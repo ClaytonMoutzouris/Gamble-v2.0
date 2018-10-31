@@ -1,0 +1,27 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class Constants {
+
+    public const float cGravity = -1030.0f;
+    public const float cMaxFallingSpeed = -900.0f;
+    public const float cWalkSpeed = 160.0f;
+    public const float cJumpSpeed = 410.0f;
+    public const float cHalfSizeY = 20.0f;
+    public const float cHalfSizeX = 6.0f;
+    public const float cMinJumpSpeed = 200.0f;
+
+    public const float cOneWayPlatformThreshold = 1.0f;
+
+    public static readonly float[] cJumpSpeeds = { 210.0f, 280.0f, 350.0f, 380.0f, 410.0f, 460.0f };
+    public static readonly float[] cHalfSizes = { 6.0f, 12.0f, 20.0f, 30.0f, 36.0f, 42.0f, 50.0f, 60.0f, 62.0f };
+    public const int cJumpFramesThreshold = 4;
+
+    public const float cBotMaxPositionError = 1.0f;
+
+    public const float cGrabLedgeStartY = 0.0f;
+    public const float cGrabLedgeEndY = 2.0f;
+    public const float cGrabLedgeTileOffsetY = -4.0f;
+
+}
