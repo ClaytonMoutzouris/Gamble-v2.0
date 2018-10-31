@@ -30,18 +30,24 @@ public class Map : MonoBehaviour {
         {
             for (int y = 0; y < mHeight; y++)
             {
-                mTiles[x, y] = TileType.Empty;
+                if (x == 0 || x==mWidth-1 || y == 0 || y == mHeight - 1)
+                {
+                    mTiles[x, y] = TileType.Block;
+                }
+                else
+                {
+                    mTiles[x, y] = TileType.Empty;
+                }
             }
-        }
-
-        for (int x = 0; x < mWidth; x++)
-        {
-                mTiles[x, 0] = TileType.Block;
         }
 
         mTiles[0, 2] = TileType.OneWay;
         mTiles[1, 2] = TileType.OneWay;
         mTiles[2, 2] = TileType.OneWay;
+
+        mTiles[3, 3] = TileType.Block;
+        mTiles[4, 3] = TileType.Block;
+        mTiles[5, 3] = TileType.Block;
 
     }
 
