@@ -227,9 +227,84 @@ public class Character : MovingObject {
                         //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     }
                 }
+
+                if (mCannotGoLeftFrames > 0)
+                {
+                    --mCannotGoLeftFrames;
+                    mInputs[(int)KeyInput.GoLeft] = false;
+                }
+                if (mCannotGoRightFrames > 0)
+                {
+                    --mCannotGoRightFrames;
+                    mInputs[(int)KeyInput.GoRight] = false;
+                }
+
+
+                if (mSpeed.y <= 0.0f && !mAtCeiling && ((mPushesRightWall && KeyState(KeyInput.GoRight)) || (mPushesLeftWall && KeyState(KeyInput.GoLeft))))
+                {
+                    Vector2 aabbCornerOffset;
+
+                    if (mPushesRightWall && mInputs[(int)KeyInput.GoRight])
+                        aabbCornerOffset = mAABB.halfSize;
+                    else
+                        aabbCornerOffset = new Vector2(-mAABB.halfSize.x - 1.0f, mAABB.halfSize.y);
+
+                    int tileX, topY, bottomY;
+                    tileX = mMap.GetMapTileXAtPoint(mAABB.center.x + aabbCornerOffset.x);
+
+                    if ((mPushedLeftWall && mPushesLeftWall) || (mPushedRightWall && mPushesRightWall))
+                    {
+                        topY = mMap.GetMapTileYAtPoint(mOldPosition.y + mAABBOffset.y + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+                        bottomY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+                    }
+                    else
+                    {
+                        topY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+                        bottomY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+                    }
+
+                    for (int y = topY; y >= bottomY; --y)
+                    {
+                        if (!mMap.IsObstacle(tileX, y) && mMap.IsObstacle(tileX, y - 1))
+                        {
+                            var tileCorner = mMap.GetMapTilePosition(tileX, y - 1);
+                            tileCorner.x -= Mathf.Sign(aabbCornerOffset.x) * Map.cTileSize / 2;
+                            tileCorner.y += Map.cTileSize / 2;
+
+                            if (y > bottomY || ((mAABB.center.y + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY && tileCorner.y - (mAABB.center.y + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                            {
+                                mLedgeTile = new Vector2i(tileX, y - 1);
+                                mPosition.y = tileCorner.y - aabbCornerOffset.y - mAABBOffset.y - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+
+                                mSpeed = Vector2.zero;
+                                mCurrentState = CharacterState.GrabLedge;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+
                 break;
 
             case CharacterState.GrabLedge:
+                bool ledgeOnLeft = mLedgeTile.x * Map.cTileSize < mPosition.x;
+                bool ledgeOnRight = !ledgeOnLeft;
+                if (mInputs[(int)KeyInput.GoDown] || (mInputs[(int)KeyInput.GoLeft] && ledgeOnRight) || (mInputs[(int)KeyInput.GoRight] && ledgeOnLeft))
+                {
+                    if (ledgeOnLeft)
+                        mCannotGoLeftFrames = 3;
+                    else
+                        mCannotGoRightFrames = 3;
+
+                    mCurrentState = CharacterState.Jump;
+                }
+                else if (mInputs[(int)KeyInput.Jump])
+                {
+                    mSpeed.y = mJumpSpeed;
+                    mCurrentState = CharacterState.Jump;
+                }
+
                 break;
         }
 
