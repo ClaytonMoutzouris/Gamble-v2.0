@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-
-public class Character : MovingObject {
-
+public class Character : MovingObject
+{
     [System.Serializable]
     public enum CharacterState
     {
@@ -13,6 +13,11 @@ public class Character : MovingObject {
         Jump,
         GrabLedge,
     };
+
+    public AudioClip mHitWallSfx;
+    public AudioClip mJumpSfx;
+    public AudioClip mWalkSfx;
+    public AudioSource mAudioSource;
 
     public float mWalkSfxTimer = 0.0f;
     public const float cWalkSfxTime = 0.25f;
@@ -27,7 +32,7 @@ public class Character : MovingObject {
     protected bool[] mInputs;
     protected bool[] mPrevInputs;
 
-    
+    [HideInInspector]
     public CharacterState mCurrentState = CharacterState.Stand;
     public float mJumpSpeed;
     public float mWalkSpeed;
@@ -39,13 +44,15 @@ public class Character : MovingObject {
     public int mCannotGoLeftFrames = 0;
     public int mCannotGoRightFrames = 0;
 
-
+    /// <summary>
+    /// Raises the draw gizmos event.
+    /// </summary>
     void OnDrawGizmos()
     {
         DrawMovingObjectGizmos();
 
         //calculate the position of the aabb's center
-        var aabbPos = transform.position + new Vector3(AABBOffsetX, AABBOffsetY, 0.0f);
+        var aabbPos = (Vector3)mAABB.Center;
 
         //draw grabbing line
         float dir;
@@ -75,7 +82,6 @@ public class Character : MovingObject {
         Gizmos.DrawLine(grabVectorTopRight, grabVectorBottomRight);
     }
 
-    /*
     public void SetCharacterWidth(Slider slider)
     {
         ScaleX = slider.value;
@@ -85,30 +91,28 @@ public class Character : MovingObject {
     {
         ScaleY = slider.value;
     }
-    */
 
-    public void CharacterInit(bool[] inputs, bool[] prevInputs)
+    public void Init(bool[] inputs, bool[] prevInputs)
     {
-        mTransform = transform;
         Scale = Vector2.one;
 
         mInputs = inputs;
         mPrevInputs = prevInputs;
 
-        //mAudioSource = GetComponent<AudioSource>();
-        mPosition = transform.position;
+        mAudioSource = GetComponent<AudioSource>();
+        mPosition = RoundVector(transform.position);
 
         mAABB.HalfSize = new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY);
-
+        mAABB.Center = mPosition;
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
+        mSlopeWallHeight = Constants.cSlopeWallHeight;
 
-        AABBOffsetY = mAABB.HalfSizeY;
+        mAABB.OffsetY = mAABB.HalfSizeY;
 
-        //mGame.mObjects.Add(this);
+        mUpdateId = mGame.AddToUpdateList(this);
+        
     }
-
-
 
     protected bool Released(KeyInput key)
     {
@@ -125,14 +129,30 @@ public class Character : MovingObject {
         return (mInputs[(int)key] && !mPrevInputs[(int)key]);
     }
 
-    public void CharacterUpdate()
+    public void UpdatePrevInputs()
+    {
+        var count = (byte)KeyInput.Count;
+
+        for (byte i = 0; i < count; ++i)
+            mPrevInputs[i] = mInputs[i];
+    }
+    
+    public void Jump()
+    {
+        mSpeed.y = mJumpSpeed;
+        mPS.tmpSticksToSlope = false;
+        mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
+        mCurrentState = CharacterState.Jump;
+    }
+
+    public void CustomUpdate()
     {
         switch (mCurrentState)
         {
             case CharacterState.Stand:
 
-                //mWalkSfxTimer = cWalkSfxTime;
-                //mAnimator.Play("Stand");
+                mWalkSfxTimer = cWalkSfxTime;
+                mAnimator.Play("Stand");
 
                 mSpeed = Vector2.zero;
 
@@ -150,32 +170,25 @@ public class Character : MovingObject {
                 }
                 else if (KeyState(KeyInput.Jump))
                 {
-                    mSpeed.y = mJumpSpeed;
-                    //mAudioSource.PlayOneShot(mJumpSfx);
-                    mCurrentState = CharacterState.Jump;
+                    Jump();
                     break;
                 }
 
                 if (KeyState(KeyInput.GoDown))
-                {
-                    Debug.Log("Pushed Down : One Way - "  + mOnOneWayPlatform);
-                    if (mOnOneWayPlatform)
-                        mPosition.y -= Constants.cOneWayPlatformThreshold;
-                }
+                    mPS.tmpIgnoresOneWay = true;
 
                 break;
             case CharacterState.Walk:
-                /*
                 mAnimator.Play("Walk");
 
                 mWalkSfxTimer += Time.deltaTime;
 
                 if (mWalkSfxTimer > cWalkSfxTime)
                 {
-                 //   mWalkSfxTimer = 0.0f;
-                 //   mAudioSource.PlayOneShot(mWalkSfx);
+                    mWalkSfxTimer = 0.0f;
+                    mAudioSource.PlayOneShot(mWalkSfx);
                 }
-                */
+
                 //if both or neither left nor right keys are pressed then stop walking and stand
 
                 if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
@@ -186,27 +199,25 @@ public class Character : MovingObject {
                 }
                 else if (KeyState(KeyInput.GoRight))
                 {
-                    if (mPS.pushesRight)
+                    if (mPS.pushesRightTile)
                         mSpeed.x = 0.0f;
                     else
                         mSpeed.x = mWalkSpeed;
-                    ScaleX = -Mathf.Abs(ScaleX);
+                    ScaleX = Mathf.Abs(ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
-                    if (mPS.pushesLeft)
+                    if (mPS.pushesLeftTile)
                         mSpeed.x = 0.0f;
                     else
                         mSpeed.x = -mWalkSpeed;
-                    ScaleX = Mathf.Abs(ScaleX);
+                    ScaleX = -Mathf.Abs(ScaleX);
                 }
 
                 //if there's no tile to walk on, fall
                 if (KeyState(KeyInput.Jump))
                 {
-                    mSpeed.y = mJumpSpeed;
-                   // mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
-                    mCurrentState = CharacterState.Jump;
+                    Jump();
                     break;
                 }
                 else if (!mPS.pushesBottom)
@@ -216,10 +227,7 @@ public class Character : MovingObject {
                 }
 
                 if (KeyState(KeyInput.GoDown))
-                {
-                    if (mOnOneWayPlatform)
-                        mPosition.y -= Constants.cOneWayPlatformThreshold;
-                }
+                    mPS.tmpIgnoresOneWay = true;
 
                 break;
             case CharacterState.Jump:
@@ -233,9 +241,10 @@ public class Character : MovingObject {
                     else if (KeyState(KeyInput.Jump))
                         mSpeed.y = mJumpSpeed;
                 }
-                // mWalkSfxTimer = cWalkSfxTime;
 
-                // mAnimator.Play("Jump");
+                mWalkSfxTimer = cWalkSfxTime;
+
+                mAnimator.Play("Jump");
 
                 mSpeed.y += Constants.cGravity * Time.deltaTime;
 
@@ -252,36 +261,36 @@ public class Character : MovingObject {
                 }
                 else if (KeyState(KeyInput.GoRight))
                 {
-                    if (mPS.pushesRight)
+                    if (mPS.pushesRightTile)
                         mSpeed.x = 0.0f;
                     else
                         mSpeed.x = mWalkSpeed;
-                    ScaleX = -Mathf.Abs(ScaleX);
+                    ScaleX = Mathf.Abs(ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
-                    if (mPS.pushesLeft)
+                    if (mPS.pushesLeftTile)
                         mSpeed.x = 0.0f;
                     else
                         mSpeed.x = -mWalkSpeed;
-                    ScaleX = Mathf.Abs(ScaleX);
+                    ScaleX = -Mathf.Abs(ScaleX);
                 }
 
                 //if we hit the ground
                 if (mPS.pushesBottom)
                 {
                     //if there's no movement change state to standing
-                    if (mInputs[(int)KeyInput.GoRight] == mInputs[(int)KeyInput.GoLeft])
+                    if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
                     {
                         mCurrentState = CharacterState.Stand;
                         mSpeed = Vector2.zero;
-                        //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     }
-                    else    //either go right or go left are pressed so we change the state to walk
+                    else	//either go right or go left are pressed so we change the state to walk
                     {
                         mCurrentState = CharacterState.Walk;
                         mSpeed.y = 0.0f;
-                        //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     }
                 }
 
@@ -295,8 +304,7 @@ public class Character : MovingObject {
                     --mCannotGoRightFrames;
                     mInputs[(int)KeyInput.GoRight] = false;
                 }
-
-
+            
                 if (mSpeed.y <= 0.0f && !mPS.pushesTop
                     && ((mPS.pushesRight && mInputs[(int)KeyInput.GoRight]) || (mPS.pushesLeft && mInputs[(int)KeyInput.GoLeft])))
                 {
@@ -311,17 +319,17 @@ public class Character : MovingObject {
                         aabbCornerOffset = new Vector2(-mAABB.HalfSizeX - 1.0f, mAABB.HalfSizeY);
 
                     int tileX, topY, bottomY;
-                    tileX = mMap.GetMapTileXAtPoint(mAABB.center.x + aabbCornerOffset.x);
+                    tileX = mMap.GetMapTileXAtPoint(mAABB.CenterX + aabbCornerOffset.x);
 
                     if ((mPS.pushedLeft && mPS.pushesLeft) || (mPS.pushedRight && mPS.pushesRight))
                     {
-                        topY = mMap.GetMapTileYAtPoint(mOldPosition.y + AABBOffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-                        bottomY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+                        topY = mMap.GetMapTileYAtPoint(mOldPosition.y + mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+                        bottomY = mMap.GetMapTileYAtPoint(mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
                     }
                     else
                     {
-                        topY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-                        bottomY = mMap.GetMapTileYAtPoint(mAABB.center.y + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+                        topY = mMap.GetMapTileYAtPoint(mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+                        bottomY = mMap.GetMapTileYAtPoint(mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
                     }
 
                     for (int y = topY; y >= bottomY; --y)
@@ -336,20 +344,21 @@ public class Character : MovingObject {
 
                             //check whether the tile's corner is between our grabbing Vector2is
                             if (y > bottomY ||
-                                ((mAABB.center.y + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
-                                && tileCorner.y - (mAABB.center.y + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                                ((mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
+                                && tileCorner.y - (mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
                             {
                                 //save the tile we are holding so we can check later on if we can still hold onto it
                                 mLedgeTile = new Vector2i(tileX, y - 1);
 
                                 //calculate our position so the corner of our AABB and the tile's are next to each other
-                                mPosition.y = tileCorner.y - aabbCornerOffset.y - AABBOffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+                                mPosition.y = tileCorner.y - aabbCornerOffset.y - mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
                                 mSpeed = Vector2.zero;
 
                                 //finally grab the edge
                                 mCurrentState = CharacterState.GrabLedge;
-                                //mAnimator.Play("GrabLedge");
-                                //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                                ScaleX *= -1;
+                                mAnimator.Play("GrabLedge");
+                                mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                                 break;
                                 //mGame.PlayOneShot(SoundType.Character_LedgeGrab, mPosition, Game.sSfxVolume);
                             }
@@ -357,12 +366,22 @@ public class Character : MovingObject {
                     }
                 }
 
+                if (KeyState(KeyInput.GoDown))
+                    mPS.tmpIgnoresOneWay = true;
+
                 break;
 
             case CharacterState.GrabLedge:
+
+                mAnimator.Play("GrabLedge");
+
                 bool ledgeOnLeft = mLedgeTile.x * Map.cTileSize < mPosition.x;
                 bool ledgeOnRight = !ledgeOnLeft;
-                if (mInputs[(int)KeyInput.GoDown] || (mInputs[(int)KeyInput.GoLeft] && ledgeOnRight) || (mInputs[(int)KeyInput.GoRight] && ledgeOnLeft))
+
+                //if down button is held then drop down
+                if (mInputs[(int)KeyInput.GoDown]
+                    || (mInputs[(int)KeyInput.GoLeft] && ledgeOnRight)
+                    || (mInputs[(int)KeyInput.GoRight] && ledgeOnLeft))
                 {
                     if (ledgeOnLeft)
                         mCannotGoLeftFrames = 3;
@@ -370,36 +389,37 @@ public class Character : MovingObject {
                         mCannotGoRightFrames = 3;
 
                     mCurrentState = CharacterState.Jump;
+                    //mGame.PlayOneShot(SoundType.Character_LedgeRelease, mPosition, Game.sSfxVolume);
                 }
                 else if (mInputs[(int)KeyInput.Jump])
                 {
+                    //the speed is positive so we don't have to worry about hero grabbing an edge
+                    //right after he jumps because he doesn't grab if speed.y > 0
                     mSpeed.y = mJumpSpeed;
+                    mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
                     mCurrentState = CharacterState.Jump;
                 }
+
+                //when the tile we grab onto gets destroyed
+                if (!mMap.IsObstacle(mLedgeTile.x, mLedgeTile.y))
+                    mCurrentState = CharacterState.Jump;
 
                 break;
         }
 
+        //if (mAllCollidingObjects.Count > 0)
+        //    GetComponent<SpriteRenderer>().color = Color.black;
+        //else
+        //    GetComponent<SpriteRenderer>().color = Color.white;
+
         UpdatePhysics();
 
-        if(mPS.pushedBottom && !mPS.pushesBottom)
-        {
+        if (mPS.pushedBottom && !mPS.pushesBottom)
             mFramesFromJumpStart = 0;
-        }
 
-        //if (mOnGround && !mWasOnGround)
-            //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+        if (mPS.pushesBottom && !mPS.pushedBottom)
+            mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
 
         UpdatePrevInputs();
     }
-
-    public void UpdatePrevInputs()
-    {
-        var count = (byte)KeyInput.Count;
-
-        for (byte i = 0; i < count; ++i)
-            mPrevInputs[i] = mInputs[i];
-    }
-
-
 }

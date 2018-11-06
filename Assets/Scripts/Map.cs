@@ -1,12 +1,11 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Map : MonoBehaviour {
-
-    [SerializeField]
-    public TileType[,] mTiles;
-
+[System.Serializable]
+public class Map : MonoBehaviour
+{
+    [HideInInspector]
+    private TileType[,] mTiles;
     public TileMapObject mTileMap;
 
     public Vector3 mPosition;
@@ -14,85 +13,116 @@ public class Map : MonoBehaviour {
     public int mWidth = 80;
     public int mHeight = 60;
 
+    [SerializeField]
     public const int cTileSize = 32;
 
     private static List<Vector2i> mOverlappingAreas = new List<Vector2i>(4);
 
+    /// <summary>
+    /// A set of areas in which at least one tile has been destroyed
+    /// </summary>
     private HashSet<Vector2i> mUpdatedAreas;
 
+    /// <summary>
+    /// How many collision areas are there on the map horizontally.
+    /// </summary>
     [HideInInspector]
     public int mHorizontalAreasCount;
 
+    /// <summary>
+    /// How many collision areas are there on the map vertically.
+    /// </summary>
     [HideInInspector]
     public int mVerticalAreasCount;
 
+    [SerializeField]
     public int mGridAreaWidth = 16;
+    [SerializeField]
     public int mGridAreaHeight = 16;
+    [HideInInspector]
     public List<MovingObject>[,] mObjectsInArea;
 
     public static List<MovingObject> mCollisionRequestObjects = new List<MovingObject>();
 
-
-    public void InitMap()
+    public void RemoveObjectFromAreas(MovingObject obj)
     {
-        mPosition = transform.position;
+        for (int i = 0; i < obj.mAreas.Count; ++i)
+            RemoveObjectFromArea(obj.mAreas[i], obj.mIdsInAreas[i], obj);
+        obj.mAreas.Clear();
+        obj.mIdsInAreas.Clear();
+    }
 
-        mUpdatedAreas = new HashSet<Vector2i>();
+    public void DebugPrintAreas()
+    {
+        Debug.Log("Objects in areas:");
 
-        mHorizontalAreasCount = Mathf.CeilToInt((float)mWidth / (float)mGridAreaWidth);
-        mVerticalAreasCount = Mathf.CeilToInt((float)mHeight / (float)mGridAreaHeight);
-
-        mObjectsInArea = new List<MovingObject>[mHorizontalAreasCount, mVerticalAreasCount];
-
-        for (var y = 0; y < mVerticalAreasCount; ++y)
+        for (int y = 0; y < mVerticalAreasCount; ++y)
         {
-            for (var x = 0; x < mHorizontalAreasCount; ++x)
-                mObjectsInArea[x, y] = new List<MovingObject>();
-        }
-
-        mTiles = new TileType[mWidth, mHeight];
-
-        for (int x = 0; x < mWidth; x++)
-        {
-            for (int y = 0; y < mHeight; y++)
+            for (int x = 0; x < mHorizontalAreasCount; ++x)
             {
-                if (x == 0 || x == mWidth - 1 || y == 0 || y == mHeight - 1)
+                var objs = mObjectsInArea[x, y];
+                if (objs.Count > 0)
                 {
-                    mTiles[x, y] = TileType.Block;
-                }
-                else
-                {
-                    mTiles[x, y] = TileType.Empty;
+                    Debug.Log("Area X: " + x + " Y: " + y + " obj count: " + objs.Count);
+                    for (int i = 0; i < objs.Count; ++i)
+                    {
+                        Debug.Log(objs[i].name);
+                    }
                 }
             }
         }
 
-        mTiles[0, 2] = TileType.OneWay;
-        mTiles[1, 2] = TileType.OneWay;
-        mTiles[2, 2] = TileType.OneWay;
+        Debug.Log("Object in areas End");
+    }
 
-        mTiles[3, 3] = TileType.Block;
-        mTiles[4, 3] = TileType.Block;
-        mTiles[5, 3] = TileType.Block;
+    public void RemoveObjectFromArea(Vector2i areaIndex, int objIndexInArea, MovingObject obj)
+    {
+        var area = mObjectsInArea[areaIndex.x, areaIndex.y];
 
-        for(int y = 0; y < mHeight; y++)
+        if (Debug.isDebugBuild && area.Count == 0)
         {
-            if (y % 3 == 1)
+            Debug.Log("Removing object from an area that doesn't contain any objects, areaIndex: " + areaIndex.x + ", " + areaIndex.y + ", objIndexInArea: " + objIndexInArea);
+            Debug.Break();
+        }
+
+        //swap the last item with the one we are removing
+        var tmp = area[area.Count - 1];
+        area[area.Count - 1] = obj;
+        area[objIndexInArea] = tmp;
+
+        var tmpIds = tmp.mIdsInAreas;
+        var tmpAreas = tmp.mAreas;
+        for (int i = 0; i < tmpAreas.Count; ++i)
+        {
+            if (tmpAreas[i] == areaIndex)
             {
-                mTiles[mWidth - 2, y] = TileType.Block;
+                tmpIds[i] = objIndexInArea;
+                break;
             }
         }
 
-        mTileMap.DrawMap(mTiles, mWidth, mHeight);
+        //remove the last item
+        area.RemoveAt(area.Count - 1);
+    }
 
+    public void AddObjectToArea(Vector2i areaIndex, MovingObject obj)
+    {
+        var area = mObjectsInArea[areaIndex.x, areaIndex.y];
+
+        //save the index of  the object in the area
+        obj.mAreas.Add(areaIndex);
+        obj.mIdsInAreas.Add(area.Count);
+
+        //add the object to the area
+        area.Add(obj);
     }
 
     public void UpdateAreas(MovingObject obj)
     {
         //get the areas at the aabb's corners
-        var topLeft = GetMapTileAtPoint(obj.mAABB.center + new Vector2(-obj.mAABB.HalfSize.x, obj.mAABB.HalfSizeY));
-        var topRight = GetMapTileAtPoint(obj.mAABB.center + obj.mAABB.HalfSize);
-        var bottomLeft = GetMapTileAtPoint(obj.mAABB.center - obj.mAABB.HalfSize);
+        var topLeft = GetMapTileAtPoint((Vector2)obj.mAABB.Center + new Vector2(-obj.mAABB.HalfSize.x, obj.mAABB.HalfSizeY));
+        var topRight = GetMapTileAtPoint(obj.mAABB.Center + obj.mAABB.HalfSize);
+        var bottomLeft = GetMapTileAtPoint(obj.mAABB.Center - obj.mAABB.HalfSize);
         var bottomRight = new Vector2i();
 
         topLeft.x /= mGridAreaWidth;
@@ -164,197 +194,6 @@ public class Map : MonoBehaviour {
         mOverlappingAreas.Clear();
     }
 
-    public void RemoveObjectFromAreas(MovingObject obj)
-    {
-        for (int i = 0; i < obj.mAreas.Count; ++i)
-            RemoveObjectFromArea(obj.mAreas[i], obj.mIdsInAreas[i], obj);
-        obj.mAreas.Clear();
-        obj.mIdsInAreas.Clear();
-    }
-
-    public void AddObjectToArea(Vector2i areaIndex, MovingObject obj)
-    {
-        var area = mObjectsInArea[areaIndex.x, areaIndex.y];
-
-        //save the index of  the object in the area
-        obj.mAreas.Add(areaIndex);
-        obj.mIdsInAreas.Add(area.Count);
-
-        //add the object to the area
-        area.Add(obj);
-    }
-
-    public void RemoveObjectFromArea(Vector2i areaIndex, int objIndexInArea, MovingObject obj)
-    {
-        var area = mObjectsInArea[areaIndex.x, areaIndex.y];
-
-        if (Debug.isDebugBuild && area.Count == 0)
-        {
-            Debug.Log("Removing object from an area that doesn't contain any objects, areaIndex: " + areaIndex.x + ", " + areaIndex.y + ", objIndexInArea: " + objIndexInArea);
-            Debug.Break();
-        }
-
-        //swap the last item with the one we are removing
-        var tmp = area[area.Count - 1];
-        area[area.Count - 1] = obj;
-        area[objIndexInArea] = tmp;
-
-        var tmpIds = tmp.mIdsInAreas;
-        var tmpAreas = tmp.mAreas;
-        for (int i = 0; i < tmpAreas.Count; ++i)
-        {
-            if (tmpAreas[i] == areaIndex)
-            {
-                tmpIds[i] = objIndexInArea;
-                break;
-            }
-        }
-
-        //remove the last item
-        area.RemoveAt(area.Count - 1);
-    }
-
-    bool SweepTest(MovingObject obj1, MovingObject obj2, out float u0, out float u1)
-    {
-        AABB a = obj1.mAABB;
-        AABB b = obj2.mAABB;
-
-        Vector2 va = obj1.mSpeed * Time.deltaTime;
-        Vector2 vb = obj2.mSpeed * Time.deltaTime;
-
-        Vector2 v = vb - va;
-
-        Vector2 u_0 = Vector2.zero;
-        Vector2 u_1 = Vector2.one;
-
-        if (a.Overlaps(b))
-        {
-            u0 = u1 = 0.0f;
-            return true;
-        }
-        else if (v.x == 0.0f && v.y == 0.0f)
-        {
-            u0 = u1 = 0.0f;
-            return false;
-        }
-
-        Vector2 maxA = a.Max();
-        Vector2 minA = a.Min();
-        Vector2 maxB = b.Max();
-        Vector2 minB = b.Min();
-
-        if (maxA.x < minB.x && v.x < 0.0f)
-            u_0.x = (maxA.x - minB.x) / v.x;
-        else if (maxB.x < minA.x && v.x > 0.0f)
-            u_0.x = (minA.x - minB.x) / v.x;
-
-        if (maxA.y < minB.y && v.y < 0.0f)
-            u_0.y = (maxA.y - minB.y) / v.y;
-        else if (maxB.y < minA.y && v.y > 0.0f)
-            u_0.y = (minA.y - minB.y) / v.y;
-
-        if (maxB.x > minA.x && v.x < 0.0f)
-            u_1.x = (minA.x - maxB.x) / v.x;
-        else if (maxA.x > minB.x && v.x > 0.0f)
-            u_1.x = (maxA.x - minB.x) / v.x;
-
-        if (maxB.y > minA.y && v.y < 0.0f)
-            u_1.y = (minA.y - maxB.y) / v.y;
-        else if (maxA.y > minB.y && v.y > 0.0f)
-            u_1.y = (maxA.y - minB.y) / v.y;
-
-        u0 = Mathf.Max(u_0.x, u_0.y);
-        u1 = Mathf.Min(u_1.x, u_1.y);
-
-        return u0 <= u1;
-    }
-
-    public void CheckCollisions()
-    {
-        Vector2 overlap;
-
-        for (int y = 0; y < mVerticalAreasCount; ++y)
-        {
-            for (int x = 0; x < mHorizontalAreasCount; ++x)
-            {
-                var objectsInArea = mObjectsInArea[x, y];
-                for (int i = 0; i < objectsInArea.Count - 1; ++i)
-                {
-                    var obj1 = objectsInArea[i];
-                    for (int j = i + 1; j < objectsInArea.Count; ++j)
-                    {
-                        var obj2 = objectsInArea[j];
-
-                        if (obj1.mAABB.OverlapsSigned(obj2.mAABB, out overlap) && !obj1.HasCollisionDataFor(obj2))
-                        {
-                            obj1.mAllCollidingObjects.Add(new CollisionData(obj2, overlap, obj1.mSpeed, obj2.mSpeed, obj1.mOldPosition, obj2.mOldPosition, obj1.mPosition, obj2.mPosition));
-                            obj2.mAllCollidingObjects.Add(new CollisionData(obj1, -overlap, obj2.mSpeed, obj1.mSpeed, obj2.mOldPosition, obj1.mOldPosition, obj2.mPosition, obj1.mPosition));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void UpdateCollisionState(MovingObject obj)
-    {
-        if (obj.mSpeed.x > 0.0f)
-        {
-            obj.mSpeed.x = 0.0f;
-            obj.mPS.pushesRight = true;
-        }
-        else if (obj.mSpeed.x < 0.0f)
-        {
-            obj.mSpeed.x = 0.0f;
-            obj.mPS.pushesLeft = true;
-        }
-
-        if (obj.mSpeed.y > 0.0f)
-        {
-            obj.mSpeed.y = 0.0f;
-            obj.mPS.pushesTop = true;
-        }
-        else if (obj.mSpeed.y < 0.0f)
-        {
-            obj.mSpeed.y = 0.0f;
-            obj.mPS.pushesBottom = true;
-        }
-    }
-
-    
-
-    public Vector2i GetMapTileAtPoint(Vector2 point)
-    {
-        return new Vector2i((int)((point.x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize)),
-                    (int)((point.y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize)));
-    }
-
-    public int GetMapTileYAtPoint(float y)
-    {
-        return (int)((y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize));
-    }
-
-    public int GetMapTileXAtPoint(float x)
-    {
-        return (int)((x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize));
-    }
-
-    public Vector2 GetMapTilePosition(int tileIndexX, int tileIndexY)
-    {
-        return new Vector2(
-                (float)(tileIndexX * cTileSize) + mPosition.x,
-                (float)(tileIndexY * cTileSize) + mPosition.y
-            );
-    }
-
-    public Vector2 GetMapTilePosition(Vector2i tileCoords)
-    {
-        return new Vector2(
-            (float)(tileCoords.x * cTileSize) + mPosition.x,
-            (float)(tileCoords.y * cTileSize) + mPosition.y
-            );
-    }
-
     public TileType GetTile(int x, int y)
     {
         if (x < 0 || x >= mWidth
@@ -364,13 +203,32 @@ public class Map : MonoBehaviour {
         return mTiles[x, y];
     }
 
-    public bool IsObstacle(int x, int y)
+    public void SetTile(int x, int y, TileType tType)
     {
         if (x < 0 || x >= mWidth
             || y < 0 || y >= mHeight)
-            return true;
+            return;
 
-        return (mTiles[x, y] == TileType.Block);
+        mTiles[x, y] = tType;
+        mTileMap.DrawTile(x, y, tType);
+    }
+
+    public TileType GetCollisionType(Vector2i pos)
+    {
+        if (pos.x <= -1 || pos.x >= mWidth
+            || pos.y <= -1 || pos.y >= mHeight)
+            return TileType.Block;
+
+        return mTiles[pos.x, pos.y];
+    }
+
+    public bool IsOneWayPlatform(int x, int y)
+    {
+        if (x < 0 || x >= mWidth
+            || y < 0 || y >= mHeight)
+            return false;
+
+        return (mTiles[x, y] == TileType.OneWay);
     }
 
     public bool IsGround(int x, int y)
@@ -382,13 +240,19 @@ public class Map : MonoBehaviour {
         return (mTiles[x, y] == TileType.OneWay || mTiles[x, y] == TileType.Block);
     }
 
-    public bool IsOneWayPlatform(int x, int y)
+    public bool IsGround(Vector2i pos)
+    {
+        return IsGround(pos.x, pos.y);
+    }
+
+
+    public bool IsObstacle(int x, int y)
     {
         if (x < 0 || x >= mWidth
             || y < 0 || y >= mHeight)
-            return false;
+            return true;
 
-        return (mTiles[x, y] == TileType.OneWay);
+        return (mTiles[x, y] == TileType.Block);
     }
 
     public bool IsEmpty(int x, int y)
@@ -409,27 +273,131 @@ public class Map : MonoBehaviour {
         return (mTiles[x, y] != TileType.Empty);
     }
 
-    public void SetTile(int x, int y, TileType type)
+    public void GetMapTileAtPoint(Vector2 point, out int tileIndexX, out int tileIndexY)
     {
-        if (x <= 1 || x >= mWidth - 2 || y <= 1 || y >= mHeight - 2)
-            return;
-
-        mTiles[x, y] = type;
-
-        if (type == TileType.Block)
-        {
-            
-        }
-        else if (type == TileType.OneWay)
-        {
-            
-        }
-        else
-        {
-            
-        }
-
-
+        tileIndexY = (int)((point.y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize));
+        tileIndexX = (int)((point.x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize));
     }
 
+    public int GetMapTileYAtPoint(float y)
+    {
+        return (int)((y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize));
+    }
+
+    public int GetMapTileXAtPoint(float x)
+    {
+        return (int)((x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize));
+    }
+
+    public Vector2i GetMapTileAtPoint(Vector2 point)
+    {
+        return new Vector2i((int)((point.x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize)),
+                    (int)((point.y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize)));
+    }
+
+    public Vector2 GetMapTilePosition(int tileIndexX, int tileIndexY)
+    {
+        return new Vector2(
+                (float)(tileIndexX * cTileSize) + mPosition.x,
+                (float)(tileIndexY * cTileSize) + mPosition.y
+            );
+    }
+
+    public Vector2 GetMapTilePosition(Vector2i tileCoords)
+    {
+        return new Vector2(
+            (float)(tileCoords.x * cTileSize) + mPosition.x,
+            (float)(tileCoords.y * cTileSize) + mPosition.y
+            );
+    }
+
+
+    public void Init()
+    {
+        //set the position
+        mPosition = transform.position;
+
+        mTiles = new TileType[mWidth, mHeight];
+
+        mUpdatedAreas = new HashSet<Vector2i>();
+
+        mHorizontalAreasCount = Mathf.CeilToInt((float)mWidth / (float)mGridAreaWidth);
+        mVerticalAreasCount = Mathf.CeilToInt((float)mHeight / (float)mGridAreaHeight);
+
+        mObjectsInArea = new List<MovingObject>[mHorizontalAreasCount, mVerticalAreasCount];
+
+        for (var y = 0; y < mVerticalAreasCount; ++y)
+        {
+            for (var x = 0; x < mHorizontalAreasCount; ++x)
+                mObjectsInArea[x, y] = new List<MovingObject>();
+        }
+
+
+        for (int x = 0; x < mWidth; x++)
+        {
+            for (int y = 0; y < mHeight; y++)
+            {
+                if (x == 0 || x == mWidth - 1 || y == 0 || y == mHeight - 1)
+                {
+                    mTiles[x, y] = TileType.Block;
+                }
+                else
+                {
+                    mTiles[x, y] = TileType.Empty;
+                }
+            }
+        }
+
+        mTiles[11, 3] = TileType.OneWay;
+        mTiles[12, 3] = TileType.OneWay;
+        mTiles[13, 3] = TileType.OneWay;
+
+        mTiles[8, 2] = TileType.OneWay;
+        mTiles[9, 2] = TileType.OneWay;
+        mTiles[10, 2] = TileType.OneWay;
+
+        mTiles[3, 3] = TileType.Block;
+        mTiles[4, 3] = TileType.Block;
+        mTiles[5, 3] = TileType.Block;
+
+        for (int y = 0; y < mHeight; y++)
+        {
+            if (y % 3 == 1)
+            {
+                mTiles[mWidth - 2, y] = TileType.Block;
+            }
+        }
+
+        mTileMap.DrawMap(mTiles, mWidth, mHeight);
+    }
+
+
+    public void CheckCollisions()
+    {
+        float overlapWidth, overlapHeight;
+
+        for (int y = 0; y < mVerticalAreasCount; ++y)
+        {
+            for (int x = 0; x < mHorizontalAreasCount; ++x)
+            {
+                var objectsInArea = mObjectsInArea[x, y];
+                for (int i = 0; i < objectsInArea.Count - 1; ++i)
+                {
+                    var obj1 = objectsInArea[i];
+                    for (int j = i + 1; j < objectsInArea.Count; ++j)
+                    {
+                        var obj2 = objectsInArea[j];
+
+                        if (obj1.mAABB.OverlapsSigned(obj2.mAABB, out overlapWidth, out overlapHeight) && !obj1.HasCollisionDataFor(obj2))
+                        {
+                            obj1.mAllCollidingObjects.Add(new CollisionData(obj2, new Vector2(overlapWidth, overlapHeight), obj1.mSpeed, obj2.mSpeed, obj1.mOldPosition, obj2.mOldPosition, obj1.mPosition, obj2.mPosition));
+                            obj2.mAllCollidingObjects.Add(new CollisionData(obj1, -new Vector2(overlapWidth, overlapHeight), obj2.mSpeed, obj1.mSpeed, obj2.mOldPosition, obj1.mOldPosition, obj2.mPosition, obj1.mPosition));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+  
 }

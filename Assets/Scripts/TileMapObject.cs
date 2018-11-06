@@ -25,6 +25,7 @@ public class TileMapObject : MonoBehaviour {
     public int tileResolution;
     private Mesh mesh;
     private Vector3[] vertices;
+    Map map;
 
     public Texture2D terrainTiles;
 
@@ -105,22 +106,23 @@ public class TileMapObject : MonoBehaviour {
 
     }
 
-    /*
+    
     //If we need to update 1 tile
-    public void DrawTile(TileType tile)
+    public void DrawTile(int x, int y, TileType tile)
     {
-        texture.SetPixels(tile.TileX * tileResolution, tile.TileY * tileResolution, tileResolution, tileResolution, tileTextures[2]);
+        texture.SetPixels(x * tileResolution, y * tileResolution, tileResolution, tileResolution, tileTextures[(int)tile]);
         texture.Apply();
     }
 
     //redraw a tile, using a new random one (for test purposes)
-    public void RedrawTile(TileType tile)
+    public void RedrawTile(int x, int y, TileType tile)
     {
         Color[] p = tileTextures[UnityEngine.Random.Range(0, 4)];
-        texture.SetPixels(tile.TileX * tileResolution, tile.TileY * tileResolution, tileResolution, tileResolution, p);
+        texture.SetPixels(x * tileResolution, y * tileResolution, tileResolution, tileResolution, p);
         texture.Apply();
     }
 
+    /*
     //Used for updating a group of tiles at once
     public void DrawMultiTiles(List<TileType> tiles)
     {
@@ -131,8 +133,8 @@ public class TileMapObject : MonoBehaviour {
         }
         texture.Apply();
     }
-
     */
+    
     void BuildInitialTexture()
     {
 

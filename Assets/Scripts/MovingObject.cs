@@ -1,41 +1,41 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public enum ObjectType
 {
     None,
     Player,
     NPC,
+    MovingPlatform,
+    Enemy,
 }
 
-public class MovingObject : MonoBehaviour
+public class MovingObject : MonoBehaviour 
 {
-
     public ObjectType mType;
-
-    public GameManager mGame;
-    public Map mMap;
-    public Transform mTransform;
+    /// <summary>
+    /// The previous position.
+    /// </summary>
     public Vector2 mOldPosition;
+
+    public int mSlopeWallHeight;
+    /// <summary>
+    /// The current position.
+    /// </summary>
     public Vector2 mPosition;
+    public Vector2 mReminder;
+    public Vector2 mOffset;
 
-    public Vector2 mOldSpeed;
-    public Vector2 mSpeed;
-
-    public List<Vector2i> mAreas = new List<Vector2i>();
-    public List<int> mIdsInAreas = new List<int>();
-    //protected List<MovingObject> mFilteredObjects = new List<MovingObject>();
-
-    public List<CollisionData> mAllCollidingObjects = new List<CollisionData>();
+    public int mUpdateId = -1;
 
     private Vector2 mScale;
     public Vector2 Scale
     {
-        set
-        {
+        set {
             mScale = value;
-            mAABB.scale = new Vector2(Mathf.Abs(value.x), Mathf.Abs(value.y));
+            mAABB.Scale = new Vector2(Mathf.Abs(value.x), Mathf.Abs(value.y));
         }
         get { return mScale; }
     }
@@ -44,7 +44,7 @@ public class MovingObject : MonoBehaviour
         set
         {
             mScale.x = value;
-            mAABB.scale.x = Mathf.Abs(value);
+            mAABB.ScaleX = Mathf.Abs(value);
         }
         get { return mScale.x; }
     }
@@ -53,119 +53,180 @@ public class MovingObject : MonoBehaviour
         set
         {
             mScale.y = value;
-            mAABB.scale.y = Mathf.Abs(value);
+            mAABB.ScaleY = Mathf.Abs(value);
         }
         get { return mScale.y; }
     }
 
+    /// <summary>
+    /// The current speed in pixels/second.
+    /// </summary>
+    public Vector2 mSpeed;
+	
+	/// <summary>
+	/// The previous speed in pixels/second.
+	/// </summary>
+	public Vector2 mOldSpeed;
+
+    [Serializable]
+    public struct PositionState
+    {
+        public bool pushesRight;
+        public bool pushesLeft;
+        public bool pushesBottom;
+        public bool pushesTop;
+
+        public bool pushedTop;
+        public bool pushedBottom;
+        public bool pushedRight;
+        public bool pushedLeft;
+
+        public bool pushedLeftObject;
+        public bool pushedRightObject;
+        public bool pushedBottomObject;
+        public bool pushedTopObject;
+
+        public bool pushesLeftObject;
+        public bool pushesRightObject;
+        public bool pushesBottomObject;
+        public bool pushesTopObject;
+
+        public bool pushedLeftTile;
+        public bool pushedRightTile;
+        public bool pushedBottomTile;
+        public bool pushedTopTile;
+
+        public bool pushesLeftTile;
+        public bool pushesRightTile;
+        public bool pushesBottomTile;
+        public bool pushesTopTile;
+
+        public bool onOneWay;
+        public bool tmpIgnoresOneWay;
+        public bool tmpSticksToSlope;
+        public int oneWayY;
+
+        public Vector2i leftTile;
+        public Vector2i rightTile;
+        public Vector2i topTile;
+        public Vector2i bottomTile;
+
+        public void Reset()
+        {
+            leftTile = rightTile = topTile = bottomTile = new Vector2i(-1, -1);
+            oneWayY = -1;
+
+            pushesRight = false;
+            pushesLeft = false;
+            pushesBottom = false;
+            pushesTop = false;
+
+            pushedTop = false;
+            pushedBottom = false;
+            pushedRight = false;
+            pushedLeft = false;
+
+            pushedLeftObject = false;
+            pushedRightObject = false;
+            pushedBottomObject = false;
+            pushedTopObject = false;
+
+            pushesLeftObject = false;
+            pushesRightObject = false;
+            pushesBottomObject = false;
+            pushesTopObject = false;
+
+            pushedLeftTile = false;
+            pushedRightTile = false;
+            pushedBottomTile = false;
+            pushedTopTile = false;
+
+            pushesLeftTile = false;
+            pushesRightTile = false;
+            pushesBottomTile = false;
+            pushesTopTile = false;
+
+            onOneWay = false;
+        }
+    }
+    /// <summary>
+    /// The AABB for collision queries.
+    /// </summary>
     public AABB mAABB;
-    private Vector2 mAABBOffset;
-    public Vector2 AABBOffset
-    {
-        set { mAABBOffset = value; }
-        get { return new Vector2(mAABBOffset.x * mScale.x, mAABBOffset.y * mScale.y); }
-    }
-
-    public float AABBOffsetX
-    {
-        set { mAABBOffset.x = value; }
-        get { return mAABBOffset.x * mScale.x; }
-    }
-
-    public float AABBOffsetY
-    {
-        set { mAABBOffset.y = value; }
-        get { return mAABBOffset.y * mScale.y; }
-    }
-
-    //Position State variables
 
     public PositionState mPS;
 
-    //public bool mSticksToSlope;
+    public Game mGame;
+    public Map mMap;
+
+    public MovingObject mMountParent = null;
+
+    public bool mIgnoresOneWay = false;
+    public bool mOnOneWayPlatform = false;
+    public bool mSticksToSlope = true;
     public bool mIsKinematic = false;
 
-    public bool mOnOneWayPlatform = false;
+    [NonSerialized]
+    public List<Vector2i> mAreas = new List<Vector2i>();
+    [NonSerialized]
+    public List<int> mIdsInAreas = new List<int>();
+    [NonSerialized]
+    protected List<MovingObject> mFilteredObjects = new List<MovingObject>();
+    [NonSerialized]
+    public List<CollisionData> mAllCollidingObjects = new List<CollisionData>();
+    /// <summary>
+    /// Depth for z-ordering the sprites.
+    /// </summary>
+    public float mSpriteDepth = -1.0f;
 
-    /*
-    public bool mPushesRight = false;
-    public bool mPushesLeft = false;
-    public bool mPushesBottom = false;
-    public bool mPushesTop = false;
+    public Transform mTransform;
 
-    public bool mPushedTop = false;
-    public bool mPushedBottom = false;
-    public bool mPushedRight = false;
-    public bool mPushedLeft = false;
-
-    public bool mPushesLeftObject = false;
-    public bool mPushesRightObject = false;
-    public bool mPushesBottomObject = false;
-    public bool mPushesTopObject = false;
-
-    public bool mPushedLeftObject = false;
-    public bool mPushedRightObject = false;
-    public bool mPushedBottomObject = false;
-    public bool mPushedTopObject = false;
-
-    public bool mPushesRightTile = false;
-    public bool mPushesLeftTile = false;
-    public bool mPushesBottomTile = false;
-    public bool mPushesTopTile = false;
-
-    public bool mPushedTopTile = false;
-    public bool mPushedBottomTile = false;
-    public bool mPushedRightTile = false;
-    public bool mPushedLeftTile = false;
-    */
-    #region DrawGizmos
-    void OnDrawGizmos()
-    {
-        DrawMovingObjectGizmos();
-    }
+	void OnDrawGizmos()
+	{
+		DrawMovingObjectGizmos ();
+	}
 
     /// <summary>
     /// Draws the aabb and ceiling, ground and wall sensors .
     /// </summary>
     protected void DrawMovingObjectGizmos()
-    {
-        //calculate the position of the aabb's center
-        var aabbPos = transform.position + (Vector3)AABBOffset;
-
-        //draw the aabb rectangle
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(aabbPos, mAABB.HalfSize * 2.0f);
-
-        //draw the ground checking sensor
-        Vector2 bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.up + Vector3.right;
-        var bottomRight = new Vector2(bottomLeft.x + mAABB.HalfSizeX * 2.0f - 2.0f, bottomLeft.y);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(bottomLeft, bottomRight);
-
-        //draw the ceiling checking sensor
-        Vector2 topRight = aabbPos + new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) + Vector3.up - Vector3.right;
-        var topLeft = new Vector2(topRight.x - mAABB.HalfSizeX * 2.0f + 2.0f, topRight.y);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(topLeft, topRight);
-
-        //draw left wall checking sensor
-        bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.right;
-        topLeft = bottomLeft;
-        topLeft.y += mAABB.HalfSizeY * 2.0f;
-
-        Gizmos.DrawLine(topLeft, bottomLeft);
-
-        //draw right wall checking sensor
-
-        bottomRight = aabbPos + new Vector3(mAABB.HalfSizeX, -mAABB.HalfSizeY, 0.0f) + Vector3.right;
-        topRight = bottomRight;
-        topRight.y += mAABB.HalfSizeY * 2.0f;
-
-        Gizmos.DrawLine(topRight, bottomRight);
-    }
-    #endregion
+	{
+		//calculate the position of the aabb's center
+		var aabbPos = (Vector3)mAABB.Center;
+		
+		//draw the aabb rectangle
+		Gizmos.color = Color.yellow;
+   		Gizmos.DrawWireCube(aabbPos, mAABB.HalfSize*2.0f);
+		
+		//draw the ground checking sensor
+		Vector2 bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.up + Vector3.right;
+		var bottomRight = new Vector2(bottomLeft.x + mAABB.HalfSizeX*2.0f - 2.0f, bottomLeft.y);
+		
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(bottomLeft, bottomRight);
+		
+		//draw the ceiling checking sensor
+		Vector2 topRight = aabbPos + new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) + Vector3.up - Vector3.right;
+		var topLeft = new Vector2(topRight.x - mAABB.HalfSizeX*2.0f + 2.0f, topRight.y);
+		
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(topLeft, topRight);
+		
+		//draw left wall checking sensor
+		bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.right;
+		topLeft = bottomLeft;
+		topLeft.y += mAABB.HalfSizeY * 2.0f;
+		
+		Gizmos.DrawLine(topLeft, bottomLeft);
+		
+		//draw right wall checking sensor
+		
+		bottomRight = aabbPos + new Vector3(mAABB.HalfSizeX, -mAABB.HalfSizeY, 0.0f) + Vector3.right;
+		topRight = bottomRight;
+		topRight.y += mAABB.HalfSizeY * 2.0f;
+		
+		Gizmos.DrawLine(topRight, bottomRight);
+	}
 
     public bool HasCollisionDataFor(MovingObject other)
     {
@@ -178,10 +239,316 @@ public class MovingObject : MonoBehaviour
         return false;
     }
 
-    //Utility function for rounding when checking corners
-    Vector2 RoundVector(Vector2 v)
+    public Vector2 RoundVector(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
+    }
+
+    public void CollidesWithTiles(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
+    {
+        Vector2 pos = position, tr = topRight, bl = bottomLeft;
+        CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
+        CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
+        CollidesWithTileLeft(ref pos, ref tr, ref bl, ref state);
+        CollidesWithTileRight(ref pos, ref tr, ref bl, ref state);
+    }
+
+    public bool CollidesWithTileRight(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
+    {
+        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x + 0.5f, topRight.y - 0.5f));
+        Vector2i bottomLeftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
+
+        //mPS.rightInOneWay = false;
+
+
+        for (int y = bottomLeftTile.y; y <= topRightTile.y; ++y)
+        {
+            var tileCollisionType = mMap.GetTile(topRightTile.x, y);
+
+            switch (tileCollisionType)
+            {
+                default://slope
+                    break;
+                case TileType.Empty:
+                    break;
+                case TileType.OneWay:
+
+                    
+
+                    //This is a temporary fix to a problem where the player will stop in the middle of a one way platform
+                    //It's a bit of a hack job but it works well enough
+                    //NOTE: This doesnt work when dealing with edge cases
+
+
+                    // mPS.rightInOneWay = true;
+                    //if (mPS.leftInOneWay && mPS.rightInOneWay)
+                    //   mPS.tmpIgnoresOneWay = true;
+                    break;
+                case TileType.Block:
+                    state.pushesRightTile = true;
+                    state.rightTile = new Vector2i(topRightTile.x, y);
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool CollidesWithTileLeft(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
+    {
+        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
+        Vector2i bottomLeftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x - 0.5f, bottomLeft.y + 0.5f));
+        //mPS.leftInOneWay = false;
+
+
+        for (int y = bottomLeftTile.y; y <= topRightTile.y; ++y)
+        {
+            var tileCollisionType = mMap.GetTile(bottomLeftTile.x, y);
+
+
+            switch (tileCollisionType)
+            {
+                default://slope
+                    break;
+                case TileType.Empty:
+                    break;
+                case TileType.OneWay:
+                    
+                    //This is a temporary fix to a problem where the player will stop in the middle of a one way platform
+                    //It's a bit of a hack job but it works well enough
+                    //NOTE: This doesnt work when dealing with edge cases
+
+                    // mPS.leftInOneWay = true;
+                    //if (mPS.leftInOneWay && mPS.rightInOneWay)
+                    //   mPS.tmpIgnoresOneWay = true;
+                    break;
+                case TileType.Block:
+                    state.pushesLeftTile = true;
+                    state.leftTile = new Vector2i(bottomLeftTile.x, y);
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool CollidesWithTileTop(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
+    {
+        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y + 0.5f));
+        Vector2i bottomleftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
+
+        for (int x = bottomleftTile.x; x <= topRightTile.x; ++x)
+        {
+            var tileCollisionType = mMap.GetTile(x, topRightTile.y);
+
+            switch (tileCollisionType)
+            {
+                default://slope
+                    break;
+                case TileType.Empty:
+                    break;
+                case TileType.OneWay:
+                    break;
+                case TileType.Block:
+                    state.pushesTopTile = true;
+                    state.topTile = new Vector2i(x, topRightTile.y);
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool CollidesWithTileBottom(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
+    {
+        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
+        Vector2i bottomleftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y - 0.5f));
+        bool isOneWay;
+        bool spiked = false;
+        bool bounced = false;
+
+        for (int x = bottomleftTile.x; x <= topRightTile.x; ++x)
+        {
+            var tileCollisionType = mMap.GetTile(x, bottomleftTile.y);
+
+            //Check if we're on a one way platform
+            isOneWay = (tileCollisionType == TileType.OneWay);
+            if ((mIgnoresOneWay || state.tmpIgnoresOneWay) && isOneWay)
+                continue;
+
+
+            switch (tileCollisionType)
+            {
+                default://slope
+                    break;
+                case TileType.Empty:
+                    break;
+                case TileType.OneWay:
+                    Vector2 tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    float topTileEdge = tileCenter.y + Map.cTileSize /2;
+
+                    if (topTileEdge > bottomLeft.y+0.5f)
+                    {
+                        continue;
+                    }
+                    state.onOneWay = true;
+                    state.oneWayY = bottomleftTile.y;
+
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    return true;
+                    break;
+                case TileType.Spikes:
+                    if(mSpeed.y < 0)
+                    {
+                        spiked = true;
+                    }
+                    break;
+                case TileType.Bounce:
+                    if (mSpeed.y < 0)
+                    {
+                        bounced = true;
+                    }
+                    break;
+                case TileType.Block:
+                    state.onOneWay = false;
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    return true;
+            }
+        }
+
+        //Stepping on spikes kills you
+        if (spiked)
+        {
+            Crush();
+        }
+
+        //Stepping on the bounce pad launches you
+        if (bounced)
+        {
+            mSpeed.y = Constants.cBounceSpeed;
+        }
+        
+        return false;
+    }
+
+    private void MoveX(ref Vector2 position, ref bool foundObstacleX, float offset, float step, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
+    {
+        while (!foundObstacleX && offset != 0.0f)
+        {
+            offset -= step;
+
+            if (step > 0.0f)
+                foundObstacleX = CollidesWithTileRight(ref position, ref topRight, ref bottomLeft, ref state, true);
+            else
+                foundObstacleX = CollidesWithTileLeft(ref position, ref topRight, ref bottomLeft, ref state, true);
+
+            if (!foundObstacleX)
+            {
+                position.x += step;
+                topRight.x += step;
+                bottomLeft.x += step;
+
+                CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
+                CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
+            }
+        }
+    }
+
+    private void MoveY(ref Vector2 position, ref bool foundObstacleY, float offset, float step, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
+    {
+        while (!foundObstacleY && offset != 0.0f)
+        {
+            offset -= step;
+
+            if (step > 0.0f)
+                foundObstacleY = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
+            else
+                foundObstacleY = CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
+
+            if (!foundObstacleY)
+            {
+                position.y += step;
+                topRight.y += step;
+                bottomLeft.y += step;
+
+                CollidesWithTileLeft(ref position, ref topRight, ref bottomLeft, ref state);
+                CollidesWithTileRight(ref position, ref topRight, ref bottomLeft, ref state);
+            }
+        }
+    }
+
+    public void Move(Vector2 offset, Vector2 speed, ref Vector2 position, ref Vector2 reminder, AABB aabb, ref PositionState state)
+    {
+        reminder += offset;
+
+        Vector2 topRight = aabb.Max();
+        Vector2 bottomLeft = aabb.Min();
+
+        bool foundObstacleX = false, foundObstacleY = false;
+
+        var step = new Vector2(Mathf.Sign(offset.x), Mathf.Sign(offset.y));
+        var move = new Vector2(Mathf.Round(reminder.x), Mathf.Round(reminder.y));
+        reminder -= move;
+
+        if (move.x == 0.0f && move.y == 0.0f)
+            return;
+        else if (move.x != 0.0f && move.y == 0.0f)
+        {
+            MoveX(ref position, ref foundObstacleX, move.x, step.x, ref topRight, ref bottomLeft, ref state);
+
+            if (step.x > 0.0f)
+                state.pushesLeftTile = CollidesWithTileLeft(ref position, ref topRight, ref bottomLeft, ref state);
+            else
+                state.pushesRightTile = CollidesWithTileRight(ref position, ref topRight, ref bottomLeft, ref state);
+        }
+        else if (move.y != 0.0f && move.x == 0.0f)
+        {
+            MoveY(ref position, ref foundObstacleY, move.y, step.y, ref topRight, ref bottomLeft, ref state);
+
+            if (step.y > 0.0f)
+                state.pushesBottomTile = CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
+            else
+                state.pushesTopTile = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
+
+            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mMap.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
+                state.tmpIgnoresOneWay = false;
+        }
+        else
+        {
+            float speedRatio = Mathf.Abs(speed.y) / Mathf.Abs(speed.x);
+            float vertAccum = 0.0f;
+
+            while (!foundObstacleX && !foundObstacleY && (move.x != 0.0f || move.y != 0.0f))
+            {
+                vertAccum += Mathf.Sign(step.y) * speedRatio;
+
+                MoveX(ref position, ref foundObstacleX, step.x, step.x, ref topRight, ref bottomLeft, ref state);
+                move.x -= step.x;
+
+                while (!foundObstacleY && move.y != 0.0f && (Mathf.Abs(vertAccum) >= 1.0f || move.x == 0.0f))
+                {
+                    move.y -= step.y;
+                    vertAccum -= step.y;
+
+                    MoveY(ref position, ref foundObstacleX, step.y, step.y, ref topRight, ref bottomLeft, ref state);
+                }
+            }
+
+            if (step.x > 0.0f)
+                state.pushesLeftTile = CollidesWithTileLeft(ref position, ref topRight, ref bottomLeft, ref state);
+            else
+                state.pushesRightTile = CollidesWithTileRight(ref position, ref topRight, ref bottomLeft, ref state);
+
+            if (step.y > 0.0f)
+                state.pushesBottomTile = CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
+            else
+                state.pushesTopTile = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
+
+            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mMap.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
+                state.tmpIgnoresOneWay = false;
+        }
     }
 
     public void UpdatePhysics()
@@ -206,82 +573,63 @@ public class MovingObject : MonoBehaviour
         mPS.pushesBottomTile = mPS.pushesLeftTile = mPS.pushesRightTile = mPS.pushesTopTile =
         mPS.pushesBottomObject = mPS.pushesLeftObject = mPS.pushesRightObject = mPS.pushesTopObject = false;
 
-        mOnOneWayPlatform = false;
+        Vector2 topRight = mAABB.Max();
+        Vector2 bottomLeft = mAABB.Min();
+        if (transform.name == "MovingPlatformWee")
+        {
+            //Debug.Log("TR: " + topRight + " BL: " + bottomLeft);
+        }
+
+            CollidesWithTiles(ref mPosition, ref topRight, ref bottomLeft, ref mPS);
 
         //save the speed to oldSpeed vector
+        if(transform.name == "MovingPlatformWee")
+        {
+           // Debug.Log("Name:" + transform.name + "- Old Speed: " + mOldSpeed + ", Speed: " + mSpeed);
+           // Debug.Log("Bot: " + mPS.pushesBottomTile + "Top: " + mPS.pushesTopTile + "Left: " + mPS.pushesLeftTile + "Right: " + mPS.pushesRightTile);
+        }
         mOldSpeed = mSpeed;
+
+        if (mPS.pushesBottomTile)
+            mSpeed.y = Mathf.Max(0.0f, mSpeed.y);
+        if (mPS.pushesTopTile)
+            mSpeed.y = Mathf.Min(0.0f, mSpeed.y);
+        if (mPS.pushesLeftTile)
+            mSpeed.x = Mathf.Max(0.0f, mSpeed.x);
+        if (mPS.pushesRightTile)
+            mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
 
         //save the position to the oldPosition vector
         mOldPosition = mPosition;
 
-        //integrate the movement only if we're not tweening
-        mPosition += mSpeed * Time.deltaTime;
+        mOffset = mSpeed * Time.deltaTime;
 
-        float groundY = 0.0f, ceilingY = 0.0f;
-        float rightWallX = 0.0f, leftWallX = 0.0f;
-
-        if (mSpeed.x <= 0.0f && CollidesWithLeftWall(mOldPosition, mPosition, out leftWallX))
+        if (mMountParent != null)
         {
-            if (mOldPosition.x - mAABB.HalfSizeX + AABBOffsetX >= leftWallX)
-            {
-                mPosition.x = leftWallX + mAABB.HalfSizeX - AABBOffsetX;
-                mPS.pushesLeftTile = true;
-            }
-            mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
+            if (HasCollisionDataFor(mMountParent))
+                mOffset += mMountParent.mPosition - mMountParent.mOldPosition;
+            else
+                mMountParent = null;
         }
-        else
-            mPS.pushesLeftTile = false;
 
-        if (mSpeed.x >= 0.0f && CollidesWithRightWall(mOldPosition, mPosition, out rightWallX))
-        {
-            if (mOldPosition.x + mAABB.HalfSizeX + AABBOffsetX <= rightWallX)
-            {
-                mPosition.x = rightWallX - mAABB.HalfSizeX - AABBOffsetX;
-                mPS.pushesRightTile = true;
-            }
+        mPosition += RoundVector(mOffset + mReminder);
 
-            mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
-        }
-        else
-            mPS.pushesRightTile = false;
-
-        if (mSpeed.y <= 0.0f && HasGround(mOldPosition, mPosition, mSpeed, out groundY, ref mOnOneWayPlatform))
-        {
-            mPosition.y = groundY + mAABB.HalfSizeY - AABBOffsetY;
-            mSpeed.y = 0.0f;
-            mPS.pushesBottomTile = true;
-        }
-        else
-            mPS.pushesBottomTile = false;
-
-        if (mSpeed.y >= 0.0f && HasCeiling(mOldPosition, mPosition, out ceilingY))
-        {
-            mPosition.y = ceilingY - mAABB.HalfSizeY - AABBOffsetY - 1.0f;
-            mSpeed.y = 0.0f;
-            mPS.pushesTopTile = true;
-        }
-        else
-            mPS.pushesTopTile = false;
-
-        //update the aabb
-        mAABB.center = mPosition + AABBOffset;
+        mAABB.Center = mPosition;
     }
 
-    public void UpdatePhysicsPartTwo()
+    public void TryAutoMount(MovingObject platform)
     {
-        UpdatePhysicsResponse();
+        if (mMountParent == null)
+        {
+            mMountParent = platform;
+            if (platform.mUpdateId > mUpdateId)
+                mGame.SwapUpdateIds(this, platform);
+        }
+    }
 
-        mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
-        mPS.pushesRight = mPS.pushesRightTile || mPS.pushesRightObject;
-        mPS.pushesLeft = mPS.pushesLeftTile || mPS.pushesLeftObject;
-        mPS.pushesTop = mPS.pushesTopTile || mPS.pushesTopObject;
-
-        //update the aabb
-        mAABB.center = mPosition + AABBOffset;
-
-        //apply the changes to the transform
-        transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), -1.0f);
-        transform.localScale = new Vector3(ScaleX, ScaleY, 1.0f);
+    public void Crush()
+    {
+        mPosition = mMap.mPosition + new Vector3(mMap.mWidth / 2 * Map.cTileSize, mMap.mHeight / 2 * Map.cTileSize);
     }
 
     private void UpdatePhysicsResponse()
@@ -307,9 +655,12 @@ public class MovingObject : MonoBehaviour
             var data = mAllCollidingObjects[i];
             var overlap = data.overlap - offsetSum;
 
+            //if (other.mUpdateId < mUpdateId)
+            //    overlap -= other.mPosition - data.pos1;
+
             if (overlap.x == 0.0f)
             {
-                if (other.mAABB.center.x > mAABB.center.x)
+                if (other.mAABB.Center.x > mAABB.Center.x)
                 {
                     mPS.pushesRightObject = true;
                     mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
@@ -323,13 +674,14 @@ public class MovingObject : MonoBehaviour
             }
             else if (overlap.y == 0.0f)
             {
-                if (other.mAABB.center.y > mAABB.center.y)
+                if (other.mAABB.Center.y > mAABB.Center.y)
                 {
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
+                    TryAutoMount(other);
                     mPS.pushesBottomObject = true;
                     mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
@@ -340,69 +692,71 @@ public class MovingObject : MonoBehaviour
             Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.pos2.x - data.oldPos2.x), Mathf.Abs(data.pos2.y - data.oldPos2.y));
             Vector2 speedSum = absSpeed1 + absSpeed2;
 
-
+            
             float speedRatioX, speedRatioY;
 
             if (other.mIsKinematic)
                 speedRatioX = speedRatioY = 1.0f;
             else
             {
-                if (speedSum.x == 0.0f && speedSum.y == 0.0f)
-                {
-                    speedRatioX = speedRatioY = 0.5f;
-                }
-                else if (speedSum.x == 0.0f)
-                {
+                if (speedSum.x == 0.0f)
                     speedRatioX = 0.5f;
-                    speedRatioY = absSpeed1.y / speedSum.y;
-                }
-                else if (speedSum.y == 0.0f)
-                {
-                    speedRatioX = absSpeed1.x / speedSum.x;
-                    speedRatioY = 0.5f;
-                }
                 else
-                {
                     speedRatioX = absSpeed1.x / speedSum.x;
+
+                if (speedSum.y == 0.0f)
+                    speedRatioY = 0.5f;
+                else
                     speedRatioY = absSpeed1.y / speedSum.y;
-                }
             }
 
-            float offsetX = overlap.x * speedRatioX;
-            float offsetY = overlap.y * speedRatioY;
+            float smallestOverlap = Mathf.Min(Mathf.Abs(overlap.x), Mathf.Abs(overlap.y));
 
-            bool overlappedLastFrameX = Mathf.Abs(data.oldPos1.x - data.oldPos2.x) < mAABB.HalfSizeX + other.mAABB.HalfSizeX;
-            bool overlappedLastFrameY = Mathf.Abs(data.oldPos1.y - data.oldPos2.y) < mAABB.HalfSizeY + other.mAABB.HalfSizeY;
-
-            if ((!overlappedLastFrameX && overlappedLastFrameY)
-                || (!overlappedLastFrameX && !overlappedLastFrameY && Mathf.Abs(overlap.x) <= Mathf.Abs(overlap.y)))
+            if (smallestOverlap == Mathf.Abs(overlap.x))
             {
-                mPosition.x += offsetX;
+                float offsetX = overlap.x * speedRatioX;
+
+                mOffset.x += offsetX;
                 offsetSum.x += offsetX;
 
                 if (overlap.x < 0.0f)
                 {
+                    if (other.mIsKinematic && mPS.pushesLeftTile)
+                        Crush();
+
                     mPS.pushesRightObject = true;
                     mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
                 }
                 else
                 {
+                    if (other.mIsKinematic && mPS.pushesRightTile)
+                        Crush();
+
                     mPS.pushesLeftObject = true;
                     mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
                 }
             }
-            else //if (!overlappedLastFrameY)//if (Mathf.Abs(data.oldPos1.x - data.oldPos2.x) < mAABB.HalfSizeX + other.mAABB.HalfSizeX)
+            else
             {
-                mPosition.y += offsetY;
+                float offsetY = overlap.y * speedRatioY;
+
+                mOffset.y += offsetY;
                 offsetSum.y += offsetY;
 
                 if (overlap.y < 0.0f)
                 {
+                    if (other.mIsKinematic && mPS.pushesBottomTile)
+                        Crush();
+
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
+                    if (other.mIsKinematic && mPS.pushesTopTile)
+                        Crush();
+
+                    TryAutoMount(other);
                     mPS.pushesBottomObject = true;
                     mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
@@ -410,183 +764,29 @@ public class MovingObject : MonoBehaviour
         }
     }
 
-    public bool HasGround(Vector2 oldPosition, Vector2 position, Vector2 speed, out float groundY, ref bool onOneWayPlatform)
+    public void UpdatePhysicsP2()
     {
-        var oldCenter = oldPosition + AABBOffset;
-        var center = position + AABBOffset;
+        mPosition -= RoundVector(mOffset + mReminder);
+        mAABB.Center = mPosition;
 
-        groundY = 0;
+        UpdatePhysicsResponse();
 
-        var oldBottomLeft = RoundVector(oldCenter - mAABB.HalfSize - Vector2.up + Vector2.right);
+        if (mOffset != Vector2.zero)
+            Move(mOffset, mSpeed, ref mPosition, ref mReminder, mAABB, ref mPS);
 
-        var newBottomLeft = RoundVector(center - mAABB.HalfSize - Vector2.up + Vector2.right);
-        var newBottomRight = RoundVector(new Vector2(newBottomLeft.x + mAABB.HalfSizeX * 2.0f - 2.0f, newBottomLeft.y));
+        mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
+        mPS.pushesRight = mPS.pushesRightTile || mPS.pushesRightObject;
+        mPS.pushesLeft = mPS.pushesLeftTile || mPS.pushesLeftObject;
+        mPS.pushesTop = mPS.pushesTopTile || mPS.pushesTopObject;
 
-        int endY = mMap.GetMapTileYAtPoint(newBottomLeft.y);
-        int begY = Mathf.Max(mMap.GetMapTileYAtPoint(oldBottomLeft.y) - 1, endY);
-        int dist = Mathf.Max(Mathf.Abs(endY - begY), 1);
+        if (!mPS.tmpSticksToSlope && mPS.pushesTop || mSpeed.y <= 0.0f)
+            mPS.tmpSticksToSlope = true;
 
-        int tileIndexX;
+        //update the aabb
+        mAABB.Center = mPosition;
 
-        for (int tileIndexY = begY; tileIndexY >= endY; --tileIndexY)
-        {
-            var bottomLeft = Vector2.Lerp(newBottomLeft, oldBottomLeft, (float)Mathf.Abs(endY - tileIndexY) / dist);
-            var bottomRight = new Vector2(bottomLeft.x + mAABB.HalfSizeX * 2.0f - 2.0f, bottomLeft.y);
-
-            for (var checkedTile = bottomLeft; ; checkedTile.x += Map.cTileSize)
-            {
-                checkedTile.x = Mathf.Min(checkedTile.x, bottomRight.x);
-
-                tileIndexX = mMap.GetMapTileXAtPoint(checkedTile.x);
-
-                groundY = (float)tileIndexY * Map.cTileSize + Map.cTileSize / 2.0f + mMap.mPosition.y;
-
-                if (mMap.IsObstacle(tileIndexX, tileIndexY))
-                {
-                    onOneWayPlatform = false;
-                    return true;
-                }
-                else if (mMap.IsOneWayPlatform(tileIndexX, tileIndexY) && Mathf.Abs(checkedTile.y - groundY) <= Constants.cOneWayPlatformThreshold + mOldPosition.y - position.y)
-                    onOneWayPlatform = true;
-
-                if (checkedTile.x >= bottomRight.x)
-                {
-                    if (onOneWayPlatform)
-                        return true;
-                    break;
-                }
-            }
-        }
-        
-        return false;
-    }
-
-    public bool HasCeiling(Vector2 oldPosition, Vector2 position, out float ceilingY)
-    {
-        var center = position + AABBOffset;
-        var oldCenter = oldPosition + AABBOffset;
-
-        ceilingY = 0.0f;
-
-        var oldTopRight = RoundVector(oldCenter + mAABB.HalfSize + Vector2.up - Vector2.right);
-
-        var newTopRight = RoundVector(center + mAABB.HalfSize + Vector2.up - Vector2.right);
-        var newTopLeft = RoundVector(new Vector2(newTopRight.x - mAABB.HalfSizeX * 2.0f + 2.0f, newTopRight.y));
-
-        int endY = mMap.GetMapTileYAtPoint(newTopRight.y);
-        int begY = Mathf.Min(mMap.GetMapTileYAtPoint(oldTopRight.y) + 1, endY);
-        int dist = Mathf.Max(Mathf.Abs(endY - begY), 1);
-
-        int tileIndexX;
-
-        for (int tileIndexY = begY; tileIndexY <= endY; ++tileIndexY)
-        {
-            var topRight = Vector2.Lerp(newTopRight, oldTopRight, (float)Mathf.Abs(endY - tileIndexY) / dist);
-            var topLeft = new Vector2(topRight.x - mAABB.HalfSizeX * 2.0f + 2.0f, topRight.y);
-
-            for (var checkedTile = topLeft; ; checkedTile.x += Map.cTileSize)
-            {
-                checkedTile.x = Mathf.Min(checkedTile.x, topRight.x);
-
-                tileIndexX = mMap.GetMapTileXAtPoint(checkedTile.x);
-
-                if (mMap.IsObstacle(tileIndexX, tileIndexY))
-                {
-                    ceilingY = (float)tileIndexY * Map.cTileSize - Map.cTileSize / 2.0f + mMap.mPosition.y;
-                    return true;
-                }
-
-                if (checkedTile.x >= topRight.x)
-                    break;
-            }
-        }
-
-        return false;
-    }
-
-    public bool CollidesWithLeftWall(Vector2 oldPosition, Vector2 position, out float wallX)
-    {
-        var center = position + AABBOffset;
-        var oldCenter = oldPosition + AABBOffset;
-
-        wallX = 0.0f;
-
-        var oldBottomLeft = RoundVector(oldCenter - mAABB.HalfSize - Vector2.right);
-
-        var newBottomLeft = RoundVector(center - mAABB.HalfSize - Vector2.right);
-        var newTopLeft = RoundVector(newBottomLeft + new Vector2(0.0f, mAABB.HalfSizeY * 2.0f));
-
-        int tileIndexY;
-
-        var endX = mMap.GetMapTileXAtPoint(newBottomLeft.x);
-        var begX = Mathf.Max(mMap.GetMapTileXAtPoint(oldBottomLeft.x) - 1, endX);
-        int dist = Mathf.Max(Mathf.Abs(endX - begX), 1);
-
-        for (int tileIndexX = begX; tileIndexX >= endX; --tileIndexX)
-        {
-            var bottomLeft = Vector2.Lerp(newBottomLeft, oldBottomLeft, (float)Mathf.Abs(endX - tileIndexX) / dist);
-            var topLeft = bottomLeft + new Vector2(0.0f, mAABB.HalfSizeY * 2.0f);
-
-            for (var checkedTile = bottomLeft; ; checkedTile.y += Map.cTileSize)
-            {
-                checkedTile.y = Mathf.Min(checkedTile.y, topLeft.y);
-
-                tileIndexY = mMap.GetMapTileYAtPoint(checkedTile.y);
-
-                if (mMap.IsObstacle(tileIndexX, tileIndexY))
-                {
-                    wallX = (float)tileIndexX * Map.cTileSize + Map.cTileSize / 2.0f + mMap.mPosition.x;
-                    return true;
-                }
-
-                if (checkedTile.y >= topLeft.y)
-                    break;
-            }
-        }
-
-        return false;
-    }
-
-    public bool CollidesWithRightWall(Vector2 oldPosition, Vector2 position, out float wallX)
-    {
-        var center = position + AABBOffset;
-        var oldCenter = oldPosition + AABBOffset;
-
-        wallX = 0.0f;
-
-        var oldBottomRight = RoundVector(oldCenter + new Vector2(mAABB.HalfSizeX, -mAABB.HalfSizeY) + Vector2.right);
-
-        var newBottomRight = RoundVector(center + new Vector2(mAABB.HalfSizeX, -mAABB.HalfSizeY) + Vector2.right);
-        var newTopRight = RoundVector(newBottomRight + new Vector2(0.0f, mAABB.HalfSizeY * 2.0f));
-
-        var endX = mMap.GetMapTileXAtPoint(newBottomRight.x);
-        var begX = Mathf.Min(mMap.GetMapTileXAtPoint(oldBottomRight.x) + 1, endX);
-        int dist = Mathf.Max(Mathf.Abs(endX - begX), 1);
-
-        int tileIndexY;
-
-        for (int tileIndexX = begX; tileIndexX <= endX; ++tileIndexX)
-        {
-            var bottomRight = Vector2.Lerp(newBottomRight, oldBottomRight, (float)Mathf.Abs(endX - tileIndexX) / dist);
-            var topRight = bottomRight + new Vector2(0.0f, mAABB.HalfSizeY * 2.0f);
-
-            for (var checkedTile = bottomRight; ; checkedTile.y += Map.cTileSize)
-            {
-                checkedTile.y = Mathf.Min(checkedTile.y, topRight.y);
-
-                tileIndexY = mMap.GetMapTileYAtPoint(checkedTile.y);
-
-                if (mMap.IsObstacle(tileIndexX, tileIndexY))
-                {
-                    wallX = (float)tileIndexX * Map.cTileSize - Map.cTileSize / 2.0f + mMap.mPosition.x;
-                    return true;
-                }
-
-                if (checkedTile.y >= topRight.y)
-                    break;
-            }
-        }
-
-        return false;
+        //apply the changes to the transform
+        transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
+        transform.localScale = new Vector3(ScaleX, ScaleY, 1.0f);
     }
 }
