@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
+
 
 [System.Serializable]
 public class Map : MonoBehaviour
@@ -314,6 +316,7 @@ public class Map : MonoBehaviour
 
     public void Init()
     {
+
         //set the position
         mPosition = transform.position;
 
@@ -371,6 +374,33 @@ public class Map : MonoBehaviour
         mTileMap.DrawMap(mTiles, mWidth, mHeight);
     }
 
+    public void Save(BinaryWriter writer)
+    {
+
+        for (int x = 0; x < mWidth; x++)
+        {
+            for (int y = 0; y < mHeight; y++)
+            {
+                //For maximum efficiency, we store the tiletype as a byte,
+                //since its an int within the 0-255 range for now
+                writer.Write((byte)mTiles[x, y]);
+            }
+        }
+
+    }
+
+    public void Load(BinaryReader reader)
+    {
+        for (int x = 0; x < mWidth; x++)
+        {
+            for (int y = 0; y < mHeight; y++)
+            {
+                mTiles[x,y] = (TileType)reader.ReadByte();
+            }
+        }
+
+        mTileMap.DrawMap(mTiles, mWidth, mHeight);
+    }
 
     public void CheckCollisions()
     {

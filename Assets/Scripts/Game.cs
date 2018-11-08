@@ -58,10 +58,10 @@ public class Game : MonoBehaviour
             mMap.DebugPrintAreas();
         }
 
-        UpdateCursor();
+        //UpdateCursor();
 
     }
-
+    /*
     public void UpdateCursor()
     {
         if (Input.GetKeyUp(KeyCode.Mouse2))
@@ -76,7 +76,7 @@ public class Game : MonoBehaviour
         mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
         //Debug.Log("Pressed X: " + mouseTileX + ", Y: " + mouseTileY);
 
-        Vector2 offsetMouse = (Vector2)(Input.mousePosition) - new Vector2(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
+        //Vector2 offsetMouse = (Vector2)(Input.mousePosition) - new Vector2(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
 
         if (Input.GetKeyDown(KeyCode.Tab))
             Debug.Break();
@@ -121,7 +121,7 @@ public class Game : MonoBehaviour
 
         //mMouseSprite.transform.position = mMap.GetMapTilePosition(mouseTileX, mouseTileY);
     }
-
+    */
     public void SwapUpdateIds(MovingObject a, MovingObject b)
     {
         int tmp = a.mUpdateId;
