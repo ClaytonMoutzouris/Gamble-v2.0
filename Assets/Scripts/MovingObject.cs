@@ -105,6 +105,9 @@ public class MovingObject : MonoBehaviour
         public bool tmpIgnoresOneWay;
         public bool tmpSticksToSlope;
         public int oneWayY;
+        public bool onLadder;
+        public bool isClimbing;
+        public bool isBounce;
 
         public Vector2i leftTile;
         public Vector2i rightTile;
@@ -147,6 +150,9 @@ public class MovingObject : MonoBehaviour
             pushesTopTile = false;
 
             onOneWay = false;
+            onLadder = false;
+            isClimbing = false;
+            isBounce = false;
         }
     }
     /// <summary>
@@ -284,6 +290,11 @@ public class MovingObject : MonoBehaviour
                     //if (mPS.leftInOneWay && mPS.rightInOneWay)
                     //   mPS.tmpIgnoresOneWay = true;
                     break;
+                case TileType.Ladder:
+                    //If the players center is on the ladder tile, we can climb it
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                        mPS.onLadder = true;
+                    break;
                 case TileType.Block:
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
@@ -322,6 +333,11 @@ public class MovingObject : MonoBehaviour
                     //if (mPS.leftInOneWay && mPS.rightInOneWay)
                     //   mPS.tmpIgnoresOneWay = true;
                     break;
+                case TileType.Ladder:
+                    //If the players center is on the ladder tile, we can climb it
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                        mPS.onLadder = true;
+                    break;
                 case TileType.Block:
                     state.pushesLeftTile = true;
                     state.leftTile = new Vector2i(bottomLeftTile.x, y);
@@ -346,8 +362,17 @@ public class MovingObject : MonoBehaviour
                 default://slope
                     break;
                 case TileType.Empty:
+                    if (mPS.isClimbing)
+                    {
+                        state.pushesTopTile = true;
+                        state.topTile = new Vector2i(x, topRightTile.y);
+                        return true;
+                    }
                     break;
                 case TileType.OneWay:
+                    break;
+                case TileType.Ladder:
+                    //mPS.onLadder = true;
                     break;
                 case TileType.Block:
                     state.pushesTopTile = true;
@@ -382,6 +407,14 @@ public class MovingObject : MonoBehaviour
                 default://slope
                     break;
                 case TileType.Empty:
+                    /*
+                    if (mPS.isClimbing)
+                    {
+                        state.pushesBottomTile = true;
+                        state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                        return true;
+                    }
+                    */
                     break;
                 case TileType.OneWay:
                     Vector2 tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
@@ -401,14 +434,21 @@ public class MovingObject : MonoBehaviour
                 case TileType.Spikes:
                     if(mSpeed.y < 0)
                     {
+                        //flag this to be dealt with after we've checked other tiles we're colliding with
                         spiked = true;
                     }
                     break;
                 case TileType.Bounce:
                     if (mSpeed.y < 0)
                     {
+                        //flag this to be dealt with after we've checked other tiles we're colliding with
                         bounced = true;
                     }
+                    //state.pushesBottomTile = true;
+                    //state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    break;
+                case TileType.Ladder:
+                    //mPS.onLadder = true;
                     break;
                 case TileType.Block:
                     state.onOneWay = false;
@@ -417,6 +457,7 @@ public class MovingObject : MonoBehaviour
                     return true;
             }
         }
+
 
         //Stepping on spikes kills you
         if (spiked)
@@ -427,9 +468,10 @@ public class MovingObject : MonoBehaviour
         //Stepping on the bounce pad launches you
         if (bounced)
         {
+            mPS.isBounce = true;
             mSpeed.y = Constants.cBounceSpeed;
         }
-        
+
         return false;
     }
 
@@ -546,8 +588,11 @@ public class MovingObject : MonoBehaviour
             else
                 state.pushesTopTile = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
 
+            //if we've fallen farther than the oneway tile threshold, we can again check for one way tiles
             if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mMap.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
                 state.tmpIgnoresOneWay = false;
+
+
         }
     }
 
@@ -572,6 +617,14 @@ public class MovingObject : MonoBehaviour
 
         mPS.pushesBottomTile = mPS.pushesLeftTile = mPS.pushesRightTile = mPS.pushesTopTile =
         mPS.pushesBottomObject = mPS.pushesLeftObject = mPS.pushesRightObject = mPS.pushesTopObject = false;
+
+        mPS.onLadder = false;
+
+
+        if(mSpeed.y < 0)
+        {
+            mPS.isBounce = false;
+        }
 
         Vector2 topRight = mAABB.Max();
         Vector2 bottomLeft = mAABB.Min();
@@ -629,7 +682,9 @@ public class MovingObject : MonoBehaviour
 
     public void Crush()
     {
+
         mPosition = mMap.mPosition + new Vector3(mMap.mWidth / 2 * Map.cTileSize, mMap.mHeight / 2 * Map.cTileSize);
+        mPS.Reset();
     }
 
     private void UpdatePhysicsResponse()
@@ -721,7 +776,7 @@ public class MovingObject : MonoBehaviour
 
                 if (overlap.x < 0.0f)
                 {
-                    if (other.mIsKinematic && mPS.pushesLeftTile)
+                    if (other.mIsKinematic && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesRightObject = true;
@@ -729,7 +784,7 @@ public class MovingObject : MonoBehaviour
                 }
                 else
                 {
-                    if (other.mIsKinematic && mPS.pushesRightTile)
+                    if (other.mIsKinematic && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesLeftObject = true;
@@ -745,15 +800,20 @@ public class MovingObject : MonoBehaviour
 
                 if (overlap.y < 0.0f)
                 {
-                    if (other.mIsKinematic && mPS.pushesBottomTile)
+                    //We should set an error for overlap, here is the basic implementation
+                    if (other.mIsKinematic && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    {
+                        Debug.Log("Crush Overlap y" + overlap.y);
+                        Debug.Log("Crush Overlap x" + overlap.x);
+                        
                         Crush();
-
+                    }
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
-                    if (other.mIsKinematic && mPS.pushesTopTile)
+                    if (other.mIsKinematic && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     TryAutoMount(other);

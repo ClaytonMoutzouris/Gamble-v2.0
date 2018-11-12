@@ -9,6 +9,7 @@ public enum TileType
     OneWay,
     Spikes,
     Bounce,
+    Ladder,
     Count,
 }
 

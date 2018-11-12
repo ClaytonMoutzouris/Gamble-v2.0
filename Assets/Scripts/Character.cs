@@ -12,6 +12,7 @@ public class Character : MovingObject
         Walk,
         Jump,
         GrabLedge,
+        Climbing,
     };
 
     public AudioClip mHitWallSfx;
@@ -36,10 +37,12 @@ public class Character : MovingObject
     public CharacterState mCurrentState = CharacterState.Stand;
     public float mJumpSpeed;
     public float mWalkSpeed;
+    public float mClimbSpeed;
 
     public List<Vector2i> mPath = new List<Vector2i>();
 
     public Vector2i mLedgeTile;
+    public Vector2i mClimbTile;
 
     public int mCannotGoLeftFrames = 0;
     public int mCannotGoRightFrames = 0;
@@ -106,6 +109,7 @@ public class Character : MovingObject
         mAABB.Center = mPosition;
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
+        mClimbSpeed = Constants.cClimbSpeed;
         mSlopeWallHeight = Constants.cSlopeWallHeight;
 
         mAABB.OffsetY = mAABB.HalfSizeY;
@@ -177,6 +181,14 @@ public class Character : MovingObject
                 if (KeyState(KeyInput.GoDown))
                     mPS.tmpIgnoresOneWay = true;
 
+                if (KeyState(KeyInput.Climb) && mPS.onLadder)
+                {
+                    mSpeed = Vector2.zero;
+                    mPS.isClimbing = true;
+                    mCurrentState = CharacterState.Climbing;
+                    break;
+                }
+
                 break;
             case CharacterState.Walk:
                 mAnimator.Play("Walk");
@@ -229,6 +241,14 @@ public class Character : MovingObject
                 if (KeyState(KeyInput.GoDown))
                     mPS.tmpIgnoresOneWay = true;
 
+                if (KeyState(KeyInput.Climb) && mPS.onLadder)
+                {
+                    mSpeed = Vector2.zero;
+                    mPS.isClimbing = true;
+                    mCurrentState = CharacterState.Climbing;
+                    break;
+                }
+
                 break;
             case CharacterState.Jump:
 
@@ -250,7 +270,7 @@ public class Character : MovingObject
 
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
 
-                if (!KeyState(KeyInput.Jump) && mSpeed.y > 0.0f)
+                if (!KeyState(KeyInput.Jump) && mSpeed.y > 0.0f && !mPS.isBounce)
                 {
                     mSpeed.y = Mathf.Min(mSpeed.y, 200.0f);
                 }
@@ -366,8 +386,19 @@ public class Character : MovingObject
                     }
                 }
 
+
+
                 if (KeyState(KeyInput.GoDown))
                     mPS.tmpIgnoresOneWay = true;
+
+                if (KeyState(KeyInput.Climb) && mPS.onLadder)
+                {
+                    //mLedgeTile = new Vector2i(tileX, y - 1);
+                    mSpeed = Vector2.zero;
+                    mPS.isClimbing = true;
+                    mCurrentState = CharacterState.Climbing;
+                    break;
+                }
 
                 break;
 
@@ -405,6 +436,63 @@ public class Character : MovingObject
                     mCurrentState = CharacterState.Jump;
 
                 break;
+            case CharacterState.Climbing:
+                int tx = 0, ty = 0;
+                mMap.GetMapTileAtPoint(mAABB.Center, out tx, out ty);
+                mPosition.x = tx * Map.cTileSize;
+
+                mAnimator.Play("Stand");
+                if (!mPS.onLadder)
+                {
+                    mPS.isClimbing = false;
+                    mCurrentState = CharacterState.Stand;
+                }
+                if (KeyState(KeyInput.GoDown) == KeyState(KeyInput.Climb))
+                {
+                    mSpeed = Vector2.zero;
+                }
+                else if (KeyState(KeyInput.GoDown))
+                {
+                    if (mPS.pushesBottom)
+                    {
+                        mPS.isClimbing = false;
+                        mCurrentState = CharacterState.Stand;
+                        mSpeed.y = 0.0f;
+                    }
+                    else
+                    {
+                        
+                        mSpeed.y = -mClimbSpeed;
+                    }
+                   // ScaleX = Mathf.Abs(ScaleX);
+                }
+                else if (KeyState(KeyInput.Climb))
+                {
+                    if (mPS.pushesTop)
+                        mSpeed.y = 0.0f;
+                    else
+                        mSpeed.y = mClimbSpeed;
+                    //ScaleX = -Mathf.Abs(ScaleX);
+                }
+
+                if (Pressed(KeyInput.GoLeft) || Pressed(KeyInput.GoRight))
+                {
+                    mPS.isClimbing = false;
+                    mCurrentState = CharacterState.Walk;
+
+                    //ScaleX = -Mathf.Abs(ScaleX);
+                }
+
+
+                if (mInputs[(int)KeyInput.Jump])
+                {
+                    //the speed is positive so we don't have to worry about hero grabbing an edge
+                    //right after he jumps because he doesn't grab if speed.y > 0
+                    mPS.isClimbing = false;
+                    mSpeed.y = mJumpSpeed;
+                    mCurrentState = CharacterState.Jump;
+                }
+                break;
         }
 
         //if (mAllCollidingObjects.Count > 0)
@@ -414,7 +502,7 @@ public class Character : MovingObject
 
         UpdatePhysics();
 
-        if (mPS.pushedBottom && !mPS.pushesBottom)
+        if (mPS.pushedBottom && !mPS.pushesBottom || mPS.isClimbing)
             mFramesFromJumpStart = 0;
 
         if (mPS.pushesBottom && !mPS.pushedBottom)

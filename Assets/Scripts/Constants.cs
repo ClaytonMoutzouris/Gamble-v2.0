@@ -6,12 +6,15 @@ public class Constants
     public const float cGravity = -1030.0f;
     public const float cMaxFallingSpeed = -900.0f;
     public const float cWalkSpeed = 160.0f;
+    public const float cClimbSpeed = 100.0f;
     public const float cJumpSpeed = 410.0f;
-    public const float cBounceSpeed = 600.0f;
+    public const float cBounceSpeed = 700.0f;
     public const float cHalfSizeY = 12.0f;
     public const float cHalfSizeX = 6.0f;
     public const float cMinJumpSpeed = 200.0f;
     public const float cOneWayPlatformThreshold = 1.0f;
+    //This allows to prevent crushing if the moving object is within a margin of error in the other axis
+    public const float cCrushCorrectThreshold = 3.0f;
     //public const float cJumpSpeed = 210.0f; //1
     //public const float cJumpSpeed = 280.0f; //2
     //public const float cJumpSpeed = 350.0f; //3

@@ -12,8 +12,9 @@ public class Game : MonoBehaviour
 
     public KeyCode goLeftKey = KeyCode.A;
     public KeyCode goRightKey = KeyCode.D;
-    public KeyCode goJumpKey = KeyCode.W;
+    public KeyCode goJumpKey = KeyCode.Space;
     public KeyCode goDownKey = KeyCode.S;
+    public KeyCode goUpKey = KeyCode.W;
 
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
@@ -51,6 +52,7 @@ public class Game : MonoBehaviour
         inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.RightArrow);
         inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.LeftArrow);
         inputs[(int)KeyInput.GoDown] = Input.GetKey(KeyCode.DownArrow);
+        inputs[(int)KeyInput.Climb] = Input.GetKey(KeyCode.UpArrow);
         inputs[(int)KeyInput.Jump] = Input.GetKey(KeyCode.Space);
 
         if (Input.GetKeyDown(KeyCode.D))

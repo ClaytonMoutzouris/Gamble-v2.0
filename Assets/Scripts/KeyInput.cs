@@ -9,6 +9,7 @@ public enum KeyInput
 	GoLeft = 0,
 	GoRight,
 	GoDown,
+    Climb,
 	Jump,
 	Count
 }
