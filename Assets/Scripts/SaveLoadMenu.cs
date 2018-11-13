@@ -72,6 +72,7 @@ public class SaveLoadMenu : MonoBehaviour
             Debug.LogError("File does not exist " + path);
             return;
         }
+        
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
         {

@@ -7,13 +7,13 @@ using System.IO;
 public class Map : MonoBehaviour
 {
     [HideInInspector]
-    private TileType[,] mTiles;
+    private TileType[,] mTileData;
     public TileMapObject mTileMap;
 
     public Vector3 mPosition;
 
-    public int mWidth = 80;
-    public int mHeight = 60;
+    public int mWidth;
+    public int mHeight;
 
     [SerializeField]
     public const int cTileSize = 32;
@@ -38,9 +38,9 @@ public class Map : MonoBehaviour
     public int mVerticalAreasCount;
 
     [SerializeField]
-    public int mGridAreaWidth = 16;
+    public int mGridAreaWidth = 25;
     [SerializeField]
-    public int mGridAreaHeight = 16;
+    public int mGridAreaHeight = 25;
     [HideInInspector]
     public List<MovingObject>[,] mObjectsInArea;
 
@@ -202,7 +202,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return TileType.Block;
 
-        return mTiles[x, y];
+        return mTileData[x, y];
     }
 
     public void SetTile(int x, int y, TileType tType)
@@ -211,7 +211,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return;
 
-        mTiles[x, y] = tType;
+        mTileData[x, y] = tType;
         mTileMap.DrawTile(x, y, tType);
     }
 
@@ -221,7 +221,7 @@ public class Map : MonoBehaviour
             || pos.y <= -1 || pos.y >= mHeight)
             return TileType.Block;
 
-        return mTiles[pos.x, pos.y];
+        return mTileData[pos.x, pos.y];
     }
 
     public bool IsOneWayPlatform(int x, int y)
@@ -230,7 +230,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return false;
 
-        return (mTiles[x, y] == TileType.OneWay);
+        return (mTileData[x, y] == TileType.OneWay);
     }
 
     public bool IsGround(int x, int y)
@@ -239,7 +239,7 @@ public class Map : MonoBehaviour
            || y < 0 || y >= mHeight)
             return false;
 
-        return (mTiles[x, y] == TileType.OneWay || mTiles[x, y] == TileType.Block);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block);
     }
 
     public bool IsGround(Vector2i pos)
@@ -254,7 +254,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return true;
 
-        return (mTiles[x, y] == TileType.Block);
+        return (mTileData[x, y] == TileType.Block);
     }
 
     public bool IsEmpty(int x, int y)
@@ -263,7 +263,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return false;
 
-        return (mTiles[x, y] == TileType.Empty);
+        return (mTileData[x, y] == TileType.Empty);
     }
 
     public bool IsNotEmpty(int x, int y)
@@ -272,7 +272,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return true;
 
-        return (mTiles[x, y] != TileType.Empty);
+        return (mTileData[x, y] != TileType.Empty);
     }
 
     public void GetMapTileAtPoint(Vector2 point, out int tileIndexX, out int tileIndexY)
@@ -316,11 +316,11 @@ public class Map : MonoBehaviour
 
     public void Init()
     {
+        mWidth = Constants.cMapWidth;
+        mHeight = Constants.cMapHeight;
 
         //set the position
         mPosition = transform.position;
-
-        mTiles = new TileType[mWidth, mHeight];
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
@@ -336,42 +336,9 @@ public class Map : MonoBehaviour
         }
 
 
-        for (int x = 0; x < mWidth; x++)
-        {
-            for (int y = 0; y < mHeight; y++)
-            {
-                if (x == 0 || x == mWidth - 1 || y == 0 || y == mHeight - 1)
-                {
-                    mTiles[x, y] = TileType.Block;
-                }
-                else
-                {
-                    mTiles[x, y] = TileType.Empty;
-                }
-            }
-        }
+        mTileData = MapGenerator.GenerateMap();
 
-        mTiles[11, 3] = TileType.OneWay;
-        mTiles[12, 3] = TileType.OneWay;
-        mTiles[13, 3] = TileType.OneWay;
-
-        mTiles[8, 2] = TileType.OneWay;
-        mTiles[9, 2] = TileType.OneWay;
-        mTiles[10, 2] = TileType.OneWay;
-
-        mTiles[3, 3] = TileType.Block;
-        mTiles[4, 3] = TileType.Block;
-        mTiles[5, 3] = TileType.Block;
-
-        for (int y = 0; y < mHeight; y++)
-        {
-            if (y % 3 == 1)
-            {
-                mTiles[mWidth - 2, y] = TileType.Block;
-            }
-        }
-
-        mTileMap.DrawMap(mTiles, mWidth, mHeight);
+        mTileMap.DrawMap(mTileData, mWidth, mHeight);
     }
 
     public void Save(BinaryWriter writer)
@@ -383,7 +350,7 @@ public class Map : MonoBehaviour
             {
                 //For maximum efficiency, we store the tiletype as a byte,
                 //since its an int within the 0-255 range for now
-                writer.Write((byte)mTiles[x, y]);
+                writer.Write((byte)mTileData[x, y]);
             }
         }
 
@@ -395,11 +362,11 @@ public class Map : MonoBehaviour
         {
             for (int y = 0; y < mHeight; y++)
             {
-                mTiles[x,y] = (TileType)reader.ReadByte();
+                mTileData[x,y] = (TileType)reader.ReadByte();
             }
         }
 
-        mTileMap.DrawMap(mTiles, mWidth, mHeight);
+        mTileMap.DrawMap(mTileData, mWidth, mHeight);
     }
 
     public void CheckCollisions()

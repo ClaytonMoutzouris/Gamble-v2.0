@@ -46,22 +46,22 @@ public struct Vector2i : IEquatable<Vector2i>
         return x == other.x && y == other.y;
     }
 
-    public static Vector2i zero
+    public static Vector2i Zero
     {
         get { return new global::Vector2i(0, 0); }
     }
 
-    public static Vector2i one
+    public static Vector2i One
     {
         get { return new global::Vector2i(1, 1); }
     }
 
-    public static Vector2i right
+    public static Vector2i Right
     {
         get { return new global::Vector2i(1, 0); }
     }
 
-    public static Vector2i up
+    public static Vector2i Up
     {
         get { return new global::Vector2i(0, 1); }
     }

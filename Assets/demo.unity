@@ -999,6 +999,9 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 1
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
     leftTile:
       x: 0
       y: 0
@@ -1267,6 +1270,9 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 0
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
     leftTile:
       x: 0
       y: 0
@@ -1297,8 +1303,12 @@ MonoBehaviour:
   mCurrentState: 0
   mJumpSpeed: 0
   mWalkSpeed: 0
+  mClimbSpeed: 0
   mPath: []
   mLedgeTile:
+    x: 0
+    y: 0
+  mClimbTile:
     x: 0
     y: 0
   mCannotGoLeftFrames: 0
@@ -1775,6 +1785,9 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 1
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
     leftTile:
       x: 7
       y: 28
@@ -1974,6 +1987,7 @@ MonoBehaviour:
   goRightKey: 100
   goJumpKey: 119
   goDownKey: 115
+  goUpKey: 119
   mMap: {fileID: 2106156355}
   mPlacedTileType: 1
   mCharacterPrefab: {fileID: 418340, guid: 60f0ca588a7b3e74f85cd3b5c138b418, type: 2}
@@ -2147,6 +2161,9 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 1
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
     leftTile:
       x: 7
       y: 28
@@ -2607,6 +2624,9 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 1
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
     leftTile:
       x: 7
       y: 19
@@ -4184,6 +4204,34 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1867059771}
   m_CullTransparentMesh: 0
+--- !u!1 &1882835015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1882835016}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1882835016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1882835015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 571.7102, y: 32, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1885536287
 GameObject:
   m_ObjectHideFlags: 0
@@ -4560,8 +4608,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTileMap: {fileID: 1587752960}
   mPosition: {x: 0, y: 0, z: 0}
-  mWidth: 50
-  mHeight: 25
+  mWidth: 100
+  mHeight: 100
   mHorizontalAreasCount: 0
   mVerticalAreasCount: 0
   mGridAreaWidth: 16

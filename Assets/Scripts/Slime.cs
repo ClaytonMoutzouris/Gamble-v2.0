@@ -5,7 +5,26 @@ using UnityEngine;
 public class Slime : MovingObject {
 
     public float mMovingSpeed;
+    public AABB mHitbox;
+    void OnDrawGizmos()
+    {
+        DrawSlimeGizmos();
+        DrawMovingObjectGizmos();
+    }
 
+    /// <summary>
+    /// Draws the aabb and ceiling, ground and wall sensors .
+    /// </summary>
+    protected void DrawSlimeGizmos()
+    {
+        //calculate the position of the aabb's center
+        var aabbPos = (Vector3)mHitbox.Center;
+
+        //draw the aabb rectangle
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(aabbPos, mHitbox.HalfSize * 2.0f); 
+       
+    }
     public void Start()
     {
         if (mUpdateId < 0)
@@ -18,6 +37,10 @@ public class Slime : MovingObject {
     public void Init()
     {
         mPosition = RoundVector(transform.position);
+
+        mHitbox.HalfSize = new Vector2(5.0f, 5.0f);
+        mHitbox.Center = mPosition;
+
         mAABB.HalfSize = new Vector2(10.0f, 5.0f);
         mAABB.Center = mPosition;
         mSlopeWallHeight = 0;
@@ -56,5 +79,8 @@ public class Slime : MovingObject {
         }
 
         UpdatePhysics();
+
+        //make sure the hitbox follows the object
+        mHitbox.Center = mAABB.Center;
     }
 }
