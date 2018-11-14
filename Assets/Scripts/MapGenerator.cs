@@ -92,19 +92,32 @@ public static class MapGenerator {
 
         TextAsset r = rooms[Random.Range(0, rooms.Length)];
         string s = r.text;
-        int i, j, column, row;
+        int i, j, rand, column, row;
         TileType[,] tiles = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
         s = s.Replace(System.Environment.NewLine, "");
+        s = Reverse(s);
+
         //Debug.Log(s);
         for (i = 0; i < s.Length; i++)
         {
-            column = i % Constants.cMapChunkSizeX;
+            column = i % Constants.cMapChunkSizeY;
             row = i/Constants.cMapChunkSizeX;
             tiles[column, row] = (TileType)char.GetNumericValue(s[i]);
             
         }
 
         return tiles;
+    }
+
+    static string Reverse(string text)
+    {
+        char[] cArray = text.ToCharArray();
+        string reverse = "";
+        for (int i = cArray.Length - 1; i > -1; i--)
+        {
+            reverse += cArray[i];
+        }
+        return reverse;
     }
 
     //This is for creating the initial path of rooms
