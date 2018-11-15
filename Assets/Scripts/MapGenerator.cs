@@ -86,24 +86,45 @@ public static class MapGenerator {
         AssetDatabase.ImportAsset(path);
     }
 
+    public static string Reverse(string s)
+    {
+        char[] charArray = s.ToCharArray();
+        System.Array.Reverse(charArray);
+        return new string(charArray);
+    }
+
     static TileType[,] GetRandomRoom()
     {
+        TileType[,] tiles = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+
         TextAsset[] rooms = Resources.LoadAll<TextAsset>("Rooms");
 
         TextAsset r = rooms[Random.Range(0, rooms.Length)];
-        string s = r.text;
-        int i, j, column, row;
-        TileType[,] tiles = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
-        s = s.Replace(System.Environment.NewLine, "");
+        string[] s = r.text.Split(new string[]{System.Environment.NewLine}, System.StringSplitOptions.RemoveEmptyEntries);
+        System.Array.Reverse(s);
+        for(int k = 0; k < s.Length; k++)
+        {
+            //s[k] = Reverse(s[k]);
+            //s[k] = s[k].Replace(System.Environment.NewLine, "");
+            for (int i = 0; i < s[k].Length; i++)
+            {
+                tiles[k, i] = (TileType)char.GetNumericValue(s[i][k]);
+            }
+        }
+
+        /*
+        //s = s.Replace(System.Environment.NewLine, "");
+        s = Reverse(s);
         //Debug.Log(s);
         for (i = 0; i < s.Length; i++)
         {
+            row = i / Constants.cMapChunkSizeX;
             column = i % Constants.cMapChunkSizeX;
-            row = i/Constants.cMapChunkSizeX;
+            
             tiles[column, row] = (TileType)char.GetNumericValue(s[i]);
             
         }
-
+        */
         return tiles;
     }
 

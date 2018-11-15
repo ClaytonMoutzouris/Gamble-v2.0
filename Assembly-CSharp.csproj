@@ -85,8 +85,8 @@
     <Compile Include="Assets\Scripts\TileMapObject.cs" />
     <Compile Include="Assets\Scripts\TileType.cs" />
     <Compile Include="Assets\Scripts\Vector2i.cs" />
-    <None Include="Assets\Resources\Rooms\EmptyRoom0.txt" />
-    <None Include="Assets\Resources\Rooms\EmptyRoom1.txt" />
+    <None Include="Assets\Resources\Rooms\EmptyRoom4.txt" />
+    <None Include="Assets\Resources\Rooms\EmptyRoom3.txt" />
     <None Include="Assets\Resources\Rooms\EmptyRoom2.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Documents/GitHub/Gamble v2.0/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
