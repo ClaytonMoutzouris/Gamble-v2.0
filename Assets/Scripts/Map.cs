@@ -9,7 +9,7 @@ public class Map : MonoBehaviour
     [HideInInspector]
     private TileType[,] mTileData;
     public TileMapObject mTileMap;
-
+    public static Map instance;
     public Vector3 mPosition;
 
     public int mWidth;
@@ -45,6 +45,11 @@ public class Map : MonoBehaviour
     public List<MovingObject>[,] mObjectsInArea;
 
     public static List<MovingObject> mCollisionRequestObjects = new List<MovingObject>();
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void RemoveObjectFromAreas(MovingObject obj)
     {
@@ -230,7 +235,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return false;
 
-        return (mTileData[x, y] == TileType.OneWay);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x,y] == TileType.LadderTop);
     }
 
     public bool IsGround(int x, int y)
@@ -239,7 +244,7 @@ public class Map : MonoBehaviour
            || y < 0 || y >= mHeight)
             return false;
 
-        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop);
     }
 
     public bool IsGround(Vector2i pos)
@@ -337,6 +342,21 @@ public class Map : MonoBehaviour
 
 
         mTileData = MapGenerator.GenerateMap();
+        int r = 0;
+        for(int i = 0; i < mWidth; i++)
+        {
+            for (int j = 0; j < mHeight; j++)
+            {
+                if(mTileData[i,j] == TileType.Empty)
+                {
+                    r = Random.Range(0, 1000);
+                    if(r == 0)
+                    {
+                        Instantiate(Resources.Load<FallingRock>("Prefabs/FallingRock") as FallingRock, GetMapTilePosition(i,j), Quaternion.identity);
+                    }
+                }
+            }
+        }
 
         mTileMap.DrawMap(mTileData, mWidth, mHeight);
     }

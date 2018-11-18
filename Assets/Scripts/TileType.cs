@@ -10,6 +10,7 @@ public enum TileType
     Spikes,
     Bounce,
     Ladder,
+    LadderTop,
     Count,
 }
 

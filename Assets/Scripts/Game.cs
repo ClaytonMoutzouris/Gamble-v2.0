@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Game : MonoBehaviour
 {
-
+    public static Game instance;
     public Camera gameCamera;
     public Character player;
     bool[] inputs;
@@ -30,6 +30,11 @@ public class Game : MonoBehaviour
     protected List<MovingObject> mObjects = new List<MovingObject>();
 
     public SpriteRenderer mMouseSprite;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start ()
     {
@@ -63,67 +68,7 @@ public class Game : MonoBehaviour
         //UpdateCursor();
 
     }
-    /*
-    public void UpdateCursor()
-    {
-        if (Input.GetKeyUp(KeyCode.Mouse2))
-            lastMouseTileX = lastMouseTileY = -1;
-
-        Vector2 mousePos = Input.mousePosition;
-        Vector2 cameraPos = Camera.main.transform.position;
-        var mousePosInWorld = cameraPos + mousePos - new Vector2(gameCamera.pixelWidth / 2, gameCamera.pixelHeight / 2);
-
-        int mouseTileX, mouseTileY;
-
-        mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
-        //Debug.Log("Pressed X: " + mouseTileX + ", Y: " + mouseTileY);
-
-        //Vector2 offsetMouse = (Vector2)(Input.mousePosition) - new Vector2(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-            Debug.Break();
-
-        if (Input.GetKey(KeyCode.Mouse1) || Input.GetKey(KeyCode.Mouse0))
-        {
-            if (mouseTileX != lastMouseTileX || mouseTileY != lastMouseTileY || Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Mouse2))
-            {
-                if (!mMap.IsNotEmpty(mouseTileX, mouseTileY))
-                    mMap.SetTile(mouseTileX, mouseTileY, mPlacedTileType);
-                else
-                    mMap.SetTile(mouseTileX, mouseTileY, TileType.Empty);
-
-                lastMouseTileX = mouseTileX;
-                lastMouseTileY = mouseTileY;
-
-                Debug.Log(mouseTileX + "  " + mouseTileY);
-            }
-        }
-
-
-            var wheel = Input.GetAxis("Mouse ScrollWheel");
-            if (wheel > 0.05f || Input.GetKeyUp(KeyCode.RightArrow))
-            {
-
-                if ((int)mPlacedTileType < (int)TileType.Count - 1)
-                    mPlacedTileType += 1;
-                else
-                    mPlacedTileType = TileType.Block;
-
-
-            }
-            else if (wheel < -0.05f || Input.GetKeyUp(KeyCode.LeftArrow))
-            {
-                if ((int)mPlacedTileType > (int)TileType.Empty + 1)
-                    mPlacedTileType -= 1;
-                else
-                    mPlacedTileType = TileType.Count - 1;
-
-            }
-        
-
-        //mMouseSprite.transform.position = mMap.GetMapTilePosition(mouseTileX, mouseTileY);
-    }
-    */
+    
     public void SwapUpdateIds(MovingObject a, MovingObject b)
     {
         int tmp = a.mUpdateId;
@@ -159,6 +104,16 @@ public class Game : MonoBehaviour
                     break;
                 case ObjectType.MovingPlatform:
                     ((MovingPlatform)mObjects[i]).CustomUpdate();
+                    mMap.UpdateAreas(mObjects[i]);
+                    mObjects[i].mAllCollidingObjects.Clear();
+                    break;
+                case ObjectType.FallingRock:
+                    ((FallingRock)mObjects[i]).CustomUpdate();
+                    mMap.UpdateAreas(mObjects[i]);
+                    mObjects[i].mAllCollidingObjects.Clear();
+                    break;
+                case ObjectType.RollingBoulder:
+                    ((RollingBoulder)mObjects[i]).CustomUpdate();
                     mMap.UpdateAreas(mObjects[i]);
                     mObjects[i].mAllCollidingObjects.Clear();
                     break;

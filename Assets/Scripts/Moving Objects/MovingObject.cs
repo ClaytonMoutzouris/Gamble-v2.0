@@ -10,6 +10,8 @@ public enum ObjectType
     NPC,
     MovingPlatform,
     Enemy,
+    FallingRock,
+    RollingBoulder,
 }
 
 public class MovingObject : MonoBehaviour 
@@ -290,6 +292,7 @@ public class MovingObject : MonoBehaviour
                     //if (mPS.leftInOneWay && mPS.rightInOneWay)
                     //   mPS.tmpIgnoresOneWay = true;
                     break;
+                case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
                     if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
@@ -333,6 +336,7 @@ public class MovingObject : MonoBehaviour
                     //if (mPS.leftInOneWay && mPS.rightInOneWay)
                     //   mPS.tmpIgnoresOneWay = true;
                     break;
+                case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
                     if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
@@ -397,10 +401,12 @@ public class MovingObject : MonoBehaviour
             var tileCollisionType = mMap.GetTile(x, bottomleftTile.y);
 
             //Check if we're on a one way platform
-            isOneWay = (tileCollisionType == TileType.OneWay);
+            isOneWay = (tileCollisionType == TileType.OneWay || tileCollisionType == TileType.LadderTop);
             if ((mIgnoresOneWay || state.tmpIgnoresOneWay) && isOneWay)
                 continue;
 
+            Vector2 tileCenter;
+            float topTileEdge;
 
             switch (tileCollisionType)
             {
@@ -416,9 +422,10 @@ public class MovingObject : MonoBehaviour
                     }
                     */
                     break;
+                case TileType.LadderTop:
                 case TileType.OneWay:
-                    Vector2 tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
-                    float topTileEdge = tileCenter.y + Map.cTileSize /2;
+                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    topTileEdge = tileCenter.y + Map.cTileSize /2;
 
                     if (topTileEdge > bottomLeft.y+0.5f)
                     {
@@ -432,13 +439,27 @@ public class MovingObject : MonoBehaviour
                     return true;
                     break;
                 case TileType.Spikes:
-                    if(mSpeed.y < 0)
+                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    topTileEdge = tileCenter.y + Map.cTileSize / 2;
+                    if (topTileEdge > bottomLeft.y + 0.5f)
+                    {
+                        continue;
+                    }
+
+                    if (mSpeed.y < 0)
                     {
                         //flag this to be dealt with after we've checked other tiles we're colliding with
                         spiked = true;
                     }
                     break;
                 case TileType.Bounce:
+                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    topTileEdge = tileCenter.y + Map.cTileSize / 2;
+                    if (topTileEdge > bottomLeft.y + 0.5f)
+                    {
+                        continue;
+                    }
+
                     if (mSpeed.y < 0)
                     {
                         //flag this to be dealt with after we've checked other tiles we're colliding with
@@ -682,8 +703,10 @@ public class MovingObject : MonoBehaviour
 
     public void Crush()
     {
-
-        mPosition = mMap.mPosition + new Vector3(mMap.mWidth / 2 * Map.cTileSize, mMap.mHeight / 2 * Map.cTileSize);
+        //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
+        transform.position = mMap.GetMapTilePosition(mMap.mWidth / 2, mMap.mHeight / 2);
+        mPosition = transform.position;
+        mAABB.Center = mPosition;
         mPS.Reset();
     }
 

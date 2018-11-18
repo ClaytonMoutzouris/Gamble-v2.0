@@ -12,7 +12,7 @@ public class Constants
     public const float cHalfSizeY = 12.0f;
     public const float cHalfSizeX = 6.0f;
     public const float cMinJumpSpeed = 200.0f;
-    public const float cOneWayPlatformThreshold = 1.0f;
+    public const float cOneWayPlatformThreshold = 2.0f;
     //This allows to prevent crushing if the moving object is within a margin of error in the other axis
     public const float cCrushCorrectThreshold = 3.0f;
     //public const float cJumpSpeed = 210.0f; //1
