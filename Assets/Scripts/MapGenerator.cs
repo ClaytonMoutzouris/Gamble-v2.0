@@ -150,7 +150,33 @@ public static class MapGenerator {
         return legalDirections;
     }
 
-    public static TileType[,] GenerateMap()
+    public static Vector2i GetStartTile(MapData map)
+    {
+        Vector2i startTile = new Vector2i(1,1);
+        int xr, yr;
+        int chunkX = Random.Range(0, Constants.cMapChunksX);
+        int chunkY = 0;
+
+        for (int y = 1; y < Constants.cMapChunkSizeY; y++)
+        {
+            for (int x = 0; x < Constants.cMapChunkSizeX; x++)
+            {
+            
+                if(map.rooms[chunkX, chunkY].tiles[x,y] == TileType.Empty)
+                {
+                    if (map.rooms[chunkX, chunkY].tiles[x, y - 1] == TileType.Block)
+                    {
+                        return startTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);                        
+                    }
+                }
+            }
+        }
+
+        return startTile;
+
+    }
+
+    public static MapData GenerateMap()
     {
         MapData map = new MapData();
 
@@ -163,25 +189,6 @@ public static class MapGenerator {
             }
         }
 
-
-
-                /*
-                Debug.Log("The chunk of tile 3,4 is: " + ((3 / Constants.cMapChunkSizeX) + (4 / Constants.cMapChunkSizeY) * (sizex / Constants.cMapChunkSizeX)));
-                Debug.Log("The chunk of tile 78,28 is: " + ((78 / Constants.cMapChunkSizeX) + (28 / Constants.cMapChunkSizeY) * (sizex / Constants.cMapChunkSizeX)));
-                int chunkX = 99 / Constants.cMapChunkSizeX;
-                int chunkY = 99 / Constants.cMapChunkSizeY;
-
-                Debug.Log("The chunk of tile 100, 100 is: " + (chunkX + chunkY * chunkCountX));
-                */
-                //int prevChunk = 0;
-                //int currentChunk = 0;
-
-                //Debug.Log("Chunk: " + currentChunk);
-
-
-
-
-
         for (int x = 0; x < Constants.cMapWidth; x++)
         {
             for (int y = 0; y < Constants.cMapWidth; y++)
@@ -193,9 +200,10 @@ public static class MapGenerator {
 
             }
         }
-        
 
-        return map.GetMap();
+        map.startTile = GetStartTile(map);
+
+        return map;
     }
 
 

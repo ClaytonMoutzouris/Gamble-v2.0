@@ -140,8 +140,8 @@ MonoBehaviour:
   mMountParent: {fileID: 0}
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
-  mSticksToSlope: 0
-  mIsKinematic: 0
+  mSticksToSlope: 1
+  mIsKinematic: 1
   mSpriteDepth: -1
   mTransform: {fileID: 4879068286814724}
   mMovingSpeed: 0

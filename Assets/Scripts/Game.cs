@@ -50,6 +50,8 @@ public class Game : MonoBehaviour
        // player.Scale = Vector2.one * 1.5f;
 
         mMap.Init();
+
+        player.SetTilePosition(mMap.mMapData.startTile);
     }
 	
 	void Update()

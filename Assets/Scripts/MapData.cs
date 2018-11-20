@@ -6,6 +6,7 @@ public enum MapType { Forest, Tundra };
 
 public class MapData {
 
+    public Vector2i startTile = new Vector2i(1,1);
     public MapChunk[,] rooms;
     public MapType type;
 

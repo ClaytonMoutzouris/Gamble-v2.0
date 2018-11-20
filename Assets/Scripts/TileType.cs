@@ -11,6 +11,7 @@ public enum TileType
     Bounce,
     Ladder,
     LadderTop,
+    Door,
     Count,
 }
 

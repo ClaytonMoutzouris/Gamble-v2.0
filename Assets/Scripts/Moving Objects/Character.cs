@@ -33,7 +33,6 @@ public class Character : MovingObject
     protected bool[] mInputs;
     protected bool[] mPrevInputs;
 
-    [HideInInspector]
     public CharacterState mCurrentState = CharacterState.Stand;
     public float mJumpSpeed;
     public float mWalkSpeed;

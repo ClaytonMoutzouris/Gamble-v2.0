@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 
 [System.Serializable]
@@ -8,10 +8,10 @@ public class Map : MonoBehaviour
 {
     [HideInInspector]
     private TileType[,] mTileData;
+    public MapData mMapData;
     public TileMapObject mTileMap;
     public static Map instance;
     public Vector3 mPosition;
-
     public int mWidth;
     public int mHeight;
 
@@ -340,8 +340,10 @@ public class Map : MonoBehaviour
                 mObjectsInArea[x, y] = new List<MovingObject>();
         }
 
+        mMapData = MapGenerator.GenerateMap();
 
-        mTileData = MapGenerator.GenerateMap();
+        mTileData = mMapData.GetMap();
+
         int r = 0;
         for(int i = 0; i < mWidth; i++)
         {

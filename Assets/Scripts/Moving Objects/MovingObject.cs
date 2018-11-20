@@ -703,11 +703,21 @@ public class MovingObject : MonoBehaviour
 
     public void Crush()
     {
+        //Kinematic things cant be spiked
+        if (mIsKinematic)
+            return;
         //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
-        transform.position = mMap.GetMapTilePosition(mMap.mWidth / 2, mMap.mHeight / 2);
+        transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
         mPosition = transform.position;
         mAABB.Center = mPosition;
         mPS.Reset();
+    }
+
+    public void SetTilePosition(Vector2i tile)
+    {
+        transform.position = mMap.GetMapTilePosition(tile);
+        mPosition = transform.position;
+        mAABB.Center = mPosition;
     }
 
     private void UpdatePhysicsResponse()

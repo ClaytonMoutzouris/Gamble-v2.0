@@ -45,7 +45,7 @@ public class RollingBoulder : MovingObject
     public void CustomUpdate()
     {
         if (mMovingSpeed < mMaxMoveSpeed)
-            mMovingSpeed += Time.deltaTime * 25;
+            mMovingSpeed += Time.deltaTime * 100;
 
         if (mPS.pushesRightTile)
         {
