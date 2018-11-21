@@ -1363,6 +1363,14 @@ MonoBehaviour:
   mWalkSfxTimer: 0
   mPlayerIndex: 1
   mAnimator: {fileID: 1477223271}
+  colorPallete:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0, g: 0.056656756, b: 0.8490566, a: 1}
+  - {r: 0, g: 0.031262007, b: 0.4245283, a: 1}
+  - {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+  - {r: 0.509434, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.4211463, g: 0.49394307, b: 0.5283019, a: 1}
   mCurrentState: 0
   mJumpSpeed: 0
   mWalkSpeed: 0
@@ -2983,6 +2991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450605700}
   - component: {fileID: 1477223274}
+  - component: {fileID: 1477223273}
   - component: {fileID: 600731197}
   - component: {fileID: 1477223271}
   - component: {fileID: 1477223272}
@@ -3108,6 +3117,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1477223273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1477223270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3f4b265c54f6c4f9b0273eeda2c57a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mColorSwapTex: {fileID: 0}
+  mSpriteColors: []
+  mSpriteRenderer: {fileID: 0}
 --- !u!212 &1477223274
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3124,7 +3147,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5245fd008ee4b0a4eb91ae9c364520d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4613,6 +4636,14 @@ MonoBehaviour:
   mWalkSfxTimer: 0
   mPlayerIndex: 2
   mAnimator: {fileID: 1959882555}
+  colorPallete:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.754717, g: 0.23139909, b: 0.23139909, a: 1}
+  - {r: 0.5566038, g: 0.107645065, b: 0.107645065, a: 1}
+  - {r: 0.9150943, g: 0.6127409, b: 0.004316493, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 0.5, g: 0.27293465, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   mCurrentState: 0
   mJumpSpeed: 0
   mWalkSpeed: 0
@@ -4642,7 +4673,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5245fd008ee4b0a4eb91ae9c364520d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4941,8 +4972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f261dafe1387f1459e4652c02b89d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mPlayerTransform: {fileID: 450605700}
-  mPlayer: {fileID: 600731197}
+  mPlayer1: {fileID: 450605700}
+  mPlayer2: {fileID: 1959882558}
   mPosition: {x: 0, y: 0, z: 0}
   mMap: {fileID: 2106156355}
   dampTime: 0.15

@@ -110,6 +110,7 @@ public class MovingObject : MonoBehaviour
         public bool onLadder;
         public bool isClimbing;
         public bool isBounce;
+        public bool onDoor;
 
         public Vector2i leftTile;
         public Vector2i rightTile;
@@ -153,8 +154,10 @@ public class MovingObject : MonoBehaviour
 
             onOneWay = false;
             onLadder = false;
+            onDoor = false;
             isClimbing = false;
             isBounce = false;
+
         }
     }
     /// <summary>
@@ -298,6 +301,11 @@ public class MovingObject : MonoBehaviour
                     if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onLadder = true;
                     break;
+                case TileType.Door:
+                    //If the players center is on the ladder tile, we can climb it
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                        mPS.onDoor = true;
+                    break;
                 case TileType.Block:
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
@@ -341,6 +349,11 @@ public class MovingObject : MonoBehaviour
                     //If the players center is on the ladder tile, we can climb it
                     if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onLadder = true;
+                    break;
+                case TileType.Door:
+                    //If the players center is on the ladder tile, we can climb it
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                        mPS.onDoor = true;
                     break;
                 case TileType.Block:
                     state.pushesLeftTile = true;
@@ -640,6 +653,7 @@ public class MovingObject : MonoBehaviour
         mPS.pushesBottomObject = mPS.pushesLeftObject = mPS.pushesRightObject = mPS.pushesTopObject = false;
 
         mPS.onLadder = false;
+        mPS.onDoor = false;
 
 
         if(mSpeed.y < 0)

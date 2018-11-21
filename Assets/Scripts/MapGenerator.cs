@@ -176,6 +176,32 @@ public static class MapGenerator {
 
     }
 
+    public static void AddDoorTile(MapData map)
+    {
+        Vector2i doorTile = new Vector2i(99, 99);
+        int xr, yr;
+        int chunkX = Random.Range(0, Constants.cMapChunksX);
+        int chunkY = 3;
+
+        for (int y = 1; y < Constants.cMapChunkSizeY; y++)
+        {
+            for (int x = 0; x < Constants.cMapChunkSizeX; x++)
+            {
+
+                if (map.rooms[chunkX, chunkY].tiles[x, y] == TileType.Empty)
+                {
+                    if (map.rooms[chunkX, chunkY].tiles[x, y - 1] == TileType.Block)
+                    {
+                        map.SetTile(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y, TileType.Door);
+                        //doorTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
+
     public static MapData GenerateMap()
     {
         MapData map = new MapData();
@@ -202,6 +228,7 @@ public static class MapGenerator {
         }
 
         map.startTile = GetStartTile(map);
+        AddDoorTile(map);
 
         return map;
     }

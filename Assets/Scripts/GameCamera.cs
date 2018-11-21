@@ -7,9 +7,11 @@ public class GameCamera : MonoBehaviour
     /// <summary>
     /// A reference to the the player.
     /// </summary>
-    public Transform mPlayerTransform;
+    public Transform mPlayer1;
+    public Transform mPlayer2;
 
-    public Character mPlayer;
+
+
 
     /// <summary>
     /// The position.
@@ -34,15 +36,13 @@ public class GameCamera : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (mPlayerTransform == null)
-            return;
 
-        if (mPlayer == null)
-            mPlayer = mPlayerTransform.GetComponent<Character>();
+        if (mPlayer1 == null || mPlayer2 == null)
+            return;
 
         Vector2 targetPos;
 
-        targetPos = mPlayer.mPosition;
+        targetPos = (mPlayer1.position + mPlayer2.position) *0.5f;
 
         mPosition = new Vector3(targetPos.x, targetPos.y, mPosition.z);
 

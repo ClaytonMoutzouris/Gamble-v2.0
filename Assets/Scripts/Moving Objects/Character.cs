@@ -23,9 +23,11 @@ public class Character : MovingObject
     public float mWalkSfxTimer = 0.0f;
     public const float cWalkSfxTime = 0.25f;
 
+
+
     public int mPlayerIndex = 0;
     public Animator mAnimator;
-
+    public List<Color> colorPallete;
     /// <summary>
     /// The number of frames passed from changing the state to jump.
     /// </summary>
@@ -43,6 +45,8 @@ public class Character : MovingObject
 
     public Vector2i mLedgeTile;
     public Vector2i mClimbTile;
+    public float mExitDoorTimer = 0;
+    public float mTimeToExit = 1;
 
     public int mCannotGoLeftFrames = 0;
     public int mCannotGoRightFrames = 0;
@@ -113,7 +117,7 @@ public class Character : MovingObject
         mSlopeWallHeight = Constants.cSlopeWallHeight;
 
         mAABB.OffsetY = mAABB.HalfSizeY;
-
+        ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
         mUpdateId = mGame.AddToUpdateList(this);
         
     }
@@ -181,12 +185,29 @@ public class Character : MovingObject
                 if (KeyState(KeyInput.GoDown))
                     mPS.tmpIgnoresOneWay = true;
 
-                if (KeyState(KeyInput.Climb) && mPS.onLadder)
+                if (KeyState(KeyInput.Climb) )
                 {
-                    mSpeed = Vector2.zero;
-                    mPS.isClimbing = true;
-                    mCurrentState = CharacterState.Climbing;
-                    break;
+                    if (mPS.onLadder)
+                    {
+                        mSpeed = Vector2.zero;
+                        mPS.isClimbing = true;
+                        mCurrentState = CharacterState.Climbing;
+                        break;
+                    }
+
+                    if (mPS.onDoor)
+                    {
+                        mExitDoorTimer += Time.deltaTime;
+                        if(mExitDoorTimer > mTimeToExit)
+                        {
+                            //load map
+                            mGame.NewMap();
+                        }
+
+                    }
+                } else
+                {
+                    mExitDoorTimer = 0;
                 }
 
                 break;

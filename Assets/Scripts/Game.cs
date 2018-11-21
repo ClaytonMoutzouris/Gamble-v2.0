@@ -62,13 +62,18 @@ public class Game : MonoBehaviour
         player2.mMap = mMap;
         player2.Init(p2inputs, p2prevInputs);
         player2.mType = ObjectType.Player;
-        player2.GetComponent<SpriteRenderer>().color = Color.gray;
+        //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
+        NewMap();
+
+    }
+
+    public void NewMap()
+    {
         mMap.Init();
 
         player1.SetTilePosition(mMap.mMapData.startTile);
         player2.SetTilePosition(mMap.mMapData.startTile);
-
     }
 
     void HandleInputs()
