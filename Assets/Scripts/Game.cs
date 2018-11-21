@@ -6,9 +6,13 @@ public class Game : MonoBehaviour
 {
     public static Game instance;
     public Camera gameCamera;
-    public Character player;
+    public Character player1;
+    public Character player2;
     bool[] inputs;
     bool[] prevInputs;
+
+    bool[] p2inputs;
+    bool[] p2prevInputs;
 
     public KeyCode goLeftKey = KeyCode.A;
     public KeyCode goRightKey = KeyCode.D;
@@ -40,27 +44,51 @@ public class Game : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
+        //init player 1
         inputs = new bool[(int)KeyInput.Count];
         prevInputs = new bool[(int)KeyInput.Count];
 
-        player.mGame = this;
-        player.mMap = mMap;
-        player.Init(inputs, prevInputs);
-        player.mType = ObjectType.Player;
-       // player.Scale = Vector2.one * 1.5f;
+        player1.mGame = this;
+        player1.mMap = mMap;
+        player1.Init(inputs, prevInputs);
+        player1.mType = ObjectType.Player;
+        // player.Scale = Vector2.one * 1.5f;
+
+        //init player 2
+        p2inputs = new bool[(int)KeyInput.Count];
+        p2prevInputs = new bool[(int)KeyInput.Count];
+
+        player2.mGame = this;
+        player2.mMap = mMap;
+        player2.Init(p2inputs, p2prevInputs);
+        player2.mType = ObjectType.Player;
+        player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
         mMap.Init();
 
-        player.SetTilePosition(mMap.mMapData.startTile);
+        player1.SetTilePosition(mMap.mMapData.startTile);
+        player2.SetTilePosition(mMap.mMapData.startTile);
+
     }
-	
-	void Update()
+
+    void HandleInputs()
     {
         inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.RightArrow);
         inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.LeftArrow);
         inputs[(int)KeyInput.GoDown] = Input.GetKey(KeyCode.DownArrow);
         inputs[(int)KeyInput.Climb] = Input.GetKey(KeyCode.UpArrow);
         inputs[(int)KeyInput.Jump] = Input.GetKey(KeyCode.Space);
+
+        p2inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
+        p2inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
+        p2inputs[(int)KeyInput.GoDown] = Input.GetKey(KeyCode.S);
+        p2inputs[(int)KeyInput.Climb] = Input.GetKey(KeyCode.W);
+        p2inputs[(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
+    }
+
+    void Update()
+    {
+        HandleInputs();
 
         if (Input.GetKeyDown(KeyCode.D))
         {

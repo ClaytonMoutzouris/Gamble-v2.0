@@ -23,6 +23,7 @@ public class Character : MovingObject
     public float mWalkSfxTimer = 0.0f;
     public const float cWalkSfxTime = 0.25f;
 
+    public int mPlayerIndex = 0;
     public Animator mAnimator;
 
     /// <summary>
