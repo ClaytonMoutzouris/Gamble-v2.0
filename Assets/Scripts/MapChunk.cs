@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+//[System.Serializable]
 public class MapChunk
 {
 
@@ -27,7 +27,6 @@ public class MapChunk
         {
             return "Left: " + Left + " Right: " + Right + " Top: " + Top + " Bottom: " + Bottom;
         }
-
 
 }
 

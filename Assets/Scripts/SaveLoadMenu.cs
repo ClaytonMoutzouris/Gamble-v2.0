@@ -10,7 +10,7 @@ public class SaveLoadMenu : MonoBehaviour
 {
     public Text menuLabel, actionButtonLabel;
     bool saveMode;
-    public Map mMap;
+    public EditorMap mMap;
     public InputField nameInput;
     public RectTransform listContent;
     public SaveLoadItem itemPrefab;
@@ -20,12 +20,12 @@ public class SaveLoadMenu : MonoBehaviour
         FillList();
         if (saveMode)
         {
-            menuLabel.text = "Save Map";
+            menuLabel.text = "Save Room";
             actionButtonLabel.text = "Save";
         }
         else
         {
-            menuLabel.text = "Load Map";
+            menuLabel.text = "Load Room";
             actionButtonLabel.text = "Load";
         }
 
@@ -40,7 +40,7 @@ public class SaveLoadMenu : MonoBehaviour
         {
             return null;
         }
-        return Path.Combine(Application.persistentDataPath, mapName + ".map");
+        return Path.Combine(Application.dataPath + "/Rooms", mapName + ".room");
     }
 
     public void Close()
@@ -83,7 +83,7 @@ public class SaveLoadMenu : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Unknown map format " + header);
+                Debug.LogWarning("Unknown room format " + header);
             }
 
         }
@@ -120,7 +120,7 @@ public class SaveLoadMenu : MonoBehaviour
         }
 
         string[] paths =
-            Directory.GetFiles(Application.persistentDataPath, "*.map");
+            Directory.GetFiles(Application.dataPath + "/Rooms", "*.room");
 
         Array.Sort(paths);
 

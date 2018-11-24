@@ -14,9 +14,10 @@ public enum ObjectType
     RollingBoulder,
 }
 
-public class MovingObject : MonoBehaviour 
+public class PhysicsObject : MonoBehaviour 
 {
     public ObjectType mType;
+    public List<ObjectType> mCollidesWith;
     /// <summary>
     /// The previous position.
     /// </summary>
@@ -170,7 +171,7 @@ public class MovingObject : MonoBehaviour
     public Game mGame;
     public Map mMap;
 
-    public MovingObject mMountParent = null;
+    public PhysicsObject mMountParent = null;
 
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
@@ -182,7 +183,7 @@ public class MovingObject : MonoBehaviour
     [NonSerialized]
     public List<int> mIdsInAreas = new List<int>();
     [NonSerialized]
-    protected List<MovingObject> mFilteredObjects = new List<MovingObject>();
+    protected List<PhysicsObject> mFilteredObjects = new List<PhysicsObject>();
     [NonSerialized]
     public List<CollisionData> mAllCollidingObjects = new List<CollisionData>();
     /// <summary>
@@ -239,7 +240,7 @@ public class MovingObject : MonoBehaviour
 		Gizmos.DrawLine(topRight, bottomRight);
 	}
 
-    public bool HasCollisionDataFor(MovingObject other)
+    public bool HasCollisionDataFor(PhysicsObject other)
     {
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
@@ -705,7 +706,7 @@ public class MovingObject : MonoBehaviour
         mAABB.Center = mPosition;
     }
 
-    public void TryAutoMount(MovingObject platform)
+    public void TryAutoMount(PhysicsObject platform)
     {
         if (mMountParent == null)
         {
@@ -753,9 +754,12 @@ public class MovingObject : MonoBehaviour
 
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
+            
             var other = mAllCollidingObjects[i].other;
             var data = mAllCollidingObjects[i];
             var overlap = data.overlap - offsetSum;
+            if (!mCollidesWith.Contains(other.mType))
+                continue;
 
             //if (other.mUpdateId < mUpdateId)
             //    overlap -= other.mPosition - data.pos1;

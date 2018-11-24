@@ -39,7 +39,8 @@ public class TileMapEditor : MonoBehaviour
 
         Vector2 mousePos = Input.mousePosition;
         Vector2 cameraPos = Camera.main.transform.position;
-        var mousePosInWorld = cameraPos + mousePos - new Vector2(gameCamera.pixelWidth / 2, gameCamera.pixelHeight / 2);
+        var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
 
         int mouseTileX, mouseTileY;
         mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
@@ -56,7 +57,7 @@ public class TileMapEditor : MonoBehaviour
                 lastMouseTileX = mouseTileX;
                 lastMouseTileY = mouseTileY;
 
-                Debug.Log(mouseTileX + "  " + mouseTileY);
+                //Debug.Log(mouseTileX + "  " + mouseTileY);
             }
         }
 

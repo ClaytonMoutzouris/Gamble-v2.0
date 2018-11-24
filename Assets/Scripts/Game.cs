@@ -31,7 +31,7 @@ public class Game : MonoBehaviour
     public Transform mMovingPlatformPrefab;
     public Transform mSlimePrefab;
     [SerializeField]
-    protected List<MovingObject> mObjects = new List<MovingObject>();
+    protected List<PhysicsObject> mObjects = new List<PhysicsObject>();
 
     public SpriteRenderer mMouseSprite;
 
@@ -104,7 +104,7 @@ public class Game : MonoBehaviour
 
     }
     
-    public void SwapUpdateIds(MovingObject a, MovingObject b)
+    public void SwapUpdateIds(PhysicsObject a, PhysicsObject b)
     {
         int tmp = a.mUpdateId;
         a.mUpdateId = b.mUpdateId;
@@ -113,7 +113,7 @@ public class Game : MonoBehaviour
         mObjects[b.mUpdateId] = b;
     }
 
-    public int AddToUpdateList(MovingObject obj)
+    public int AddToUpdateList(PhysicsObject obj)
     {
         mObjects.Add(obj);
         return mObjects.Count - 1;

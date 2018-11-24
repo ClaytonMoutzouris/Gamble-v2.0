@@ -7,7 +7,7 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     [HideInInspector]
-    private TileType[,] mTileData;
+    protected TileType[,] mTileData;
     public MapData mMapData;
     public TileMapObject mTileMap;
     public static Map instance;
@@ -42,16 +42,16 @@ public class Map : MonoBehaviour
     [SerializeField]
     public int mGridAreaHeight = 25;
     [HideInInspector]
-    public List<MovingObject>[,] mObjectsInArea;
+    public List<PhysicsObject>[,] mObjectsInArea;
 
-    public static List<MovingObject> mCollisionRequestObjects = new List<MovingObject>();
+    public static List<PhysicsObject> mCollisionRequestObjects = new List<PhysicsObject>();
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void RemoveObjectFromAreas(MovingObject obj)
+    public void RemoveObjectFromAreas(PhysicsObject obj)
     {
         for (int i = 0; i < obj.mAreas.Count; ++i)
             RemoveObjectFromArea(obj.mAreas[i], obj.mIdsInAreas[i], obj);
@@ -82,7 +82,7 @@ public class Map : MonoBehaviour
         Debug.Log("Object in areas End");
     }
 
-    public void RemoveObjectFromArea(Vector2i areaIndex, int objIndexInArea, MovingObject obj)
+    public void RemoveObjectFromArea(Vector2i areaIndex, int objIndexInArea, PhysicsObject obj)
     {
         var area = mObjectsInArea[areaIndex.x, areaIndex.y];
 
@@ -112,7 +112,7 @@ public class Map : MonoBehaviour
         area.RemoveAt(area.Count - 1);
     }
 
-    public void AddObjectToArea(Vector2i areaIndex, MovingObject obj)
+    public void AddObjectToArea(Vector2i areaIndex, PhysicsObject obj)
     {
         var area = mObjectsInArea[areaIndex.x, areaIndex.y];
 
@@ -124,7 +124,7 @@ public class Map : MonoBehaviour
         area.Add(obj);
     }
 
-    public void UpdateAreas(MovingObject obj)
+    public void UpdateAreas(PhysicsObject obj)
     {
         //get the areas at the aabb's corners
         var topLeft = GetMapTileAtPoint((Vector2)obj.mAABB.Center + new Vector2(-obj.mAABB.HalfSize.x, obj.mAABB.HalfSizeY));
@@ -332,33 +332,17 @@ public class Map : MonoBehaviour
         mHorizontalAreasCount = Mathf.CeilToInt((float)mWidth / (float)mGridAreaWidth);
         mVerticalAreasCount = Mathf.CeilToInt((float)mHeight / (float)mGridAreaHeight);
 
-        mObjectsInArea = new List<MovingObject>[mHorizontalAreasCount, mVerticalAreasCount];
+        mObjectsInArea = new List<PhysicsObject>[mHorizontalAreasCount, mVerticalAreasCount];
 
         for (var y = 0; y < mVerticalAreasCount; ++y)
         {
             for (var x = 0; x < mHorizontalAreasCount; ++x)
-                mObjectsInArea[x, y] = new List<MovingObject>();
+                mObjectsInArea[x, y] = new List<PhysicsObject>();
         }
 
         mMapData = MapGenerator.GenerateMap();
 
         mTileData = mMapData.GetMap();
-
-        int r = 0;
-        for(int i = 0; i < mWidth; i++)
-        {
-            for (int j = 0; j < mHeight; j++)
-            {
-                if(mTileData[i,j] == TileType.Empty)
-                {
-                    r = Random.Range(0, 1000);
-                    if(r == 0)
-                    {
-                        Instantiate(Resources.Load<FallingRock>("Prefabs/FallingRock") as FallingRock, GetMapTilePosition(i,j), Quaternion.identity);
-                    }
-                }
-            }
-        }
 
         mTileMap.DrawMap(mTileData, mWidth, mHeight);
     }

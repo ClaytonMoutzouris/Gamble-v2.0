@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime : MovingObject {
+public class Slime : PhysicsObject {
 
     public float mMovingSpeed;
     public AABB mHitbox;

@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class MovingPlatform : MovingObject
+public class MovingPlatform : PhysicsObject
 {
     public float mMovingSpeed;
     public bool mWait;

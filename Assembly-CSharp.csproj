@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\AABB.cs" />
     <Compile Include="Assets\Scripts\CollisionData.cs" />
     <Compile Include="Assets\Scripts\Constants.cs" />
+    <Compile Include="Assets\Scripts\EditorCamera.cs" />
+    <Compile Include="Assets\Scripts\EditorMap.cs" />
     <Compile Include="Assets\Scripts\EditorSceneController.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\GameCamera.cs" />
@@ -76,11 +78,12 @@
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Moving Objects\Character.cs" />
     <Compile Include="Assets\Scripts\Moving Objects\FallingRock.cs" />
-    <Compile Include="Assets\Scripts\Moving Objects\MovingObject.cs" />
     <Compile Include="Assets\Scripts\Moving Objects\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Moving Objects\PhysicsObject.cs" />
     <Compile Include="Assets\Scripts\Moving Objects\RollingBoulder.cs" />
     <Compile Include="Assets\Scripts\Moving Objects\Slime.cs" />
     <Compile Include="Assets\Scripts\NewMapMenu.cs" />
+    <Compile Include="Assets\Scripts\RoomEditor.cs" />
     <Compile Include="Assets\Scripts\RoomModel.cs" />
     <Compile Include="Assets\Scripts\SaveLoadItem.cs" />
     <Compile Include="Assets\Scripts\SaveLoadMenu.cs" />

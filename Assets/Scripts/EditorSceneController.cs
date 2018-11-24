@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class EditorSceneController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static EditorSceneController instance;
+    public Camera gameCamera;
+
+    public EditorMap mMap;
+
+    void Start()
+    {
+        Application.targetFrameRate = 60;
+
+        //player2.GetComponent<SpriteRenderer>().color = Color.gray;
+
+        NewMap();
+
+    }
+
+    public void NewMap()
+    {
+        mMap.Init();
+    }
 }

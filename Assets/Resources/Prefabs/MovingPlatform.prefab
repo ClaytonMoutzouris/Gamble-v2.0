@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mType: 3
+  mCollidesWith: 010000000200000004000000
   mOldPosition: {x: 0, y: 0}
   mSlopeWallHeight: 0
   mPosition: {x: 0, y: 0}
@@ -101,6 +102,10 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 0
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
     leftTile:
       x: 0
       y: 0

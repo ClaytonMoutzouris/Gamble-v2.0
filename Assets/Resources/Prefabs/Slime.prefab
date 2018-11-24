@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mType: 4
+  mCollidesWith: 01000000030000000500000006000000
   mOldPosition: {x: 0, y: 0}
   mSlopeWallHeight: 0
   mPosition: {x: 445.0164, y: 318.902}
@@ -101,6 +102,10 @@ MonoBehaviour:
     tmpIgnoresOneWay: 0
     tmpSticksToSlope: 0
     oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
     leftTile:
       x: 0
       y: 0
@@ -123,6 +128,17 @@ MonoBehaviour:
   mSpriteDepth: -1
   mTransform: {fileID: 4516062173263090}
   mMovingSpeed: 0
+  mHitbox:
+    center: {x: 0, y: 0, z: 0}
+    halfSize: {x: 0, y: 0, z: 0}
+    offset: {x: 0, y: 0, z: 0}
+    baseOffset: {x: 0, y: 0, z: 0}
+    baseHalfSize: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    type: 0
+    rotation: 0
+    isCircle: 0
+    flipped: 0
 --- !u!212 &212171719442141220
 SpriteRenderer:
   m_ObjectHideFlags: 1

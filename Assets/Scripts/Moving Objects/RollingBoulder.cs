@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class RollingBoulder : MovingObject
+public class RollingBoulder : PhysicsObject
 {
     public float mMovingSpeed = 1;
     public float mMaxMoveSpeed = 150.0f;

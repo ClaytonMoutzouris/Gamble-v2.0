@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class FallingRock : MovingObject
+public class FallingRock : PhysicsObject
 {
     public bool isTriggered = false;
     public float mTriggerTime = 5.0f;

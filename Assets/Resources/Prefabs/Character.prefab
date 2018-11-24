@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mType: 0
+  mCollidesWith: 03000000040000000500000006000000
   mOldPosition: {x: 0, y: 0}
   mSlopeWallHeight: 0
   mPosition: {x: 0, y: 0}
@@ -238,6 +239,7 @@ MonoBehaviour:
     onLadder: 0
     isClimbing: 0
     isBounce: 0
+    onDoor: 0
     leftTile:
       x: 0
       y: 0
@@ -266,6 +268,7 @@ MonoBehaviour:
   mWalkSfxTimer: 0
   mPlayerIndex: 0
   mAnimator: {fileID: 9507910}
+  colorPallete: []
   mCurrentState: 0
   mJumpSpeed: 0
   mWalkSpeed: 0
@@ -277,6 +280,8 @@ MonoBehaviour:
   mClimbTile:
     x: 0
     y: 0
+  mExitDoorTimer: 0
+  mTimeToExit: 1
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
 --- !u!120 &12013634

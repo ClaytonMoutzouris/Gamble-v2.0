@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Character : MovingObject
+public class Character : PhysicsObject
 {
     [System.Serializable]
     public enum CharacterState

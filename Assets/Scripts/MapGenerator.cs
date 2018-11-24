@@ -8,7 +8,7 @@ public enum Direction { Left, Up, Right, Down };
 
 public static class MapGenerator {
 
-    
+    static List<TileType[,]> RoomDatabase;
 
     static List<MapChunk> BasicPath()
     {
@@ -128,6 +128,84 @@ public static class MapGenerator {
         return tiles;
     }
 
+    static TileType[,] GetRandomRoom2()
+    {
+        string[] paths =
+            Directory.GetFiles(Application.dataPath+"/Rooms", "*.room");
+
+        int r = Random.Range(0, paths.Length);
+
+        TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        //string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
+        {
+            int header = reader.ReadInt32();
+            if (header == 0)
+            {
+                for (int x = 0; x < Constants.cMapChunkSizeX; x++)
+                {
+                    for (int y = 0; y < Constants.cMapChunkSizeY; y++)
+                    {
+                        temp[x, y] = (TileType)reader.ReadByte();
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Unknown room format " + header);
+            }
+
+        }
+
+        return temp;
+    }
+
+    static void LoadRooms()
+    {
+        //TileType[,] tiles = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        RoomDatabase = new List<TileType[,]>();
+        string[] paths =
+            Directory.GetFiles(Application.persistentDataPath, "*.room");
+        
+
+        foreach(string room in paths)
+        {
+            Debug.Log(room);
+            if (!File.Exists(room))
+            {
+                Debug.LogError("File does not exist " + room);
+                return;
+            } else
+            {
+                Debug.Log("File Exists");
+            }
+
+            TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+            //string path = Path.Combine(Application.persistentDataPath, "test.map");
+            using (BinaryReader reader = new BinaryReader(File.OpenRead(room)))
+            {
+                int header = reader.ReadInt32();
+                if (header == 0)
+                {
+                    for (int x = 0; x < Constants.cMapChunkSizeX; x++)
+                    {
+                        for (int y = 0; y < Constants.cMapChunkSizeY; y++)
+                        {
+                            temp[x, y] = (TileType)reader.ReadByte();
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Unknown room format " + header);
+                }
+
+                RoomDatabase.Add(temp);
+            }
+        }
+        
+    }
+
     //This is for creating the initial path of rooms
     static List<Direction> GetLegalDirections(Vector2i currPoint, Vector2i prevPoint)
     {
@@ -205,27 +283,30 @@ public static class MapGenerator {
     public static MapData GenerateMap()
     {
         MapData map = new MapData();
-
-
+        LoadRooms();
+        
         for (int x = 0; x < Constants.cMapChunksX; x++)
         {
             for (int y = 0; y < Constants.cMapChunksY; y++)
             {
-                map.rooms[x, y].tiles = GetRandomRoom();
+                map.rooms[x, y].tiles = GetRandomRoom2();
             }
         }
 
-        for (int x = 0; x < Constants.cMapWidth; x++)
+        for (int i = 0; i < Constants.cMapWidth; i++)
         {
-            for (int y = 0; y < Constants.cMapWidth; y++)
+            for (int j = 0; j < Constants.cMapHeight; j++)
             {
-                if(x == 0 || y == 0 || x == Constants.cMapWidth - 1 || y == Constants.cMapWidth - 1)
+                
+                if(j == 0 || i == 0 || j == Constants.cMapWidth - 1 || i == Constants.cMapHeight - 1)
                 {
-                    map.SetTile(x,y,TileType.Block);
-                } 
-
+                    //Debug.Log("X: " + x + ", Y: " + y);
+                    map.SetTile(j,i, TileType.Block);
+                }
             }
+            
         }
+
 
         map.startTile = GetStartTile(map);
         AddDoorTile(map);
