@@ -43,7 +43,6 @@ public class Slime : PhysicsObject {
 
         mAABB.HalfSize = new Vector2(10.0f, 5.0f);
         mAABB.Center = mPosition;
-        mSlopeWallHeight = 0;
         mMovingSpeed = 50.0f;
         mIsKinematic = false;
         int r = Random.Range(0, 2);
@@ -58,7 +57,7 @@ public class Slime : PhysicsObject {
 
     }
 
-    public void CustomUpdate()
+    public override void CustomUpdate()
     {
         if (!mPS.pushesBottom)
         {
@@ -78,7 +77,9 @@ public class Slime : PhysicsObject {
             mSpeed.x = mMovingSpeed;
         }
 
-        UpdatePhysics();
+        //This is just a test, probably dont need to do it this way
+        base.CustomUpdate();
+        //UpdatePhysics();
 
         //make sure the hitbox follows the object
         mHitbox.Center = mAABB.Center;

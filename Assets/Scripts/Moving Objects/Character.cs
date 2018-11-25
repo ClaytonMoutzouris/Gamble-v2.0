@@ -114,7 +114,6 @@ public class Character : PhysicsObject
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
-        mSlopeWallHeight = Constants.cSlopeWallHeight;
 
         mAABB.OffsetY = mAABB.HalfSizeY;
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
@@ -148,13 +147,13 @@ public class Character : PhysicsObject
     public void Jump()
     {
         mSpeed.y = mJumpSpeed;
-        mPS.tmpSticksToSlope = false;
         mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
         mCurrentState = CharacterState.Jump;
     }
 
-    public void CustomUpdate()
+    public override void CustomUpdate()
     {
+
         switch (mCurrentState)
         {
             case CharacterState.Stand:
@@ -162,7 +161,22 @@ public class Character : PhysicsObject
                 mWalkSfxTimer = cWalkSfxTime;
                 mAnimator.Play("Stand");
 
-                mSpeed = Vector2.zero;
+                if (!mPS.pushesBottom)
+                {
+                    mCurrentState = CharacterState.Jump;
+                    break;
+                }
+
+                if (mPS.onIce || mPS.isBounce)
+                {
+                   
+                }
+                else
+                { 
+                    mSpeed = Vector2.zero;
+                }
+
+                
 
                 if (!mPS.pushesBottom)
                 {
@@ -183,8 +197,15 @@ public class Character : PhysicsObject
                 }
 
                 if (KeyState(KeyInput.GoDown))
+                {
                     mPS.tmpIgnoresOneWay = true;
-
+                    ItemObject item = CheckForItems();
+                    if (item != null)
+                    {
+                        Debug.Log("You picked up " + item.name);
+                        mGame.FlagObjectForRemoval(item);
+                    }
+                }
                 if (KeyState(KeyInput.Climb) )
                 {
                     if (mPS.onLadder)
@@ -192,6 +213,8 @@ public class Character : PhysicsObject
                         mSpeed = Vector2.zero;
                         mPS.isClimbing = true;
                         mCurrentState = CharacterState.Climbing;
+                        mIgnoresGravity = true;
+
                         break;
                     }
 
@@ -227,23 +250,34 @@ public class Character : PhysicsObject
                 if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
                 {
                     mCurrentState = CharacterState.Stand;
-                    mSpeed = Vector2.zero;
+                    //mSpeed = Vector2.zero;
                     break;
                 }
                 else if (KeyState(KeyInput.GoRight))
                 {
                     if (mPS.pushesRightTile)
+                    {
                         mSpeed.x = 0.0f;
+                    }
                     else
-                        mSpeed.x = mWalkSpeed;
+                    {
+                       
+                            mSpeed.x = mWalkSpeed;
+                        
+                    }
                     ScaleX = Mathf.Abs(ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
                     if (mPS.pushesLeftTile)
+                    {
                         mSpeed.x = 0.0f;
+                    }
                     else
-                        mSpeed.x = -mWalkSpeed;
+                    {
+                         mSpeed.x = -mWalkSpeed;
+                    }
+                
                     ScaleX = -Mathf.Abs(ScaleX);
                 }
 
@@ -267,12 +301,14 @@ public class Character : PhysicsObject
                     mSpeed = Vector2.zero;
                     mPS.isClimbing = true;
                     mCurrentState = CharacterState.Climbing;
+                    mIgnoresGravity = true;
+
                     break;
                 }
 
                 break;
             case CharacterState.Jump:
-
+                mIgnoresGravity = false;
                 ++mFramesFromJumpStart;
 
                 if (mFramesFromJumpStart <= Constants.cJumpFramesThreshold)
@@ -286,11 +322,11 @@ public class Character : PhysicsObject
                 mWalkSfxTimer = cWalkSfxTime;
 
                 mAnimator.Play("Jump");
-
+                /*
                 mSpeed.y += Constants.cGravity * Time.deltaTime;
 
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
-
+                */
                 if (!KeyState(KeyInput.Jump) && mSpeed.y > 0.0f && !mPS.isBounce)
                 {
                     mSpeed.y = Mathf.Min(mSpeed.y, 200.0f);
@@ -324,7 +360,7 @@ public class Character : PhysicsObject
                     if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
                     {
                         mCurrentState = CharacterState.Stand;
-                        mSpeed = Vector2.zero;
+                        //mSpeed = Vector2.zero;
                         mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     }
                     else	//either go right or go left are pressed so we change the state to walk
@@ -397,6 +433,7 @@ public class Character : PhysicsObject
 
                                 //finally grab the edge
                                 mCurrentState = CharacterState.GrabLedge;
+                                mIgnoresGravity = true;
                                 ScaleX *= -1;
                                 mAnimator.Play("GrabLedge");
                                 mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
@@ -418,14 +455,16 @@ public class Character : PhysicsObject
                     mSpeed = Vector2.zero;
                     mPS.isClimbing = true;
                     mCurrentState = CharacterState.Climbing;
+                    mIgnoresGravity = true;
+
                     break;
                 }
 
                 break;
 
             case CharacterState.GrabLedge:
-
                 mAnimator.Play("GrabLedge");
+                mIgnoresGravity = true;
 
                 bool ledgeOnLeft = mLedgeTile.x * Map.cTileSize < mPosition.x;
                 bool ledgeOnRight = !ledgeOnLeft;
@@ -515,6 +554,17 @@ public class Character : PhysicsObject
                 }
                 break;
         }
+        /*
+        if(mSpeed.x > Constants.cMaxWalkSpeed)
+        {
+
+        }else if(mSpeed.x < -Constants.cMaxWalkSpeed)
+        {
+
+        }
+        */
+        //mSpeed.x = Mathf.Clamp(mSpeed.x, -Constants.cMaxWalkSpeed, Constants.cMaxWalkSpeed);
+       
 
         //if (mAllCollidingObjects.Count > 0)
         //    GetComponent<SpriteRenderer>().color = Color.black;
@@ -530,5 +580,19 @@ public class Character : PhysicsObject
             mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
 
         UpdatePrevInputs();
+    }
+
+    public ItemObject CheckForItems()
+    {
+        for (int i = 0; i < mAllCollidingObjects.Count; ++i)
+        {
+            if(mAllCollidingObjects[i].other.mType == ObjectType.Item)
+            {
+                Debug.Log("Found Item at index " + i);
+                return (ItemObject)mAllCollidingObjects[i].other;
+            }
+        }
+
+        return null;
     }
 }

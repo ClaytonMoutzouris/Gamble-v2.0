@@ -244,7 +244,7 @@ public class Map : MonoBehaviour
            || y < 0 || y >= mHeight)
             return false;
 
-        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop || mTileData[x,y] == TileType.IceBlock || mTileData[x, y] == TileType.ConveyorLeft || mTileData[x, y] == TileType.ConveyorRight);
     }
 
     public bool IsGround(Vector2i pos)
@@ -259,7 +259,7 @@ public class Map : MonoBehaviour
             || y < 0 || y >= mHeight)
             return true;
 
-        return (mTileData[x, y] == TileType.Block);
+        return (mTileData[x, y] == TileType.Block || mTileData[x,y] == TileType.IceBlock);
     }
 
     public bool IsEmpty(int x, int y)

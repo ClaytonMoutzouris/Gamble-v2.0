@@ -12,6 +12,9 @@ public enum TileType
     Ladder,
     LadderTop,
     Door,
+    IceBlock,
+    ConveyorRight,
+    ConveyorLeft,
     Count,
 }
 

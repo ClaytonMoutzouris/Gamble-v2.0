@@ -12,6 +12,7 @@ public enum ObjectType
     Enemy,
     FallingRock,
     RollingBoulder,
+    Item,
 }
 
 public class PhysicsObject : MonoBehaviour 
@@ -23,7 +24,6 @@ public class PhysicsObject : MonoBehaviour
     /// </summary>
     public Vector2 mOldPosition;
 
-    public int mSlopeWallHeight;
     /// <summary>
     /// The current position.
     /// </summary>
@@ -70,102 +70,12 @@ public class PhysicsObject : MonoBehaviour
 	/// The previous speed in pixels/second.
 	/// </summary>
 	public Vector2 mOldSpeed;
-
-    [Serializable]
-    public struct PositionState
-    {
-        public bool pushesRight;
-        public bool pushesLeft;
-        public bool pushesBottom;
-        public bool pushesTop;
-
-        public bool pushedTop;
-        public bool pushedBottom;
-        public bool pushedRight;
-        public bool pushedLeft;
-
-        public bool pushedLeftObject;
-        public bool pushedRightObject;
-        public bool pushedBottomObject;
-        public bool pushedTopObject;
-
-        public bool pushesLeftObject;
-        public bool pushesRightObject;
-        public bool pushesBottomObject;
-        public bool pushesTopObject;
-
-        public bool pushedLeftTile;
-        public bool pushedRightTile;
-        public bool pushedBottomTile;
-        public bool pushedTopTile;
-
-        public bool pushesLeftTile;
-        public bool pushesRightTile;
-        public bool pushesBottomTile;
-        public bool pushesTopTile;
-
-        public bool onOneWay;
-        public bool tmpIgnoresOneWay;
-        public bool tmpSticksToSlope;
-        public int oneWayY;
-        public bool onLadder;
-        public bool isClimbing;
-        public bool isBounce;
-        public bool onDoor;
-
-        public Vector2i leftTile;
-        public Vector2i rightTile;
-        public Vector2i topTile;
-        public Vector2i bottomTile;
-
-        public void Reset()
-        {
-            leftTile = rightTile = topTile = bottomTile = new Vector2i(-1, -1);
-            oneWayY = -1;
-
-            pushesRight = false;
-            pushesLeft = false;
-            pushesBottom = false;
-            pushesTop = false;
-
-            pushedTop = false;
-            pushedBottom = false;
-            pushedRight = false;
-            pushedLeft = false;
-
-            pushedLeftObject = false;
-            pushedRightObject = false;
-            pushedBottomObject = false;
-            pushedTopObject = false;
-
-            pushesLeftObject = false;
-            pushesRightObject = false;
-            pushesBottomObject = false;
-            pushesTopObject = false;
-
-            pushedLeftTile = false;
-            pushedRightTile = false;
-            pushedBottomTile = false;
-            pushedTopTile = false;
-
-            pushesLeftTile = false;
-            pushesRightTile = false;
-            pushesBottomTile = false;
-            pushesTopTile = false;
-
-            onOneWay = false;
-            onLadder = false;
-            onDoor = false;
-            isClimbing = false;
-            isBounce = false;
-
-        }
-    }
     /// <summary>
     /// The AABB for collision queries.
     /// </summary>
     public AABB mAABB;
 
+    [SerializeField]
     public PositionState mPS;
 
     public Game mGame;
@@ -175,8 +85,9 @@ public class PhysicsObject : MonoBehaviour
 
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
-    public bool mSticksToSlope = true;
     public bool mIsKinematic = false;
+    public bool mToRemove = false;
+    public bool mIgnoresGravity = false;
 
     [NonSerialized]
     public List<Vector2i> mAreas = new List<Vector2i>();
@@ -307,10 +218,15 @@ public class PhysicsObject : MonoBehaviour
                     if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
+                case TileType.Bounce:
+                case TileType.ConveyorLeft:
+                case TileType.ConveyorRight:
+                case TileType.IceBlock:
                 case TileType.Block:
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
                     return true;
+
             }
         }
 
@@ -356,6 +272,10 @@ public class PhysicsObject : MonoBehaviour
                     if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
+                case TileType.Bounce:
+                case TileType.IceBlock:
+                case TileType.ConveyorLeft:
+                case TileType.ConveyorRight:
                 case TileType.Block:
                     state.pushesLeftTile = true;
                     state.leftTile = new Vector2i(bottomLeftTile.x, y);
@@ -392,6 +312,10 @@ public class PhysicsObject : MonoBehaviour
                 case TileType.Ladder:
                     //mPS.onLadder = true;
                     break;
+                case TileType.Bounce:
+                case TileType.ConveyorLeft:
+                case TileType.ConveyorRight:
+                case TileType.IceBlock:
                 case TileType.Block:
                     state.pushesTopTile = true;
                     state.topTile = new Vector2i(x, topRightTile.y);
@@ -474,17 +398,40 @@ public class PhysicsObject : MonoBehaviour
                         continue;
                     }
 
-                    if (mSpeed.y < 0)
-                    {
-                        //flag this to be dealt with after we've checked other tiles we're colliding with
-                        bounced = true;
-                    }
-                    //state.pushesBottomTile = true;
-                    //state.bottomTile = new Vector2i(x, bottomleftTile.y);
-                    break;
+
+                    //flag this to be dealt with after we've checked other tiles we're colliding with
+                    mPS.isBounce = true;
+                    mSpeed.y = Constants.cBounceSpeed;
+
+                    state.onOneWay = false;
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    return true;
                 case TileType.Ladder:
                     //mPS.onLadder = true;
                     break;
+                case TileType.ConveyorLeft:
+
+                    state.onOneWay = false;
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    state.onConveyorLeft = true;
+                    return true;
+                case TileType.ConveyorRight:
+
+                    state.onOneWay = false;
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    state.onConveyorRight = true;
+                    return true;
+                case TileType.IceBlock:
+
+                    state.onOneWay = false;
+                    state.pushesBottomTile = true;
+                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
+                    state.onIce = true;
+                    return true;
+                    
                 case TileType.Block:
                     state.onOneWay = false;
                     state.pushesBottomTile = true;
@@ -498,13 +445,6 @@ public class PhysicsObject : MonoBehaviour
         if (spiked)
         {
             Crush();
-        }
-
-        //Stepping on the bounce pad launches you
-        if (bounced)
-        {
-            mPS.isBounce = true;
-            mSpeed.y = Constants.cBounceSpeed;
         }
 
         return false;
@@ -655,7 +595,9 @@ public class PhysicsObject : MonoBehaviour
 
         mPS.onLadder = false;
         mPS.onDoor = false;
-
+        mPS.onIce = false;
+        mPS.onConveyorLeft = false;
+        mPS.onConveyorRight = false;
 
         if(mSpeed.y < 0)
         {
@@ -678,6 +620,10 @@ public class PhysicsObject : MonoBehaviour
            // Debug.Log("Bot: " + mPS.pushesBottomTile + "Top: " + mPS.pushesTopTile + "Left: " + mPS.pushesLeftTile + "Right: " + mPS.pushesRightTile);
         }
         mOldSpeed = mSpeed;
+        //This is the cutoff of updating
+        //Lets try applying gravity here
+        if(!mIgnoresGravity)
+        ApplyGravity();
 
         if (mPS.pushesBottomTile)
             mSpeed.y = Mathf.Max(0.0f, mSpeed.y);
@@ -687,6 +633,10 @@ public class PhysicsObject : MonoBehaviour
             mSpeed.x = Mathf.Max(0.0f, mSpeed.x);
         if (mPS.pushesRightTile)
             mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
+
+        /* Here is where we should update tile physics changes */
+        HandleTilePhysics();
+
 
         //save the position to the oldPosition vector
         mOldPosition = mPosition;
@@ -706,6 +656,13 @@ public class PhysicsObject : MonoBehaviour
         mAABB.Center = mPosition;
     }
 
+    public void ApplyGravity()
+    {
+        mSpeed.y += Constants.cGravity * Time.deltaTime;
+
+        mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+    }
+
     public void TryAutoMount(PhysicsObject platform)
     {
         if (mMountParent == null)
@@ -716,9 +673,28 @@ public class PhysicsObject : MonoBehaviour
         }
     }
 
+    public void HandleTilePhysics()
+    {
+        if (mPS.onIce)
+        {
+            //mSpeed.x = mSpeed.x * Time.deltaTime;
+        }
+        else if (mPS.onConveyorLeft)
+        {
+            mSpeed.x += -Constants.cConveyorSpeed;
+        }
+        else if (mPS.onConveyorRight)
+        {
+            mSpeed.x +=  Constants.cConveyorSpeed;
+        }
+
+        mSpeed.x = Mathf.Clamp(mSpeed.x, -Constants.cMaxWalkSpeed, Constants.cMaxWalkSpeed);
+
+    }
+
     public void Crush()
     {
-        //Kinematic things cant be spiked
+        //Kinematic things cant be spiked or crushed
         if (mIsKinematic)
             return;
         //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
@@ -758,6 +734,7 @@ public class PhysicsObject : MonoBehaviour
             var other = mAllCollidingObjects[i].other;
             var data = mAllCollidingObjects[i];
             var overlap = data.overlap - offsetSum;
+
             if (!mCollidesWith.Contains(other.mType))
                 continue;
 
@@ -890,8 +867,7 @@ public class PhysicsObject : MonoBehaviour
         mPS.pushesLeft = mPS.pushesLeftTile || mPS.pushesLeftObject;
         mPS.pushesTop = mPS.pushesTopTile || mPS.pushesTopObject;
 
-        if (!mPS.tmpSticksToSlope && mPS.pushesTop || mSpeed.y <= 0.0f)
-            mPS.tmpSticksToSlope = true;
+        
 
         //update the aabb
         mAABB.Center = mPosition;
@@ -900,4 +876,13 @@ public class PhysicsObject : MonoBehaviour
         transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
         transform.localScale = new Vector3(ScaleX, ScaleY, 1.0f);
     }
+
+    public virtual void CustomUpdate()
+    {
+
+        UpdatePhysics();
+        //Default Custom Update
+        //...Do nothing lol
+    }
+
 }

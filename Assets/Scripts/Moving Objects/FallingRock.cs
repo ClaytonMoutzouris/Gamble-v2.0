@@ -33,7 +33,6 @@ public class FallingRock : PhysicsObject
 
         mAABB.HalfSize = new Vector2(15.0f, 15.0f);
         mAABB.Center = mPosition;
-        mSlopeWallHeight = 0;
         mSpeed = Vector2.zero;
             mIsKinematic = true;
         
@@ -44,17 +43,11 @@ public class FallingRock : PhysicsObject
 
     }
 
-    public void CustomUpdate()
+    public override void CustomUpdate()
     {
         if (isTriggered)
         {
-            mSpeed.y = Constants.cMaxFallingSpeed;
-        } else if(mTriggerTime > mTimeToTrigger)
-        {
-            mTimeToTrigger += Time.deltaTime;
-        } else
-        {
-            isTriggered = true;
+            mIgnoresGravity = false;
         }
 
         UpdatePhysics();

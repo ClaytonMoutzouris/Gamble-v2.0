@@ -78,11 +78,11 @@ public class Game : MonoBehaviour
 
     void HandleInputs()
     {
-        inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.RightArrow);
-        inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.LeftArrow);
-        inputs[(int)KeyInput.GoDown] = Input.GetKey(KeyCode.DownArrow);
-        inputs[(int)KeyInput.Climb] = Input.GetKey(KeyCode.UpArrow);
-        inputs[(int)KeyInput.Jump] = Input.GetKey(KeyCode.Space);
+        inputs[(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
+        inputs[(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
+        inputs[(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
+        inputs[(int)KeyInput.Climb] = Input.GetAxisRaw("Vertical") > 0;
+        inputs[(int)KeyInput.Jump] = Input.GetButton("Jump");
 
         p2inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
         p2inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
@@ -118,46 +118,44 @@ public class Game : MonoBehaviour
         mObjects.Add(obj);
         return mObjects.Count - 1;
     }
+    public void FlagObjectForRemoval(PhysicsObject obj)
+    {
+        obj.mToRemove = true;
+    }
+
+    public void RemoveFromUpdateList(PhysicsObject obj)
+    {
+        mObjects.Remove(obj);
+        int index = 0;
+        foreach(PhysicsObject p in mObjects)
+        {
+            p.mUpdateId = index;
+            index++;
+        }
+    }
 
     void FixedUpdate()
     {
         for (int i = 0; i < mObjects.Count; ++i)
         {
-            switch (mObjects[i].mType)
-            {
-                case ObjectType.Player:
-                
-                case ObjectType.NPC:
-                    ((Character)mObjects[i]).CustomUpdate();
-                    mMap.UpdateAreas(mObjects[i]);
-                    mObjects[i].mAllCollidingObjects.Clear();
-                    break;
-                case ObjectType.Enemy:
-                    ((Slime)mObjects[i]).CustomUpdate();
-                    mMap.UpdateAreas(mObjects[i]);
-                    mObjects[i].mAllCollidingObjects.Clear();
-                    break;
-                case ObjectType.MovingPlatform:
-                    ((MovingPlatform)mObjects[i]).CustomUpdate();
-                    mMap.UpdateAreas(mObjects[i]);
-                    mObjects[i].mAllCollidingObjects.Clear();
-                    break;
-                case ObjectType.FallingRock:
-                    ((FallingRock)mObjects[i]).CustomUpdate();
-                    mMap.UpdateAreas(mObjects[i]);
-                    mObjects[i].mAllCollidingObjects.Clear();
-                    break;
-                case ObjectType.RollingBoulder:
-                    ((RollingBoulder)mObjects[i]).CustomUpdate();
-                    mMap.UpdateAreas(mObjects[i]);
-                    mObjects[i].mAllCollidingObjects.Clear();
-                    break;
-            }
+            mObjects[i].CustomUpdate();
+            mMap.UpdateAreas(mObjects[i]);
+            mObjects[i].mAllCollidingObjects.Clear();
         }
 
         mMap.CheckCollisions();
 
         for (int i = 0; i < mObjects.Count; ++i)
             mObjects[i].UpdatePhysicsP2();
+
+        for (int i = mObjects.Count-1; i >= 0; i--)
+        {
+            if (mObjects[i].mToRemove)
+            {
+                Destroy(mObjects[i].gameObject);
+                RemoveFromUpdateList(mObjects[i]);
+                mMap.RemoveObjectFromAreas(mObjects[i]);
+            }
+        }
     }
 }

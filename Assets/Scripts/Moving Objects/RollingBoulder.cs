@@ -22,7 +22,6 @@ public class RollingBoulder : PhysicsObject
 
         mAABB.HalfSize = new Vector2(31.0f, 31.0f);
         mAABB.Center = mPosition;
-        mSlopeWallHeight = 0;
         mIsKinematic = true;
         int r = Random.Range(0, 2);
         if (r == 1)
@@ -42,7 +41,7 @@ public class RollingBoulder : PhysicsObject
 
     }
 
-    public void CustomUpdate()
+    public override void CustomUpdate()
     {
         if (mMovingSpeed < mMaxMoveSpeed)
             mMovingSpeed += Time.deltaTime * 100;

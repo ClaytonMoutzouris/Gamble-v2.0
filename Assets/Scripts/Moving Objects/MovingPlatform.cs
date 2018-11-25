@@ -24,7 +24,6 @@ public class MovingPlatform : PhysicsObject
 
         mAABB.HalfSize = new Vector2(30.0f, 8.0f);
         mAABB.Center = mPosition;
-        mSlopeWallHeight = 0;
         mMovingSpeed = 100.0f;
         mIsKinematic = true;
         int r = Random.Range(0, 2);
@@ -45,7 +44,7 @@ public class MovingPlatform : PhysicsObject
         
     }
 
-    public void CustomUpdate()
+    public override void CustomUpdate()
     {
         if (mPS.pushesRightTile && !mPS.pushesBottomTile)
             mSpeed.x = -mMovingSpeed;
