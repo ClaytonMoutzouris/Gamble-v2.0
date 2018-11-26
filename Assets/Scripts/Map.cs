@@ -86,10 +86,15 @@ public class Map : MonoBehaviour
     {
         var area = mObjectsInArea[areaIndex.x, areaIndex.y];
 
-        if (Debug.isDebugBuild && area.Count == 0)
+        if (obj.mToRemove)
+        {
+            Debug.Log("This object is flagged for removal");
+        }
+
+        if (area.Count == 0)
         {
             Debug.Log("Removing object from an area that doesn't contain any objects, areaIndex: " + areaIndex.x + ", " + areaIndex.y + ", objIndexInArea: " + objIndexInArea);
-            Debug.Break();
+            //Debug.Break();
         }
 
         //swap the last item with the one we are removing

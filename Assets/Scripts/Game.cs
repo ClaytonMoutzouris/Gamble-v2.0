@@ -95,10 +95,7 @@ public class Game : MonoBehaviour
     {
         HandleInputs();
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            mMap.DebugPrintAreas();
-        }
+        
 
         //UpdateCursor();
 
@@ -136,6 +133,8 @@ public class Game : MonoBehaviour
 
     void FixedUpdate()
     {
+        
+
         for (int i = 0; i < mObjects.Count; ++i)
         {
             mObjects[i].CustomUpdate();
@@ -143,19 +142,29 @@ public class Game : MonoBehaviour
             mObjects[i].mAllCollidingObjects.Clear();
         }
 
-        mMap.CheckCollisions();
-
-        for (int i = 0; i < mObjects.Count; ++i)
-            mObjects[i].UpdatePhysicsP2();
-
-        for (int i = mObjects.Count-1; i >= 0; i--)
+        for (int i = mObjects.Count - 1; i >= 0; i--)
         {
             if (mObjects[i].mToRemove)
             {
+                Debug.Log("Removing " + mObjects[i].name + " at index " + i);
                 Destroy(mObjects[i].gameObject);
-                RemoveFromUpdateList(mObjects[i]);
+                //THIS VVVVV HAS TO BE REMOVED BEFORE..
                 mMap.RemoveObjectFromAreas(mObjects[i]);
+                //THIS!!!! OTHERWISE IT FUCKS SHIT UP
+                //FUCK THIS ERROR IT TOOK ME SO GODDAMN LONG TO FIX
+                RemoveFromUpdateList(mObjects[i]);
+                
             }
         }
+
+        mMap.CheckCollisions();
+
+        for (int i = 0; i < mObjects.Count; ++i)
+        {
+            //if(!mObjects[i].mToRemove)
+            mObjects[i].UpdatePhysicsP2();
+        }
+
+        
     }
 }

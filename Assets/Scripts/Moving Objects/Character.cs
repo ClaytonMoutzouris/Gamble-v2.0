@@ -199,11 +199,15 @@ public class Character : PhysicsObject
                 if (KeyState(KeyInput.GoDown))
                 {
                     mPS.tmpIgnoresOneWay = true;
-                    ItemObject item = CheckForItems();
-                    if (item != null)
+                    if (Pressed(KeyInput.GoDown))
                     {
-                        Debug.Log("You picked up " + item.name);
-                        mGame.FlagObjectForRemoval(item);
+                        ItemObject item = CheckForItems();
+                        if (item != null)
+                        {
+                            Debug.Log("You picked up " + item.name);
+                            //mAllCollidingObjects.Remove(item);
+                            mGame.FlagObjectForRemoval(item);
+                        }
                     }
                 }
                 if (KeyState(KeyInput.Climb) )
@@ -584,11 +588,12 @@ public class Character : PhysicsObject
 
     public ItemObject CheckForItems()
     {
+        //ItemObject item = null;
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
+            Debug.Log(mAllCollidingObjects[i].other.name);
             if(mAllCollidingObjects[i].other.mType == ObjectType.Item)
             {
-                Debug.Log("Found Item at index " + i);
                 return (ItemObject)mAllCollidingObjects[i].other;
             }
         }

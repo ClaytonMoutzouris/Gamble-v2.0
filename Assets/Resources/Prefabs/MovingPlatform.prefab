@@ -52,8 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc078032eabc7a542b955df4c8251b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mType: 3
-  mCollidesWith: 010000000200000004000000
+  mType: 6
+  mCollidesWith: 0100000002000000030000000400000005000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   mIgnoresOneWay: 1
   mOnOneWayPlatform: 0
   mIsKinematic: 1
+  mToRemove: 0
   mIgnoresGravity: 1
   mSpriteDepth: -1
   mTransform: {fileID: 4935694775006048}

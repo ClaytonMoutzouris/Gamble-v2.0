@@ -8,11 +8,10 @@ public enum ObjectType
     None,
     Player,
     NPC,
-    MovingPlatform,
     Enemy,
-    FallingRock,
-    RollingBoulder,
     Item,
+    Obstacle,
+    Platform,
 }
 
 public class PhysicsObject : MonoBehaviour 
@@ -646,9 +645,22 @@ public class PhysicsObject : MonoBehaviour
         if (mMountParent != null)
         {
             if (HasCollisionDataFor(mMountParent))
-                mOffset += mMountParent.mPosition - mMountParent.mOldPosition;
+            {
+                if (mType == ObjectType.Player)
+                    Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
+                Vector2 parentOffset = mMountParent.mPosition - mMountParent.mOldPosition;
+
+                //This is my hacky way of fixing sliding off of a parent if its moving into another object, maybe
+                if(parentOffset.x > 0 && !mMountParent.mPS.pushesRight || parentOffset.x < 0 && !mMountParent.mPS.pushesLeft)
+                {
+                    mOffset += mMountParent.mPosition - mMountParent.mOldPosition;
+                }
+
+            }
             else
+            {
                 mMountParent = null;
+            }
         }
 
         mPosition += RoundVector(mOffset + mReminder);
@@ -713,9 +725,10 @@ public class PhysicsObject : MonoBehaviour
 
     private void UpdatePhysicsResponse()
     {
+        
         if (mIsKinematic)
             return;
-
+        
         mPS.pushedBottomObject = mPS.pushesBottomObject;
         mPS.pushedRightObject = mPS.pushesRightObject;
         mPS.pushedLeftObject = mPS.pushesLeftObject;
@@ -735,7 +748,7 @@ public class PhysicsObject : MonoBehaviour
             var data = mAllCollidingObjects[i];
             var overlap = data.overlap - offsetSum;
 
-            if (!mCollidesWith.Contains(other.mType))
+            if (!mCollidesWith.Contains(other.mType) || other.mToRemove)
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
@@ -771,10 +784,14 @@ public class PhysicsObject : MonoBehaviour
                 continue;
             }
 
+            //The absolute speed of object 1
             Vector2 absSpeed1 = new Vector2(Mathf.Abs(data.pos1.x - data.oldPos1.x), Mathf.Abs(data.pos1.y - data.oldPos1.y));
-            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.pos2.x - data.oldPos2.x), Mathf.Abs(data.pos2.y - data.oldPos2.y));
-            Vector2 speedSum = absSpeed1 + absSpeed2;
 
+            //The absolute speed of object 2
+            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.pos2.x - data.oldPos2.x), Mathf.Abs(data.pos2.y - data.oldPos2.y));
+
+            Vector2 speedSum = absSpeed1 + absSpeed2;
+            //Debug.Log(name + " colliding with " + data.other.name + " obj1 speed: " + absSpeed1 + " obj2 speed: " + absSpeed2 + " speed sum: " + speedSum);
             
             float speedRatioX, speedRatioY;
 
@@ -797,6 +814,7 @@ public class PhysicsObject : MonoBehaviour
 
             if (smallestOverlap == Mathf.Abs(overlap.x))
             {
+                //Debug.Log(name + " colliding with " + data.other.name + " speed ratio: " + speedRatioX);
                 float offsetX = overlap.x * speedRatioX;
 
                 mOffset.x += offsetX;
@@ -831,8 +849,6 @@ public class PhysicsObject : MonoBehaviour
                     //We should set an error for overlap, here is the basic implementation
                     if (other.mIsKinematic && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                     {
-                        Debug.Log("Crush Overlap y" + overlap.y);
-                        Debug.Log("Crush Overlap x" + overlap.x);
                         
                         Crush();
                     }
@@ -854,13 +870,19 @@ public class PhysicsObject : MonoBehaviour
 
     public void UpdatePhysicsP2()
     {
+        //if (mType == ObjectType.Player) 
+        //Debug.Log(name + " Offset " + mOffset);
+
         mPosition -= RoundVector(mOffset + mReminder);
         mAABB.Center = mPosition;
 
         UpdatePhysicsResponse();
 
+
         if (mOffset != Vector2.zero)
+        {
             Move(mOffset, mSpeed, ref mPosition, ref mReminder, mAABB, ref mPS);
+        }
 
         mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
         mPS.pushesRight = mPS.pushesRightTile || mPS.pushesRightObject;

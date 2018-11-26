@@ -232,8 +232,9 @@ public static class MapGenerator {
     {
         Vector2i startTile = new Vector2i(1,1);
         int xr, yr;
-        int chunkX = Random.Range(0, Constants.cMapChunksX);
-        int chunkY = 0;
+        //int chunkX = Random.Range(0, Constants.cMapChunksX);
+        int chunkX = 3;
+        int chunkY = 3;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {

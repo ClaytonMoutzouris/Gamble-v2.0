@@ -32,7 +32,7 @@ public class MapData {
         xPosInChunk = x % Constants.cMapChunkSizeX;
         yPosInChunk = y % Constants.cMapChunkSizeY;
         if (t == TileType.Block)
-            Debug.Log("chunkx: " + chunkX + " chunky: " + chunkY + " xpos: " + xPosInChunk + " ypos: " + yPosInChunk);
+            //Debug.Log("chunkx: " + chunkX + " chunky: " + chunkY + " xpos: " + xPosInChunk + " ypos: " + yPosInChunk);
         rooms[chunkX, chunkY].tiles[xPosInChunk, yPosInChunk] = t;
     }
     

@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mType: 5
-  mCollidesWith: 010000000200000004000000
+  mCollidesWith: 0100000002000000030000000500000006000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
   mIsKinematic: 0
+  mToRemove: 0
   mIgnoresGravity: 1
   mSpriteDepth: -1
   mTransform: {fileID: 4065437662474560}

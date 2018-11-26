@@ -189,7 +189,6 @@ MonoBehaviour:
   mType: 0
   mCollidesWith: 03000000040000000500000006000000
   mOldPosition: {x: 0, y: 0}
-  mSlopeWallHeight: 0
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
@@ -207,58 +206,14 @@ MonoBehaviour:
     rotation: 0
     isCircle: 0
     flipped: 0
-  mPS:
-    pushesRight: 0
-    pushesLeft: 0
-    pushesBottom: 0
-    pushesTop: 0
-    pushedTop: 0
-    pushedBottom: 0
-    pushedRight: 0
-    pushedLeft: 0
-    pushedLeftObject: 0
-    pushedRightObject: 0
-    pushedBottomObject: 0
-    pushedTopObject: 0
-    pushesLeftObject: 0
-    pushesRightObject: 0
-    pushesBottomObject: 0
-    pushesTopObject: 0
-    pushedLeftTile: 0
-    pushedRightTile: 0
-    pushedBottomTile: 0
-    pushedTopTile: 0
-    pushesLeftTile: 0
-    pushesRightTile: 0
-    pushesBottomTile: 0
-    pushesTopTile: 0
-    onOneWay: 0
-    tmpIgnoresOneWay: 0
-    tmpSticksToSlope: 0
-    oneWayY: 0
-    onLadder: 0
-    isClimbing: 0
-    isBounce: 0
-    onDoor: 0
-    leftTile:
-      x: 0
-      y: 0
-    rightTile:
-      x: 0
-      y: 0
-    topTile:
-      x: 0
-      y: 0
-    bottomTile:
-      x: 0
-      y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
   mMountParent: {fileID: 0}
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
-  mSticksToSlope: 1
   mIsKinematic: 0
+  mToRemove: 0
+  mIgnoresGravity: 0
   mSpriteDepth: -1
   mTransform: {fileID: 418340}
   mHitWallSfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
