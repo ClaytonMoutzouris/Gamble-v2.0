@@ -232,6 +232,18 @@ public class Character : PhysicsObject
                         }
 
                     }
+
+                    if (Pressed(KeyInput.Climb))
+                    {
+                        Chest chest = CheckForChest();
+                        if (chest != null)
+                        {
+                            //Debug.Log("You picked up " + item.name);
+                            //mAllCollidingObjects.Remove(item);
+                            //mGame.FlagObjectForRemoval(item);
+                            chest.mOpen = true;
+                        }
+                    }
                 } else
                 {
                     mExitDoorTimer = 0;
@@ -591,10 +603,25 @@ public class Character : PhysicsObject
         //ItemObject item = null;
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
-            Debug.Log(mAllCollidingObjects[i].other.name);
+            //Debug.Log(mAllCollidingObjects[i].other.name);
             if(mAllCollidingObjects[i].other.mType == ObjectType.Item)
             {
                 return (ItemObject)mAllCollidingObjects[i].other;
+            }
+        }
+
+        return null;
+    }
+
+    public Chest CheckForChest()
+    {
+        //ItemObject item = null;
+        for (int i = 0; i < mAllCollidingObjects.Count; ++i)
+        {
+            //Debug.Log(mAllCollidingObjects[i].other.name);
+            if (mAllCollidingObjects[i].other.mType == ObjectType.Chest)
+            {
+                return (Chest)mAllCollidingObjects[i].other;
             }
         }
 

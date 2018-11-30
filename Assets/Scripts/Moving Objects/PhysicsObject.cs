@@ -12,6 +12,7 @@ public enum ObjectType
     Item,
     Obstacle,
     Platform,
+    Chest,
 }
 
 public class PhysicsObject : MonoBehaviour 
@@ -718,7 +719,7 @@ public class PhysicsObject : MonoBehaviour
 
     public void SetTilePosition(Vector2i tile)
     {
-        transform.position = mMap.GetMapTilePosition(tile);
+        transform.position = mMap.GetMapTilePosition(tile) + new Vector2(0, -(Map.cTileSize/2));
         mPosition = transform.position;
         mAABB.Center = mPosition;
     }
