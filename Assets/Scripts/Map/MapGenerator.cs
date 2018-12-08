@@ -259,8 +259,8 @@ public static class MapGenerator {
     {
         Vector2i doorTile = new Vector2i(99, 99);
         int xr, yr;
-        int chunkX = Random.Range(0, Constants.cMapChunksX);
-        int chunkY = 3;
+        int chunkX = 0;
+        int chunkY = 0;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
@@ -273,6 +273,7 @@ public static class MapGenerator {
                     {
                         map.SetTile(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y, TileType.Door);
                         //doorTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
+                        Debug.Log("Setting Door tile at " + x + "," + y);
                         return;
                     }
                 }

@@ -25,21 +25,16 @@ public class FallingRock : PhysicsObject
         }
     }
 
-    public void Init()
+    public override void Init()
     {
-        Vector2i temp = mMap.GetMapTileAtPoint(transform.position);
-        transform.position = mMap.GetMapTilePosition(temp);
-        mPosition = transform.position;
 
         mAABB.HalfSize = new Vector2(15.0f, 15.0f);
-        mAABB.Center = mPosition;
         mSpeed = Vector2.zero;
-            mIsKinematic = true;
+        mIsKinematic = true;
         
         Scale = new Vector2(1.0f, 1.0f);
 
-        mUpdateId = mGame.AddToUpdateList(this);
-
+        base.Init();
 
     }
 

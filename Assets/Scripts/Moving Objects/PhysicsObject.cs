@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+/* general object type
+ * 
+ * 
+ */
+
 public enum ObjectType
 {
     None,
@@ -906,6 +911,25 @@ public class PhysicsObject : MonoBehaviour
         UpdatePhysics();
         //Default Custom Update
         //...Do nothing lol
+    }
+
+    public virtual void Init()
+    {
+        //All the basics that every physics object needs upon initialization
+        Scale = Vector2.one;
+        mPosition = RoundVector(transform.position);
+        mAABB.Center = mPosition;
+        mAABB.OffsetY = mAABB.HalfSizeY;
+
+        //Check to see if we're in editorMode
+
+            mGame = Game.instance;
+            mMap = mGame.mMap;
+       
+
+        mUpdateId = mGame.AddToUpdateList(this);
+
+
     }
 
 }

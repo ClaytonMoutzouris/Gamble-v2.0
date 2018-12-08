@@ -324,7 +324,7 @@ public class Map : MonoBehaviour
     }
 
 
-    public void Init()
+    public virtual void Init()
     {
         mWidth = Constants.cMapWidth;
         mHeight = Constants.cMapHeight;
@@ -350,6 +350,11 @@ public class Map : MonoBehaviour
         mTileData = mMapData.GetMap();
 
         mTileMap.DrawMap(mTileData, mWidth, mHeight);
+    }
+
+    public void NewMap()
+    {
+
     }
 
     public void Save(BinaryWriter writer)

@@ -2,8 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+public enum GameMode
+{
+    Game,
+    Editor
+}
 public class Game : MonoBehaviour
 {
+    public GameMode mGameMode;
     public static Game instance;
     public Camera gameCamera;
     public Character player1;
@@ -34,6 +41,7 @@ public class Game : MonoBehaviour
     protected List<PhysicsObject> mObjects = new List<PhysicsObject>();
 
     public SpriteRenderer mMouseSprite;
+    public bool mMapChangeFlag = false;
 
     private void Awake()
     {
@@ -44,36 +52,56 @@ public class Game : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
-        //init player 1
-        inputs = new bool[(int)KeyInput.Count];
-        prevInputs = new bool[(int)KeyInput.Count];
 
-        player1.mGame = this;
-        player1.mMap = mMap;
-        player1.Init(inputs, prevInputs);
-        player1.mType = ObjectType.Player;
-        // player.Scale = Vector2.one * 1.5f;
 
-        //init player 2
-        p2inputs = new bool[(int)KeyInput.Count];
-        p2prevInputs = new bool[(int)KeyInput.Count];
+        switch (mGameMode)
+        {
+            case GameMode.Game:
+                NewGameMap();
 
-        player2.mGame = this;
-        player2.mMap = mMap;
-        player2.Init(p2inputs, p2prevInputs);
-        player2.mType = ObjectType.Player;
-        //player2.GetComponent<SpriteRenderer>().color = Color.gray;
+                //init player 1
+                inputs = new bool[(int)KeyInput.Count];
+                prevInputs = new bool[(int)KeyInput.Count];
 
-        NewMap();
 
+                player1.Init();
+                player1.SetInputs(inputs, prevInputs);
+                player1.mType = ObjectType.Player;
+                // player.Scale = Vector2.one * 1.5f;
+
+                //init player 2
+                p2inputs = new bool[(int)KeyInput.Count];
+                p2prevInputs = new bool[(int)KeyInput.Count];
+
+                player2.Init();
+                player2.SetInputs(p2inputs, p2prevInputs);
+                player2.mType = ObjectType.Player;
+                //player2.GetComponent<SpriteRenderer>().color = Color.gray;
+
+                player1.SetTilePosition(mMap.mMapData.startTile);
+                player2.SetTilePosition(mMap.mMapData.startTile);
+           break;
+            case GameMode.Editor:
+                NewEditorMap();
+                break;
+        }
+        
     }
 
-    public void NewMap()
+    public void NewGameMap()
+    {
+        //We have to clear/reset the players refence to the map
+        //For now, clearing its areas does the job
+        for (int i = mObjects.Count - 1; i >= 0; i--)
+        {
+            mMap.RemoveObjectFromAreas(mObjects[i]);
+        }
+        mMap.Init();
+    }
+
+    public void NewEditorMap()
     {
         mMap.Init();
-
-        player1.SetTilePosition(mMap.mMapData.startTile);
-        player2.SetTilePosition(mMap.mMapData.startTile);
     }
 
     void HandleInputs()
@@ -93,6 +121,9 @@ public class Game : MonoBehaviour
 
     void Update()
     {
+        if (mGameMode == GameMode.Editor)
+            return;
+
         HandleInputs();
 
         
@@ -133,7 +164,8 @@ public class Game : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if (mGameMode == GameMode.Editor)
+            return;
 
         for (int i = 0; i < mObjects.Count; ++i)
         {
@@ -165,6 +197,16 @@ public class Game : MonoBehaviour
             mObjects[i].UpdatePhysicsP2();
         }
 
+        /*If we want to change the map, we have to either abort everything or wait until we're finished updating
+        * to perform the change. This method waits until everything is updated.
+        * 
+        * 
+        */ 
+        if (mMapChangeFlag)
+        {
+            NewGameMap();
+            mMapChangeFlag = false;
+        }
         
     }
 }

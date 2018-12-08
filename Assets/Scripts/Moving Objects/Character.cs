@@ -99,26 +99,25 @@ public class Character : PhysicsObject
         ScaleY = slider.value;
     }
 
-    public void Init(bool[] inputs, bool[] prevInputs)
+    public override void Init()
     {
-        Scale = Vector2.one;
-
-        mInputs = inputs;
-        mPrevInputs = prevInputs;
-
         mAudioSource = GetComponent<AudioSource>();
-        mPosition = RoundVector(transform.position);
 
         mAABB.HalfSize = new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY);
-        mAABB.Center = mPosition;
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
 
-        mAABB.OffsetY = mAABB.HalfSizeY;
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
-        mUpdateId = mGame.AddToUpdateList(this);
-        
+
+
+        base.Init();
+    }
+
+    public void SetInputs(bool[] inputs, bool[] prevInputs)
+    {
+        mInputs = inputs;
+        mPrevInputs = prevInputs;
     }
 
     protected bool Released(KeyInput key)
@@ -228,7 +227,8 @@ public class Character : PhysicsObject
                         if(mExitDoorTimer > mTimeToExit)
                         {
                             //load map
-                            mGame.NewMap();
+                            mGame.mMapChangeFlag = true;
+                            mExitDoorTimer = 0;
                         }
 
                     }

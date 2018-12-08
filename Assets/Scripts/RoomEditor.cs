@@ -3,6 +3,14 @@ using UnityEngine.EventSystems;
 using System.IO;
 using UnityEngine.UI;
 
+public enum EditorMode
+{
+    Tiles,
+    Objects,
+    Enemies,
+    Misc
+}
+
 public class RoomEditor : MonoBehaviour
 {
 
@@ -13,7 +21,7 @@ public class RoomEditor : MonoBehaviour
 
     public Text tilePreview;
     private Color activeColor;
-
+    public EditorMode mode;
     public TileType mPlacedTileType;
 
     int lastMouseTileX = -1;
@@ -33,12 +41,41 @@ public class RoomEditor : MonoBehaviour
 
     }
 
+    public void ChangeMode(int index)
+    {
+        mode = (EditorMode)index;
+    }
+
 
     void HandleInput()
     {
 
         //Vector2 mousePos = Input.mousePosition;
         //Vector2 cameraPos = Camera.main.transform.position;
+
+
+        switch (mode)
+        {
+            case EditorMode.Tiles:
+                TileMode();
+                break;
+            case EditorMode.Objects:
+                ObjectMode();
+                break;
+            case EditorMode.Enemies:
+                EnemyMode();
+                break;
+            case EditorMode.Misc:
+                MiscMode();
+                break;
+
+        }
+        
+
+    }
+
+    void TileMode()
+    {
         var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         int mouseTileX, mouseTileY;
@@ -47,8 +84,8 @@ public class RoomEditor : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1) || Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
         {
 
-                
-                mMap.SetTile(mouseTileX, mouseTileY, mPlacedTileType);
+
+            mMap.SetTile(mouseTileX, mouseTileY, mPlacedTileType);
 
         }
 
@@ -72,19 +109,36 @@ public class RoomEditor : MonoBehaviour
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.S))
+    void ObjectMode()
+    {
+        var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        int mouseTileX, mouseTileY;
+        mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !EventSystem.current.IsPointerOverGameObject())
         {
-            //Save();
+
+            MovingPlatform temp =Instantiate(Resources.Load<MovingPlatform>("Prefabs/MovingPlatform"));
+            temp.Init();
+            temp.SetTilePosition(new Vector2i(mouseTileX, mouseTileY));
+
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            //Load();
-        }
+       
+    }
+
+    void EnemyMode()
+    {
 
     }
 
+    void MiscMode()
+    {
+
+    }
 
 
 }

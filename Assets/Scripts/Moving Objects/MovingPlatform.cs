@@ -17,13 +17,11 @@ public class MovingPlatform : PhysicsObject
         }
     }
 
-    public void Init()
+    public override void Init()
     {
         mWait = false;
-        mPosition = transform.position;
 
         mAABB.HalfSize = new Vector2(30.0f, 8.0f);
-        mAABB.Center = mPosition;
         mMovingSpeed = 100.0f;
         mIsKinematic = true;
         int r = Random.Range(0, 2);
@@ -37,11 +35,10 @@ public class MovingPlatform : PhysicsObject
             mSpeed.y = mMovingSpeed;
 
         }
-        Scale = new Vector2(1.0f, 1.0f);
 
-        mUpdateId = mGame.AddToUpdateList(this);
 
-        
+        base.Init();
+
     }
 
     public override void CustomUpdate()

@@ -6,7 +6,7 @@ public class EditorMap : Map {
 
 
 
-    public new void Init()
+    public override void Init()
     {
         mWidth = Constants.cMapChunkSizeX;
         mHeight = Constants.cMapChunkSizeY;

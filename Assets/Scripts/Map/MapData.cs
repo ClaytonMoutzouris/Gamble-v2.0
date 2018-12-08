@@ -10,6 +10,8 @@ public class MapData {
     public MapChunk[,] rooms;
     public MapType type;
 
+    public List<ObjectType> objects;
+
     public MapData(int sizex = Constants.cMapWidth, int sizey = Constants.cMapHeight, MapType type = MapType.Forest)
     {
         this.type = type;
@@ -31,7 +33,7 @@ public class MapData {
         chunkY = y / Constants.cMapChunkSizeY;
         xPosInChunk = x % Constants.cMapChunkSizeX;
         yPosInChunk = y % Constants.cMapChunkSizeY;
-        if (t == TileType.Block)
+        //if (t == TileType.Block)
             //Debug.Log("chunkx: " + chunkX + " chunky: " + chunkY + " xpos: " + xPosInChunk + " ypos: " + yPosInChunk);
         rooms[chunkX, chunkY].tiles[xPosInChunk, yPosInChunk] = t;
     }

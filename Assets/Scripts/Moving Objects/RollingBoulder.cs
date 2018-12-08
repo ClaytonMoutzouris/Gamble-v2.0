@@ -16,12 +16,9 @@ public class RollingBoulder : PhysicsObject
         }
     }
 
-    public void Init()
+    public override void Init()
     {
-        mPosition = transform.position;
-
         mAABB.HalfSize = new Vector2(31.0f, 31.0f);
-        mAABB.Center = mPosition;
         mIsKinematic = true;
         int r = Random.Range(0, 2);
         if (r == 1)
@@ -34,11 +31,9 @@ public class RollingBoulder : PhysicsObject
             mSpeed.x = -mMovingSpeed;
 
         }
-        Scale = new Vector2(1.0f, 1.0f);
-
-        mUpdateId = mGame.AddToUpdateList(this);
 
 
+        base.Init();
     }
 
     public override void CustomUpdate()

@@ -23,21 +23,13 @@ public class ItemObject : PhysicsObject {
         }
     }
 
-    public void Init()
+    public override void Init()
     {
-        mPosition = RoundVector(transform.position);
 
         mAABB.HalfSize = new Vector2(5.0f, 5.0f);
-        mAABB.Center = mPosition;
         mIsKinematic = false;
 
-
-
-        Scale = new Vector2(1.0f, 1.0f);
-        mAABB.OffsetY = mAABB.HalfSizeY;
-
-        mUpdateId = mGame.AddToUpdateList(this);
-
+        base.Init();
 
     }
 
