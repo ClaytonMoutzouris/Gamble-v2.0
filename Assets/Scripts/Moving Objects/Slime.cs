@@ -29,12 +29,12 @@ public class Slime : PhysicsObject {
     {
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
         mHitbox.HalfSize = new Vector2(5.0f, 5.0f);
         mHitbox.Center = mPosition;
@@ -48,7 +48,7 @@ public class Slime : PhysicsObject {
 
 
 
-        base.Init();
+        base.ObjectInit();
 
     }
 

@@ -20,12 +20,12 @@ public class FallingRock : PhysicsObject
         }
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
 
         mAABB.HalfSize = new Vector2(15.0f, 15.0f);
@@ -34,7 +34,7 @@ public class FallingRock : PhysicsObject
         
         Scale = new Vector2(1.0f, 1.0f);
 
-        base.Init();
+        base.ObjectInit();
 
     }
 

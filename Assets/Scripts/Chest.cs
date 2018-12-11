@@ -10,19 +10,18 @@ public class Chest : PhysicsObject {
     /// 
     public Animator mAnimator;
     public bool mOpen = false;
-    public bool mWasOpen = false;
     public void Start()
     {
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public void Init()
+    public override void ObjectInit()
     {
-        SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
+        //SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
         //mPosition = RoundVector(transform.position);
 
         mAABB.HalfSize = new Vector2(10.0f, 10.0f);
@@ -31,25 +30,32 @@ public class Chest : PhysicsObject {
 
 
 
-        Scale = new Vector2(1.0f, 1.0f);
-        mAABB.OffsetY = mAABB.HalfSizeY;
-
-        mUpdateId = mGame.AddToUpdateList(this);
+        base.ObjectInit();       
 
 
     }
 
     public override void CustomUpdate()
     {
-        if(mOpen)
-        {
-            if (!mWasOpen)
-            {
-                mAnimator.Play("ChestOpen");
-            }
-            mWasOpen = true;
-        }
+        
         //UpdatePhysics();
 
+    }
+
+    public bool OpenChest()
+    {
+        if (mOpen)
+            return false;
+
+        mOpen = true;
+        mAnimator.Play("ChestOpen");
+        
+        ItemObject temp = Instantiate(ItemDatabase.GetRandomItem());
+        temp.ObjectInit();
+        temp.mPosition = mPosition+new Vector2(0, Map.cTileSize/2);
+        //temp.mOldSpeed.y = Constants.cJumpSpeed;
+        //temp.mSpeed.y = Constants.cJumpSpeed*10;
+
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using System.IO;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum EditorMode
 {
@@ -23,6 +24,8 @@ public class RoomEditor : MonoBehaviour
     private Color activeColor;
     public EditorMode mode;
     public TileType mPlacedTileType;
+    public List<GameObject> objectPrefabs;
+    public int mObjectIndex = 0;
 
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
@@ -121,13 +124,33 @@ public class RoomEditor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && !EventSystem.current.IsPointerOverGameObject())
         {
 
-            MovingPlatform temp =Instantiate(Resources.Load<MovingPlatform>("Prefabs/MovingPlatform"));
-            temp.Init();
-            temp.SetTilePosition(new Vector2i(mouseTileX, mouseTileY));
+            GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
+            
+            temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
 
         }
 
-       
+        var wheel = Input.GetAxis("Mouse ScrollWheel");
+        if (wheel > 0.05f)
+        {
+
+            if ((int)mObjectIndex < (int)objectPrefabs.Count - 1)
+                mObjectIndex += 1;
+            else
+                mObjectIndex = 0;
+
+            tilePreview.text = "Tiletype: " + objectPrefabs[mObjectIndex].name;
+        }
+        else if (wheel < -0.05f)
+        {
+            if ((int)mObjectIndex > 0)
+                mObjectIndex -= 1;
+            else
+                mObjectIndex = objectPrefabs.Count - 1;
+
+            tilePreview.text = "Tiletype: " + objectPrefabs[mObjectIndex].name;
+        }
+
     }
 
     void EnemyMode()

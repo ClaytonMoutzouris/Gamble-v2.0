@@ -538,7 +538,7 @@ MonoBehaviour:
     x: 0
     y: 0
   mExitDoorTimer: 0
-  mTimeToExit: 1
+  mTimeToExit: 0.5
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
 --- !u!1 &665418490
@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1086a6dc80b1348b9b425351444e6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mGameMode: 0
   gameCamera: {fileID: 1799959646}
   player1: {fileID: 600731197}
   player2: {fileID: 1959882556}
@@ -1759,7 +1760,7 @@ MonoBehaviour:
     x: 0
     y: 0
   mExitDoorTimer: 0
-  mTimeToExit: 1
+  mTimeToExit: 0.5
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
 --- !u!212 &1959882557

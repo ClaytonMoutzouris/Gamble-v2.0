@@ -99,7 +99,7 @@ public class Character : PhysicsObject
         ScaleY = slider.value;
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
         mAudioSource = GetComponent<AudioSource>();
 
@@ -111,7 +111,7 @@ public class Character : PhysicsObject
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
 
-        base.Init();
+        base.ObjectInit();
     }
 
     public void SetInputs(bool[] inputs, bool[] prevInputs)
@@ -241,7 +241,7 @@ public class Character : PhysicsObject
                             //Debug.Log("You picked up " + item.name);
                             //mAllCollidingObjects.Remove(item);
                             //mGame.FlagObjectForRemoval(item);
-                            chest.mOpen = true;
+                            chest.OpenChest();
                         }
                     }
                 } else

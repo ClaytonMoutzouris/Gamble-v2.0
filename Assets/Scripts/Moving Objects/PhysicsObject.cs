@@ -913,7 +913,7 @@ public class PhysicsObject : MonoBehaviour
         //...Do nothing lol
     }
 
-    public virtual void Init()
+    public virtual void ObjectInit()
     {
         //All the basics that every physics object needs upon initialization
         Scale = Vector2.one;

@@ -12,12 +12,12 @@ public class MovingPlatform : PhysicsObject
     {
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
         mWait = false;
 
@@ -37,7 +37,7 @@ public class MovingPlatform : PhysicsObject
         }
 
 
-        base.Init();
+        base.ObjectInit();
 
     }
 

@@ -46,6 +46,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        ItemDatabase.InitializeDatabase();
     }
 
     void Start ()
@@ -57,14 +58,13 @@ public class Game : MonoBehaviour
         switch (mGameMode)
         {
             case GameMode.Game:
-                NewGameMap();
 
                 //init player 1
                 inputs = new bool[(int)KeyInput.Count];
                 prevInputs = new bool[(int)KeyInput.Count];
 
 
-                player1.Init();
+                player1.ObjectInit();
                 player1.SetInputs(inputs, prevInputs);
                 player1.mType = ObjectType.Player;
                 // player.Scale = Vector2.one * 1.5f;
@@ -73,13 +73,13 @@ public class Game : MonoBehaviour
                 p2inputs = new bool[(int)KeyInput.Count];
                 p2prevInputs = new bool[(int)KeyInput.Count];
 
-                player2.Init();
+                player2.ObjectInit();
                 player2.SetInputs(p2inputs, p2prevInputs);
                 player2.mType = ObjectType.Player;
                 //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
-                player1.SetTilePosition(mMap.mMapData.startTile);
-                player2.SetTilePosition(mMap.mMapData.startTile);
+                NewGameMap();
+
            break;
             case GameMode.Editor:
                 NewEditorMap();
@@ -97,6 +97,8 @@ public class Game : MonoBehaviour
             mMap.RemoveObjectFromAreas(mObjects[i]);
         }
         mMap.Init();
+        player1.SetTilePosition(mMap.mMapData.startTile);
+        player2.SetTilePosition(mMap.mMapData.startTile);
     }
 
     public void NewEditorMap()

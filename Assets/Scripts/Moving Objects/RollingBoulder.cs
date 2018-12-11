@@ -11,12 +11,12 @@ public class RollingBoulder : PhysicsObject
     {
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
         mAABB.HalfSize = new Vector2(31.0f, 31.0f);
         mIsKinematic = true;
@@ -33,7 +33,7 @@ public class RollingBoulder : PhysicsObject
         }
 
 
-        base.Init();
+        base.ObjectInit();
     }
 
     public override void CustomUpdate()

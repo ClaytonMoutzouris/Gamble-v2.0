@@ -18,18 +18,18 @@ public class ItemObject : PhysicsObject {
     {
         if (mUpdateId < 0)
         {
-            Init();
+            ObjectInit();
             //mSpeed.x = 0;
         }
     }
 
-    public override void Init()
+    public override void ObjectInit()
     {
 
         mAABB.HalfSize = new Vector2(5.0f, 5.0f);
         mIsKinematic = false;
 
-        base.Init();
+        base.ObjectInit();
 
     }
 

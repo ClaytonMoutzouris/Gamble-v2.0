@@ -3290,6 +3290,12 @@ MonoBehaviour:
   tilePreview: {fileID: 1393154191}
   mode: 0
   mPlacedTileType: 0
+  objectPrefabs:
+  - {fileID: 1452644371891400, guid: c879ab11eac30ce40a5f3f41318157ae, type: 2}
+  - {fileID: 1007837247802040, guid: c80be59cf9e060c45aa97c82baaa5f12, type: 2}
+  - {fileID: 1703030010661936, guid: 6318d7ff725788c4e928dcccaefcf0f3, type: 2}
+  - {fileID: 1091165860579362, guid: 6e8bca4ee13ae7046be8f91b06d9fe37, type: 2}
+  mObjectIndex: 0
 --- !u!114 &1651152768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4582,7 +4588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a1086a6dc80b1348b9b425351444e6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
+  mGameMode: 1
   gameCamera: {fileID: 849335803}
   player1: {fileID: 0}
   player2: {fileID: 0}
