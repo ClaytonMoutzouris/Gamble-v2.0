@@ -348,8 +348,50 @@ public class Map : MonoBehaviour
         mMapData = MapGenerator.GenerateMap();
 
         mTileData = mMapData.GetMap();
-
+        AddEntities();
         mTileMap.DrawMap(mTileData, mWidth, mHeight);
+    }
+
+    public void AddEntities()
+    {
+        foreach(EntityData eD in mMapData.objects)
+        { 
+            switch (eD.EntityType)
+            {
+                case EntityType.Object:
+                    AddObjectEntity((ObjectData)eD);
+                    break;
+
+                case EntityType.Enemy:
+                    AddEnemyEntity((EnemyData)eD);
+                    break;
+            }
+            
+        }
+    }
+
+    public void AddObjectEntity(ObjectData data)
+    {
+        switch (data.type)
+        {
+            case ObjectType.Chest:
+                Chest temp = Instantiate(Resources.Load<Chest>("Prefabs/Chest")) as Chest;
+                temp.ObjectInit();
+                temp.SetTilePosition(data.TilePosition);
+                break;
+        }
+    }
+
+    public void AddEnemyEntity(EnemyData data)
+    {
+        switch (data.type)
+        {
+            case EnemyType.Slime:
+                Slime slimeTemp = Instantiate(Resources.Load<Slime>("Prefabs/Slime")) as Slime;
+                slimeTemp.ObjectInit();
+                slimeTemp.SetTilePosition(data.TilePosition);
+                break;
+        }
     }
 
     public void NewMap()

@@ -10,18 +10,18 @@ public class MapData {
     public MapChunk[,] rooms;
     public MapType type;
 
-    public List<ObjectType> objects;
+    public List<EntityData> objects;
 
     public MapData(int sizex = Constants.cMapWidth, int sizey = Constants.cMapHeight, MapType type = MapType.Forest)
     {
         this.type = type;
         rooms = new MapChunk[Constants.cMapChunksX, Constants.cMapChunksY];
-
-        for(int x = 0; x < Constants.cMapChunksX; x++)
+        objects = new List<EntityData>();
+        for (int x = 0; x < Constants.cMapChunksX; x++)
         {
             for (int y = 0; y < Constants.cMapChunksY; y++)
             {
-                rooms[x, y] = new MapChunk(x,y);
+                rooms[x, y] = new MapChunk();
             }
         }
     }
@@ -62,5 +62,10 @@ public class MapData {
         }
 
         return tiles;
+    }
+
+    public void AddEntity(EntityData e)
+    {
+        objects.Add(e);
     }
 }

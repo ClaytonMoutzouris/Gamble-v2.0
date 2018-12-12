@@ -70,7 +70,8 @@
     <Compile Include="Assets\Scripts\EditorCamera.cs" />
     <Compile Include="Assets\Scripts\EditorMap.cs" />
     <Compile Include="Assets\Scripts\EditorSceneController.cs" />
-    <Compile Include="Assets\Scripts\Entity\ObjectData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enums.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\GameCamera.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEntity.cs" />

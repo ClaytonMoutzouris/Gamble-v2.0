@@ -313,8 +313,63 @@ public static class MapGenerator {
         map.startTile = GetStartTile(map);
         AddDoorTile(map);
 
+        PopulateMap(map);
+
         return map;
     }
+
+    static void PopulateMap(MapData map)
+    {
+        AddChests(map);
+        AddEnemies(map);
+
+        
+        
+    }
+
+    static void AddChests(MapData map)
+    {
+        int r;
+
+        for (int x = 0; x < Constants.cMapWidth; x++)
+        {
+            for (int y = 0; y < Constants.cMapHeight; y++)
+            {
+                r = Random.Range(0, 100);
+                if (r < 95)
+                    continue;
+
+                if (map.GetTile(x, y) == TileType.Empty)
+                {
+                    if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
+                        map.AddEntity(new ObjectData(x, y, ObjectType.Chest));
+                }
+            }
+        }
+    }
+
+    static void AddEnemies(MapData map)
+    {
+        int r;
+
+        for (int x = 0; x < Constants.cMapWidth; x++)
+        {
+            for (int y = 0; y < Constants.cMapHeight; y++)
+            {
+                r = Random.Range(0, 100);
+                if (r < 98)
+                    continue;
+
+                if (map.GetTile(x, y) == TileType.Empty)
+                {
+                    if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
+                        map.AddEntity(new EnemyData(x, y, EnemyType.Slime));
+                }
+            }
+        }
+    }
+
+    
 
 
 }

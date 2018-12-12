@@ -8,7 +8,7 @@ using System;
  * 
  */
 
-public enum ObjectType
+public enum CollisionType
 {
     None,
     Player,
@@ -22,8 +22,8 @@ public enum ObjectType
 
 public class PhysicsObject : MonoBehaviour 
 {
-    public ObjectType mType;
-    public List<ObjectType> mCollidesWith;
+    public CollisionType mType;
+    public List<CollisionType> mCollidesWith;
     /// <summary>
     /// The previous position.
     /// </summary>
@@ -652,7 +652,7 @@ public class PhysicsObject : MonoBehaviour
         {
             if (HasCollisionDataFor(mMountParent))
             {
-                if (mType == ObjectType.Player)
+                if (mType == CollisionType.Player)
                     Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
                 Vector2 parentOffset = mMountParent.mPosition - mMountParent.mOldPosition;
 

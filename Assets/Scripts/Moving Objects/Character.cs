@@ -604,7 +604,7 @@ public class Character : PhysicsObject
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if(mAllCollidingObjects[i].other.mType == ObjectType.Item)
+            if(mAllCollidingObjects[i].other.mType == CollisionType.Item)
             {
                 return (ItemObject)mAllCollidingObjects[i].other;
             }
@@ -619,7 +619,7 @@ public class Character : PhysicsObject
         for (int i = 0; i < mAllCollidingObjects.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (mAllCollidingObjects[i].other.mType == ObjectType.Chest)
+            if (mAllCollidingObjects[i].other.mType == CollisionType.Chest)
             {
                 return (Chest)mAllCollidingObjects[i].other;
             }

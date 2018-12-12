@@ -40,7 +40,7 @@ public class Slime : PhysicsObject {
         mHitbox.Center = mPosition;
 
         mAABB.HalfSize = new Vector2(10.0f, 5.0f);
-        mMovingSpeed = 50.0f;
+        mMovingSpeed = 110.0f;
         mIsKinematic = false;
         int r = Random.Range(0, 2);
             mSpeed.x = mMovingSpeed;

@@ -66,7 +66,7 @@ public class Game : MonoBehaviour
 
                 player1.ObjectInit();
                 player1.SetInputs(inputs, prevInputs);
-                player1.mType = ObjectType.Player;
+                player1.mType = CollisionType.Player;
                 // player.Scale = Vector2.one * 1.5f;
 
                 //init player 2
@@ -75,7 +75,7 @@ public class Game : MonoBehaviour
 
                 player2.ObjectInit();
                 player2.SetInputs(p2inputs, p2prevInputs);
-                player2.mType = ObjectType.Player;
+                player2.mType = CollisionType.Player;
                 //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
                 NewGameMap();

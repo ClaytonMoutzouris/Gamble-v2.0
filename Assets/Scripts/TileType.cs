@@ -18,3 +18,30 @@ public enum TileType
     Count,
 }
 
+
+[System.Serializable]
+public enum TileContentType
+{
+    Empty,
+    Block,
+    OneWay,
+    Spikes,
+    EnemySpawn,
+    Chest,
+    
+
+}
+
+public enum TileCollisionType
+{
+    Empty,
+    Block,
+    OneWay,
+    IceBlock,
+    ConveyorRight,
+    ConveyorLeft,
+    Count,
+}
+
+
+
