@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e26218e4aa2193419d6f44284cfb950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mType: 4
+  mCollisionType: 4
   mCollidesWith: 06000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 0, y: 0}

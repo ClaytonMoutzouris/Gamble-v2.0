@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MapType { Forest, Tundra };
 
 public class MapData {
 
@@ -12,7 +11,7 @@ public class MapData {
 
     public List<EntityData> objects;
 
-    public MapData(int sizex = Constants.cMapWidth, int sizey = Constants.cMapHeight, MapType type = MapType.Forest)
+    public MapData(MapType type = MapType.Forest, int sizex = Constants.cMapWidth, int sizey = Constants.cMapHeight)
     {
         this.type = type;
         rooms = new MapChunk[Constants.cMapChunksX, Constants.cMapChunksY];

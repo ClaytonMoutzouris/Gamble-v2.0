@@ -284,7 +284,7 @@ public static class MapGenerator {
 
     public static MapData GenerateMap()
     {
-        MapData map = new MapData();
+        MapData map = new MapData((MapType)Random.Range(0, (int)MapType.Count));
         LoadRooms();
         
         for (int x = 0; x < Constants.cMapChunksX; x++)
@@ -363,7 +363,10 @@ public static class MapGenerator {
                 if (map.GetTile(x, y) == TileType.Empty)
                 {
                     if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
-                        map.AddEntity(new EnemyData(x, y, EnemyType.Slime));
+                    {
+                        int enemyRandom = Random.Range(0, (int)EnemyType.Count);
+                        map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
+                    }
                 }
             }
         }

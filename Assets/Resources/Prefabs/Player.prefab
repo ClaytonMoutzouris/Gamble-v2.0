@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be887feb7d612a4f9a8993970b2298f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mType: 1
+  mCollisionType: 1
   mCollidesWith: 030000000500000006000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 0, y: 0}
