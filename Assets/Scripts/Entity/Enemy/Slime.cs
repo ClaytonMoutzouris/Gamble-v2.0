@@ -26,13 +26,6 @@ public class Slime : EnemyObject {
 
     public override void CustomUpdate()
     {
-        if (!mPS.pushesBottom)
-        {
-            mSpeed.y += Constants.cGravity * Time.deltaTime;
-
-            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
-        }
-
 
         if (!mPS.pushesRightTile && !mPS.pushedLeftTile)
             mSpeed.x = mMovingSpeed;

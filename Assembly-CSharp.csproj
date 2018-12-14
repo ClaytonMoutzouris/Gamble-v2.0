@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\EnemyObject.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />

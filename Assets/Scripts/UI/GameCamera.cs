@@ -7,77 +7,149 @@ public class GameCamera : MonoBehaviour
     /// <summary>
     /// A reference to the the player.
     /// </summary>
-    public Transform mPlayer1;
-    public Transform mPlayer2;
+
+    public Transform[] targets;
 
     /// <summary>
     /// The position.
     /// </summary>
-    public Vector3 mPosition;
-    public Vector3 targetPos;
-    Camera camera;
+    Camera mCamera;
     /// <summary>
     /// The map. Assigned from editor.
     /// </summary>
     public MapManager mMap;
 
-    public float smoothTime = 0.15f;
-    public Vector2 PlayerDistance;
-    //public float smoothTimeX = 0.3f;
-    private Vector3 velocity = Vector3.zero;
-    public bool bounds;
-
-    public float halfWidth;
-    public float halfHeight;
-    const int cOuterVisibilityX = 0;
-    const int cOuterVisibilityY = 0;
+    public float mZoomSpeed = 10f;
+    public float mMinOrthographicSize = 120;
+    public float mBoundingBoxPadding = 32;
 
     void Start()
     {
-        camera = GetComponent<Camera>();
-
+        mCamera = GetComponent<Camera>();
+        //mCamera.orthographicSize = mMinOrthographicSize;
         //mPosition = transform.position;
     }
 
-    public void FixedUpdate()
+    public void LateUpdate()
     {
+        Rect boundingBox = CalculateTargetsBoundingBox();
+        transform.position = CalculateCameraPosition(boundingBox);
+        mCamera.orthographicSize = CalculateOrthographicSize(boundingBox);
+    }
 
-        if (mPlayer1 == null || mPlayer2 == null)
-            return;
+    Rect CalculateTargetsBoundingBox()
+    {
+        float minX = Mathf.Infinity;
+        float maxX = Mathf.NegativeInfinity;
+        float minY = Mathf.Infinity;
+        float maxY = Mathf.NegativeInfinity;
+
+        foreach (Transform target in targets)
+        {
+            Vector3 position = target.position;
+
+            minX = Mathf.Min(minX, position.x);
+            minY = Mathf.Min(minY, position.y);
+            maxX = Mathf.Max(maxX, position.x);
+            maxY = Mathf.Max(maxY, position.y);
+        }
+
+        return Rect.MinMaxRect(minX - mBoundingBoxPadding, maxY + mBoundingBoxPadding, maxX + mBoundingBoxPadding, minY - mBoundingBoxPadding);
+    }
+
+    float CalculateOrthographicSize(Rect boundingBox)
+    {
+        float orthographicSize = mCamera.orthographicSize;
+        Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
+        Vector3 topRightAsViewport = mCamera.WorldToViewportPoint(topRight);
+
+        if (topRightAsViewport.x >= topRightAsViewport.y)
+            orthographicSize = Mathf.Abs(boundingBox.width) / mCamera.aspect / 2f;
+        else
+            orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
+
+        return Mathf.Clamp(Mathf.Lerp(mCamera.orthographicSize, orthographicSize, Time.deltaTime * mZoomSpeed), mMinOrthographicSize, Mathf.Infinity);
+    }
+
+    Vector3 CalculateCameraPosition(Rect boundingBox)
+    {
+        Vector2 boundingBoxCenter = boundingBox.center;
+
+        return new Vector3(boundingBoxCenter.x, boundingBoxCenter.y, mCamera.transform.position.z);
+    }
+
+    /* Old Code
+    void UpdateZoom()
+    {
+        halfHeight = mCamera.orthographicSize;
+        halfWidth = mCamera.aspect * halfHeight;
+        float tempSize = mCamera.orthographicSize;
+        bool growY = false, growX = false;
+        bool shrinkY = false, shrinkX = false;
+
+        //First try to expand
+        if (PlayerDistance.x > (halfWidth*2) - EdgeBuffer.x)
+        {
+            growX = true;
+        }
+
+        if ((halfWidth * 2) >= PlayerDistance.x + EdgeBuffer.x)
+        {
+            shrinkX = true;
+        }
+
+        
+        //If the players are farther apart than the camera is tall, expand the camera
+        if (PlayerDistance.y > (halfHeight*2) - EdgeBuffer.y)
+        {
+            growY = true;
+        }
+
+        
+        if ((halfHeight * 2) >= PlayerDistance.y + EdgeBuffer.y)
+        {
+            shrinkY = true;
+        }
 
 
-        PlayerDistance = new Vector2(Mathf.Abs(mPlayer1.position.x - mPlayer2.position.x), Mathf.Abs(mPlayer1.position.y - mPlayer2.position.y));
-        targetPos = (mPlayer1.position + mPlayer2.position) *0.5f;
+
+        if (growY || shrinkY)
+        {
+            tempSize = tempSize * ((PlayerDistance.y + EdgeBuffer.y) / (halfHeight * 2));
+        }
+
+        if (growX || shrinkX)
+        {
+            tempSize = tempSize * ((PlayerDistance.x + EdgeBuffer.x) / (halfWidth * 2));
+        }
+
+        if (tempSize < mMinOrthographicSize)
+            tempSize = mMinOrthographicSize;
+
+        mCamera.orthographicSize = tempSize;
+    }
+
+    void CameraFollow()
+    {
+        targetPos = (mPlayer1.position + mPlayer2.position) * 0.5f;
 
         var cameraPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
         //Debug.Log("Camera position " + cameraPos);
 
-        halfHeight = camera.orthographicSize;
-        halfWidth = camera.aspect * halfHeight;
 
-        //If the players are farther apart than the camera is wide, expand the camera
-        if (PlayerDistance.x > halfWidth*2)
-        {
-            camera.orthographicSize = camera.orthographicSize * (PlayerDistance.x / (halfWidth * 2));
-        }
-
-        //If the players are farther apart than the camera is tall, expand the camera
-        if (PlayerDistance.y > halfHeight * 2)
-        {
-            camera.orthographicSize = camera.orthographicSize * (PlayerDistance.y / (halfHeight * 2));
-        }
 
         //Keep the camera within the bounds of the maps width
         if (cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
         {
             cameraPos.x = halfWidth - MapManager.cTileSize / 2;
-        } else if(cameraPos.x + halfWidth + MapManager.cTileSize / 2 > mMap.mWidth * MapManager.cTileSize)
+        }
+        else if (cameraPos.x + halfWidth + MapManager.cTileSize / 2 > mMap.mWidth * MapManager.cTileSize)
         {
             cameraPos.x = mMap.mWidth * MapManager.cTileSize - (halfWidth + MapManager.cTileSize / 2);
         }
 
         //Keep the camera within the bounds of the maps height
-        if (cameraPos.y - halfHeight + MapManager.cTileSize/2 < 0)
+        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 < 0)
         {
             cameraPos.y = halfHeight - MapManager.cTileSize / 2;
         }
@@ -87,6 +159,6 @@ public class GameCamera : MonoBehaviour
         }
 
         transform.position = new Vector3(cameraPos.x, cameraPos.y, transform.position.z);
-        
     }
+    */
 }

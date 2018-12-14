@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCollisionType: 3
-  mCollidesWith: 01000000030000000500000006000000
+  mCollidesWith: 010000000600000005000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 445.0164, y: 318.902}
   mReminder: {x: 0, y: 0}
@@ -72,6 +72,54 @@ MonoBehaviour:
     rotation: 0
     isCircle: 0
     flipped: 0
+  mPS:
+    pushesRight: 0
+    pushesLeft: 0
+    pushesBottom: 0
+    pushesTop: 0
+    pushedTop: 0
+    pushedBottom: 0
+    pushedRight: 0
+    pushedLeft: 0
+    pushedLeftObject: 0
+    pushedRightObject: 0
+    pushedBottomObject: 0
+    pushedTopObject: 0
+    pushesLeftObject: 0
+    pushesRightObject: 0
+    pushesBottomObject: 0
+    pushesTopObject: 0
+    pushedLeftTile: 0
+    pushedRightTile: 0
+    pushedBottomTile: 0
+    pushedTopTile: 0
+    pushesLeftTile: 0
+    pushesRightTile: 0
+    pushesBottomTile: 0
+    pushesTopTile: 0
+    onOneWay: 0
+    tmpIgnoresOneWay: 0
+    tmpSticksToSlope: 0
+    oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
+    onIce: 0
+    onConveyorLeft: 0
+    onConveyorRight: 0
+    leftTile:
+      x: 0
+      y: 0
+    rightTile:
+      x: 0
+      y: 0
+    topTile:
+      x: 0
+      y: 0
+    bottomTile:
+      x: 0
+      y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
   mMountParent: {fileID: 0}

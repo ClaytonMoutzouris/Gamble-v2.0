@@ -617,7 +617,7 @@ public class PhysicsObject : MonoBehaviour
         mOldSpeed = mSpeed;
         //This is the cutoff of updating
         //Lets try applying gravity here
-        if(!mIgnoresGravity)
+        if(!mIgnoresGravity && !mPS.pushesBottom)
         ApplyGravity();
 
         if (mPS.pushesBottomTile)

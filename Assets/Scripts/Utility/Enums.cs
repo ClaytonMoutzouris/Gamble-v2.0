@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Enemy, Object, Player };
-public enum EnemyType { Slime, CrimsonSlime, Count };
+public enum EnemyType { Slime, CrimsonSlime, Eye, Count };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 public enum MapType { Forest, Tundra, Count };

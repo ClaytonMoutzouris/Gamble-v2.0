@@ -501,6 +501,54 @@ MonoBehaviour:
     rotation: 0
     isCircle: 0
     flipped: 0
+  mPS:
+    pushesRight: 0
+    pushesLeft: 0
+    pushesBottom: 0
+    pushesTop: 0
+    pushedTop: 0
+    pushedBottom: 0
+    pushedRight: 0
+    pushedLeft: 0
+    pushedLeftObject: 0
+    pushedRightObject: 0
+    pushedBottomObject: 0
+    pushedTopObject: 0
+    pushesLeftObject: 0
+    pushesRightObject: 0
+    pushesBottomObject: 0
+    pushesTopObject: 0
+    pushedLeftTile: 0
+    pushedRightTile: 0
+    pushedBottomTile: 0
+    pushedTopTile: 0
+    pushesLeftTile: 0
+    pushesRightTile: 0
+    pushesBottomTile: 0
+    pushesTopTile: 0
+    onOneWay: 0
+    tmpIgnoresOneWay: 0
+    tmpSticksToSlope: 0
+    oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
+    onIce: 0
+    onConveyorLeft: 0
+    onConveyorRight: 0
+    leftTile:
+      x: 0
+      y: 0
+    rightTile:
+      x: 0
+      y: 0
+    topTile:
+      x: 0
+      y: 0
+    bottomTile:
+      x: 0
+      y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
   mMountParent: {fileID: 0}
@@ -1725,6 +1773,54 @@ MonoBehaviour:
     rotation: 0
     isCircle: 0
     flipped: 0
+  mPS:
+    pushesRight: 0
+    pushesLeft: 0
+    pushesBottom: 0
+    pushesTop: 0
+    pushedTop: 0
+    pushedBottom: 0
+    pushedRight: 0
+    pushedLeft: 0
+    pushedLeftObject: 0
+    pushedRightObject: 0
+    pushedBottomObject: 0
+    pushedTopObject: 0
+    pushesLeftObject: 0
+    pushesRightObject: 0
+    pushesBottomObject: 0
+    pushesTopObject: 0
+    pushedLeftTile: 0
+    pushedRightTile: 0
+    pushedBottomTile: 0
+    pushedTopTile: 0
+    pushesLeftTile: 0
+    pushesRightTile: 0
+    pushesBottomTile: 0
+    pushesTopTile: 0
+    onOneWay: 0
+    tmpIgnoresOneWay: 0
+    tmpSticksToSlope: 0
+    oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
+    onIce: 0
+    onConveyorLeft: 0
+    onConveyorRight: 0
+    leftTile:
+      x: 0
+      y: 0
+    rightTile:
+      x: 0
+      y: 0
+    topTile:
+      x: 0
+      y: 0
+    bottomTile:
+      x: 0
+      y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
   mMountParent: {fileID: 0}
@@ -1869,13 +1965,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f261dafe1387f1459e4652c02b89d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mPlayer1: {fileID: 450605700}
-  mPlayer2: {fileID: 1959882558}
-  mPosition: {x: 0, y: 0, z: 0}
-  targetPos: {x: 0, y: 0, z: 0}
+  targets:
+  - {fileID: 450605700}
+  - {fileID: 1959882558}
   mMap: {fileID: 2106156355}
-  smoothTime: 0.15
-  bounds: 0
+  mZoomSpeed: 10
+  mMinOrthographicSize: 120
+  mBoundingBoxPadding: 32
 --- !u!81 &2081810911
 AudioListener:
   m_ObjectHideFlags: 0
