@@ -22,11 +22,13 @@ public class GameCamera : MonoBehaviour
     public MapManager mMap;
 
     public float smoothTime = 0.15f;
+    public Vector2 PlayerDistance;
     //public float smoothTimeX = 0.3f;
     private Vector3 velocity = Vector3.zero;
     public bool bounds;
 
-
+    public float halfWidth;
+    public float halfHeight;
     const int cOuterVisibilityX = 0;
     const int cOuterVisibilityY = 0;
 
@@ -43,18 +45,30 @@ public class GameCamera : MonoBehaviour
         if (mPlayer1 == null || mPlayer2 == null)
             return;
 
-        
 
+        PlayerDistance = new Vector2(Mathf.Abs(mPlayer1.position.x - mPlayer2.position.x), Mathf.Abs(mPlayer1.position.y - mPlayer2.position.y));
         targetPos = (mPlayer1.position + mPlayer2.position) *0.5f;
 
         var cameraPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
         //Debug.Log("Camera position " + cameraPos);
 
-        float halfHeight = camera.orthographicSize;
-        float halfWidth = camera.aspect * halfHeight;
+        halfHeight = camera.orthographicSize;
+        halfWidth = camera.aspect * halfHeight;
+
+        //If the players are farther apart than the camera is wide, expand the camera
+        if (PlayerDistance.x > halfWidth*2)
+        {
+            camera.orthographicSize = camera.orthographicSize * (PlayerDistance.x / (halfWidth * 2));
+        }
+
+        //If the players are farther apart than the camera is tall, expand the camera
+        if (PlayerDistance.y > halfHeight * 2)
+        {
+            camera.orthographicSize = camera.orthographicSize * (PlayerDistance.y / (halfHeight * 2));
+        }
 
         //Keep the camera within the bounds of the maps width
-        if(cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
+        if (cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
         {
             cameraPos.x = halfWidth - MapManager.cTileSize / 2;
         } else if(cameraPos.x + halfWidth + MapManager.cTileSize / 2 > mMap.mWidth * MapManager.cTileSize)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-[SerializeField]
+[System.Serializable]
 public struct PositionState
 {
     public bool pushesRight;
