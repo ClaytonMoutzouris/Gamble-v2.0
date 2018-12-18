@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Eye : EnemyObject
+public class Eye : Enemy
 {
     public PhysicsObject target = null;
 
-    Animator mAnimator;
 
-    private void Awake()
+
+    public override void EntityInit()
     {
         mAnimator = GetComponent<Animator>();
-    }
 
-    public override void ObjectInit()
-    {
-
-        mAABB.HalfSize = new Vector2(16.0f, 10.0f);
-        mIsKinematic = false;
+        Body.mAABB.HalfSize = new Vector2(16.0f, 10.0f);
+        Body.mIsKinematic = false;
 
         int r = Random.Range(0, 2);
 
@@ -25,11 +21,11 @@ public class Eye : EnemyObject
 
 
 
-        base.ObjectInit();
+        base.EntityInit();
 
     }
 
-    public override void CustomUpdate()
+    public override void EntityUpdate()
     {
         if(target != null)
         {
@@ -42,7 +38,7 @@ public class Eye : EnemyObject
         
 
         //This is just a test, probably dont need to do it this way
-        base.CustomUpdate();
+        base.EntityUpdate();
         //UpdatePhysics();
 
         //make sure the hitbox follows the object
@@ -52,22 +48,22 @@ public class Eye : EnemyObject
     {
         mAnimator.Play("Eye_Fly");
         //This works amazing!
-        mSpeed = (target.mPosition - mPosition).normalized*mMovingSpeed;
+        body.mSpeed = (target.mPosition - body.mPosition).normalized*mMovingSpeed;
 
 
     }
 
     void NoTargetUpdate()
     {
-        if (!mPS.pushesTop)
+        if (!body.mPS.pushesTop)
         {
             mAnimator.Play("Eye_Fly");
-            mSpeed.y = mMovingSpeed;
+            body.mSpeed.y = mMovingSpeed;
         }
         else
         {
             mAnimator.Play("Eye_Sleep");
-            mSpeed.y = 0;
+            body.mSpeed.y = 0;
         }
     }
 }

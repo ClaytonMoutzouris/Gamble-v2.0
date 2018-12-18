@@ -11,5 +11,7 @@ public enum KeyInput
 	GoDown,
     Climb,
 	Jump,
+    Shoot,
+    Attack,
 	Count
 }

@@ -2,46 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slime : EnemyObject {
+public class Slime : Enemy {
 
 
-    public override void ObjectInit()
+    public override void EntityInit()
     {
-        mHitbox.HalfSize = new Vector2(5.0f, 5.0f);
-        mHitbox.Center = mPosition;
-
-        mAABB.HalfSize = new Vector2(10.0f, 5.0f);
-        mIsKinematic = false;
-
-        int r = Random.Range(0, 2);
-        mSpeed.x = mMovingSpeed;
+        body.mAABB.HalfSize = new Vector2(10.0f, 5.0f);
+        body.mIsKinematic = false;
+        body.mSpeed.x = mMovingSpeed;
 
         //mEnemyType = EnemyType.Slime;
 
 
 
-        base.ObjectInit();
+        base.EntityInit();
 
     }
 
-    public override void CustomUpdate()
+    public override void EntityUpdate()
     {
 
-        if (!mPS.pushesRightTile && !mPS.pushedLeftTile)
-            mSpeed.x = mMovingSpeed;
+        if (!body.mPS.pushesRightTile && !body.mPS.pushedLeftTile)
+            body.mSpeed.x = mMovingSpeed;
 
-        if (mPS.pushesLeftTile || mPS.pushesRightTile)
+        if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
         {
             mMovingSpeed *= -1;
 
-            mSpeed.x = mMovingSpeed;
+            body.mSpeed.x = mMovingSpeed;
         }
 
-        //This is just a test, probably dont need to do it this way
-        base.CustomUpdate();
-        //UpdatePhysics();
+        
+        body.UpdatePhysics();
 
         //make sure the hitbox follows the object
-        mHitbox.Center = mAABB.Center;
     }
 }

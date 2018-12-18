@@ -1,50 +1,33 @@
 ﻿
 using UnityEngine;
 
-public class FallingRock : PhysicsObject
+public class FallingRock : Entity
 {
     public bool isTriggered = false;
     public float mTriggerTime = 5.0f;
     public float mTimeToTrigger = 0.0f;
 
-    public void Start()
-    {
-        if (!mMap)
-        {
-            mMap = MapManager.instance;
-        }
 
-        if (!mGame)
-        {
-            mGame = Game.instance;
-        }
-        if (mUpdateId < 0)
-        {
-            ObjectInit();
-            //mSpeed.x = 0;
-        }
-    }
-
-    public override void ObjectInit()
+    public override void EntityInit()
     {
 
-        mAABB.HalfSize = new Vector2(15.0f, 15.0f);
-        mSpeed = Vector2.zero;
-        mIsKinematic = true;
-        
-        Scale = new Vector2(1.0f, 1.0f);
+        Body.mAABB.HalfSize = new Vector2(15.0f, 15.0f);
+        Body.mSpeed = Vector2.zero;
+        Body.mIsKinematic = true;
 
-        base.ObjectInit();
+        Body.Scale = new Vector2(1.0f, 1.0f);
+
+        base.EntityInit();
 
     }
 
-    public override void CustomUpdate()
+    public override void EntityUpdate()
     {
         if (isTriggered)
         {
-            mIgnoresGravity = false;
+            Body.mIgnoresGravity = false;
         }
 
-        UpdatePhysics();
+        base.EntityUpdate();
     }
 }

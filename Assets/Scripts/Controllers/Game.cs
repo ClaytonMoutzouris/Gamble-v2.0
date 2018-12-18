@@ -13,13 +13,10 @@ public class Game : MonoBehaviour
     public GameMode mGameMode;
     public static Game instance;
     public Camera gameCamera;
-    public Character player1;
-    public Character player2;
-    bool[] inputs;
-    bool[] prevInputs;
+    public List<Player> players;
 
-    bool[] p2inputs;
-    bool[] p2prevInputs;
+    public List<bool[]> playerInputs;
+    public List<bool[]> playerPrevInputs;
 
     public KeyCode goLeftKey = KeyCode.A;
     public KeyCode goRightKey = KeyCode.D;
@@ -38,7 +35,7 @@ public class Game : MonoBehaviour
     public Transform mMovingPlatformPrefab;
     public Transform mSlimePrefab;
     [SerializeField]
-    protected List<PhysicsObject> mObjects = new List<PhysicsObject>();
+    protected List<Entity> mEntities = new List<Entity>();
 
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
@@ -59,24 +56,21 @@ public class Game : MonoBehaviour
         switch (mGameMode)
         {
             case GameMode.Game:
+                playerInputs = new List<bool[]>();
+                playerPrevInputs = new List<bool[]>();
 
-                //init player 1
-                inputs = new bool[(int)KeyInput.Count];
-                prevInputs = new bool[(int)KeyInput.Count];
+                foreach (Player player in players)
+                {
+                    //init player 1
+                    bool[] inputs = new bool[(int)KeyInput.Count];
+                    bool[] prevInputs = new bool[(int)KeyInput.Count];
+                    playerInputs.Add(inputs);
+                    playerPrevInputs.Add(prevInputs);
 
-
-                player1.ObjectInit();
-                player1.SetInputs(inputs, prevInputs);
-                player1.mCollisionType = CollisionType.Player;
-                // player.Scale = Vector2.one * 1.5f;
-
-                //init player 2
-                p2inputs = new bool[(int)KeyInput.Count];
-                p2prevInputs = new bool[(int)KeyInput.Count];
-
-                player2.ObjectInit();
-                player2.SetInputs(p2inputs, p2prevInputs);
-                player2.mCollisionType = CollisionType.Player;
+                    player.EntityInit();
+                    player.SetInputs(inputs, prevInputs);
+                    player.Body.mCollisionType = CollisionType.Player;
+                }
                 //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
                 NewGameMap();
@@ -93,13 +87,13 @@ public class Game : MonoBehaviour
     {
         //We have to clear/reset the players refence to the map
         //For now, clearing its areas does the job
-        for (int i = mObjects.Count - 1; i >= 0; i--)
+        for (int i = mEntities.Count - 1; i >= 0; i--)
         {
-            mMap.RemoveObjectFromAreas(mObjects[i]);
+            mMap.RemoveObjectFromAreas(mEntities[i].Body);
         }
         mMap.Init();
-        player1.SetTilePosition(mMap.mMapData.startTile);
-        player2.SetTilePosition(mMap.mMapData.startTile);
+        foreach(Player player in players)
+        player.Body.SetTilePosition(mMap.mMapData.startTile);
     }
 
     public void NewEditorMap()
@@ -109,17 +103,22 @@ public class Game : MonoBehaviour
 
     void HandleInputs()
     {
-        inputs[(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
-        inputs[(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
-        inputs[(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
-        inputs[(int)KeyInput.Climb] = Input.GetAxisRaw("Vertical") > 0;
-        inputs[(int)KeyInput.Jump] = Input.GetButton("Jump");
+        for(int p = 0; p < players.Count; p++)
+        {
+            playerInputs[p][(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
+            playerInputs[p][(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
+            playerInputs[p][(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
+            playerInputs[p][(int)KeyInput.Climb] = Input.GetAxisRaw("Vertical") > 0;
+            playerInputs[p][(int)KeyInput.Jump] = Input.GetButton("Jump");
+            playerInputs[p][(int)KeyInput.Shoot] = Input.GetButton("Fire1");
+            playerInputs[p][(int)KeyInput.Attack] = Input.GetButton("Fire2");
+        }
 
-        p2inputs[(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
-        p2inputs[(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
-        p2inputs[(int)KeyInput.GoDown] = Input.GetKey(KeyCode.S);
-        p2inputs[(int)KeyInput.Climb] = Input.GetKey(KeyCode.W);
-        p2inputs[(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            //PauseMenu.instance.Open();
+        }
+
     }
 
     void Update()
@@ -135,30 +134,30 @@ public class Game : MonoBehaviour
 
     }
     
-    public void SwapUpdateIds(PhysicsObject a, PhysicsObject b)
+    public void SwapUpdateIds(Entity a, Entity b)
     {
         int tmp = a.mUpdateId;
         a.mUpdateId = b.mUpdateId;
         b.mUpdateId = tmp;
-        mObjects[a.mUpdateId] = a;
-        mObjects[b.mUpdateId] = b;
+        mEntities[a.mUpdateId] = a;
+        mEntities[b.mUpdateId] = b;
     }
 
-    public int AddToUpdateList(PhysicsObject obj)
+    public int AddToUpdateList(Entity obj)
     {
-        mObjects.Add(obj);
-        return mObjects.Count - 1;
+        mEntities.Add(obj);
+        return mEntities.Count - 1;
     }
-    public void FlagObjectForRemoval(PhysicsObject obj)
+    public void FlagObjectForRemoval(Entity obj)
     {
         obj.mToRemove = true;
     }
 
-    public void RemoveFromUpdateList(PhysicsObject obj)
+    public void RemoveFromUpdateList(Entity obj)
     {
-        mObjects.Remove(obj);
+        mEntities.Remove(obj);
         int index = 0;
-        foreach(PhysicsObject p in mObjects)
+        foreach(Entity p in mEntities)
         {
             p.mUpdateId = index;
             index++;
@@ -170,34 +169,34 @@ public class Game : MonoBehaviour
         if (mGameMode == GameMode.Editor)
             return;
 
-        for (int i = 0; i < mObjects.Count; ++i)
+        for (int i = 0; i < mEntities.Count; ++i)
         {
-            mObjects[i].CustomUpdate();
-            mMap.UpdateAreas(mObjects[i]);
-            mObjects[i].mAllCollidingObjects.Clear();
+            mEntities[i].EntityUpdate();
+            mMap.UpdateAreas(mEntities[i].Body);
+            mEntities[i].Body.mAllCollidingObjects.Clear();
         }
 
-        for (int i = mObjects.Count - 1; i >= 0; i--)
+        for (int i = mEntities.Count - 1; i >= 0; i--)
         {
-            if (mObjects[i].mToRemove)
+            if (mEntities[i].mToRemove)
             {
-                Debug.Log("Removing " + mObjects[i].name + " at index " + i);
-                Destroy(mObjects[i].gameObject);
+                Debug.Log("Removing " + mEntities[i].name + " at index " + i);
+                Destroy(mEntities[i].gameObject);
                 //THIS VVVVV HAS TO BE REMOVED BEFORE..
-                mMap.RemoveObjectFromAreas(mObjects[i]);
+                mMap.RemoveObjectFromAreas(mEntities[i].Body);
                 //THIS!!!! OTHERWISE IT FUCKS SHIT UP
                 //FUCK THIS ERROR IT TOOK ME SO GODDAMN LONG TO FIX
-                RemoveFromUpdateList(mObjects[i]);
+                RemoveFromUpdateList(mEntities[i]);
                 
             }
         }
 
         mMap.CheckCollisions();
 
-        for (int i = 0; i < mObjects.Count; ++i)
+        for (int i = 0; i < mEntities.Count; ++i)
         {
             //if(!mObjects[i].mToRemove)
-            mObjects[i].UpdatePhysicsP2();
+            mEntities[i].Body.UpdatePhysicsP2();
         }
 
         /*If we want to change the map, we have to either abort everything or wait until we're finished updating

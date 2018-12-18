@@ -1,66 +1,57 @@
 ﻿
 using UnityEngine;
 
-public class RollingBoulder : PhysicsObject
+public class RollingBoulder : Entity
 {
-    public float mMovingSpeed = 1;
     public float mMaxMoveSpeed = 150.0f;
     public float mDir = 1;
 
-    public void Start()
+    public override void EntityInit()
     {
-        if (mUpdateId < 0)
-        {
-            ObjectInit();
-            //mSpeed.x = 0;
-        }
-    }
-
-    public override void ObjectInit()
-    {
-        mAABB.HalfSize = new Vector2(31.0f, 31.0f);
-        mIsKinematic = true;
+        Body.mAABB.HalfSize = new Vector2(31.0f, 31.0f);
+        Body.mIsKinematic = true;
         int r = Random.Range(0, 2);
         if (r == 1)
         {
-            mSpeed.x = mMovingSpeed;
+            Body.mSpeed.x = mMovingSpeed;
 
         }
         else
         {
-            mSpeed.x = -mMovingSpeed;
+            Body.mSpeed.x = -mMovingSpeed;
 
         }
 
 
-        base.ObjectInit();
+        base.EntityInit();
     }
 
-    public override void CustomUpdate()
+    public override void EntityUpdate()
     {
         if (mMovingSpeed < mMaxMoveSpeed)
             mMovingSpeed += Time.deltaTime * 100;
 
-        if (mPS.pushesRightTile)
+        if (Body.mPS.pushesRightTile)
         {
             mDir = -1;
-            ScaleX = -Mathf.Abs(ScaleX);
+            Body.ScaleX = -Mathf.Abs(Body.ScaleX);
         }
-        else if (mPS.pushesLeftTile)
+        else if (Body.mPS.pushesLeftTile)
         {
             mDir = 1;
-            ScaleX = Mathf.Abs(ScaleX);
+            Body.ScaleX = Mathf.Abs(Body.ScaleX);
 
         }
 
-        mSpeed.x = mMovingSpeed * mDir;
+        Body.mSpeed.x = mMovingSpeed * mDir;
 
-        if (!mPS.pushesBottom)
+        if (!Body.mPS.pushesBottom)
         {
-            mSpeed.y += Constants.cGravity * Time.deltaTime;
+            Body.mSpeed.y += Constants.cGravity * Time.deltaTime;
 
-            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+            Body.mSpeed.y = Mathf.Max(Body.mSpeed.y, Constants.cMaxFallingSpeed);
         }
-        UpdatePhysics();
+
+        base.EntityUpdate();
     }
 }

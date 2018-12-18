@@ -1,57 +1,47 @@
 ﻿
 using UnityEngine;
 
-public class MovingPlatform : PhysicsObject
+public class MovingPlatform : Entity
 {
-    public float mMovingSpeed;
     public bool mWait;
     public float mTimer = 0.0f;
     public float mWaitTime = 3.0f;
 
-    public void Start()
-    {
-        if (mUpdateId < 0)
-        {
-            ObjectInit();
-            //mSpeed.x = 0;
-        }
-    }
-
-    public override void ObjectInit()
+    public override void EntityInit()
     {
         mWait = false;
 
-        mAABB.HalfSize = new Vector2(30.0f, 8.0f);
+        Body.mAABB.HalfSize = new Vector2(30.0f, 8.0f);
         mMovingSpeed = 100.0f;
-        mIsKinematic = true;
+        Body.mIsKinematic = true;
         int r = Random.Range(0, 2);
         if(r == 1)
         {
-            mSpeed.x = mMovingSpeed;
+            Body.mSpeed.x = mMovingSpeed;
 
         }
         else
         {
-            mSpeed.y = mMovingSpeed;
+            Body.mSpeed.y = mMovingSpeed;
 
         }
 
 
-        base.ObjectInit();
+        base.EntityInit();
 
     }
 
-    public override void CustomUpdate()
+    public override void EntityUpdate()
     {
-        if (mPS.pushesRightTile && !mPS.pushesBottomTile)
-            mSpeed.x = -mMovingSpeed;
-        else if (mPS.pushesBottomTile && !mPS.pushesLeftTile)
-            mSpeed.y = mMovingSpeed;
-        else if (mPS.pushesLeftTile && !mPS.pushesTopTile)
-            mSpeed.x = mMovingSpeed;
-        else if (mPS.pushesTopTile && !mPS.pushesRightTile)
-            mSpeed.y = -mMovingSpeed;
+        if (Body.mPS.pushesRightTile && !Body.mPS.pushesBottomTile)
+            Body.mSpeed.x = -mMovingSpeed;
+        else if (Body.mPS.pushesBottomTile && !Body.mPS.pushesLeftTile)
+            Body.mSpeed.y = mMovingSpeed;
+        else if (Body.mPS.pushesLeftTile && !Body.mPS.pushesTopTile)
+            Body.mSpeed.x = mMovingSpeed;
+        else if (Body.mPS.pushesTopTile && !Body.mPS.pushesRightTile)
+            Body.mSpeed.y = -mMovingSpeed;
 
-        UpdatePhysics();
+        base.EntityUpdate();
     }
 }

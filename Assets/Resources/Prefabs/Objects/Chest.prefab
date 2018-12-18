@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212907519225381640}
   - component: {fileID: 95040133573377836}
   - component: {fileID: 114641317293973688}
+  - component: {fileID: 114485043180105686}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1091165860579362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 292.71106, y: 78.48515, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,7 +61,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114641317293973688
+--- !u!114 &114485043180105686
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1091165860579362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c17112285aa45054ea6a53d8a63c5754, type: 3}
+  m_Script: {fileID: 11500000, guid: 807102eb09f7c8f4e9af35dcd842b00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mCollisionType: 7
@@ -77,7 +78,6 @@ MonoBehaviour:
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
-  mUpdateId: -1
   mSpeed: {x: 0, y: 0}
   mOldSpeed: {x: 0, y: 0}
   mAABB:
@@ -91,17 +91,93 @@ MonoBehaviour:
     rotation: 0
     isCircle: 0
     flipped: 0
+  mPS:
+    pushesRight: 0
+    pushesLeft: 0
+    pushesBottom: 0
+    pushesTop: 0
+    pushedTop: 0
+    pushedBottom: 0
+    pushedRight: 0
+    pushedLeft: 0
+    pushedLeftObject: 0
+    pushedRightObject: 0
+    pushedBottomObject: 0
+    pushedTopObject: 0
+    pushesLeftObject: 0
+    pushesRightObject: 0
+    pushesBottomObject: 0
+    pushesTopObject: 0
+    pushedLeftTile: 0
+    pushedRightTile: 0
+    pushedBottomTile: 0
+    pushedTopTile: 0
+    pushesLeftTile: 0
+    pushesRightTile: 0
+    pushesBottomTile: 0
+    pushesTopTile: 0
+    onOneWay: 0
+    tmpIgnoresOneWay: 0
+    tmpSticksToSlope: 0
+    oneWayY: 0
+    onLadder: 0
+    isClimbing: 0
+    isBounce: 0
+    onDoor: 0
+    onIce: 0
+    onConveyorLeft: 0
+    onConveyorRight: 0
+    leftTile:
+      x: 0
+      y: 0
+    rightTile:
+      x: 0
+      y: 0
+    topTile:
+      x: 0
+      y: 0
+    bottomTile:
+      x: 0
+      y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
+  mEntity: {fileID: 114641317293973688}
   mMountParent: {fileID: 0}
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
   mIsKinematic: 0
-  mToRemove: 0
   mIgnoresGravity: 0
   mSpriteDepth: -1
   mTransform: {fileID: 4558402522061630}
+--- !u!114 &114641317293973688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1091165860579362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17112285aa45054ea6a53d8a63c5754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mMovingSpeed: 0
+  mToRemove: 0
+  mUpdateId: -1
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
   mAnimator: {fileID: 95040133573377836}
+  colorPallete: []
+  mHitbox:
+    center: {x: 0, y: 0, z: 0}
+    halfSize: {x: 0, y: 0, z: 0}
+    offset: {x: 0, y: 0, z: 0}
+    baseOffset: {x: 0, y: 0, z: 0}
+    baseHalfSize: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    type: 0
+    rotation: 0
+    isCircle: 0
+    flipped: 0
   mOpen: 0
 --- !u!212 &212907519225381640
 SpriteRenderer:
@@ -118,7 +194,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5245fd008ee4b0a4eb91ae9c364520d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

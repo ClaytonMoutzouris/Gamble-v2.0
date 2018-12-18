@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameCamera : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GameCamera : MonoBehaviour
     /// A reference to the the player.
     /// </summary>
 
-    public Transform[] targets;
+    public List<Transform> targets;
 
     /// <summary>
     /// The position.
@@ -25,6 +26,7 @@ public class GameCamera : MonoBehaviour
 
     void Start()
     {
+
         mCamera = GetComponent<Camera>();
         //mCamera.orthographicSize = mMinOrthographicSize;
         //mPosition = transform.position;

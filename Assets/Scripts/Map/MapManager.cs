@@ -73,7 +73,7 @@ public class MapManager : MonoBehaviour
                     Debug.Log("Area X: " + x + " Y: " + y + " obj count: " + objs.Count);
                     for (int i = 0; i < objs.Count; ++i)
                     {
-                        Debug.Log(objs[i].name);
+                        Debug.Log(objs[i].mTransform.name);
                     }
                 }
             }
@@ -86,7 +86,7 @@ public class MapManager : MonoBehaviour
     {
         var area = mObjectsInArea[areaIndex.x, areaIndex.y];
 
-        if (obj.mToRemove)
+        if (obj.mEntity.mToRemove)
         {
             Debug.Log("This object is flagged for removal");
         }
@@ -385,8 +385,8 @@ public class MapManager : MonoBehaviour
         {
             case ObjectType.Chest:
                 Chest temp = Instantiate(Resources.Load<Chest>("Prefabs/Objects/Chest")) as Chest;
-                temp.ObjectInit();
-                temp.SetTilePosition(data.TilePosition);
+                temp.EntityInit();
+                temp.Body.SetTilePosition(data.TilePosition);
                 break;
         }
     }
@@ -394,9 +394,9 @@ public class MapManager : MonoBehaviour
     public void AddEnemyEntity(EnemyData data)
     {
   
-        EnemyObject temp = Instantiate(EnemyDatabase.GetEnemyPrefab(data.type));
-        temp.ObjectInit();
-        temp.SetTilePosition(data.TilePosition);
+        Enemy temp = Instantiate(EnemyDatabase.GetEnemyPrefab(data.type));
+        temp.EntityInit();
+        temp.Body.SetTilePosition(data.TilePosition);
     }
 
 

@@ -5,7 +5,8 @@ public enum EntityType { Enemy, Object, Player };
 public enum EnemyType { Slime, CrimsonSlime, Eye, Count };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
-public enum MapType { Forest, Tundra, Count };
+//Hub comes after count, because we dont want to randomly choose the hub (in most cases)
+public enum MapType { Forest, Tundra, Count, Hub };
 
 public enum TileType
 {
@@ -33,4 +34,15 @@ public enum CollisionType
     Obstacle,
     Platform,
     Chest,
+    Projectile,
+}
+
+public enum AABBType
+{
+    Unknown = -1,
+    Main,
+    Terrain,
+    Secondary,
+    Damage,
+    Terrain3D
 }

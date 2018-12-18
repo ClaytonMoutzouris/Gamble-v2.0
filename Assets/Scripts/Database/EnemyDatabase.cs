@@ -5,12 +5,12 @@ using UnityEngine;
 public static class EnemyDatabase
 {
 
-    static Dictionary<EnemyType, EnemyObject> mEnemyDatabase;
+    static Dictionary<EnemyType, Enemy> mEnemyDatabase;
 
     public static bool InitializeDatabase()
     {
-        mEnemyDatabase = new Dictionary<EnemyType, EnemyObject>();
-        foreach (EnemyObject obj in Resources.LoadAll<EnemyObject>("Prefabs/Enemies"))
+        mEnemyDatabase = new Dictionary<EnemyType, Enemy>();
+        foreach (Enemy obj in Resources.LoadAll<Enemy>("Prefabs/Enemies"))
         {
             mEnemyDatabase.Add(obj.mEnemyType, obj);
         }
@@ -18,7 +18,7 @@ public static class EnemyDatabase
         return true;
     }
 
-    public static EnemyObject GetEnemyPrefab(EnemyType id)
+    public static Enemy GetEnemyPrefab(EnemyType id)
     {
 
         return mEnemyDatabase[id];

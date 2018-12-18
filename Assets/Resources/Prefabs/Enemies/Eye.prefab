@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212992731995653070}
   - component: {fileID: 114667629719467648}
   - component: {fileID: 95194250073010510}
+  - component: {fileID: 114332550567967688}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -60,7 +61,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114667629719467648
+--- !u!114 &114332550567967688
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,16 +69,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956054827893182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76dfe49771809b48ad32b58e9333a53, type: 3}
+  m_Script: {fileID: 11500000, guid: 807102eb09f7c8f4e9af35dcd842b00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mCollisionType: 3
-  mCollidesWith: 010000000600000005000000
+  mCollidesWith: 01000000020000000500000006000000
   mOldPosition: {x: 0, y: 0}
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
-  mUpdateId: -1
   mSpeed: {x: 0, y: 0}
   mOldSpeed: {x: 0, y: 0}
   mAABB:
@@ -141,15 +141,32 @@ MonoBehaviour:
       y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
+  mEntity: {fileID: 114667629719467648}
   mMountParent: {fileID: 0}
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
   mIsKinematic: 0
-  mToRemove: 0
   mIgnoresGravity: 1
   mSpriteDepth: -1
   mTransform: {fileID: 4389534336763958}
+--- !u!114 &114667629719467648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1956054827893182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76dfe49771809b48ad32b58e9333a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   mMovingSpeed: 20
+  mToRemove: 0
+  mUpdateId: -1
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mAnimator: {fileID: 0}
+  colorPallete: []
   mHitbox:
     center: {x: 0, y: 0, z: 0}
     halfSize: {x: 0, y: 0, z: 0}

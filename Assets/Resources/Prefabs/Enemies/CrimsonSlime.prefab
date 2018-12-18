@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4158516181654174}
   - component: {fileID: 212359211727283486}
   - component: {fileID: 114213223733883614}
+  - component: {fileID: 114262829634916918}
   m_Layer: 0
   m_Name: CrimsonSlime
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1402695801023494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 803.6653, y: 880.972, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,13 +53,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f663ce5bebddc49beeb4e396cfcfb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mMovingSpeed: 80
+  mToRemove: 0
+  mUpdateId: -1
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mEnemyType: 1
+--- !u!114 &114262829634916918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402695801023494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807102eb09f7c8f4e9af35dcd842b00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   mCollisionType: 3
-  mCollidesWith: 010000000600000005000000
+  mCollidesWith: 01000000020000000500000006000000
   mOldPosition: {x: 0, y: 0}
-  mPosition: {x: 445.0164, y: 318.902}
+  mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
-  mUpdateId: -1
   mSpeed: {x: 0, y: 0}
   mOldSpeed: {x: 0, y: 0}
   mAABB:
@@ -122,27 +139,14 @@ MonoBehaviour:
       y: 0
   mGame: {fileID: 0}
   mMap: {fileID: 0}
+  mEntity: {fileID: 0}
   mMountParent: {fileID: 0}
   mIgnoresOneWay: 0
   mOnOneWayPlatform: 0
   mIsKinematic: 0
-  mToRemove: 0
   mIgnoresGravity: 0
   mSpriteDepth: -1
   mTransform: {fileID: 4158516181654174}
-  mMovingSpeed: 80
-  mHitbox:
-    center: {x: 0, y: 0, z: 0}
-    halfSize: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    baseOffset: {x: 0, y: 0, z: 0}
-    baseHalfSize: {x: 0, y: 0, z: 0}
-    scale: {x: 1, y: 1, z: 1}
-    type: 0
-    rotation: 0
-    isCircle: 0
-    flipped: 0
-  mEnemyType: 1
 --- !u!212 &212359211727283486
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ using System;
  */
 
 
-
+[System.Serializable]
 public class PhysicsObject : MonoBehaviour 
 {
     public CollisionType mCollisionType;
@@ -26,7 +26,6 @@ public class PhysicsObject : MonoBehaviour
     public Vector2 mReminder;
     public Vector2 mOffset;
 
-    public int mUpdateId = -1;
 
     private Vector2 mScale;
     public Vector2 Scale
@@ -65,23 +64,22 @@ public class PhysicsObject : MonoBehaviour
 	/// The previous speed in pixels/second.
 	/// </summary>
 	public Vector2 mOldSpeed;
-    /// <summary>
-    /// The AABB for collision queries.
-    /// </summary>
-    public AABB mAABB;
+
+    [SerializeField]
+    public CustomAABB mAABB;
 
     [SerializeField]
     public PositionState mPS;
 
     public Game mGame;
     public MapManager mMap;
+    public Entity mEntity;
 
     public PhysicsObject mMountParent = null;
 
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
     public bool mIsKinematic = false;
-    public bool mToRemove = false;
     public bool mIgnoresGravity = false;
 
     [NonSerialized]
@@ -491,7 +489,7 @@ public class PhysicsObject : MonoBehaviour
         }
     }
 
-    public void Move(Vector2 offset, Vector2 speed, ref Vector2 position, ref Vector2 reminder, AABB aabb, ref PositionState state)
+    public void Move(Vector2 offset, Vector2 speed, ref Vector2 position, ref Vector2 reminder, CustomAABB aabb, ref PositionState state)
     {
         reminder += offset;
 
@@ -601,19 +599,12 @@ public class PhysicsObject : MonoBehaviour
 
         Vector2 topRight = mAABB.Max();
         Vector2 bottomLeft = mAABB.Min();
-        if (transform.name == "MovingPlatformWee")
-        {
-            //Debug.Log("TR: " + topRight + " BL: " + bottomLeft);
-        }
+
 
             CollidesWithTiles(ref mPosition, ref topRight, ref bottomLeft, ref mPS);
 
-        //save the speed to oldSpeed vector
-        if(transform.name == "MovingPlatformWee")
-        {
-           // Debug.Log("Name:" + transform.name + "- Old Speed: " + mOldSpeed + ", Speed: " + mSpeed);
-           // Debug.Log("Bot: " + mPS.pushesBottomTile + "Top: " + mPS.pushesTopTile + "Left: " + mPS.pushesLeftTile + "Right: " + mPS.pushesRightTile);
-        }
+
+
         mOldSpeed = mSpeed;
         //This is the cutoff of updating
         //Lets try applying gravity here
@@ -676,8 +667,8 @@ public class PhysicsObject : MonoBehaviour
         if (mMountParent == null)
         {
             mMountParent = platform;
-            if (platform.mUpdateId > mUpdateId)
-                mGame.SwapUpdateIds(this, platform);
+            if (platform.mEntity.mUpdateId > mEntity.mUpdateId)
+                mGame.SwapUpdateIds(mEntity, platform.mEntity);
         }
     }
 
@@ -744,7 +735,7 @@ public class PhysicsObject : MonoBehaviour
             var data = mAllCollidingObjects[i];
             var overlap = data.overlap - offsetSum;
 
-            if (!mCollidesWith.Contains(other.mCollisionType) || other.mToRemove)
+            if (!mCollidesWith.Contains(other.mCollisionType) || other.mEntity.mToRemove)
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
@@ -889,22 +880,19 @@ public class PhysicsObject : MonoBehaviour
 
         //update the aabb
         mAABB.Center = mPosition;
+        mEntity.mHurtBox.collider.Center = mAABB.Center;
 
         //apply the changes to the transform
         transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
         transform.localScale = new Vector3(ScaleX, ScaleY, 1.0f);
     }
 
-    public virtual void CustomUpdate()
+    public virtual void ObjectInit(Entity entity)
     {
+        mGame = Game.instance;
+        mMap = mGame.mMap;
+        mEntity = entity;
 
-        UpdatePhysics();
-        //Default Custom Update
-        //...Do nothing lol
-    }
-
-    public virtual void ObjectInit()
-    {
         //All the basics that every physics object needs upon initialization
         Scale = Vector2.one;
         mPosition = RoundVector(transform.position);
@@ -912,12 +900,8 @@ public class PhysicsObject : MonoBehaviour
         mAABB.OffsetY = mAABB.HalfSizeY;
 
         //Check to see if we're in editorMode
-
-            mGame = Game.instance;
-            mMap = mGame.mMap;
        
 
-        mUpdateId = mGame.AddToUpdateList(this);
 
 
     }
