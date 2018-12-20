@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackManager : MonoBehaviour {
 
     public Entity mEntity;
-    public List<Attack> AttackList;
+    public List<Attack> AttackList = new List<Attack>();
 
     public List<MeleeAttack> meleeAttacks;
     public List<RangedAttack> rangedAttacks;
@@ -50,23 +50,23 @@ public class AttackManager : MonoBehaviour {
     {
         foreach(Attack attack in AttackList)
         {
-            if (attack.mIsActive)
-            {
-                attack.UpdateAttack();
-
-            }
+                attack.UpdateAttack();  
         }
 
 
     }
 
-    public void LateUpdate()
+    public void SecondUpdate()
     {
+
         //this makes sure the attack hitbox follows the player
         foreach (Attack attack in AttackList)
         {
-            attack.SecondUpdate();
+            if (attack.mIsActive)
+                attack.SecondUpdate();
         }
+
+           
     }
 
     void OnDrawGizmos()
@@ -80,8 +80,8 @@ public class AttackManager : MonoBehaviour {
                     MeleeAttack temp = (MeleeAttack)attack;
 
                     //calculate the position of the aabb's center
-                    var aabbPos = temp.hitbox.collider.Center;
-                    var halfSize = temp.hitbox.collider.HalfSize;
+                    var aabbPos = temp.hitbox.mAABB.Center;
+                    var halfSize = temp.hitbox.mAABB.HalfSize;
                     //Debug.Log(aabbPos + " halfsize =" + temp.hitbox.collider.HalfSize);
 
                     //draw the aabb rectangle

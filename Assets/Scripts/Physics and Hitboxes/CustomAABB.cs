@@ -8,9 +8,7 @@ public struct CustomAABB
 {
     
     public Vector3 center;
-    [HideInInspector]
     public Vector3 halfSize;
-    [HideInInspector]
     public Vector3 offset;
     public Vector3 baseOffset;
     public Vector3 baseHalfSize;

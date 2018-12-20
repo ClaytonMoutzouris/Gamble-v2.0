@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ColliderState { Open, Closed, Colliding }
 
 [System.Serializable]
 public class Hitbox
@@ -28,8 +27,6 @@ public class Hitbox
         {
 
         }
-
-
 
     }
 

@@ -208,6 +208,7 @@ public class Player : Entity
     {
         mAttackManager.UpdateAttacks();
 
+
         switch (mCurrentState)
         {
             

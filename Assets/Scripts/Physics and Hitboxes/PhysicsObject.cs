@@ -877,7 +877,7 @@ public class PhysicsObject : MonoBehaviour
 
         //update the aabb
         mAABB.Center = mPosition;
-        mEntity.mHurtBox.collider.Center = mAABB.Center;
+        mEntity.mHurtBox.UpdatePosition();
 
         //apply the changes to the transform
         transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);

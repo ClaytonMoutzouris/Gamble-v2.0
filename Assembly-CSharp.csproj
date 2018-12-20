@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\Physics and Hitboxes\AttackManager.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CollisionManager.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CustomAABB.cs" />
+    <Compile Include="Assets\Scripts\Physics and Hitboxes\CustomCollider2D.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\Hitbox.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\HitboxManager.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\Hurtbox.cs" />

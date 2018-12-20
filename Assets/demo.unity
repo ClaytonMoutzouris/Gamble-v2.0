@@ -1628,6 +1628,55 @@ Prefab:
       propertyPath: meleeAttacks.Array.data[0].hitbox.collider.baseOffset.x
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 2}
+      propertyPath: mHurtBox.mEntity
+      value: 
+      objectReference: {fileID: 1793492460}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mEntity
+      value: 
+      objectReference: {fileID: 1793492460}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.colliderType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.halfSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.halfSize.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.offset.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.baseOffset.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.baseHalfSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.mAABB.baseHalfSize.y
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1464cb122959e44080dd376f21d6734, type: 2}
   m_IsPrefabAsset: 0

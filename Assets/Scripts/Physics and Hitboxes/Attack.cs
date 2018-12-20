@@ -12,6 +12,8 @@ public class Attack {
     public float duration;
     public float elapsed;
 
+    //List of effects
+
     public bool mIsActive = false;
 
 
@@ -20,8 +22,11 @@ public class Attack {
 
     }
 
-    public void UpdateAttack()
+    public virtual void UpdateAttack()
     {
+        if (!mIsActive)
+            return;
+
         if(elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -57,39 +62,54 @@ public class Attack {
     {
         hurtbox.GetHit(this);
     }
+
 	
 }
 
 [System.Serializable]
 public class MeleeAttack : Attack
 {
-    public Hitbox hitbox;
+    public CustomCollider2D hitbox;
 
     public override void Activate()
     {
         base.Activate();
 
-        hitbox.state = ColliderState.Open;
+        hitbox.mState = ColliderState.Open;
+        hitbox.colliderType = ColliderType.Hitbox;
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
 
-        hitbox.state = ColliderState.Closed;
+        hitbox.mState = ColliderState.Closed;
+
+    }
+
+    public override void UpdateAttack()
+    {
+        foreach (CustomCollider2D hit in hitbox.mCollisions)
+        {
+            Debug.Log(hit.mEntity.name + " was hit by " + mEntity.name);
+            //hurt.GetHit(this);
+        }
+        hitbox.mCollisions.Clear();
+
+        base.UpdateAttack();
+
+
+        CollisionManager.UpdateAreas(hitbox);
     }
 
     public override void SecondUpdate()
     {
         base.SecondUpdate();
 
-        hitbox.collider.Center = mEntity.Body.mAABB.Center;
-        hitbox.collider.Scale = mEntity.Body.Scale;
+        hitbox.UpdatePosition();
 
-        foreach(Hurtbox hurt in hitbox.colliders)
-        {
-            hurt.GetHit(this);
-        }
+
+
     }
 
 }

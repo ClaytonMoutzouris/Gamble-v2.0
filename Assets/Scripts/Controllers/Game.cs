@@ -175,22 +175,9 @@ public class Game : MonoBehaviour
             mEntities[i].EntityUpdate();
             CollisionManager.UpdateAreas(mEntities[i].Body);
             CollisionManager.UpdateAreas(mEntities[i].mHurtBox);
+            mEntities[i].mHurtBox.mCollisions.Clear();
             mEntities[i].Body.mAllCollidingObjects.Clear();
-            if (mEntities[i] is Player)
-            {
-                foreach (Attack attack in mEntities[i].mAttackManager.AttackList)
-                {
-                    if (attack.mIsActive && attack is MeleeAttack)
-                    {
-                        MeleeAttack temp = (MeleeAttack)attack;
-                        CollisionManager.UpdateAreas(temp.hitbox);
-                        temp.hitbox.colliders.Clear();
-
-                    }
-
-                }
-
-            }
+            
         }
 
         for (int i = mEntities.Count - 1; i >= 0; i--)
@@ -222,7 +209,7 @@ public class Game : MonoBehaviour
         for (int i = 0; i < mEntities.Count; ++i)
         {
             //if(!mObjects[i].mToRemove)
-            mEntities[i].Body.UpdatePhysicsP2();
+            mEntities[i].SecondUpdate();
         }
 
         /*If we want to change the map, we have to either abort everything or wait until we're finished updating

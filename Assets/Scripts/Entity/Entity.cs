@@ -11,14 +11,15 @@ public abstract class Entity : MonoBehaviour {
     public Game mGame;
     public MapManager mMap;
     public bool mDoubleJump = true;
-
     public Animator mAnimator;
     public List<Color> colorPallete;
 
     //Every entity has a body, it exists in the world
     //Whether the body actually interacts with anything, thats up to the body
     protected PhysicsObject body;
-    public Hurtbox mHurtBox;
+
+    [SerializeField]
+    public CustomCollider2D mHurtBox;
 
     public EntityData EntityData;
 
@@ -36,11 +37,35 @@ public abstract class Entity : MonoBehaviour {
         }
     }
 
+    public Vector3 Position
+    {
+        get
+        {
+            return body.mPosition;
+        }
+    }
+
     #endregion
 
 
     public AttackManager mAttackManager;
 
+    void OnDrawGizmos()
+    {
+        DrawHitboxGizmos();
+    }
+
+    protected void DrawHitboxGizmos()
+    {
+        //calculate the position of the aabb's center
+        var aabbPos = mHurtBox.mAABB.Center;
+
+        //draw the aabb rectangle
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawCube(aabbPos, mHurtBox.mAABB.HalfSize * 2.0f);
+
+
+    }
 
     private void Awake()
     {
@@ -52,14 +77,10 @@ public abstract class Entity : MonoBehaviour {
 
 
         body = GetComponent<PhysicsObject>();
-        mHurtBox = GetComponent<Hurtbox>();
-        if(mHurtBox == null)
-        {
-            mHurtBox = gameObject.AddComponent<Hurtbox>();
-        }
 
         mHurtBox.mEntity = this;
-        //if()
+        mHurtBox.colliderType = ColliderType.Hurtbox;
+
         body.mTransform = transform;
     }
 
@@ -73,8 +94,9 @@ public abstract class Entity : MonoBehaviour {
 
         body.ObjectInit(this);
 
-        mHurtBox.collider.halfSize = body.mAABB.halfSize;
-        mHurtBox.collider.Offset = body.mOffset;
+        mHurtBox.mAABB.baseHalfSize = Body.mAABB.HalfSize;
+        mHurtBox.mAABB.HalfSize = Body.mAABB.HalfSize;
+        mHurtBox.UpdatePosition();
 
         mUpdateId = mGame.AddToUpdateList(this);
 
@@ -84,8 +106,14 @@ public abstract class Entity : MonoBehaviour {
     public virtual void EntityUpdate()
     {
         body.UpdatePhysics();
-        mHurtBox.collider.Center = body.mAABB.Center;
+        mHurtBox.UpdatePosition();
 
+    }
+
+    public virtual void SecondUpdate()
+    {
+        Body.UpdatePhysicsP2();
+        mAttackManager.SecondUpdate();
     }
 
     public void Shoot(Bullet prefab)
