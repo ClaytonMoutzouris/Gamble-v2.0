@@ -10,6 +10,7 @@ public abstract class Entity : MonoBehaviour {
     public int mUpdateId = -1;
     public Game mGame;
     public MapManager mMap;
+    public bool mDoubleJump = true;
 
     public Animator mAnimator;
     public List<Color> colorPallete;
@@ -38,8 +39,18 @@ public abstract class Entity : MonoBehaviour {
     #endregion
 
 
+    public AttackManager mAttackManager;
+
+
     private void Awake()
     {
+        mAttackManager = GetComponent<AttackManager>();
+        if (mAttackManager == null)
+            mAttackManager = gameObject.AddComponent<AttackManager>();
+
+        mAttackManager.mEntity = this;
+
+
         body = GetComponent<PhysicsObject>();
         mHurtBox = GetComponent<Hurtbox>();
         if(mHurtBox == null)
@@ -77,8 +88,15 @@ public abstract class Entity : MonoBehaviour {
 
     }
 
-
+    public void Shoot(Bullet prefab)
+    {
+        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
+        temp.EntityInit();
+        temp.direction = new Vector2(body.ScaleX, 0);
+    }
 }
+
+
 
 public abstract class Enemy : Entity
 {

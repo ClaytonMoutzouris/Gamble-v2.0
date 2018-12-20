@@ -43,6 +43,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        CollisionManager.InitializeCollisionManager();
         ItemDatabase.InitializeDatabase();
         EnemyDatabase.InitializeDatabase();
     }
@@ -89,7 +90,7 @@ public class Game : MonoBehaviour
         //For now, clearing its areas does the job
         for (int i = mEntities.Count - 1; i >= 0; i--)
         {
-            mMap.RemoveObjectFromAreas(mEntities[i].Body);
+            CollisionManager.RemoveObjectFromAreas(mEntities[i].Body);
         }
         mMap.Init();
         foreach(Player player in players)
@@ -172,8 +173,24 @@ public class Game : MonoBehaviour
         for (int i = 0; i < mEntities.Count; ++i)
         {
             mEntities[i].EntityUpdate();
-            mMap.UpdateAreas(mEntities[i].Body);
+            CollisionManager.UpdateAreas(mEntities[i].Body);
+            CollisionManager.UpdateAreas(mEntities[i].mHurtBox);
             mEntities[i].Body.mAllCollidingObjects.Clear();
+            if (mEntities[i] is Player)
+            {
+                foreach (Attack attack in mEntities[i].mAttackManager.AttackList)
+                {
+                    if (attack.mIsActive && attack is MeleeAttack)
+                    {
+                        MeleeAttack temp = (MeleeAttack)attack;
+                        CollisionManager.UpdateAreas(temp.hitbox);
+                        temp.hitbox.colliders.Clear();
+
+                    }
+
+                }
+
+            }
         }
 
         for (int i = mEntities.Count - 1; i >= 0; i--)
@@ -183,7 +200,16 @@ public class Game : MonoBehaviour
                 Debug.Log("Removing " + mEntities[i].name + " at index " + i);
                 Destroy(mEntities[i].gameObject);
                 //THIS VVVVV HAS TO BE REMOVED BEFORE..
-                mMap.RemoveObjectFromAreas(mEntities[i].Body);
+                CollisionManager.RemoveObjectFromAreas(mEntities[i].Body);
+                foreach (Attack attack in mEntities[i].mAttackManager.AttackList)
+                {
+                    if (attack is MeleeAttack)
+                    {
+                        MeleeAttack temp = (MeleeAttack)attack;
+                        CollisionManager.RemoveObjectFromAreas(temp.hitbox);
+                    }
+
+                }
                 //THIS!!!! OTHERWISE IT FUCKS SHIT UP
                 //FUCK THIS ERROR IT TOOK ME SO GODDAMN LONG TO FIX
                 RemoveFromUpdateList(mEntities[i]);
@@ -191,7 +217,7 @@ public class Game : MonoBehaviour
             }
         }
 
-        mMap.CheckCollisions();
+        CollisionManager.CheckCollisions();
 
         for (int i = 0; i < mEntities.Count; ++i)
         {

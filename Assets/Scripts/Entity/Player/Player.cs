@@ -12,11 +12,10 @@ public class Player : Entity
         Walk,
         Jump,
         GrabLedge,
-        Climbing,
+        Climb,
+        Attacking,
+
     };
-
-    public List<Attack> mAttackList;
-
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -25,7 +24,6 @@ public class Player : Entity
 
     public float mWalkSfxTimer = 0.0f;
     public const float cWalkSfxTime = 0.25f;
-    public Bullet bullet;
 
 
     public int mPlayerIndex = 0;
@@ -52,26 +50,7 @@ public class Player : Entity
     public int mCannotGoLeftFrames = 0;
     public int mCannotGoRightFrames = 0;
 
-    void OnDrawGizmos()
-    {
-        DrawAttackGizmos();
-    }
-
-    protected void DrawAttackGizmos()
-    {
-        if (mAttackList[0].mIsActive)
-        {
-            //calculate the position of the aabb's center
-            var aabbPos = mAttackList[0].hitbox.collider.Center;
-
-            //draw the aabb rectangle
-            Gizmos.color = new Color(0, 1, 0, 1);
-            Gizmos.DrawCube(aabbPos, mAttackList[0].hitbox.collider.HalfSize * 2.0f);
-        }
-
-
-    }
-
+   
 
 
     public void SetCharacterWidth(Slider slider)
@@ -134,22 +113,107 @@ public class Player : Entity
         mCurrentState = PlayerState.Jump;
     }
 
-    public void Shoot()
+    public void ClimbLadder()
     {
-        Bullet temp = Instantiate(bullet, body.mAABB.Center, Quaternion.identity);
-        temp.EntityInit();
-        temp.direction = new Vector2(body.ScaleX, 0);
+        body.mPS.isClimbing = true;
+        mCurrentState = PlayerState.Climb;
+    }
+
+    public void TryGrabLedge()
+    {
+        //we'll translate the original aabb's HalfSize so we get a vector Vector2iing
+        //the top right corner of the aabb when we want to grab the right edge
+        //and top left corner of the aabb when we want to grab the left edge
+        Vector2 aabbCornerOffset;
+
+        if (body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight])
+            aabbCornerOffset = body.mAABB.HalfSize;
+        else
+            aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
+
+        int tileX, topY, bottomY;
+        tileX = mMap.GetMapTileXAtPoint(body.mAABB.CenterX + aabbCornerOffset.x);
+
+        if ((body.mPS.pushedLeft && body.mPS.pushesLeft) || (body.mPS.pushedRight && body.mPS.pushesRight))
+        {
+            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+        }
+        else
+        {
+            topY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+        }
+
+        for (int y = topY; y >= bottomY; --y)
+        {
+            if (!mMap.IsObstacle(tileX, y) && mMap.IsObstacle(tileX, y - 1))
+            {
+                //calculate the appropriate corner
+                var tileCorner = mMap.GetMapTilePosition(tileX, y - 1);
+                tileCorner.x -= Mathf.Sign(aabbCornerOffset.x) * MapManager.cTileSize / 2;
+                tileCorner.y += MapManager.cTileSize / 2;
+
+                //check whether the tile's corner is between our grabbing Vector2is
+                if (y > bottomY ||
+                    ((body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
+                    && tileCorner.y - (body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                {
+                    //save the tile we are holding so we can check later on if we can still hold onto it
+                    mLedgeTile = new Vector2i(tileX, y - 1);
+
+                    //calculate our position so the corner of our AABB and the tile's are next to each other
+                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+                    body.mSpeed = Vector2.zero;
+
+                    //finally grab the edge
+                    mCurrentState = PlayerState.GrabLedge;
+                    body.mIgnoresGravity = true;
+                    body.ScaleX *= -1;
+                    mAnimator.Play("GrabLedge");
+                    //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                    break;
+                    //mGame.PlayOneShot(SoundType.Character_LedgeGrab, mPosition, Game.sSfxVolume);
+                }
+            }
+        }
+    }
+
+    public void UpdateAnimator()
+    {
+        foreach(Attack attack in mAttackManager.AttackList)
+        {
+            if (attack.mIsActive)
+            {
+                mAnimator.Play("Attack");
+                return;
+            }
+        }
+
+        if (mCurrentState == PlayerState.Climb) {
+            //Update the animator
+            if (Mathf.Abs(body.mSpeed.y) > 0)
+                mAnimator.Play("Climb");
+            else
+                mAnimator.Play("LadderIdle");
+        } else
+        {
+            mAnimator.Play(mCurrentState.ToString());
+
+        }
+
     }
 
     public override void EntityUpdate()
     {
+        mAttackManager.UpdateAttacks();
 
         switch (mCurrentState)
         {
+            
             case PlayerState.Stand:
 
                 mWalkSfxTimer = cWalkSfxTime;
-                mAnimator.Play("Stand");
 
                 if (!body.mPS.pushesBottom)
                 {
@@ -164,11 +228,6 @@ public class Player : Entity
                 else
                 {
                     body.mSpeed = Vector2.zero;
-                }
-
-                if (Pressed(KeyInput.Shoot))
-                {
-                    Shoot();
                 }
                 
 
@@ -210,7 +269,7 @@ public class Player : Entity
                     {
                         body.mSpeed = Vector2.zero;
                         body.mPS.isClimbing = true;
-                        mCurrentState = PlayerState.Climbing;
+                        mCurrentState = PlayerState.Climb;
                         body.mIgnoresGravity = true;
 
                         break;
@@ -246,7 +305,6 @@ public class Player : Entity
 
                 break;
             case PlayerState.Walk:
-                mAnimator.Play("Walk");
 
                 mWalkSfxTimer += Time.deltaTime;
 
@@ -311,7 +369,7 @@ public class Player : Entity
                 {
                     body.mSpeed = Vector2.zero;
                     body.mPS.isClimbing = true;
-                    mCurrentState = PlayerState.Climbing;
+                    mCurrentState = PlayerState.Climb;
                     body.mIgnoresGravity = true;
 
                     break;
@@ -319,6 +377,8 @@ public class Player : Entity
 
                 break;
             case PlayerState.Jump:
+
+                //we do not ignore gravity while in the air
                 body.mIgnoresGravity = false;
                 ++mFramesFromJumpStart;
 
@@ -330,9 +390,13 @@ public class Player : Entity
                         body.mSpeed.y = mJumpSpeed;
                 }
 
+                if (Pressed(KeyInput.Jump) && mDoubleJump)
+                {
+                    Jump();
+                }
+
                 mWalkSfxTimer = cWalkSfxTime;
 
-                mAnimator.Play("Jump");
                 /*
                 mSpeed.y += Constants.cGravity * Time.deltaTime;
 
@@ -396,63 +460,7 @@ public class Player : Entity
                 if (body.mSpeed.y <= 0.0f && !body.mPS.pushesTop
                     && ((body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight]) || (body.mPS.pushesLeft && mInputs[(int)KeyInput.GoLeft])))
                 {
-                    //we'll translate the original aabb's HalfSize so we get a vector Vector2iing
-                    //the top right corner of the aabb when we want to grab the right edge
-                    //and top left corner of the aabb when we want to grab the left edge
-                    Vector2 aabbCornerOffset;
-
-                    if (body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight])
-                        aabbCornerOffset = body.mAABB.HalfSize;
-                    else
-                        aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
-
-                    int tileX, topY, bottomY;
-                    tileX = mMap.GetMapTileXAtPoint(body.mAABB.CenterX + aabbCornerOffset.x);
-
-                    if ((body.mPS.pushedLeft && body.mPS.pushesLeft) || (body.mPS.pushedRight && body.mPS.pushesRight))
-                    {
-                        topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-                        bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
-                    }
-                    else
-                    {
-                        topY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-                        bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
-                    }
-
-                    for (int y = topY; y >= bottomY; --y)
-                    {
-                        if (!mMap.IsObstacle(tileX, y)
-                            && mMap.IsObstacle(tileX, y - 1))
-                        {
-                            //calculate the appropriate corner
-                            var tileCorner = mMap.GetMapTilePosition(tileX, y - 1);
-                            tileCorner.x -= Mathf.Sign(aabbCornerOffset.x) * MapManager.cTileSize / 2;
-                            tileCorner.y += MapManager.cTileSize / 2;
-
-                            //check whether the tile's corner is between our grabbing Vector2is
-                            if (y > bottomY ||
-                                ((body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
-                                && tileCorner.y - (body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
-                            {
-                                //save the tile we are holding so we can check later on if we can still hold onto it
-                                mLedgeTile = new Vector2i(tileX, y - 1);
-
-                                //calculate our position so the corner of our AABB and the tile's are next to each other
-                                body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
-                                body.mSpeed = Vector2.zero;
-
-                                //finally grab the edge
-                                mCurrentState = PlayerState.GrabLedge;
-                                body.mIgnoresGravity = true;
-                                body.ScaleX *= -1;
-                                mAnimator.Play("GrabLedge");
-                                mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
-                                break;
-                                //mGame.PlayOneShot(SoundType.Character_LedgeGrab, mPosition, Game.sSfxVolume);
-                            }
-                        }
-                    }
+                    TryGrabLedge();
                 }
 
 
@@ -460,21 +468,16 @@ public class Player : Entity
                 if (KeyState(KeyInput.GoDown))
                     body.mPS.tmpIgnoresOneWay = true;
 
+                // we can climb ladders from this state
                 if (KeyState(KeyInput.Climb) && body.mPS.onLadder)
                 {
-                    //mLedgeTile = new Vector2i(tileX, y - 1);
-                    body.mSpeed = Vector2.zero;
-                    body.mPS.isClimbing = true;
-                    mCurrentState = PlayerState.Climbing;
-                    body.mIgnoresGravity = true;
-
+                    mCurrentState = PlayerState.Climb;
                     break;
                 }
 
                 break;
 
             case PlayerState.GrabLedge:
-                mAnimator.Play("GrabLedge");
                 body.mIgnoresGravity = true;
 
                 bool ledgeOnLeft = mLedgeTile.x * MapManager.cTileSize < body.mPosition.x;
@@ -507,25 +510,32 @@ public class Player : Entity
                     mCurrentState = PlayerState.Jump;
 
                 break;
-            case PlayerState.Climbing:
+            case PlayerState.Climb:
+/*
+                //Update the animator
+                if (Mathf.Abs(body.mSpeed.y) > 0)
+                else
+                    mAnimator.Play("LadderIdle");
+*/
+                //On a ladder, we always assume we are still until we receive input
+                body.mSpeed = Vector2.zero;
+                body.mPS.isClimbing = true;
+                //While we are climbing, we always ignore gravity
+                body.mIgnoresGravity = true;
+
                 int tx = 0, ty = 0;
                 mMap.GetMapTileAtPoint(body.mAABB.Center, out tx, out ty);
                 body.mPosition.x = tx * MapManager.cTileSize;
 
-                if(Mathf.Abs(body.mSpeed.y) > 0)
-                    mAnimator.Play("Climb");
-                else
-                    mAnimator.Play("LadderIdle");
+                
 
                 if (!body.mPS.onLadder)
                 {
                     body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Stand;
                 }
-                if (KeyState(KeyInput.GoDown) == KeyState(KeyInput.Climb))
-                {
-                    body.mSpeed = Vector2.zero;
-                }
+
+
                 else if (KeyState(KeyInput.GoDown))
                 {
                     if (body.mPS.pushesBottom)
@@ -569,6 +579,19 @@ public class Player : Entity
                 }
                 break;
         }
+
+        if (mInputs[(int)KeyInput.Attack])
+        {
+            mAttackManager.AttackList[0].Activate();
+        }
+
+        if (Pressed(KeyInput.Shoot))
+        {
+            mAttackManager.AttackList[1].Activate();
+        }
+
+
+
         /*
         if(mSpeed.x > Constants.cMaxWalkSpeed)
         {
@@ -588,24 +611,18 @@ public class Player : Entity
 
         base.EntityUpdate();
 
-        if (mInputs[(int)KeyInput.Attack])
-        {
-            mAttackList[0].Activate();
-        }
+       
 
-            //Handle Attack stuff here
-        if (mAttackList[0].mIsActive)
-        {
-            Debug.Log("Attack is active");
-            mAttackList[0].hitbox.collider.Center = body.mAABB.Center + mAttackList[0].hitbox.collider.Offset;
-            mAttackList[0].UpdateAttack();
-        }
 
-        if (body.mPS.pushedBottom && !body.mPS.pushesBottom || body.mPS.isClimbing)
+        //if (body.mPS.pushedBottom && !body.mPS.pushesBottom)
             mFramesFromJumpStart = 0;
 
-        if (body.mPS.pushesBottom && !body.mPS.pushedBottom)
-            mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+        //if (body.mPS.pushesBottom && !body.mPS.pushedBottom)
+          //  mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+
+        //Update the animator last
+        UpdateAnimator();
+
 
         UpdatePrevInputs();
     }

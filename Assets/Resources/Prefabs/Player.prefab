@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 9507910}
   - component: {fileID: 8258700}
   - component: {fileID: 114493027762648444}
+  - component: {fileID: 114922682524623852}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -192,6 +193,7 @@ MonoBehaviour:
   mUpdateId: -1
   mGame: {fileID: 0}
   mMap: {fileID: 0}
+  mDoubleJump: 1
   mAnimator: {fileID: 9507910}
   colorPallete:
   - {r: 1, g: 0, b: 0, a: 1}
@@ -202,31 +204,12 @@ MonoBehaviour:
   - {r: 1, g: 0.5613208, b: 0.5613208, a: 1}
   - {r: 0.21807075, g: 1, b: 0, a: 1}
   mHurtBox: {fileID: 0}
-  mAttackList:
-  - mEntity: {fileID: 11443564}
-    damage: 0
-    duration: 1
-    elapsed: 0
-    mIsActive: 0
-    hitbox:
-      collider:
-        center: {x: 0, y: 0, z: 0}
-        halfSize: {x: 5, y: 10, z: 0}
-        offset: {x: 5, y: 0, z: 0}
-        baseOffset: {x: 0, y: 0, z: 0}
-        baseHalfSize: {x: 0, y: 0, z: 0}
-        scale: {x: 0, y: 0, z: 0}
-        type: 0
-        rotation: 0
-        isCircle: 0
-        flipped: 0
-      state: 1
+  mAttackManager: {fileID: 0}
   mHitWallSfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
   mJumpSfx: {fileID: 8300000, guid: 0675524b9de73754286435cc2b6083ca, type: 3}
   mWalkSfx: {fileID: 8300000, guid: 129cfec52de8a314b809cf8c994139b6, type: 3}
   mAudioSource: {fileID: 8258700}
   mWalkSfxTimer: 0
-  bullet: {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66, type: 2}
   mPlayerIndex: 0
   mCurrentState: 0
   mJumpSpeed: 0
@@ -418,6 +401,7 @@ MonoBehaviour:
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
+  mScale: {x: 0, y: 0}
   mSpeed: {x: 0, y: 0}
   mOldSpeed: {x: 0, y: 0}
   mAABB:
@@ -487,5 +471,50 @@ MonoBehaviour:
   mOnOneWayPlatform: 0
   mIsKinematic: 0
   mIgnoresGravity: 0
+  mAreas: []
+  mIdsInAreas: 
   mSpriteDepth: -1
   mTransform: {fileID: 418340}
+--- !u!114 &114922682524623852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  AttackList: []
+  meleeAttacks:
+  - mEntity: {fileID: 11443564}
+    damage: 0
+    duration: 1
+    elapsed: 0
+    mIsActive: 0
+    hitbox:
+      collider:
+        center: {x: 0, y: 0, z: 0}
+        halfSize: {x: 0, y: 0, z: 0}
+        offset: {x: 0, y: 0, z: 0}
+        baseOffset: {x: 5, y: 0, z: 0}
+        baseHalfSize: {x: 5, y: 10, z: 0}
+        scale: {x: 0, y: 0, z: 0}
+        type: 0
+        rotation: 0
+        isCircle: 0
+        flipped: 0
+      state: 1
+      colliders: []
+      mAreas: []
+      mIdsInAreas: 
+  rangedAttacks:
+  - mEntity: {fileID: 11443564}
+    damage: 0
+    duration: 0.2
+    elapsed: 0
+    mIsActive: 0
+    projectile: {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66,
+      type: 2}

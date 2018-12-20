@@ -15,7 +15,6 @@ public class FallingRock : Entity
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
 
-        Body.Scale = new Vector2(1.0f, 1.0f);
 
         base.EntityInit();
 

@@ -40,9 +40,8 @@ public enum CollisionType
 public enum AABBType
 {
     Unknown = -1,
-    Main,
-    Terrain,
-    Secondary,
-    Damage,
-    Terrain3D
+    Bounds,
+    Hurtbox,
+    Hitbox,
+    Pushbox,
 }

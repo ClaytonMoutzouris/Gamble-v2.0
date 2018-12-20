@@ -78,6 +78,7 @@ MonoBehaviour:
   mPosition: {x: 0, y: 0}
   mReminder: {x: 0, y: 0}
   mOffset: {x: 0, y: 0}
+  mScale: {x: 0, y: 0}
   mSpeed: {x: 0, y: 0}
   mOldSpeed: {x: 0, y: 0}
   mAABB:
@@ -147,6 +148,8 @@ MonoBehaviour:
   mOnOneWayPlatform: 0
   mIsKinematic: 0
   mIgnoresGravity: 0
+  mAreas: []
+  mIdsInAreas: 
   mSpriteDepth: -1
   mTransform: {fileID: 4558402522061630}
 --- !u!114 &114641317293973688
@@ -165,19 +168,11 @@ MonoBehaviour:
   mUpdateId: -1
   mGame: {fileID: 0}
   mMap: {fileID: 0}
+  mDoubleJump: 1
   mAnimator: {fileID: 95040133573377836}
   colorPallete: []
-  mHitbox:
-    center: {x: 0, y: 0, z: 0}
-    halfSize: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    baseOffset: {x: 0, y: 0, z: 0}
-    baseHalfSize: {x: 0, y: 0, z: 0}
-    scale: {x: 1, y: 1, z: 1}
-    type: 0
-    rotation: 0
-    isCircle: 0
-    flipped: 0
+  mHurtBox: {fileID: 0}
+  mAttackManager: {fileID: 0}
   mOpen: 0
 --- !u!212 &212907519225381640
 SpriteRenderer:

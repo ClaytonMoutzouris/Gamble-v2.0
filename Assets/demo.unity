@@ -1579,6 +1579,55 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 2}
+      propertyPath: mAttackList.Array.data[0].duration
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889220561357670, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.flipped
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.baseOffset.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.baseOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.baseHalfSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.baseHalfSize.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: AttackList.Array.data[0].hitbox.collider.halfSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.collider.baseHalfSize.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.collider.baseHalfSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.collider.baseOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114922682524623852, guid: d1464cb122959e44080dd376f21d6734,
+        type: 2}
+      propertyPath: meleeAttacks.Array.data[0].hitbox.collider.baseOffset.x
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1464cb122959e44080dd376f21d6734, type: 2}
   m_IsPrefabAsset: 0
@@ -1948,10 +1997,6 @@ MonoBehaviour:
   mPosition: {x: 0, y: 0, z: 0}
   mWidth: 100
   mHeight: 100
-  mHorizontalAreasCount: 0
-  mVerticalAreasCount: 0
-  mGridAreaWidth: 25
-  mGridAreaHeight: 25
 --- !u!4 &2106156356
 Transform:
   m_ObjectHideFlags: 0
