@@ -55,19 +55,19 @@ public class Player : Entity
 
     public void SetCharacterWidth(Slider slider)
     {
-        body.ScaleX = slider.value;
+        body.mCollider.mAABB.ScaleX = slider.value;
     }
 
     public void SetCharacterHeight(Slider slider)
     {
-        body.ScaleY = slider.value;
+        body.mCollider.mAABB.ScaleY = slider.value;
     }
 
     public override void EntityInit()
     {
         mAudioSource = GetComponent<AudioSource>();
 
-        body.mAABB.HalfSize = new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY);
+        body.mCollider.mAABB.HalfSize = new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY);
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
@@ -127,22 +127,22 @@ public class Player : Entity
         Vector2 aabbCornerOffset;
 
         if (body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight])
-            aabbCornerOffset = body.mAABB.HalfSize;
+            aabbCornerOffset = body.mCollider.mAABB.HalfSize;
         else
-            aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
+            aabbCornerOffset = new Vector2(-body.mCollider.mAABB.HalfSizeX - 1.0f, body.mCollider.mAABB.HalfSizeY);
 
         int tileX, topY, bottomY;
-        tileX = mMap.GetMapTileXAtPoint(body.mAABB.CenterX + aabbCornerOffset.x);
+        tileX = mMap.GetMapTileXAtPoint(body.mCollider.mAABB.CenterX + aabbCornerOffset.x);
 
         if ((body.mPS.pushedLeft && body.mPS.pushesLeft) || (body.mPS.pushedRight && body.mPS.pushesRight))
         {
-            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mCollider.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
         else
         {
-            topY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
 
         for (int y = topY; y >= bottomY; --y)
@@ -156,20 +156,20 @@ public class Player : Entity
 
                 //check whether the tile's corner is between our grabbing Vector2is
                 if (y > bottomY ||
-                    ((body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
-                    && tileCorner.y - (body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                    ((body.mCollider.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
+                    && tileCorner.y - (body.mCollider.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
                 {
                     //save the tile we are holding so we can check later on if we can still hold onto it
                     mLedgeTile = new Vector2i(tileX, y - 1);
 
                     //calculate our position so the corner of our AABB and the tile's are next to each other
-                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mCollider.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
                     body.mSpeed = Vector2.zero;
 
                     //finally grab the edge
                     mCurrentState = PlayerState.GrabLedge;
                     body.mIgnoresGravity = true;
-                    body.ScaleX *= -1;
+                    body.mCollider.mAABB.ScaleX *= -1;
                     mAnimator.Play("GrabLedge");
                     //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     break;
@@ -335,7 +335,7 @@ public class Player : Entity
                         body.mSpeed.x = mWalkSpeed;
                         
                     }
-                    body.ScaleX = Mathf.Abs(body.ScaleX);
+                    body.mCollider.mAABB.ScaleX = Mathf.Abs(body.mCollider.mAABB.ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
@@ -348,7 +348,7 @@ public class Player : Entity
                         body.mSpeed.x = -mWalkSpeed;
                     }
 
-                    body.ScaleX = -Mathf.Abs(body.ScaleX);
+                    body.mCollider.mAABB.ScaleX = -Mathf.Abs(body.mCollider.mAABB.ScaleX);
                 }
 
                 //if there's no tile to walk on, fall
@@ -418,7 +418,7 @@ public class Player : Entity
                         body.mSpeed.x = 0.0f;
                     else
                         body.mSpeed.x = mWalkSpeed;
-                    body.ScaleX = Mathf.Abs(body.ScaleX);
+                    body.mCollider.mAABB.ScaleX = Mathf.Abs(body.mCollider.mAABB.ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
@@ -426,7 +426,7 @@ public class Player : Entity
                         body.mSpeed.x = 0.0f;
                     else
                         body.mSpeed.x = -mWalkSpeed;
-                    body.ScaleX = -Mathf.Abs(body.ScaleX);
+                    body.mCollider.mAABB.ScaleX = -Mathf.Abs(body.mCollider.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
@@ -525,7 +525,7 @@ public class Player : Entity
                 body.mIgnoresGravity = true;
 
                 int tx = 0, ty = 0;
-                mMap.GetMapTileAtPoint(body.mAABB.Center, out tx, out ty);
+                mMap.GetMapTileAtPoint(body.mCollider.mAABB.Center, out tx, out ty);
                 body.mPosition.x = tx * MapManager.cTileSize;
 
                 
@@ -631,12 +631,12 @@ public class Player : Entity
     public ItemObject CheckForItems()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mAllCollidingObjects.Count; ++i)
+        for (int i = 0; i < body.mCollider.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if(body.mAllCollidingObjects[i].other.mCollisionType == CollisionType.Item)
+            if(body.mCollider.mCollisions[i].other.mEntity.Body.mCollisionType == CollisionType.Item)
             {
-                return (ItemObject)body.mAllCollidingObjects[i].other.mEntity;
+                return (ItemObject)body.mCollider.mCollisions[i].other.mEntity;
             }
         }
 
@@ -646,12 +646,12 @@ public class Player : Entity
     public Chest CheckForChest()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mAllCollidingObjects.Count; ++i)
+        for (int i = 0; i < body.mCollider.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (body.mAllCollidingObjects[i].other.mCollisionType == CollisionType.Chest)
+            if (body.mCollider.mCollisions[i].other.mEntity.Body.mCollisionType == CollisionType.Chest)
             {
-                return (Chest)body.mAllCollidingObjects[i].other.mEntity;
+                return (Chest)body.mCollider.mCollisions[i].other.mEntity;
             }
         }
 

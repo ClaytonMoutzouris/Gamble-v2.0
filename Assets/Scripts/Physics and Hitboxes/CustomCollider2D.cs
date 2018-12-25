@@ -13,28 +13,39 @@ public class CustomCollider2D  {
     public Entity mEntity;
     public CustomAABB mAABB;
     public ColliderState mState;
-    public List<CustomCollider2D> mCollisions;
+    public List<CollisionData> mCollisions;
     public List<Vector2i> mAreas = new List<Vector2i>();
     public List<int> mIdsInAreas = new List<int>();
 
     public CustomCollider2D(Entity entity)
     {
-        mCollisions = new List<CustomCollider2D>();
+        mCollisions = new List<CollisionData>();
         mAreas = new List<Vector2i>();
         mIdsInAreas = new List<int>();
         mState = ColliderState.Open;
         mEntity = entity;
 
         mAABB = new CustomAABB();
-        mAABB.HalfSize = mEntity.Body.mAABB.HalfSize;
-        mAABB.Center = mEntity.Body.mAABB.Center;
+        mAABB.HalfSize = mEntity.Body.mCollider.mAABB.HalfSize;
+        mAABB.Center = mEntity.Body.mCollider.mAABB.Center;
         mAABB.Offset = mEntity.Body.mOffset;
+    }
+
+    public bool HasCollisionDataFor(CustomCollider2D other)
+    {
+        for (int i = 0; i < mCollisions.Count; ++i)
+        {
+            if (mCollisions[i].other == other)
+                return true;
+        }
+
+        return false;
     }
 
     public void UpdatePosition()
     {
-        mAABB.Center = mEntity.Body.mAABB.Center;
-        mAABB.Scale = mEntity.Body.Scale;
+        mAABB.Center = mEntity.Body.mCollider.mAABB.Center;
+        mAABB.Scale = mEntity.Body.mCollider.mAABB.Scale;
     }
 
     void UpdateHitbox()

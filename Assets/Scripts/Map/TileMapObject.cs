@@ -63,14 +63,16 @@ public class TileMapObject : MonoBehaviour {
         CurrentMapType = mapType;
         //This represents one tiles color array
         Color[] p;
-        MapSize = new Vector2(xSize, ySize);
+        //MapSize = new Vector2(MAXSIZEY, MAXSIZEY);
         for (int y = 0; y < MAXSIZEY; y++)
         {
             for (int x = 0; x < MAXSIZEY; x++)
             {
-                if (x < MapSize.x && y < MapSize.y)
+                if (x < xSize && y < ySize)
                 {
-                     p = tilePalettes[(int)CurrentMapType].GetTile((int)tiles[x,y]);
+
+
+                    p = tilePalettes[(int)CurrentMapType].GetTile((int)tiles[x,y]);
                     
                 } else
                 {

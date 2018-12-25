@@ -10,7 +10,7 @@ public class Bullet : Entity {
 
     public override void EntityInit()
     {
-        Body.mAABB.HalfSize = new Vector2(5.0f, 5.0f);
+        Body.mCollider.mAABB.HalfSize = new Vector2(5.0f, 5.0f);
         Body.mIsKinematic = true;
         mMovingSpeed = 100;
         body.mIgnoresGravity = true;
@@ -20,7 +20,7 @@ public class Bullet : Entity {
 
     public override void EntityUpdate()
     {
-        if(mTimeAlive >= mMaxTime)
+        if(mTimeAlive >= mMaxTime || Body.mPS.pushesBottom || Body.mPS.pushesTop || Body.mPS.pushesLeft || Body.mPS.pushesRight)
         {
             mToRemove = true;
         }

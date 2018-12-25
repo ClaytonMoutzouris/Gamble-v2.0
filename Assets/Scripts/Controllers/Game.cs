@@ -90,8 +90,18 @@ public class Game : MonoBehaviour
         //For now, clearing its areas does the job
         for (int i = mEntities.Count - 1; i >= 0; i--)
         {
-            CollisionManager.RemoveObjectFromAreas(mEntities[i].Body);
+            CollisionManager.RemoveObjectFromAreas(mEntities[i].Body.mCollider);
         }
+
+        //Flag each object for removal before we switch to the new map
+        foreach(Entity entity in mEntities)
+        {
+            if(!(entity is Player))
+            entity.mToRemove = true;
+            
+
+        }
+
         mMap.Init();
         foreach(Player player in players)
         player.Body.SetTilePosition(mMap.mMapData.startTile);
@@ -152,10 +162,13 @@ public class Game : MonoBehaviour
     public void FlagObjectForRemoval(Entity obj)
     {
         obj.mToRemove = true;
+        obj.mHurtBox.mState = ColliderState.Closed;
     }
 
     public void RemoveFromUpdateList(Entity obj)
     {
+        
+
         mEntities.Remove(obj);
         int index = 0;
         foreach(Entity p in mEntities)
@@ -163,6 +176,11 @@ public class Game : MonoBehaviour
             p.mUpdateId = index;
             index++;
         }
+    }
+
+    public void ClearMap()
+    {
+
     }
 
     void FixedUpdate()
@@ -173,10 +191,10 @@ public class Game : MonoBehaviour
         for (int i = 0; i < mEntities.Count; ++i)
         {
             mEntities[i].EntityUpdate();
-            CollisionManager.UpdateAreas(mEntities[i].Body);
+            CollisionManager.UpdateAreas(mEntities[i].Body.mCollider);
             CollisionManager.UpdateAreas(mEntities[i].mHurtBox);
             mEntities[i].mHurtBox.mCollisions.Clear();
-            mEntities[i].Body.mAllCollidingObjects.Clear();
+            mEntities[i].Body.mCollider.mCollisions.Clear();
             
         }
 
@@ -184,10 +202,13 @@ public class Game : MonoBehaviour
         {
             if (mEntities[i].mToRemove)
             {
-                Debug.Log("Removing " + mEntities[i].name + " at index " + i);
+                //Debug.Log("Removing " + mEntities[i].name + " at index " + i);
                 Destroy(mEntities[i].gameObject);
                 //THIS VVVVV HAS TO BE REMOVED BEFORE..
-                CollisionManager.RemoveObjectFromAreas(mEntities[i].Body);
+                //Before we remove it from the update list, we have to remove it from the update areas
+                CollisionManager.RemoveObjectFromAreas(mEntities[i].Body.mCollider);
+
+                //we have to remove the hitboxes
                 foreach (Attack attack in mEntities[i].mAttackManager.AttackList)
                 {
                     if (attack is MeleeAttack)

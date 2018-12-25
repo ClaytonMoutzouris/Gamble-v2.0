@@ -14,6 +14,7 @@ public abstract class Entity : MonoBehaviour {
     public Animator mAnimator;
     public List<Color> colorPallete;
 
+
     //Every entity has a body, it exists in the world
     //Whether the body actually interacts with anything, thats up to the body
     protected PhysicsObject body;
@@ -81,7 +82,7 @@ public abstract class Entity : MonoBehaviour {
         mHurtBox.mEntity = this;
         mHurtBox.colliderType = ColliderType.Hurtbox;
 
-        body.mTransform = transform;
+        //body.mTransform = transform;
     }
 
     public virtual void EntityInit()
@@ -94,8 +95,8 @@ public abstract class Entity : MonoBehaviour {
 
         body.ObjectInit(this);
 
-        mHurtBox.mAABB.baseHalfSize = Body.mAABB.HalfSize;
-        mHurtBox.mAABB.HalfSize = Body.mAABB.HalfSize;
+        mHurtBox.mAABB.baseHalfSize = Body.mCollider.mAABB.HalfSize;
+        mHurtBox.mAABB.HalfSize = Body.mCollider.mAABB.HalfSize;
         mHurtBox.UpdatePosition();
 
         mUpdateId = mGame.AddToUpdateList(this);
@@ -118,9 +119,18 @@ public abstract class Entity : MonoBehaviour {
 
     public void Shoot(Bullet prefab)
     {
-        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
+        Bullet temp = Instantiate(prefab, body.mCollider.mAABB.Center, Quaternion.identity);
         temp.EntityInit();
-        temp.direction = new Vector2(body.ScaleX, 0);
+        temp.direction = new Vector2(body.mCollider.mAABB.ScaleX, 0);
+    }
+
+    public void Die()
+    {
+        Debug.Log(name + " has died");
+
+        mToRemove = true;
+        mHurtBox.mState = ColliderState.Closed;
+        mHurtBox.mCollisions.Clear();
     }
 }
 

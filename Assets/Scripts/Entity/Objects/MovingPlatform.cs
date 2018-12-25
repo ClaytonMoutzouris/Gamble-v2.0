@@ -11,7 +11,7 @@ public class MovingPlatform : Entity
     {
         mWait = false;
 
-        Body.mAABB.HalfSize = new Vector2(30.0f, 8.0f);
+        Body.mCollider.mAABB.HalfSize = new Vector2(30.0f, 8.0f);
         mMovingSpeed = 100.0f;
         Body.mIsKinematic = true;
         int r = Random.Range(0, 2);

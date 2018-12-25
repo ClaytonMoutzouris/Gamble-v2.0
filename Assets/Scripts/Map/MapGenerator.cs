@@ -10,6 +10,7 @@ public static class MapGenerator {
 
     static List<TileType[,]> RoomDatabase;
 
+    /*
     static List<MapChunk> BasicPath()
     {
         List<MapChunk> rooms = new List<MapChunk>();
@@ -58,7 +59,8 @@ public static class MapGenerator {
         return rooms;
     }
 
-    
+    */
+
     [MenuItem("Assets/Create/EmptyRoom")]
     static void WriteString()
     {
@@ -206,6 +208,7 @@ public static class MapGenerator {
         
     }
 
+    /*
     //This is for creating the initial path of rooms
     static List<Direction> GetLegalDirections(Vector2i currPoint, Vector2i prevPoint)
     {
@@ -227,6 +230,7 @@ public static class MapGenerator {
 
         return legalDirections;
     }
+    */
 
     public static Vector2i GetStartTile(MapData map)
     {
@@ -282,25 +286,62 @@ public static class MapGenerator {
 
     }
 
-    public static MapData GenerateMap()
+    public static void AddBounds(MapData map)
     {
-        MapData map = new MapData((MapType)Random.Range(0, (int)MapType.Count));
-        LoadRooms();
-        
-        for (int x = 0; x < Constants.cMapChunksX; x++)
+        for (int i = 0; i < map.sizeX; i++)
         {
-            for (int y = 0; y < Constants.cMapChunksY; y++)
+            for (int j = 0; j < map.sizeY; j++)
+            {
+
+                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
+                {
+                    //Debug.Log("X: " + x + ", Y: " + y);
+                    map.SetTile(j, i, TileType.Block);
+                }
+            }
+
+        }
+    }
+
+    public static MapData GenerateHubMap()
+    {
+        MapData map = new MapData(MapType.Hub, 30, 30);
+
+        for (int x = 0; x < map.MapChunksX; x++)
+        {
+            for (int y = 0; y < map.MapChunksY; y++)
             {
                 map.rooms[x, y].tiles = GetRandomRoom2();
             }
         }
 
-        for (int i = 0; i < Constants.cMapWidth; i++)
+        AddBounds(map);
+
+        map.startTile = GetStartTile(map);
+        AddDoorTile(map);
+
+        return map;
+    }
+
+    public static MapData GenerateMap()
+    {
+        MapData map = new MapData((MapType)Random.Range(0, (int)MapType.Count));
+        LoadRooms();
+        
+        for (int x = 0; x < map.MapChunksX; x++)
         {
-            for (int j = 0; j < Constants.cMapHeight; j++)
+            for (int y = 0; y < map.MapChunksY; y++)
+            {
+                map.rooms[x, y].tiles = GetRandomRoom2();
+            }
+        }
+
+        for (int i = 0; i < map.sizeX; i++)
+        {
+            for (int j = 0; j < map.sizeY; j++)
             {
                 
-                if(j == 0 || i == 0 || j == Constants.cMapWidth - 1 || i == Constants.cMapHeight - 1)
+                if(j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
                 {
                     //Debug.Log("X: " + x + ", Y: " + y);
                     map.SetTile(j,i, TileType.Block);
@@ -331,9 +372,9 @@ public static class MapGenerator {
     {
         int r;
 
-        for (int x = 0; x < Constants.cMapWidth; x++)
+        for (int x = 0; x < map.sizeX; x++)
         {
-            for (int y = 0; y < Constants.cMapHeight; y++)
+            for (int y = 0; y < map.sizeY; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 95)
@@ -352,9 +393,9 @@ public static class MapGenerator {
     {
         int r;
 
-        for (int x = 0; x < Constants.cMapWidth; x++)
+        for (int x = 0; x < map.sizeX; x++)
         {
-            for (int y = 0; y < Constants.cMapHeight; y++)
+            for (int y = 0; y < map.sizeY; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 98)

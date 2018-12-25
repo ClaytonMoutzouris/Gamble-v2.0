@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Enemy, Object, Player };
-public enum EnemyType { Slime, CrimsonSlime, Eye, Count };
+public enum EnemyType { Slime, CrimsonSlime, Eye, Treedude, Count };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)

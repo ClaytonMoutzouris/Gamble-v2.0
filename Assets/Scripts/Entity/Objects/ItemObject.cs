@@ -8,7 +8,7 @@ public class ItemObject : Entity {
     public override void EntityInit()
     {
 
-        body.mAABB.HalfSize = new Vector2(5.0f, 5.0f);
+        body.mCollider.mAABB.HalfSize = new Vector2(5.0f, 5.0f);
         body.mIsKinematic = false;
 
         base.EntityInit();

@@ -12,7 +12,7 @@ public class Eye : Enemy
     {
         mAnimator = GetComponent<Animator>();
 
-        Body.mAABB.HalfSize = new Vector2(16.0f, 10.0f);
+        Body.mCollider.mAABB.HalfSize = new Vector2(16.0f, 10.0f);
         Body.mIsKinematic = false;
 
         int r = Random.Range(0, 2);

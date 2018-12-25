@@ -14,11 +14,12 @@ public class MapManager : MonoBehaviour
     public Vector3 mPosition;
     public int mWidth;
     public int mHeight;
+    public bool mFirstMap = true;
 
     [SerializeField]
     public const int cTileSize = 32;
 
-    private static List<Vector2i> mOverlappingAreas = new List<Vector2i>(4);
+    //private static List<Vector2i> mOverlappingAreas = new List<Vector2i>(4);
 
     /// <summary>
     /// A set of areas in which at least one tile has been destroyed
@@ -158,21 +159,33 @@ public class MapManager : MonoBehaviour
 
     }
 
+
+
     public virtual void Init()
     {
-        mWidth = Constants.cMapWidth;
-        mHeight = Constants.cMapHeight;
+        mWidth = Constants.cDefaultMapWidth;
+        mHeight = Constants.cDefaultMapHeight;
+
 
         //set the position
         mPosition = transform.position;
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
-        mMapData = MapGenerator.GenerateMap();
+        if (mFirstMap)
+        {
+            mMapData = MapGenerator.GenerateHubMap();
+            mFirstMap = false;
+        } else
+        {
+            mMapData = MapGenerator.GenerateMap();
+
+        }
 
         mTileData = mMapData.GetMap();
         AddEntities();
-        mTileMap.DrawMap(mTileData, mWidth, mHeight, mMapData.type);
+        Debug.Log(mMapData.sizeX + ", " + mMapData.sizeY);
+        mTileMap.DrawMap(mTileData, mMapData.sizeX, mMapData.sizeY, mMapData.type);
     }
 
     public void AddEntities()

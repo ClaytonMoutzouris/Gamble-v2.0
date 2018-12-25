@@ -8,17 +8,41 @@ public class MapData {
     public Vector2i startTile = new Vector2i(1,1);
     public MapChunk[,] rooms;
     public MapType type;
+    public int sizeX;
+    public int sizeY;
+
+    public int MapChunksX
+    {
+        get
+        {
+            return sizeX / Constants.cMapChunkSizeX;
+        }
+    }
+
+    public int MapChunksY
+    {
+        get
+        {
+            return sizeY / Constants.cMapChunkSizeY;
+        }
+    }
+
+
 
     public List<EntityData> objects;
 
-    public MapData(MapType type = MapType.Forest, int sizex = Constants.cMapWidth, int sizey = Constants.cMapHeight)
+    public MapData(MapType type = MapType.Forest, int sizex = Constants.cDefaultMapWidth, int sizey = Constants.cDefaultMapHeight)
     {
         this.type = type;
-        rooms = new MapChunk[Constants.cMapChunksX, Constants.cMapChunksY];
+        sizeX = sizex;
+        sizeY = sizey;
+
+        rooms = new MapChunk[MapChunksX, MapChunksY];
         objects = new List<EntityData>();
-        for (int x = 0; x < Constants.cMapChunksX; x++)
+
+        for (int x = 0; x < MapChunksX; x++)
         {
-            for (int y = 0; y < Constants.cMapChunksY; y++)
+            for (int y = 0; y < MapChunksY; y++)
             {
                 rooms[x, y] = new MapChunk();
             }
@@ -50,11 +74,11 @@ public class MapData {
 
     public TileType[,] GetMap()
     {
-        TileType[,] tiles = new TileType[Constants.cMapWidth, Constants.cMapWidth];
+        TileType[,] tiles = new TileType[sizeX, sizeY];
 
-        for(int x = 0; x < Constants.cMapWidth; x++)
+        for(int x = 0; x < sizeX; x++)
         {
-            for (int y = 0; y < Constants.cMapHeight; y++)
+            for (int y = 0; y < sizeY; y++)
             {
                 tiles[x, y] = GetTile(x, y);
             }

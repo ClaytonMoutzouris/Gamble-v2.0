@@ -16,7 +16,7 @@ public class Chest : Entity {
         //SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
         //mPosition = RoundVector(transform.position);
 
-        Body.mAABB.HalfSize = new Vector2(10.0f, 10.0f);
+        Body.mCollider.mAABB.HalfSize = new Vector2(10.0f, 10.0f);
         //mAABB.Center = mPosition;
         Body.mIsKinematic = false;
 

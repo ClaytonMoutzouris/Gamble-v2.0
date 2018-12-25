@@ -11,7 +11,7 @@ public class FallingRock : Entity
     public override void EntityInit()
     {
 
-        Body.mAABB.HalfSize = new Vector2(15.0f, 15.0f);
+        Body.mCollider.mAABB.HalfSize = new Vector2(15.0f, 15.0f);
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
 

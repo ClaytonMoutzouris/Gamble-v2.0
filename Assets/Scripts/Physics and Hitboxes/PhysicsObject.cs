@@ -27,34 +27,6 @@ public class PhysicsObject : MonoBehaviour
     public Vector2 mOffset;
 
 
-    public Vector2 mScale;
-    public Vector2 Scale
-    {
-        set {
-            mScale = value;
-            mAABB.Scale = new Vector2(Mathf.Abs(value.x), Mathf.Abs(value.y));
-        }
-        get { return mScale; }
-    }
-    public float ScaleX
-    {
-        set
-        {
-            mScale.x = value;
-            mAABB.ScaleX = Mathf.Abs(value);
-        }
-        get { return mScale.x; }
-    }
-    public float ScaleY
-    {
-        set
-        {
-            mScale.y = value;
-            mAABB.ScaleY = Mathf.Abs(value);
-        }
-        get { return mScale.y; }
-    }
-
     /// <summary>
     /// The current speed in pixels/second.
     /// </summary>
@@ -66,7 +38,7 @@ public class PhysicsObject : MonoBehaviour
 	public Vector2 mOldSpeed;
 
     [SerializeField]
-    public CustomAABB mAABB;
+    public CustomCollider2D mCollider;
 
     [SerializeField]
     public PositionState mPS;
@@ -75,16 +47,12 @@ public class PhysicsObject : MonoBehaviour
     public MapManager mMap;
     public Entity mEntity;
 
-    public PhysicsObject mMountParent = null;
+    public Entity mMountParent = null;
 
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
     public bool mIsKinematic = false;
     public bool mIgnoresGravity = false;
-
-    public List<Vector2i> mAreas = new List<Vector2i>();
-    public List<int> mIdsInAreas = new List<int>();
-    public List<CollisionData> mAllCollidingObjects = new List<CollisionData>();
 
 
     /// <summary>
@@ -92,7 +60,7 @@ public class PhysicsObject : MonoBehaviour
     /// </summary>
     public float mSpriteDepth = -1.0f;
 
-    public Transform mTransform;
+    //public Transform mTransform;
 
 	void OnDrawGizmos()
 	{
@@ -105,52 +73,41 @@ public class PhysicsObject : MonoBehaviour
     protected void DrawMovingObjectGizmos()
 	{
 		//calculate the position of the aabb's center
-		var aabbPos = (Vector3)mAABB.Center;
+		var aabbPos = (Vector3)mCollider.mAABB.Center;
 		
 		//draw the aabb rectangle
 		Gizmos.color = Color.yellow;
-   		Gizmos.DrawWireCube(aabbPos, mAABB.HalfSize*2.0f);
+   		Gizmos.DrawWireCube(aabbPos, mCollider.mAABB.HalfSize*2.0f);
 		
 		//draw the ground checking sensor
-		Vector2 bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.up + Vector3.right;
-		var bottomRight = new Vector2(bottomLeft.x + mAABB.HalfSizeX*2.0f - 2.0f, bottomLeft.y);
+		Vector2 bottomLeft = aabbPos - new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) - Vector3.up + Vector3.right;
+		var bottomRight = new Vector2(bottomLeft.x + mCollider.mAABB.HalfSizeX*2.0f - 2.0f, bottomLeft.y);
 		
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(bottomLeft, bottomRight);
 		
 		//draw the ceiling checking sensor
-		Vector2 topRight = aabbPos + new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) + Vector3.up - Vector3.right;
-		var topLeft = new Vector2(topRight.x - mAABB.HalfSizeX*2.0f + 2.0f, topRight.y);
+		Vector2 topRight = aabbPos + new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) + Vector3.up - Vector3.right;
+		var topLeft = new Vector2(topRight.x - mCollider.mAABB.HalfSizeX*2.0f + 2.0f, topRight.y);
 		
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(topLeft, topRight);
 		
 		//draw left wall checking sensor
-		bottomLeft = aabbPos - new Vector3(mAABB.HalfSizeX, mAABB.HalfSizeY, 0.0f) - Vector3.right;
+		bottomLeft = aabbPos - new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) - Vector3.right;
 		topLeft = bottomLeft;
-		topLeft.y += mAABB.HalfSizeY * 2.0f;
+		topLeft.y += mCollider.mAABB.HalfSizeY * 2.0f;
 		
 		Gizmos.DrawLine(topLeft, bottomLeft);
 		
 		//draw right wall checking sensor
 		
-		bottomRight = aabbPos + new Vector3(mAABB.HalfSizeX, -mAABB.HalfSizeY, 0.0f) + Vector3.right;
+		bottomRight = aabbPos + new Vector3(mCollider.mAABB.HalfSizeX, -mCollider.mAABB.HalfSizeY, 0.0f) + Vector3.right;
 		topRight = bottomRight;
-		topRight.y += mAABB.HalfSizeY * 2.0f;
+		topRight.y += mCollider.mAABB.HalfSizeY * 2.0f;
 		
 		Gizmos.DrawLine(topRight, bottomRight);
 	}
-
-    public bool HasCollisionDataFor(PhysicsObject other)
-    {
-        for (int i = 0; i < mAllCollidingObjects.Count; ++i)
-        {
-            if (mAllCollidingObjects[i].other == other)
-                return true;
-        }
-
-        return false;
-    }
 
     public Vector2 RoundVector(Vector2 v)
     {
@@ -200,12 +157,12 @@ public class PhysicsObject : MonoBehaviour
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -254,12 +211,12 @@ public class PhysicsObject : MonoBehaviour
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -322,7 +279,6 @@ public class PhysicsObject : MonoBehaviour
         Vector2i bottomleftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y - 0.5f));
         bool isOneWay;
         bool spiked = false;
-        bool bounced = false;
 
         for (int x = bottomleftTile.x; x <= topRightTile.x; ++x)
         {
@@ -365,7 +321,7 @@ public class PhysicsObject : MonoBehaviour
                     state.pushesBottomTile = true;
                     state.bottomTile = new Vector2i(x, bottomleftTile.y);
                     return true;
-                    break;
+                    //break;
                 case TileType.Spikes:
                     tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
@@ -486,12 +442,12 @@ public class PhysicsObject : MonoBehaviour
         }
     }
 
-    public void Move(Vector2 offset, Vector2 speed, ref Vector2 position, ref Vector2 reminder, CustomAABB aabb, ref PositionState state)
+    public void Move(Vector2 offset, Vector2 speed, ref Vector2 position, ref Vector2 reminder, CustomCollider2D collider, ref PositionState state)
     {
         reminder += offset;
 
-        Vector2 topRight = aabb.Max();
-        Vector2 bottomLeft = aabb.Min();
+        Vector2 topRight = collider.mAABB.Max();
+        Vector2 bottomLeft = collider.mAABB.Min();
 
         bool foundObstacleX = false, foundObstacleY = false;
 
@@ -594,8 +550,8 @@ public class PhysicsObject : MonoBehaviour
             mPS.isBounce = false;
         }
 
-        Vector2 topRight = mAABB.Max();
-        Vector2 bottomLeft = mAABB.Min();
+        Vector2 topRight = mCollider.mAABB.Max();
+        Vector2 bottomLeft = mCollider.mAABB.Min();
 
 
             CollidesWithTiles(ref mPosition, ref topRight, ref bottomLeft, ref mPS);
@@ -628,16 +584,16 @@ public class PhysicsObject : MonoBehaviour
 
         if (mMountParent != null)
         {
-            if (HasCollisionDataFor(mMountParent))
+            if (mCollider.HasCollisionDataFor(mMountParent.Body.mCollider))
             {
                 //if (mCollisionType == CollisionType.Player)
                    // Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
-                Vector2 parentOffset = mMountParent.mPosition - mMountParent.mOldPosition;
+                Vector2 parentOffset = mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
 
                 //This is my hacky way of fixing sliding off of a parent if its moving into another object, maybe
-                if(parentOffset.x > 0 && !mMountParent.mPS.pushesRight || parentOffset.x < 0 && !mMountParent.mPS.pushesLeft)
+                if(parentOffset.x > 0 && !mMountParent.Body.mPS.pushesRight || parentOffset.x < 0 && !mMountParent.Body.mPS.pushesLeft)
                 {
-                    mOffset += mMountParent.mPosition - mMountParent.mOldPosition;
+                    mOffset += mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
                 }
 
             }
@@ -649,7 +605,7 @@ public class PhysicsObject : MonoBehaviour
 
         mPosition += RoundVector(mOffset + mReminder);
 
-        mAABB.Center = mPosition;
+        mCollider.mAABB.Center = mPosition;
     }
 
     public void ApplyGravity()
@@ -659,13 +615,13 @@ public class PhysicsObject : MonoBehaviour
         mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
     }
 
-    public void TryAutoMount(PhysicsObject platform)
+    public void TryAutoMount(Entity platform)
     {
         if (mMountParent == null)
         {
             mMountParent = platform;
-            if (platform.mEntity.mUpdateId > mEntity.mUpdateId)
-                mGame.SwapUpdateIds(mEntity, platform.mEntity);
+            if (platform.mUpdateId > mEntity.mUpdateId)
+                mGame.SwapUpdateIds(mEntity, platform);
         }
     }
 
@@ -696,7 +652,7 @@ public class PhysicsObject : MonoBehaviour
         //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
         transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
         mPosition = transform.position;
-        mAABB.Center = mPosition;
+        mCollider.mAABB.Center = mPosition;
         mPS.Reset();
     }
 
@@ -704,7 +660,7 @@ public class PhysicsObject : MonoBehaviour
     {
         transform.position = mMap.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
         mPosition = transform.position;
-        mAABB.Center = mPosition;
+        mCollider.mAABB.Center = mPosition;
     }
 
     private void UpdatePhysicsResponse()
@@ -725,14 +681,14 @@ public class PhysicsObject : MonoBehaviour
 
         Vector2 offsetSum = Vector2.zero;
 
-        for (int i = 0; i < mAllCollidingObjects.Count; ++i)
+        for (int i = 0; i < mCollider.mCollisions.Count; ++i)
         {
-            
-            var other = mAllCollidingObjects[i].other;
-            var data = mAllCollidingObjects[i];
+
+            var other = mCollider.mCollisions[i].other;
+            var data = mCollider.mCollisions[i];
             var overlap = data.overlap - offsetSum;
 
-            if (!mCollidesWith.Contains(other.mCollisionType) || other.mEntity.mToRemove)
+            if (!mCollidesWith.Contains(other.mEntity.Body.mCollisionType) || other.mEntity.mToRemove)
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
@@ -740,7 +696,7 @@ public class PhysicsObject : MonoBehaviour
 
             if (overlap.x == 0.0f)
             {
-                if (other.mAABB.Center.x > mAABB.Center.x)
+                if (other.mAABB.Center.x > mCollider.mAABB.Center.x)
                 {
                     mPS.pushesRightObject = true;
                     mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
@@ -754,14 +710,14 @@ public class PhysicsObject : MonoBehaviour
             }
             else if (overlap.y == 0.0f)
             {
-                if (other.mAABB.Center.y > mAABB.Center.y)
+                if (other.mAABB.Center.y > mCollider.mAABB.Center.y)
                 {
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
-                    TryAutoMount(other);
+                    TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
                     mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
@@ -779,7 +735,7 @@ public class PhysicsObject : MonoBehaviour
             
             float speedRatioX, speedRatioY;
 
-            if (other.mIsKinematic)
+            if (other.mEntity.Body.mIsKinematic)
                 speedRatioX = speedRatioY = 1.0f;
             else
             {
@@ -806,7 +762,7 @@ public class PhysicsObject : MonoBehaviour
 
                 if (overlap.x < 0.0f)
                 {
-                    if (other.mIsKinematic && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsKinematic && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesRightObject = true;
@@ -814,7 +770,7 @@ public class PhysicsObject : MonoBehaviour
                 }
                 else
                 {
-                    if (other.mIsKinematic && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsKinematic && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesLeftObject = true;
@@ -831,7 +787,7 @@ public class PhysicsObject : MonoBehaviour
                 if (overlap.y < 0.0f)
                 {
                     //We should set an error for overlap, here is the basic implementation
-                    if (other.mIsKinematic && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsKinematic && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                     {
                         
                         Crush();
@@ -841,10 +797,10 @@ public class PhysicsObject : MonoBehaviour
                 }
                 else
                 {
-                    if (other.mIsKinematic && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsKinematic && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                         Crush();
 
-                    TryAutoMount(other);
+                    TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
                     mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
@@ -858,14 +814,14 @@ public class PhysicsObject : MonoBehaviour
         //Debug.Log(name + " Offset " + mOffset);
 
         mPosition -= RoundVector(mOffset + mReminder);
-        mAABB.Center = mPosition;
+        mCollider.mAABB.Center = mPosition;
 
         UpdatePhysicsResponse();
 
 
         if (mOffset != Vector2.zero)
         {
-            Move(mOffset, mSpeed, ref mPosition, ref mReminder, mAABB, ref mPS);
+            Move(mOffset, mSpeed, ref mPosition, ref mReminder, mCollider, ref mPS);
         }
 
         mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
@@ -876,12 +832,12 @@ public class PhysicsObject : MonoBehaviour
         
 
         //update the aabb
-        mAABB.Center = mPosition;
+        mCollider.mAABB.Center = mPosition;
         mEntity.mHurtBox.UpdatePosition();
 
         //apply the changes to the transform
         transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
-        transform.localScale = new Vector3(ScaleX, ScaleY, 1.0f);
+        transform.localScale = new Vector3(mCollider.mAABB.ScaleX, mCollider.mAABB.ScaleY, 1.0f);
     }
 
     public virtual void ObjectInit(Entity entity)
@@ -890,11 +846,13 @@ public class PhysicsObject : MonoBehaviour
         mMap = mGame.mMap;
         mEntity = entity;
 
+        mCollider.mEntity = mEntity;
         //All the basics that every physics object needs upon initialization
-        Scale = Vector2.one;
+        mCollider.colliderType = ColliderType.Pushbox;
+        mCollider.mAABB.Scale = Vector2.one;
         mPosition = RoundVector(transform.position);
-        mAABB.Center = mPosition;
-        mAABB.OffsetY = mAABB.HalfSizeY;
+        mCollider.mAABB.Center = mPosition;
+        mCollider.mAABB.OffsetY = mCollider.mAABB.HalfSizeY;
 
         //Check to see if we're in editorMode
        

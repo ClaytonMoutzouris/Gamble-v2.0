@@ -58,10 +58,7 @@ public class Attack {
         mIsActive = false;
     }
 
-    public void Hit(Hurtbox hurtbox)
-    {
-        hurtbox.GetHit(this);
-    }
+
 
 	
 }
@@ -89,10 +86,9 @@ public class MeleeAttack : Attack
 
     public override void UpdateAttack()
     {
-        foreach (CustomCollider2D hit in hitbox.mCollisions)
+        foreach (CollisionData hit in hitbox.mCollisions)
         {
-            Debug.Log(hit.mEntity.name + " was hit by " + mEntity.name);
-            //hurt.GetHit(this);
+            hit.other.mEntity.Die();
         }
         hitbox.mCollisions.Clear();
 
