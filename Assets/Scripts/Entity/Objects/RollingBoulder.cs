@@ -8,7 +8,10 @@ public class RollingBoulder : Entity
 
     public override void EntityInit()
     {
-        Body.mCollider.mAABB.HalfSize = new Vector2(31.0f, 31.0f);
+        base.EntityInit();
+
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(31.0f, 31.0f), new Vector2(0, 31.0f), new Vector3(1, 1, 1)));
+
         Body.mIsKinematic = true;
         int r = Random.Range(0, 2);
         if (r == 1)
@@ -23,7 +26,6 @@ public class RollingBoulder : Entity
         }
 
 
-        base.EntityInit();
     }
 
     public override void EntityUpdate()
@@ -34,12 +36,12 @@ public class RollingBoulder : Entity
         if (Body.mPS.pushesRightTile)
         {
             mDir = -1;
-            Body.mCollider.mAABB.ScaleX = -Mathf.Abs(Body.mCollider.mAABB.ScaleX);
+            Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
         }
         else if (Body.mPS.pushesLeftTile)
         {
             mDir = 1;
-            Body.mCollider.mAABB.ScaleX = Mathf.Abs(Body.mCollider.mAABB.ScaleX);
+            Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
 
         }
 

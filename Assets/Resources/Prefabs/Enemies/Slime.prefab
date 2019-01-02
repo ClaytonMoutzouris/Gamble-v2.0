@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4516062173263090}
   - component: {fileID: 212171719442141220}
   - component: {fileID: 114562500152961564}
-  - component: {fileID: 114960003292869192}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -98,11 +97,9 @@ MonoBehaviour:
   mUpdateId: -1
   mGame: {fileID: 0}
   mMap: {fileID: 0}
-  mDoubleJump: 1
   mAnimator: {fileID: 0}
   colorPallete: []
-  mHurtBox:
-    colliderType: 0
+  body:
     mEntity: {fileID: 0}
     mAABB:
       center: {x: 0, y: 0, z: 0}
@@ -110,106 +107,76 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       baseOffset: {x: 0, y: 0, z: 0}
       baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      type: 0
+      scale: {x: 0, y: 0, z: 0}
       rotation: 0
       isCircle: 0
       flipped: 0
     mState: 0
-    mCollisions: []
     mAreas: []
     mIdsInAreas: 
-  mAttackManager: {fileID: 0}
+    mGame: {fileID: 0}
+    mMap: {fileID: 0}
+    mOldPosition: {x: 0, y: 0}
+    mPosition: {x: 0, y: 0}
+    mReminder: {x: 0, y: 0}
+    mOffset: {x: 0, y: 0}
+    mSpeed: {x: 0, y: 0}
+    mOldSpeed: {x: 0, y: 0}
+    mPS:
+      pushesRight: 0
+      pushesLeft: 0
+      pushesBottom: 0
+      pushesTop: 0
+      pushedTop: 0
+      pushedBottom: 0
+      pushedRight: 0
+      pushedLeft: 0
+      pushedLeftObject: 0
+      pushedRightObject: 0
+      pushedBottomObject: 0
+      pushedTopObject: 0
+      pushesLeftObject: 0
+      pushesRightObject: 0
+      pushesBottomObject: 0
+      pushesTopObject: 0
+      pushedLeftTile: 0
+      pushedRightTile: 0
+      pushedBottomTile: 0
+      pushedTopTile: 0
+      pushesLeftTile: 0
+      pushesRightTile: 0
+      pushesBottomTile: 0
+      pushesTopTile: 0
+      onOneWay: 0
+      tmpIgnoresOneWay: 0
+      tmpSticksToSlope: 0
+      oneWayY: 0
+      onLadder: 0
+      isClimbing: 0
+      isBounce: 0
+      onDoor: 0
+      onIce: 0
+      onConveyorLeft: 0
+      onConveyorRight: 0
+      leftTile:
+        x: 0
+        y: 0
+      rightTile:
+        x: 0
+        y: 0
+      topTile:
+        x: 0
+        y: 0
+      bottomTile:
+        x: 0
+        y: 0
+    mMountParent: {fileID: 0}
+    mIgnoresOneWay: 0
+    mOnOneWayPlatform: 0
+    mIsKinematic: 0
+    mIgnoresGravity: 0
+    mCollisions: []
+    mSpriteDepth: 0
+  mEntityType: 1
+  mCollidesWith: 000000000200000003000000
   mEnemyType: 0
---- !u!114 &114960003292869192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937429433522054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 807102eb09f7c8f4e9af35dcd842b00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mCollisionType: 3
-  mCollidesWith: 01000000020000000500000006000000
-  mOldPosition: {x: 0, y: 0}
-  mPosition: {x: 0, y: 0}
-  mReminder: {x: 0, y: 0}
-  mOffset: {x: 0, y: 0}
-  mScale: {x: 0, y: 0}
-  mSpeed: {x: 0, y: 0}
-  mOldSpeed: {x: 0, y: 0}
-  mAABB:
-    center: {x: 0, y: 0, z: 0}
-    halfSize: {x: 0, y: 0, z: 0}
-    offset: {x: 0, y: 0, z: 0}
-    baseOffset: {x: 0, y: 0, z: 0}
-    baseHalfSize: {x: 0, y: 0, z: 0}
-    scale: {x: 1, y: 1, z: 1}
-    type: 0
-    rotation: 0
-    isCircle: 0
-    flipped: 0
-  mPS:
-    pushesRight: 0
-    pushesLeft: 0
-    pushesBottom: 0
-    pushesTop: 0
-    pushedTop: 0
-    pushedBottom: 0
-    pushedRight: 0
-    pushedLeft: 0
-    pushedLeftObject: 0
-    pushedRightObject: 0
-    pushedBottomObject: 0
-    pushedTopObject: 0
-    pushesLeftObject: 0
-    pushesRightObject: 0
-    pushesBottomObject: 0
-    pushesTopObject: 0
-    pushedLeftTile: 0
-    pushedRightTile: 0
-    pushedBottomTile: 0
-    pushedTopTile: 0
-    pushesLeftTile: 0
-    pushesRightTile: 0
-    pushesBottomTile: 0
-    pushesTopTile: 0
-    onOneWay: 0
-    tmpIgnoresOneWay: 0
-    tmpSticksToSlope: 0
-    oneWayY: 0
-    onLadder: 0
-    isClimbing: 0
-    isBounce: 0
-    onDoor: 0
-    onIce: 0
-    onConveyorLeft: 0
-    onConveyorRight: 0
-    leftTile:
-      x: 0
-      y: 0
-    rightTile:
-      x: 0
-      y: 0
-    topTile:
-      x: 0
-      y: 0
-    bottomTile:
-      x: 0
-      y: 0
-  mGame: {fileID: 0}
-  mMap: {fileID: 0}
-  mEntity: {fileID: 0}
-  mMountParent: {fileID: 0}
-  mIgnoresOneWay: 0
-  mOnOneWayPlatform: 0
-  mIsKinematic: 0
-  mIgnoresGravity: 0
-  mAreas: []
-  mIdsInAreas: 
-  mSpriteDepth: -1
-  mTransform: {fileID: 4516062173263090}

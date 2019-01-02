@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Player : Entity
+public class Player : Entity, IHurtable
 {
     [System.Serializable]
     public enum PlayerState
@@ -39,6 +39,8 @@ public class Player : Entity
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
+    public bool mDoubleJump = true;
+
 
     public List<Vector2i> mPath = new List<Vector2i>();
 
@@ -50,31 +52,56 @@ public class Player : Entity
     public int mCannotGoLeftFrames = 0;
     public int mCannotGoRightFrames = 0;
 
-   
+    //Players have hurtboxes, get over it
+    [SerializeField]
+    private Hurtbox hurtBox;
+    public AttackManager mAttackManager;
 
+    public Hurtbox HurtBox
+    {
+        get
+        {
+            return hurtBox;
+        }
+
+        set
+        {
+            hurtBox = value;
+        }
+    }
+
+   
 
     public void SetCharacterWidth(Slider slider)
     {
-        body.mCollider.mAABB.ScaleX = slider.value;
+        body.mAABB.ScaleX = slider.value;
     }
 
     public void SetCharacterHeight(Slider slider)
     {
-        body.mCollider.mAABB.ScaleY = slider.value;
+        body.mAABB.ScaleY = slider.value;
     }
 
     public override void EntityInit()
     {
+        base.EntityInit();
+
         mAudioSource = GetComponent<AudioSource>();
 
-        body.mCollider.mAABB.HalfSize = new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY);
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0,Constants.cHalfSizeY), new Vector3(1,1,1)));
+        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
+
+        HurtBox.UpdatePosition();
+
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
 
-
-
-        base.EntityInit();
+        mAttackManager = GetComponent<AttackManager>();
+        //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
+        MeleeAttack temp = new MeleeAttack(this, 1, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(5, 10, 0), new Vector3(1, 1, 1))));
+        mAttackManager.AttackList.Add(temp);
+        mAttackManager.meleeAttacks.Add(temp);
     }
 
     public void SetInputs(bool[] inputs, bool[] prevInputs)
@@ -127,22 +154,22 @@ public class Player : Entity
         Vector2 aabbCornerOffset;
 
         if (body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight])
-            aabbCornerOffset = body.mCollider.mAABB.HalfSize;
+            aabbCornerOffset = body.mAABB.HalfSize;
         else
-            aabbCornerOffset = new Vector2(-body.mCollider.mAABB.HalfSizeX - 1.0f, body.mCollider.mAABB.HalfSizeY);
+            aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
 
         int tileX, topY, bottomY;
-        tileX = mMap.GetMapTileXAtPoint(body.mCollider.mAABB.CenterX + aabbCornerOffset.x);
+        tileX = mMap.GetMapTileXAtPoint(body.mAABB.CenterX + aabbCornerOffset.x);
 
         if ((body.mPS.pushedLeft && body.mPS.pushesLeft) || (body.mPS.pushedRight && body.mPS.pushesRight))
         {
-            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mCollider.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
         else
         {
-            topY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mCollider.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
 
         for (int y = topY; y >= bottomY; --y)
@@ -156,20 +183,20 @@ public class Player : Entity
 
                 //check whether the tile's corner is between our grabbing Vector2is
                 if (y > bottomY ||
-                    ((body.mCollider.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
-                    && tileCorner.y - (body.mCollider.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                    ((body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
+                    && tileCorner.y - (body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
                 {
                     //save the tile we are holding so we can check later on if we can still hold onto it
                     mLedgeTile = new Vector2i(tileX, y - 1);
 
                     //calculate our position so the corner of our AABB and the tile's are next to each other
-                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mCollider.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
                     body.mSpeed = Vector2.zero;
 
                     //finally grab the edge
                     mCurrentState = PlayerState.GrabLedge;
                     body.mIgnoresGravity = true;
-                    body.mCollider.mAABB.ScaleX *= -1;
+                    body.mAABB.ScaleX *= -1;
                     mAnimator.Play("GrabLedge");
                     //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     break;
@@ -335,7 +362,7 @@ public class Player : Entity
                         body.mSpeed.x = mWalkSpeed;
                         
                     }
-                    body.mCollider.mAABB.ScaleX = Mathf.Abs(body.mCollider.mAABB.ScaleX);
+                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
@@ -348,7 +375,7 @@ public class Player : Entity
                         body.mSpeed.x = -mWalkSpeed;
                     }
 
-                    body.mCollider.mAABB.ScaleX = -Mathf.Abs(body.mCollider.mAABB.ScaleX);
+                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
                 }
 
                 //if there's no tile to walk on, fall
@@ -418,7 +445,7 @@ public class Player : Entity
                         body.mSpeed.x = 0.0f;
                     else
                         body.mSpeed.x = mWalkSpeed;
-                    body.mCollider.mAABB.ScaleX = Mathf.Abs(body.mCollider.mAABB.ScaleX);
+                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
                 else if (KeyState(KeyInput.GoLeft))
                 {
@@ -426,7 +453,7 @@ public class Player : Entity
                         body.mSpeed.x = 0.0f;
                     else
                         body.mSpeed.x = -mWalkSpeed;
-                    body.mCollider.mAABB.ScaleX = -Mathf.Abs(body.mCollider.mAABB.ScaleX);
+                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
@@ -525,7 +552,7 @@ public class Player : Entity
                 body.mIgnoresGravity = true;
 
                 int tx = 0, ty = 0;
-                mMap.GetMapTileAtPoint(body.mCollider.mAABB.Center, out tx, out ty);
+                mMap.GetMapTileAtPoint(body.mAABB.Center, out tx, out ty);
                 body.mPosition.x = tx * MapManager.cTileSize;
 
                 
@@ -592,31 +619,18 @@ public class Player : Entity
         }
 
 
-
-        /*
-        if(mSpeed.x > Constants.cMaxWalkSpeed)
-        {
-
-        }else if(mSpeed.x < -Constants.cMaxWalkSpeed)
-        {
-
-        }
-        */
-        //mSpeed.x = Mathf.Clamp(mSpeed.x, -Constants.cMaxWalkSpeed, Constants.cMaxWalkSpeed);
-
-
-        //if (mAllCollidingObjects.Count > 0)
-        //    GetComponent<SpriteRenderer>().color = Color.black;
-        //else
-        //    GetComponent<SpriteRenderer>().color = Color.white;
-
+        //Calling this pretty much just updates the body
+        //Let's seee if we can make it update collision stuff aswell
         base.EntityUpdate();
 
-       
 
+        CollisionManager.UpdateAreas(HurtBox);
+        //HurtBox.mCollisions.Clear();
+
+        //Pretty sure this lets use jump forever
 
         //if (body.mPS.pushedBottom && !body.mPS.pushesBottom)
-            mFramesFromJumpStart = 0;
+        mFramesFromJumpStart = 0;
 
         //if (body.mPS.pushesBottom && !body.mPS.pushedBottom)
           //  mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
@@ -628,15 +642,55 @@ public class Player : Entity
         UpdatePrevInputs();
     }
 
+    public override void SecondUpdate()
+    {
+        //Should be in the habit of doing this first, i guess
+        base.SecondUpdate();
+        mAttackManager.SecondUpdate();
+        HurtBox.UpdatePosition();
+
+    }
+
+    public void GetHurt(Attack attack)
+    {
+
+    }
+
+
+    public override void Die()
+    {
+        base.Die();
+
+        HurtBox.mState = ColliderState.Closed;
+        //HurtBox.mCollisions.Clear();
+    }
+
+    public override void ActuallyDie()
+    {
+        //we have to remove the hitboxes
+        foreach (Attack attack in mAttackManager.AttackList)
+        {
+            if (attack is MeleeAttack)
+            {
+                MeleeAttack temp = (MeleeAttack)attack;
+                CollisionManager.RemoveObjectFromAreas(temp.hitbox);
+            }
+
+        }
+
+        //Do other stuff first because the base destroys the object
+        base.ActuallyDie();
+    }
+
     public ItemObject CheckForItems()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mCollider.mCollisions.Count; ++i)
+        for (int i = 0; i < body.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if(body.mCollider.mCollisions[i].other.mEntity.Body.mCollisionType == CollisionType.Item)
+            if(body.mCollisions[i].other.mEntity is ItemObject)
             {
-                return (ItemObject)body.mCollider.mCollisions[i].other.mEntity;
+                return (ItemObject)body.mCollisions[i].other.mEntity;
             }
         }
 
@@ -646,12 +700,12 @@ public class Player : Entity
     public Chest CheckForChest()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mCollider.mCollisions.Count; ++i)
+        for (int i = 0; i < body.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (body.mCollider.mCollisions[i].other.mEntity.Body.mCollisionType == CollisionType.Chest)
+            if (body.mCollisions[i].other.mEntity is Chest)
             {
-                return (Chest)body.mCollider.mCollisions[i].other.mEntity;
+                return (Chest)body.mCollisions[i].other.mEntity;
             }
         }
 

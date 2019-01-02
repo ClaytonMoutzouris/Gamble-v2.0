@@ -70,7 +70,6 @@ public class Game : MonoBehaviour
 
                     player.EntityInit();
                     player.SetInputs(inputs, prevInputs);
-                    player.Body.mCollisionType = CollisionType.Player;
                 }
                 //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
@@ -90,7 +89,7 @@ public class Game : MonoBehaviour
         //For now, clearing its areas does the job
         for (int i = mEntities.Count - 1; i >= 0; i--)
         {
-            CollisionManager.RemoveObjectFromAreas(mEntities[i].Body.mCollider);
+            CollisionManager.RemoveObjectFromAreas(mEntities[i].Body);
         }
 
         //Flag each object for removal before we switch to the new map
@@ -159,10 +158,10 @@ public class Game : MonoBehaviour
         mEntities.Add(obj);
         return mEntities.Count - 1;
     }
-    public void FlagObjectForRemoval(Entity obj)
+    public virtual void FlagObjectForRemoval(Entity obj)
     {
-        obj.mToRemove = true;
-        obj.mHurtBox.mState = ColliderState.Closed;
+        obj.Die();
+        
     }
 
     public void RemoveFromUpdateList(Entity obj)
@@ -185,48 +184,35 @@ public class Game : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        //The game doesnt run in editor mode
         if (mGameMode == GameMode.Editor)
             return;
 
+
+
+        //Right now, this update loop is nice and generic, I hope to keep it that way
+
+        //Update all the entities
         for (int i = 0; i < mEntities.Count; ++i)
         {
-            mEntities[i].EntityUpdate();
-            CollisionManager.UpdateAreas(mEntities[i].Body.mCollider);
-            CollisionManager.UpdateAreas(mEntities[i].mHurtBox);
-            mEntities[i].mHurtBox.mCollisions.Clear();
-            mEntities[i].Body.mCollider.mCollisions.Clear();
-            
+            mEntities[i].EntityUpdate();          
         }
 
+        //Check for entities flagged for removal
         for (int i = mEntities.Count - 1; i >= 0; i--)
         {
             if (mEntities[i].mToRemove)
             {
-                //Debug.Log("Removing " + mEntities[i].name + " at index " + i);
-                Destroy(mEntities[i].gameObject);
-                //THIS VVVVV HAS TO BE REMOVED BEFORE..
-                //Before we remove it from the update list, we have to remove it from the update areas
-                CollisionManager.RemoveObjectFromAreas(mEntities[i].Body.mCollider);
-
-                //we have to remove the hitboxes
-                foreach (Attack attack in mEntities[i].mAttackManager.AttackList)
-                {
-                    if (attack is MeleeAttack)
-                    {
-                        MeleeAttack temp = (MeleeAttack)attack;
-                        CollisionManager.RemoveObjectFromAreas(temp.hitbox);
-                    }
-
-                }
-                //THIS!!!! OTHERWISE IT FUCKS SHIT UP
-                //FUCK THIS ERROR IT TOOK ME SO GODDAMN LONG TO FIX
-                RemoveFromUpdateList(mEntities[i]);
+                mEntities[i].ActuallyDie();
                 
             }
         }
 
+        //Update the collisions of all objects
         CollisionManager.CheckCollisions();
 
+        //Second handles everything that needs to be done AFTER physics and collisions have been checked
         for (int i = 0; i < mEntities.Count; ++i)
         {
             //if(!mObjects[i].mToRemove)
@@ -235,8 +221,6 @@ public class Game : MonoBehaviour
 
         /*If we want to change the map, we have to either abort everything or wait until we're finished updating
         * to perform the change. This method waits until everything is updated.
-        * 
-        * 
         */ 
         if (mMapChangeFlag)
         {

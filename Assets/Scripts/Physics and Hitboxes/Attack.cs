@@ -17,8 +17,10 @@ public class Attack {
     public bool mIsActive = false;
 
 
-    public Attack()
+    public Attack(Entity entity, float duration)
     {
+        mEntity = entity;
+        this.duration = duration;
 
     }
 
@@ -66,14 +68,18 @@ public class Attack {
 [System.Serializable]
 public class MeleeAttack : Attack
 {
-    public CustomCollider2D hitbox;
-
+    public Hitbox hitbox;
+    public MeleeAttack(Entity entity, float duration, Hitbox hit) : base(entity, duration)
+    {
+        hitbox = hit;
+        hitbox.mState = ColliderState.Closed;
+    }
     public override void Activate()
     {
         base.Activate();
 
         hitbox.mState = ColliderState.Open;
-        hitbox.colliderType = ColliderType.Hitbox;
+        //hitbox.colliderType = ColliderType.Hitbox;
     }
 
     public override void Deactivate()
@@ -86,11 +92,13 @@ public class MeleeAttack : Attack
 
     public override void UpdateAttack()
     {
-        foreach (CollisionData hit in hitbox.mCollisions)
+        foreach (IHurtable hit in hitbox.mCollisions)
         {
-            hit.other.mEntity.Die();
+                hit.GetHurt(this);
+           
         }
         hitbox.mCollisions.Clear();
+
 
         base.UpdateAttack();
 
@@ -115,7 +123,10 @@ public class RangedAttack : Attack
 {
     public Bullet projectile;
 
-
+    public RangedAttack(Entity entity, float duration, Bullet proj) : base(entity, duration)
+    {
+        projectile = proj;
+    }
 
     public override void Activate()
     {

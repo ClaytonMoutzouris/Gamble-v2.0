@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 [Serializable]
-public struct CustomAABB
+public class CustomAABB
 {
     
     public Vector3 center;
@@ -14,13 +14,19 @@ public struct CustomAABB
     public Vector3 baseHalfSize;
     public Vector3 scale;
     [HideInInspector]
-    public AABBType type;
-    [HideInInspector]
     public float rotation;
     [HideInInspector]
     public bool isCircle;
     public bool flipped;
 
+    public CustomAABB(Vector3 pCenter, Vector3 pHalfSize, Vector3 pOffset, Vector3 pScale)
+    {
+        scale = pScale;
+        HalfSize = pHalfSize;
+        Offset = pOffset;
+        Center = pCenter;
+
+    }
 
     public void Copy(CustomAABB other)
     {
@@ -30,7 +36,6 @@ public struct CustomAABB
         baseOffset = other.baseOffset;
         baseHalfSize = other.baseHalfSize;
         scale = other.scale;
-        type = other.type;
         rotation = other.rotation;
         isCircle = other.isCircle;
         flipped = other.flipped;

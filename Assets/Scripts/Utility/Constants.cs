@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//consider nuking this
+
 public class Constants
 {
     public const float cGravity = -1030.0f;

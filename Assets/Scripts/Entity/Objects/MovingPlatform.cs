@@ -9,9 +9,11 @@ public class MovingPlatform : Entity
 
     public override void EntityInit()
     {
-        mWait = false;
+        base.EntityInit();
 
-        Body.mCollider.mAABB.HalfSize = new Vector2(30.0f, 8.0f);
+        mWait = false;
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(30.0f, 8.0f), new Vector2(0, 8.0f), new Vector3(1, 1, 1)));
+
         mMovingSpeed = 100.0f;
         Body.mIsKinematic = true;
         int r = Random.Range(0, 2);
@@ -27,7 +29,7 @@ public class MovingPlatform : Entity
         }
 
 
-        base.EntityInit();
+        
 
     }
 

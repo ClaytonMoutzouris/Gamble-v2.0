@@ -4,63 +4,37 @@ using UnityEngine;
 
 public enum ColliderState { Open, Closed, Colliding }
 
+//There is one last type of hitbox to make, that would be vision/aggro
 public enum ColliderType { Unknown, Hitbox, Hurtbox, Pushbox }
 
 [System.Serializable]
-public class CustomCollider2D  {
+public abstract class CustomCollider2D {
 
-    public ColliderType colliderType;
+    //public ColliderType colliderType;
     public Entity mEntity;
     public CustomAABB mAABB;
     public ColliderState mState;
-    public List<CollisionData> mCollisions;
     public List<Vector2i> mAreas = new List<Vector2i>();
     public List<int> mIdsInAreas = new List<int>();
 
-    public CustomCollider2D(Entity entity)
+    public CustomCollider2D(Entity entity, CustomAABB aABB)
     {
-        mCollisions = new List<CollisionData>();
+        mEntity = entity;
+        mAABB = aABB;
+        mState = ColliderState.Open;
         mAreas = new List<Vector2i>();
         mIdsInAreas = new List<int>();
-        mState = ColliderState.Open;
-        mEntity = entity;
 
-        mAABB = new CustomAABB();
-        mAABB.HalfSize = mEntity.Body.mCollider.mAABB.HalfSize;
-        mAABB.Center = mEntity.Body.mCollider.mAABB.Center;
-        mAABB.Offset = mEntity.Body.mOffset;
     }
+    
 
-    public bool HasCollisionDataFor(CustomCollider2D other)
-    {
-        for (int i = 0; i < mCollisions.Count; ++i)
-        {
-            if (mCollisions[i].other == other)
-                return true;
-        }
-
-        return false;
-    }
 
     public void UpdatePosition()
     {
-        mAABB.Center = mEntity.Body.mCollider.mAABB.Center;
-        mAABB.Scale = mEntity.Body.mCollider.mAABB.Scale;
-    }
-
-    void UpdateHitbox()
-    {
-        if (mState == ColliderState.Closed) { return; }
-
-        if (mCollisions.Count > 0)
-        {
-            mState = ColliderState.Colliding;
-        }
-        else
-        {
-            mState = ColliderState.Open;
-        }
-
+        //This should make sure the collider moves with whatever object it is attached to
+        //and also keeps its scale correctly (though scaling isnt used yet)
+        mAABB.Center = mEntity.Position;
+        mAABB.Scale = mEntity.Scale;
     }
 
 }

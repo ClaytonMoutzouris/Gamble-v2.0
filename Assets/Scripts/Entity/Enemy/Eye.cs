@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class Eye : Enemy
 {
-    public PhysicsObject target = null;
+    public Entity target = null;
 
 
 
     public override void EntityInit()
     {
+        base.EntityInit();
+
         mAnimator = GetComponent<Animator>();
 
-        Body.mCollider.mAABB.HalfSize = new Vector2(16.0f, 10.0f);
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), new Vector2(0, 10.0f), new Vector3(1, 1, 1)));
+        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), Vector3.zero, new Vector3(1, 1, 1)));
+
         Body.mIsKinematic = false;
+        Body.mIgnoresGravity = true;
 
-        int r = Random.Range(0, 2);
-
-        //mEnemyType = EnemyType.Slime;
-
-
-
-        base.EntityInit();
+        HurtBox.UpdatePosition();
 
     }
 
@@ -39,6 +38,9 @@ public class Eye : Enemy
 
         //This is just a test, probably dont need to do it this way
         base.EntityUpdate();
+
+        CollisionManager.UpdateAreas(HurtBox);
+        //HurtBox.mCollisions.Clear();
         //UpdatePhysics();
 
         //make sure the hitbox follows the object
@@ -48,7 +50,7 @@ public class Eye : Enemy
     {
         mAnimator.Play("Eye_Fly");
         //This works amazing!
-        body.mSpeed = (target.mPosition - body.mPosition).normalized*mMovingSpeed;
+        body.mSpeed = ((Vector2)target.Position - body.mPosition).normalized*mMovingSpeed;
 
 
     }
@@ -65,5 +67,7 @@ public class Eye : Enemy
             mAnimator.Play("Eye_Sleep");
             body.mSpeed.y = 0;
         }
+
+        body.mSpeed.x = 0;
     }
 }

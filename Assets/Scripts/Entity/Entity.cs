@@ -2,30 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PhysicsObject))]
 public abstract class Entity : MonoBehaviour {
 
+    //The speed of the entity when it moves, probably not needed by all entities
     public float mMovingSpeed;
+    //When we want to remove an entity, either from dying or something else, we must flag it for removal.
+    //This is because we can't just delete an object while iterating through a list, or it will cause problems
     public bool mToRemove = false;
+    //The order in the update list that the entity is updated, this matters for things like mounting
     public int mUpdateId = -1;
     public Game mGame;
     public MapManager mMap;
-    public bool mDoubleJump = true;
+    //Probably all entities will have an animator, even if it doesnt need it
     public Animator mAnimator;
+    //This is for changing the color pallete of an entity, right now only the players use this but will be useful for making different enemies with the same behaviours (Green slime, red slime, etc.)
     public List<Color> colorPallete;
 
 
     //Every entity has a body, it exists in the world
     //Whether the body actually interacts with anything, thats up to the body
-    protected PhysicsObject body;
-
     [SerializeField]
-    public CustomCollider2D mHurtBox;
+    protected PhysicsBody body;
 
+    public EntityType mEntityType;
+
+    //This might be better served as an entity type matrix rather than collision type
+    public List<EntityType> mCollidesWith;
+
+    //Not currently in use
     public EntityData EntityData;
 
     #region Accesors
-    public PhysicsObject Body
+    public PhysicsBody Body
     {
         get
         {
@@ -42,48 +50,23 @@ public abstract class Entity : MonoBehaviour {
     {
         get
         {
-            return body.mPosition;
+            //The bodies position + its offset so we get the middle (right now sprites are bottom aligned, if we changed to center we would need to change this among other things)
+            return body.mPosition + (Vector2)body.mAABB.Offset;
+        }
+    }
+
+    public Vector3 Scale
+    {
+        get
+        {
+            //Ok this is pretty nasty, ill try and fix this
+            return body.mAABB.Scale;
         }
     }
 
     #endregion
 
 
-    public AttackManager mAttackManager;
-
-    void OnDrawGizmos()
-    {
-        DrawHitboxGizmos();
-    }
-
-    protected void DrawHitboxGizmos()
-    {
-        //calculate the position of the aabb's center
-        var aabbPos = mHurtBox.mAABB.Center;
-
-        //draw the aabb rectangle
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawCube(aabbPos, mHurtBox.mAABB.HalfSize * 2.0f);
-
-
-    }
-
-    private void Awake()
-    {
-        mAttackManager = GetComponent<AttackManager>();
-        if (mAttackManager == null)
-            mAttackManager = gameObject.AddComponent<AttackManager>();
-
-        mAttackManager.mEntity = this;
-
-
-        body = GetComponent<PhysicsObject>();
-
-        mHurtBox.mEntity = this;
-        mHurtBox.colliderType = ColliderType.Hurtbox;
-
-        //body.mTransform = transform;
-    }
 
     public virtual void EntityInit()
     {
@@ -93,12 +76,6 @@ public abstract class Entity : MonoBehaviour {
         if(colorPallete != null && colorPallete.Count > 0)
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
-        body.ObjectInit(this);
-
-        mHurtBox.mAABB.baseHalfSize = Body.mCollider.mAABB.HalfSize;
-        mHurtBox.mAABB.HalfSize = Body.mCollider.mAABB.HalfSize;
-        mHurtBox.UpdatePosition();
-
         mUpdateId = mGame.AddToUpdateList(this);
 
         //mEnemyType = EnemyType.Slime;
@@ -107,41 +84,56 @@ public abstract class Entity : MonoBehaviour {
     public virtual void EntityUpdate()
     {
         body.UpdatePhysics();
-        mHurtBox.UpdatePosition();
+
+        //Update the areas of the the colliders
+        CollisionManager.UpdateAreas(Body);
+
+        //After updating the areas, clear all the collisions for this frame so that we dont have any remnants from last frame
+        Body.mCollisions.Clear();
+
+
+        //Right now it works without doing this here, but ill leave it until im sure its fine to remove
+        //mHurtBox.UpdatePosition();
 
     }
 
     public virtual void SecondUpdate()
     {
         Body.UpdatePhysicsP2();
-        mAttackManager.SecondUpdate();
     }
 
     public void Shoot(Bullet prefab)
     {
-        Bullet temp = Instantiate(prefab, body.mCollider.mAABB.Center, Quaternion.identity);
+        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
         temp.EntityInit();
-        temp.direction = new Vector2(body.mCollider.mAABB.ScaleX, 0);
+        temp.direction = new Vector2(body.mAABB.ScaleX, 0);
     }
 
-    public void Die()
+    public virtual void Die()
     {
         Debug.Log(name + " has died");
 
         mToRemove = true;
-        mHurtBox.mState = ColliderState.Closed;
-        mHurtBox.mCollisions.Clear();
+
+    }
+
+    public virtual void ActuallyDie()
+    {
+
+        //before we remove it from the update list, we have to remove it from the update areas
+        CollisionManager.RemoveObjectFromAreas(Body);
+
+
+        mGame.RemoveFromUpdateList(this);
+
+        //Finally, kill this object forever
+        Destroy(gameObject);
+
     }
 }
 
 
 
-public abstract class Enemy : Entity
-{
 
-    public EnemyType mEnemyType;
-
-
-}
 
 

@@ -13,23 +13,25 @@ public class Chest : Entity {
 
     public override void EntityInit()
     {
+        base.EntityInit();
+
         //SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
         //mPosition = RoundVector(transform.position);
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(10.0f, 10.0f), new Vector2(0, 10.0f), new Vector3(1, 1, 1)));
 
-        Body.mCollider.mAABB.HalfSize = new Vector2(10.0f, 10.0f);
         //mAABB.Center = mPosition;
         Body.mIsKinematic = false;
 
 
 
-        base.EntityInit();       
 
 
     }
 
     public override void EntityUpdate()
     {
-        
+        //Chests dont really need to update their physics, but they do need to keep up to date collision data. Right now this is done in the base update
+        base.EntityUpdate();
         //UpdatePhysics();
 
     }

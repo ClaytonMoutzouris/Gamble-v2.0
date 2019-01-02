@@ -10,12 +10,13 @@ public class Bullet : Entity {
 
     public override void EntityInit()
     {
-        Body.mCollider.mAABB.HalfSize = new Vector2(5.0f, 5.0f);
+        base.EntityInit();
+
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(5.0f, 5.0f), new Vector2(0, 5.0f), new Vector3(1, 1, 1)));
         Body.mIsKinematic = true;
         mMovingSpeed = 100;
         body.mIgnoresGravity = true;
 
-        base.EntityInit();
     }
 
     public override void EntityUpdate()

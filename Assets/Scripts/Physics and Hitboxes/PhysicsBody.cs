@@ -9,50 +9,60 @@ using System;
  */
 
 
+    //This will serve as both the physical body with which entities will bump into eachother, and also as the bounds when entities are overlapping but do not block eachothers movement
+    //Potentially we could split these
 [System.Serializable]
-public class PhysicsObject : MonoBehaviour 
+public class PhysicsBody : CustomCollider2D
 {
-    public CollisionType mCollisionType;
-    public List<CollisionType> mCollidesWith;
+    public Game mGame;
+    public MapManager mMap;
+    //public Entity mEntity;
+
+
+
+    
+
     /// <summary>
     /// The previous position.
     /// </summary>
     public Vector2 mOldPosition;
-
+    //Entity can get this but not set it, maybe we should change that
     /// <summary>
     /// The current position.
     /// </summary>
     public Vector2 mPosition;
+
+
+    //
     public Vector2 mReminder;
     public Vector2 mOffset;
 
-
+    //These speeds are only used by the body, or atleast they should be
     /// <summary>
-    /// The current speed in pixels/second.
+    /// The current speed in pixels/second. Basically pixel velocity, not an attribute
     /// </summary>
     public Vector2 mSpeed;
-	
 	/// <summary>
 	/// The previous speed in pixels/second.
 	/// </summary>
 	public Vector2 mOldSpeed;
 
-    [SerializeField]
-    public CustomCollider2D mCollider;
+    //perhaps these things should inherit from customcollider, but for now having it as a member is fine
 
+    //Probably better off in the entity class
     [SerializeField]
     public PositionState mPS;
 
-    public Game mGame;
-    public MapManager mMap;
-    public Entity mEntity;
-
     public Entity mMountParent = null;
 
+    //
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
     public bool mIsKinematic = false;
     public bool mIgnoresGravity = false;
+
+
+    public List<CollisionData> mCollisions;
 
 
     /// <summary>
@@ -62,52 +72,34 @@ public class PhysicsObject : MonoBehaviour
 
     //public Transform mTransform;
 
-	void OnDrawGizmos()
-	{
-		DrawMovingObjectGizmos ();
-	}
+    //A physics body needs a reference to the entity it is apart of
+    //We could also get this using GetComponent
+    public PhysicsBody(Entity entity, CustomAABB aABB) : base(entity, aABB)
+    {
+        mCollisions = new List<CollisionData>();
+        mGame = Game.instance;
+        mMap = mGame.mMap;
+        mEntity = entity;
+        mAABB = aABB;
 
-    /// <summary>
-    /// Draws the aabb and ceiling, ground and wall sensors .
-    /// </summary>
-    protected void DrawMovingObjectGizmos()
-	{
-		//calculate the position of the aabb's center
-		var aabbPos = (Vector3)mCollider.mAABB.Center;
-		
-		//draw the aabb rectangle
-		Gizmos.color = Color.yellow;
-   		Gizmos.DrawWireCube(aabbPos, mCollider.mAABB.HalfSize*2.0f);
-		
-		//draw the ground checking sensor
-		Vector2 bottomLeft = aabbPos - new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) - Vector3.up + Vector3.right;
-		var bottomRight = new Vector2(bottomLeft.x + mCollider.mAABB.HalfSizeX*2.0f - 2.0f, bottomLeft.y);
-		
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(bottomLeft, bottomRight);
-		
-		//draw the ceiling checking sensor
-		Vector2 topRight = aabbPos + new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) + Vector3.up - Vector3.right;
-		var topLeft = new Vector2(topRight.x - mCollider.mAABB.HalfSizeX*2.0f + 2.0f, topRight.y);
-		
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(topLeft, topRight);
-		
-		//draw left wall checking sensor
-		bottomLeft = aabbPos - new Vector3(mCollider.mAABB.HalfSizeX, mCollider.mAABB.HalfSizeY, 0.0f) - Vector3.right;
-		topLeft = bottomLeft;
-		topLeft.y += mCollider.mAABB.HalfSizeY * 2.0f;
-		
-		Gizmos.DrawLine(topLeft, bottomLeft);
-		
-		//draw right wall checking sensor
-		
-		bottomRight = aabbPos + new Vector3(mCollider.mAABB.HalfSizeX, -mCollider.mAABB.HalfSizeY, 0.0f) + Vector3.right;
-		topRight = bottomRight;
-		topRight.y += mCollider.mAABB.HalfSizeY * 2.0f;
-		
-		Gizmos.DrawLine(topRight, bottomRight);
-	}
+        mPS = new PositionState();
+        //mEntity = mEntity;
+        //All the basics that every physics object needs upon initialization
+        //colliderType = ColliderType.Pushbox;
+        //mAABB.Scale = Vector2.one;
+
+        mPosition = RoundVector(mEntity.transform.position);
+
+        //This should suffice for all physics bodies, maybe we'll come back to this
+        mAABB.Center = mPosition;
+        mAABB.OffsetY = mAABB.HalfSizeY;
+
+        //Check to see if we're in editorMode
+
+
+
+
+    }
 
     public Vector2 RoundVector(Vector2 v)
     {
@@ -157,12 +149,12 @@ public class PhysicsObject : MonoBehaviour
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
+                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -211,12 +203,12 @@ public class PhysicsObject : MonoBehaviour
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mCollider.mAABB.Center)))
+                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -550,8 +542,8 @@ public class PhysicsObject : MonoBehaviour
             mPS.isBounce = false;
         }
 
-        Vector2 topRight = mCollider.mAABB.Max();
-        Vector2 bottomLeft = mCollider.mAABB.Min();
+        Vector2 topRight = mAABB.Max();
+        Vector2 bottomLeft = mAABB.Min();
 
 
             CollidesWithTiles(ref mPosition, ref topRight, ref bottomLeft, ref mPS);
@@ -584,7 +576,7 @@ public class PhysicsObject : MonoBehaviour
 
         if (mMountParent != null)
         {
-            if (mCollider.HasCollisionDataFor(mMountParent.Body.mCollider))
+            if (HasCollisionDataFor(mMountParent.Body))
             {
                 //if (mCollisionType == CollisionType.Player)
                    // Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
@@ -605,7 +597,7 @@ public class PhysicsObject : MonoBehaviour
 
         mPosition += RoundVector(mOffset + mReminder);
 
-        mCollider.mAABB.Center = mPosition;
+        mAABB.Center = mPosition;
     }
 
     public void ApplyGravity()
@@ -650,17 +642,17 @@ public class PhysicsObject : MonoBehaviour
         if (mIsKinematic)
             return;
         //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
-        transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
-        mPosition = transform.position;
-        mCollider.mAABB.Center = mPosition;
+        mEntity.transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
+        mPosition = mEntity.transform.position;
+        mAABB.Center = mPosition;
         mPS.Reset();
     }
 
     public void SetTilePosition(Vector2i tile)
     {
-        transform.position = mMap.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
-        mPosition = transform.position;
-        mCollider.mAABB.Center = mPosition;
+        mEntity.transform.position = mMap.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
+        mPosition = mEntity.transform.position;
+        mAABB.Center = mPosition;
     }
 
     private void UpdatePhysicsResponse()
@@ -681,14 +673,14 @@ public class PhysicsObject : MonoBehaviour
 
         Vector2 offsetSum = Vector2.zero;
 
-        for (int i = 0; i < mCollider.mCollisions.Count; ++i)
+        for (int i = 0; i < mCollisions.Count; ++i)
         {
 
-            var other = mCollider.mCollisions[i].other;
-            var data = mCollider.mCollisions[i];
+            var other = mCollisions[i].other;
+            var data = mCollisions[i];
             var overlap = data.overlap - offsetSum;
 
-            if (!mCollidesWith.Contains(other.mEntity.Body.mCollisionType) || other.mEntity.mToRemove)
+            if (!mEntity.mCollidesWith.Contains(other.mEntity.mEntityType) || other.mEntity.mToRemove)
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
@@ -696,7 +688,7 @@ public class PhysicsObject : MonoBehaviour
 
             if (overlap.x == 0.0f)
             {
-                if (other.mAABB.Center.x > mCollider.mAABB.Center.x)
+                if (other.mAABB.Center.x > mAABB.Center.x)
                 {
                     mPS.pushesRightObject = true;
                     mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
@@ -710,7 +702,7 @@ public class PhysicsObject : MonoBehaviour
             }
             else if (overlap.y == 0.0f)
             {
-                if (other.mAABB.Center.y > mCollider.mAABB.Center.y)
+                if (other.mAABB.Center.y > mAABB.Center.y)
                 {
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
@@ -808,20 +800,31 @@ public class PhysicsObject : MonoBehaviour
         }
     }
 
+    public bool HasCollisionDataFor(PhysicsBody other)
+    {
+        for (int i = 0; i < mCollisions.Count; ++i)
+        {
+            if (mCollisions[i].other == other)
+                return true;
+        }
+
+        return false;
+    }
+
     public void UpdatePhysicsP2()
     {
         //if (mType == ObjectType.Player) 
         //Debug.Log(name + " Offset " + mOffset);
 
         mPosition -= RoundVector(mOffset + mReminder);
-        mCollider.mAABB.Center = mPosition;
+        mAABB.Center = mPosition;
 
         UpdatePhysicsResponse();
 
 
         if (mOffset != Vector2.zero)
         {
-            Move(mOffset, mSpeed, ref mPosition, ref mReminder, mCollider, ref mPS);
+            Move(mOffset, mSpeed, ref mPosition, ref mReminder, this, ref mPS);
         }
 
         mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
@@ -832,33 +835,13 @@ public class PhysicsObject : MonoBehaviour
         
 
         //update the aabb
-        mCollider.mAABB.Center = mPosition;
-        mEntity.mHurtBox.UpdatePosition();
+        mAABB.Center = mPosition;
 
         //apply the changes to the transform
-        transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
-        transform.localScale = new Vector3(mCollider.mAABB.ScaleX, mCollider.mAABB.ScaleY, 1.0f);
+        mEntity.transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
+        mEntity.transform.localScale = new Vector3(mAABB.ScaleX, mAABB.ScaleY, 1.0f);
     }
 
-    public virtual void ObjectInit(Entity entity)
-    {
-        mGame = Game.instance;
-        mMap = mGame.mMap;
-        mEntity = entity;
-
-        mCollider.mEntity = mEntity;
-        //All the basics that every physics object needs upon initialization
-        mCollider.colliderType = ColliderType.Pushbox;
-        mCollider.mAABB.Scale = Vector2.one;
-        mPosition = RoundVector(transform.position);
-        mCollider.mAABB.Center = mPosition;
-        mCollider.mAABB.OffsetY = mCollider.mAABB.HalfSizeY;
-
-        //Check to see if we're in editorMode
-       
-
-
-
-    }
+ 
 
 }

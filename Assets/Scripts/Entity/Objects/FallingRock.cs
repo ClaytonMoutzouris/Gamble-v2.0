@@ -10,13 +10,13 @@ public class FallingRock : Entity
 
     public override void EntityInit()
     {
+        base.EntityInit();
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(15.0f, 15.0f), new Vector2(0, 15f), new Vector3(1, 1, 1)));
 
-        Body.mCollider.mAABB.HalfSize = new Vector2(15.0f, 15.0f);
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
 
 
-        base.EntityInit();
 
     }
 

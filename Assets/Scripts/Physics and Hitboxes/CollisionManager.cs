@@ -164,7 +164,7 @@ public static class CollisionManager {
     }
 
     // Use this for initialization
-
+    /*
     public static bool LegalCollision(CustomCollider2D obj1, CustomCollider2D obj2)
     {
         //It's not a legal collision if an object is colliding with itself, or either of the colliders are closed
@@ -180,12 +180,61 @@ public static class CollisionManager {
 
         return false;
     }
+    */
+    public static void PhysicsCollision(PhysicsBody obj1, PhysicsBody obj2)
+    {
+        float overlapWidth, overlapHeight;
+
+        if (obj1.mAABB.OverlapsSigned(obj2.mAABB, out overlapWidth, out overlapHeight) && !obj1.HasCollisionDataFor(obj2))
+        {
+
+            obj1.mCollisions.Add(new CollisionData(obj2, new Vector2(overlapWidth, overlapHeight), obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mPosition, obj2.mEntity.Body.mPosition));
+            obj2.mCollisions.Add(new CollisionData(obj1, -new Vector2(overlapWidth, overlapHeight), obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mPosition, obj1.mEntity.Body.mPosition));
+            //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
+            //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
+        }
+    }
+
+    public static void HandleCollision(CustomCollider2D obj1, CustomCollider2D obj2)
+    {
+        if (obj1.mState == ColliderState.Closed || obj2.mState == ColliderState.Closed || obj1.mEntity == obj2.mEntity)
+            return;
+
+        //First we'll check to see if its a pushbox collision
+        if(obj1 is PhysicsBody && obj2 is PhysicsBody)
+        {
+            PhysicsCollision((PhysicsBody)obj1, (PhysicsBody)obj2);
+        }
+
+        if(obj1 is Hitbox && obj2 is Hurtbox)
+        {
+            HitCollision((Hitbox)obj1, (Hurtbox)obj2);
+        }
+
+        if (obj2 is Hitbox && obj1 is Hurtbox)
+        {
+            HitCollision((Hitbox)obj2, (Hurtbox)obj1);
+        }
+
+
+    }
+
+    public static void HitCollision(Hitbox obj1, Hurtbox obj2)
+    {
+        if (obj1.mAABB.Overlaps(obj2.mAABB) && !obj1.mCollisions.Contains((IHurtable)obj2.mEntity))
+        {
+
+            obj1.mCollisions.Add((IHurtable)obj2.mEntity);
+            //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
+            //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
+        }
+    }
 
     public static void CheckCollisions()
     {
 
         //First check the pushboxes
-        float overlapWidth, overlapHeight;
+
 
         //Next check the hitboxes on the hurtboxes
         for (int y = 0; y < mVerticalAreasCount; ++y)
@@ -200,14 +249,10 @@ public static class CollisionManager {
                     for (int j = i + 1; j < colliderInArea.Count; ++j)
                     {
                         var obj2 = colliderInArea[j];
+
+
+                        HandleCollision(obj1, obj2);
                         
-                        if (LegalCollision(obj1, obj2) && obj1.mAABB.OverlapsSigned(obj2.mAABB, out overlapWidth, out overlapHeight)  && !obj1.HasCollisionDataFor(obj2))
-                        {
-                            obj1.mCollisions.Add(new CollisionData(obj2, new Vector2(overlapWidth, overlapHeight), obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mPosition, obj2.mEntity.Body.mPosition));
-                            obj2.mCollisions.Add(new CollisionData(obj1, -new Vector2(overlapWidth, overlapHeight), obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mPosition, obj1.mEntity.Body.mPosition));
-                            //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
-                            //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
-                        }
                     }
                 }
             }
