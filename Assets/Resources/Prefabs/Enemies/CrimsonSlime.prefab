@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4158516181654174}
   - component: {fileID: 212359211727283486}
   - component: {fileID: 114213223733883614}
+  - component: {fileID: 5756834535270892339}
   m_Layer: 0
   m_Name: CrimsonSlime
   m_TagString: Untagged
@@ -180,3 +181,28 @@ MonoBehaviour:
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
   mEnemyType: 1
+  mStats: {fileID: 0}
+--- !u!114 &5756834535270892339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402695801023494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    currentHealth: 30
+    maxHealth: 30
+  stats:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 0
+  - type: 2
+    value: 0
+  - type: 3
+    value: 0

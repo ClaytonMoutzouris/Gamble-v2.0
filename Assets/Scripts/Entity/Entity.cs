@@ -66,7 +66,14 @@ public abstract class Entity : MonoBehaviour {
 
     #endregion
 
-
+    public virtual void OnDrawGizmos()
+    {
+        if (body != null)
+        {
+            Gizmos.color = new Color(0, 0, 1, 0.35f);
+            Gizmos.DrawCube(body.mAABB.Center, body.mAABB.HalfSize * 2);
+        }
+    }
 
     public virtual void EntityInit()
     {
@@ -102,10 +109,12 @@ public abstract class Entity : MonoBehaviour {
         Body.UpdatePhysicsP2();
     }
 
-    public void Shoot(Bullet prefab)
+    public void Shoot(Bullet prefab, Attack attack)
     {
         Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
         temp.EntityInit();
+        temp.Attack = attack;
+        temp.Owner = this;
         temp.direction = new Vector2(body.mAABB.ScaleX, 0);
     }
 

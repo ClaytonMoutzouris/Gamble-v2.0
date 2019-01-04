@@ -6,8 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public class Hitbox : CustomCollider2D
 {
-    [SerializeField]
+
     public List<IHurtable> mCollisions;
+    public List<IHurtable> mDealthWith;
+
     public int Collisions
     {
         get
@@ -18,6 +20,7 @@ public class Hitbox : CustomCollider2D
     public Hitbox(Entity entity, CustomAABB aABB) : base(entity, aABB)
     {
         mCollisions = new List<IHurtable>();
+        mDealthWith = new List<IHurtable>();
     }
 
 }

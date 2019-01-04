@@ -2290,7 +2290,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1810139705}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2041713573}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1be887feb7d612a4f9a8993970b2298f, type: 3}
@@ -2503,6 +2503,11 @@ PrefabInstance:
       propertyPath: mEntityType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 3}
+      propertyPath: mBullet
+      value: 
+      objectReference: {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66,
+        type: 3}
     - target: {fileID: 418340, guid: d1464cb122959e44080dd376f21d6734, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2729,6 +2734,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2041713573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 174408, guid: d1464cb122959e44080dd376f21d6734,
+    type: 3}
+  m_PrefabInstance: {fileID: 1810139705}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2041713578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041713573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  health:
+    currentHealth: 50
+    maxHealth: 50
+  stats:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 0
+  - type: 2
+    value: 0
+  - type: 3
+    value: 0
 --- !u!1 &2071477696
 GameObject:
   m_ObjectHideFlags: 0

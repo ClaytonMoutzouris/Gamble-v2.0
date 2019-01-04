@@ -9,8 +9,8 @@ public static class CollisionManager {
     private static List<Vector2i> mOverlappingAreas = new List<Vector2i>(4);
     public static int mHorizontalAreasCount = 0;
     public static int mVerticalAreasCount = 0;
-    public static int mGridAreaWidth = 10;
-    public static int mGridAreaHeight = 10;
+    public static int mGridAreaWidth = 25;
+    public static int mGridAreaHeight = 25;
 
     public static List<CustomCollider2D>[,] mCollidersInArea;
 
@@ -75,7 +75,16 @@ public static class CollisionManager {
 
     static void AddObjectToArea(Vector2i areaIndex, CustomCollider2D obj)
     {
-        var area = mCollidersInArea[areaIndex.x, areaIndex.y];
+        List<CustomCollider2D> area = new List<CustomCollider2D>();
+        try
+        {
+            area = mCollidersInArea[areaIndex.x, areaIndex.y];
+
+        }
+        catch (System.IndexOutOfRangeException e)
+        {
+            Debug.LogError("Index out of range " + areaIndex.x + " , " + areaIndex.y);
+        }
 
         //save the index of  the object in the area
         obj.mAreas.Add(areaIndex);
@@ -94,6 +103,11 @@ public static class CollisionManager {
         var bottomLeft = mapManager.GetMapTileAtPoint(obj.mAABB.Center - obj.mAABB.HalfSize);
         var bottomRight = new Vector2i();
 
+        if(topLeft.x > MapManager.instance.mWidth || topLeft.y > MapManager.instance.mHeight)
+        {
+            Debug.Log("big X: " + topLeft.x + "big Y: " + topRight.y);
+        }
+
         topLeft.x /= mGridAreaWidth;
         topLeft.y /= mGridAreaHeight;
 
@@ -103,14 +117,14 @@ public static class CollisionManager {
         bottomLeft.x /= mGridAreaWidth;
         bottomLeft.y /= mGridAreaHeight;
 
-        /*topLeft.x = Mathf.Clamp(topLeft.x, 0, mHorizontalAreasCount - 1);
+        topLeft.x = Mathf.Clamp(topLeft.x, 0, mHorizontalAreasCount - 1);
         topLeft.y = Mathf.Clamp(topLeft.y, 0, mVerticalAreasCount - 1);
 
         topRight.x = Mathf.Clamp(topRight.x, 0, mHorizontalAreasCount - 1);
         topRight.y = Mathf.Clamp(topRight.y, 0, mVerticalAreasCount - 1);
 
         bottomLeft.x = Mathf.Clamp(bottomLeft.x, 0, mHorizontalAreasCount - 1);
-        bottomLeft.y = Mathf.Clamp(bottomLeft.y, 0, mVerticalAreasCount - 1);*/
+        bottomLeft.y = Mathf.Clamp(bottomLeft.y, 0, mVerticalAreasCount - 1);
 
         bottomRight.x = topRight.x;
         bottomRight.y = bottomLeft.y;
@@ -197,6 +211,7 @@ public static class CollisionManager {
 
     public static void HandleCollision(CustomCollider2D obj1, CustomCollider2D obj2)
     {
+        //We add in a clause that if both colliders belong to the same entity they ignore eachother
         if (obj1.mState == ColliderState.Closed || obj2.mState == ColliderState.Closed || obj1.mEntity == obj2.mEntity)
             return;
 
@@ -216,11 +231,38 @@ public static class CollisionManager {
             HitCollision((Hitbox)obj2, (Hurtbox)obj1);
         }
 
+        if(obj1 is Sightbox && obj2 is PhysicsBody)
+        {
+            SightCollision((Sightbox)obj1, (PhysicsBody)obj2);
+        }
+
+        if (obj2 is Sightbox && obj1 is PhysicsBody)
+        {
+            SightCollision((Sightbox)obj2, (PhysicsBody)obj1);
+        }
+
 
     }
 
+    public static void SightCollision(Sightbox obj1, PhysicsBody obj2)
+    {
+
+        if (obj1.mAABB.Overlaps(obj2.mAABB) && !obj1.mEntitiesInSight.Contains(obj2.mEntity))
+        {
+            obj1.mEntitiesInSight.Add(obj2.mEntity);
+        }
+    }
+   
+
     public static void HitCollision(Hitbox obj1, Hurtbox obj2)
     {
+        if(obj1.mEntity is IProjectile)
+        {
+            IProjectile proj = (IProjectile)obj1.mEntity;
+            if (proj.Owner == obj2.mEntity)
+                return;
+        }
+
         if (obj1.mAABB.Overlaps(obj2.mAABB) && !obj1.mCollisions.Contains((IHurtable)obj2.mEntity))
         {
 

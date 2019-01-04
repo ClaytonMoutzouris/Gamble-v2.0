@@ -6,26 +6,42 @@ public class Eye : Enemy
 {
     public Entity target = null;
 
-
+    
 
     public override void EntityInit()
     {
         base.EntityInit();
+        EnemyInit();
 
         mAnimator = GetComponent<Animator>();
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), new Vector2(0, 10.0f), new Vector3(1, 1, 1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), Vector3.zero, new Vector3(1, 1, 1)));
+        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
 
         Body.mIsKinematic = false;
         Body.mIgnoresGravity = true;
 
         HurtBox.UpdatePosition();
+        sight.UpdatePosition();
 
     }
 
     public override void EntityUpdate()
     {
+        target = null;
+        if(sight.mEntitiesInSight != null)
+        {
+            foreach(Entity entity in sight.mEntitiesInSight)
+            {
+                if(entity is Player)
+                {
+                    target = entity;
+                    break;
+                }
+            }
+        }
+
         if(target != null)
         {
             HasTargetUpdate();
@@ -39,11 +55,22 @@ public class Eye : Enemy
         //This is just a test, probably dont need to do it this way
         base.EntityUpdate();
 
+
         CollisionManager.UpdateAreas(HurtBox);
+        CollisionManager.UpdateAreas(sight);
+        sight.mEntitiesInSight.Clear();
+
+
         //HurtBox.mCollisions.Clear();
         //UpdatePhysics();
 
         //make sure the hitbox follows the object
+    }
+
+    public override void SecondUpdate()
+    {
+        base.SecondUpdate();
+
     }
 
     void HasTargetUpdate()

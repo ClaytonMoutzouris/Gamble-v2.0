@@ -129,8 +129,9 @@ public class MapManager : MonoBehaviour
 
     public Vector2i GetMapTileAtPoint(Vector2 point)
     {
-        return new Vector2i((int)((point.x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize)),
-                    (int)((point.y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize)));
+        //We should clamp all of these point getters
+        Vector2i tilePoint = new Vector2i((int)((point.x - mPosition.x + cTileSize / 2.0f) / (float)(cTileSize)), (int)((point.y - mPosition.y + cTileSize / 2.0f) / (float)(cTileSize)));
+        return tilePoint;
     }
 
     public Vector2 GetMapTilePosition(int tileIndexX, int tileIndexY)

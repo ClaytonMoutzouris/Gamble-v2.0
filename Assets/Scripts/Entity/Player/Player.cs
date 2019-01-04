@@ -70,23 +70,15 @@ public class Player : Entity, IHurtable
         }
     }
 
-   
-
-    public void SetCharacterWidth(Slider slider)
-    {
-        body.mAABB.ScaleX = slider.value;
-    }
-
-    public void SetCharacterHeight(Slider slider)
-    {
-        body.mAABB.ScaleY = slider.value;
-    }
+    public Stats mStats;
+    public Bullet mBullet;
 
     public override void EntityInit()
     {
         base.EntityInit();
 
         mAudioSource = GetComponent<AudioSource>();
+        mStats = GetComponent<Stats>();
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0,Constants.cHalfSizeY), new Vector3(1,1,1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
@@ -99,9 +91,13 @@ public class Player : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
         //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 1, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(5, 10, 0), new Vector3(1, 1, 1))));
+        MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
+        RangedAttack ranged = new RangedAttack(this, 0.5f, 5, mBullet);
+        mAttackManager.AttackList.Add(ranged);
+
+
     }
 
     public void SetInputs(bool[] inputs, bool[] prevInputs)
@@ -653,6 +649,12 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
+        mStats.health.LoseHP(attack.damage);
+
+        if(mStats.health.currentHealth == 0)
+        {
+            Die();
+        }
 
     }
 
@@ -711,4 +713,34 @@ public class Player : Entity, IHurtable
 
         return null;
     }
+
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        if(mStats != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(Body.mAABB.Center + (Body.mAABB.HalfSizeY + 3) * Vector3.up, new Vector3(30 * (mStats.health.currentHealth / mStats.health.maxHealth), 6, 1));
+        }
+
+
+        Gizmos.color = new Color(1,0,0, 0.5f);
+
+        if (HurtBox != null)
+            Gizmos.DrawCube(Position, HurtBox.mAABB.halfSize * 2);
+
+        if(mAttackManager != null)
+        {
+            foreach(MeleeAttack attack in mAttackManager.meleeAttacks)
+            {
+                if (attack.mIsActive)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(attack.hitbox.mAABB.Center, attack.hitbox.mAABB.halfSize * 2);
+                }
+            }
+        }
+    }
+
 }

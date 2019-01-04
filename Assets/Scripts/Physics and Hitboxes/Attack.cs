@@ -17,10 +17,11 @@ public class Attack {
     public bool mIsActive = false;
 
 
-    public Attack(Entity entity, float duration)
+    public Attack(Entity entity, float duration, int damage)
     {
         mEntity = entity;
         this.duration = duration;
+        this.damage = damage;
 
     }
 
@@ -69,16 +70,20 @@ public class Attack {
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, Hitbox hit) : base(entity, duration)
+    public MeleeAttack(Entity entity, float duration, int damage, Hitbox hit) : base(entity, duration, damage)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
     }
     public override void Activate()
     {
+        if (mIsActive)
+            return;
+
         base.Activate();
 
         hitbox.mState = ColliderState.Open;
+        hitbox.mDealthWith.Clear();
         //hitbox.colliderType = ColliderType.Hitbox;
     }
 
@@ -87,6 +92,8 @@ public class MeleeAttack : Attack
         base.Deactivate();
 
         hitbox.mState = ColliderState.Closed;
+        hitbox.mCollisions.Clear();
+        hitbox.mDealthWith.Clear();
 
     }
 
@@ -94,10 +101,14 @@ public class MeleeAttack : Attack
     {
         foreach (IHurtable hit in hitbox.mCollisions)
         {
+            if (!hitbox.mDealthWith.Contains(hit))
+            {
                 hit.GetHurt(this);
-           
+                hitbox.mDealthWith.Add(hit);
+            }
+
         }
-        hitbox.mCollisions.Clear();
+        //hitbox.mCollisions.Clear();
 
 
         base.UpdateAttack();
@@ -123,16 +134,17 @@ public class RangedAttack : Attack
 {
     public Bullet projectile;
 
-    public RangedAttack(Entity entity, float duration, Bullet proj) : base(entity, duration)
+    public RangedAttack(Entity entity, float duration, int damage, Bullet proj) : base(entity, duration, damage)
     {
         projectile = proj;
     }
 
+    //These only cover the shooting animation really
     public override void Activate()
     {
         base.Activate();
 
-        mEntity.Shoot(projectile);
+        mEntity.Shoot(projectile, this);
     }
 
     public override void Deactivate()

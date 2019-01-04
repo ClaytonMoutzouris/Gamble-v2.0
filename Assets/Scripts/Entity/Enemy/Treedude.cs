@@ -8,6 +8,8 @@ public class Treedude : Enemy
     {
 
         base.EntityInit();
+        EnemyInit();
+
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(20.0f, 40.0f), new Vector2(0, 40.0f), new Vector3(1, 1, 1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(20.0f, 40.0f), Vector3.zero, new Vector3(1, 1, 1)));
@@ -17,6 +19,9 @@ public class Treedude : Enemy
 
 
         HurtBox.UpdatePosition();
+
+        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
+        sight.UpdatePosition();
     }
 
     public override void EntityUpdate()

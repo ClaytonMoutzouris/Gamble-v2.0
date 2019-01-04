@@ -6,8 +6,12 @@ public abstract class Enemy : Entity, IHurtable
 {
     [SerializeField]
     private Hurtbox hurtBox;
+    public Sightbox sight;
+
 
     public EnemyType mEnemyType;
+
+    public Stats mStats;
 
     public Hurtbox HurtBox
     {
@@ -20,6 +24,28 @@ public abstract class Enemy : Entity, IHurtable
         {
             hurtBox = value;
         }
+    }
+
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        if (mStats != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(Body.mAABB.Center + (Body.mAABB.HalfSizeY + 3) * Vector3.up, new Vector3(30 * (mStats.health.currentHealth / mStats.health.maxHealth), 6, 1));
+        }
+
+        if (sight != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(sight.mAABB.Center, sight.mAABB.HalfSize.x);
+        }
+    }
+
+    public virtual void EnemyInit()
+    {
+        mStats = GetComponent<Stats>();
     }
 
     /*
@@ -35,6 +61,7 @@ public abstract class Enemy : Entity, IHurtable
         base.SecondUpdate();
 
         HurtBox.UpdatePosition();
+        sight.UpdatePosition();
 
     }
 
@@ -46,9 +73,25 @@ public abstract class Enemy : Entity, IHurtable
         //HurtBox.mCollisions.Clear();
     }
 
+    public override void ActuallyDie()
+    {
+        CollisionManager.RemoveObjectFromAreas(HurtBox);
+
+        base.ActuallyDie();
+    }
+
     public virtual void GetHurt(Attack attack)
     {
-        Debug.Log(name + " was hurt by " + attack.mEntity.name);
-        Die();
+        Debug.Log("Dude is getting hurt");
+
+            mStats.health.LoseHP(attack.damage);
+        Debug.Log("Current health: " + mStats.health.currentHealth + " damage");
+
+        if (mStats.health.currentHealth == 0)
+            {
+                Die();
+            }
+
+        
     }
 }

@@ -8,7 +8,7 @@ public class Slime : Enemy {
     public override void EntityInit()
     {
         base.EntityInit();
-
+        EnemyInit();
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), new Vector2(0, 5.0f), new Vector3(1, 1, 1)));
         Body.mAABB.ScaleX *= -1;
 
@@ -18,6 +18,9 @@ public class Slime : Enemy {
 
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), Vector3.zero, new Vector3(1, 1, 1)));
         HurtBox.UpdatePosition();
+
+        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
+        sight.UpdatePosition();
 
     }
 

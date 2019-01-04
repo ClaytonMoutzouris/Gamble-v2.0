@@ -17,3 +17,10 @@ public interface IHurtable
     void GetHurt(Attack attack);
 
 }
+
+public interface IProjectile
+{
+    Attack Attack { get; set; }
+    Entity Owner { get; set; }
+
+}

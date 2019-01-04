@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 212992731995653070}
   - component: {fileID: 114667629719467648}
   - component: {fileID: 95194250073010510}
+  - component: {fileID: 6399982450656871162}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -181,84 +182,8 @@ MonoBehaviour:
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
   mEnemyType: 2
-  target:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mGame: {fileID: 0}
-    mMap: {fileID: 0}
-    mOldPosition: {x: 0, y: 0}
-    mPosition: {x: 0, y: 0}
-    mReminder: {x: 0, y: 0}
-    mOffset: {x: 0, y: 0}
-    mSpeed: {x: 0, y: 0}
-    mOldSpeed: {x: 0, y: 0}
-    mPS:
-      pushesRight: 0
-      pushesLeft: 0
-      pushesBottom: 0
-      pushesTop: 0
-      pushedTop: 0
-      pushedBottom: 0
-      pushedRight: 0
-      pushedLeft: 0
-      pushedLeftObject: 0
-      pushedRightObject: 0
-      pushedBottomObject: 0
-      pushedTopObject: 0
-      pushesLeftObject: 0
-      pushesRightObject: 0
-      pushesBottomObject: 0
-      pushesTopObject: 0
-      pushedLeftTile: 0
-      pushedRightTile: 0
-      pushedBottomTile: 0
-      pushedTopTile: 0
-      pushesLeftTile: 0
-      pushesRightTile: 0
-      pushesBottomTile: 0
-      pushesTopTile: 0
-      onOneWay: 0
-      tmpIgnoresOneWay: 0
-      tmpSticksToSlope: 0
-      oneWayY: 0
-      onLadder: 0
-      isClimbing: 0
-      isBounce: 0
-      onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
-      leftTile:
-        x: 0
-        y: 0
-      rightTile:
-        x: 0
-        y: 0
-      topTile:
-        x: 0
-        y: 0
-      bottomTile:
-        x: 0
-        y: 0
-    mMountParent: {fileID: 0}
-    mIgnoresOneWay: 0
-    mOnOneWayPlatform: 0
-    mIsKinematic: 0
-    mIgnoresGravity: 0
-    mCollisions: []
-    mSpriteDepth: 0
+  mStats: {fileID: 0}
+  target: {fileID: 0}
 --- !u!95 &95194250073010510
 Animator:
   serializedVersion: 3
@@ -278,3 +203,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6399982450656871162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956054827893182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    currentHealth: 25
+    maxHealth: 25
+  stats:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 0
+  - type: 2
+    value: 0
+  - type: 3
+    value: 0
