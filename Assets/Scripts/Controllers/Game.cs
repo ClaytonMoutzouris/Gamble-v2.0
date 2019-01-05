@@ -101,7 +101,31 @@ public class Game : MonoBehaviour
 
         }
 
-        mMap.Init();
+        MapType mapType;
+
+        if (mMap.mMapData != null)
+        {
+            mapType = mMap.mMapData.mapType;
+            if (mapType == MapType.Hub)
+            {
+                mapType = MapType.World;
+            }
+            else if (mapType == MapType.World)
+            {
+                mapType = MapType.BossMap;
+            }
+            else if (mapType == MapType.BossMap)
+            {
+                mapType = MapType.World;
+            }
+        } else
+        {
+            mapType = MapType.Hub;
+        }
+        
+
+
+        mMap.NewMap(mapType);
         foreach(Player player in players)
         player.Body.SetTilePosition(mMap.mMapData.startTile);
     }

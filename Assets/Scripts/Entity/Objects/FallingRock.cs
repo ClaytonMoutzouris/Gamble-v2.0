@@ -8,6 +8,8 @@ public class FallingRock : Entity
     public float mTimeToTrigger = 0.0f;
 
     public Sightbox trigger;
+    public Vector2i tilePos;
+    public int sizeDown = 0;
 
     public override void OnDrawGizmos()
     {
@@ -25,38 +27,29 @@ public class FallingRock : Entity
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
         Body.mIgnoresGravity = true;
+        
+
         /*
-        mMap.GetMapTilePosition(Body.til)
-        int sizeDown = 0;
-        Debug.Log(mMap.GetTile(tile.x, tile.y - 1));
-        while (mMap.GetTile(tile.x, tile.y - 1) == TileType.Empty)
-        {
-            
-            sizeDown += 1;
-            tile = mMap.GetMapTileAtPoint(new Vector3(tile.x, tile.y - 1));
-        }
+        
         */
 
-        trigger = new Sightbox(this, new CustomAABB(transform.position, new Vector2(MapManager.cTileSize/2, 10 * MapManager.cTileSize/2), new Vector2(0, -10 * MapManager.cTileSize/2), new Vector3(1, 1, 1)));
-        trigger.UpdatePosition();
+
 
         isTriggered = false;
     }
 
-    int GetSizeDown(int sizeDown, int x, int y)
+    public void InitPosition(Vector2i pos)
     {
-        
+        //Vector2i tilePos = mMap.GetMapTileAtPoint(pos);
+        Body.SetTilePosition(pos);
+        tilePos = pos;
 
-        if (mMap.GetTile(x, y-1) == TileType.Empty)
-        {
-          sizeDown += GetSizeDown(sizeDown, x, y - 1);
-        } else
-        {
-            sizeDown = 1;
-        }
+        sizeDown = mMap.CheckEmptySpacesBelow(pos);
 
-        return sizeDown;
+        trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0,  -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2)), new Vector3(1, 1, 1)));
+        trigger.UpdatePosition();
     }
+
 
     public override void EntityUpdate()
     {
@@ -81,6 +74,20 @@ public class FallingRock : Entity
     {
         base.SecondUpdate();
         trigger.UpdatePosition();
+
+    }
+
+    public override void Die()
+    {
+        base.Die();
+    }
+
+    public override void ActuallyDie()
+    {
+
+        CollisionManager.RemoveObjectFromAreas(trigger);
+
+        base.ActuallyDie();
 
     }
 }

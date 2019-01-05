@@ -31,6 +31,7 @@ public abstract class Entity : MonoBehaviour {
 
     //Not currently in use
     public EntityData EntityData;
+    public Vector3 BodySize;
 
     #region Accesors
     public PhysicsBody Body

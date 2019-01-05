@@ -7,7 +7,8 @@ public class MapData {
 
     public Vector2i startTile = new Vector2i(1,1);
     public MapChunk[,] rooms;
-    public MapType type;
+    public WorldType type;
+    public MapType mapType;
     public int sizeX;
     public int sizeY;
 
@@ -31,8 +32,9 @@ public class MapData {
 
     public List<EntityData> objects;
 
-    public MapData(MapType type = MapType.Forest, int sizex = Constants.cDefaultMapWidth, int sizey = Constants.cDefaultMapHeight)
+    public MapData(MapType mapType = MapType.Hub, WorldType type = WorldType.Forest, int sizex = Constants.cDefaultMapWidth, int sizey = Constants.cDefaultMapHeight)
     {
+        this.mapType = mapType;
         this.type = type;
         sizeX = sizex;
         sizeY = sizey;

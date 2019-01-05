@@ -14,7 +14,6 @@ public class MapManager : MonoBehaviour
     public Vector3 mPosition;
     public int mWidth;
     public int mHeight;
-    public bool mFirstMap = true;
 
     [SerializeField]
     public const int cTileSize = 32;
@@ -150,43 +149,67 @@ public class MapManager : MonoBehaviour
             );
     }
 
+    public int CheckEmptySpacesBelow(Vector2i start)
+    {
+        int emptySpaces = 0;
+        Vector2i currTile = start;
+
+        while (currTile.y != 0 && GetTile(currTile.x, currTile.y - 1) == TileType.Empty)
+        {
+
+            emptySpaces += 1;
+            currTile = GetMapTileAtPoint(GetMapTilePosition(new Vector2i(currTile.x, currTile.y - 1)));
+        }
+
+        return emptySpaces;
+
+    }
+
+
     public void InitMapObject()
     {
 
     }
 
-    public void NewMap()
-    {
-
-    }
-
-
-
-    public virtual void Init()
+    public void NewMap(MapType mapType)
     {
         mWidth = Constants.cDefaultMapWidth;
         mHeight = Constants.cDefaultMapHeight;
 
 
         //set the position
-        mPosition = transform.position;
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
-        if (mFirstMap)
+        switch (mapType)
         {
-            mMapData = MapGenerator.GenerateHubMap();
-            mFirstMap = false;
-        } else
-        {
-            mMapData = MapGenerator.GenerateMap();
-
+            case MapType.Hub:
+                mMapData = MapGenerator.GenerateHubMap();
+                break;
+            case MapType.World:
+                mMapData = MapGenerator.GenerateMap();
+                break;
+            case MapType.BossMap:
+                mMapData = MapGenerator.GenerateBossMap(mMapData.type);
+                break;
         }
+
+        mWidth = mMapData.sizeX;
+        mHeight = mMapData.sizeY;
 
         mTileData = mMapData.GetMap();
         AddEntities();
         Debug.Log(mMapData.sizeX + ", " + mMapData.sizeY);
         mTileMap.DrawMap(mTileData, mMapData.sizeX, mMapData.sizeY, mMapData.type);
+    }
+
+
+
+    public virtual void Init()
+    {
+        mPosition = transform.position;
+
+        NewMap(MapType.Hub);
     }
 
     public void AddEntities()
@@ -219,7 +242,7 @@ public class MapManager : MonoBehaviour
             case ObjectType.FallingRock:
                 FallingRock temp2 = Instantiate(Resources.Load<FallingRock>("Prefabs/Objects/FallingRock")) as FallingRock;
                 temp2.EntityInit();
-                temp2.Body.SetTilePosition(data.TilePosition);
+                temp2.InitPosition(data.TilePosition);
                 break;
         }
     }

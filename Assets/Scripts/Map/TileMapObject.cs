@@ -27,7 +27,7 @@ public class TileMapObject : MonoBehaviour {
     private Vector3[] vertices;
     MapManager map;
 
-    public MapType CurrentMapType;
+    public WorldType CurrentMapType;
 
     public List<Texture2D> terrainTiles;
 
@@ -58,7 +58,7 @@ public class TileMapObject : MonoBehaviour {
 
 
 
-    public void DrawMap(TileType[,] tiles, int xSize, int ySize, MapType mapType = MapType.Forest)
+    public void DrawMap(TileType[,] tiles, int xSize, int ySize, WorldType mapType = WorldType.Forest)
     {
         CurrentMapType = mapType;
         //This represents one tiles color array

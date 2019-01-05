@@ -305,7 +305,7 @@ public static class MapGenerator {
 
     public static MapData GenerateHubMap()
     {
-        MapData map = new MapData(MapType.Hub, 30, 30);
+        MapData map = new MapData(MapType.Hub, WorldType.Hub, 30, 30);
 
         for (int x = 0; x < map.MapChunksX; x++)
         {
@@ -323,9 +323,35 @@ public static class MapGenerator {
         return map;
     }
 
+    public static MapData GenerateBossMap(WorldType type)
+    {
+        MapData map = new MapData(MapType.BossMap, type, 30, 30);
+
+
+        for (int i = 0; i < map.sizeX; i++)
+        {
+            for (int j = 0; j < map.sizeY; j++)
+            {
+
+                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
+                {
+                    //Debug.Log("X: " + x + ", Y: " + y);
+                    map.SetTile(j, i, TileType.Block);
+                }
+            }
+
+        }
+
+        map.AddEntity(new EnemyData(map.sizeX / 2, map.sizeY / 2, EnemyType.LavaBoss));
+
+        map.startTile = GetStartTile(map);
+        AddDoorTile(map);
+        return map;
+    }
+
     public static MapData GenerateMap()
     {
-        MapData map = new MapData((MapType)Random.Range(0, (int)MapType.Count));
+        MapData map = new MapData(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
         LoadRooms();
         
         for (int x = 0; x < map.MapChunksX; x++)

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile };
-public enum EnemyType { Slime, CrimsonSlime, Eye, Treedude, Count };
+public enum EnemyType { Slime, CrimsonSlime, Eye, Treedude, Count, LavaBoss };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
-public enum MapType { Forest, Tundra, Lava, Count, Hub };
+public enum WorldType { Forest, Tundra, Lava, Count, Hub };
+public enum MapType {  Hub, World, BossMap };
 
 public enum TileType
 {
