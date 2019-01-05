@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8acf45dc78e33409ae147d53b51203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMovingSpeed: 0
+  mMovingSpeed: 300
   mToRemove: 0
   mUpdateId: -1
   mGame: {fileID: 0}
@@ -182,3 +182,4 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   mMaxTime: 10
   mTimeAlive: 0
+  mPierce: 0

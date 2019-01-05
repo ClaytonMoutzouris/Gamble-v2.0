@@ -47,7 +47,7 @@ public class Bullet : Entity, IProjectile {
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(2.0f, 2.0f), new Vector2(0, 2.0f), new Vector3(1, 1, 1)));
         mHitbox = new Hitbox(this, new CustomAABB(transform.position, new Vector2(2.0f, 2.0f), new Vector2(0, 2.0f), new Vector3(1, 1, 1)));
         Body.mIsKinematic = true;
-        mMovingSpeed = 100;
+        //mMovingSpeed = 100;
         body.mIgnoresGravity = true;
 
     }

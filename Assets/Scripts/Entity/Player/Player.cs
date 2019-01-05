@@ -77,6 +77,12 @@ public class Player : Entity, IHurtable
     {
         base.EntityInit();
 
+        for(int c = 0; c < colorPallete.Count; c++)
+        {
+            colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+        }
+            ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
+
         mAudioSource = GetComponent<AudioSource>();
         mStats = GetComponent<Stats>();
 
@@ -661,14 +667,19 @@ public class Player : Entity, IHurtable
 
     public override void Die()
     {
+
+        //The player never dies
+        /*
         base.Die();
 
         HurtBox.mState = ColliderState.Closed;
         //HurtBox.mCollisions.Clear();
+        */
     }
 
     public override void ActuallyDie()
     {
+        
         //we have to remove the hitboxes
         foreach (Attack attack in mAttackManager.AttackList)
         {

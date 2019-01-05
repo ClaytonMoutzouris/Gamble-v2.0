@@ -115,6 +115,9 @@ public class Game : MonoBehaviour
     {
         for(int p = 0; p < players.Count; p++)
         {
+            switch (p)
+            {
+                case 0:
             playerInputs[p][(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
             playerInputs[p][(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
             playerInputs[p][(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
@@ -122,6 +125,18 @@ public class Game : MonoBehaviour
             playerInputs[p][(int)KeyInput.Jump] = Input.GetButton("Jump");
             playerInputs[p][(int)KeyInput.Shoot] = Input.GetButton("Fire1");
             playerInputs[p][(int)KeyInput.Attack] = Input.GetButton("Fire2");
+                    break;
+                case 1:
+            playerInputs[p][(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
+            playerInputs[p][(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
+            playerInputs[p][(int)KeyInput.GoDown] = Input.GetKey(KeyCode.S);
+            playerInputs[p][(int)KeyInput.Climb] = Input.GetKey(KeyCode.W);
+            playerInputs[p][(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
+            playerInputs[p][(int)KeyInput.Shoot] = Input.GetKey(KeyCode.Q);
+            playerInputs[p][(int)KeyInput.Attack] = Input.GetKey(KeyCode.R);
+                    break;
+            }
+            
         }
 
         if (Input.GetKey(KeyCode.Escape))

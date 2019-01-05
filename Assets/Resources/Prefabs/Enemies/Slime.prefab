@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5bb1cedac6e6d144f8fdbfb07d1323f6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.16216493, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -180,6 +180,37 @@ MonoBehaviour:
     mSpriteDepth: 0
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
+  hurtBox:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+  sight:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+    mEntitiesInSight: []
   mEnemyType: 0
   mStats: {fileID: 0}
 --- !u!114 &1613120553129927952
@@ -194,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
   health:
     currentHealth: 20
     maxHealth: 20

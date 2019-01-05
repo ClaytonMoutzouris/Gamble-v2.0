@@ -73,9 +73,17 @@ public abstract class Enemy : Entity, IHurtable
         //HurtBox.mCollisions.Clear();
     }
 
+    public virtual void DropLoot()
+    {
+        ItemObject temp = Instantiate(ItemDatabase.GetRandomItem());
+        temp.EntityInit();
+        temp.Body.mPosition = Body.mPosition + new Vector2(0, MapManager.cTileSize / 2);
+    }
+
     public override void ActuallyDie()
     {
         CollisionManager.RemoveObjectFromAreas(HurtBox);
+        DropLoot();
 
         base.ActuallyDie();
     }
