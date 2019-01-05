@@ -216,6 +216,11 @@ public class MapManager : MonoBehaviour
                 temp.EntityInit();
                 temp.Body.SetTilePosition(data.TilePosition);
                 break;
+            case ObjectType.FallingRock:
+                FallingRock temp2 = Instantiate(Resources.Load<FallingRock>("Prefabs/Objects/FallingRock")) as FallingRock;
+                temp2.EntityInit();
+                temp2.Body.SetTilePosition(data.TilePosition);
+                break;
         }
     }
 

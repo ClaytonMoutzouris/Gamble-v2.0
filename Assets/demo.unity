@@ -2589,6 +2589,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66,
         type: 3}
+    - target: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 3}
+      propertyPath: mDoubleJump
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 418340, guid: d1464cb122959e44080dd376f21d6734, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

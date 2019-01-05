@@ -363,6 +363,7 @@ public static class MapGenerator {
     {
         AddChests(map);
         AddEnemies(map);
+        AddFallingRock(map);
 
         
         
@@ -384,6 +385,27 @@ public static class MapGenerator {
                 {
                     if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
                         map.AddEntity(new ObjectData(x, y, ObjectType.Chest));
+                }
+            }
+        }
+    }
+
+    static void AddFallingRock(MapData map)
+    {
+        int r;
+
+        for (int x = 0; x < map.sizeX; x++)
+        {
+            for (int y = 0; y < map.sizeY; y++)
+            {
+                r = Random.Range(0, 100);
+                if (r < 95)
+                    continue;
+
+                if (map.GetTile(x, y) == TileType.Empty)
+                {
+                    if (y != (map.sizeY-1) && map.GetTile(x, y + 1) == TileType.Block)
+                        map.AddEntity(new ObjectData(x, y, ObjectType.FallingRock));
                 }
             }
         }
