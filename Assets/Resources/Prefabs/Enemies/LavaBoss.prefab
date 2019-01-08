@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5008275162836723558}
   - component: {fileID: 9178708738724330315}
   - component: {fileID: 1605136653131188733}
+  - component: {fileID: 4574250162577053720}
   m_Layer: 0
   m_Name: LavaBoss
   m_TagString: Untagged
@@ -199,7 +200,7 @@ MonoBehaviour:
     mCollisions: []
     mSpriteDepth: 0
   mEntityType: 1
-  mCollidesWith: 000000000500000000000000
+  mCollidesWith: 000000000300000002000000
   BodySize: {x: 40, y: 55, z: 0}
   hurtBox:
     mEntity: {fileID: 0}
@@ -232,9 +233,12 @@ MonoBehaviour:
     mAreas: []
     mIdsInAreas: 
     mEntitiesInSight: []
+  mAttackManager: {fileID: 0}
   mEnemyType: 5
   mStats: {fileID: 0}
   target: {fileID: 0}
+  VolcanicBombPrefab: {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb,
+    type: 3}
 --- !u!114 &1605136653131188733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,3 +264,18 @@ MonoBehaviour:
     value: 6
   - type: 3
     value: 2
+--- !u!114 &4574250162577053720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590620537515642921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  AttackList: []
+  meleeAttacks: []

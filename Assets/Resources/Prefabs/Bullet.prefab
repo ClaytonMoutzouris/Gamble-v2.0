@@ -174,11 +174,12 @@ MonoBehaviour:
     mIgnoresOneWay: 0
     mOnOneWayPlatform: 0
     mIsKinematic: 0
-    mIgnoresGravity: 0
+    mIgnoresGravity: 1
     mCollisions: []
     mSpriteDepth: 0
   mEntityType: 5
   mCollidesWith: 00000000010000000200000003000000
+  BodySize: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0}
   mMaxTime: 10
   mTimeAlive: 0

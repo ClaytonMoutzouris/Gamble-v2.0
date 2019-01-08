@@ -5,7 +5,7 @@ using UnityEngine;
 public class LavaBoss : Enemy
 {
     public Entity target = null;
-
+    public Bullet VolcanicBombPrefab;
 
 
     public override void EntityInit()
@@ -25,10 +25,14 @@ public class LavaBoss : Enemy
         HurtBox.UpdatePosition();
         sight.UpdatePosition();
 
+        RangedAttack ranged = new RangedAttack(this, 0.2f, 10, VolcanicBombPrefab);
+        mAttackManager.AttackList.Add(ranged);
+
     }
 
     public override void EntityUpdate()
     {
+        mAttackManager.UpdateAttacks();
         target = null;
         if (sight.mEntitiesInSight != null)
         {
@@ -82,7 +86,7 @@ public class LavaBoss : Enemy
 
     void HasTargetUpdate()
     {
-        mAnimator.Play("Eye_Fly");
+        //mAnimator.Play("Eye_Fly");
         //This works amazing!
 
         if(target.Position.x > Position.x)
@@ -96,6 +100,8 @@ public class LavaBoss : Enemy
         }
 
         body.mSpeed.x = mMovingSpeed;
+
+        mAttackManager.AttackList[0].Activate();
         //body.mSpeed = ((Vector2)target.Position - body.mPosition).normalized * Mathf.Abs(mMovingSpeed);
 
 
@@ -119,5 +125,15 @@ public class LavaBoss : Enemy
 
 
         body.mSpeed.x = mMovingSpeed;
+    }
+
+    public override void Shoot(Bullet prefab, Attack attack)
+    {
+        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
+        temp.EntityInit();
+        temp.Attack = attack;
+        temp.Owner = this;
+        temp.SetInitialDirection(new Vector2(Random.Range(-.7f, .7f), 1));
+        
     }
 }

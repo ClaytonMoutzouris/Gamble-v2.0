@@ -11,14 +11,12 @@ public struct Health
     public void LoseHP(float damage)
     {
         Debug.Log("Dealing " + damage + " damage");
-        currentHealth -= damage;
-        Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
     }
 
     public void GainHP(float gainz)
     {
-        currentHealth += gainz;
-        Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + gainz, 0, maxHealth);
     }
 
 }

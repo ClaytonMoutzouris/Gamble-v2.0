@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : Entity, IProjectile {
 
-    public Vector2 direction = Vector2.zero;
+    //public Vector2 direction = Vector2.zero;
     public float mMaxTime = 10;
     public float mTimeAlive = 0;
     Hitbox mHitbox;
@@ -13,6 +13,7 @@ public class Bullet : Entity, IProjectile {
     private Entity owner;
     private Attack attack;
     public bool mPierce = false;
+    public bool IgnoreGravity = true;
 
     public Attack Attack
     {
@@ -48,8 +49,13 @@ public class Bullet : Entity, IProjectile {
         mHitbox = new Hitbox(this, new CustomAABB(transform.position, new Vector2(2.0f, 2.0f), new Vector2(0, 2.0f), new Vector3(1, 1, 1)));
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
-        body.mIgnoresGravity = true;
+        body.mIgnoresGravity = IgnoreGravity;
 
+    }
+
+    public void SetInitialDirection(Vector3 direction)
+    {
+        Body.mSpeed = mMovingSpeed * direction;
     }
 
     public override void EntityUpdate()
@@ -77,7 +83,7 @@ public class Bullet : Entity, IProjectile {
 
         mTimeAlive += Time.deltaTime;
 
-        Body.mSpeed = mMovingSpeed * direction;
+        //Body.mSpeed = mMovingSpeed * direction;
 
         base.EntityUpdate();
 

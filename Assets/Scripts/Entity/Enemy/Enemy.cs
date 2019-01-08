@@ -7,7 +7,7 @@ public abstract class Enemy : Entity, IHurtable
     [SerializeField]
     private Hurtbox hurtBox;
     public Sightbox sight;
-
+    public AttackManager mAttackManager;
 
     public EnemyType mEnemyType;
 
@@ -46,6 +46,7 @@ public abstract class Enemy : Entity, IHurtable
     public virtual void EnemyInit()
     {
         mStats = GetComponent<Stats>();
+        mAttackManager = GetComponent<AttackManager>();
     }
 
     /*

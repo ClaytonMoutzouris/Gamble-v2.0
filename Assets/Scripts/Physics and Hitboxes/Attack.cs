@@ -142,9 +142,22 @@ public class RangedAttack : Attack
     //These only cover the shooting animation really
     public override void Activate()
     {
+        if (mIsActive)
+        {
+            return;
+        }
+
         base.Activate();
 
         mEntity.Shoot(projectile, this);
+    }
+
+    public override void UpdateAttack()
+    {
+        if (!mIsActive)
+            return;
+
+        base.UpdateAttack();
     }
 
     public override void Deactivate()

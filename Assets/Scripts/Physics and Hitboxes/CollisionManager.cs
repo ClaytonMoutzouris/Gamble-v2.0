@@ -105,7 +105,7 @@ public static class CollisionManager {
 
         if(topLeft.x > MapManager.instance.mWidth || topLeft.y > MapManager.instance.mHeight)
         {
-            Debug.Log("big X: " + topLeft.x + "big Y: " + topRight.y);
+            //Debug.Log("big X: " + topLeft.x + "big Y: " + topRight.y);
         }
 
         topLeft.x /= mGridAreaWidth;
