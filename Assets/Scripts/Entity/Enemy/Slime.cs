@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
+    public bool dashTrigger;
+    public Sightbox meleeDash;
 
     public override void EntityInit()
     {
@@ -22,6 +24,8 @@ public class Slime : Enemy {
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
 
+        meleeDash = new Sightbox(this, new CustomAABB(transform.position, new Vector2( 2 * MapManager.cTileSize / 2, MapManager.cTileSize / 2), new Vector3(-MapManager.cTileSize,11,0), new Vector3(2, 1, 1)));
+        meleeDash.UpdatePosition();
     }
 
     public override void EntityUpdate()
@@ -53,5 +57,23 @@ public class Slime : Enemy {
         CollisionManager.UpdateAreas(HurtBox);
         //HurtBox.mCollisions.Clear();
         //make sure the hitbox follows the object
+    }
+
+    public override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+
+        if (meleeDash != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawCube(meleeDash.mAABB.Center, meleeDash.mAABB.HalfSize * 2);
+        }
+    }
+
+    public override void SecondUpdate()
+    {
+        base.SecondUpdate();
+        meleeDash.UpdatePosition();
     }
 }

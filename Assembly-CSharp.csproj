@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Color Swap Package\SwapIndex.cs" />
-    <Compile Include="Assets\LavaBoss.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\PlayerPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\LavaBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
