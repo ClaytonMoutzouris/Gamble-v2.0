@@ -4,15 +4,15 @@ using UnityEngine;
 
 public static class ItemDatabase {
 
-    static ItemObject[] mItemDatabase;
+    static Item[] mItemDatabase;
 
     public static bool InitializeDatabase()
     {
-        mItemDatabase = Resources.LoadAll<ItemObject>("Prefabs/Items");
+        mItemDatabase = Resources.LoadAll<Item>("Items");
         return true;
     }
 
-    public static ItemObject GetRandomItem()
+    public static Item GetRandomItem()
     {
         return mItemDatabase[Random.Range(0, mItemDatabase.Length)];
     }

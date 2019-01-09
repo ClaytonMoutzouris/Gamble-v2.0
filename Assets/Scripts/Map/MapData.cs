@@ -11,6 +11,7 @@ public class MapData {
     public MapType mapType;
     public int sizeX;
     public int sizeY;
+    //public Audio
 
     public int MapChunksX
     {

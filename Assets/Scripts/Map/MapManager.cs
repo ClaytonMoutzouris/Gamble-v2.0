@@ -185,12 +185,15 @@ public class MapManager : MonoBehaviour
         {
             case MapType.Hub:
                 mMapData = MapGenerator.GenerateHubMap();
+                SoundManager.instance.PlayMusic(0);
                 break;
             case MapType.World:
                 mMapData = MapGenerator.GenerateMap();
+                SoundManager.instance.PlayMusic(1);
                 break;
             case MapType.BossMap:
                 mMapData = MapGenerator.GenerateBossMap(mMapData.type);
+                SoundManager.instance.PlayMusic(2);
                 break;
         }
 

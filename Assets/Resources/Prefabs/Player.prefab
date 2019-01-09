@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 9507910}
   - component: {fileID: 8258700}
   - component: {fileID: 4989206604878757318}
+  - component: {fileID: 3215723004739739211}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -325,6 +326,7 @@ MonoBehaviour:
     mSpriteDepth: 0
   mEntityType: 0
   mCollidesWith: 010000000200000003000000
+  BodySize: {x: 0, y: 0, z: 0}
   mHitWallSfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
   mJumpSfx: {fileID: 8300000, guid: 0675524b9de73754286435cc2b6083ca, type: 3}
   mWalkSfx: {fileID: 8300000, guid: 129cfec52de8a314b809cf8c994139b6, type: 3}
@@ -347,7 +349,24 @@ MonoBehaviour:
   mTimeToExit: 1
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
+  hurtBox:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
   mAttackManager: {fileID: 0}
+  mStats: {fileID: 0}
+  mBullet: {fileID: 0}
 --- !u!95 &9507910
 Animator:
   serializedVersion: 3
@@ -477,3 +496,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mEntity: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 3}
   AttackList: []
+  meleeAttacks: []
+--- !u!114 &3215723004739739211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfee5390bb8f0948a74c41e6ecc4691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 11443564}

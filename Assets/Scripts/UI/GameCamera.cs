@@ -35,8 +35,38 @@ public class GameCamera : MonoBehaviour
     public void LateUpdate()
     {
         Rect boundingBox = CalculateTargetsBoundingBox();
+        
         transform.position = CalculateCameraPosition(boundingBox);
         mCamera.orthographicSize = CalculateOrthographicSize(boundingBox);
+        StayWithinBounds();
+    }
+
+    void StayWithinBounds()
+    {
+        var cameraPos = transform.position;
+        var halfHeight = mCamera.orthographicSize;
+        var halfWidth = mCamera.aspect * halfHeight;
+        //Keep the camera within the bounds of the maps width
+        if (cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
+        {
+            cameraPos.x = halfWidth - MapManager.cTileSize / 2;
+        }
+        else if (cameraPos.x + halfWidth + MapManager.cTileSize / 2 > mMap.mWidth * MapManager.cTileSize)
+        {
+            cameraPos.x = mMap.mWidth * MapManager.cTileSize - (halfWidth + MapManager.cTileSize / 2);
+        }
+
+        //Keep the camera within the bounds of the maps height
+        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 < 0)
+        {
+            cameraPos.y = halfHeight - MapManager.cTileSize / 2;
+        }
+        else if (cameraPos.y + halfHeight + MapManager.cTileSize / 2 > mMap.mHeight * MapManager.cTileSize)
+        {
+            cameraPos.y = mMap.mHeight * MapManager.cTileSize - (halfHeight + MapManager.cTileSize / 2);
+        }
+
+        transform.position = new Vector3(cameraPos.x, cameraPos.y, transform.position.z);
     }
 
     Rect CalculateTargetsBoundingBox()

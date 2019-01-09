@@ -128,6 +128,8 @@ public class Game : MonoBehaviour
         mMap.NewMap(mapType);
         foreach(Player player in players)
         player.Body.SetTilePosition(mMap.mMapData.startTile);
+
+
     }
 
     public void NewEditorMap()

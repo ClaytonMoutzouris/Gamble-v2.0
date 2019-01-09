@@ -75,7 +75,8 @@ public abstract class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
-        ItemObject temp = Instantiate(ItemDatabase.GetRandomItem());
+        ItemObject temp = Instantiate(Resources.Load<ItemObject>("Prefabs/ItemObject")) as ItemObject;
+        temp.SetItem(ItemDatabase.GetRandomItem());
         temp.EntityInit();
         temp.Body.mPosition = Body.mPosition + new Vector2(0, MapManager.cTileSize / 2);
     }
