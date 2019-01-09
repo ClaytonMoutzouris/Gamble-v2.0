@@ -125,7 +125,7 @@ public abstract class Entity : MonoBehaviour {
         Debug.Log(name + " has died");
 
         mToRemove = true;
-
+        Body.mState = ColliderState.Closed;
     }
 
     public virtual void ActuallyDie()

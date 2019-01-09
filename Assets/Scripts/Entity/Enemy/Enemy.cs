@@ -71,7 +71,6 @@ public abstract class Enemy : Entity, IHurtable
         base.Die();
 
         HurtBox.mState = ColliderState.Closed;
-        //HurtBox.mCollisions.Clear();
     }
 
     public virtual void DropLoot()

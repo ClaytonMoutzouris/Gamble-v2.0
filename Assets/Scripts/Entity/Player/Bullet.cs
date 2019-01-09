@@ -100,4 +100,19 @@ public class Bullet : Entity, IProjectile {
 
     }
 
+    public override void Die()
+    {
+        base.Die();
+
+        mHitbox.mState = ColliderState.Closed;
+    }
+
+    public override void ActuallyDie()
+    {
+        CollisionManager.RemoveObjectFromAreas(mHitbox);
+
+        base.ActuallyDie();
+
+    }
+
 }

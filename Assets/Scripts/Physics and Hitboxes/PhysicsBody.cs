@@ -619,6 +619,7 @@ public class PhysicsBody : CustomCollider2D
 
     public void HandleTilePhysics()
     {
+        /*
         if (mPS.onIce)
         {
             //mSpeed.x = mSpeed.x * Time.deltaTime;
@@ -633,7 +634,7 @@ public class PhysicsBody : CustomCollider2D
         }
 
         mSpeed.x = Mathf.Clamp(mSpeed.x, -Constants.cMaxWalkSpeed, Constants.cMaxWalkSpeed);
-
+        */
     }
 
     public void Crush()

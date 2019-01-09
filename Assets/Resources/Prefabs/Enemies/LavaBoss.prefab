@@ -239,6 +239,20 @@ MonoBehaviour:
   target: {fileID: 0}
   VolcanicBombPrefab: {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb,
     type: 3}
+  AttackTimer: 3
+  AttackCooldown: 0
+  EruptDuration: 2
+  EruptTimer: 0
+  ChargeDuration: 10
+  ChargeTimer: 0
+  ChargeSpeed: 1000
+  KnockDuration: 0.2
+  KnockTimer: 0
+  KnockedCooldown: 0.2
+  Knocked: 0
+  ChargeDirection: 1
+  KnockedCoolDownTimer: 0
+  mBossState: 0
 --- !u!114 &1605136653131188733
 MonoBehaviour:
   m_ObjectHideFlags: 0
