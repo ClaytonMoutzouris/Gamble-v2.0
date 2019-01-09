@@ -8,6 +8,8 @@ public class Bullet : Entity, IProjectile {
     public float mMaxTime = 10;
     public float mTimeAlive = 0;
     Hitbox mHitbox;
+
+    public AudioClip fireSFX;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
     private Entity owner;
@@ -50,7 +52,7 @@ public class Bullet : Entity, IProjectile {
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
         body.mIgnoresGravity = IgnoreGravity;
-
+        mAudioSource.PlayOneShot(fireSFX);
     }
 
     public void SetInitialDirection(Vector3 direction)

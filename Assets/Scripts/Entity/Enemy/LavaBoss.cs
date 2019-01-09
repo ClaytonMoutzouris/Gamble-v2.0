@@ -23,6 +23,9 @@ public class LavaBoss : Enemy
     public int ChargeDirection = 1;
     public float KnockedCoolDownTimer = 0;
 
+    public AudioClip mCrashSFX;
+    public AudioClip mEruptSFX;
+
     public BossState mBossState = BossState.Idle;
 
     public override void EntityInit()
@@ -116,6 +119,7 @@ public class LavaBoss : Enemy
             KnockedCoolDownTimer += Time.deltaTime;
             if (KnockedCoolDownTimer > KnockedCooldown && (body.mPS.pushesLeftTile || body.mPS.pushesRightTile))
             {
+                mAudioSource.PlayOneShot(mCrashSFX);
                 ChargeDirection = -1 * ChargeDirection;
                 Knocked = true;
                 KnockTimer = 0;

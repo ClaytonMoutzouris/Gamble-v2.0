@@ -64,6 +64,7 @@
     <Compile Include="Assets\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Color Swap Package\SwapIndex.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
+    <Compile Include="Assets\PlayerInventoryUI.cs" />
     <Compile Include="Assets\PlayerPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PositionState.cs" />
     <Compile Include="Assets\Scripts\UI\EditorCamera.cs" />
     <Compile Include="Assets\Scripts\UI\GameCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\InventoryNode.cs" />
     <Compile Include="Assets\Scripts\UI\NewMapMenu.cs" />
     <Compile Include="Assets\Scripts\UI\RoomEditor.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadItem.cs" />

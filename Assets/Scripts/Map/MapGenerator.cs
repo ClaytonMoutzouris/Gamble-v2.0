@@ -133,13 +133,43 @@ public static class MapGenerator {
     static TileType[,] GetRandomRoom2()
     {
         string[] paths =
-            Directory.GetFiles(Application.dataPath+"/Rooms", "*.room");
+            Directory.GetFiles(Application.dataPath+"/Rooms/RandomRooms", "*.room");
 
         int r = Random.Range(0, paths.Length);
 
         TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
+        {
+            int header = reader.ReadInt32();
+            if (header == 0)
+            {
+                for (int x = 0; x < Constants.cMapChunkSizeX; x++)
+                {
+                    for (int y = 0; y < Constants.cMapChunkSizeY; y++)
+                    {
+                        temp[x, y] = (TileType)reader.ReadByte();
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Unknown room format " + header);
+            }
+
+        }
+
+        return temp;
+    }
+
+    static TileType[,] GetHubRoom()
+    {
+
+        string path = Directory.GetFiles(Application.dataPath + "/Rooms", "Hub.room")[0];
+
+        TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        //string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
         {
             int header = reader.ReadInt32();
             if (header == 0)
@@ -305,17 +335,17 @@ public static class MapGenerator {
 
     public static MapData GenerateHubMap()
     {
-        MapData map = new MapData(MapType.Hub, WorldType.Hub, 30, 30);
+        MapData map = new MapData(MapType.Hub, WorldType.Hub, 10, 10);
 
         for (int x = 0; x < map.MapChunksX; x++)
         {
             for (int y = 0; y < map.MapChunksY; y++)
             {
-                map.rooms[x, y].tiles = GetRandomRoom2();
+                map.rooms[x, y].tiles = GetHubRoom();
             }
         }
 
-        AddBounds(map);
+        //AddBounds(map);
 
         map.startTile = GetStartTile(map);
         AddDoorTile(map);
@@ -352,7 +382,7 @@ public static class MapGenerator {
     public static MapData GenerateMap()
     {
         MapData map = new MapData(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
-        LoadRooms();
+        //LoadRooms();
         
         for (int x = 0; x < map.MapChunksX; x++)
         {

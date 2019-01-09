@@ -18,7 +18,7 @@ public abstract class Entity : MonoBehaviour {
     //This is for changing the color pallete of an entity, right now only the players use this but will be useful for making different enemies with the same behaviours (Green slime, red slime, etc.)
     public List<Color> colorPallete;
 
-
+    public AudioSource mAudioSource;
     //Every entity has a body, it exists in the world
     //Whether the body actually interacts with anything, thats up to the body
     [SerializeField]
@@ -80,8 +80,9 @@ public abstract class Entity : MonoBehaviour {
     {
         mGame = Game.instance;
         mMap = mGame.mMap;
+        mAudioSource = GetComponent<AudioSource>();
 
-        if(colorPallete != null && colorPallete.Count > 0)
+        if (colorPallete != null && colorPallete.Count > 0)
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
         mUpdateId = mGame.AddToUpdateList(this);

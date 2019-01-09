@@ -17,10 +17,12 @@ public class Player : Entity, IHurtable
 
     };
 
+    public PlayerInventoryUI InventoryUI;
+
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
     public AudioClip mWalkSfx;
-    public AudioSource mAudioSource;
+    //public AudioSource mAudioSource;
 
     public float mWalkSfxTimer = 0.0f;
     public const float cWalkSfxTime = 0.25f;
@@ -83,7 +85,6 @@ public class Player : Entity, IHurtable
         }
             ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
-        mAudioSource = GetComponent<AudioSource>();
         mStats = GetComponent<Stats>();
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0,Constants.cHalfSizeY), new Vector3(1,1,1)));
@@ -208,6 +209,15 @@ public class Player : Entity, IHurtable
         }
     }
 
+    public bool PickUp(ItemObject itemObject)
+    {
+        Debug.Log("You picked up " + itemObject.name);
+        //mAllCollidingObjects.Remove(item);
+        mGame.FlagObjectForRemoval(itemObject);
+        InventoryUI.AddItem(itemObject.mItemData);
+        return true;
+    }
+
     public void UpdateAnimator()
     {
         foreach(Attack attack in mAttackManager.AttackList)
@@ -289,7 +299,7 @@ public class Player : Entity, IHurtable
                         {
                             Debug.Log("You picked up " + item.name);
                             //mAllCollidingObjects.Remove(item);
-                            mGame.FlagObjectForRemoval(item);
+                            PickUp(item);
                         }
                     }
                 }
