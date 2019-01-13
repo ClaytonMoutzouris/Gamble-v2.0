@@ -113,7 +113,7 @@ public class MeleeAttack : Attack
 
         base.UpdateAttack();
 
-
+        hitbox.UpdatePosition();
         CollisionManager.UpdateAreas(hitbox);
     }
 

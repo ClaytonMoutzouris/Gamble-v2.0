@@ -10,9 +10,8 @@ public class Slime : Enemy {
     public override void EntityInit()
     {
         base.EntityInit();
-        EnemyInit();
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), new Vector2(0, 5.0f), new Vector3(1, 1, 1)));
-        Body.mAABB.ScaleX *= -1;
+        //Body.mAABB.ScaleX *= -1;
 
         body.mIsKinematic = false;
         body.mSpeed.x = mMovingSpeed;
@@ -20,9 +19,8 @@ public class Slime : Enemy {
 
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), Vector3.zero, new Vector3(1, 1, 1)));
         HurtBox.UpdatePosition();
+        EnemyInit();
 
-        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
-        sight.UpdatePosition();
 
         meleeDash = new Sightbox(this, new CustomAABB(transform.position, new Vector2( 2 * MapManager.cTileSize / 2, MapManager.cTileSize / 2), new Vector3(-MapManager.cTileSize,11,0), new Vector3(2, 1, 1)));
         meleeDash.UpdatePosition();
@@ -30,15 +28,17 @@ public class Slime : Enemy {
 
     public override void EntityUpdate()
     {
+        EnemyUpdate();
+
         if (Body.mSpeed.x > 0)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed);
-            Body.mAABB.ScaleX = -1;
+            Body.mAABB.ScaleX = 1;
         }
         else if (Body.mSpeed.x < 0)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-            Body.mAABB.ScaleX = 1;
+            Body.mAABB.ScaleX = -1;
 
         }
 
@@ -55,6 +55,10 @@ public class Slime : Enemy {
         base.EntityUpdate();
 
         CollisionManager.UpdateAreas(HurtBox);
+        CollisionManager.UpdateAreas(sight);
+        sight.mEntitiesInSight.Clear();
+
+
         //HurtBox.mCollisions.Clear();
         //make sure the hitbox follows the object
     }
@@ -63,17 +67,20 @@ public class Slime : Enemy {
     {
         base.OnDrawGizmos();
 
-
+        /*
         if (meleeDash != null)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawCube(meleeDash.mAABB.Center, meleeDash.mAABB.HalfSize * 2);
         }
+        */
     }
 
+    /*
     public override void SecondUpdate()
     {
         base.SecondUpdate();
         meleeDash.UpdatePosition();
     }
+    */
 }

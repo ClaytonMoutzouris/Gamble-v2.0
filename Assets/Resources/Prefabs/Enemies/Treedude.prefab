@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 75086311158165847}
   - component: {fileID: 75086311158165832}
   - component: {fileID: 5178419798309597383}
+  - component: {fileID: 5720512605603623667}
   m_Layer: 0
   m_Name: Treedude
   m_TagString: Untagged
@@ -120,6 +121,7 @@ MonoBehaviour:
   mMap: {fileID: 0}
   mAnimator: {fileID: 0}
   colorPallete: []
+  mAudioSource: {fileID: 0}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -200,6 +202,40 @@ MonoBehaviour:
     mSpriteDepth: 0
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
+  BodySize: {x: 0, y: 0, z: 0}
+  hurtBox:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+  sight:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+    mEntitiesInSight: []
+  mAttackManager: {fileID: 0}
+  target: {fileID: 0}
   mEnemyType: 3
   mStats: {fileID: 0}
 --- !u!114 &5178419798309597383
@@ -214,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
   health:
     currentHealth: 200
     maxHealth: 200
@@ -226,3 +263,18 @@ MonoBehaviour:
     value: 0
   - type: 3
     value: 0
+--- !u!114 &5720512605603623667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75086311158165844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  AttackList: []
+  meleeAttacks: []

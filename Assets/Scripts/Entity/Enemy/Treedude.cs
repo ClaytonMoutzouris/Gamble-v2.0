@@ -8,7 +8,6 @@ public class Treedude : Enemy
     {
 
         base.EntityInit();
-        EnemyInit();
 
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(20.0f, 40.0f), new Vector2(0, 40.0f), new Vector3(1, 1, 1)));
@@ -20,12 +19,13 @@ public class Treedude : Enemy
 
         HurtBox.UpdatePosition();
 
-        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
-        sight.UpdatePosition();
+        EnemyInit();
+
     }
 
     public override void EntityUpdate()
     {
+        EnemyUpdate();
 
         if (Body.mSpeed.x > 0)
         {
@@ -52,6 +52,9 @@ public class Treedude : Enemy
         base.EntityUpdate();
 
         CollisionManager.UpdateAreas(HurtBox);
+        CollisionManager.UpdateAreas(sight);
+        sight.mEntitiesInSight.Clear();
+
         //HurtBox.mCollisions.Clear();
 
         //make sure the hitbox follows the object

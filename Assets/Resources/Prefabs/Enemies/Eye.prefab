@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 114667629719467648}
   - component: {fileID: 95194250073010510}
   - component: {fileID: 6399982450656871162}
+  - component: {fileID: 114404760516863551}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -101,6 +102,7 @@ MonoBehaviour:
   mMap: {fileID: 0}
   mAnimator: {fileID: 0}
   colorPallete: []
+  mAudioSource: {fileID: 0}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -181,9 +183,42 @@ MonoBehaviour:
     mSpriteDepth: 0
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
+  BodySize: {x: 0, y: 0, z: 0}
+  hurtBox:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+  sight:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+    mEntitiesInSight: []
+  mAttackManager: {fileID: 0}
+  target: {fileID: 0}
   mEnemyType: 2
   mStats: {fileID: 0}
-  target: {fileID: 0}
 --- !u!95 &95194250073010510
 Animator:
   serializedVersion: 3
@@ -215,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
   health:
     currentHealth: 25
     maxHealth: 25
@@ -227,3 +263,18 @@ MonoBehaviour:
     value: 0
   - type: 3
     value: 0
+--- !u!114 &114404760516863551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956054827893182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  AttackList: []
+  meleeAttacks: []

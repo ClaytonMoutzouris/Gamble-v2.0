@@ -7,7 +7,6 @@ public enum BossState { Idle, Aggrivated, Attack1, Attack2, Attack3 };
 
 public class LavaBoss : Enemy
 {
-    public Entity target = null;
     public Bullet VolcanicBombPrefab;
     public float AttackTimer = 4.0f;
     public float AttackCooldown = 0.0f;
@@ -31,19 +30,21 @@ public class LavaBoss : Enemy
     public override void EntityInit()
     {
         base.EntityInit();
-        EnemyInit();
 
         mAnimator = GetComponent<Animator>();
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
-        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(150, 150), Vector3.zero, new Vector3(1, 1, 1)));
 
         Body.mIsKinematic = false;
         //Body.mIgnoresGravity = true;
 
         HurtBox.UpdatePosition();
-        sight.UpdatePosition();
+
+
+
+        EnemyInit();
+        mAttackManager.AttackList.Clear();
 
         RangedAttack ranged = new RangedAttack(this, 0.2f, 10, VolcanicBombPrefab);
         mAttackManager.AttackList.Add(ranged);

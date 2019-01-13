@@ -8,6 +8,7 @@ public abstract class Enemy : Entity, IHurtable
     private Hurtbox hurtBox;
     public Sightbox sight;
     public AttackManager mAttackManager;
+    public Entity target = null;
 
     public EnemyType mEnemyType;
 
@@ -46,7 +47,18 @@ public abstract class Enemy : Entity, IHurtable
     public virtual void EnemyInit()
     {
         mStats = GetComponent<Stats>();
+        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
+        sight.UpdatePosition();
+
+
+
         mAttackManager = GetComponent<AttackManager>();
+
+
+            MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        mAttackManager.AttackList.Add(defaultAttack);
+        mAttackManager.meleeAttacks.Add(defaultAttack);
+
     }
 
     /*
@@ -60,10 +72,35 @@ public abstract class Enemy : Entity, IHurtable
     {
         //Should be in the habit of doing this first, i guess
         base.SecondUpdate();
+        mAttackManager.SecondUpdate();
 
         HurtBox.UpdatePosition();
         sight.UpdatePosition();
 
+    }
+
+    public void EnemyUpdate()
+    {
+        //First enemies check sight
+        target = null;
+        if (sight.mEntitiesInSight != null)
+        {
+            foreach (Entity entity in sight.mEntitiesInSight)
+            {
+                if (entity is Player)
+                {
+                    target = entity;
+                    break;
+                }
+            }
+        }
+
+        if (target != null)
+        {
+            mAttackManager.AttackList[0].Activate();
+        }
+
+        mAttackManager.UpdateAttacks();
     }
 
     public override void Die()
@@ -84,6 +121,8 @@ public abstract class Enemy : Entity, IHurtable
     public override void ActuallyDie()
     {
         CollisionManager.RemoveObjectFromAreas(HurtBox);
+        CollisionManager.RemoveObjectFromAreas(sight);
+
         DropLoot();
 
         base.ActuallyDie();

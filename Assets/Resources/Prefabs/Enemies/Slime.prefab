@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 212171719442141220}
   - component: {fileID: 114562500152961564}
   - component: {fileID: 1613120553129927952}
+  - component: {fileID: 5025981402742140755}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -100,6 +101,7 @@ MonoBehaviour:
   mMap: {fileID: 0}
   mAnimator: {fileID: 0}
   colorPallete: []
+  mAudioSource: {fileID: 0}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -180,6 +182,7 @@ MonoBehaviour:
     mSpriteDepth: 0
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
+  BodySize: {x: 0, y: 0, z: 0}
   hurtBox:
     mEntity: {fileID: 0}
     mAABB:
@@ -211,8 +214,27 @@ MonoBehaviour:
     mAreas: []
     mIdsInAreas: 
     mEntitiesInSight: []
+  mAttackManager: {fileID: 0}
+  target: {fileID: 0}
   mEnemyType: 0
   mStats: {fileID: 0}
+  dashTrigger: 0
+  meleeDash:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+    mEntitiesInSight: []
 --- !u!114 &1613120553129927952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,3 +260,18 @@ MonoBehaviour:
     value: 0
   - type: 3
     value: 0
+--- !u!114 &5025981402742140755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937429433522054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  AttackList: []
+  meleeAttacks: []

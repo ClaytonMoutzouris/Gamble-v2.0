@@ -58,6 +58,7 @@ public class Player : Entity, IHurtable
     [SerializeField]
     private Hurtbox hurtBox;
     public AttackManager mAttackManager;
+    public HealthBar mHealthBar;
 
     public Hurtbox HurtBox
     {
@@ -86,6 +87,8 @@ public class Player : Entity, IHurtable
             ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
         mStats = GetComponent<Stats>();
+        mStats.health.healthbar = mHealthBar;
+        mStats.health.healthbar.SetHealth(mStats.health);
 
         Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0,Constants.cHalfSizeY), new Vector3(1,1,1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
@@ -101,7 +104,7 @@ public class Player : Entity, IHurtable
         MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
-        RangedAttack ranged = new RangedAttack(this, 0.5f, 5, mBullet);
+        RangedAttack ranged = new RangedAttack(this, 0.1f, 5, mBullet);
         mAttackManager.AttackList.Add(ranged);
 
 
@@ -138,6 +141,8 @@ public class Player : Entity, IHurtable
     
     public void Jump()
     {
+        if (mCurrentState == PlayerState.Jump && !mDoubleJump)
+            return;
         body.mSpeed.y = mJumpSpeed;
         mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
         mCurrentState = PlayerState.Jump;
@@ -283,7 +288,9 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Walk;
                     break;
                 }
-                else if (KeyState(KeyInput.Jump))
+
+                //If the jump button is pressed
+                if (Pressed(KeyInput.Jump))
                 {
                     Jump();
                     break;
@@ -390,13 +397,14 @@ public class Player : Entity, IHurtable
                     body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
                 }
 
-                //if there's no tile to walk on, fall
-                if (KeyState(KeyInput.Jump))
+                //If the jump button is pressed
+                if (Pressed(KeyInput.Jump))
                 {
                     Jump();
                     break;
                 }
-                else if (!body.mPS.pushesBottom)
+
+                if (!body.mPS.pushesBottom)
                 {
                     mCurrentState = PlayerState.Jump;
                     break;
@@ -430,10 +438,13 @@ public class Player : Entity, IHurtable
                         body.mSpeed.y = mJumpSpeed;
                 }
 
+                /*
                 if (Pressed(KeyInput.Jump) && mDoubleJump)
                 {
                     Jump();
                 }
+                 *
+                 * /
 
                 mWalkSfxTimer = cWalkSfxTime;
 
@@ -751,17 +762,7 @@ public class Player : Entity, IHurtable
         if (HurtBox != null)
             Gizmos.DrawCube(Position, HurtBox.mAABB.halfSize * 2);
 
-        if(mAttackManager != null)
-        {
-            foreach(MeleeAttack attack in mAttackManager.meleeAttacks)
-            {
-                if (attack.mIsActive)
-                {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawCube(attack.hitbox.mAABB.Center, attack.hitbox.mAABB.halfSize * 2);
-                }
-            }
-        }
+        
     }
 
 }

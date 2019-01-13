@@ -16,6 +16,7 @@ public class FallingRock : Entity
         base.OnDrawGizmos();
 
         Gizmos.color = Color.yellow;
+        if(trigger != null)
         Gizmos.DrawCube(trigger.mAABB.Center, trigger.mAABB.HalfSize * 2);
     }
 
@@ -53,27 +54,49 @@ public class FallingRock : Entity
 
     public override void EntityUpdate()
     {
-        foreach(Entity body in trigger.mEntitiesInSight)
+        if(trigger != null)
         {
-            if(body is Player)
+            foreach (Entity body in trigger.mEntitiesInSight)
             {
-                isTriggered = true;
+                if (body is Player)
+                {
+                    isTriggered = true;
+                }
             }
         }
+        
 
-        if(isTriggered)
-            Body.mIgnoresGravity = false;
+        if (isTriggered && trigger != null)
+        {
+            DropTrigger();
+
+        } else
+        {
+
+        }
+
+
+
 
         base.EntityUpdate();
 
+        if(trigger != null)
         CollisionManager.UpdateAreas(trigger);
 
+    }
+
+    public void DropTrigger()
+    {
+        Body.mIgnoresGravity = false;
+        CollisionManager.RemoveObjectFromAreas(trigger);
+        trigger = null;
     }
 
     public override void SecondUpdate()
     {
         base.SecondUpdate();
-        trigger.UpdatePosition();
+        if (trigger != null)
+            trigger.UpdatePosition();
 
     }
 

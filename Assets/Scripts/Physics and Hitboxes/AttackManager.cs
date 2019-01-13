@@ -12,10 +12,25 @@ public class AttackManager : MonoBehaviour {
     public List<Attack> AttackList = new List<Attack>();
     public List<MeleeAttack> meleeAttacks;
 
+    private void OnDrawGizmos()
+    {
+        if (meleeAttacks != null)
+        {
+            foreach (MeleeAttack attack in meleeAttacks)
+            {
+                if (attack.mIsActive)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(attack.hitbox.mAABB.Center, attack.hitbox.mAABB.halfSize * 2);
+                }
+            }
+        }
+    }
+
     private void Start()
     {
         mEntity = GetComponent<Entity>();
-        
+
     }
 
     public void UpdateAttacks()

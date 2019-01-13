@@ -35,7 +35,7 @@ public class Constants
 
     public static readonly float[] cJumpSpeeds = { 210.0f, 280.0f, 350.0f, 380.0f, 410.0f, 460.0f };
     public static readonly float[] cHalfSizes = { 6.0f, 12.0f, 20.0f, 30.0f, 36.0f, 42.0f, 50.0f, 60.0f, 62.0f};
-    public const int cJumpFramesThreshold = 10;
+    public const int cJumpFramesThreshold = 0;
 
     public const float cBotMaxPositionError = 1.0f;
 
