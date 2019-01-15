@@ -6,7 +6,7 @@ public enum EnemyType { Slime, CrimsonSlime, Eye, Treedude, Count, LavaBoss };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 public enum ItemType { };
-public enum EquipmentSlot { Head, Body, Hands, Feet };
+public enum EquipmentSlot { Head, Body, Gloves, Boots, LeftHand, RightHand };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Count, Hub };

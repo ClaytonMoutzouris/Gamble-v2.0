@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
+    [HideInInspector]
     public bool dashTrigger;
+
+    [HideInInspector]
     public Sightbox meleeDash;
 
     public override void EntityInit()
     {
         base.EntityInit();
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), new Vector2(0, 5.0f), new Vector3(1, 1, 1)));
         //Body.mAABB.ScaleX *= -1;
 
         body.mIsKinematic = false;
         body.mSpeed.x = mMovingSpeed;
 
 
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(10.0f, 5.0f), Vector3.zero, new Vector3(1, 1, 1)));
-        HurtBox.UpdatePosition();
         EnemyInit();
 
 

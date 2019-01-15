@@ -11,22 +11,30 @@ public class Attack {
     public int damage;
     public float duration;
     public float elapsed;
+    public float coolDown;
+    public bool onCooldown;
 
+    public float coolDownTimer = 0;
     //List of effects
 
     public bool mIsActive = false;
 
 
-    public Attack(Entity entity, float duration, int damage)
+    public Attack(Entity entity, float duration, int damage, float cd)
     {
         mEntity = entity;
         this.duration = duration;
         this.damage = damage;
-
+        coolDown = cd;
     }
 
     public virtual void UpdateAttack()
     {
+        if (coolDownTimer < coolDown)
+            coolDownTimer += Time.deltaTime;
+
+
+
         if (!mIsActive)
             return;
 
@@ -45,10 +53,15 @@ public class Attack {
     {
 
     }
+
+    public bool OnCooldown()
+    {
+        return coolDownTimer < coolDown;
+    }
     
     public virtual void Activate()
     {
-        if (mIsActive)
+        if (mIsActive || OnCooldown())
             return;
 
         elapsed = 0;
@@ -58,6 +71,7 @@ public class Attack {
     public virtual void Deactivate()
     {
         elapsed = 0;
+        coolDownTimer = 0;
         mIsActive = false;
     }
 
@@ -70,14 +84,14 @@ public class Attack {
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, int damage, Hitbox hit) : base(entity, duration, damage)
+    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
     }
     public override void Activate()
     {
-        if (mIsActive)
+        if (mIsActive || OnCooldown())
             return;
 
         base.Activate();
@@ -134,7 +148,7 @@ public class RangedAttack : Attack
 {
     public Bullet projectile;
 
-    public RangedAttack(Entity entity, float duration, int damage, Bullet proj) : base(entity, duration, damage)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, Bullet proj) : base(entity, duration, damage, cd)
     {
         projectile = proj;
     }
@@ -142,7 +156,7 @@ public class RangedAttack : Attack
     //These only cover the shooting animation really
     public override void Activate()
     {
-        if (mIsActive)
+        if (mIsActive || OnCooldown())
         {
             return;
         }
@@ -150,14 +164,6 @@ public class RangedAttack : Attack
         base.Activate();
 
         mEntity.Shoot(projectile, this);
-    }
-
-    public override void UpdateAttack()
-    {
-        if (!mIsActive)
-            return;
-
-        base.UpdateAttack();
     }
 
     public override void Deactivate()

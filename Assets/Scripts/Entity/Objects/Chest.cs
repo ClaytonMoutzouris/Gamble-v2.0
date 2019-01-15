@@ -8,6 +8,7 @@ public class Chest : Entity {
     /// Draws the aabb and ceiling, ground and wall sensors .
     /// </summary>
     /// 
+    [HideInInspector]
     public bool mOpen = false;
 
 
@@ -17,7 +18,6 @@ public class Chest : Entity {
 
         //SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
         //mPosition = RoundVector(transform.position);
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(10.0f, 10.0f), new Vector2(0, 10.0f), new Vector3(1, 1, 1)));
 
         //mAABB.Center = mPosition;
         Body.mIsKinematic = false;

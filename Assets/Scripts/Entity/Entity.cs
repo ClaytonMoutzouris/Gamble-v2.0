@@ -3,35 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
-
-    //The speed of the entity when it moves, probably not needed by all entities
-    public float mMovingSpeed;
-    //When we want to remove an entity, either from dying or something else, we must flag it for removal.
-    //This is because we can't just delete an object while iterating through a list, or it will cause problems
-    public bool mToRemove = false;
-    //The order in the update list that the entity is updated, this matters for things like mounting
-    public int mUpdateId = -1;
-    public Game mGame;
-    public MapManager mMap;
-    //Probably all entities will have an animator, even if it doesnt need it
-    public Animator mAnimator;
-    //This is for changing the color pallete of an entity, right now only the players use this but will be useful for making different enemies with the same behaviours (Green slime, red slime, etc.)
-    public List<Color> colorPallete;
-
-    public AudioSource mAudioSource;
-    //Every entity has a body, it exists in the world
-    //Whether the body actually interacts with anything, thats up to the body
-    [SerializeField]
-    protected PhysicsBody body;
-
     public EntityType mEntityType;
+    public List<EntityType> mCollidesWith;
+    public List<Color> colorPallete;
+    public float mMovingSpeed;
+    public Vector2 BodySize;
+    #region HiddenInInspector
+    protected PhysicsBody body;
+    [HideInInspector]
+    public AudioSource mAudioSource;
+    [HideInInspector]
+    public Game mGame;
+    [HideInInspector]
+    public MapManager mMap;
+    [HideInInspector]
+    public Animator mAnimator;
+    [HideInInspector]
+    public bool mToRemove = false;
+    [HideInInspector]
+    public int mUpdateId = -1; //The order in the update list that the entity is updated, this matters for things like mounting
+    #endregion
 
     //This might be better served as an entity type matrix rather than collision type
-    public List<EntityType> mCollidesWith;
 
     //Not currently in use
+    [HideInInspector]
     public EntityData EntityData;
-    public Vector3 BodySize;
 
     #region Accesors
     public PhysicsBody Body
@@ -80,12 +77,18 @@ public abstract class Entity : MonoBehaviour {
     {
         mGame = Game.instance;
         mMap = mGame.mMap;
+
+        mAnimator = GetComponent<Animator>();
+
         mAudioSource = GetComponent<AudioSource>();
 
         if (colorPallete != null && colorPallete.Count > 0)
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
         mUpdateId = mGame.AddToUpdateList(this);
+
+        //Set the physicsBody
+        Body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
 
         //mEnemyType = EnemyType.Slime;
     }

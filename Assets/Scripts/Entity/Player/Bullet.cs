@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Bullet : Entity, IProjectile {
 
+    public bool mPierce = false;
+    public bool IgnoreGravity = true;
+    public AudioClip fireSFX;
     //public Vector2 direction = Vector2.zero;
+    //Should be a constant
+    [HideInInspector]
     public float mMaxTime = 10;
+    [HideInInspector]
     public float mTimeAlive = 0;
+    [HideInInspector]
     Hitbox mHitbox;
 
-    public AudioClip fireSFX;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
     private Entity owner;
     private Attack attack;
-    public bool mPierce = false;
-    public bool IgnoreGravity = true;
+
 
     public Attack Attack
     {
@@ -47,8 +52,7 @@ public class Bullet : Entity, IProjectile {
     {
         base.EntityInit();
 
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(2.0f, 2.0f), new Vector2(0, 2.0f), new Vector3(1, 1, 1)));
-        mHitbox = new Hitbox(this, new CustomAABB(transform.position, new Vector2(2.0f, 2.0f), new Vector2(0, 2.0f), new Vector3(1, 1, 1)));
+        mHitbox = new Hitbox(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
         body.mIgnoresGravity = IgnoreGravity;

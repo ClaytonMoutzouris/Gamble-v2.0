@@ -6,59 +6,67 @@ using UnityEngine.UI;
 public class Player : Entity, IHurtable
 {
     [System.Serializable]
-    public enum PlayerState
-    {
-        Stand,
-        Walk,
-        Jump,
-        GrabLedge,
-        Climb,
-        Attacking,
+    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, };
 
-    };
+    public float mJumpSpeed;
+    public float mWalkSpeed;
+    public float mClimbSpeed;
+    public bool mDoubleJump = true;
+    public float mTimeToExit = 1;
 
-    public PlayerInventoryUI InventoryUI;
+    public HealthBar mHealthBar;
+
+    public Bullet mBullet;
+    [SerializeField]
+    private PlayerState mCurrentState = PlayerState.Stand;
+    public int mPlayerIndex = 0;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
     public AudioClip mWalkSfx;
     //public AudioSource mAudioSource;
 
-    public float mWalkSfxTimer = 0.0f;
-    public const float cWalkSfxTime = 0.25f;
-
-
-    public int mPlayerIndex = 0;
+    #region Hidden
     /// <summary>
     /// The number of frames passed from changing the state to jump.
     /// </summary>
+
     protected int mFramesFromJumpStart = 0;
 
     protected bool[] mInputs;
     protected bool[] mPrevInputs;
-
-    public PlayerState mCurrentState = PlayerState.Stand;
-    public float mJumpSpeed;
-    public float mWalkSpeed;
-    public float mClimbSpeed;
-    public bool mDoubleJump = true;
-
-
-    public List<Vector2i> mPath = new List<Vector2i>();
-
+    [HideInInspector]
     public Vector2i mLedgeTile;
+    [HideInInspector]
     public Vector2i mClimbTile;
+    [HideInInspector]
     public float mExitDoorTimer = 0;
-    public float mTimeToExit = 1;
-
+    [HideInInspector]
+    public float mWalkSfxTimer = 0.0f;
+    [HideInInspector]
+    public const float cWalkSfxTime = 0.25f;
+    [HideInInspector]
     public int mCannotGoLeftFrames = 0;
+    [HideInInspector]
     public int mCannotGoRightFrames = 0;
-
-    //Players have hurtboxes, get over it
-    [SerializeField]
-    private Hurtbox hurtBox;
+    [HideInInspector]
+    public Stats mStats;
+    [HideInInspector]
     public AttackManager mAttackManager;
-    public HealthBar mHealthBar;
+    private Hurtbox hurtBox;
+
+    #endregion
+
+    #region UI
+    public PlayerInventoryUI InventoryUI;
+
+    #endregion
+
+    #region NotUsed
+    private List<Vector2i> mPath = new List<Vector2i>();
+
+    #endregion
+
 
     public Hurtbox HurtBox
     {
@@ -73,8 +81,6 @@ public class Player : Entity, IHurtable
         }
     }
 
-    public Stats mStats;
-    public Bullet mBullet;
 
     public override void EntityInit()
     {
@@ -90,21 +96,23 @@ public class Player : Entity, IHurtable
         mStats.health.healthbar = mHealthBar;
         mStats.health.healthbar.SetHealth(mStats.health);
 
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0,Constants.cHalfSizeY), new Vector3(1,1,1)));
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
 
         HurtBox.UpdatePosition();
 
+        /*
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
+        */
+
 
         mAttackManager = GetComponent<AttackManager>();
         //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
+        MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, .5f, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
-        RangedAttack ranged = new RangedAttack(this, 0.1f, 5, mBullet);
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, .1f, mBullet);
         mAttackManager.AttackList.Add(ranged);
 
 

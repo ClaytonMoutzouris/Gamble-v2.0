@@ -94,129 +94,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f663ce5bebddc49beeb4e396cfcfb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mEntityType: 1
+  mCollidesWith: 000000000200000003000000
+  colorPallete: []
   mMovingSpeed: 60
-  mToRemove: 0
-  mUpdateId: -1
+  BodySize: {x: 8, y: 5}
+  mAudioSource: {fileID: 0}
   mGame: {fileID: 0}
   mMap: {fileID: 0}
   mAnimator: {fileID: 0}
-  colorPallete: []
-  mAudioSource: {fileID: 0}
-  body:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mGame: {fileID: 0}
-    mMap: {fileID: 0}
-    mOldPosition: {x: 0, y: 0}
-    mPosition: {x: 0, y: 0}
-    mReminder: {x: 0, y: 0}
-    mOffset: {x: 0, y: 0}
-    mSpeed: {x: 0, y: 0}
-    mOldSpeed: {x: 0, y: 0}
-    mPS:
-      pushesRight: 0
-      pushesLeft: 0
-      pushesBottom: 0
-      pushesTop: 0
-      pushedTop: 0
-      pushedBottom: 0
-      pushedRight: 0
-      pushedLeft: 0
-      pushedLeftObject: 0
-      pushedRightObject: 0
-      pushedBottomObject: 0
-      pushedTopObject: 0
-      pushesLeftObject: 0
-      pushesRightObject: 0
-      pushesBottomObject: 0
-      pushesTopObject: 0
-      pushedLeftTile: 0
-      pushedRightTile: 0
-      pushedBottomTile: 0
-      pushedTopTile: 0
-      pushesLeftTile: 0
-      pushesRightTile: 0
-      pushesBottomTile: 0
-      pushesTopTile: 0
-      onOneWay: 0
-      tmpIgnoresOneWay: 0
-      tmpSticksToSlope: 0
-      oneWayY: 0
-      onLadder: 0
-      isClimbing: 0
-      isBounce: 0
-      onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
-      leftTile:
-        x: 0
-        y: 0
-      rightTile:
-        x: 0
-        y: 0
-      topTile:
-        x: 0
-        y: 0
-      bottomTile:
-        x: 0
-        y: 0
-    mMountParent: {fileID: 0}
-    mIgnoresOneWay: 0
-    mOnOneWayPlatform: 0
-    mIsKinematic: 0
-    mIgnoresGravity: 0
-    mCollisions: []
-    mSpriteDepth: 0
-  mEntityType: 1
-  mCollidesWith: 000000000200000003000000
-  BodySize: {x: 0, y: 0, z: 0}
-  hurtBox:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-  sight:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mEntitiesInSight: []
+  mToRemove: 0
+  mUpdateId: -1
+  mEnemyType: 0
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mEnemyType: 0
   mStats: {fileID: 0}
   dashTrigger: 0
   meleeDash:
@@ -251,6 +142,7 @@ MonoBehaviour:
   health:
     currentHealth: 20
     maxHealth: 20
+    healthbar: {fileID: 0}
   stats:
   - type: 0
     value: 0

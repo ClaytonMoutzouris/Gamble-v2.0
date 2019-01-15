@@ -10,14 +10,11 @@ public class Treedude : Enemy
         base.EntityInit();
 
 
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(20.0f, 40.0f), new Vector2(0, 40.0f), new Vector3(1, 1, 1)));
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(20.0f, 40.0f), Vector3.zero, new Vector3(1, 1, 1)));
 
         body.mSpeed.x = mMovingSpeed;
 
 
 
-        HurtBox.UpdatePosition();
 
         EnemyInit();
 
