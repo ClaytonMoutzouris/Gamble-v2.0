@@ -9,6 +9,9 @@ public class Slime : Enemy {
 
     [HideInInspector]
     public Sightbox meleeDash;
+    public float moveCooldown = 0.5f;
+    public float strollTime = 0f;
+    public float wait = 0.5f;
 
     public override void EntityInit()
     {
@@ -21,6 +24,7 @@ public class Slime : Enemy {
 
         EnemyInit();
 
+        wait += moveCooldown;
 
         meleeDash = new Sightbox(this, new CustomAABB(transform.position, new Vector2( 2 * MapManager.cTileSize / 2, MapManager.cTileSize / 2), new Vector3(-MapManager.cTileSize,11,0), new Vector3(2, 1, 1)));
         meleeDash.UpdatePosition();
@@ -30,28 +34,21 @@ public class Slime : Enemy {
     {
         EnemyUpdate();
 
-        if (Body.mSpeed.x > 0)
+        if (target != null)
         {
-            mMovingSpeed = Mathf.Abs(mMovingSpeed);
-            Body.mAABB.ScaleX = 1;
+            if (target.Position.x > this.Body.mPosition.x)
+            {
+                Move(target, 1);
+            }
+            else
+            {
+                Move(target, -1);
+            }
         }
-        else if (Body.mSpeed.x < 0)
+        else
         {
-            mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-            Body.mAABB.ScaleX = -1;
-
+            Move();
         }
-
-        if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
-        {
-            mMovingSpeed *= -1;
-
-        }
-
-
-        body.mSpeed.x = mMovingSpeed;
-
-
         base.EntityUpdate();
 
         CollisionManager.UpdateAreas(HurtBox);
@@ -61,6 +58,84 @@ public class Slime : Enemy {
 
         //HurtBox.mCollisions.Clear();
         //make sure the hitbox follows the object
+    }
+
+    /*1. Entities stroll around until their moveCooldown is reached.
+ *2. If they have a target, they move in the direction of the target.
+ *3. If the strollTime reaches moveCooldown, the entity will stop moving.
+ *4. The entity will consider where to move next when it is done waiting.
+ *5. When it is done waiting strollTime is reset to 0f.
+ */
+    public void Move(Entity target, int direction)
+    {
+        //1-2
+        if (strollTime < moveCooldown)
+        {
+            //If we have a target move in it's direction.
+            if (target != null)
+            {
+                body.mSpeed.x = mMovingSpeed * direction;
+            }
+
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //3-4
+        else if (strollTime > moveCooldown && strollTime < wait)
+        {
+            //Debug.Log("Resting");
+            //Movement Cooldown reached .
+            //reset strollTime.
+            body.mSpeed.x = 0f;
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //5
+        else if (strollTime > wait)
+        {
+            //Debug.Log("Done Resting.");
+            strollTime = 0f;
+            return;
+        }
+    }
+
+    /*1. Entities stroll around until their moveCooldown is reached.
+     *2. If the entity hits a wall, they will wiggle until they turn around.
+     *Consider fixing the wiggle.
+     *3. If the strollTime reaches moveCooldown, the entity will stop moving.
+     *4. The entity will consider where to move next when it is done waiting.
+     *5. When it is done waiting strollTime is reset to 0f.
+    */
+    public void Move()
+    {
+        //1
+        body.mSpeed.x = mMovingSpeed;
+        //2
+        if (strollTime < moveCooldown)
+        {
+            if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+            {
+                mMovingSpeed *= -1;
+
+            }
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //3-4
+        else if (strollTime > moveCooldown && strollTime < wait)
+        {
+            //Movement Cooldown reached .
+            //reset strollTime.
+            body.mSpeed.x = 0f;
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //5
+        else if (strollTime > wait)
+        {
+            strollTime = 0f;
+            return;
+        }
     }
 
     public override void OnDrawGizmos()

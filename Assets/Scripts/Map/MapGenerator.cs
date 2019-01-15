@@ -350,6 +350,10 @@ public static class MapGenerator {
         map.startTile = GetStartTile(map);
         AddDoorTile(map);
 
+
+        map.AddEntity(new EnemyData(map.sizeX / 4, map.sizeY / 4, EnemyType.Slime));
+
+
         return map;
     }
 
