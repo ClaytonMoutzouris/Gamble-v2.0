@@ -1,48 +1,70 @@
 ﻿
 using UnityEngine;
 
+public enum PlatformAxis { Vertical, Horizontal };
 public class MovingPlatform : Entity
 {
+    [HideInInspector]
     public bool mWait;
+    [HideInInspector]
     public float mTimer = 0.0f;
+    [HideInInspector]
     public float mWaitTime = 3.0f;
+
+    PlatformAxis axis;
 
     public override void EntityInit()
     {
         base.EntityInit();
 
         mWait = false;
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(30.0f, 8.0f), new Vector2(0, 8.0f), new Vector3(1, 1, 1)));
 
-        mMovingSpeed = 100.0f;
         Body.mIsKinematic = true;
         int r = Random.Range(0, 2);
         if(r == 1)
         {
-            Body.mSpeed.x = mMovingSpeed;
+            axis = PlatformAxis.Vertical;
 
         }
         else
         {
-            Body.mSpeed.y = mMovingSpeed;
+            axis = PlatformAxis.Horizontal;
 
         }
 
 
-        
 
+
+    }
+    public void VerticalPlatform()
+    {
+        if (Body.mPS.pushesBottomTile)
+            Body.mSpeed.y = mMovingSpeed;
+
+        if (Body.mPS.pushesTopTile)
+            Body.mSpeed.y = -mMovingSpeed;
+    }
+
+    public void HorizontalPlatform()
+    {
+        if (Body.mPS.pushesLeftTile)
+            Body.mSpeed.x = mMovingSpeed;
+
+        if (Body.mPS.pushesRightTile)
+            Body.mSpeed.x = -mMovingSpeed;
     }
 
     public override void EntityUpdate()
     {
-        if (Body.mPS.pushesRightTile && !Body.mPS.pushesBottomTile)
-            Body.mSpeed.x = -mMovingSpeed;
-        else if (Body.mPS.pushesBottomTile && !Body.mPS.pushesLeftTile)
-            Body.mSpeed.y = mMovingSpeed;
-        else if (Body.mPS.pushesLeftTile && !Body.mPS.pushesTopTile)
-            Body.mSpeed.x = mMovingSpeed;
-        else if (Body.mPS.pushesTopTile && !Body.mPS.pushesRightTile)
-            Body.mSpeed.y = -mMovingSpeed;
+        switch (axis)
+        {
+            case PlatformAxis.Vertical:
+                VerticalPlatform();
+                break;
+            case PlatformAxis.Horizontal:
+                HorizontalPlatform();
+                break;
+        }
 
         base.EntityUpdate();
     }

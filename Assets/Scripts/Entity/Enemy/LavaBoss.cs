@@ -7,46 +7,49 @@ public enum BossState { Idle, Aggrivated, Attack1, Attack2, Attack3 };
 
 public class LavaBoss : Enemy
 {
-    public Bullet VolcanicBombPrefab;
+    #region SetInInspector
+    public BossState mBossState = BossState.Idle;
+
     public float AttackTimer = 4.0f;
-    public float AttackCooldown = 0.0f;
     public float EruptDuration = 5;
-    public float EruptTimer = 0;
     public float ChargeDuration = 8;
-    public float ChargeTimer = 0;
     public float ChargeSpeed = 1200;
     public float KnockDuration = 1;
-    public float KnockTimer = 0;
     public float KnockedCooldown = 1;
-    public bool Knocked = false;
-    public int ChargeDirection = 1;
-    public float KnockedCoolDownTimer = 0;
 
     public AudioClip mCrashSFX;
     public AudioClip mEruptSFX;
 
-    public BossState mBossState = BossState.Idle;
+    public Bullet VolcanicBombPrefab;
+    #endregion
+
+
+    private float AttackCooldown = 0.0f;
+    private float EruptTimer = 0;
+    private float ChargeTimer = 0;
+    private float KnockTimer = 0;
+    private bool Knocked = false;
+    private int ChargeDirection = 1;
+    private float KnockedCoolDownTimer = 0;
+
+
 
     public override void EntityInit()
     {
         base.EntityInit();
 
-        mAnimator = GetComponent<Animator>();
 
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
 
         Body.mIsKinematic = false;
         //Body.mIgnoresGravity = true;
 
-        HurtBox.UpdatePosition();
 
 
 
         EnemyInit();
         mAttackManager.AttackList.Clear();
 
-        RangedAttack ranged = new RangedAttack(this, 0.2f, 10, VolcanicBombPrefab);
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         mAttackManager.AttackList.Add(ranged);
 
     }

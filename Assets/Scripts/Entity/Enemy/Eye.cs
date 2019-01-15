@@ -11,15 +11,10 @@ public class Eye : Enemy
     {
         base.EntityInit();
 
-        mAnimator = GetComponent<Animator>();
-
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), new Vector2(0, 10.0f), new Vector3(1, 1, 1)));
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(16.0f, 10.0f), Vector3.zero, new Vector3(1, 1, 1)));
 
         Body.mIsKinematic = false;
         Body.mIgnoresGravity = true;
 
-        HurtBox.UpdatePosition();
 
         EnemyInit();
 

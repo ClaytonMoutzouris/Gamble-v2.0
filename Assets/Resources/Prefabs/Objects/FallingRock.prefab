@@ -44,13 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e1e968ef87fbe49848e75b71633f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMovingSpeed: 0
-  mToRemove: 0
-  mUpdateId: -1
-  mGame: {fileID: 0}
-  mMap: {fileID: 0}
-  mAnimator: {fileID: 0}
+  mEntityType: 2
+  mCollidesWith: 000000000100000003000000
   colorPallete: []
+  mMovingSpeed: 0
+  BodySize: {x: 16, y: 16}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -129,11 +127,35 @@ MonoBehaviour:
     mIgnoresGravity: 0
     mCollisions: []
     mSpriteDepth: 0
-  mEntityType: 2
-  mCollidesWith: 000000000100000003000000
+  mAudioSource: {fileID: 0}
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mAnimator: {fileID: 0}
+  mToRemove: 0
+  mUpdateId: -1
   isTriggered: 0
   mTriggerTime: 5
   mTimeToTrigger: 0
+  trigger:
+    mEntity: {fileID: 0}
+    mAABB:
+      center: {x: 0, y: 0, z: 0}
+      halfSize: {x: 0, y: 0, z: 0}
+      offset: {x: 0, y: 0, z: 0}
+      baseOffset: {x: 0, y: 0, z: 0}
+      baseHalfSize: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      rotation: 0
+      isCircle: 0
+      flipped: 0
+    mState: 0
+    mAreas: []
+    mIdsInAreas: 
+    mEntitiesInSight: []
+  tilePos:
+    x: 0
+    y: 0
+  sizeDown: 0
 --- !u!212 &212591210098852462
 SpriteRenderer:
   m_ObjectHideFlags: 0

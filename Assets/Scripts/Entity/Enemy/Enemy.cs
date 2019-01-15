@@ -4,14 +4,17 @@ using UnityEngine;
 
 public abstract class Enemy : Entity, IHurtable
 {
-    [SerializeField]
-    private Hurtbox hurtBox;
-    public Sightbox sight;
-    public AttackManager mAttackManager;
-    public Entity target = null;
-
     public EnemyType mEnemyType;
 
+
+    private Hurtbox hurtBox;
+    protected Sightbox sight;
+    [HideInInspector]
+    public AttackManager mAttackManager;
+    [SerializeField]
+    protected Entity target = null;
+
+    [HideInInspector]
     public Stats mStats;
 
     public Hurtbox HurtBox
@@ -46,16 +49,25 @@ public abstract class Enemy : Entity, IHurtable
 
     public virtual void EnemyInit()
     {
+
+
+        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
+        HurtBox.UpdatePosition();
+
+
         mStats = GetComponent<Stats>();
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
 
-
+        EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
+        temp.transform.localPosition = new Vector3(0, BodySize.y * 2);
+        mStats.health.healthbar = temp;
+        mStats.health.healthbar.SetHealth(mStats.health);
 
         mAttackManager = GetComponent<AttackManager>();
 
 
-            MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+            MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
 

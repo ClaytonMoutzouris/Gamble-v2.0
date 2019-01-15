@@ -93,14 +93,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8acf45dc78e33409ae147d53b51203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMovingSpeed: 300
-  mToRemove: 0
-  mUpdateId: -1
-  mGame: {fileID: 0}
-  mMap: {fileID: 0}
-  mAnimator: {fileID: 0}
+  mEntityType: 5
+  mCollidesWith: 00000000010000000200000003000000
   colorPallete: []
-  mAudioSource: {fileID: 0}
+  mMovingSpeed: 300
+  BodySize: {x: 5, y: 5}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -179,9 +176,12 @@ MonoBehaviour:
     mIgnoresGravity: 1
     mCollisions: []
     mSpriteDepth: 0
-  mEntityType: 5
-  mCollidesWith: 00000000010000000200000003000000
-  BodySize: {x: 0, y: 0, z: 0}
+  mAudioSource: {fileID: 0}
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mAnimator: {fileID: 0}
+  mToRemove: 0
+  mUpdateId: -1
   mMaxTime: 10
   mTimeAlive: 0
   fireSFX: {fileID: 8300000, guid: 8637a5123489f544dba8dfb27de501b9, type: 3}
