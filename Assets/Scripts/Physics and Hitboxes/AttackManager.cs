@@ -34,12 +34,13 @@ public class AttackManager : MonoBehaviour {
     }
 
     public void UpdateAttacks()
-    {
+    { 
+        
         foreach(Attack attack in AttackList)
         {
                 attack.UpdateAttack();  
         }
-
+        
 
     }
 

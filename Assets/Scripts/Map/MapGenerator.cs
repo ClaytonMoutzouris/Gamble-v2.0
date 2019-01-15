@@ -345,6 +345,8 @@ public static class MapGenerator {
             }
         }
 
+        map.AddEntity(new EnemyData(map.sizeX / 4, map.sizeY / 4, EnemyType.Slime));
+
         //AddBounds(map);
 
         map.startTile = GetStartTile(map);

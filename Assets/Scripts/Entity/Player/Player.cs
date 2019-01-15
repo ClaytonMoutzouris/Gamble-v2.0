@@ -80,7 +80,9 @@ public class Player : Entity, IHurtable
     {
         base.EntityInit();
 
-        for(int c = 0; c < colorPallete.Count; c++)
+        mAttackManager = GetComponent<AttackManager>();
+
+        for (int c = 0; c < colorPallete.Count; c++)
         {
             colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         }
