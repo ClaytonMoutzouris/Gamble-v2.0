@@ -26,7 +26,8 @@ public class FallingRock : Entity
         base.EntityInit();
 
         Body.mSpeed = Vector2.zero;
-        Body.mIsKinematic = true;
+        Body.mIsKinematic = false;
+        Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
         
 

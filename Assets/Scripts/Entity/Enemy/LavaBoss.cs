@@ -41,6 +41,7 @@ public class LavaBoss : Enemy
 
 
         Body.mIsKinematic = false;
+        Body.mIsHeavy = true;
         //Body.mIgnoresGravity = true;
 
 
@@ -100,11 +101,9 @@ public class LavaBoss : Enemy
     {
         mAnimator.Play("LavaBossWalk");
         //mAnimator.playbackTime = ;
-        Body.mIsKinematic = true;
 
         if (ChargeTimer >= ChargeDuration)
         {
-            Body.mIsKinematic = false;
 
             mBossState = BossState.Aggrivated;
             ChargeTimer = 0;

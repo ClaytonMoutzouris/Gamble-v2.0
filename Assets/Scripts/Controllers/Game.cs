@@ -151,6 +151,8 @@ public class Game : MonoBehaviour
             playerInputs[p][(int)KeyInput.Jump] = Input.GetButton("Jump");
             playerInputs[p][(int)KeyInput.Shoot] = Input.GetButton("Fire1");
             playerInputs[p][(int)KeyInput.Attack] = Input.GetButton("Fire2");
+            playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
+
                     break;
                 case 1:
             playerInputs[p][(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
@@ -160,6 +162,7 @@ public class Game : MonoBehaviour
             playerInputs[p][(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
             playerInputs[p][(int)KeyInput.Shoot] = Input.GetKey(KeyCode.Q);
             playerInputs[p][(int)KeyInput.Attack] = Input.GetKey(KeyCode.R);
+
                     break;
             }
             

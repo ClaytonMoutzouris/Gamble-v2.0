@@ -9,7 +9,7 @@ public abstract class Entity : MonoBehaviour {
     public float mMovingSpeed;
     public Vector2 BodySize;
     #region HiddenInInspector
-    protected PhysicsBody body;
+    public PhysicsBody body;
     [HideInInspector]
     public AudioSource mAudioSource;
     [HideInInspector]
@@ -144,6 +144,31 @@ public abstract class Entity : MonoBehaviour {
         //Finally, kill this object forever
         Destroy(gameObject);
 
+    }
+
+    public virtual void Crush()
+    {
+        //Kinematic things cant be spiked or crushed
+        if (Body.mIsKinematic)
+            return;
+        //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
+        /*
+        mEntity.transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
+        mPosition = mEntity.transform.position;
+        mAABB.Center = mPosition;
+        mPS.Reset();
+        */
+
+        
+
+    }
+
+    public virtual void ShowFloatingText(int damage, Color color)
+    {
+        FloatingText floatingText = Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, transform.position, Quaternion.identity);
+        floatingText.SetOffset(Vector3.up * (Body.mAABB.HalfSize.y * 2 + 7));
+        floatingText.GetComponent<TextMesh>().text = "" + damage;
+        floatingText.GetComponent<TextMesh>().color = color;
     }
 }
 

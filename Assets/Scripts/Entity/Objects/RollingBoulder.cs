@@ -14,6 +14,8 @@ public class RollingBoulder : Entity
 
 
         Body.mIsKinematic = true;
+        Body.mIsHeavy = true;
+
         int r = Random.Range(0, 2);
         if (r == 1)
         {

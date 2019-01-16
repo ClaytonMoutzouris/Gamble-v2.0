@@ -167,15 +167,17 @@ public abstract class Enemy : Entity, IHurtable
             Hostility = Hostility.Hostile;
         }
 
-        mStats.health.LoseHP(attack.damage);
+        int damage = (int)mStats.health.LoseHP(attack.damage);
+        ShowFloatingText(damage, Color.white);
+
         Debug.Log("Current health: " + mStats.health.currentHealth + " damage");
 
         if (mStats.health.currentHealth == 0)
         {
             Die();
         }
-
-        
-        
+      
     }
+
+
 }

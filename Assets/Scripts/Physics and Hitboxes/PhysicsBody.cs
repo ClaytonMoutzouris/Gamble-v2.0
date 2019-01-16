@@ -59,6 +59,7 @@ public class PhysicsBody : CustomCollider2D
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
     public bool mIsKinematic = false;
+    public bool mIsHeavy = false;
     public bool mIgnoresGravity = false;
 
 
@@ -609,7 +610,7 @@ public class PhysicsBody : CustomCollider2D
 
     public void TryAutoMount(Entity platform)
     {
-        if (mMountParent == null)
+        if (mMountParent == null && !mIsHeavy)
         {
             mMountParent = platform;
             if (platform.mUpdateId > mEntity.mUpdateId)
@@ -640,13 +641,22 @@ public class PhysicsBody : CustomCollider2D
     public void Crush()
     {
         //Kinematic things cant be spiked or crushed
-        if (mIsKinematic)
+        if (mIsKinematic || mIsHeavy)
             return;
         //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
+        /*
         mEntity.transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
         mPosition = mEntity.transform.position;
         mAABB.Center = mPosition;
         mPS.Reset();
+        */
+
+        if(mEntity is IHurtable)
+        {
+            IHurtable hurtable = (IHurtable)mEntity;
+            hurtable.GetHurt(Attack.CrushAttack());
+
+        }
     }
 
     public void SetTilePosition(Vector2i tile)
@@ -658,7 +668,7 @@ public class PhysicsBody : CustomCollider2D
 
     private void UpdatePhysicsResponse()
     {
-        
+        //Kinematic objects do not receive force, only give
         if (mIsKinematic)
             return;
         
@@ -672,6 +682,7 @@ public class PhysicsBody : CustomCollider2D
         mPS.pushesLeftObject = false;
         mPS.pushesTopObject = false;
 
+        //The total sum of all offsets from colliding forces
         Vector2 offsetSum = Vector2.zero;
 
         for (int i = 0; i < mCollisions.Count; ++i)
@@ -681,23 +692,25 @@ public class PhysicsBody : CustomCollider2D
             var data = mCollisions[i];
             var overlap = data.overlap - offsetSum;
 
+            //If this object does not collide with the other object or the other object is flagged for removal, ignore it
             if (!mEntity.mCollidesWith.Contains(other.mEntity.mEntityType) || other.mEntity.mToRemove)
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
             //    overlap -= other.mPosition - data.pos1;
 
+            //If there is no overlap in the x axis (kind hard but sure)
             if (overlap.x == 0.0f)
             {
                 if (other.mAABB.Center.x > mAABB.Center.x)
                 {
                     mPS.pushesRightObject = true;
-                    mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
+                    //mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
                 }
                 else
                 {
                     mPS.pushesLeftObject = true;
-                    mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
+                    //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
                 }
                 continue;
             }
@@ -706,56 +719,75 @@ public class PhysicsBody : CustomCollider2D
                 if (other.mAABB.Center.y > mAABB.Center.y)
                 {
                     mPS.pushesTopObject = true;
-                    mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
+                    //mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
-                    mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                    //mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
                 continue;
             }
 
             //The absolute speed of object 1
-            Vector2 absSpeed1 = new Vector2(Mathf.Abs(data.pos1.x - data.oldPos1.x), Mathf.Abs(data.pos1.y - data.oldPos1.y));
+            Vector2 absSpeed1 = new Vector2(Mathf.Abs(data.speed1.x), Mathf.Abs(data.speed1.y));
 
             //The absolute speed of object 2
-            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.pos2.x - data.oldPos2.x), Mathf.Abs(data.pos2.y - data.oldPos2.y));
+            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.speed2.x), Mathf.Abs(data.speed2.y));
 
             Vector2 speedSum = absSpeed1 + absSpeed2;
-            //Debug.Log(name + " colliding with " + data.other.name + " obj1 speed: " + absSpeed1 + " obj2 speed: " + absSpeed2 + " speed sum: " + speedSum);
+            Debug.Log(mEntity.name + " colliding with " + data.other.mEntity.name + " obj1 speed: " + absSpeed1 + " obj2 speed: " + absSpeed2 + " speed sum: " + speedSum);
             
             float speedRatioX, speedRatioY;
 
             if (other.mEntity.Body.mIsKinematic)
+            {
                 speedRatioX = speedRatioY = 1.0f;
+            }
             else
             {
                 if (speedSum.x == 0.0f)
                     speedRatioX = 0.5f;
                 else
-                    speedRatioX = absSpeed1.x / speedSum.x;
+                    speedRatioX = absSpeed2.x / speedSum.x;
 
                 if (speedSum.y == 0.0f)
                     speedRatioY = 0.5f;
                 else
-                    speedRatioY = absSpeed1.y / speedSum.y;
+                    speedRatioY = absSpeed2.y / speedSum.y;
             }
 
+            /*
+            if (mIsHeavy)
+                speedRatioY = 0;
+            */
+
+
+            //Determine which side has the smallest amount of overlap
             float smallestOverlap = Mathf.Min(Mathf.Abs(overlap.x), Mathf.Abs(overlap.y));
 
             if (smallestOverlap == Mathf.Abs(overlap.x))
             {
-                //Debug.Log(name + " colliding with " + data.other.name + " speed ratio: " + speedRatioX);
-                float offsetX = overlap.x * speedRatioX;
-
-                mOffset.x += offsetX;
-                offsetSum.x += offsetX;
+                float offsetX = 0;
+                
 
                 if (overlap.x < 0.0f)
                 {
-                    if (other.mEntity.Body.mIsKinematic && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (data.other.mEntity.Body.mPS.pushesRight)
+                    {
+                        offsetX = overlap.x;
+                    } else
+                    {
+                        offsetX = overlap.x * speedRatioX;
+
+                    }
+
+
+                    mOffset.x += offsetX;
+                    offsetSum.x += offsetX;
+
+                    if (other.mEntity.Body.mIsHeavy && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesRightObject = true;
@@ -763,7 +795,19 @@ public class PhysicsBody : CustomCollider2D
                 }
                 else
                 {
-                    if (other.mEntity.Body.mIsKinematic && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (data.other.mEntity.Body.mPS.pushesLeft)
+                    {
+                        offsetX = overlap.x;
+                    }
+                    else
+                    {
+                        offsetX = overlap.x * speedRatioX;
+
+                    }
+
+                    mOffset.x += offsetX;
+                    offsetSum.x += offsetX;
+                    if (other.mEntity.Body.mIsHeavy && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     mPS.pushesLeftObject = true;
@@ -780,7 +824,7 @@ public class PhysicsBody : CustomCollider2D
                 if (overlap.y < 0.0f)
                 {
                     //We should set an error for overlap, here is the basic implementation
-                    if (other.mEntity.Body.mIsKinematic && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsHeavy && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                     {
                         
                         Crush();
@@ -790,7 +834,7 @@ public class PhysicsBody : CustomCollider2D
                 }
                 else
                 {
-                    if (other.mEntity.Body.mIsKinematic && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.Body.mIsHeavy && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                         Crush();
 
                     TryAutoMount(other.mEntity);

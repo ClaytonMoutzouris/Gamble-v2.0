@@ -13,5 +13,6 @@ public enum KeyInput
 	Jump,
     Shoot,
     Attack,
+    Item,
 	Count
 }

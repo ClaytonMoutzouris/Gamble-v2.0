@@ -19,6 +19,15 @@ public class Attack {
 
     public bool mIsActive = false;
 
+    public static Attack CrushAttack()
+    {
+        return new Attack(999);
+    }
+
+    public Attack(int damage)
+    {
+        this.damage = damage;
+    }
 
     public Attack(Entity entity, float duration, int damage, float cd)
     {

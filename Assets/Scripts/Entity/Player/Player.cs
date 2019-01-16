@@ -304,6 +304,12 @@ public class Player : Entity, IHurtable
                     break;
                 }
 
+                if (Pressed(KeyInput.Item))
+                {
+                    GainLife(5);
+                    break;
+                }
+
                 if (KeyState(KeyInput.GoDown))
                 {
                     body.mPS.tmpIgnoresOneWay = true;
@@ -684,12 +690,21 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        mStats.health.LoseHP(attack.damage);
+        int damage = (int)mStats.health.LoseHP(attack.damage);
+        ShowFloatingText(damage, Color.red);
 
-        if(mStats.health.currentHealth == 0)
+        if (mStats.health.currentHealth == 0)
         {
             Die();
         }
+
+    }
+
+    public void GainLife(int health)
+    {
+        int life = (int)mStats.health.GainHP(health);
+        ShowFloatingText(life, Color.green);
+
 
     }
 

@@ -12,7 +12,8 @@ public class Treedude : Enemy
 
 
         body.mSpeed.x = mMovingSpeed;
-
+        Body.mIsKinematic = false;
+        Body.mIsHeavy = true;
 
 
 

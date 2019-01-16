@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 2
-  mCollidesWith: 000000000100000003000000
+  mCollidesWith: 00000000010000000300000002000000
   colorPallete: []
   mMovingSpeed: 0
   BodySize: {x: 16, y: 16}
@@ -124,6 +124,7 @@ MonoBehaviour:
     mIgnoresOneWay: 0
     mOnOneWayPlatform: 0
     mIsKinematic: 0
+    mIsHeavy: 0
     mIgnoresGravity: 0
     mCollisions: []
     mSpriteDepth: 0
@@ -134,8 +135,6 @@ MonoBehaviour:
   mToRemove: 0
   mUpdateId: -1
   isTriggered: 0
-  mTriggerTime: 5
-  mTimeToTrigger: 0
   trigger:
     mEntity: {fileID: 0}
     mAABB:

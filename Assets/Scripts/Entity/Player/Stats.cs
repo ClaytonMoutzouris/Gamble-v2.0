@@ -15,6 +15,8 @@ public class Stats : MonoBehaviour
     }
 
 
+
+
 }
 
 public enum StatType { Strength, Agility, Intelligence, Luck };
