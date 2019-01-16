@@ -448,7 +448,7 @@ public class Player : Entity, IHurtable
                 {
                     if (body.mPS.pushesTop || body.mSpeed.y > 0.0f)
                         mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
-                    else if (KeyState(KeyInput.Jump))
+                    else if (Pressed(KeyInput.Jump))
                         body.mSpeed.y = mJumpSpeed;
                 }
 
@@ -534,7 +534,7 @@ public class Player : Entity, IHurtable
                     body.mPS.tmpIgnoresOneWay = true;
 
                 // we can climb ladders from this state
-                if (KeyState(KeyInput.Climb) && body.mPS.onLadder)
+                if (Pressed(KeyInput.Climb) && body.mPS.onLadder)
                 {
                     mCurrentState = PlayerState.Climb;
                     break;
@@ -666,7 +666,7 @@ public class Player : Entity, IHurtable
 
         //Pretty sure this lets use jump forever
 
-        //if (body.mPS.pushedBottom && !body.mPS.pushesBottom)
+        if (body.mPS.pushedBottom && !body.mPS.pushesBottom || Body.mPS.isClimbing)
         mFramesFromJumpStart = 0;
 
         //if (body.mPS.pushesBottom && !body.mPS.pushedBottom)

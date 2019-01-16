@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FallingRock : Entity
 {
-    [HideInInspector]
+    //[HideInInspector]
     public bool isTriggered = false;
     [HideInInspector]
     public Sightbox trigger;
@@ -50,6 +50,10 @@ public class FallingRock : Entity
 
         trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0,  -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2)), new Vector3(1, 1, 1)));
         trigger.UpdatePosition();
+        if(sizeDown <= 0)
+        {
+            isTriggered = true;
+        }
     }
 
 

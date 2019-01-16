@@ -11,7 +11,7 @@ public class FloatingText : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, DestroyTime);
-
+        //GetComponent<MeshRenderer>().sortingLayerID = 0;
     }
 
     public void SetOffset(Vector3 newOffset)

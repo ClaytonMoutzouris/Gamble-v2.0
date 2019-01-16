@@ -137,7 +137,7 @@ public abstract class Enemy : Entity, IHurtable
     public override void Die()
     {
         base.Die();
-
+        DropLoot();
         HurtBox.mState = ColliderState.Closed;
     }
 
@@ -154,7 +154,6 @@ public abstract class Enemy : Entity, IHurtable
         CollisionManager.RemoveObjectFromAreas(HurtBox);
         CollisionManager.RemoveObjectFromAreas(sight);
 
-        DropLoot();
 
         base.ActuallyDie();
     }

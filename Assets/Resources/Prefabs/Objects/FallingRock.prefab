@@ -48,7 +48,7 @@ MonoBehaviour:
   mCollidesWith: 00000000010000000300000002000000
   colorPallete: []
   mMovingSpeed: 0
-  BodySize: {x: 16, y: 16}
+  BodySize: {x: 15, y: 16}
   body:
     mEntity: {fileID: 0}
     mAABB:
