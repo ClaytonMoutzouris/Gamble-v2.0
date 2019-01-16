@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Slime : Enemy {
 
     [HideInInspector]
@@ -12,6 +13,7 @@ public class Slime : Enemy {
     public float moveCooldown = 0.5f;
     public float strollTime = 0f;
     public float wait = 0.5f;
+    
 
     public override void EntityInit()
     {

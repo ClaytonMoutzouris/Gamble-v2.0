@@ -102,13 +102,15 @@ public class FallingRock : Entity
 
     public override void Die()
     {
+
         base.Die();
     }
 
     public override void ActuallyDie()
     {
-
+        if(trigger != null)
         CollisionManager.RemoveObjectFromAreas(trigger);
+
 
         base.ActuallyDie();
 

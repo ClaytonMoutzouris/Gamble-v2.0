@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum Hostility { Friendly, Neutral, Hostile };
 
 public abstract class Enemy : Entity, IHurtable
 {
     public EnemyType mEnemyType;
+    [SerializeField]
+    private Hostility hostility = Hostility.Neutral;
 
 
     private Hurtbox hurtBox;
@@ -13,6 +16,7 @@ public abstract class Enemy : Entity, IHurtable
     public AttackManager mAttackManager;
     [SerializeField]
     protected Entity target = null;
+    [SerializeField]
 
     [HideInInspector]
     public Stats mStats;
@@ -27,6 +31,19 @@ public abstract class Enemy : Entity, IHurtable
         set
         {
             hurtBox = value;
+        }
+    }
+
+    public Hostility Hostility
+    {
+        get
+        {
+            return hostility;
+        }
+
+        set
+        {
+            hostility = value;
         }
     }
 
@@ -61,7 +78,9 @@ public abstract class Enemy : Entity, IHurtable
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
         temp.transform.localPosition = new Vector3(0, BodySize.y * 2);
+        temp.InitHealthbar(this);
         mStats.health.healthbar = temp;
+        
         mStats.health.healthbar.SetHealth(mStats.health);
 
         mAttackManager = GetComponent<AttackManager>();
@@ -99,7 +118,7 @@ public abstract class Enemy : Entity, IHurtable
         {
             foreach (Entity entity in sight.mEntitiesInSight)
             {
-                if (entity is Player)
+                if (entity is Player && Hostility == Hostility.Hostile)
                 {
                     target = entity;
                     break;
@@ -143,15 +162,20 @@ public abstract class Enemy : Entity, IHurtable
     public virtual void GetHurt(Attack attack)
     {
         Debug.Log("Dude is getting hurt");
+        if (Hostility == Hostility.Neutral)
+        {
+            Hostility = Hostility.Hostile;
+        }
 
-            mStats.health.LoseHP(attack.damage);
+        mStats.health.LoseHP(attack.damage);
         Debug.Log("Current health: " + mStats.health.currentHealth + " damage");
 
         if (mStats.health.currentHealth == 0)
-            {
-                Die();
-            }
+        {
+            Die();
+        }
 
+        
         
     }
 }
