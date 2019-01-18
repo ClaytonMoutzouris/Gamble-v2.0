@@ -13,7 +13,10 @@ public class Slime : Enemy {
     public float moveCooldown = 0.5f;
     public float strollTime = 0f;
     public float wait = 0.5f;
-    
+    public float jumpCooldown = 0f;
+    public float jumpTime = 3.0f;
+    public bool jumping;
+    public float jumpSpeed = 400f;
 
     public override void EntityInit()
     {
@@ -41,10 +44,21 @@ public class Slime : Enemy {
             if (target.Position.x > this.Body.mPosition.x)
             {
                 Move(target, 1);
+                if (target.Position.y - this.Body.mPosition.y > 30)
+                {
+                    Jump(target,1);
+                }
+                
             }
-            else
+            else if(target.Position.x < this.Body.mPosition.x)
             {
+                //Debug.Log("Target: " + target.Position.y + "Slime: " + this.Body.mPosition.y);
                 Move(target, -1);
+                if (target.Position.y - this.Body.mPosition.y > 30)
+                {
+                    Debug.Log("jumping!");
+                    Jump(target, 1);
+                }
             }
         }
         else
@@ -137,6 +151,28 @@ public class Slime : Enemy {
         {
             strollTime = 0f;
             return;
+        }
+    }
+
+    public void Jump(Entity target, int direction)
+    {
+        
+        //If we have a target, and we arent jumping.
+        if (target != null && !jumping && jumpCooldown == 0)
+        {
+            this.Body.mSpeed.y = jumpSpeed * direction;
+            jumping = true;
+        }
+
+        //If we have initiated a jump, add force to our mSpeed y.
+        if (jumping && jumpCooldown <= jumpTime)
+        {        
+            jumpCooldown += Time.deltaTime;
+        }
+        else if(jumping && jumpCooldown >= jumpTime)
+        {
+            jumpCooldown = 0;
+            jumping = false;
         }
     }
 
