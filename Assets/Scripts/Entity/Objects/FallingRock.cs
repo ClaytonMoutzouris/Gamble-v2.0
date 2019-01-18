@@ -47,7 +47,8 @@ public class FallingRock : Entity
         tilePos = pos;
 
         sizeDown = mMap.CheckEmptySpacesBelow(pos);
-
+        if (sizeDown == 0)
+            mToRemove = true;
         trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0,  -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2)), new Vector3(1, 1, 1)));
         trigger.UpdatePosition();
         if(sizeDown <= 0)

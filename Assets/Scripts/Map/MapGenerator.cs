@@ -6,7 +6,8 @@ using System.IO;
 
 public enum Direction { Left, Up, Right, Down };
 
-public static class MapGenerator {
+public static class MapGenerator
+{
 
     static List<TileType[,]> RoomDatabase;
 
@@ -64,12 +65,12 @@ public static class MapGenerator {
     [MenuItem("Assets/Create/EmptyRoom")]
     static void WriteString()
     {
-        
+
         int index = Resources.LoadAll<TextAsset>("Rooms").Length;
         Resources.UnloadUnusedAssets();
 
         string path = "Assets/Resources/Rooms/EmptyRoom" + index + ".txt";
-        
+
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(path, false);
@@ -77,7 +78,7 @@ public static class MapGenerator {
         {
             for (int x = 0; x < Constants.cMapChunkSizeX; x++)
             {
-                writer.Write(Random.Range(0,3));
+                writer.Write(Random.Range(0, 3));
             }
             writer.Write(System.Environment.NewLine);
         }
@@ -102,9 +103,9 @@ public static class MapGenerator {
         TextAsset[] rooms = Resources.LoadAll<TextAsset>("Rooms");
 
         TextAsset r = rooms[Random.Range(0, rooms.Length)];
-        string[] s = r.text.Split(new string[]{System.Environment.NewLine}, System.StringSplitOptions.RemoveEmptyEntries);
+        string[] s = r.text.Split(new string[] { System.Environment.NewLine }, System.StringSplitOptions.RemoveEmptyEntries);
         System.Array.Reverse(s);
-        for(int k = 0; k < s.Length; k++)
+        for (int k = 0; k < s.Length; k++)
         {
             //s[k] = Reverse(s[k]);
             //s[k] = s[k].Replace(System.Environment.NewLine, "");
@@ -130,27 +131,21 @@ public static class MapGenerator {
         return tiles;
     }
 
-    static TileType[,] GetRandomRoom2()
+    static MapChunk GetRandomRoom2()
     {
         string[] paths =
-            Directory.GetFiles(Application.dataPath+"/Rooms/RandomRooms", "*.room");
+            Directory.GetFiles(Application.dataPath + "/Rooms/RandomRooms", "*.room");
 
         int r = Random.Range(0, paths.Length);
 
-        TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        MapChunk temp = new MapChunk();
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
         {
             int header = reader.ReadInt32();
-            if (header == 0)
+            if (header == 1)
             {
-                for (int x = 0; x < Constants.cMapChunkSizeX; x++)
-                {
-                    for (int y = 0; y < Constants.cMapChunkSizeY; y++)
-                    {
-                        temp[x, y] = (TileType)reader.ReadByte();
-                    }
-                }
+                temp.Load(reader);
             }
             else
             {
@@ -162,25 +157,98 @@ public static class MapGenerator {
         return temp;
     }
 
-    static TileType[,] GetHubRoom()
+    static MapChunk GetSurfaceRoom()
+    {
+        string[] paths =
+            Directory.GetFiles(Application.dataPath + "/Rooms/SurfaceRooms", "*.room");
+
+        int r = Random.Range(0, paths.Length);
+
+        MapChunk temp = new MapChunk();
+        //string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
+        {
+            int header = reader.ReadInt32();
+            if (header == 1)
+            {
+                temp.Load(reader);
+            }
+            else
+            {
+                Debug.LogWarning("Unknown room format " + header);
+            }
+
+        }
+
+        return temp;
+    }
+
+    static MapChunk GetInnerRoom()
+    {
+        string[] paths =
+            Directory.GetFiles(Application.dataPath + "/Rooms/InnerRooms", "*.room");
+
+        int r = Random.Range(0, paths.Length);
+
+        MapChunk temp = new MapChunk();
+        //string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
+        {
+            int header = reader.ReadInt32();
+            if (header == 1)
+            {
+                temp.Load(reader);
+            }
+            else
+            {
+                Debug.LogWarning("Unknown room format " + header);
+            }
+
+        }
+
+        return temp;
+    }
+
+    static MapChunk GetAboveRoom()
+    {
+        string[] paths =
+            Directory.GetFiles(Application.dataPath + "/Rooms/AboveRooms", "*.room");
+
+        int r = Random.Range(0, paths.Length);
+
+        MapChunk temp = new MapChunk();
+        //string path = Path.Combine(Application.persistentDataPath, "test.map");
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[r])))
+        {
+            int header = reader.ReadInt32();
+            if (header == 1)
+            {
+                temp.Load(reader);
+            }
+            else
+            {
+                Debug.LogWarning("Unknown room format " + header);
+            }
+
+        }
+
+        return temp;
+    }
+
+    static MapChunk GetHubRoom()
     {
 
         string path = Directory.GetFiles(Application.dataPath + "/Rooms", "Hub.room")[0];
 
-        TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        //TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
+        MapChunk temp = new MapChunk();
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
         {
             int header = reader.ReadInt32();
-            if (header == 0)
+            if (header == 1)
             {
-                for (int x = 0; x < Constants.cMapChunkSizeX; x++)
-                {
-                    for (int y = 0; y < Constants.cMapChunkSizeY; y++)
-                    {
-                        temp[x, y] = (TileType)reader.ReadByte();
-                    }
-                }
+                temp.Load(reader);
             }
             else
             {
@@ -198,16 +266,17 @@ public static class MapGenerator {
         RoomDatabase = new List<TileType[,]>();
         string[] paths =
             Directory.GetFiles(Application.persistentDataPath, "*.room");
-        
 
-        foreach(string room in paths)
+
+        foreach (string room in paths)
         {
             Debug.Log(room);
             if (!File.Exists(room))
             {
                 Debug.LogError("File does not exist " + room);
                 return;
-            } else
+            }
+            else
             {
                 Debug.Log("File Exists");
             }
@@ -235,7 +304,7 @@ public static class MapGenerator {
                 RoomDatabase.Add(temp);
             }
         }
-        
+
     }
 
     /*
@@ -262,24 +331,24 @@ public static class MapGenerator {
     }
     */
 
-    public static Vector2i GetStartTile(MapData map)
+    public static Vector2i GetStartTile(MapData map, int depth = 0)
     {
-        Vector2i startTile = new Vector2i(1,1);
+        Vector2i startTile = new Vector2i(1, 1);
         int xr, yr;
         //int chunkX = Random.Range(0, Constants.cMapChunksX);
         int chunkX = 0;
-        int chunkY = 0;
+        int chunkY = depth;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
             for (int x = 0; x < Constants.cMapChunkSizeX; x++)
             {
-            
-                if(map.rooms[chunkX, chunkY].tiles[x,y] == TileType.Empty)
+
+                if (map.rooms[chunkX, chunkY].tiles[x, y] == TileType.Empty)
                 {
                     if (map.rooms[chunkX, chunkY].tiles[x, y - 1] == TileType.Block)
                     {
-                        return startTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);                        
+                        return startTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
                     }
                 }
             }
@@ -289,12 +358,12 @@ public static class MapGenerator {
 
     }
 
-    public static void AddDoorTile(MapData map)
+    public static void AddDoorTile(MapData map, int depth = 0)
     {
         Vector2i doorTile = new Vector2i(99, 99);
         int xr, yr;
         int chunkX = 0;
-        int chunkY = 0;
+        int chunkY = depth;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
@@ -323,7 +392,7 @@ public static class MapGenerator {
             for (int j = 0; j < map.sizeY; j++)
             {
 
-                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
+                if (j == 0 || i == 0 || j == map.sizeX - 1)
                 {
                     //Debug.Log("X: " + x + ", Y: " + y);
                     map.SetTile(j, i, TileType.Block);
@@ -341,7 +410,7 @@ public static class MapGenerator {
         {
             for (int y = 0; y < map.MapChunksY; y++)
             {
-                map.rooms[x, y].tiles = GetHubRoom();
+                map.rooms[x, y] = GetHubRoom();
             }
         }
 
@@ -387,12 +456,19 @@ public static class MapGenerator {
     {
         MapData map = new MapData(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
         //LoadRooms();
-        
+        int depth = Random.Range(5, 8);
+
         for (int x = 0; x < map.MapChunksX; x++)
         {
             for (int y = 0; y < map.MapChunksY; y++)
             {
-                map.rooms[x, y].tiles = GetRandomRoom2();
+                if (y < depth)
+                    map.rooms[x, y] = GetInnerRoom();
+                else if (y == depth)
+                    map.rooms[x, y] = GetSurfaceRoom();
+                else
+                    map.rooms[x, y] = GetAboveRoom();
+
             }
         }
 
@@ -400,19 +476,19 @@ public static class MapGenerator {
         {
             for (int j = 0; j < map.sizeY; j++)
             {
-                
-                if(j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
+
+                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
                 {
                     //Debug.Log("X: " + x + ", Y: " + y);
-                    map.SetTile(j,i, TileType.Block);
+                    map.SetTile(j, i, TileType.Block);
                 }
             }
-            
+
         }
 
 
-        map.startTile = GetStartTile(map);
-        AddDoorTile(map);
+        map.startTile = GetStartTile(map, depth);
+        AddDoorTile(map, depth);
 
         PopulateMap(map);
 
@@ -425,8 +501,8 @@ public static class MapGenerator {
         AddEnemies(map);
         AddFallingRock(map);
 
-        
-        
+
+
     }
 
     static void AddChests(MapData map)
@@ -464,7 +540,7 @@ public static class MapGenerator {
 
                 if (map.GetTile(x, y) == TileType.Empty)
                 {
-                    if (y != (map.sizeY-1) && map.GetTile(x, y + 1) == TileType.Block)
+                    if (y != (map.sizeY - 1) && map.GetTile(x, y + 1) == TileType.Block)
                         map.AddEntity(new ObjectData(x, y, ObjectType.FallingRock));
                 }
             }
@@ -495,7 +571,7 @@ public static class MapGenerator {
         }
     }
 
-    
+
 
 
 }

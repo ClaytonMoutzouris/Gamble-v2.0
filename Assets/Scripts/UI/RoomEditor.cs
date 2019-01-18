@@ -23,6 +23,7 @@ public class RoomEditor : MonoBehaviour
     public Text tilePreview;
     private Color activeColor;
     public EditorMode mode;
+    public ChunkType roomType;
     public TileType mPlacedTileType;
     public List<GameObject> objectPrefabs;
     public int mObjectIndex = 0;
@@ -49,6 +50,10 @@ public class RoomEditor : MonoBehaviour
         mode = (EditorMode)index;
     }
 
+    public void ChangeType(int index)
+    {
+        mMap.chunk.type = (ChunkType)index;
+    }
 
     void HandleInput()
     {
@@ -73,7 +78,7 @@ public class RoomEditor : MonoBehaviour
                 break;
 
         }
-        
+
 
     }
 
@@ -125,7 +130,7 @@ public class RoomEditor : MonoBehaviour
         {
 
             GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
-            
+
             temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
 
         }

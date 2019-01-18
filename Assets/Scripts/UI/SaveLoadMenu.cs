@@ -14,6 +14,8 @@ public class SaveLoadMenu : MonoBehaviour
     public InputField nameInput;
     public RectTransform listContent;
     public SaveLoadItem itemPrefab;
+    public RoomEditor RoomEditor;
+    public int version = 1;
 
     public void Open(bool saveMode)
     {
@@ -58,9 +60,9 @@ public class SaveLoadMenu : MonoBehaviour
             //This is our header byte, which will let us know which version of the save we are using
             //right now it is byte 0, so version 0. if we update our format we can use this byte
             //to determine what format a map we are loading is
-            writer.Write(0);
+            writer.Write(version);
 
-            mMap.Save(writer);
+            mMap.chunk.Save(writer);
         }
 
     }
@@ -72,14 +74,15 @@ public class SaveLoadMenu : MonoBehaviour
             Debug.LogError("File does not exist " + path);
             return;
         }
-        
+
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
         {
             int header = reader.ReadInt32();
-            if (header == 0)
+            if (header == version)
             {
-                mMap.Load(reader);
+                mMap.chunk.Load(reader);
+                mMap.Draw();
             }
             else
             {
@@ -128,7 +131,7 @@ public class SaveLoadMenu : MonoBehaviour
         {
             SaveLoadItem item = Instantiate(itemPrefab);
             item.menu = this;
-            item.MapName = Path.GetFileNameWithoutExtension(paths[i]); 
+            item.MapName = Path.GetFileNameWithoutExtension(paths[i]);
             item.transform.SetParent(listContent, false);
         }
     }

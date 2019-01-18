@@ -161,6 +161,11 @@ public class MapManager : MonoBehaviour
             currTile = GetMapTileAtPoint(GetMapTilePosition(new Vector2i(currTile.x, currTile.y - 1)));
         }
 
+        if (emptySpaces > 10)
+        {
+            emptySpaces = 0;
+        }
+
         return emptySpaces;
 
     }
