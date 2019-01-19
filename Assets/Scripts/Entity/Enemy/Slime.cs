@@ -189,11 +189,4 @@ public class Slime : Enemy {
         */
     }
 
-    /*
-    public override void SecondUpdate()
-    {
-        base.SecondUpdate();
-        meleeDash.UpdatePosition();
-    }
-    */
 }

@@ -86,7 +86,7 @@ public abstract class Enemy : Entity, IHurtable
         mAttackManager = GetComponent<AttackManager>();
 
 
-            MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
 
@@ -128,7 +128,32 @@ public abstract class Enemy : Entity, IHurtable
 
         if (target != null)
         {
-            mAttackManager.AttackList[0].Activate();
+            //If target is standing close to Entity
+            if (Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) < 20 && Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) > -20)
+            {
+                //If target is to the left of the Entity && Target has an attack...
+                if (target.Position.x < this.Body.mPosition.x && mAttackManager.AttackList != null)
+                {
+                    //Check if target can make a close range attack.
+                    foreach (MeleeAttack attack in mAttackManager.AttackList)
+                    {
+                        //Check if the hitbox has already set OffsetX to face to the left.
+                        if(attack.hitbox.mAABB.OffsetX > 0)
+                        attack.hitbox.mAABB.OffsetX = attack.hitbox.mAABB.OffsetX * - 1;
+                    }
+                }
+                //If target is to the right of the Entity && Target has an attack...
+                else if (target.Position.x > this.Body.mPosition.x && mAttackManager.AttackList != null)
+                {
+                    //Check if target can make a close range attack.
+                    foreach (MeleeAttack attack in mAttackManager.AttackList)
+                    {
+                        attack.hitbox.mAABB.OffsetX = Mathf.Abs(attack.hitbox.mAABB.OffsetX);
+                    }
+                }
+                //Attack
+                mAttackManager.AttackList[0].Activate();
+            }
         }
 
         mAttackManager.UpdateAttacks();

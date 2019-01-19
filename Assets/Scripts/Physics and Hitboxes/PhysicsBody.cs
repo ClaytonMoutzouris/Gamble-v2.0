@@ -737,7 +737,7 @@ public class PhysicsBody : CustomCollider2D
             Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.speed2.x), Mathf.Abs(data.speed2.y));
 
             Vector2 speedSum = absSpeed1 + absSpeed2;
-            Debug.Log(mEntity.name + " colliding with " + data.other.mEntity.name + " obj1 speed: " + absSpeed1 + " obj2 speed: " + absSpeed2 + " speed sum: " + speedSum);
+            //Debug.Log(mEntity.name + " colliding with " + data.other.mEntity.name + " obj1 speed: " + absSpeed1 + " obj2 speed: " + absSpeed2 + " speed sum: " + speedSum);
             
             float speedRatioX, speedRatioY;
 
