@@ -331,7 +331,7 @@ public static class MapGenerator
     }
     */
 
-    public static Vector2i GetStartTile(MapData map, int depth = 0)
+    public static Vector2i GetStartTile(Map map, int depth = 0)
     {
         Vector2i startTile = new Vector2i(1, 1);
         int xr, yr;
@@ -358,7 +358,7 @@ public static class MapGenerator
 
     }
 
-    public static void AddDoorTile(MapData map, int depth = 0)
+    public static void AddDoorTile(Map map, int depth = 0)
     {
         Vector2i doorTile = new Vector2i(99, 99);
         int xr, yr;
@@ -385,7 +385,7 @@ public static class MapGenerator
 
     }
 
-    public static void AddBounds(MapData map)
+    public static void AddBounds(Map map)
     {
         for (int i = 0; i < map.sizeX; i++)
         {
@@ -402,9 +402,9 @@ public static class MapGenerator
         }
     }
 
-    public static MapData GenerateHubMap()
+    public static Map GenerateHubMap()
     {
-        MapData map = new MapData(MapType.Hub, WorldType.Hub, 10, 10);
+        Map map = new Map(MapType.Hub, WorldType.Hub, 10, 10);
 
         for (int x = 0; x < map.MapChunksX; x++)
         {
@@ -426,9 +426,9 @@ public static class MapGenerator
         return map;
     }
 
-    public static MapData GenerateBossMap(WorldType type)
+    public static Map GenerateBossMap(WorldType type)
     {
-        MapData map = new MapData(MapType.BossMap, type, 30, 30);
+        Map map = new Map(MapType.BossMap, type, 30, 30);
 
 
         for (int i = 0; i < map.sizeX; i++)
@@ -452,9 +452,9 @@ public static class MapGenerator
         return map;
     }
 
-    public static MapData GenerateMap()
+    public static Map GenerateMap()
     {
-        MapData map = new MapData(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
+        Map map = new Map(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
         //LoadRooms();
         int depth = Random.Range(5, 8);
 
@@ -495,7 +495,7 @@ public static class MapGenerator
         return map;
     }
 
-    static void PopulateMap(MapData map)
+    static void PopulateMap(Map map)
     {
         AddChests(map);
         AddEnemies(map);
@@ -505,7 +505,7 @@ public static class MapGenerator
 
     }
 
-    static void AddChests(MapData map)
+    static void AddChests(Map map)
     {
         int r;
 
@@ -526,7 +526,7 @@ public static class MapGenerator
         }
     }
 
-    static void AddFallingRock(MapData map)
+    static void AddFallingRock(Map map)
     {
         int r;
 
@@ -547,7 +547,7 @@ public static class MapGenerator
         }
     }
 
-    static void AddEnemies(MapData map)
+    static void AddEnemies(Map map)
     {
         int r;
 

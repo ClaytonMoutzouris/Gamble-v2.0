@@ -5,15 +5,17 @@ using System.IO;
 //NESW
 
 public enum ChunkType { Above, Surface, Inner };
-public enum ChunkOrientation { }
+public enum ChunkEdge { North, East, West, South }
+
 //[System.Serializable]
 public class MapChunk
 {
     public TileType[,] tiles;
+    public Dictionary<ChunkEdge, bool> chunkEdges; //This dictionary keeps track of which sides are open and which are closed?
     public ChunkType type;
     public int mWidth;
     public int mHeight;
-
+        
     public MapChunk()
     {
         mWidth = Constants.cMapChunkSizeX;

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\ItemEditor.cs" />
+    <Compile Include="Assets\Editor\MapEditor.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

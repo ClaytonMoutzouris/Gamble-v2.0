@@ -603,7 +603,7 @@ public class PhysicsBody : CustomCollider2D
 
     public void ApplyGravity()
     {
-        mSpeed.y += Constants.cGravity * Time.deltaTime;
+        mSpeed.y += mMap.GetGravity() * Time.deltaTime;
 
         mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
     }

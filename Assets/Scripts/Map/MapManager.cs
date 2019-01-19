@@ -8,7 +8,7 @@ public class MapManager : MonoBehaviour
 {
     [HideInInspector]
     protected TileType[,] mTileData;
-    public MapData mMapData;
+    public Map mCurrentMap;
     public TileMapObject mTileMap;
     public static MapManager instance;
     public Vector3 mPosition;
@@ -170,6 +170,11 @@ public class MapManager : MonoBehaviour
 
     }
 
+    public float GetGravity()
+    {
+        return mCurrentMap.gravity;
+    }
+
 
     public void InitMapObject()
     {
@@ -189,26 +194,26 @@ public class MapManager : MonoBehaviour
         switch (mapType)
         {
             case MapType.Hub:
-                mMapData = MapGenerator.GenerateHubMap();
+                mCurrentMap = MapGenerator.GenerateHubMap();
                 SoundManager.instance.PlayMusic(0);
                 break;
             case MapType.World:
-                mMapData = MapGenerator.GenerateMap();
+                mCurrentMap = MapGenerator.GenerateMap();
                 SoundManager.instance.PlayMusic(1);
                 break;
             case MapType.BossMap:
-                mMapData = MapGenerator.GenerateBossMap(mMapData.type);
+                mCurrentMap = MapGenerator.GenerateBossMap(mCurrentMap.type);
                 SoundManager.instance.PlayMusic(2);
                 break;
         }
 
-        mWidth = mMapData.sizeX;
-        mHeight = mMapData.sizeY;
+        mWidth = mCurrentMap.sizeX;
+        mHeight = mCurrentMap.sizeY;
 
-        mTileData = mMapData.GetMap();
-        AddEntities();
-        Debug.Log(mMapData.sizeX + ", " + mMapData.sizeY);
-        mTileMap.DrawMap(mTileData, mMapData.sizeX, mMapData.sizeY, mMapData.type);
+        mTileData = mCurrentMap.GetMap();
+        AddEntities(mCurrentMap);
+
+        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
     }
 
 
@@ -220,9 +225,9 @@ public class MapManager : MonoBehaviour
         NewMap(MapType.Hub);
     }
 
-    public void AddEntities()
+    public void AddEntities(Map data)
     {
-        foreach(EntityData eD in mMapData.objects)
+        foreach(EntityData eD in data.objects)
         { 
             switch (eD.EntityType)
             {

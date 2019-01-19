@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Controllers\Game.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\LavaBoss.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\Scripts\Items\PlayerEquipment.cs" />
     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
     <Compile Include="Assets\Scripts\Map\EditorMap.cs" />
+    <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapChunk.cs" />
     <Compile Include="Assets\Scripts\Map\MapData.cs" />
     <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />

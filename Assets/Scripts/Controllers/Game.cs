@@ -103,9 +103,9 @@ public class Game : MonoBehaviour
 
         MapType mapType;
 
-        if (mMap.mMapData != null)
+        if (mMap.mCurrentMap != null)
         {
-            mapType = mMap.mMapData.mapType;
+            mapType = mMap.mCurrentMap.mapType;
             if (mapType == MapType.Hub)
             {
                 mapType = MapType.World;
@@ -127,7 +127,7 @@ public class Game : MonoBehaviour
 
         mMap.NewMap(mapType);
         foreach(Player player in players)
-        player.Body.SetTilePosition(mMap.mMapData.startTile);
+        player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
 
 
     }

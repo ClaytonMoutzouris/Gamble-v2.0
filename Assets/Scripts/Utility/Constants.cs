@@ -5,7 +5,7 @@ using System.Collections;
 
 public class Constants
 {
-    public const float cGravity = -1030.0f;
+    public const float cDefaultGravity = -1030.0f;
     public const float cMaxFallingSpeed = -900.0f;
     public const float cConveyorSpeed = 100.0f;
     public const float cBounceSpeed = 700.0f;
