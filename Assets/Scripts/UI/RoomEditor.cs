@@ -2,7 +2,9 @@
 using UnityEngine.EventSystems;
 using System.IO;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public enum EditorMode
 {
@@ -20,10 +22,12 @@ public class RoomEditor : MonoBehaviour
 
     public EditorMap mMap;
 
+    public Dropdown chunkTypeDropdown;
+    public Dropdown edgeTypeDropdown;
+
     public Text tilePreview;
     private Color activeColor;
     public EditorMode mode;
-    public ChunkType roomType;
     public TileType mPlacedTileType;
     public List<GameObject> objectPrefabs;
     public int mObjectIndex = 0;
@@ -34,8 +38,13 @@ public class RoomEditor : MonoBehaviour
     void Awake()
     {
         tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
-
         //SelectColor(0);
+        List<string> edgeOptions = new List<string>();
+        for(int i = 0; i < (int)ChunkEdgeType.Count; i++)
+        {
+            edgeOptions.Add(((ChunkEdgeType)i).ToString());
+        }
+        edgeTypeDropdown.AddOptions(edgeOptions);
     }
 
     void Update()
@@ -43,6 +52,14 @@ public class RoomEditor : MonoBehaviour
 
         HandleInput();
 
+    }
+
+
+    public void SetEditorValues(ChunkType type, ChunkEdgeType edges)
+    {
+        edgeTypeDropdown.value = (int)edges;
+        chunkTypeDropdown.value = (int)type;
+        //SetChunkEdgeType();
     }
 
     public void ChangeMode(int index)
@@ -53,6 +70,11 @@ public class RoomEditor : MonoBehaviour
     public void ChangeType(int index)
     {
         mMap.chunk.type = (ChunkType)index;
+    }
+
+    public void ChangeEdgeType(int index)
+    {
+        mMap.chunk.edgeType = (ChunkEdgeType)index;
     }
 
     void HandleInput()
@@ -101,7 +123,7 @@ public class RoomEditor : MonoBehaviour
         if (wheel > 0.05f)
         {
 
-            if ((int)mPlacedTileType < (int)TileType.Count - 1)
+            if ((int)mPlacedTileType < (int)TileType.Door - 1)
                 mPlacedTileType += 1;
             else
                 mPlacedTileType = TileType.Empty;
@@ -113,7 +135,7 @@ public class RoomEditor : MonoBehaviour
             if ((int)mPlacedTileType > (int)TileType.Empty)
                 mPlacedTileType -= 1;
             else
-                mPlacedTileType = TileType.Count - 1;
+                mPlacedTileType = TileType.Door - 1;
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }

@@ -12,10 +12,11 @@ public class SaveLoadMenu : MonoBehaviour
     bool saveMode;
     public EditorMap mMap;
     public InputField nameInput;
+    public SaveLoadItem selected;
     public RectTransform listContent;
     public SaveLoadItem itemPrefab;
     public RoomEditor RoomEditor;
-    public int version = 1;
+    public int version = 2;
 
     public void Open(bool saveMode)
     {
@@ -35,15 +36,6 @@ public class SaveLoadMenu : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    string GetSelectedPath()
-    {
-        string mapName = nameInput.text;
-        if (mapName.Length == 0)
-        {
-            return null;
-        }
-        return Path.Combine(Application.dataPath + "/Rooms", mapName + ".room");
-    }
 
     public void Close()
     {
@@ -63,6 +55,9 @@ public class SaveLoadMenu : MonoBehaviour
             writer.Write(version);
 
             mMap.chunk.Save(writer);
+
+            Debug.Log("Saving EdgeType :" + mMap.chunk.edgeType);
+            Debug.Log("Saving ChunkType :" + mMap.chunk.type);
         }
 
     }
@@ -83,6 +78,10 @@ public class SaveLoadMenu : MonoBehaviour
             {
                 mMap.chunk.Load(reader);
                 mMap.Draw();
+                Debug.Log("Loading EdgeType :" + mMap.chunk.edgeType);
+                Debug.Log("Loading ChunkType :" + mMap.chunk.type);
+
+                RoomEditor.SetEditorValues(mMap.chunk.type, mMap.chunk.edgeType);
             }
             else
             {
@@ -94,7 +93,7 @@ public class SaveLoadMenu : MonoBehaviour
 
     public void Action()
     {
-        string path = GetSelectedPath();
+        string path = selected.Path;
         if (path == null)
         {
             return;
@@ -110,9 +109,10 @@ public class SaveLoadMenu : MonoBehaviour
         Close();
     }
 
-    public void SelectItem(string name)
+    public void SelectItem(SaveLoadItem selected)
     {
-        nameInput.text = name;
+        nameInput.text = selected.MapName;
+        this.selected = selected;
     }
 
     void FillList()
@@ -123,7 +123,7 @@ public class SaveLoadMenu : MonoBehaviour
         }
 
         string[] paths =
-            Directory.GetFiles(Application.dataPath + "/Rooms", "*.room");
+            Directory.GetFiles(Application.dataPath + "/Rooms", "*.room", SearchOption.AllDirectories);
 
         Array.Sort(paths);
 
@@ -131,6 +131,7 @@ public class SaveLoadMenu : MonoBehaviour
         {
             SaveLoadItem item = Instantiate(itemPrefab);
             item.menu = this;
+            item.Path = paths[i];
             item.MapName = Path.GetFileNameWithoutExtension(paths[i]);
             item.transform.SetParent(listContent, false);
         }
@@ -138,7 +139,7 @@ public class SaveLoadMenu : MonoBehaviour
 
     public void Delete()
     {
-        string path = GetSelectedPath();
+        string path = selected.Path;
         if (path == null)
         {
             return;

@@ -4,15 +4,18 @@ using System.IO;
 
 //NESW
 
-public enum ChunkType { Above, Surface, Inner };
+public enum ChunkType { Above, Surface, Inner, Count };
 public enum ChunkEdge { North, East, West, South }
+//Each bit represents a direction W S E N -> 0 = closed edge, 1 = open edge
+public enum ChunkEdgeType { E0000, E0001, E0010, E0011, E0100, E0101, E0110, E0111, E1000, E1001, E1010, E1011, E1100, E1101, E1110, E1111, Count };
 
 //[System.Serializable]
 public class MapChunk
 {
     public TileType[,] tiles;
-    public Dictionary<ChunkEdge, bool> chunkEdges; //This dictionary keeps track of which sides are open and which are closed?
+    //public Dictionary<ChunkEdge, bool> chunkEdges; //This dictionary keeps track of which sides are open and which are closed?
     public ChunkType type;
+    public ChunkEdgeType edgeType;
     public int mWidth;
     public int mHeight;
         
@@ -25,10 +28,26 @@ public class MapChunk
         tiles = new TileType[mWidth, mHeight];
     }
 
+    public MapChunk Copy()
+    {
+        MapChunk copy = new MapChunk();
+        copy.tiles = tiles.Clone() as TileType[,];
+        copy.type = this.type;
+        copy.edgeType = this.edgeType;
+        copy.mWidth = this.mWidth;
+        copy.mHeight = this.mHeight;
+
+        return copy;
+    }
+
 
     public void Load(BinaryReader reader)
     {
         type = (ChunkType)reader.ReadByte();
+
+        edgeType = (ChunkEdgeType)reader.ReadByte();
+
+
         mWidth = reader.ReadByte();
         mHeight = reader.ReadByte();
 
@@ -46,6 +65,10 @@ public class MapChunk
     {
         //First write the type
         writer.Write((byte)type);
+
+        //Then write the EdgeType
+        writer.Write((byte)edgeType);
+
 
         //Then write the size
         writer.Write((byte)mWidth);

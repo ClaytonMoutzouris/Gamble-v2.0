@@ -19,10 +19,24 @@ public class SaveLoadItem : MonoBehaviour
         }
     }
 
+    public string Path
+    {
+        get
+        {
+            return path;
+        }
+
+        set
+        {
+            path = value;
+        }
+    }
+
     string mapName;
+    string path;
 
     public void Select()
     {
-        menu.SelectItem(mapName);
+        menu.SelectItem(this);
     }
 }

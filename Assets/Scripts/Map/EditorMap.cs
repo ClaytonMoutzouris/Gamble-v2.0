@@ -16,7 +16,7 @@ public class EditorMap : MapManager
 
         chunk = new MapChunk();
         mTileData = chunk.tiles;
-        chunk.type = ChunkType.Inner;
+        //chunk.type = ChunkType.Inner;
 
         for (int x = 0; x < mWidth; x++)
         {

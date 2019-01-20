@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class MapEditor
+public class MapDataEditor
 {
 
     [MenuItem("Assets/Create/Map")]

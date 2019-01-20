@@ -46,6 +46,7 @@ public class Game : MonoBehaviour
         CollisionManager.InitializeCollisionManager();
         ItemDatabase.InitializeDatabase();
         EnemyDatabase.InitializeDatabase();
+        MapGenerator.LoadChunks();
     }
 
     void Start ()
