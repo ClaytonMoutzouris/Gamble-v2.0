@@ -266,24 +266,21 @@ public static class MapGenerator
         return temp;
     }
 
-    public static Vector2i GetStartTile(Map map, int depth = 0)
+    public static Vector2i GetStartTile(Map map, int roomX, int roomY)
     {
         Vector2i startTile = new Vector2i(1, 1);
-        int xr, yr;
         //int chunkX = Random.Range(0, Constants.cMapChunksX);
-        int chunkX = 0;
-        int chunkY = depth;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
             for (int x = 0; x < Constants.cMapChunkSizeX; x++)
             {
 
-                if (map.rooms[chunkX, chunkY].tiles[x, y] == TileType.Empty)
+                if (map.rooms[roomX, roomY].tiles[x, y] == TileType.Empty)
                 {
-                    if (map.rooms[chunkX, chunkY].tiles[x, y - 1] == TileType.Block)
+                    if (map.rooms[roomX, roomY].tiles[x, y - 1] == TileType.Block)
                     {
-                        return startTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
+                        return startTile = new Vector2i(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y);
                     }
                 }
             }
@@ -293,23 +290,20 @@ public static class MapGenerator
 
     }
 
-    public static void AddDoorTile(Map map, int depth = 0)
+    public static void AddDoorTile(Map map, int roomX, int roomY)
     {
         Vector2i doorTile = new Vector2i(99, 99);
-        int xr, yr;
-        int chunkX = 0;
-        int chunkY = depth;
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
             for (int x = 0; x < Constants.cMapChunkSizeX; x++)
             {
 
-                if (map.rooms[chunkX, chunkY].tiles[x, y] == TileType.Empty)
+                if (map.rooms[roomX, roomY].tiles[x, y] == TileType.Empty)
                 {
-                    if (map.rooms[chunkX, chunkY].tiles[x, y - 1] == TileType.Block)
+                    if (map.rooms[roomX, roomY].tiles[x, y - 1] == TileType.Block)
                     {
-                        map.SetTile(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y, TileType.Door);
+                        map.SetTile(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y, TileType.Door);
                         //doorTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
                         Debug.Log("Setting Door tile at " + x + "," + y);
                         return;
@@ -351,8 +345,8 @@ public static class MapGenerator
 
         //AddBounds(map);
 
-        map.startTile = GetStartTile(map);
-        AddDoorTile(map);
+        map.startTile = GetStartTile(map, 0, 0);
+        AddDoorTile(map,0,0);
 
 
         map.AddEntity(new EnemyData(map.sizeX / 4, map.sizeY / 4, EnemyType.Slime));
@@ -382,24 +376,16 @@ public static class MapGenerator
 
         map.AddEntity(new EnemyData(map.sizeX / 2, map.sizeY / 2, EnemyType.LavaBoss));
 
-        map.startTile = GetStartTile(map);
-        AddDoorTile(map);
+        map.startTile = GetStartTile(map,1,0);
+        AddDoorTile(map,0,0);
         return map;
     }
 
-    public struct ChunkNode {
-        public int x;
-        public int y;
-
-        public ChunkEdgeType edgeType;
-        public ChunkType type;
-
-        public List<Direction> openDirections;
-    }
 
     public static ChunkType[,] GenerateTypeMap(int sizeX, int sizeY, int depth = 5)
     {
         ChunkType[,] typeMap = new ChunkType[sizeX, sizeY];
+
         for (int y = 0; y < sizeY; y++)
         {
             for (int x = 0; x < sizeX; x++)
@@ -497,12 +483,112 @@ public static class MapGenerator
         return edgeMap;
     }
 
+
+    public static List<Direction> PossibleDirections(ChunkNode node, int maxX, int maxY)
+    {
+        List<Direction> directions = new List<Direction>();
+
+        if(node.x != 0)
+        {
+            directions.Add(Direction.Left);
+        }
+        if (node.y != 0)
+        {
+            directions.Add(Direction.Down);
+        }
+        if (node.x != maxX-1)
+        {
+            directions.Add(Direction.Right);
+        }
+        if (node.y != maxY-1)
+        {
+            directions.Add(Direction.Up);
+        }
+
+        return directions;
+
+    }
+
+    public static ChunkNode[,] GenerateNodeMap(int sizeX, int sizeY, int startingX, int startingY, int goalX, int goalY, int depth = 5)
+    {
+        ChunkNode[,] nodeMap = new ChunkNode[sizeX, sizeY];
+
+        for (int y = 0; y < sizeY; y++)
+        {
+            for (int x = 0; x < sizeX; x++)
+            {
+                //Check if chunk lies on an edge.
+                //Check if tile is 
+                nodeMap[x, y] = new ChunkNode(x, y);
+
+                if(x != 0)
+                {
+                    nodeMap[x, y].AddNeighbour(Direction.Left,nodeMap[x-1,y]);
+                    nodeMap[x-1, y].AddNeighbour(Direction.Right, nodeMap[x, y]);
+                }
+                if(y != 0)
+                {
+                    nodeMap[x, y].AddNeighbour(Direction.Down, nodeMap[x, y-1]);
+                    nodeMap[x, y-1].AddNeighbour(Direction.Up, nodeMap[x, y]);
+                }
+                if(x != sizeX - 1)
+                {
+                    nodeMap[x, y].AddNeighbour(Direction.Right, nodeMap[x + 1, y]);
+                }
+                if(y != sizeY - 1)
+                {
+                    nodeMap[x, y].AddNeighbour(Direction.Up, nodeMap[x, y + 1]);
+                }
+            }
+        }
+
+
+
+        ChunkNode currentNode = nodeMap[startingX, startingY];
+        bool pathDone = false;
+        Debug.Log("Path X: " + currentNode.x + ", Y: " + currentNode.y);
+
+
+        while (!pathDone)
+        {
+            List<Direction> dirs = PossibleDirections(currentNode, sizeX, sizeY);
+
+            if(dirs.Count > 0)
+            {
+                Direction next = dirs[Random.Range(0, dirs.Count)];
+                Debug.Log("Next Direction is " + next.ToString());
+
+                currentNode.ChangeEdge(next, true);
+                currentNode = currentNode.GetNeighbour(next);
+                Debug.Log("Path X: " + currentNode.x + ", Y: " + currentNode.y);
+                if(currentNode == nodeMap[goalX, goalY])
+                {
+                    pathDone = true;
+                }
+            }
+            else
+            {
+                //we're fucked
+                pathDone = true;
+            }
+
+        }
+
+        return nodeMap;
+    }
+
     public static Map GenerateMap()
     {
         Map map = new Map(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
         //LoadRooms();
-        int depth = Random.Range(5, 8);
+        int depth = Random.Range(6, 8);
         //PrintDictionary();
+        int startingX = Random.Range(0, map.MapChunksX);
+        int startingY = depth;
+
+        int goalX = Random.Range(0, map.MapChunksX);
+        int goalY = Random.Range(0, 2);
+        ChunkNode[,] nodemap = GenerateNodeMap(map.MapChunksX, map.MapChunksY, startingX, startingY, goalX, goalY);
 
         ChunkType[,] typeMap = GenerateTypeMap(map.MapChunksX, map.MapChunksY, depth);
         ChunkEdgeType[,] edgeMap = GenerateEdgeMap(typeMap, map.MapChunksX, map.MapChunksY);
@@ -518,8 +604,8 @@ public static class MapGenerator
         AddBounds(map);
 
 
-        map.startTile = GetStartTile(map, depth);
-        AddDoorTile(map, depth);
+        map.startTile = GetStartTile(map, startingX, startingY);
+        AddDoorTile(map, goalX, goalY);
 
         PopulateMap(map);
 

@@ -93,7 +93,16 @@ public class SaveLoadMenu : MonoBehaviour
 
     public void Action()
     {
-        string path = selected.Path;
+        string path;
+        if (selected != null)
+        {
+            path = selected.Path;
+
+        } else
+        {
+            path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
+        }
+
         if (path == null)
         {
             return;

@@ -163,6 +163,8 @@ public class Game : MonoBehaviour
             playerInputs[p][(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
             playerInputs[p][(int)KeyInput.Shoot] = Input.GetKey(KeyCode.Q);
             playerInputs[p][(int)KeyInput.Attack] = Input.GetKey(KeyCode.R);
+            playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
+
 
                     break;
             }
