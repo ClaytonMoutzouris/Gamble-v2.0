@@ -16,7 +16,7 @@ public class SaveLoadMenu : MonoBehaviour
     public RectTransform listContent;
     public SaveLoadItem itemPrefab;
     public RoomEditor RoomEditor;
-    public int version = 2;
+    public int version = 3;
 
     public void Open(bool saveMode)
     {
@@ -54,10 +54,8 @@ public class SaveLoadMenu : MonoBehaviour
             //to determine what format a map we are loading is
             writer.Write(version);
 
-            mMap.chunk.Save(writer);
+            mMap.room.Save(writer);
 
-            Debug.Log("Saving EdgeType :" + mMap.chunk.edgeType);
-            Debug.Log("Saving ChunkType :" + mMap.chunk.type);
         }
 
     }
@@ -76,12 +74,10 @@ public class SaveLoadMenu : MonoBehaviour
             int header = reader.ReadInt32();
             if (header == version)
             {
-                mMap.chunk.Load(reader);
+                mMap.room.Load(reader);
                 mMap.Draw();
-                Debug.Log("Loading EdgeType :" + mMap.chunk.edgeType);
-                Debug.Log("Loading ChunkType :" + mMap.chunk.type);
 
-                RoomEditor.SetEditorValues(mMap.chunk.type, mMap.chunk.edgeType);
+                RoomEditor.SetEditorValues(mMap.room.roomType);
             }
             else
             {
@@ -94,14 +90,9 @@ public class SaveLoadMenu : MonoBehaviour
     public void Action()
     {
         string path;
-        if (selected != null)
-        {
-            path = selected.Path;
 
-        } else
-        {
-            path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
-        }
+        path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
+        
 
         if (path == null)
         {
@@ -121,7 +112,6 @@ public class SaveLoadMenu : MonoBehaviour
     public void SelectItem(SaveLoadItem selected)
     {
         nameInput.text = selected.MapName;
-        this.selected = selected;
     }
 
     void FillList()

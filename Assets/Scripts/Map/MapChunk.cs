@@ -5,6 +5,7 @@ using System.IO;
 //NESW
 
 public enum ChunkType { Above, Surface, Inner, Count };
+
 //Each bit represents a direction W S E N -> 0 = closed edge, 1 = open edge
 public enum ChunkEdgeType { E0000, E0001, E0010, E0011, E0100, E0101, E0110, E0111, E1000, E1001, E1010, E1011, E1100, E1101, E1110, E1111, Count };
 

@@ -28,7 +28,7 @@ public class EditorCamera : MonoBehaviour
     const int cOuterVisibilityY = 0;
     float zoom = 1f;
     public float mCameraMoveSpeed = 25;
-
+    int UIsize = 15;
 
 
     void Start()
@@ -68,9 +68,9 @@ public class EditorCamera : MonoBehaviour
         }
 
         //Keep the camera within the bounds of the maps height
-        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 < 0)
+        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 + UIsize < 0)
         {
-            cameraPos.y = halfHeight - MapManager.cTileSize / 2;
+            cameraPos.y = halfHeight - MapManager.cTileSize / 2 - UIsize;
         }
         else if (cameraPos.y + halfHeight + MapManager.cTileSize / 2 > mMap.mHeight * MapManager.cTileSize)
         {

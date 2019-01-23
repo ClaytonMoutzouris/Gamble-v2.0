@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChunkNode
+public class Node<T>
 {
     public int x;
     public int y;
 
-    public ChunkEdge[] neighbours;
+    public Edge<T>[] neighbours;
     /*Left = 0
     *Up=1
     * Right=2
     * Down=3
     */
 
-    public ChunkNode(int x, int y)
+    public Node(int x, int y)
     {
         this.x = x;
         this.y = y;
 
-        neighbours = new ChunkEdge[4];
+        neighbours = new Edge<T>[4];
     }
 
-    public void AddNeighbour(Direction direction, ChunkNode node)
+    public void AddNeighbour(Direction direction, Node<T> node)
     {
-        neighbours[(int)direction] = new ChunkEdge(node);
+        neighbours[(int)direction] = new Edge<T>(node);
     }
 
-    public ChunkNode GetNeighbour(Direction direction)
+    public Node<T> GetNeighbour(Direction direction)
     {
         return neighbours[(int)direction].node;
     }
@@ -38,13 +38,13 @@ public class ChunkNode
     }
 }
 
-public class ChunkEdge
+public class Edge<T>
 {
     public bool isOpen;
 
-    public ChunkNode node;
+    public Node<T> node;
 
-    public ChunkEdge(ChunkNode n)
+    public Edge(Node<T> n)
     {
         isOpen = false;
         node = n;

@@ -22,8 +22,7 @@ public class RoomEditor : MonoBehaviour
 
     public EditorMap mMap;
 
-    public Dropdown chunkTypeDropdown;
-    public Dropdown edgeTypeDropdown;
+    public Dropdown roomTypeDropdown;
 
     public Text tilePreview;
     private Color activeColor;
@@ -40,11 +39,12 @@ public class RoomEditor : MonoBehaviour
         tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         //SelectColor(0);
         List<string> edgeOptions = new List<string>();
-        for(int i = 0; i < (int)ChunkEdgeType.Count; i++)
+
+        for(int i = 0; i < (int)RoomType.Count; i++)
         {
-            edgeOptions.Add(((ChunkEdgeType)i).ToString());
+            edgeOptions.Add(((RoomType)i).ToString());
         }
-        edgeTypeDropdown.AddOptions(edgeOptions);
+        roomTypeDropdown.AddOptions(edgeOptions);
     }
 
     void Update()
@@ -55,10 +55,9 @@ public class RoomEditor : MonoBehaviour
     }
 
 
-    public void SetEditorValues(ChunkType type, ChunkEdgeType edges)
+    public void SetEditorValues(RoomType type)
     {
-        edgeTypeDropdown.value = (int)edges;
-        chunkTypeDropdown.value = (int)type;
+        roomTypeDropdown.value = (int)type;
         //SetChunkEdgeType();
     }
 
@@ -67,14 +66,10 @@ public class RoomEditor : MonoBehaviour
         mode = (EditorMode)index;
     }
 
-    public void ChangeType(int index)
-    {
-        mMap.chunk.type = (ChunkType)index;
-    }
 
-    public void ChangeEdgeType(int index)
+    public void ChangeRoomType(int index)
     {
-        mMap.chunk.edgeType = (ChunkEdgeType)index;
+        mMap.room.roomType = (RoomType)index;
     }
 
     void HandleInput()

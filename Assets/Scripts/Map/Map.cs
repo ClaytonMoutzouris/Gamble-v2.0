@@ -5,13 +5,13 @@ using UnityEngine;
 public class Map
 {
     public Vector2i startTile = new Vector2i(1, 1);
-    public MapChunk[,] rooms;
+    public Room[,] rooms;
     public WorldType type;
     public MapType mapType;
     public int sizeX;
     public int sizeY;
 
-    public float gravity = Constants.cDefaultGravity;
+    public float gravity = -800.0f;
     //public Audio
 
     public int MapChunksX
@@ -43,14 +43,14 @@ public class Map
 
         //gravity = gravity + Random.Range(-500, 500);
 
-        rooms = new MapChunk[MapChunksX, MapChunksY];
+        rooms = new Room[MapChunksX, MapChunksY];
         objects = new List<EntityData>();
 
         for (int x = 0; x < MapChunksX; x++)
         {
             for (int y = 0; y < MapChunksY; y++)
             {
-                rooms[x, y] = new MapChunk();
+                rooms[x, y] = new Room();
             }
         }
     }
@@ -66,14 +66,14 @@ public class Map
         gravity = data.gravity;
 
 
-        rooms = new MapChunk[MapChunksX, MapChunksY];
+        rooms = new Room[MapChunksX, MapChunksY];
         objects = new List<EntityData>();
 
         for (int x = 0; x < MapChunksX; x++)
         {
             for (int y = 0; y < MapChunksY; y++)
             {
-                rooms[x, y] = new MapChunk();
+                rooms[x, y] = new Room();
             }
         }
     }
