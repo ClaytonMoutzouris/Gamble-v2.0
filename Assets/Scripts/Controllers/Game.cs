@@ -46,7 +46,9 @@ public class Game : MonoBehaviour
         CollisionManager.InitializeCollisionManager();
         ItemDatabase.InitializeDatabase();
         EnemyDatabase.InitializeDatabase();
-        MapGenerator.LoadRooms();
+        MapDatabase.InitializeDatabase();
+        RoomDatabase.InitializeDatabase();
+
     }
 
     void Start ()
@@ -74,7 +76,7 @@ public class Game : MonoBehaviour
                 }
                 //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
-                NewGameMap();
+                NewGameMap(MapType.Hub);
 
            break;
             case GameMode.Editor:
@@ -84,7 +86,7 @@ public class Game : MonoBehaviour
         
     }
 
-    public void NewGameMap()
+    public void NewGameMap(MapType type)
     {
         //We have to clear/reset the players refence to the map
         //For now, clearing its areas does the job
@@ -102,31 +104,7 @@ public class Game : MonoBehaviour
 
         }
 
-        MapType mapType;
-
-        if (mMap.mCurrentMap != null)
-        {
-            mapType = mMap.mCurrentMap.mapType;
-            if (mapType == MapType.Hub)
-            {
-                mapType = MapType.World;
-            }
-            else if (mapType == MapType.World)
-            {
-                mapType = MapType.BossMap;
-            }
-            else if (mapType == MapType.BossMap)
-            {
-                mapType = MapType.World;
-            }
-        } else
-        {
-            mapType = MapType.Hub;
-        }
-        
-
-
-        mMap.NewMap(mapType);
+        mMap.NewMap(MapDatabase.GetMap(type));
         foreach(Player player in players)
         player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
 
@@ -271,7 +249,7 @@ public class Game : MonoBehaviour
         */ 
         if (mMapChangeFlag)
         {
-            NewGameMap();
+            NewGameMap(MapType.World);
             mMapChangeFlag = false;
         }
         

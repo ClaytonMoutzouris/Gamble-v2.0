@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public enum RoomType { Hub, SideRoom, LeftRight, LeftRightBottom, LeftRightBottomTop, Count };
 
 public class Room
 {
     public TileType[,] tiles;
     public RoomType roomType;
+    public SurfaceLayer layer = SurfaceLayer.Surface;
     public int mWidth;
     public int mHeight;
 
@@ -23,9 +23,12 @@ public class Room
     {
         mWidth = Constants.cMapChunkSizeX;
         mHeight = Constants.cMapChunkSizeY;
+        //layer = layerType;
         roomType = type;
         tiles = new TileType[mWidth, mHeight];
     }
+
+   
 
     public Room Copy()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EditorMap : MapManager
 {
 
-    public Room room;
+    public RoomData room;
 
     public override void Init()
     {
@@ -14,7 +14,7 @@ public class EditorMap : MapManager
         //set the position
         mPosition = transform.position;
 
-        room = new Room();
+        room = new RoomData();
         mTileData = room.tiles;
         //chunk.type = ChunkType.Inner;
 

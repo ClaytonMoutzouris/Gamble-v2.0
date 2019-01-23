@@ -23,6 +23,8 @@ public class RoomEditor : MonoBehaviour
     public EditorMap mMap;
 
     public Dropdown roomTypeDropdown;
+    public Dropdown mapLayerDropdown;
+
 
     public Text tilePreview;
     private Color activeColor;
@@ -45,6 +47,14 @@ public class RoomEditor : MonoBehaviour
             edgeOptions.Add(((RoomType)i).ToString());
         }
         roomTypeDropdown.AddOptions(edgeOptions);
+
+        edgeOptions.Clear();
+
+        for (int i = 0; i < (int)SurfaceLayer.Count; i++)
+        {
+            edgeOptions.Add(((SurfaceLayer)i).ToString());
+        }
+        mapLayerDropdown.AddOptions(edgeOptions);
     }
 
     void Update()
@@ -55,9 +65,10 @@ public class RoomEditor : MonoBehaviour
     }
 
 
-    public void SetEditorValues(RoomType type)
+    public void SetEditorValues(RoomType type, SurfaceLayer layer)
     {
         roomTypeDropdown.value = (int)type;
+        mapLayerDropdown.value = (int)layer;
         //SetChunkEdgeType();
     }
 
@@ -70,6 +81,11 @@ public class RoomEditor : MonoBehaviour
     public void ChangeRoomType(int index)
     {
         mMap.room.roomType = (RoomType)index;
+    }
+
+    public void ChangeMapLayer(int index)
+    {
+        mMap.room.surfaceLayer = (SurfaceLayer)index;
     }
 
     void HandleInput()
@@ -118,7 +134,7 @@ public class RoomEditor : MonoBehaviour
         if (wheel > 0.05f)
         {
 
-            if ((int)mPlacedTileType < (int)TileType.Door - 1)
+            if ((int)mPlacedTileType < (int)TileType.Count)
                 mPlacedTileType += 1;
             else
                 mPlacedTileType = TileType.Empty;
@@ -130,7 +146,7 @@ public class RoomEditor : MonoBehaviour
             if ((int)mPlacedTileType > (int)TileType.Empty)
                 mPlacedTileType -= 1;
             else
-                mPlacedTileType = TileType.Door - 1;
+                mPlacedTileType = TileType.Count-1;
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }

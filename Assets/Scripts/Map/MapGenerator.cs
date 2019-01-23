@@ -6,7 +6,7 @@ using System.IO;
 using AccidentalNoise;
 
 
-public enum Direction { Left, Up, Right, Down };
+public enum Direction { Invalid, Up, Left, Down, Right };
 
 
 public static class MapGenerator
@@ -14,47 +14,12 @@ public static class MapGenerator
 
     static Dictionary<RoomType, List<Room>> RoomDictionary;
 
-
-    public static void LoadRooms()
-    {
-        RoomDictionary = new Dictionary<RoomType, List<Room>>();
-
-        for (int type = 0; type < (int)RoomType.Count; type++)
-        {
-            RoomDictionary.Add((RoomType)type, new List<Room>());
-        }
-
-        string[] paths = Directory.GetFiles(Application.dataPath + "/Rooms", "*.room", SearchOption.AllDirectories);
-
-
-        for (int i = 0; i < paths.Length; i++)
-        {
-            Room temp = new Room();
-
-            //string path = Path.Combine(Application.persistentDataPath, "test.map");
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[i])))
-            {
-                int header = reader.ReadInt32();
-                Debug.Log("Reading room with header " + header);
-                if (header == 1)
-                {
-                    temp.Load(reader);
-                }
-                else
-                {
-                    Debug.LogWarning("Unknown room format " + header);
-                }
-
-            }
-            RoomDictionary[temp.roomType].Add(temp.Copy());
-        }
-    }
-
     static Room GetRoom(RoomType type)
     {
         List<Room> chunks = new List<Room>();
         try
         {
+
             chunks.AddRange(RoomDictionary[type]);
         }
         catch (System.NullReferenceException)
@@ -66,31 +31,6 @@ public static class MapGenerator
         //Debug.Log("Chunk with Type: " + chunks[random].type + " and EdgeType " + chunks[random].edgeType);
 
         return chunks[random].Copy();
-    }
-
-    static Room GetHubRoom()
-    {
-
-        string path = Directory.GetFiles(Application.dataPath + "/Rooms", "Hub.room")[0];
-
-        //TileType[,] temp = new TileType[Constants.cMapChunkSizeX, Constants.cMapChunkSizeY];
-        Room temp = new Room();
-        //string path = Path.Combine(Application.persistentDataPath, "test.map");
-        using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
-        {
-            int header = reader.ReadInt32();
-            if (header == 1)
-            {
-                temp.Load(reader);
-            }
-            else
-            {
-                Debug.LogWarning("Unknown room format " + header);
-            }
-
-        }
-
-        return temp;
     }
 
     public static Vector2i GetStartTile(Map map, int roomX, int roomY)
@@ -158,56 +98,6 @@ public static class MapGenerator
         }
     }
 
-    public static Map GenerateHubMap()
-    {
-        Map map = new Map(MapType.Hub, WorldType.Hub, 10, 10);
-
-        for (int x = 0; x < map.MapChunksX; x++)
-        {
-            for (int y = 0; y < map.MapChunksY; y++)
-            {
-                map.rooms[x, y] = GetRoom(RoomType.Hub);
-            }
-        }
-
-        //AddBounds(map);
-
-        map.startTile = GetStartTile(map, 0, 0);
-        AddDoorTile(map,0,0);
-
-
-        map.AddEntity(new EnemyData(map.sizeX / 4, map.sizeY / 4, EnemyType.Slime));
-
-
-        return map;
-    }
-
-    public static Map GenerateBossMap(WorldType type)
-    {
-        Map map = new Map(MapType.BossMap, type, 30, 30);
-
-
-        for (int i = 0; i < map.sizeX; i++)
-        {
-            for (int j = 0; j < map.sizeY; j++)
-            {
-
-                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
-                {
-                    //Debug.Log("X: " + x + ", Y: " + y);
-                    map.SetTile(j, i, TileType.Block);
-                }
-            }
-
-        }
-
-        map.AddEntity(new EnemyData(map.sizeX / 2, map.sizeY / 2, EnemyType.LavaBoss));
-
-        map.startTile = GetStartTile(map,1,0);
-        AddDoorTile(map,0,0);
-        return map;
-    }
-
     //For Generating a map based on noise
     public static Map GenerateMap2()
     {
@@ -262,19 +152,33 @@ public static class MapGenerator
         return map;
     }
 
-    public static Room[,] RoomMap(int sizeX, int sizeY, out Vector2i startRoom, out Vector2i endRoom, int depth = 5)
+    /*
+    public static Node<Room>[,] NodeMap(int sizeX, int sizeY, out Vector2i startRoom, out Vector2i endRoom, int depth)
     {
-        Room[,] map = new Room[sizeX, sizeY];
-        List<Room> mainPath = new List<Room>();
         startRoom = new Vector2i(Random.Range(0, sizeX), depth);
+        endRoom = new Vector2i(0, 0);
+        Node<Room>[,] map = new Node<Room>[sizeX, sizeY];
 
-        map[startRoom.x, startRoom.y] = new Room(RoomType.LeftRightBottomTop);
+
+        
+
+    }
+    */
+   
+
+    public static RoomData[,] RoomMap(int sizeX, int sizeY, out Vector2i startRoom, out Vector2i endRoom, int depth)
+    {
+        RoomData[,] map = new RoomData[sizeX, sizeY];
+        List<RoomData> mainPath = new List<RoomData>();
+        startRoom = new Vector2i(Random.Range(0, sizeX), depth);
+        Debug.Log("StartingX: " + startRoom.x + ", StartingY: " + startRoom.y);
+
+        map[startRoom.x, startRoom.y] = new RoomData(RoomType.LeftRightBottomTop);
         int currentX = startRoom.x;
         int currentY = startRoom.y;
         int prevX = currentX;
         int prevY = currentY;
 
-        //Debug.Log("StartingX: " + startingX + ", StartingY: " + startingY);
 
         mainPath.Add(map[currentX, currentY]);
         int r = 0;
@@ -291,7 +195,7 @@ public static class MapGenerator
                 if(currentX != 0)
                 {
                     currentX -= 1;
-                    map[currentX, currentY] = new Room(RoomType.LeftRight);
+                    map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                 } else
                 {
                     if(map[currentX, currentY].roomType == RoomType.LeftRight)
@@ -300,10 +204,10 @@ public static class MapGenerator
                     if (currentY != 0)
                     {
                         currentX += 1;
-                        map[currentX, currentY] = new Room(RoomType.LeftRightBottomTop);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
 
                         currentY -= 1;
-                        map[currentX, currentY] = new Room(RoomType.LeftRight);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                     }
                     else
                     {
@@ -316,7 +220,7 @@ public static class MapGenerator
                 if (currentX != sizeX-1)
                 {
                     currentX += 1;
-                    map[currentX, currentY] = new Room(RoomType.LeftRight);
+                    map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                 }
                 else
                 {
@@ -326,10 +230,10 @@ public static class MapGenerator
                     if (currentY != 0)
                     {
                         currentX -= 1;
-                        map[currentX, currentY] = new Room(RoomType.LeftRightBottomTop);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
 
                         currentY -= 1;
-                        map[currentX, currentY] = new Room(RoomType.LeftRight);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                     }
                     else
                     {
@@ -342,7 +246,7 @@ public static class MapGenerator
                 if (currentY != 0)
                 {
                     currentY -= 1;
-                    map[currentX, currentY] = new Room(RoomType.LeftRight);
+                    map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                 }
                 else
                 {
@@ -355,6 +259,8 @@ public static class MapGenerator
             {
                 map[currentX, currentY].roomType = RoomType.LeftRightBottomTop;
             }
+
+
             mainPath.Add(map[currentX, currentY]);
         }
         endRoom = new Vector2i(currentX, currentY);
@@ -362,28 +268,57 @@ public static class MapGenerator
         return map;
     }
 
-    public static Map GenerateMap()
+    public static Map GenerateMap(MapData data)
     {
-        Map map = new Map(MapType.World, (WorldType)Random.Range(0, (int)WorldType.Count));
-
-        int depth = Random.Range(8, 9);
+        Map map = new Map(data);
+        
         Vector2i startRoom;
         Vector2i endRoom;
 
+        int[] depths = new int[data.sizeX];
+        for(int i = 0; i < depths.Length; i++)
+        {
+            depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
+        }
 
-        Room[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, out startRoom, out endRoom, depth);
-
+        RoomData[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, out startRoom, out endRoom, data.baseDepth);
+        SurfaceLayer temp;
         for (int x = 0; x < map.MapChunksX; x++)
         {
             for (int y = 0; y < map.MapChunksY; y++)
             {
-                if(roomPath[x, y] != null)
-                    map.rooms[x, y] = GetRoom(roomPath[x,y].roomType);
-                else
-                    map.rooms[x, y] = GetRoom(RoomType.SideRoom);
+                if (data.mapType == MapType.Hub)
+                {
+                    map.rooms[x, y] = RoomDatabase.GetRoom(RoomType.Hub);
+                    continue;
+                }
 
+                if (y < depths[x])
+                {
+                    temp = SurfaceLayer.Inner;
+                } else if(y > depths[x])
+                {
+                    temp = SurfaceLayer.Above;
+                }
+                else 
+                {
+                    temp = SurfaceLayer.Surface;
+                }
+
+                if (roomPath[x, y] != null)
+                {
+                    map.rooms[x, y] = RoomDatabase.GetRoom(roomPath[x, y].roomType, temp);
+                }
+                else
+                {
+                    map.rooms[x, y] = RoomDatabase.GetRoom(RoomType.SideRoom, temp);
+                }
+
+                
             }
         }
+
+        
 
         AddBounds(map);
 

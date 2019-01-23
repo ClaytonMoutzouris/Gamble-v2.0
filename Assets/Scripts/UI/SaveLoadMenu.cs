@@ -77,7 +77,7 @@ public class SaveLoadMenu : MonoBehaviour
                 mMap.room.Load(reader);
                 mMap.Draw();
 
-                RoomEditor.SetEditorValues(mMap.room.roomType);
+                RoomEditor.SetEditorValues(mMap.room.roomType, mMap.room.surfaceLayer);
             }
             else
             {

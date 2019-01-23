@@ -11,6 +11,7 @@ public enum EquipmentSlot { Head, Body, Gloves, Boots, LeftHand, RightHand };
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Count, Hub };
 public enum MapType {  Hub, World, BossMap };
+public enum SurfaceLayer { Above, Surface, Inner, Count };
 
 public enum TileType
 {
@@ -26,6 +27,31 @@ public enum TileType
     ConveyorRight,
     ConveyorLeft,
     Count,
+}
+
+//This enum is for generating levels
+public enum RoomTile
+{
+    Empty,
+    Block,
+    OneWay,
+    Spikes,
+    Bounce,
+    Ladder,
+    LadderTop,
+    SmallEnemy,
+    LargeEnemy,
+    ObstacleBlock1, //suppose a size of 2x2
+    ObstacleBlock2, //suppose size of 2x4
+    ObstacleBlock3, //suppose a size of 3x3
+    Count,
+
+}
+
+//This is for defining smaller portions of rooms, each type should contain an exact definition
+public enum TileType3
+{
+
 }
 
 public enum CollisionType

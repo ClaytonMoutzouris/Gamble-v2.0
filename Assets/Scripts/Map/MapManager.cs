@@ -181,7 +181,7 @@ public class MapManager : MonoBehaviour
 
     }
 
-    public void NewMap(MapType mapType)
+    public void NewMap(MapData data)
     {
         mWidth = Constants.cDefaultMapWidth;
         mHeight = Constants.cDefaultMapHeight;
@@ -191,21 +191,26 @@ public class MapManager : MonoBehaviour
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
-        switch (mapType)
+        /*
+        switch (data.mapType)
         {
             case MapType.Hub:
                 mCurrentMap = MapGenerator.GenerateHubMap();
                 SoundManager.instance.PlayMusic(0);
                 break;
             case MapType.World:
-                mCurrentMap = MapGenerator.GenerateMap();
                 SoundManager.instance.PlayMusic(1);
                 break;
             case MapType.BossMap:
-                mCurrentMap = MapGenerator.GenerateBossMap(mCurrentMap.type);
-                SoundManager.instance.PlayMusic(2);
+                mCurrentMap = MapGenerator.GenerateBossMap(data.type);
                 break;
         }
+        */
+
+
+        mCurrentMap = MapGenerator.GenerateMap(data);
+        SoundManager.instance.PlayMusic((int)data.mapType);
+
 
         mWidth = mCurrentMap.sizeX;
         mHeight = mCurrentMap.sizeY;
@@ -222,7 +227,7 @@ public class MapManager : MonoBehaviour
     {
         mPosition = transform.position;
 
-        NewMap(MapType.Hub);
+        //NewMap(MapType.Hub);
     }
 
     public void AddEntities(Map data)

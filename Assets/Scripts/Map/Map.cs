@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Map
 {
     public Vector2i startTile = new Vector2i(1, 1);
-    public Room[,] rooms;
+    public RoomData[,] rooms;
     public WorldType type;
     public MapType mapType;
     public int sizeX;
@@ -43,14 +44,14 @@ public class Map
 
         //gravity = gravity + Random.Range(-500, 500);
 
-        rooms = new Room[MapChunksX, MapChunksY];
+        rooms = new RoomData[MapChunksX, MapChunksY];
         objects = new List<EntityData>();
 
         for (int x = 0; x < MapChunksX; x++)
         {
             for (int y = 0; y < MapChunksY; y++)
             {
-                rooms[x, y] = new Room();
+                rooms[x, y] = new RoomData();
             }
         }
     }
@@ -66,14 +67,14 @@ public class Map
         gravity = data.gravity;
 
 
-        rooms = new Room[MapChunksX, MapChunksY];
+        rooms = new RoomData[MapChunksX, MapChunksY];
         objects = new List<EntityData>();
 
         for (int x = 0; x < MapChunksX; x++)
         {
             for (int y = 0; y < MapChunksY; y++)
             {
-                rooms[x, y] = new Room();
+                rooms[x, y] = new RoomData();
             }
         }
     }

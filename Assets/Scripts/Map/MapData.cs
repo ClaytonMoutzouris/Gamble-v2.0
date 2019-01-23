@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//A template to use for different types of maps
 public class MapData : ScriptableObject {
 
     public MapType mapType;
@@ -11,6 +11,7 @@ public class MapData : ScriptableObject {
     public int sizeY = 100;
 
     public float gravity = Constants.cDefaultGravity;
-    public int depth = 0;
+    public int baseDepth = 6;
+    public int depthVariance = 3;
 
 }
