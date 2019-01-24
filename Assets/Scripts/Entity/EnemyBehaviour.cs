@@ -2,37 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityBehaviour : MonoBehaviour
+public enum State { Idle, Moving, Jumping, Attacking, Aggrivated, Attack1, Attack2, Attack3 };
+public class EnemyBehaviour : MonoBehaviour
 {
 
     public Enemy mEnemy;
     private State state = State.Idle;
-    
-    //When the moveTimer reaches moveDuration they stop.
-    public float moveDuration;
-    //Timer for movement, they move for this amount of time.
-    public float moveTimer;
-    //Makes the character wait for an amount of time.
-    public float wait;
-    public float jumpDuration;
-    public float jumpTimer;
-    public bool jumping;
-    public float jumpSpeed;
-    public bool canJump;
 
-    public EntityBehaviour(Enemy enemy)
+
+    public bool canMove;
+    public bool canJump;
+    public bool canAttack;
+
+    public bool isWaiting;
+    public bool isMoving;
+    public bool isJumping;
+    public bool isAttacking;
+
+    public float waitDuration;
+    public float moveDuration;
+    public float jumpDuration;
+    public float basicAttackDuration;
+
+    public float moveTimer;
+    public float jumpTimer;
+    public float waitTimer;
+    public float basicAttackTimer;
+
+    public float jumpSpeed;
+
+
+    public EnemyBehaviour(Enemy enemy)
     {
         mEnemy = enemy;
     }
 
-    void EntityBehaviourInit()
+    void EnemyBehaviourInit()
     {
+        canMove = false;
         canJump = false;
+        canAttack = false;
+        isAttacking = false;
+
+        state = State.Idle;
     }
 
-    public void EntityBehaviourUpdate(Enemy enemy)
+    public void EnemyBehaviourUpdate(Enemy enemy)
     {
         EnemyBehaviourLoop(enemy);
+    }
+
+    public void Wait(Enemy enemy)
+    {
+        enemy.Body.mSpeed.x = 0f;
+
+        if(waitTimer >= waitDuration)
+        {
+            waitTimer = 0f;
+            isWaiting = false;
+            return;
+            //Wait finished.
+        }
+
+        waitTimer += Time.deltaTime;
+        return;
     }
 
     /*1. Entities stroll around until their moveCooldown is reached.
@@ -44,13 +77,17 @@ public class EntityBehaviour : MonoBehaviour
    */
     public void Move(Enemy enemy)
     {
-        //1
-        enemy.body.mSpeed.x = enemy.mMovingSpeed;
-        //2
+
         if (moveTimer < moveDuration)
         {
-            if (enemy.body.mPS.pushesLeftTile || enemy.body.mPS.pushesRightTile)
+
+            enemy.body.mSpeed.x = enemy.mMovingSpeed;
+
+            //If we touch somthing to our right or left.
+            if (enemy.body.mPS.pushedLeftTile || enemy.body.mPS.pushedRightTile)
             {
+
+                //Change direction.
                 enemy.mMovingSpeed *= -1;
 
             }
@@ -58,50 +95,33 @@ public class EntityBehaviour : MonoBehaviour
             return;
         }
         //3-4
-        else if (moveTimer > moveDuration && moveTimer < wait)
+        else if (moveTimer > moveDuration)
         {
-            //Movement Cooldown reached .
-            //reset strollTime.
-            enemy.body.mSpeed.x = 0f;
-            moveTimer += Time.deltaTime;
-            return;
-        }
-        //5
-        else if (moveTimer > wait)
-        {
+            isWaiting = true;
             moveTimer = 0f;
             return;
         }
     }
 
-    public void Move(Enemy entity, Entity target, int direction)
+    public void Move(Enemy enemy, Entity target, int direction)
     {
         //1-2
         if (moveTimer < moveDuration)
         {
             //If we have a target move in it's direction.
-            if (target != null)
+            if (target != null && isMoving == false)
             {
-                entity.body.mSpeed.x = entity.mMovingSpeed * direction;
+                isMoving = true;
+                enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
             }
 
             moveTimer += Time.deltaTime;
             return;
         }
-        //3-4
-        else if (moveTimer > moveDuration && moveTimer < wait)
+        else if (moveTimer > moveDuration)
         {
-            //Debug.Log("Resting");
-            //Movement Cooldown reached .
-            //reset strollTime.
-            entity.body.mSpeed.x = 0f;
-            moveTimer += Time.deltaTime;
-            return;
-        }
-        //5
-        else if (moveTimer > wait)
-        {
-            //Debug.Log("Done Resting.");
+            isMoving = false;
+            isWaiting = true;
             moveTimer = 0f;
             return;
         }
@@ -110,22 +130,21 @@ public class EntityBehaviour : MonoBehaviour
     public void Jump(Enemy enemy, int direction)
     {
 
-        //If we have a target, and we arent jumping.
-        if (enemy.Target != null && !jumping && jumpDuration == 0)
+        //If we have a target, and we arent jumping...JUMP!
+        if (enemy.Target != null && !isJumping && jumpTimer == 0f)
         {
             enemy.Body.mSpeed.y = jumpSpeed * direction;
-            jumping = true;
+            isJumping = true;
         }
 
-        //If we have initiated a jump, add force to our mSpeed y.
-        if (jumping && jumpDuration <= jumpTimer)
+        if (isJumping && jumpTimer <= jumpDuration)
         {
-            jumpDuration += Time.deltaTime;
+            jumpTimer += Time.deltaTime;
         }
-        else if (jumping && jumpDuration >= jumpTimer)
+        else if (isJumping && jumpTimer >= jumpDuration)
         {
-            jumpDuration = 0;
-            jumping = false;
+            jumpTimer = 0;
+            isJumping = false;
         }
     }
 
@@ -149,50 +168,100 @@ public class EntityBehaviour : MonoBehaviour
     {
         CheckForTargets(enemy);
 
+        if (isWaiting)
+        {
+            state = State.Idle;
+            Wait(enemy);
+            return;
+        }
+
+
         if (enemy.Target != null)
         {
-            if (enemy.Target.Position.x > enemy.Body.mPosition.x)
+            EnemyAttack(enemy);
+
+            if (TargetToRight(enemy))
             {
+                state = State.Moving;
                 Move(enemy,enemy.Target, 1);
                 if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30)
                 {
+                    state = State.Jumping;
                     Jump(enemy, 1);
                 }
 
             }
-            else if (enemy.Target.Position.x < enemy.Body.mPosition.x)
+            else if (TargetToLeft(enemy))
             {
-                //Debug.Log("Target: " + target.Position.y + "Slime: " + this.Body.mPosition.y);
+                state = State.Moving;
                 Move(enemy,enemy.Target, -1);
                 if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30)
                 {
-                    Debug.Log("jumping!");
+                    state = State.Jumping;
                     Jump(enemy, 1);
                 }
             }
         }
         else
         {
+            state = State.Moving;
             Move(enemy);
         }
 
-        //Enemy attack a target if it is hostile towards it.
-        if(enemy.Target != null)
+
+        enemy.mAttackManager.UpdateAttacks();
+
+    }
+
+    public bool TargetToRight(Enemy enemy)
+    {
+        if (enemy.Target.Position.x > enemy.Body.mPosition.x)
         {
-            EnemyAttack(enemy);
+            return true;
         }
-        
+        else
+        {
+            return false;
+        }
+            
+    }
+
+    public bool TargetToLeft(Enemy enemy)
+    {
+        if (enemy.Target.Position.x < enemy.Body.mPosition.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 
     public void EnemyAttack(Enemy enemy)
     {
+        //If we are already attacking.
+        if (basicAttackTimer < basicAttackDuration && isAttacking)
+        {
+            basicAttackTimer += Time.deltaTime;
+            return;
+        }
+        else if (basicAttackTimer > basicAttackDuration && isAttacking)
+        {
+            isAttacking = false;
+            basicAttackTimer = 0f;
+            enemy.mAttackManager.AttackList[0].Deactivate();
+            return;
+        }
 
-            //If target is standing close to Entity
-            if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+
+
+        //If target is standing close to Entity
+        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
             {
                 //If target is to the left of the Entity && Target has an attack...
-                if (enemy.Target.Position.x < enemy.Body.mPosition.x && enemy.mAttackManager.AttackList != null)
+                if (TargetToLeft(enemy) && enemy.mAttackManager.AttackList != null)
                 {
                     //Check if target can make a close range attack.
                     foreach (MeleeAttack attack in enemy.mAttackManager.AttackList)
@@ -206,7 +275,7 @@ public class EntityBehaviour : MonoBehaviour
                     }
                 }
                 //If target is to the right of the Entity && Target has an attack...
-                else if (enemy.Target.Position.x > enemy.Body.mPosition.x && enemy.mAttackManager.AttackList != null)
+                else if (TargetToRight(enemy) && enemy.mAttackManager.AttackList != null)
                 {
 
                     //Check if target can make a close range attack.
@@ -218,13 +287,14 @@ public class EntityBehaviour : MonoBehaviour
                         }
                     }
                 }
-                //Attack
+            //Attack
+            if (basicAttackTimer == 0f && !isAttacking)
+            {
+                isAttacking = true;
                 enemy.mAttackManager.AttackList[0].Activate();
+                return;
             }
-
-
-            enemy.mAttackManager.UpdateAttacks();
-
+        }
     }
 
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 114562500152961564}
   - component: {fileID: 1613120553129927952}
   - component: {fileID: 5025981402742140755}
-  - component: {fileID: 1441853441759060906}
+  - component: {fileID: 6094765276272370620}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -185,13 +185,13 @@ MonoBehaviour:
   mAnimator: {fileID: 0}
   mToRemove: 0
   mUpdateId: -1
-  mBehaviour: {fileID: 0}
   mEnemyType: 0
   hostility: 1
   state: 0
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
+  mBehaviour: {fileID: 0}
   dashTrigger: 0
 --- !u!114 &1613120553129927952
 MonoBehaviour:
@@ -234,7 +234,7 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &1441853441759060906
+--- !u!114 &6094765276272370620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,12 +246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  moveCooldown: 0
-  strollTime: 0
+  mEnemy: {fileID: 0}
+  moveDuration: 0
+  moveTimer: 0
   wait: 0
-  jumpCooldown: 0
-  jumpTime: 0
+  jumpDuration: 0
+  jumpTimer: 0
   jumping: 0
   jumpSpeed: 0
   canJump: 0

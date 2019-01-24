@@ -80,9 +80,9 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
+    <Compile Include="Assets\Scripts\Entity\EnemyBehaviour.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityBehaviour.cs" />
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Chest.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FallingRock.cs" />

@@ -19,13 +19,16 @@ public class Eye : Enemy
         EnemyInit();
 
         mBehaviour.canJump = false;
-        mBehaviour.moveDuration = 0f;
+
+        mBehaviour.moveDuration = 0.5f;
+        mBehaviour.waitDuration = 0.5f;
+        mBehaviour.jumpDuration = 3.0f;
+        mBehaviour.basicAttackDuration = 0.2f;
+
+        mBehaviour.waitTimer = 0f;
         mBehaviour.moveTimer = 0f;
-        mBehaviour.wait = 0f;
-        mBehaviour.jumpDuration = 0f;
         mBehaviour.jumpTimer = 0f;
-        mBehaviour.jumpSpeed = 0f;
-        mBehaviour.wait += this.mBehaviour.moveDuration;
+        mBehaviour.basicAttackTimer = 0f;
 
     }
 

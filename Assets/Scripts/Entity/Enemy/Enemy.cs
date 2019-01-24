@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
-public enum State { Idle, Aggrivated, Attack1, Attack2, Attack3 };
+
 public abstract class Enemy : Entity, IHurtable
 {
     public EnemyType mEnemyType;
@@ -10,8 +10,6 @@ public abstract class Enemy : Entity, IHurtable
     //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
-    [SerializeField]
-    private State state = State.Idle;
 
     //End of Behaviour
 
@@ -26,7 +24,7 @@ public abstract class Enemy : Entity, IHurtable
     [HideInInspector]
     public Stats mStats;
     [HideInInspector]
-    public EntityBehaviour mBehaviour;
+    public EnemyBehaviour mBehaviour;
 
     public Hurtbox HurtBox
     {
@@ -109,7 +107,7 @@ public abstract class Enemy : Entity, IHurtable
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
 
-        mBehaviour = GetComponent<EntityBehaviour>();
+        mBehaviour = GetComponent<EnemyBehaviour>();
         mBehaviour.mEnemy = this;
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
@@ -295,7 +293,7 @@ public abstract class Enemy : Entity, IHurtable
 
     public void EnemyUpdate()
     {
-        mBehaviour.EntityBehaviourUpdate(mBehaviour.mEnemy);
+        mBehaviour.EnemyBehaviourUpdate(mBehaviour.mEnemy);
 
         /*
          * 

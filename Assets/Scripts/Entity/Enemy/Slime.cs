@@ -23,14 +23,18 @@ public class Slime : Enemy {
         //Set Custom stats
         
         mBehaviour.canJump = true;
+
         mBehaviour.moveDuration = 0.5f;
+        mBehaviour.waitDuration = 0.5f;
+        mBehaviour.jumpDuration = 3.0f;
+        mBehaviour.basicAttackDuration = 0.5f;
+
+        mBehaviour.waitTimer = 0f;
         mBehaviour.moveTimer = 0f;
-        mBehaviour.wait = 0.5f;
-        mBehaviour.jumpDuration = 0f;
-        mBehaviour.jumpTimer = 3.0f;
+        mBehaviour.jumpTimer = 0f;
+        mBehaviour.basicAttackTimer = 0f;
+
         mBehaviour.jumpSpeed = 400f;
-        mBehaviour.wait += this.mBehaviour.moveDuration;
-        
     }
 
     public override void EntityUpdate()
