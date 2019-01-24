@@ -288,7 +288,7 @@ public static class MapGenerator
         {
             depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
         }
-        int randomX = Random.Range(0, map.MapChunksX);
+        int randomX = Random.Range((map.MapChunksX/4), map.MapChunksX-(map.MapChunksX/4));
         startRoom = new Vector2i(randomX, depths[randomX]);
 
         RoomData[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, startRoom, out endRoom, data.baseDepth);

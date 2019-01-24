@@ -3600,6 +3600,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
   - {fileID: 2800000, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
   - {fileID: 2800000, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 2800000, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
+  - {fileID: 2800000, guid: fa772b6751bcc284a96c948523e90e39, type: 3}
   - {fileID: 2800000, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}
   - {fileID: 2800000, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}
 --- !u!23 &1587752961
@@ -5304,6 +5306,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f975c8383001864ea3e3fe027b4373f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mCurrentMap:
+    startTile:
+      x: 0
+      y: 0
+    type: 0
+    mapType: 0
+    sizeX: 0
+    sizeY: 0
+    gravity: 0
   mTileMap: {fileID: 1587752960}
   mPosition: {x: 0, y: 0, z: 0}
   mWidth: 100
