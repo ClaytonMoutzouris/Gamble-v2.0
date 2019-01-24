@@ -36,6 +36,8 @@ public static class MapGenerator
     public static Vector2i GetStartTile(Map map, int roomX, int roomY)
     {
         Vector2i startTile = new Vector2i(1, 1);
+        List<Vector2i> possibleTiles = new List<Vector2i>();
+
         //int chunkX = Random.Range(0, Constants.cMapChunksX);
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
@@ -47,19 +49,23 @@ public static class MapGenerator
                 {
                     if (map.rooms[roomX, roomY].tiles[x, y - 1] == TileType.Block)
                     {
-                        return startTile = new Vector2i(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y);
+                        possibleTiles.Add(new Vector2i(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y));
                     }
                 }
             }
         }
 
+        startTile = possibleTiles[Random.Range(0, possibleTiles.Count)];
+
+
         return startTile;
 
     }
 
-    public static void AddDoorTile(Map map, int roomX, int roomY)
+    public static Vector2i AddDoorTile(Map map, int roomX, int roomY)
     {
-        Vector2i doorTile = new Vector2i(99, 99);
+        List<Vector2i> possibleTiles = new List<Vector2i>();
+        Vector2i tile = new Vector2i(1, 1);
 
         for (int y = 1; y < Constants.cMapChunkSizeY; y++)
         {
@@ -70,14 +76,15 @@ public static class MapGenerator
                 {
                     if (map.rooms[roomX, roomY].tiles[x, y - 1] == TileType.Block)
                     {
-                        map.SetTile(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y, TileType.Door);
-                        //doorTile = new Vector2i(chunkX * Constants.cMapChunkSizeX + x, chunkY * Constants.cMapChunkSizeY + y);
-                        Debug.Log("Setting Door tile at " + x + "," + y);
-                        return;
+                        possibleTiles.Add(new Vector2i(roomX * Constants.cMapChunkSizeX + x, roomY * Constants.cMapChunkSizeY + y));
                     }
                 }
             }
         }
+
+        tile = possibleTiles[Random.Range(0, possibleTiles.Count)];
+
+        return tile;
 
     }
 
@@ -144,8 +151,10 @@ public static class MapGenerator
 
         Vector2i start = GetStartTile(map, startingX, 4);
         map.startTile = start;
-        Debug.Log("Start tile " + start);
-        AddDoorTile(map, goalX, goalY);
+        Vector2i door = AddDoorTile(map, goalX, goalY);
+        Debug.Log("Door tile " + door);
+
+        map.SetTile(door.x, door.y, TileType.Door);
 
         PopulateMap(map);
 
@@ -166,11 +175,10 @@ public static class MapGenerator
     */
    
 
-    public static RoomData[,] RoomMap(int sizeX, int sizeY, out Vector2i startRoom, out Vector2i endRoom, int depth)
+    public static RoomData[,] RoomMap(int sizeX, int sizeY, Vector2i startRoom, out Vector2i endRoom, int depth)
     {
         RoomData[,] map = new RoomData[sizeX, sizeY];
         List<RoomData> mainPath = new List<RoomData>();
-        startRoom = new Vector2i(Random.Range(0, sizeX), depth);
         Debug.Log("StartingX: " + startRoom.x + ", StartingY: " + startRoom.y);
 
         map[startRoom.x, startRoom.y] = new RoomData(RoomType.LeftRightBottomTop);
@@ -275,13 +283,15 @@ public static class MapGenerator
         Vector2i startRoom;
         Vector2i endRoom;
 
-        int[] depths = new int[data.sizeX];
+        int[] depths = new int[map.MapChunksX];
         for(int i = 0; i < depths.Length; i++)
         {
             depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
         }
+        int randomX = Random.Range(0, map.MapChunksX);
+        startRoom = new Vector2i(randomX, depths[randomX]);
 
-        RoomData[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, out startRoom, out endRoom, data.baseDepth);
+        RoomData[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, startRoom, out endRoom, data.baseDepth);
         SurfaceLayer temp;
         for (int x = 0; x < map.MapChunksX; x++)
         {
@@ -324,8 +334,13 @@ public static class MapGenerator
 
 
         map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
-        AddDoorTile(map, endRoom.x, endRoom.y);
+        Vector2i door = AddDoorTile(map, endRoom.x, endRoom.y);
+        Debug.Log("Door tile " + door);
 
+        map.SetTile(door.x, door.y, TileType.Door);
+
+        //Lets not populate the hub for now
+        if(data.mapType != MapType.Hub)
         PopulateMap(map);
 
         return map;
