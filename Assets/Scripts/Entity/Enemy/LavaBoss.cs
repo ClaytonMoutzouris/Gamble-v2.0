@@ -87,8 +87,8 @@ public class LavaBoss : Enemy
 
         CollisionManager.UpdateAreas(HurtBox);
 
-        CollisionManager.UpdateAreas(sight);
-        sight.mEntitiesInSight.Clear();
+        CollisionManager.UpdateAreas(Sight);
+        Sight.mEntitiesInSight.Clear();
 
 
         //HurtBox.mCollisions.Clear();
@@ -175,12 +175,12 @@ public class LavaBoss : Enemy
         mAnimator.Play("LavaBossWalk");
         //This works amazing!
 
-        if (target.Position.x > Position.x)
+        if (Target.Position.x > Position.x)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed);
             Body.mAABB.ScaleX = -1;
         }
-        else if (target.Position.x < Position.x)
+        else if (Target.Position.x < Position.x)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
             Body.mAABB.ScaleX = 1;
@@ -213,14 +213,14 @@ public class LavaBoss : Enemy
     {
         mAnimator.Play("LavaBossIdle");
 
-        target = null;
-        if (sight.mEntitiesInSight != null)
+        this.Target = null;
+        if (Sight.mEntitiesInSight != null)
         {
-            foreach (Entity entity in sight.mEntitiesInSight)
+            foreach (Entity entity in Sight.mEntitiesInSight)
             {
                 if (entity is Player)
                 {
-                    target = entity;
+                    this.Target = entity;
                     mBossState = BossState.Aggrivated;
                     break;
                 }

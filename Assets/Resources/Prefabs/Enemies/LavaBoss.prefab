@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1605136653131188733}
   - component: {fileID: 4574250162577053720}
   - component: {fileID: 8630459097548981258}
+  - component: {fileID: 793725748071440402}
   m_Layer: 0
   m_Name: LavaBoss
   m_TagString: Untagged
@@ -115,13 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968bc036e2cfdb14aa36b603e9e768a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMovingSpeed: 50
-  mToRemove: 0
-  mUpdateId: -1
-  mGame: {fileID: 0}
-  mMap: {fileID: 0}
-  mAnimator: {fileID: 0}
+  mEntityType: 1
+  mCollidesWith: 000000000300000002000000
   colorPallete: []
+  mMovingSpeed: 50
+  BodySize: {x: 40, y: 55}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -197,64 +196,34 @@ MonoBehaviour:
     mIgnoresOneWay: 0
     mOnOneWayPlatform: 0
     mIsKinematic: 0
+    mIsHeavy: 0
     mIgnoresGravity: 0
     mCollisions: []
     mSpriteDepth: 0
-  mEntityType: 1
-  mCollidesWith: 000000000300000002000000
-  BodySize: {x: 40, y: 55, z: 0}
-  hurtBox:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-  sight:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mEntitiesInSight: []
-  mAttackManager: {fileID: 0}
+  mAudioSource: {fileID: 0}
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mAnimator: {fileID: 0}
+  mToRemove: 0
+  mUpdateId: -1
   mEnemyType: 5
-  mStats: {fileID: 0}
+  hostility: 1
+  state: 0
+  mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  VolcanicBombPrefab: {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb,
-    type: 3}
+  mStats: {fileID: 0}
+  mBehaviour: {fileID: 0}
+  mBossState: 0
   AttackTimer: 3
-  AttackCooldown: 0
   EruptDuration: 2
-  EruptTimer: 0
   ChargeDuration: 10
-  ChargeTimer: 0
   ChargeSpeed: 1000
   KnockDuration: 0.2
-  KnockTimer: 0
   KnockedCooldown: 0.2
-  Knocked: 0
-  ChargeDirection: 1
-  KnockedCoolDownTimer: 0
   mCrashSFX: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
-  mBossState: 0
+  mEruptSFX: {fileID: 0}
+  VolcanicBombPrefab: {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb,
+    type: 3}
 --- !u!114 &1605136653131188733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +240,7 @@ MonoBehaviour:
   health:
     currentHealth: 600
     maxHealth: 600
+    healthbar: {fileID: 0}
   stats:
   - type: 0
     value: 25
@@ -391,3 +361,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &793725748071440402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590620537515642921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEnemy: {fileID: 0}
+  moveDuration: 0
+  moveTimer: 0
+  wait: 0
+  jumpDuration: 0
+  jumpTimer: 0
+  jumping: 0
+  jumpSpeed: 0
+  canJump: 0

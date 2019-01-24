@@ -30,6 +30,8 @@ public abstract class Entity : MonoBehaviour {
     [HideInInspector]
     public EntityData EntityData;
 
+
+
     #region Accesors
     public PhysicsBody Body
     {
@@ -73,6 +75,8 @@ public abstract class Entity : MonoBehaviour {
         }
     }
 
+
+
     public virtual void EntityInit()
     {
         mGame = Game.instance;
@@ -89,6 +93,7 @@ public abstract class Entity : MonoBehaviour {
 
         //Set the physicsBody
         Body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
+
 
         //mEnemyType = EnemyType.Slime;
     }

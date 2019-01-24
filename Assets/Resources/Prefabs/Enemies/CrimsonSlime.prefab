@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 114213223733883614}
   - component: {fileID: 5756834535270892339}
   - component: {fileID: 5318899653814056182}
+  - component: {fileID: 5224026195340014373}
   m_Layer: 0
   m_Name: CrimsonSlime
   m_TagString: Untagged
@@ -174,6 +175,7 @@ MonoBehaviour:
     mIgnoresOneWay: 0
     mOnOneWayPlatform: 0
     mIsKinematic: 0
+    mIsHeavy: 0
     mIgnoresGravity: 0
     mCollisions: []
     mSpriteDepth: 0
@@ -183,58 +185,14 @@ MonoBehaviour:
   mAnimator: {fileID: 0}
   mToRemove: 0
   mUpdateId: -1
-  hurtBox:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-  sight:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mEntitiesInSight: []
+  mEnemyType: 1
+  hostility: 1
+  state: 0
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mEnemyType: 1
   mStats: {fileID: 0}
+  mBehaviour: {fileID: 0}
   dashTrigger: 0
-  meleeDash:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
-    mEntitiesInSight: []
 --- !u!114 &5756834535270892339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,3 +234,24 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
+--- !u!114 &5224026195340014373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402695801023494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEnemy: {fileID: 0}
+  moveCooldown: 0
+  strollTime: 0
+  wait: 0
+  jumpCooldown: 0
+  jumpTime: 0
+  jumping: 0
+  jumpSpeed: 0
+  canJump: 0
