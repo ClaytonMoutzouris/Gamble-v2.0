@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
-
+public enum State { Idle, Aggrivated, Attack1, Attack2, Attack3 };
 public abstract class Enemy : Entity, IHurtable
 {
     public EnemyType mEnemyType;
+
+    //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
+    [SerializeField]
+    private State state = State.Idle;
 
+    //End of Behaviour
 
     private Hurtbox hurtBox;
-    protected Sightbox sight;
+    private Sightbox sight;
     [HideInInspector]
     public AttackManager mAttackManager;
+
     [SerializeField]
-    protected Entity target = null;
-    [SerializeField]
+    private Entity target = null;
 
     [HideInInspector]
     public Stats mStats;
+    [HideInInspector]
+    public EntityBehaviour mBehaviour;
 
     public Hurtbox HurtBox
     {
@@ -34,6 +41,19 @@ public abstract class Enemy : Entity, IHurtable
         }
     }
 
+    public Entity Target
+    {
+        get
+        {
+            return target;
+        }
+
+        set
+        {
+            target = value;
+        }
+    }
+
     public Hostility Hostility
     {
         get
@@ -44,6 +64,20 @@ public abstract class Enemy : Entity, IHurtable
         set
         {
             hostility = value;
+        }
+    }
+
+    
+
+    public Sightbox Sight
+    {
+        get
+        {
+            return sight;
+        }
+        set
+        {
+            sight = value;
         }
     }
 
@@ -67,7 +101,6 @@ public abstract class Enemy : Entity, IHurtable
     public virtual void EnemyInit()
     {
 
-
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
         HurtBox.UpdatePosition();
 
@@ -75,6 +108,9 @@ public abstract class Enemy : Entity, IHurtable
         mStats = GetComponent<Stats>();
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
+
+        mBehaviour = GetComponent<EntityBehaviour>();
+        mBehaviour.mEnemy = this;
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
         temp.transform.localPosition = new Vector3(0, BodySize.y * 2);
@@ -85,19 +121,10 @@ public abstract class Enemy : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
 
-
         MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
-
     }
-
-    /*
-    public virtual void EntityInit()
-    {
-        base.EntityInit();
-    }
-    */
 
     public override void SecondUpdate()
     {
@@ -110,7 +137,103 @@ public abstract class Enemy : Entity, IHurtable
 
     }
 
-    public void EnemyUpdate()
+    /*1. Entities stroll around until their moveCooldown is reached.
+    *2. If the entity hits a wall, they will wiggle until they turn around.
+    *Consider fixing the wiggle.
+    *3. If the strollTime reaches moveCooldown, the entity will stop moving.
+    *4. The entity will consider where to move next when it is done waiting.
+    *5. When it is done waiting strollTime is reset to 0f.
+   */
+
+ /*
+    public void Move()
+    {
+        //1
+        body.mSpeed.x = mMovingSpeed;
+        //2
+        if (strollTime < moveCooldown)
+        {
+            if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+            {
+                mMovingSpeed *= -1;
+
+            }
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //3-4
+        else if (strollTime > moveCooldown && strollTime < wait)
+        {
+            //Movement Cooldown reached .
+            //reset strollTime.
+            body.mSpeed.x = 0f;
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //5
+        else if (strollTime > wait)
+        {
+            strollTime = 0f;
+            return;
+        }
+    }
+
+    public void Move(Entity target, int direction)
+    {
+        //1-2
+        if (strollTime < moveCooldown)
+        {
+            //If we have a target move in it's direction.
+            if (target != null)
+            {
+                body.mSpeed.x = mMovingSpeed * direction;
+            }
+
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //3-4
+        else if (strollTime > moveCooldown && strollTime < wait)
+        {
+            //Debug.Log("Resting");
+            //Movement Cooldown reached .
+            //reset strollTime.
+            body.mSpeed.x = 0f;
+            strollTime += Time.deltaTime;
+            return;
+        }
+        //5
+        else if (strollTime > wait)
+        {
+            //Debug.Log("Done Resting.");
+            strollTime = 0f;
+            return;
+        }
+    }
+
+    public void Jump(Entity target, int direction)
+    {
+
+        //If we have a target, and we arent jumping.
+        if (target != null && !jumping && jumpCooldown == 0)
+        {
+            this.Body.mSpeed.y = jumpSpeed * direction;
+            jumping = true;
+        }
+
+        //If we have initiated a jump, add force to our mSpeed y.
+        if (jumping && jumpCooldown <= jumpTime)
+        {
+            jumpCooldown += Time.deltaTime;
+        }
+        else if (jumping && jumpCooldown >= jumpTime)
+        {
+            jumpCooldown = 0;
+            jumping = false;
+        }
+    }
+
+    public void CheckForTargets()
     {
         //First enemies check sight
         target = null;
@@ -125,11 +248,14 @@ public abstract class Enemy : Entity, IHurtable
                 }
             }
         }
+    }
 
+    public void EnemyAttack()
+    {
         if (target != null)
         {
             //If target is standing close to Entity
-            if (Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) < 20 && Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) > -20)
+            if (Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) < 20 && Mathf.Abs(target.Position.x) - Mathf.Abs(this.Body.mPosition.x) > -20 && Mathf.Abs(target.Position.y) - Mathf.Abs(this.Body.mPosition.y) < 30 && Mathf.Abs(target.Position.y) - Mathf.Abs(this.Body.mPosition.y) > -30)
             {
                 //If target is to the left of the Entity && Target has an attack...
                 if (target.Position.x < this.Body.mPosition.x && mAttackManager.AttackList != null)
@@ -137,18 +263,25 @@ public abstract class Enemy : Entity, IHurtable
                     //Check if target can make a close range attack.
                     foreach (MeleeAttack attack in mAttackManager.AttackList)
                     {
-                        //Check if the hitbox has already set OffsetX to face to the left.
-                        if(attack.hitbox.mAABB.OffsetX > 0)
-                        attack.hitbox.mAABB.OffsetX = attack.hitbox.mAABB.OffsetX * - 1;
+                        if (!attack.mIsActive)
+                        {
+                            //Check if the hitbox has already set OffsetX to face to the left.
+                            if (attack.hitbox.mAABB.OffsetX > 0)
+                                attack.hitbox.mAABB.OffsetX = attack.hitbox.mAABB.OffsetX * -1;
+                        }
                     }
                 }
                 //If target is to the right of the Entity && Target has an attack...
                 else if (target.Position.x > this.Body.mPosition.x && mAttackManager.AttackList != null)
                 {
+
                     //Check if target can make a close range attack.
                     foreach (MeleeAttack attack in mAttackManager.AttackList)
                     {
-                        attack.hitbox.mAABB.OffsetX = Mathf.Abs(attack.hitbox.mAABB.OffsetX);
+                        if (!attack.mIsActive)
+                        {
+                            attack.hitbox.mAABB.OffsetX = Mathf.Abs(attack.hitbox.mAABB.OffsetX);
+                        }
                     }
                 }
                 //Attack
@@ -158,6 +291,50 @@ public abstract class Enemy : Entity, IHurtable
 
         mAttackManager.UpdateAttacks();
     }
+    */
+
+    public void EnemyUpdate()
+    {
+        mBehaviour.EntityBehaviourUpdate(mBehaviour.mEnemy);
+
+        /*
+         * 
+        //Enemy checks Sightbox for targets.
+        mBehaviour.CheckForTargets(this);
+
+        if (target != null)
+        {
+            if (target.Position.x > this.Body.mPosition.x)
+            {
+                Move(target, 1);
+                if (target.Position.y - this.Body.mPosition.y > 30)
+                {
+                    Jump(target, 1);
+                }
+
+            }
+            else if (target.Position.x < this.Body.mPosition.x)
+            {
+                //Debug.Log("Target: " + target.Position.y + "Slime: " + this.Body.mPosition.y);
+                Move(target, -1);
+                if (target.Position.y - this.Body.mPosition.y > 30)
+                {
+                    Debug.Log("jumping!");
+                    Jump(target, 1);
+                }
+            }
+        }
+        else
+        {
+            Move();
+        }
+
+        //Enemy attack a target if it is hostile towards it.
+        EnemyAttack();
+        */
+    }
+
+
 
     public override void Die()
     {

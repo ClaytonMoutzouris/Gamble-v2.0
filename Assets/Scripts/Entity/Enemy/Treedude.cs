@@ -19,6 +19,15 @@ public class Treedude : Enemy
 
         EnemyInit();
 
+        mBehaviour.canJump = false;
+        mBehaviour.moveDuration = 1.0f;
+        mBehaviour.moveTimer = 0f;
+        mBehaviour.wait = 0f;
+        mBehaviour.jumpDuration = 0f;
+        mBehaviour.jumpTimer = 0f;
+        mBehaviour.jumpSpeed = 0f;
+        mBehaviour.wait += this.mBehaviour.moveDuration;
+
     }
 
     public override void EntityUpdate()
@@ -50,8 +59,8 @@ public class Treedude : Enemy
         base.EntityUpdate();
 
         CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(sight);
-        sight.mEntitiesInSight.Clear();
+        CollisionManager.UpdateAreas(Sight);
+        Sight.mEntitiesInSight.Clear();
 
         //HurtBox.mCollisions.Clear();
 

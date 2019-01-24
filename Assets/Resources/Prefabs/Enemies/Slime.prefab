@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 114562500152961564}
   - component: {fileID: 1613120553129927952}
   - component: {fileID: 5025981402742140755}
+  - component: {fileID: 1441853441759060906}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -99,18 +100,7 @@ MonoBehaviour:
   colorPallete: []
   mMovingSpeed: 60
   BodySize: {x: 8, y: 5}
-  mAudioSource: {fileID: 0}
-  mGame: {fileID: 0}
-  mMap: {fileID: 0}
-  mAnimator: {fileID: 0}
-  mToRemove: 0
-  mUpdateId: -1
-  mEnemyType: 0
-  mAttackManager: {fileID: 0}
-  target: {fileID: 0}
-  mStats: {fileID: 0}
-  dashTrigger: 0
-  meleeDash:
+  body:
     mEntity: {fileID: 0}
     mAABB:
       center: {x: 0, y: 0, z: 0}
@@ -125,7 +115,84 @@ MonoBehaviour:
     mState: 0
     mAreas: []
     mIdsInAreas: 
-    mEntitiesInSight: []
+    mGame: {fileID: 0}
+    mMap: {fileID: 0}
+    mOldPosition: {x: 0, y: 0}
+    mPosition: {x: 0, y: 0}
+    mReminder: {x: 0, y: 0}
+    mOffset: {x: 0, y: 0}
+    mSpeed: {x: 0, y: 0}
+    mOldSpeed: {x: 0, y: 0}
+    mPS:
+      pushesRight: 0
+      pushesLeft: 0
+      pushesBottom: 0
+      pushesTop: 0
+      pushedTop: 0
+      pushedBottom: 0
+      pushedRight: 0
+      pushedLeft: 0
+      pushedLeftObject: 0
+      pushedRightObject: 0
+      pushedBottomObject: 0
+      pushedTopObject: 0
+      pushesLeftObject: 0
+      pushesRightObject: 0
+      pushesBottomObject: 0
+      pushesTopObject: 0
+      pushedLeftTile: 0
+      pushedRightTile: 0
+      pushedBottomTile: 0
+      pushedTopTile: 0
+      pushesLeftTile: 0
+      pushesRightTile: 0
+      pushesBottomTile: 0
+      pushesTopTile: 0
+      onOneWay: 0
+      tmpIgnoresOneWay: 0
+      tmpSticksToSlope: 0
+      oneWayY: 0
+      onLadder: 0
+      isClimbing: 0
+      isBounce: 0
+      onDoor: 0
+      onIce: 0
+      onConveyorLeft: 0
+      onConveyorRight: 0
+      leftTile:
+        x: 0
+        y: 0
+      rightTile:
+        x: 0
+        y: 0
+      topTile:
+        x: 0
+        y: 0
+      bottomTile:
+        x: 0
+        y: 0
+    mMountParent: {fileID: 0}
+    mIgnoresOneWay: 0
+    mOnOneWayPlatform: 0
+    mIsKinematic: 0
+    mIsHeavy: 0
+    mIgnoresGravity: 0
+    mCollisions: []
+    mSpriteDepth: 0
+  mAudioSource: {fileID: 0}
+  mGame: {fileID: 0}
+  mMap: {fileID: 0}
+  mAnimator: {fileID: 0}
+  mToRemove: 0
+  mUpdateId: -1
+  mBehaviour: {fileID: 0}
+  mEnemyType: 0
+  hostility: 1
+  state: 0
+  mAttackManager: {fileID: 0}
+  target: {fileID: 0}
+  mStats: {fileID: 0}
+  dashTrigger: 0
 --- !u!114 &1613120553129927952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,3 +234,24 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
+--- !u!114 &1441853441759060906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937429433522054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mEntity: {fileID: 0}
+  moveCooldown: 0
+  strollTime: 0
+  wait: 0
+  jumpCooldown: 0
+  jumpTime: 0
+  jumping: 0
+  jumpSpeed: 0
+  canJump: 0
