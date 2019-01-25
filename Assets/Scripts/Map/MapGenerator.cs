@@ -179,7 +179,6 @@ public static class MapGenerator
     {
         RoomData[,] map = new RoomData[sizeX, sizeY];
         List<RoomData> mainPath = new List<RoomData>();
-        Debug.Log("StartingX: " + startRoom.x + ", StartingY: " + startRoom.y);
 
         map[startRoom.x, startRoom.y] = new RoomData(RoomType.LeftRightBottomTop);
         int currentX = startRoom.x;
@@ -191,31 +190,35 @@ public static class MapGenerator
         mainPath.Add(map[currentX, currentY]);
         int r = 0;
         bool done = false;
+        Direction lastDirection = Direction.Invalid;
 
         while (!done)
         {
             r = Random.Range(0, 5);
-            prevX = currentX;
-            prevY = currentY;
 
-            if(r < 2) //Move left
+            if (r < 2) //Move left
             {
-                if(currentX != 0)
+                if(currentX != 0 && lastDirection != Direction.Right)
                 {
+                    lastDirection = Direction.Left;
+                    prevX = currentX;
                     currentX -= 1;
                     map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                 } else
                 {
-                    if(map[currentX, currentY].roomType == RoomType.LeftRight)
+                    //if(map[currentX, currentY].roomType == RoomType.LeftRight)
                     map[currentX, currentY].roomType = RoomType.LeftRightBottomTop;
 
                     if (currentY != 0)
                     {
+                        /*
                         currentX += 1;
                         map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
-
+                        */
+                        lastDirection = Direction.Down;
+                        prevY = currentY;
                         currentY -= 1;
-                        map[currentX, currentY] = new RoomData(RoomType.LeftRight);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
                     }
                     else
                     {
@@ -225,23 +228,28 @@ public static class MapGenerator
                 }
             } else if(r < 4) //Move Right
             {
-                if (currentX != sizeX-1)
+                if (currentX != sizeX- 1 && lastDirection != Direction.Left)
                 {
+                    lastDirection = Direction.Right;
+                    prevX = currentX;
                     currentX += 1;
                     map[currentX, currentY] = new RoomData(RoomType.LeftRight);
                 }
                 else
                 {
-                    if (map[currentX, currentY].roomType == RoomType.LeftRight)
+                    //if (map[currentX, currentY].roomType == RoomType.LeftRight)
                         map[currentX, currentY].roomType = RoomType.LeftRightBottomTop;
 
                     if (currentY != 0)
                     {
+                        /*
                         currentX -= 1;
                         map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
-
+                        */
+                        lastDirection = Direction.Down;
+                        prevY = currentY;
                         currentY -= 1;
-                        map[currentX, currentY] = new RoomData(RoomType.LeftRight);
+                        map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
                     }
                     else
                     {
@@ -251,22 +259,35 @@ public static class MapGenerator
                 }
             } else //Move Down
             {
+                //if (map[currentX, currentY].roomType == RoomType.LeftRight)
+                    map[currentX, currentY].roomType = RoomType.LeftRightBottomTop;
+
                 if (currentY != 0)
                 {
+                    prevY = currentY;
                     currentY -= 1;
-                    map[currentX, currentY] = new RoomData(RoomType.LeftRight);
+                    map[currentX, currentY] = new RoomData(RoomType.LeftRightBottomTop);
                 }
                 else
                 {
                     done = true;
 
                 }
+                lastDirection = Direction.Down;
+
             }
 
-            if(map[prevX, prevY].roomType == RoomType.LeftRightBottomTop)
+            /*
+            if (currentY < prevY)
             {
+                //Debug.Log("PrevY: " + prevY + ", CurrentY: " + currentY);
+
                 map[currentX, currentY].roomType = RoomType.LeftRightBottomTop;
+                //map[prevY, prevX].roomType = RoomType.LeftRightBottomTop;
+
             }
+            */
+
 
 
             mainPath.Add(map[currentX, currentY]);
@@ -339,11 +360,22 @@ public static class MapGenerator
 
         map.SetTile(door.x, door.y, TileType.Door);
 
-        //Lets not populate the hub for now
-        if(data.mapType != MapType.Hub)
-        PopulateMap(map);
 
+        //Lets not populate the hub for now
+        if (data.mapType != MapType.Hub)
+        {
+
+            PopulateMap(map);
+
+
+            //PopulateBoss(map);
+        }
         return map;
+    }
+
+    static void PopulateBoss(Map map)
+    {
+        map.AddEntity(new EnemyData(10, 5, EnemyType.LavaBoss));
     }
 
     static void PopulateMap(Map map)

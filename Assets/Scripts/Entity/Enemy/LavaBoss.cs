@@ -40,7 +40,7 @@ public class LavaBoss : Enemy
 
 
 
-        Body.mIsKinematic = false;
+        Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         //Body.mIgnoresGravity = true;
 

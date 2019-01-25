@@ -14,6 +14,7 @@ public class Treedude : Enemy
         body.mSpeed.x = mMovingSpeed;
         Body.mIsKinematic = false;
         Body.mIsHeavy = true;
+        Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
 
 
 

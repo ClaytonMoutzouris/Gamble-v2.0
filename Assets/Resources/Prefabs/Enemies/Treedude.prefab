@@ -207,7 +207,6 @@ MonoBehaviour:
   mUpdateId: -1
   mEnemyType: 3
   hostility: 1
-  state: 0
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
@@ -266,11 +265,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEnemy: {fileID: 0}
-  moveCooldown: 0
-  strollTime: 0
-  wait: 0
-  jumpCooldown: 0
-  jumpTime: 0
-  jumping: 0
-  jumpSpeed: 0
+  canMove: 0
   canJump: 0
+  canAttack: 0
+  isWaiting: 0
+  isMoving: 0
+  isJumping: 0
+  isAttacking: 0
+  waitDuration: 0
+  moveDuration: 0
+  jumpDuration: 0
+  basicAttackDuration: 0
+  moveTimer: 0
+  jumpTimer: 0
+  waitTimer: 0
+  basicAttackTimer: 0
+  jumpSpeed: 0

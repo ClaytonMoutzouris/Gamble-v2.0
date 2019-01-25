@@ -26,7 +26,7 @@ public class FallingRock : Entity
         base.EntityInit();
 
         Body.mSpeed = Vector2.zero;
-        Body.mIsKinematic = false;
+        Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
         
@@ -86,7 +86,13 @@ public class FallingRock : Entity
 
         base.EntityUpdate();
 
-        if(trigger != null)
+        if (Body.mIsKinematic && body.mPS.pushedBottom)
+        {
+            Body.mIsKinematic = false;
+
+        }
+
+        if (trigger != null)
         CollisionManager.UpdateAreas(trigger);
 
     }
