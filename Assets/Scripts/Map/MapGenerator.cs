@@ -362,6 +362,12 @@ public static class MapGenerator
 
 
         //Lets not populate the hub for now
+
+        if(data.mapType == MapType.Hub)
+        {
+            map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
+        }
+
         if (data.mapType != MapType.Hub)
         {
 

@@ -170,7 +170,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (isWaiting)
         {
-            state = State.Idle;
             Wait(enemy);
             return;
         }
@@ -178,7 +177,13 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (enemy.Target != null)
         {
-            EnemyAttack(enemy);
+
+            if (TargetInMeleeDistance(enemy) || isAttacking)
+            {
+                EnemyAttack(enemy);
+                enemy.mAttackManager.UpdateAttacks();
+                return;
+            }
 
             if (TargetToRight(enemy))
             {
@@ -209,7 +214,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
 
-        enemy.mAttackManager.UpdateAttacks();
+        
 
     }
 
@@ -224,6 +229,16 @@ public class EnemyBehaviour : MonoBehaviour
             return false;
         }
             
+    }
+
+    public bool TargetInMeleeDistance(Enemy enemy)
+    {
+        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public bool TargetToLeft(Enemy enemy)
@@ -242,23 +257,35 @@ public class EnemyBehaviour : MonoBehaviour
     public void EnemyAttack(Enemy enemy)
     {
         //If we are already attacking.
-        if (basicAttackTimer < basicAttackDuration && isAttacking)
-        {
-            basicAttackTimer += Time.deltaTime;
-            return;
-        }
-        else if (basicAttackTimer > basicAttackDuration && isAttacking)
+        //if (basicAttackTimer < basicAttackDuration && isAttacking)
+        if(enemy.mAttackManager.AttackList[0].OnCooldown())
         {
             isAttacking = false;
+            return;
+        }
+
+        if (isAttacking)
+        {
+            enemy.mAttackManager.AttackList[0].Activate();
+            return;
+        }
+
+
+        /*
+        else if(enemy.mAttackManager.AttackList[0].OnCooldown())
+        //else if (basicAttackTimer > basicAttackDuration)
+        {
+            isAttacking = false;
+            isWaiting = true;
             basicAttackTimer = 0f;
             enemy.mAttackManager.AttackList[0].Deactivate();
             return;
         }
-
+        */
 
 
         //If target is standing close to Entity
-        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+        if (!isAttacking)
             {
                 //If target is to the left of the Entity && Target has an attack...
                 if (TargetToLeft(enemy) && enemy.mAttackManager.AttackList != null)
@@ -287,13 +314,9 @@ public class EnemyBehaviour : MonoBehaviour
                         }
                     }
                 }
-            //Attack
-            if (basicAttackTimer == 0f && !isAttacking)
-            {
-                isAttacking = true;
-                enemy.mAttackManager.AttackList[0].Activate();
-                return;
-            }
+
+            
+            isAttacking = true;
         }
     }
 
