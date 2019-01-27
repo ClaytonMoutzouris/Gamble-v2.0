@@ -80,7 +80,6 @@ public class Game : MonoBehaviour
 
            break;
             case GameMode.Editor:
-                NewEditorMap();
                 break;
         }
         
@@ -109,11 +108,6 @@ public class Game : MonoBehaviour
         player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
 
 
-    }
-
-    public void NewEditorMap()
-    {
-        mMap.Init();
     }
 
     void HandleInputs()

@@ -138,7 +138,8 @@ public class SaveLoadMenu : MonoBehaviour
 
     public void Delete()
     {
-        string path = selected.Path;
+        string path;
+        path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
         if (path == null)
         {
             return;

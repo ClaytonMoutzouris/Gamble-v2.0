@@ -47,6 +47,8 @@ public class TileMapObject : MonoBehaviour {
 
     public void Awake()
     {
+        //Debug.Log(CurrentMapType);
+
         tileResolution = Constants.cTileResolution;
         ChopUpTiles();
         GenerateMesh();
@@ -70,7 +72,6 @@ public class TileMapObject : MonoBehaviour {
             {
                 if (x < xSize && y < ySize)
                 {
-
 
                     p = tilePalettes[(int)CurrentMapType].GetTile((int)tiles[x,y]);
                     

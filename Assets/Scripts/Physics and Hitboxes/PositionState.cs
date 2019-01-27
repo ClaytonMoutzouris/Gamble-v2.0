@@ -44,9 +44,6 @@ public struct PositionState
     public bool isClimbing;
     public bool isBounce;
     public bool onDoor;
-    public bool onIce;
-    public bool onConveyorLeft;
-    public bool onConveyorRight;
 
     public Vector2i leftTile;
     public Vector2i rightTile;
@@ -93,9 +90,6 @@ public struct PositionState
         onDoor = false;
         isClimbing = false;
         isBounce = false;
-        onIce = false;
-        onConveyorLeft = false;
-        onConveyorRight = false;
 
     }
 }

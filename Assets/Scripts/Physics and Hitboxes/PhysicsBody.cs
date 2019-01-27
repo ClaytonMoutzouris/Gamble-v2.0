@@ -159,9 +159,6 @@ public class PhysicsBody : CustomCollider2D
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
-                case TileType.ConveyorLeft:
-                case TileType.ConveyorRight:
-                case TileType.IceBlock:
                 case TileType.Block:
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
@@ -213,9 +210,6 @@ public class PhysicsBody : CustomCollider2D
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
-                case TileType.IceBlock:
-                case TileType.ConveyorLeft:
-                case TileType.ConveyorRight:
                 case TileType.Block:
                     state.pushesLeftTile = true;
                     state.leftTile = new Vector2i(bottomLeftTile.x, y);
@@ -253,9 +247,6 @@ public class PhysicsBody : CustomCollider2D
                     //mPS.onLadder = true;
                     break;
                 case TileType.Bounce:
-                case TileType.ConveyorLeft:
-                case TileType.ConveyorRight:
-                case TileType.IceBlock:
                 case TileType.Block:
                     state.pushesTopTile = true;
                     state.topTile = new Vector2i(x, topRightTile.y);
@@ -348,29 +339,7 @@ public class PhysicsBody : CustomCollider2D
                     return true;
                 case TileType.Ladder:
                     //mPS.onLadder = true;
-                    break;
-                case TileType.ConveyorLeft:
-
-                    state.onOneWay = false;
-                    state.pushesBottomTile = true;
-                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
-                    state.onConveyorLeft = true;
-                    return true;
-                case TileType.ConveyorRight:
-
-                    state.onOneWay = false;
-                    state.pushesBottomTile = true;
-                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
-                    state.onConveyorRight = true;
-                    return true;
-                case TileType.IceBlock:
-
-                    state.onOneWay = false;
-                    state.pushesBottomTile = true;
-                    state.bottomTile = new Vector2i(x, bottomleftTile.y);
-                    state.onIce = true;
-                    return true;
-                    
+                    break;                    
                 case TileType.Block:
                     state.onOneWay = false;
                     state.pushesBottomTile = true;
@@ -534,9 +503,6 @@ public class PhysicsBody : CustomCollider2D
 
         mPS.onLadder = false;
         mPS.onDoor = false;
-        mPS.onIce = false;
-        mPS.onConveyorLeft = false;
-        mPS.onConveyorRight = false;
 
         if(mSpeed.y < 0)
         {

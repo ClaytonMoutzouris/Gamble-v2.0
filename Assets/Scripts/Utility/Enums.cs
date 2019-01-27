@@ -13,6 +13,7 @@ public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Count, Hub };
 public enum MapType {  Hub, World, BossMap };
 public enum SurfaceLayer { Above, Surface, Inner, Count };
 
+//This is for handling the tilemaps at runtime, based on what type of tile each tile is
 public enum TileType
 {
     Empty,
@@ -23,9 +24,11 @@ public enum TileType
     Ladder,
     LadderTop,
     Door,
-    IceBlock,
-    ConveyorRight,
-    ConveyorLeft,
+    SmallEnemy,
+    LargeEnemy,
+    ObstacleBlock1, //suppose a size of 2x2
+    ObstacleBlock2, //suppose size of 2x4
+    ObstacleBlock3, //suppose a size of 3x3
     Count,
 }
 

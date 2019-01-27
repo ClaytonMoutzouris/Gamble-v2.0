@@ -274,21 +274,10 @@ public class Player : Entity, IHurtable
                     break;
                 }
 
-                if (body.mPS.onIce || body.mPS.isBounce)
-                {
-                   
-                }
-                else
-                {
-                    body.mSpeed = Vector2.zero;
-                }
-                
 
-                if (!body.mPS.pushesBottom)
-                {
-                    mCurrentState = PlayerState.Jump;
-                    break;
-                }
+                body.mSpeed = Vector2.zero;
+                
+                
 
                 //if left or right key is pressed, but not both
                 if (KeyState(KeyInput.GoRight) != KeyState(KeyInput.GoLeft))

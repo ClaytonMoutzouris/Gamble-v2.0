@@ -361,8 +361,6 @@ public static class MapGenerator
         map.SetTile(door.x, door.y, TileType.Door);
 
 
-        //Lets not populate the hub for now
-
         if(data.mapType == MapType.Hub)
         {
             map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
@@ -371,12 +369,48 @@ public static class MapGenerator
         if (data.mapType != MapType.Hub)
         {
 
-            PopulateMap(map);
+            //PopulateMap(map);
 
 
             //PopulateBoss(map);
         }
+
+        //Post process the map based on probabilistic tiles and such
+        PostProcessing(map);
+
         return map;
+    }
+
+    static void PostProcessing(Map map)
+    {
+        int enemyRandom = 0;
+        int blockRandom = 0;
+
+        for (int x = 0; x < map.sizeX; x++)
+        {
+            for (int y = 0; y < map.sizeY; y++)
+            {
+                if(map.GetTile(x, y) == TileType.SmallEnemy)
+                {
+                    Debug.Log("SmallEnemy");
+                    enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
+                    map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
+                    map.SetTile(x, y, TileType.Empty);
+                } else if(map.GetTile(x, y) == TileType.LargeEnemy)
+                {
+                    Debug.Log("LargeEnemy");
+                    map.AddEntity(new EnemyData(x, y, EnemyType.Treedude));
+                    map.SetTile(x, y, TileType.Empty);
+                }
+                else if (map.GetTile(x, y) == TileType.ObstacleBlock1)
+                {
+                    Debug.Log("Obstacle1");
+                    blockRandom = Random.Range(0, 3); //This is between empty and bounce
+                    map.SetTile(x, y, (TileType)blockRandom);
+                }
+            }
+        }
+
     }
 
     static void PopulateBoss(Map map)

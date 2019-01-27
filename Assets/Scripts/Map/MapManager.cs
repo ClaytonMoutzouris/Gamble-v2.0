@@ -74,7 +74,7 @@ public class MapManager : MonoBehaviour
            || y < 0 || y >= mHeight)
             return false;
 
-        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop || mTileData[x,y] == TileType.IceBlock || mTileData[x, y] == TileType.ConveyorLeft || mTileData[x, y] == TileType.ConveyorRight);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop);
     }
 
     public bool IsGround(Vector2i pos)
@@ -89,7 +89,7 @@ public class MapManager : MonoBehaviour
             || y < 0 || y >= mHeight)
             return true;
 
-        return (mTileData[x, y] == TileType.Block || mTileData[x,y] == TileType.IceBlock);
+        return (mTileData[x, y] == TileType.Block);
     }
 
     public bool IsEmpty(int x, int y)

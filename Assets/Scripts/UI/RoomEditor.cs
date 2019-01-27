@@ -134,7 +134,7 @@ public class RoomEditor : MonoBehaviour
         if (wheel > 0.05f)
         {
 
-            if ((int)mPlacedTileType < (int)TileType.Door)
+            if ((int)mPlacedTileType < (int)TileType.Count)
                 mPlacedTileType += 1;
             else
                 mPlacedTileType = TileType.Empty;
@@ -146,7 +146,7 @@ public class RoomEditor : MonoBehaviour
             if ((int)mPlacedTileType > (int)TileType.Empty)
                 mPlacedTileType -= 1;
             else
-                mPlacedTileType = TileType.Door-1;
+                mPlacedTileType = TileType.Count-1;
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }

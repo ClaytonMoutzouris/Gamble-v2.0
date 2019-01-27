@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64c6200b41be104dbac6ea088d1ac56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMap: {fileID: 1156935486}
+  mMap: {fileID: 0}
 --- !u!114 &591530480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3294,16 +3294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216d44a5379ebdd4fb2b74a91678612e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCurrentMap:
-    startTile:
-      x: 0
-      y: 0
-    type: 0
-    mapType: 0
-    sizeX: 0
-    sizeY: 0
-    gravity: 0
   mTileMap: {fileID: 2036786035}
+  instance: {fileID: 0}
   mPosition: {x: 0, y: 0, z: 0}
   mWidth: 25
   mHeight: 25
@@ -6765,7 +6757,11 @@ MonoBehaviour:
   tileSize: 32
   CurrentMapType: 0
   terrainTiles:
-  - {fileID: 2800000, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
+  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
 --- !u!23 &2036786036
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6825,65 +6821,6 @@ Transform:
   m_Father: {fileID: 1156935485}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2046496044
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2046496045}
-  - component: {fileID: 2046496046}
-  m_Layer: 0
-  m_Name: GameController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2046496045
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046496044}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2267.3179, y: 2311.266, z: -10.4048605}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2046496046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046496044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1086a6dc80b1348b9b425351444e6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mGameMode: 1
-  gameCamera: {fileID: 849335803}
-  players: []
-  goLeftKey: 97
-  goRightKey: 100
-  goJumpKey: 32
-  goDownKey: 115
-  goUpKey: 119
-  mMap: {fileID: 1156935486}
-  mPlacedTileType: 0
-  mCharacterPrefab: {fileID: 0}
-  mMovingPlatformPrefab: {fileID: 0}
-  mSlimePrefab: {fileID: 0}
-  mEntities: []
-  mMouseSprite: {fileID: 0}
-  mMapChangeFlag: 0
 --- !u!1 &2047104951
 GameObject:
   m_ObjectHideFlags: 0
