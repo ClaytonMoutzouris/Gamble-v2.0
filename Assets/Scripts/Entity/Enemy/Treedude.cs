@@ -25,12 +25,10 @@ public class Treedude : Enemy
         mBehaviour.moveDuration = 0.5f;
         mBehaviour.waitDuration = 0.5f;
         mBehaviour.jumpDuration = 3.0f;
-        mBehaviour.basicAttackDuration = 0.2f;
 
         mBehaviour.waitTimer = 0f;
         mBehaviour.moveTimer = 0f;
         mBehaviour.jumpTimer = 0f;
-        mBehaviour.basicAttackTimer = 0f;
 
     }
 

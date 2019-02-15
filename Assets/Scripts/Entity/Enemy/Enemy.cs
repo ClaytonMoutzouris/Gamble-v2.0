@@ -119,7 +119,7 @@ public abstract class Enemy : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
 
-        MeleeAttack defaultAttack = new MeleeAttack(this, 1f, 5, 2f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        MeleeAttack defaultAttack = new MeleeAttack(this, 1f, 5, 2f, Range.Close, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
     }

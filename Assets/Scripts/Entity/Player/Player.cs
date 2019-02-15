@@ -109,10 +109,10 @@ public class Player : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
         //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, .5f, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
+        MeleeAttack temp = new MeleeAttack(this, 0.5f, 5, .5f, Range.Close, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, .1f, mBullet);
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, .1f, Range.Far, mBullet);
         mAttackManager.AttackList.Add(ranged);
 
 

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum State { Idle, Moving, Jumping, Attacking, Aggrivated, Attack1, Attack2, Attack3 };
+public enum EnemyRange {  Close, Near, Far };
 public class EnemyBehaviour : MonoBehaviour
 {
 
     public Enemy mEnemy;
-    private State state = State.Idle;
+    public State state = State.Idle;
 
 
     public bool canMove;
@@ -22,12 +23,10 @@ public class EnemyBehaviour : MonoBehaviour
     public float waitDuration;
     public float moveDuration;
     public float jumpDuration;
-    public float basicAttackDuration;
 
     public float moveTimer;
     public float jumpTimer;
     public float waitTimer;
-    public float basicAttackTimer;
 
     public float jumpSpeed;
 
@@ -54,6 +53,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Wait(Enemy enemy)
     {
+        state = State.Idle;
+
         enemy.Body.mSpeed.x = 0f;
 
         if(waitTimer >= waitDuration)
@@ -77,10 +78,10 @@ public class EnemyBehaviour : MonoBehaviour
    */
     public void Move(Enemy enemy)
     {
-
+        
         if (moveTimer < moveDuration)
         {
-
+            state = State.Moving;
             enemy.body.mSpeed.x = enemy.mMovingSpeed;
 
             //If we touch somthing to our right or left.
@@ -105,13 +106,15 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Move(Enemy enemy, Entity target, int direction)
     {
-        //1-2
+        
+        
         if (moveTimer < moveDuration)
         {
             //If we have a target move in it's direction.
             if (target != null && isMoving == false)
             {
                 isMoving = true;
+                state = State.Moving;
                 enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
             }
 
@@ -129,22 +132,26 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Jump(Enemy enemy, int direction)
     {
-
+        
         //If we have a target, and we arent jumping...JUMP!
         if (enemy.Target != null && !isJumping && jumpTimer == 0f)
         {
             enemy.Body.mSpeed.y = jumpSpeed * direction;
+            state = State.Jumping;
             isJumping = true;
+            return;
         }
 
         if (isJumping && jumpTimer <= jumpDuration)
         {
             jumpTimer += Time.deltaTime;
+            return;
         }
         else if (isJumping && jumpTimer >= jumpDuration)
         {
             jumpTimer = 0;
             isJumping = false;
+            return;
         }
     }
 
@@ -174,47 +181,60 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
 
-
+        //If the enemy has a target!
         if (enemy.Target != null)
         {
-
+            //See if we are in range to use any of our attacks! (Or if we are already using them.)
             if (TargetInMeleeDistance(enemy) || isAttacking)
             {
+                state = State.Attacking;
                 EnemyAttack(enemy);
                 enemy.mAttackManager.UpdateAttacks();
                 return;
             }
-
+            
+            if(TargetInDashDistance(enemy) || isAttacking)
+            {
+                state = State.Attacking;
+                EnemyAttack(enemy);
+                enemy.mAttackManager.UpdateAttacks();
+                return;
+            }
+            //-------------------------------------------------------------------------------------
+            //Orient our direction to the target.
             if (TargetToRight(enemy))
             {
-                state = State.Moving;
                 Move(enemy,enemy.Target, 1);
+                
+                //If target is above this entity.
                 if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30)
                 {
-                    state = State.Jumping;
                     Jump(enemy, 1);
+                    return;
                 }
+                return;
 
             }
             else if (TargetToLeft(enemy))
             {
-                state = State.Moving;
                 Move(enemy,enemy.Target, -1);
-                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30)
+
+                //If target is above this entity.
+                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30 && !isJumping)
                 {
-                    state = State.Jumping;
                     Jump(enemy, 1);
+                    return;
                 }
+                return;
             }
+            //----------------------------------------------------------
         }
+
         else
         {
-            state = State.Moving;
             Move(enemy);
+            return;
         }
-
-
-        
 
     }
 
@@ -231,16 +251,6 @@ public class EnemyBehaviour : MonoBehaviour
             
     }
 
-    public bool TargetInMeleeDistance(Enemy enemy)
-    {
-        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     public bool TargetToLeft(Enemy enemy)
     {
         if (enemy.Target.Position.x < enemy.Body.mPosition.x)
@@ -254,11 +264,35 @@ public class EnemyBehaviour : MonoBehaviour
 
     }
 
+    public bool TargetInMeleeDistance(Enemy enemy)
+    {
+        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TargetInDashDistance(Enemy enemy)
+    {
+        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 50 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -50 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
     public void EnemyAttack(Enemy enemy)
     {
         //If we are already attacking.
         //if (basicAttackTimer < basicAttackDuration && isAttacking)
-        if(enemy.mAttackManager.AttackList[0].OnCooldown())
+        
+
+        if (enemy.mAttackManager.AttackList[0].OnCooldown())
         {
             isAttacking = false;
             return;
@@ -269,19 +303,6 @@ public class EnemyBehaviour : MonoBehaviour
             enemy.mAttackManager.AttackList[0].Activate();
             return;
         }
-
-
-        /*
-        else if(enemy.mAttackManager.AttackList[0].OnCooldown())
-        //else if (basicAttackTimer > basicAttackDuration)
-        {
-            isAttacking = false;
-            isWaiting = true;
-            basicAttackTimer = 0f;
-            enemy.mAttackManager.AttackList[0].Deactivate();
-            return;
-        }
-        */
 
 
         //If target is standing close to Entity
@@ -318,6 +339,29 @@ public class EnemyBehaviour : MonoBehaviour
             
             isAttacking = true;
         }
+
+        if (TargetInDashDistance(enemy) && isAttacking)
+        {
+            for (int i = 0; i < enemy.mAttackManager.AttackList.Count; i++)
+            {
+                if (enemy.mAttackManager.AttackList[i].range == Range.Near)
+                {
+                    enemy.mAttackManager.AttackList[i].Activate();
+                }
+            }
+        }
+
+        if (TargetInMeleeDistance(enemy) && isAttacking)
+        {
+            for (int i = 0; i < enemy.mAttackManager.AttackList.Count; i++)
+            {
+                if (enemy.mAttackManager.AttackList[i].range == Range.Close)
+                {
+                    enemy.mAttackManager.AttackList[i].Activate();
+                }
+            }
+        }
+
     }
 
 

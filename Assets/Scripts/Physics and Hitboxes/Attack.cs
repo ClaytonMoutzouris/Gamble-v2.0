@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Range { Close, Near, Far };
 [System.Serializable]
 public class Attack {
 
@@ -13,7 +14,7 @@ public class Attack {
     public float elapsed;
     public float coolDown;
     public bool onCooldown;
-
+    public Range range;
     public float coolDownTimer = 0;
     //List of effects
 
@@ -29,12 +30,13 @@ public class Attack {
         this.damage = damage;
     }
 
-    public Attack(Entity entity, float duration, int damage, float cd)
+    public Attack(Entity entity, float duration, int damage, float cd, Range range)
     {
         mEntity = entity;
         this.duration = duration;
         this.damage = damage;
         coolDown = cd;
+        this.range = range;
     }
 
     public virtual void UpdateAttack()
@@ -89,11 +91,73 @@ public class Attack {
 	
 }
 
+public class DashAttack : Attack
+{
+    public Hitbox hitbox;
+
+    public DashAttack(Entity entity, float duration, int damage, float cd, Range range, Hitbox hit) : base(entity, duration, damage, cd, range)
+    {
+        hitbox = hit;
+        hitbox.mState = ColliderState.Closed;
+    }
+    public override void Activate()
+    {
+        if (mIsActive || OnCooldown())
+            return;
+
+        base.Activate();
+
+        hitbox.mState = ColliderState.Open;
+        hitbox.mDealthWith.Clear();
+        //hitbox.colliderType = ColliderType.Hitbox;
+    }
+
+    public override void Deactivate()
+    {
+        base.Deactivate();
+
+        hitbox.mState = ColliderState.Closed;
+        hitbox.mCollisions.Clear();
+        hitbox.mDealthWith.Clear();
+
+    }
+
+    public override void UpdateAttack()
+    {
+        foreach (IHurtable hit in hitbox.mCollisions)
+        {
+            if (!hitbox.mDealthWith.Contains(hit))
+            {
+                hit.GetHurt(this);
+                hitbox.mDealthWith.Add(hit);
+            }
+
+        }
+        //hitbox.mCollisions.Clear();
+
+
+        base.UpdateAttack();
+
+        hitbox.UpdatePosition();
+        CollisionManager.UpdateAreas(hitbox);
+    }
+
+    public override void SecondUpdate()
+    {
+        base.SecondUpdate();
+
+        hitbox.UpdatePosition();
+
+
+
+    }
+}
+
 [System.Serializable]
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
+    public MeleeAttack(Entity entity, float duration, int damage, float cd, Range range, Hitbox hit) : base(entity, duration, damage, cd, range)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
@@ -157,7 +221,7 @@ public class RangedAttack : Attack
 {
     public Bullet projectile;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, Bullet proj) : base(entity, duration, damage, cd)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, Range range, Bullet proj) : base(entity, duration, damage, cd, range)
     {
         projectile = proj;
     }
