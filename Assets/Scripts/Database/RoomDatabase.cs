@@ -22,7 +22,7 @@ public static class RoomDatabase
             using (BinaryReader reader = new BinaryReader(File.OpenRead(paths[i])))
             {
                 int header = reader.ReadInt32();
-                Debug.Log("Reading room with header " + header);
+                //Debug.Log("Reading room with header " + header);
                 if (header == 1)
                 {
                     temp.Load(reader);

@@ -3,33 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum State { Idle, Moving, Jumping, Attacking, Aggrivated, Attack1, Attack2, Attack3 };
-public enum EnemyRange {  Close, Near, Far };
+public enum TargetRange {  Close, Near, Far , OutOfRange};
 public class EnemyBehaviour : MonoBehaviour
 {
 
     public Enemy mEnemy;
     public State state = State.Idle;
-
+    public TargetRange range = TargetRange.OutOfRange;
 
     public bool canMove;
     public bool canJump;
     public bool canAttack;
 
-    public bool isWaiting;
+    public bool isOnCooldown;
     public bool isMoving;
     public bool isJumping;
     public bool isAttacking;
 
-    public float waitDuration;
+    public float cooldownDuration;
     public float moveDuration;
     public float jumpDuration;
 
     public float moveTimer;
     public float jumpTimer;
-    public float waitTimer;
+    public float cooldownTimer;
+
+    public float closeRange;
+    public float nearRange;
+    public float farRange;
 
     public float jumpSpeed;
 
+    public int direction;
 
     public EnemyBehaviour(Enemy enemy)
     {
@@ -42,7 +47,6 @@ public class EnemyBehaviour : MonoBehaviour
         canJump = false;
         canAttack = false;
         isAttacking = false;
-
         state = State.Idle;
     }
 
@@ -51,107 +55,28 @@ public class EnemyBehaviour : MonoBehaviour
         EnemyBehaviourLoop(enemy);
     }
 
-    public void Wait(Enemy enemy)
+    public void EnemyBehaviourLoop(Enemy enemy)
     {
-        state = State.Idle;
+        CheckForTargets(enemy);
 
-        enemy.Body.mSpeed.x = 0f;
-
-        if(waitTimer >= waitDuration)
+        if (isOnCooldown)
         {
-            waitTimer = 0f;
-            isWaiting = false;
+            Wait(enemy);
             return;
-            //Wait finished.
         }
 
-        waitTimer += Time.deltaTime;
-        return;
-    }
-
-    /*1. Entities stroll around until their moveCooldown is reached.
-    *2. If the entity hits a wall, they will wiggle until they turn around.
-    *Consider fixing the wiggle.
-    *3. If the strollTime reaches moveCooldown, the entity will stop moving.
-    *4. The entity will consider where to move next when it is done waiting.
-    *5. When it is done waiting strollTime is reset to 0f.
-   */
-    public void Move(Enemy enemy)
-    {
-        
-        if (moveTimer < moveDuration)
+        if (!isAttacking)
         {
-            state = State.Moving;
-            enemy.body.mSpeed.x = enemy.mMovingSpeed;
+            Move(enemy);
+        }
 
-            //If we touch somthing to our right or left.
-            if (enemy.body.mPS.pushedLeftTile || enemy.body.mPS.pushedRightTile)
+        if (TargetInCombatDistance(enemy))
+        {
+            if (canEnemyAttack(enemy))
             {
-
-                //Change direction.
-                enemy.mMovingSpeed *= -1;
-
+                EnemyAttack(enemy);
+                return;
             }
-            moveTimer += Time.deltaTime;
-            return;
-        }
-        //3-4
-        else if (moveTimer > moveDuration)
-        {
-            isWaiting = true;
-            moveTimer = 0f;
-            return;
-        }
-    }
-
-    public void Move(Enemy enemy, Entity target, int direction)
-    {
-        
-        
-        if (moveTimer < moveDuration)
-        {
-            //If we have a target move in it's direction.
-            if (target != null && isMoving == false)
-            {
-                isMoving = true;
-                state = State.Moving;
-                enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
-            }
-
-            moveTimer += Time.deltaTime;
-            return;
-        }
-        else if (moveTimer > moveDuration)
-        {
-            isMoving = false;
-            isWaiting = true;
-            moveTimer = 0f;
-            return;
-        }
-    }
-
-    public void Jump(Enemy enemy, int direction)
-    {
-        
-        //If we have a target, and we arent jumping...JUMP!
-        if (enemy.Target != null && !isJumping && jumpTimer == 0f)
-        {
-            enemy.Body.mSpeed.y = jumpSpeed * direction;
-            state = State.Jumping;
-            isJumping = true;
-            return;
-        }
-
-        if (isJumping && jumpTimer <= jumpDuration)
-        {
-            jumpTimer += Time.deltaTime;
-            return;
-        }
-        else if (isJumping && jumpTimer >= jumpDuration)
-        {
-            jumpTimer = 0;
-            isJumping = false;
-            return;
         }
     }
 
@@ -171,71 +96,123 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    public void EnemyBehaviourLoop(Enemy enemy)
+/*1.State is IDLE.
+*2.Horizontal speed is 0.
+*3.If cooldownTimer exceeds cooldownDuration, reset states/booleans.
+*4.Otherwise cooldownTimer counts up.
+*/
+    public void Wait(Enemy enemy)
     {
-        CheckForTargets(enemy);
-
-        if (isWaiting)
+        //1
+        state = State.Idle;
+        //2
+        enemy.Body.mSpeed.x = 0f;
+        //3
+        if (cooldownTimer >= cooldownDuration)
         {
-            Wait(enemy);
+            cooldownTimer = 0f;
+            isOnCooldown = false;
+            isAttacking = false;
             return;
+            //Wait finished.
         }
+        //4
+        cooldownTimer += Time.deltaTime;
+        return;
+    }
 
-        //If the enemy has a target!
+ /*
+ * 1.Change speed from 0.
+ * 2.If we have a target, move toward it.
+ * 3.Otherwise, just move until we touch a wall. (Left or Right)
+ * 4.Update Movement timer.
+ * 5.If movement is used, isOnCooldown = true.
+*/
+    public void Move(Enemy enemy)
+    {
+        //1
+        if (enemy.body.mSpeed.x == 0)
+        {
+            enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
+        }
+        //2
         if (enemy.Target != null)
         {
-            //See if we are in range to use any of our attacks! (Or if we are already using them.)
-            if (TargetInMeleeDistance(enemy) || isAttacking)
-            {
-                state = State.Attacking;
-                EnemyAttack(enemy);
-                enemy.mAttackManager.UpdateAttacks();
-                return;
-            }
-            
-            if(TargetInDashDistance(enemy) || isAttacking)
-            {
-                state = State.Attacking;
-                EnemyAttack(enemy);
-                enemy.mAttackManager.UpdateAttacks();
-                return;
-            }
-            //-------------------------------------------------------------------------------------
-            //Orient our direction to the target.
             if (TargetToRight(enemy))
             {
-                Move(enemy,enemy.Target, 1);
-                
-                //If target is above this entity.
-                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30)
+                direction = 1;
+                enemy.body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
+                //Is enemy higher then us?
+                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30 || isJumping)
                 {
-                    Jump(enemy, 1);
-                    return;
+                    Jump(enemy);
                 }
-                return;
-
             }
-            else if (TargetToLeft(enemy))
+            else if (direction != -1 && TargetToLeft(enemy))
             {
-                Move(enemy,enemy.Target, -1);
-
-                //If target is above this entity.
-                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30 && !isJumping)
+                direction = -1;
+                enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
+                //Is enemy higher than us?
+                if (enemy.Target.Position.y - enemy.Body.mPosition.y > 30 || isJumping)
                 {
-                    Jump(enemy, 1);
-                    return;
+                    Jump(enemy);
                 }
-                return;
             }
-            //----------------------------------------------------------
-        }
-
+        } 
+        //3
         else
         {
-            Move(enemy);
+            //If we touch somthing to our right or left or right.
+            if (enemy.body.mPS.pushedLeftTile)
+            {
+                //Change direction.
+                direction = 1;
+                enemy.body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
+
+            }
+            else if (enemy.body.mPS.pushedRightTile && direction != -1)
+            {
+                direction = -1;
+                enemy.body.mSpeed.x = enemy.mMovingSpeed * direction;
+            }
+        }
+        //4
+        if (moveTimer < moveDuration)
+        {
+            state = State.Moving;
+            moveTimer += Time.deltaTime;
+            return;
+        }
+        //5
+        else if (moveTimer > moveDuration)
+        {
+            isOnCooldown = true;
+            moveTimer = 0f;
+            return;
+        }
+    }
+
+    public void Jump(Enemy enemy)
+    {
+        //If we have a target, and we arent jumping...JUMP!
+        if (enemy.Target != null && !isJumping && jumpTimer == 0f)
+        {
+            enemy.Body.mSpeed.y = jumpSpeed;
+            isJumping = true;
             return;
         }
 
+        if (isJumping && jumpTimer <= jumpDuration)
+        {
+            jumpTimer += Time.deltaTime;
+            return;
+        }
+        else if (isJumping && jumpTimer >= jumpDuration)
+        {
+            jumpTimer = 0;
+            isJumping = false;
+            return;
+        }
     }
 
     public bool TargetToRight(Enemy enemy)
@@ -248,7 +225,6 @@ public class EnemyBehaviour : MonoBehaviour
         {
             return false;
         }
-            
     }
 
     public bool TargetToLeft(Enemy enemy)
@@ -261,12 +237,11 @@ public class EnemyBehaviour : MonoBehaviour
         {
             return false;
         }
-
     }
 
-    public bool TargetInMeleeDistance(Enemy enemy)
+    public bool canEnemyAttack(Enemy enemy)
     {
-        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 20 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -20 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+        if (enemy.mAttackManager.AttackList != null)
         {
             return true;
         }
@@ -274,96 +249,100 @@ public class EnemyBehaviour : MonoBehaviour
         return false;
     }
 
-    public bool TargetInDashDistance(Enemy enemy)
+    public bool TargetInCombatDistance(Enemy enemy)
     {
-        if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < 50 && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -50 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+
+        if (enemy.Target != null)
         {
-            return true;
+            if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < closeRange && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -closeRange && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+            {
+                range = TargetRange.Close;
+                return true;
+            }
+
+            if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < nearRange && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -nearRange && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+            {
+                range = TargetRange.Near;
+                return true;
+            }
+
+            if (Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) < farRange && Mathf.Abs(enemy.Target.Position.x) - Mathf.Abs(enemy.Body.mPosition.x) > -farRange && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) < 30 && Mathf.Abs(enemy.Target.Position.y) - Mathf.Abs(enemy.Body.mPosition.y) > -30)
+            {
+                range = TargetRange.Far;
+                return true;
+            }
+
+            range = TargetRange.OutOfRange;
+            return false;
+
         }
 
         return false;
     }
-
-
-
+/*
+ *1.If we are attacking, loop through attacks to check if any are active. If not, we aren't attacking.
+ *2.If we arent attacking, loop through attacks to see if any are in range.
+ *3.Set the attacks direction.
+ *4.Stop Moving.
+ *5.Activate Attack.
+ */
     public void EnemyAttack(Enemy enemy)
     {
-        //If we are already attacking.
-        //if (basicAttackTimer < basicAttackDuration && isAttacking)
-        
-
-        if (enemy.mAttackManager.AttackList[0].OnCooldown())
-        {
-            isAttacking = false;
-            return;
-        }
-
+        //1
         if (isAttacking)
         {
-            enemy.mAttackManager.AttackList[0].Activate();
-            return;
+            for(int i = 0; i < enemy.mAttackManager.AttackList.Count; i++)
+            {
+                if (enemy.mAttackManager.AttackList[i].mIsActive)
+                {
+                    return;
+                }
+            }
+            isAttacking = false;
         }
-
-
-        //If target is standing close to Entity
+        //2
         if (!isAttacking)
-            {
-                //If target is to the left of the Entity && Target has an attack...
-                if (TargetToLeft(enemy) && enemy.mAttackManager.AttackList != null)
-                {
-                    //Check if target can make a close range attack.
-                    foreach (MeleeAttack attack in enemy.mAttackManager.AttackList)
-                    {
-                        if (!attack.mIsActive)
-                        {
-                            //Check if the hitbox has already set OffsetX to face to the left.
-                            if (attack.hitbox.mAABB.OffsetX > 0)
-                                attack.hitbox.mAABB.OffsetX = attack.hitbox.mAABB.OffsetX * -1;
-                        }
-                    }
-                }
-                //If target is to the right of the Entity && Target has an attack...
-                else if (TargetToRight(enemy) && enemy.mAttackManager.AttackList != null)
-                {
-
-                    //Check if target can make a close range attack.
-                    foreach (MeleeAttack attack in enemy.mAttackManager.AttackList)
-                    {
-                        if (!attack.mIsActive)
-                        {
-                            attack.hitbox.mAABB.OffsetX = Mathf.Abs(attack.hitbox.mAABB.OffsetX);
-                        }
-                    }
-                }
-
-            
-            isAttacking = true;
-        }
-
-        if (TargetInDashDistance(enemy) && isAttacking)
         {
             for (int i = 0; i < enemy.mAttackManager.AttackList.Count; i++)
             {
-                if (enemy.mAttackManager.AttackList[i].range == Range.Near)
+                if ((int)enemy.mAttackManager.AttackList[i].range == (int)range && !enemy.mAttackManager.AttackList[i].onCooldown)
                 {
+                    isAttacking = true;
+                    //3
+                    SetAttackHitboxDirection(enemy,i);
+                    //4
+                    enemy.body.mSpeed.x = 0f;
+                    //5
                     enemy.mAttackManager.AttackList[i].Activate();
+                    return;
                 }
             }
         }
-
-        if (TargetInMeleeDistance(enemy) && isAttacking)
-        {
-            for (int i = 0; i < enemy.mAttackManager.AttackList.Count; i++)
-            {
-                if (enemy.mAttackManager.AttackList[i].range == Range.Close)
-                {
-                    enemy.mAttackManager.AttackList[i].Activate();
-                }
-            }
-        }
-
     }
 
+
+    public void SetAttackHitboxDirection(Enemy enemy, int i)
+    {
+        MeleeAttack attack = (MeleeAttack)enemy.mAttackManager.AttackList[i];
+        //If the target is to the left of the Entity.
+        if (TargetToLeft(enemy))
+        {
+            if (!attack.mIsActive)
+            {
+                //Check if the hitbox has already set OffsetX to face to the left.
+                if (attack.hitbox.mAABB.OffsetX > 0)
+                    attack.hitbox.mAABB.OffsetX = attack.hitbox.mAABB.OffsetX * -1;
+            }
+        }
+        //If target is to the right of the Entity.
+        else if (TargetToRight(enemy))
+        {
+            if (!attack.mIsActive)
+            {
+                attack.hitbox.mAABB.OffsetX = Mathf.Abs(attack.hitbox.mAABB.OffsetX);
+            }
+        }
+    }
 
     public State State
     {

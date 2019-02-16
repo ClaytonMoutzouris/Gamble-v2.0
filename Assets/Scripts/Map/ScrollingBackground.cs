@@ -65,7 +65,7 @@ public class ScrollingBackground : MonoBehaviour {
 
     private void ScrollLeft()
     {
-        print("Scrolling Left");
+        //print("Scrolling Left");
         int lastRight = rightIndex;
         layers[rightIndex].position = new Vector3((layers[leftIndex].position.x - backgroundSize), layers[leftIndex].position.y);
         leftIndex = rightIndex;
@@ -78,7 +78,7 @@ public class ScrollingBackground : MonoBehaviour {
 
     private void ScrollRight()
     {
-        print("Scrolling Right");
+        //print("Scrolling Right");
 
         int lastLeft = leftIndex;
         layers[leftIndex].position = new Vector3((layers[rightIndex].position.x + backgroundSize), layers[rightIndex].position.y);

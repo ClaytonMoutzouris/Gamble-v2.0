@@ -11,7 +11,7 @@ public struct Health
 
     public float LoseHP(float damage)
     {
-        Debug.Log("Dealing " + damage + " damage");
+        //Debug.Log("Dealing " + damage + " damage");
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         if(healthbar != null)
         {

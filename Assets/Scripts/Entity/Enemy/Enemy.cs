@@ -138,6 +138,7 @@ public abstract class Enemy : Entity, IHurtable
 
     public void EnemyUpdate()
     {
+        mAttackManager.UpdateAttacks();
         mBehaviour.EnemyBehaviourUpdate(mBehaviour.mEnemy);
     }
 
@@ -169,7 +170,7 @@ public abstract class Enemy : Entity, IHurtable
 
     public virtual void GetHurt(Attack attack)
     {
-        Debug.Log("Dude is getting hurt");
+        //Debug.Log("Dude is getting hurt");
         if (Hostility == Hostility.Neutral)
         {
             Hostility = Hostility.Hostile;

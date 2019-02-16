@@ -25,16 +25,15 @@ public class Slime : Enemy {
         mBehaviour.canJump = true;
 
         mBehaviour.moveDuration = 0.5f;
-        mBehaviour.waitDuration = 0.5f;
+        mBehaviour.cooldownDuration = 0.5f;
         mBehaviour.jumpDuration = 3.0f;
 
-        mBehaviour.waitTimer = 0f;
+        mBehaviour.cooldownTimer = 0f;
         mBehaviour.moveTimer = 0f;
         mBehaviour.jumpTimer = 0f;
 
         mBehaviour.jumpSpeed = 400f;
-
-        
+        mBehaviour.direction = 1;
 
     }
 

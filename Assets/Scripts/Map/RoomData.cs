@@ -47,7 +47,7 @@ public class RoomData
     {
         roomType = (RoomType)reader.ReadByte();
         surfaceLayer = (SurfaceLayer)reader.ReadByte();
-        Debug.Log("Reading Surface Type " + surfaceLayer);
+        //Debug.Log("Reading Surface Type " + surfaceLayer);
 
         mWidth = reader.ReadByte();
         mHeight = reader.ReadByte();

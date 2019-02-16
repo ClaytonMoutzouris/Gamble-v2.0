@@ -356,7 +356,7 @@ public static class MapGenerator
 
         map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
         Vector2i door = AddDoorTile(map, endRoom.x, endRoom.y);
-        Debug.Log("Door tile " + door);
+        //Debug.Log("Door tile " + door);
 
         map.SetTile(door.x, door.y, TileType.Door);
 
@@ -404,7 +404,7 @@ public static class MapGenerator
                 }
                 else if (map.GetTile(x, y) == TileType.ObstacleBlock1)
                 {
-                    Debug.Log("Obstacle1");
+                    //Debug.Log("Obstacle1");
                     blockRandom = Random.Range(0, 3); //This is between empty and bounce
                     map.SetTile(x, y, (TileType)blockRandom);
                 }
