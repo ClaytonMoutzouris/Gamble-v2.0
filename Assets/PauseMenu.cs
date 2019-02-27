@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour {
 
-    //public static PauseMenu instance;
+    public static PauseMenu instance;
 
-    public void Awake()
+    public void Start()
     {
-        //instance = this;
+
+        instance = this;
+        gameObject.SetActive(false);
     }
 
     public void Open()

@@ -13,7 +13,7 @@ public abstract class Entity : MonoBehaviour {
     [HideInInspector]
     public AudioSource mAudioSource;
     [HideInInspector]
-    public Game mGame;
+    public LevelManager mGame;
     [HideInInspector]
     public MapManager mMap;
     [HideInInspector]
@@ -79,7 +79,7 @@ public abstract class Entity : MonoBehaviour {
 
     public virtual void EntityInit()
     {
-        mGame = Game.instance;
+        mGame = LevelManager.instance;
         mMap = mGame.mMap;
 
         mAnimator = GetComponent<Animator>();
@@ -92,7 +92,7 @@ public abstract class Entity : MonoBehaviour {
         mUpdateId = mGame.AddToUpdateList(this);
 
         //Set the physicsBody
-        Body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
+        body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
 
 
         //mEnemyType = EnemyType.Slime;

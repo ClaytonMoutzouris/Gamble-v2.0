@@ -7,7 +7,6 @@ public enum ColliderState { Open, Closed, Colliding }
 //There is one last type of hitbox to make, that would be vision/aggro
 public enum ColliderType { Unknown, Hitbox, Hurtbox, Pushbox }
 
-[System.Serializable]
 public abstract class CustomCollider2D {
 
     //public ColliderType colliderType;

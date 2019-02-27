@@ -19,7 +19,7 @@ public static class CollisionManager {
 
     public static void InitializeCollisionManager()
     {
-        mapManager = Game.instance.mMap;
+        mapManager = LevelManager.instance.mMap;
         mHorizontalAreasCount = Mathf.CeilToInt((float)mapManager.mWidth / (float)mGridAreaWidth);
         mVerticalAreasCount = Mathf.CeilToInt((float)mapManager.mHeight / (float)mGridAreaHeight);
 

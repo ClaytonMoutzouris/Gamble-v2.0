@@ -26,7 +26,7 @@ public class Constants
     public const int cMapChunkSizeX = 10;
     public const int cMapChunkSizeY = 10;
     public const int cTileResolution = 32;
-
+    public const int MAX_NUM_PLAYERS = 4;
 
 
     public static readonly float[] cJumpSpeeds = { 210.0f, 280.0f, 350.0f, 380.0f, 410.0f, 460.0f };

@@ -237,13 +237,13 @@ MonoBehaviour:
   mEntityType: 0
   mCollidesWith: 010000000200000003000000
   colorPallete:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0.7075472, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0.3254717, b: 0.3254717, a: 1}
-  - {r: 1, g: 0.9669811, b: 0.9669811, a: 1}
-  - {r: 0.2924528, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0.5613208, b: 0.5613208, a: 1}
-  - {r: 0.21807075, g: 1, b: 0, a: 1}
+  - {r: 0.7103927, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0.10847686, b: 0.7058824, a: 1}
+  - {r: 0.32549024, g: 0.8369397, b: 1, a: 1}
+  - {r: 0.8490566, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.24056602, b: 0.24056602, a: 1}
+  - {r: 1, g: 0.88149357, b: 0, a: 1}
+  - {r: 0.72925043, g: 0, b: 1, a: 1}
   mMovingSpeed: 0
   BodySize: {x: 6, y: 12}
   body:
@@ -302,9 +302,6 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
       leftTile:
         x: 0
         y: 0
@@ -331,13 +328,13 @@ MonoBehaviour:
   mAnimator: {fileID: 9507910}
   mToRemove: 0
   mUpdateId: -1
-  mJumpSpeed: 0
-  mWalkSpeed: 0
-  mClimbSpeed: 0
-  mDoubleJump: 1
+  mJumpSpeed: 410
+  mWalkSpeed: 140
+  mClimbSpeed: 100
+  mDoubleJump: 0
   mTimeToExit: 1
   mHealthBar: {fileID: 0}
-  mBullet: {fileID: 0}
+  mBullet: {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66, type: 3}
   mCurrentState: 0
   mPlayerIndex: 0
   mHitWallSfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
@@ -354,7 +351,7 @@ MonoBehaviour:
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
   mStats: {fileID: 0}
-  mAttackManager: {fileID: 0}
+  mAttackManager: {fileID: 4989206604878757318}
   InventoryUI: {fileID: 0}
 --- !u!95 &9507910
 Animator:
@@ -483,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c58e0d0a5992ed43bd565e4ce8df5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mEntity: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 3}
+  mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
 --- !u!114 &3215723004739739211

@@ -86,6 +86,8 @@ public class Player : Entity, IHurtable
     {
         base.EntityInit();
 
+        Debug.Log("Setting player body" + Body);
+
         for(int c = 0; c < colorPallete.Count; c++)
         {
             colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));

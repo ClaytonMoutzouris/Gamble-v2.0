@@ -14,7 +14,7 @@ using System;
 [System.Serializable]
 public class PhysicsBody : CustomCollider2D
 {
-    public Game mGame;
+    public LevelManager mGame;
     public MapManager mMap;
     //public Entity mEntity;
 
@@ -78,7 +78,7 @@ public class PhysicsBody : CustomCollider2D
     public PhysicsBody(Entity entity, CustomAABB aABB) : base(entity, aABB)
     {
         mCollisions = new List<CollisionData>();
-        mGame = Game.instance;
+        mGame = LevelManager.instance;
         mMap = mGame.mMap;
         mEntity = entity;
         mAABB = aABB;

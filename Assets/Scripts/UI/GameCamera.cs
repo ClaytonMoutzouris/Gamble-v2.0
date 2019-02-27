@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GameCamera : MonoBehaviour
 {
-
+    public static GameCamera instance;
     /// <summary>
     /// A reference to the the player.
     /// </summary>
@@ -24,10 +24,11 @@ public class GameCamera : MonoBehaviour
     public float mMinOrthographicSize = 120;
     public float mBoundingBoxPadding = 32;
 
-    void Start()
+    void Awake()
     {
-
+        instance = this;
         mCamera = GetComponent<Camera>();
+        
         //mCamera.orthographicSize = mMinOrthographicSize;
         //mPosition = transform.position;
     }

@@ -6,23 +6,15 @@ using System.Collections.Generic;
 public enum GameMode
 {
     Game,
-    Editor
+    Paused
 }
-public class Game : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     public GameMode mGameMode;
-    public static Game instance;
+    public static LevelManager instance;
     public Camera gameCamera;
+    public int numPlayers = 1;
     public List<Player> players;
-
-    public List<bool[]> playerInputs;
-    public List<bool[]> playerPrevInputs;
-
-    public KeyCode goLeftKey = KeyCode.A;
-    public KeyCode goRightKey = KeyCode.D;
-    public KeyCode goJumpKey = KeyCode.Space;
-    public KeyCode goDownKey = KeyCode.S;
-    public KeyCode goUpKey = KeyCode.W;
 
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
@@ -31,7 +23,7 @@ public class Game : MonoBehaviour
 
     public TileType mPlacedTileType;
 
-    public Transform mCharacterPrefab;
+    public Player mPlayerPrefab;
     public Transform mMovingPlatformPrefab;
     public Transform mSlimePrefab;
     [SerializeField]
@@ -55,33 +47,24 @@ public class Game : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
-
-
-        switch (mGameMode)
+        for(int i = 0; i < numPlayers; i++)
         {
-            case GameMode.Game:
-                playerInputs = new List<bool[]>();
-                playerPrevInputs = new List<bool[]>();
-
-                foreach (Player player in players)
-                {
-                    //init player 1
-                    bool[] inputs = new bool[(int)KeyInput.Count];
-                    bool[] prevInputs = new bool[(int)KeyInput.Count];
-                    playerInputs.Add(inputs);
-                    playerPrevInputs.Add(prevInputs);
-
-                    player.EntityInit();
-                    player.SetInputs(inputs, prevInputs);
-                }
-                //player2.GetComponent<SpriteRenderer>().color = Color.gray;
-
-                NewGameMap(MapType.Hub);
-
-           break;
-            case GameMode.Editor:
-                break;
+            Player newPlayer = Instantiate(mPlayerPrefab) as Player;
+            newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
+            newPlayer.EntityInit();
+            newPlayer.SetInputs(InputManager.instance.playerInputs[i], InputManager.instance.playerPrevInputs[i]);
+            GameCamera.instance.targets.Add(newPlayer.transform);
+            players.Add(newPlayer);
+            
         }
+
+        
+
+
+
+        //player2.GetComponent<SpriteRenderer>().color = Color.gray;
+
+        NewGameMap(MapType.Hub);
         
     }
 
@@ -104,60 +87,30 @@ public class Game : MonoBehaviour
         }
 
         mMap.NewMap(MapDatabase.GetMap(type));
-        foreach(Player player in players)
-        player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+        int count = 0;
+        foreach (Player player in players)
+        {
+            player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+        }
 
 
     }
 
-    void HandleInputs()
+    public void PauseGame()
     {
-        for(int p = 0; p < players.Count; p++)
-        {
-            switch (p)
-            {
-                case 0:
-            playerInputs[p][(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
-            playerInputs[p][(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
-            playerInputs[p][(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
-            playerInputs[p][(int)KeyInput.Climb] = Input.GetAxisRaw("Vertical") > 0;
-            playerInputs[p][(int)KeyInput.Jump] = Input.GetButton("Jump");
-            playerInputs[p][(int)KeyInput.Shoot] = Input.GetButton("Fire1");
-            playerInputs[p][(int)KeyInput.Attack] = Input.GetButton("Fire2");
-            playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
+        PauseMenu.instance.Open();
+        mGameMode = GameMode.Paused;
+    }
 
-                    break;
-                case 1:
-            playerInputs[p][(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
-            playerInputs[p][(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
-            playerInputs[p][(int)KeyInput.GoDown] = Input.GetKey(KeyCode.S);
-            playerInputs[p][(int)KeyInput.Climb] = Input.GetKey(KeyCode.W);
-            playerInputs[p][(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
-            playerInputs[p][(int)KeyInput.Shoot] = Input.GetKey(KeyCode.Q);
-            playerInputs[p][(int)KeyInput.Attack] = Input.GetKey(KeyCode.R);
-            playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
-
-
-                    break;
-            }
-            
-        }
-
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            //PauseMenu.instance.Open();
-        }
+    public void UnpauseGame()
+    {
+        PauseMenu.instance.Close();
+        mGameMode = GameMode.Game;
 
     }
 
     void Update()
     {
-        if (mGameMode == GameMode.Editor)
-            return;
-
-        HandleInputs();
-
-        
 
         //UpdateCursor();
 
@@ -205,7 +158,7 @@ public class Game : MonoBehaviour
     {
 
         //The game doesnt run in editor mode
-        if (mGameMode == GameMode.Editor)
+        if (mGameMode == GameMode.Paused)
             return;
 
 
