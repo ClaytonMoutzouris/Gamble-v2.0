@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerPanel : MonoBehaviour
 {
     public HealthBar healthBar;
+    public PlayerInventoryUI inventoryUI;
 
     // Start is called before the first frame update
     void Start()

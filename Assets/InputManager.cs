@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -9,12 +10,6 @@ public class InputManager : MonoBehaviour
 
     public List<bool[]> playerInputs;
     public List<bool[]> playerPrevInputs;
-
-    public KeyCode goLeftKey = KeyCode.A;
-    public KeyCode goRightKey = KeyCode.D;
-    public KeyCode goJumpKey = KeyCode.Space;
-    public KeyCode goDownKey = KeyCode.S;
-    public KeyCode goUpKey = KeyCode.W;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +71,7 @@ public class InputManager : MonoBehaviour
             if (LevelManager.instance.mGameMode == GameMode.Game)
             {
                 LevelManager.instance.PauseGame();
+                EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
             }
             else
             {

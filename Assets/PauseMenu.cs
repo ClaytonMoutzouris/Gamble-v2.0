@@ -5,6 +5,7 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour {
 
     public static PauseMenu instance;
+    public GameObject defaultObject;
 
     public void Start()
     {

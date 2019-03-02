@@ -67,7 +67,8 @@
     <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\InputManager.cs" />
     <Compile Include="Assets\MainMenuController.cs" />
-    <Compile Include="Assets\MiniMap.cs" />
+    <Compile Include="Assets\NewCharacterField.cs" />
+    <Compile Include="Assets\NewCharacterPanel.cs" />
     <Compile Include="Assets\PauseMenu.cs" />
     <Compile Include="Assets\PlayerHealthBar.cs" />
     <Compile Include="Assets\PlayerIndicator.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Assets\Scripts\UI\EditorCamera.cs" />
     <Compile Include="Assets\Scripts\UI\GameCamera.cs" />
     <Compile Include="Assets\Scripts\UI\InventoryNode.cs" />
+    <Compile Include="Assets\Scripts\UI\MiniMap.cs" />
     <Compile Include="Assets\Scripts\UI\NewMapMenu.cs" />
     <Compile Include="Assets\Scripts\UI\RenderExtensions.cs" />
     <Compile Include="Assets\Scripts\UI\RoomEditor.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
     <Compile Include="Assets\Scripts\Utility\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
+    <Compile Include="Assets\ShipSceneController.cs" />
     <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\TestAA.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

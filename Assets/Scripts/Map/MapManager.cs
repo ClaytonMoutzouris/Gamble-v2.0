@@ -219,6 +219,7 @@ public class MapManager : MonoBehaviour
         AddEntities(mCurrentMap);
 
         mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
+        MiniMap.instance.SetMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY);
     }
 
 
