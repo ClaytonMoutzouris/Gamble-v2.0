@@ -14,5 +14,6 @@ public enum KeyInput
     Shoot,
     Attack,
     Item,
+    Inventory,
 	Count
 }

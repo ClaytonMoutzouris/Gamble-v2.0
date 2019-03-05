@@ -61,23 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\EnemyHealthBar.cs" />
-    <Compile Include="Assets\FloatingText.cs" />
-    <Compile Include="Assets\GameData.cs" />
-    <Compile Include="Assets\HealthBar.cs" />
-    <Compile Include="Assets\InputManager.cs" />
-    <Compile Include="Assets\MainMenuController.cs" />
-    <Compile Include="Assets\NewCharacterField.cs" />
-    <Compile Include="Assets\NewCharacterPanel.cs" />
-    <Compile Include="Assets\PauseMenu.cs" />
-    <Compile Include="Assets\PlayerHealthBar.cs" />
-    <Compile Include="Assets\PlayerIndicator.cs" />
-    <Compile Include="Assets\PlayerInventoryUI.cs" />
-    <Compile Include="Assets\PlayerPanel.cs" />
-    <Compile Include="Assets\PlayerUIPanels.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\InputManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ShipSceneController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
+    <Compile Include="Assets\Scripts\Database\GameData.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
@@ -131,10 +121,23 @@
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PhysicsBody.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PositionState.cs" />
     <Compile Include="Assets\Scripts\UI\EditorCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemyHealthBar.cs" />
+    <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
     <Compile Include="Assets\Scripts\UI\GameCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\InventoryNode.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\UI\MiniMap.cs" />
+    <Compile Include="Assets\Scripts\UI\NewCharacterField.cs" />
+    <Compile Include="Assets\Scripts\UI\NewCharacterPanel.cs" />
     <Compile Include="Assets\Scripts\UI\NewMapMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\OtisUIPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerIndicator.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerInventoryUI.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerUIPanels.cs" />
     <Compile Include="Assets\Scripts\UI\RenderExtensions.cs" />
     <Compile Include="Assets\Scripts\UI\RoomEditor.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadItem.cs" />
@@ -147,8 +150,6 @@
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
     <Compile Include="Assets\Scripts\Utility\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
-    <Compile Include="Assets\ShipSceneController.cs" />
-    <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\TestAA.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
