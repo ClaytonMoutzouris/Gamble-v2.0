@@ -6,7 +6,6 @@ public class Bullet : Entity, IProjectile {
 
     public bool mPierce = false;
     public bool IgnoreGravity = true;
-    public AudioClip fireSFX;
     //public Vector2 direction = Vector2.zero;
     //Should be a constant
     [HideInInspector]
@@ -56,7 +55,6 @@ public class Bullet : Entity, IProjectile {
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
         body.mIgnoresGravity = IgnoreGravity;
-        mAudioSource.PlayOneShot(fireSFX);
     }
 
     public void SetInitialDirection(Vector3 direction)

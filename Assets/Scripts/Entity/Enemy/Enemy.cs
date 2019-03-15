@@ -5,6 +5,7 @@ public enum Hostility { Friendly, Neutral, Hostile };
 
 public abstract class Enemy : Entity, IHurtable
 {
+    public EnemyState mEnemyState = EnemyState.Idle;
     public EnemyType mEnemyType;
 
     //Behaviour
@@ -23,8 +24,6 @@ public abstract class Enemy : Entity, IHurtable
 
     [HideInInspector]
     public Stats mStats;
-    [HideInInspector]
-    public EnemyBehaviour mBehaviour;
 
     public Hurtbox HurtBox
     {
@@ -107,9 +106,6 @@ public abstract class Enemy : Entity, IHurtable
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
 
-        mBehaviour = GetComponent<EnemyBehaviour>();
-        mBehaviour.mEnemy = this;
-
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
         temp.transform.localPosition = new Vector3(0, BodySize.y * 2);
         temp.InitHealthbar(this);
@@ -139,7 +135,6 @@ public abstract class Enemy : Entity, IHurtable
     public void EnemyUpdate()
     {
         mAttackManager.UpdateAttacks();
-        mBehaviour.EnemyBehaviourUpdate(mBehaviour.mEnemy);
     }
 
 

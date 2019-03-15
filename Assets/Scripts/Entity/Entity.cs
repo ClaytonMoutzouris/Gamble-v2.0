@@ -119,13 +119,13 @@ public abstract class Entity : MonoBehaviour {
         Body.UpdatePhysicsP2();
     }
 
-    public virtual void Shoot(Bullet prefab, Attack attack)
+    public virtual void Shoot(Bullet prefab, Attack attack, Vector2 Dir)
     {
         Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
         temp.EntityInit();
         temp.Attack = attack;
         temp.Owner = this;
-        temp.SetInitialDirection(new Vector2(body.mAABB.ScaleX, 0));
+        temp.SetInitialDirection(Dir);
 
     }
 

@@ -295,7 +295,7 @@ public class PhysicsBody : CustomCollider2D
                     tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize /2;
 
-                    if (topTileEdge > bottomLeft.y+0.5f)
+                    if (topTileEdge > bottomLeft.y+0.5f || mSpeed.y > 0)
                     {
                         continue;
                     }
@@ -309,7 +309,7 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.Spikes:
                     tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
-                    if (topTileEdge > bottomLeft.y + 0.5f)
+                    if (topTileEdge > bottomLeft.y + 0.5f || mSpeed.y > 0)
                     {
                         continue;
                     }
@@ -323,7 +323,7 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.Bounce:
                     tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
-                    if (topTileEdge > bottomLeft.y + 0.5f)
+                    if (topTileEdge > bottomLeft.y + 0.5f || mSpeed.y > 0)
                     {
                         continue;
                     }
@@ -782,7 +782,20 @@ public class PhysicsBody : CustomCollider2D
             }
             else
             {
-                float offsetY = overlap.y * speedRatioY;
+
+
+                float offsetY;
+
+
+                if (data.other.mEntity.Body.mPS.pushedBottomTile)
+                {
+                    offsetY = overlap.y;
+                }
+                else
+                {
+                    offsetY = overlap.y * speedRatioY;
+
+                }
 
                 mOffset.y += offsetY;
                 offsetSum.y += offsetY;

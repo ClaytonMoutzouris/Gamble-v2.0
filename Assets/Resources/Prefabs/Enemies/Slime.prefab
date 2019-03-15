@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 114562500152961564}
   - component: {fileID: 1613120553129927952}
   - component: {fileID: 5025981402742140755}
-  - component: {fileID: 6094765276272370620}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5bb1cedac6e6d144f8fdbfb07d1323f6, type: 3}
   m_Color: {r: 0.16216493, g: 1, b: 0, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 32, y: 32}
@@ -182,12 +181,12 @@ MonoBehaviour:
   mAnimator: {fileID: 0}
   mToRemove: 0
   mUpdateId: -1
+  mEnemyState: 0
   mEnemyType: 0
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
-  mBehaviour: {fileID: 0}
   dashTrigger: 0
   hitbox:
     mEntity: {fileID: 0}
@@ -245,35 +244,3 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &6094765276272370620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937429433522054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEnemy: {fileID: 0}
-  state: 0
-  range: 0
-  canMove: 0
-  canJump: 0
-  canAttack: 0
-  isOnCooldown: 0
-  isMoving: 0
-  isJumping: 0
-  isAttacking: 0
-  cooldownDuration: 0
-  moveDuration: 0
-  jumpDuration: 0
-  moveTimer: 0
-  jumpTimer: 0
-  cooldownTimer: 0
-  closeRange: 40
-  nearRange: 100
-  farRange: 300
-  jumpSpeed: 0

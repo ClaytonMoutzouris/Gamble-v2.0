@@ -364,6 +364,8 @@ public static class MapGenerator
         if(data.mapType == MapType.Hub)
         {
             map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
+            map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
+
         }
 
         if (data.mapType != MapType.Hub)
@@ -377,6 +379,8 @@ public static class MapGenerator
 
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map);
+
+        AddFallingRock(map);
 
         return map;
     }

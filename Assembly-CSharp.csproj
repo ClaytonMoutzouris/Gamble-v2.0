@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Roller.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\InputManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />

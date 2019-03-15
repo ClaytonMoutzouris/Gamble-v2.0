@@ -166,7 +166,7 @@ public class LavaBoss : Enemy
             EruptTimer += Time.deltaTime;
         }
 
-        mAttackManager.AttackList[0].Activate();
+        Shoot(VolcanicBombPrefab, mAttackManager.AttackList[0], Vector2.zero);
 
     }
 
@@ -254,7 +254,7 @@ public class LavaBoss : Enemy
         body.mSpeed.x = mMovingSpeed;
     }
 
-    public override void Shoot(Bullet prefab, Attack attack)
+    public override void Shoot(Bullet prefab, Attack attack, Vector2 Dir)
     {
         Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
         temp.EntityInit();

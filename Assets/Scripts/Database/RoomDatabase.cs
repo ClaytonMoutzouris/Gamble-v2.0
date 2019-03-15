@@ -70,14 +70,11 @@ public static class RoomDatabase
         List<RoomData> roomList = new List<RoomData>();
         foreach (RoomData data in RoomDictionary)
         {
-            Debug.Log("Looking for " + roomType + " " + layer);
-            Debug.Log("Checking " + data.roomType + " " + data.surfaceLayer);
             if (data.surfaceLayer == layer && data.roomType == roomType)
             {
                 roomList.Add(data);
             }
         }
-        Debug.Log("Looking for " + roomType + " " + layer + " and found " + roomList.Count);
         return roomList[Random.Range(0, roomList.Count)].Copy();
     }
 

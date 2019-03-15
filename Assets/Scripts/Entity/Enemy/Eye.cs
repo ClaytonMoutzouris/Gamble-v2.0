@@ -14,39 +14,82 @@ public class Eye : Enemy
 
         Body.mIsKinematic = false;
         Body.mIgnoresGravity = true;
+        Body.mIgnoresOneWay = true;
 
 
         EnemyInit();
+        StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
 
-        mBehaviour.canJump = false;
 
-        mBehaviour.moveDuration = 0.5f;
-        mBehaviour.cooldownDuration = 0.5f;
-        mBehaviour.jumpDuration = 3.0f;
-
-        mBehaviour.cooldownTimer = 0f;
-        mBehaviour.moveTimer = 0f;
-        mBehaviour.jumpTimer = 0f;
-        mBehaviour.direction = 1;
     }
 
     public override void EntityUpdate()
     {
         EnemyUpdate();
-
-        
-        if(this.Target != null)
-        {
-            HasTargetUpdate();
-        } else
-        {
-            NoTargetUpdate();
-        }
-        
-        
-
         //This is just a test, probably dont need to do it this way
         base.EntityUpdate();
+
+        if (Hostility == Hostility.Hostile)
+        {
+            EnemyBehaviour.CheckForTargets(this);
+        }
+
+        switch (mEnemyState)
+        {
+            case EnemyState.Idle:
+
+                break;
+            case EnemyState.Moving:
+
+                if (Target != null)
+                {
+                    mAnimator.Play("Eye_Fly");
+                    if(body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+                    {
+                        if(Target.Position.y < Position.y)
+                        {
+                            body.mSpeed.y = -mMovingSpeed;
+                        } else
+                        {
+                            body.mSpeed.y = mMovingSpeed;
+                        }
+                    } else if (body.mPS.pushesBottomTile || body.mPS.pushesTopTile)
+                    {
+                        if (Target.Position.x < Position.x)
+                        {
+                            body.mSpeed.x = -mMovingSpeed;
+                        }
+                        else
+                        {
+                            body.mSpeed.x = mMovingSpeed;
+                        }
+                    } else
+                    {
+                        body.mSpeed = ((Vector2)Target.Position - body.mPosition).normalized * mMovingSpeed;
+                    }
+
+                }
+                else
+                {
+                    if (!body.mPS.pushesTop)
+                    {
+                        mAnimator.Play("Eye_Fly");
+                        body.mSpeed.y = mMovingSpeed;
+                    }
+                    else
+                    {
+                        mAnimator.Play("Eye_Sleep");
+                        body.mSpeed.y = 0;
+                    }
+
+                    body.mSpeed.x = 0;
+
+
+                }
+
+                break;
+
+        }
 
 
         CollisionManager.UpdateAreas(HurtBox);
@@ -66,26 +109,4 @@ public class Eye : Enemy
 
     }
 
-    void HasTargetUpdate()
-    {
-        mAnimator.Play("Eye_Fly");
-        //This works amazing!
-        body.mSpeed = ((Vector2)this.Target.Position - body.mPosition).normalized*mMovingSpeed;
-    }
-
-    void NoTargetUpdate()
-    {
-        if (!body.mPS.pushesTop)
-        {
-            mAnimator.Play("Eye_Fly");
-            body.mSpeed.y = mMovingSpeed;
-        }
-        else
-        {
-            mAnimator.Play("Eye_Sleep");
-            body.mSpeed.y = 0;
-        }
-
-        body.mSpeed.x = 0;
-    }
 }

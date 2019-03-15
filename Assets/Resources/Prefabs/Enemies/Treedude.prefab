@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 75086311158165832}
   - component: {fileID: 5178419798309597383}
   - component: {fileID: 5720512605603623667}
-  - component: {fileID: 6612717312834628813}
   m_Layer: 0
   m_Name: Treedude
   m_TagString: Untagged
@@ -176,9 +175,6 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
       leftTile:
         x: 0
         y: 0
@@ -205,12 +201,12 @@ MonoBehaviour:
   mAnimator: {fileID: 0}
   mToRemove: 0
   mUpdateId: -1
-  mEnemyType: 3
+  mEnemyState: 0
+  mEnemyType: 4
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
-  mBehaviour: {fileID: 0}
 --- !u!114 &5178419798309597383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,32 +248,3 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &6612717312834628813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75086311158165844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEnemy: {fileID: 0}
-  canMove: 0
-  canJump: 0
-  canAttack: 0
-  isWaiting: 0
-  isMoving: 0
-  isJumping: 0
-  isAttacking: 0
-  waitDuration: 0
-  moveDuration: 0
-  jumpDuration: 0
-  basicAttackDuration: 0
-  moveTimer: 0
-  jumpTimer: 0
-  waitTimer: 0
-  basicAttackTimer: 0
-  jumpSpeed: 0

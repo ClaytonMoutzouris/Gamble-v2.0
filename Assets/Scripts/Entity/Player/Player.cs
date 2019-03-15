@@ -8,6 +8,7 @@ public class Player : Entity, IHurtable
     [System.Serializable]
     public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, };
 
+    public InputMode mInputMode = InputMode.Game;
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
@@ -171,7 +172,7 @@ public class Player : Entity, IHurtable
         //and top left corner of the aabb when we want to grab the left edge
         Vector2 aabbCornerOffset;
 
-        if (body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight])
+        if (body.mPS.pushesRight && mInputs[(int)KeyInput.LeftStick_Right])
             aabbCornerOffset = body.mAABB.HalfSize;
         else
             aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
@@ -262,7 +263,7 @@ public class Player : Entity, IHurtable
     {
         mAttackManager.UpdateAttacks();
 
-
+        //Handle each of the players states
         switch (mCurrentState)
         {
             
@@ -282,29 +283,30 @@ public class Player : Entity, IHurtable
                 
 
                 //if left or right key is pressed, but not both
-                if (KeyState(KeyInput.GoRight) != KeyState(KeyInput.GoLeft))
+                if (KeyState(KeyInput.LeftStick_Right) != KeyState(KeyInput.LeftStick_Left))
                 {
                     mCurrentState = PlayerState.Walk;
                     break;
                 }
 
-                //If the jump button is pressed
-                if (Pressed(KeyInput.Jump))
-                {
-                    Jump();
-                    break;
-                }
 
                 if (Pressed(KeyInput.Item))
                 {
                     GainLife(5);
-                    break;
                 }
 
-                if (KeyState(KeyInput.GoDown))
+                if (KeyState(KeyInput.LeftStick_Down))
                 {
-                    body.mPS.tmpIgnoresOneWay = true;
-                    if (Pressed(KeyInput.GoDown))
+                    if (KeyState(KeyInput.LeftStick_Down) && Pressed(KeyInput.Jump))
+                    {
+                        if (body.mPS.onOneWay)
+                        {
+                            body.mPS.tmpIgnoresOneWay = true;
+                            break;
+                        }
+                    }
+
+                    if (Pressed(KeyInput.LeftStick_Down))
                     {
                         ItemObject item = CheckForItems();
                         if (item != null)
@@ -315,7 +317,15 @@ public class Player : Entity, IHurtable
                         }
                     }
                 }
-                if (KeyState(KeyInput.Climb) )
+
+
+                if (Pressed(KeyInput.Jump))
+                {
+                    Jump();
+                    break;
+                }
+
+                if (KeyState(KeyInput.LeftStick_Up) )
                 {
                     if (body.mPS.onLadder)
                     {
@@ -339,7 +349,7 @@ public class Player : Entity, IHurtable
 
                     }
 
-                    if (Pressed(KeyInput.Climb))
+                    if (Pressed(KeyInput.LeftStick_Up))
                     {
                         Chest chest = CheckForChest();
                         if (chest != null)
@@ -366,15 +376,21 @@ public class Player : Entity, IHurtable
                     mAudioSource.PlayOneShot(mWalkSfx);
                 }
 
+                if (!body.mPS.pushesBottom)
+                {
+                    mCurrentState = PlayerState.Jump;
+                    break;
+                }
+
                 //if both or neither left nor right keys are pressed then stop walking and stand
 
-                if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
+                if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
                 {
                     mCurrentState = PlayerState.Stand;
                     //mSpeed = Vector2.zero;
                     break;
                 }
-                else if (KeyState(KeyInput.GoRight))
+                else if (KeyState(KeyInput.LeftStick_Right))
                 {
                     if (body.mPS.pushesRightTile)
                     {
@@ -388,7 +404,7 @@ public class Player : Entity, IHurtable
                     }
                     body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
-                else if (KeyState(KeyInput.GoLeft))
+                else if (KeyState(KeyInput.LeftStick_Left))
                 {
                     if (body.mPS.pushesLeftTile)
                     {
@@ -402,23 +418,39 @@ public class Player : Entity, IHurtable
                     body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
                 }
 
-                //If the jump button is pressed
+                if (KeyState(KeyInput.LeftStick_Down))
+                {
+                    if (KeyState(KeyInput.LeftStick_Down) && Pressed(KeyInput.Jump))
+                    {
+                        if (body.mPS.onOneWay)
+                        {
+                            body.mPS.tmpIgnoresOneWay = true;
+                            break;
+                        }
+
+                    }
+
+                    if (Pressed(KeyInput.LeftStick_Down))
+                    {
+                        ItemObject item = CheckForItems();
+                        if (item != null)
+                        {
+                            Debug.Log("You picked up " + item.name);
+                            //mAllCollidingObjects.Remove(item);
+                            PickUp(item);
+                        }
+                    }
+                }
+
+
                 if (Pressed(KeyInput.Jump))
                 {
                     Jump();
                     break;
                 }
 
-                if (!body.mPS.pushesBottom)
-                {
-                    mCurrentState = PlayerState.Jump;
-                    break;
-                }
 
-                if (KeyState(KeyInput.GoDown))
-                    body.mPS.tmpIgnoresOneWay = true;
-
-                if (KeyState(KeyInput.Climb) && body.mPS.onLadder)
+                if (KeyState(KeyInput.LeftStick_Up) && body.mPS.onLadder)
                 {
                     body.mSpeed = Vector2.zero;
                     body.mPS.isClimbing = true;
@@ -443,6 +475,7 @@ public class Player : Entity, IHurtable
                         body.mSpeed.y = mJumpSpeed;
                 }
 
+
                 /*
                 if (Pressed(KeyInput.Jump) && mDoubleJump)
                 {
@@ -463,11 +496,11 @@ public class Player : Entity, IHurtable
                     body.mSpeed.y = Mathf.Min(body.mSpeed.y, 200.0f);
                 }
 
-                if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
+                if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
                 {
                     body.mSpeed.x = 0.0f;
                 }
-                else if (KeyState(KeyInput.GoRight))
+                else if (KeyState(KeyInput.LeftStick_Right))
                 {
                     if (body.mPS.pushesRightTile)
                         body.mSpeed.x = 0.0f;
@@ -475,7 +508,7 @@ public class Player : Entity, IHurtable
                         body.mSpeed.x = mWalkSpeed;
                     body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
-                else if (KeyState(KeyInput.GoLeft))
+                else if (KeyState(KeyInput.LeftStick_Left))
                 {
                     if (body.mPS.pushesLeftTile)
                         body.mSpeed.x = 0.0f;
@@ -488,7 +521,7 @@ public class Player : Entity, IHurtable
                 if (body.mPS.pushesBottom)
                 {
                     //if there's no movement change state to standing
-                    if (KeyState(KeyInput.GoRight) == KeyState(KeyInput.GoLeft))
+                    if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
                     {
                         mCurrentState = PlayerState.Stand;
                         //mSpeed = Vector2.zero;
@@ -505,31 +538,32 @@ public class Player : Entity, IHurtable
                 if (mCannotGoLeftFrames > 0)
                 {
                     --mCannotGoLeftFrames;
-                    mInputs[(int)KeyInput.GoLeft] = false;
+                    mInputs[(int)KeyInput.LeftStick_Left] = false;
                 }
                 if (mCannotGoRightFrames > 0)
                 {
                     --mCannotGoRightFrames;
-                    mInputs[(int)KeyInput.GoRight] = false;
+                    mInputs[(int)KeyInput.LeftStick_Right] = false;
                 }
             
                 if (body.mSpeed.y <= 0.0f && !body.mPS.pushesTop
-                    && ((body.mPS.pushesRight && mInputs[(int)KeyInput.GoRight]) || (body.mPS.pushesLeft && mInputs[(int)KeyInput.GoLeft])))
+                    && ((body.mPS.pushesRight && mInputs[(int)KeyInput.LeftStick_Right]) || (body.mPS.pushesLeft && mInputs[(int)KeyInput.LeftStick_Left])))
                 {
                     TryGrabLedge();
                 }
 
 
-
-                if (KeyState(KeyInput.GoDown))
+                if (KeyState(KeyInput.LeftStick_Down))
                     body.mPS.tmpIgnoresOneWay = true;
 
                 // we can climb ladders from this state
-                if (Pressed(KeyInput.Climb) && body.mPS.onLadder)
+                if ((KeyState(KeyInput.LeftStick_Up) || KeyState(KeyInput.LeftStick_Down)) && body.mPS.onLadder)
                 {
                     mCurrentState = PlayerState.Climb;
-                    break;
                 }
+
+
+
 
                 break;
 
@@ -540,9 +574,9 @@ public class Player : Entity, IHurtable
                 bool ledgeOnRight = !ledgeOnLeft;
 
                 //if down button is held then drop down
-                if (mInputs[(int)KeyInput.GoDown]
-                    || (mInputs[(int)KeyInput.GoLeft] && ledgeOnRight)
-                    || (mInputs[(int)KeyInput.GoRight] && ledgeOnLeft))
+                if (mInputs[(int)KeyInput.LeftStick_Down]
+                    || (mInputs[(int)KeyInput.LeftStick_Left] && ledgeOnRight)
+                    || (mInputs[(int)KeyInput.LeftStick_Right] && ledgeOnLeft))
                 {
                     if (ledgeOnLeft)
                         mCannotGoLeftFrames = 3;
@@ -592,7 +626,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                else if (KeyState(KeyInput.GoDown))
+                else if (KeyState(KeyInput.LeftStick_Down))
                 {
                     if (body.mPS.pushesBottom)
                     {
@@ -607,7 +641,7 @@ public class Player : Entity, IHurtable
                     }
                    // ScaleX = Mathf.Abs(ScaleX);
                 }
-                else if (KeyState(KeyInput.Climb))
+                else if (KeyState(KeyInput.LeftStick_Up))
                 {
                     if (body.mPS.pushesTop)
                         body.mSpeed.y = 0.0f;
@@ -616,7 +650,7 @@ public class Player : Entity, IHurtable
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
-                if (Pressed(KeyInput.GoLeft) || Pressed(KeyInput.GoRight))
+                if (Pressed(KeyInput.LeftStick_Left) || Pressed(KeyInput.LeftStick_Right))
                 {
                     body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Walk;
@@ -636,14 +670,22 @@ public class Player : Entity, IHurtable
                 break;
         }
 
+
+
         if (mInputs[(int)KeyInput.Attack])
         {
             mAttackManager.AttackList[0].Activate();
         }
 
-        if (Pressed(KeyInput.Shoot))
+        if(mInputs[(int)KeyInput.RightStick_Left] || mInputs[(int)KeyInput.RightStick_Right] || 
+            mInputs[(int)KeyInput.RightStick_Down] || mInputs[(int)KeyInput.RightStick_Up])
         {
-            mAttackManager.AttackList[1].Activate();
+            if (Pressed(KeyInput.Shoot))
+            {
+                
+                Shoot(mBullet, mAttackManager.AttackList[1], GetAim());
+
+            }
         }
 
 
@@ -660,14 +702,41 @@ public class Player : Entity, IHurtable
         if (body.mPS.pushedBottom && !body.mPS.pushesBottom || Body.mPS.isClimbing)
         mFramesFromJumpStart = 0;
 
-        //if (body.mPS.pushesBottom && !body.mPS.pushedBottom)
-          //  mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
 
         //Update the animator last
         UpdateAnimator();
 
 
         UpdatePrevInputs();
+    }
+
+    public Vector2 GetAim()
+    {
+        Vector2 aim = Vector2.zero;
+
+        if (KeyState(KeyInput.RightStick_Down)){
+            aim += Vector2.down;
+
+        }
+        else if (KeyState(KeyInput.RightStick_Up))
+        {
+            aim += Vector2.up;
+
+        }
+
+        if (KeyState(KeyInput.RightStick_Left))
+        {
+            aim += Vector2.left;
+
+        }
+        else if (KeyState(KeyInput.RightStick_Right))
+        {
+            aim += Vector2.right;
+
+        }
+
+
+        return aim;
     }
 
     public override void SecondUpdate()

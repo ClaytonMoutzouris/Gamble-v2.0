@@ -7,72 +7,60 @@ public enum InputMode { Game, Pause, Inventory };
 
 public class InputManager : MonoBehaviour
 {
+    public InputMode mode;
+    public Player player;
 
-    public static InputManager instance;
-
-    public List<bool[]> playerInputs;
-    public List<bool[]> playerPrevInputs;
+    public bool[] playerInputs;
+    public bool[] playerPrevInputs;
+    public int[] playerAxis;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        instance = this;
+        playerInputs = new bool[(int)KeyInput.Count];
+        playerPrevInputs = new bool[(int)KeyInput.Count];
+        //playerAxis = new int[(int)StickInput.Count];
 
-
-        playerInputs = new List<bool[]>();
-        playerPrevInputs = new List<bool[]>();
-
-        for(int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
-        { 
-            //init player 1
-            bool[] inputs = new bool[(int)KeyInput.Count];
-            bool[] prevInputs = new bool[(int)KeyInput.Count];
-            playerInputs.Add(inputs);
-            playerPrevInputs.Add(prevInputs);
-
-            
-        }
+        GetComponent<Player>().SetInputs(playerInputs, playerPrevInputs);
     }
 
     // Update is called once per frame
     void Update()
     {
-        for (int p = 0; p < Constants.MAX_NUM_PLAYERS; p++)
+
+        switch (mode)
         {
-            switch (p)
-            {
-                case 0:
-                    playerInputs[p][(int)KeyInput.GoRight] = Input.GetAxisRaw("Horizontal") > 0;
-                    playerInputs[p][(int)KeyInput.GoLeft] = Input.GetAxisRaw("Horizontal") < 0;
-                    playerInputs[p][(int)KeyInput.GoDown] = Input.GetAxisRaw("Vertical") < 0;
-                    playerInputs[p][(int)KeyInput.Climb] = Input.GetAxisRaw("Vertical") > 0;
-                    playerInputs[p][(int)KeyInput.Jump] = Input.GetButton("Jump");
-                    playerInputs[p][(int)KeyInput.Shoot] = Input.GetButton("Fire1");
-                    playerInputs[p][(int)KeyInput.Attack] = Input.GetButton("Fire2");
-                    playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
-                    playerInputs[p][(int)KeyInput.Inventory] = Input.GetKey(KeyCode.Alpha1);
+            case InputMode.Game:
+                playerInputs[(int)KeyInput.LeftStick_Right] = Input.GetAxisRaw("LeftHorizontal") > 0;
+                playerInputs[(int)KeyInput.LeftStick_Left] = Input.GetAxisRaw("LeftHorizontal") < 0;
+                playerInputs[(int)KeyInput.LeftStick_Down] = Input.GetAxisRaw("LeftVertical") < 0;
+                playerInputs[(int)KeyInput.LeftStick_Up] = Input.GetAxisRaw("LeftVertical") > 0;
+                playerInputs[(int)KeyInput.RightStick_Right] = Input.GetAxisRaw("RightHorizontal") > 0;
+                playerInputs[(int)KeyInput.RightStick_Left] = Input.GetAxisRaw("RightHorizontal") < 0;
+                playerInputs[(int)KeyInput.RightStick_Down] = Input.GetAxisRaw("RightVertical") < 0;
+                playerInputs[(int)KeyInput.RightStick_Up] = Input.GetAxisRaw("RightVertical") > 0;
+                playerInputs[(int)KeyInput.Jump] = Input.GetButton("Jump");
+                playerInputs[(int)KeyInput.Shoot] = Input.GetAxisRaw("Fire1") > 0;
+                playerInputs[(int)KeyInput.Attack] = Input.GetButton("Fire2");
+                playerInputs[(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
+                playerInputs[(int)KeyInput.Inventory] = Input.GetKey(KeyCode.Alpha1);
+                break;
+            case InputMode.Inventory:
 
-                    break;
-                case 1:
-                    playerInputs[p][(int)KeyInput.GoRight] = Input.GetKey(KeyCode.D);
-                    playerInputs[p][(int)KeyInput.GoLeft] = Input.GetKey(KeyCode.A);
-                    playerInputs[p][(int)KeyInput.GoDown] = Input.GetKey(KeyCode.S);
-                    playerInputs[p][(int)KeyInput.Climb] = Input.GetKey(KeyCode.W);
-                    playerInputs[p][(int)KeyInput.Jump] = Input.GetKey(KeyCode.F);
-                    playerInputs[p][(int)KeyInput.Shoot] = Input.GetKey(KeyCode.Q);
-                    playerInputs[p][(int)KeyInput.Attack] = Input.GetKey(KeyCode.R);
-                    playerInputs[p][(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
-                    playerInputs[p][(int)KeyInput.Inventory] = Input.GetKey(KeyCode.Alpha2);
+                break;
+            case InputMode.Pause:
 
-
-                    break;
-            }
-
+                break;
         }
 
+
+
+
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             PlayerUIPanels.instance.OpenClosePanel(0);
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

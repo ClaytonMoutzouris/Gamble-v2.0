@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
             newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
             newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
             newPlayer.EntityInit();
-            newPlayer.SetInputs(InputManager.instance.playerInputs[i], InputManager.instance.playerPrevInputs[i]);
+            //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
             GameCamera.instance.targets.Add(newPlayer.transform);
             players.Add(newPlayer);
             

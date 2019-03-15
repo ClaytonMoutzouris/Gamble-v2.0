@@ -6,14 +6,27 @@ using System.Collections;
 /// </summary>
 public enum KeyInput
 {
-	GoLeft = 0,
-	GoRight,
-	GoDown,
-    Climb,
-	Jump,
+	LeftStick_Left = 0,
+	LeftStick_Right,
+	LeftStick_Down,
+    LeftStick_Up,
+    RightStick_Left,
+    RightStick_Right,
+    RightStick_Down,
+    RightStick_Up,
+    Jump,
     Shoot,
     Attack,
     Item,
     Inventory,
 	Count
+}
+
+public enum StickInput
+{
+    LeftStickX = 0,
+    LeftStickY,
+    RightStickX,
+    RightStickY,
+    Count
 }

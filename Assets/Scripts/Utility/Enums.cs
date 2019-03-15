@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile };
-public enum EnemyType { Slime, CrimsonSlime, Eye, Treedude, Count, LavaBoss };
+public enum EnemyType { Slime, CrimsonSlime, Eye, Roller, Treedude, Count, LavaBoss };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 public enum ItemType { };
@@ -29,6 +29,7 @@ public enum TileType
     ObstacleBlock1, //suppose a size of 2x2
     ObstacleBlock2, //suppose size of 2x4
     ObstacleBlock3, //suppose a size of 3x3
+    Boss,
     Count,
 }
 

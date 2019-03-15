@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 95194250073010510}
   - component: {fileID: 6399982450656871162}
   - component: {fileID: 114404760516863551}
-  - component: {fileID: 59620760661611358}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -157,9 +156,6 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
       leftTile:
         x: 0
         y: 0
@@ -188,7 +184,6 @@ MonoBehaviour:
   mUpdateId: -1
   mEnemyType: 2
   hostility: 1
-  state: 0
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
@@ -253,24 +248,3 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &59620760661611358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956054827893182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f46ae76b4346e844aa3f7d5b4344d08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEnemy: {fileID: 0}
-  moveCooldown: 0
-  strollTime: 0
-  wait: 0
-  jumpCooldown: 0
-  jumpTime: 0
-  jumping: 0
-  jumpSpeed: 0
-  canJump: 0

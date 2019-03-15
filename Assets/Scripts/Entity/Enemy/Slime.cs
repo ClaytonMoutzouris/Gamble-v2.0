@@ -5,36 +5,18 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
-    [HideInInspector]
-    public bool dashTrigger;
-    public Hitbox hitbox;
-
+    
     public override void EntityInit()
     {
         base.EntityInit();
         //Body.mAABB.ScaleX *= -1;
 
         body.mIsKinematic = false;
-        body.mSpeed.x = mMovingSpeed;
 
 
         EnemyInit();
 
-        //Set Custom stats
-        
-        mBehaviour.canJump = true;
-
-        mBehaviour.moveDuration = 0.5f;
-        mBehaviour.cooldownDuration = 0.5f;
-        mBehaviour.jumpDuration = 3.0f;
-
-        mBehaviour.cooldownTimer = 0f;
-        mBehaviour.moveTimer = 0f;
-        mBehaviour.jumpTimer = 0f;
-
-        mBehaviour.jumpSpeed = 400f;
-        mBehaviour.direction = 1;
-
+        StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
     }
 
     public override void EntityUpdate()
@@ -43,9 +25,116 @@ public class Slime : Enemy {
         EnemyUpdate();
         base.EntityUpdate();
 
+        if(Hostility == Hostility.Hostile)
+        {
+            EnemyBehaviour.CheckForTargets(this);
+        }
+
+        switch (mEnemyState)
+        {
+            case EnemyState.Idle:
+
+                break;
+            case EnemyState.Moving:
+
+                if(Target != null)
+                {
+                    //Replace this with pathfinding to the target
+
+                    if (EnemyBehaviour.TargetInRange(this, Target, 20))
+                    {
+                        mAttackManager.AttackList[0].Activate();
+                    }
+                    else
+                    {
+
+                        if (Target.Position.x > body.mPosition.x)
+                        {
+                            if (body.mPS.pushesRightTile)
+                            {
+                                EnemyBehaviour.Jump(this, 460);
+                            }
+                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                        }
+                        else
+                        {
+                            if (body.mPS.pushesLeftTile)
+                            {
+                                EnemyBehaviour.Jump(this, 460);
+                            }
+                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (body.mPS.pushedLeftTile)
+                    {
+
+                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
+
+                    }
+                    else if (body.mPS.pushedRightTile)
+                    {
+                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                    }
+
+                    
+                }
+
+                body.mSpeed.x = mMovingSpeed;
+                    
+                break;
+            case EnemyState.Jumping:
+                if (body.mPS.pushesBottom)
+                {
+                    mEnemyState = EnemyState.Moving;
+                    break;
+                }
+
+                if (Target != null)
+                {
+                    //Replace this with pathfinding to the target
+
+                    if (EnemyBehaviour.TargetInRange(this, Target, 20))
+                    {
+                        mAttackManager.AttackList[0].Activate();
+                    }
+                    else
+                    {
+
+                        if (Target.Position.x > body.mPosition.x)
+                        {
+                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                        }
+                        else
+                        {
+                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                        }
+                    }
+
+                }
+
+                body.mSpeed.x = mMovingSpeed;
+
+
+                break;
+        }
+
+        if (body.mSpeed.x > 0)
+        {
+            body.mAABB.ScaleX = 1;
+        } else
+        {
+            body.mAABB.ScaleX = -1;
+
+        }
+
         CollisionManager.UpdateAreas(HurtBox);
         CollisionManager.UpdateAreas(Sight);
         Sight.mEntitiesInSight.Clear();
+
 
         
     }

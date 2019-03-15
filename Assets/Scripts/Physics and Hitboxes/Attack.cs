@@ -236,7 +236,6 @@ public class RangedAttack : Attack
 
         base.Activate();
 
-        mEntity.Shoot(projectile, this);
     }
 
     public override void Deactivate()
