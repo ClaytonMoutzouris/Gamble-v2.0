@@ -137,6 +137,12 @@ public abstract class Entity : MonoBehaviour {
         Body.mState = ColliderState.Closed;
     }
 
+    public void Destroy()
+    {
+        mToRemove = true;
+        Body.mState = ColliderState.Closed;
+    }
+
     public virtual void ActuallyDie()
     {
 

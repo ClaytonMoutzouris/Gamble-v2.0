@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
 {
     public InputMode mode;
     public Player player;
-
     public bool[] playerInputs;
     public bool[] playerPrevInputs;
     public int[] playerAxis;
@@ -28,22 +27,24 @@ public class InputManager : MonoBehaviour
     void Update()
     {
 
+
         switch (mode)
         {
             case InputMode.Game:
-                playerInputs[(int)KeyInput.LeftStick_Right] = Input.GetAxisRaw("LeftHorizontal") > 0;
-                playerInputs[(int)KeyInput.LeftStick_Left] = Input.GetAxisRaw("LeftHorizontal") < 0;
-                playerInputs[(int)KeyInput.LeftStick_Down] = Input.GetAxisRaw("LeftVertical") < 0;
-                playerInputs[(int)KeyInput.LeftStick_Up] = Input.GetAxisRaw("LeftVertical") > 0;
-                playerInputs[(int)KeyInput.RightStick_Right] = Input.GetAxisRaw("RightHorizontal") > 0;
-                playerInputs[(int)KeyInput.RightStick_Left] = Input.GetAxisRaw("RightHorizontal") < 0;
-                playerInputs[(int)KeyInput.RightStick_Down] = Input.GetAxisRaw("RightVertical") < 0;
-                playerInputs[(int)KeyInput.RightStick_Up] = Input.GetAxisRaw("RightVertical") > 0;
-                playerInputs[(int)KeyInput.Jump] = Input.GetButton("Jump");
-                playerInputs[(int)KeyInput.Shoot] = Input.GetAxisRaw("Fire1") > 0;
-                playerInputs[(int)KeyInput.Attack] = Input.GetButton("Fire2");
-                playerInputs[(int)KeyInput.Item] = Input.GetKey(KeyCode.V);
-                playerInputs[(int)KeyInput.Inventory] = Input.GetKey(KeyCode.Alpha1);
+                playerInputs[(int)KeyInput.LeftStick_Right] = Input.GetAxisRaw("Player" + player.playerIndex + "_LeftStickX") > 0;
+                playerInputs[(int)KeyInput.LeftStick_Left] = Input.GetAxisRaw("Player" + player.playerIndex + "_LeftStickX") < 0;
+                playerInputs[(int)KeyInput.LeftStick_Down] = Input.GetAxisRaw("Player" + player.playerIndex + "_LeftStickY") < 0;
+                playerInputs[(int)KeyInput.LeftStick_Up] = Input.GetAxisRaw("Player" + player.playerIndex + "_LeftStickY") > 0;
+                playerInputs[(int)KeyInput.RightStick_Right] = Input.GetAxisRaw("Player" + player.playerIndex + "_RightStickX") > 0;
+                playerInputs[(int)KeyInput.RightStick_Left] = Input.GetAxisRaw("Player" + player.playerIndex + "_RightStickX") < 0;
+                playerInputs[(int)KeyInput.RightStick_Down] = Input.GetAxisRaw("Player" + player.playerIndex + "_RightStickY") < 0;
+                playerInputs[(int)KeyInput.RightStick_Up] = Input.GetAxisRaw("Player" + player.playerIndex + "_RightStickY") > 0;
+                playerInputs[(int)KeyInput.Jump] = Input.GetButton("Player" + player.playerIndex + "_Button0");
+                playerInputs[(int)KeyInput.Shoot] = Input.GetAxisRaw("Player" + player.playerIndex + "_RightTrigger") > 0;
+                playerInputs[(int)KeyInput.Attack] = Input.GetButton("Player" + player.playerIndex + "_Button1");
+                playerInputs[(int)KeyInput.Item] = Input.GetButton("Player" + player.playerIndex + "_Button2");
+                playerInputs[(int)KeyInput.Inventory] = Input.GetButton("Player" + player.playerIndex + "_Button3");
+                playerInputs[(int)KeyInput.Pause] = Input.GetButton("Player" + player.playerIndex + "_Button7");
                 break;
             case InputMode.Inventory:
 
@@ -57,24 +58,6 @@ public class InputManager : MonoBehaviour
 
 
         
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            PlayerUIPanels.instance.OpenClosePanel(0);
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (LevelManager.instance.mGameMode == GameMode.Game)
-            {
-                LevelManager.instance.PauseGame();
-                EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
-            }
-            else
-            {
-                LevelManager.instance.UnpauseGame();
-            }
-        }
     }
 
 }

@@ -14,7 +14,7 @@ public class Player : Entity, IHurtable
     public float mClimbSpeed;
     public bool mDoubleJump = true;
     public float mTimeToExit = 1;
-
+    public int playerIndex;
     public HealthBar mHealthBar;
 
     public Bullet mBullet;
@@ -26,6 +26,7 @@ public class Player : Entity, IHurtable
     public AudioClip mJumpSfx;
     public AudioClip mWalkSfx;
     //public AudioSource mAudioSource;
+    public MiniMapIcon MiniMapIcon;
 
     #region Hidden
     /// <summary>
@@ -97,7 +98,11 @@ public class Player : Entity, IHurtable
 
         mStats = GetComponent<Stats>();
         mStats.health.healthbar = mHealthBar;
-        mStats.health.healthbar.SetHealth(mStats.health);
+
+        if (mStats.health.healthbar != null)
+        {
+            mStats.health.healthbar.SetHealth(mStats.health);
+        }
 
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
 
@@ -118,6 +123,10 @@ public class Player : Entity, IHurtable
         RangedAttack ranged = new RangedAttack(this, 0.05f, 5, .1f, Range.Far, mBullet);
         mAttackManager.AttackList.Add(ranged);
 
+        if (MiniMap.instance != null)
+        {
+            MiniMapIcon = MiniMap.instance.AddStaticIcon(MinimapIconType.Player, mMap.GetMapTileAtPoint(Body.mPosition));
+        }
 
     }
 
@@ -259,9 +268,22 @@ public class Player : Entity, IHurtable
 
     }
 
+
     public override void EntityUpdate()
     {
+        //
+        if (Pressed(KeyInput.Inventory))
+        {
+            PlayerUIPanels.instance.OpenClosePanel(playerIndex);
+
+        }
+
+
+
+
         mAttackManager.UpdateAttacks();
+
+
 
         //Handle each of the players states
         switch (mCurrentState)
@@ -306,15 +328,17 @@ public class Player : Entity, IHurtable
                         }
                     }
 
-                    if (Pressed(KeyInput.LeftStick_Down))
+
+                }
+
+                if (Pressed(KeyInput.LeftStick_Down))
+                {
+                    ItemObject item = CheckForItems();
+                    if (item != null)
                     {
-                        ItemObject item = CheckForItems();
-                        if (item != null)
-                        {
-                            Debug.Log("You picked up " + item.name);
-                            //mAllCollidingObjects.Remove(item);
-                            PickUp(item);
-                        }
+                        Debug.Log("You picked up " + item.name);
+                        //mAllCollidingObjects.Remove(item);
+                        PickUp(item);
                     }
                 }
 
@@ -680,10 +704,10 @@ public class Player : Entity, IHurtable
         if(mInputs[(int)KeyInput.RightStick_Left] || mInputs[(int)KeyInput.RightStick_Right] || 
             mInputs[(int)KeyInput.RightStick_Down] || mInputs[(int)KeyInput.RightStick_Up])
         {
-            if (Pressed(KeyInput.Shoot))
+            if (KeyState(KeyInput.Shoot))
             {
-                
-                Shoot(mBullet, mAttackManager.AttackList[1], GetAim());
+                RangedAttack attack = (RangedAttack)mAttackManager.AttackList[1];
+                attack.Activate(mBullet, GetAim());
 
             }
         }
@@ -746,6 +770,10 @@ public class Player : Entity, IHurtable
         mAttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
 
+        if(MiniMapIcon != null)
+        {
+            MiniMapIcon.UpdateIcon(mMap.GetMapTileAtPoint(Body.mPosition));
+        }
     }
 
     public void GetHurt(Attack attack)
@@ -773,12 +801,12 @@ public class Player : Entity, IHurtable
     {
 
         //The player never dies
-        /*
-        base.Die();
+        
+        //base.Die();
 
-        HurtBox.mState = ColliderState.Closed;
+        //HurtBox.mState = ColliderState.Closed;
         //HurtBox.mCollisions.Clear();
-        */
+        
     }
 
     public override void ActuallyDie()

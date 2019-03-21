@@ -20,6 +20,11 @@ public class ItemEditor
     {
         ScriptableObjectUtility.CreateAsset<ConsumableItem>();
     }
+    [MenuItem("Assets/Create/Items/QuestItem")]
+    public static void CreateBaseQuestItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<QuestItem>();
+    }
 
 
 

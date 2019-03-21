@@ -8,23 +8,21 @@ public enum GameMode
     Game,
     Paused
 }
+
 public class LevelManager : MonoBehaviour
 {
     public GameMode mGameMode;
     public static LevelManager instance;
     public Camera gameCamera;
     public int numPlayers = 1;
-    public List<Player> players;
+    public Player[] players = new Player[4];
 
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
 
     public MapManager mMap;
 
-    public TileType mPlacedTileType;
-
     public Player mPlayerPrefab;
-    public Transform mMovingPlatformPrefab;
     public Transform mSlimePrefab;
     [SerializeField]
     protected List<Entity> mEntities = new List<Entity>();
@@ -50,12 +48,12 @@ public class LevelManager : MonoBehaviour
         for(int i = 0; i < numPlayers; i++)
         {
             Player newPlayer = Instantiate(mPlayerPrefab) as Player;
-            newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
-            newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
+            newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[i].healthBar;
+            newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[i].inventoryUI;
             newPlayer.EntityInit();
+            newPlayer.playerIndex = i+1;
             //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
-            GameCamera.instance.targets.Add(newPlayer.transform);
-            players.Add(newPlayer);
+            players[i] = newPlayer;
             
         }
 
@@ -94,6 +92,10 @@ public class LevelManager : MonoBehaviour
             player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
         }
 
+        MiniMap.instance.SetMap(mMap.mCurrentMap, players);
+        SoundManager.instance.PlayMusic((int)type);
+
+
 
     }
 
@@ -131,6 +133,7 @@ public class LevelManager : MonoBehaviour
         mEntities.Add(obj);
         return mEntities.Count - 1;
     }
+
     public virtual void FlagObjectForRemoval(Entity obj)
     {
         obj.Die();

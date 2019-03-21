@@ -72,14 +72,17 @@ public class GameCamera : MonoBehaviour
 
     Rect CalculateTargetsBoundingBox()
     {
-        float minX = Mathf.Infinity;
-        float maxX = Mathf.NegativeInfinity;
-        float minY = Mathf.Infinity;
-        float maxY = Mathf.NegativeInfinity;
+        float minX = mMap.mWidth * MapManager.cTileSize;
+        float maxX = 0;
+        float minY = mMap.mHeight * MapManager.cTileSize;
+        float maxY = 0;
 
-        foreach (Transform target in targets)
+        foreach (Player target in LevelManager.instance.players)
         {
-            Vector3 position = target.position;
+            if (target == null)
+                continue;
+
+            Vector3 position = target.transform.position;
 
             minX = Mathf.Min(minX, position.x);
             minY = Mathf.Min(minY, position.y);

@@ -150,8 +150,9 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (Mathf.Abs(mMap.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x ) < Constants.cLadderThreshold)                  
                         mPS.onLadder = true;
+
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
@@ -201,7 +202,7 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (Mathf.Abs(mMap.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x) < Constants.cLadderThreshold)
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
@@ -323,7 +324,7 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.Bounce:
                     tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
-                    if (topTileEdge > bottomLeft.y + 0.5f || mSpeed.y > 0)
+                    if (topTileEdge > bottomLeft.y + 0.5f)
                     {
                         continue;
                     }
@@ -532,6 +533,11 @@ public class PhysicsBody : CustomCollider2D
         if (mPS.pushesRightTile)
             mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
 
+
+        if(mPS.pushesBottomTile && mPS.pushesTopTile && mPS.pushesLeftTile && mPS.pushesRightTile)
+        {
+            mSpeed.y = 1;
+        }
         /* Here is where we should update tile physics changes */
         HandleTilePhysics();
 
@@ -576,6 +582,7 @@ public class PhysicsBody : CustomCollider2D
 
     public void TryAutoMount(Entity platform)
     {
+        
         if (mMountParent == null && !mIsHeavy)
         {
             mMountParent = platform;
@@ -818,7 +825,7 @@ public class PhysicsBody : CustomCollider2D
 
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
-                    mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                    //mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
             }
         }
@@ -856,7 +863,7 @@ public class PhysicsBody : CustomCollider2D
         mPS.pushesLeft = mPS.pushesLeftTile || mPS.pushesLeftObject;
         mPS.pushesTop = mPS.pushesTopTile || mPS.pushesTopObject;
 
-        
+
 
         //update the aabb
         mAABB.Center = mPosition;

@@ -29,11 +29,9 @@ public class SoundManager : MonoBehaviour
     //Used to play single sound clips.
     public void PlaySingle(AudioClip clip)
     {
-        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource.clip = clip;
+        efxSource.PlayOneShot(clip);
 
-        //Play the clip.
-        efxSource.Play();
+
     }
 
     public void PlayMusic(int musicIndex)

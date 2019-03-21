@@ -130,7 +130,7 @@ public class RoomEditor : MonoBehaviour
 
         }
 
-        var wheel = Input.GetAxis("Mouse ScrollWheel");
+        var wheel = Input.GetAxis("Horizontal");
         if (wheel > 0.05f)
         {
 

@@ -152,8 +152,7 @@ public static class MapGenerator
         Vector2i start = GetStartTile(map, startingX, 4);
         map.startTile = start;
         Vector2i door = AddDoorTile(map, goalX, goalY);
-        Debug.Log("Door tile " + door);
-
+        map.exitTile = door;
         map.SetTile(door.x, door.y, TileType.Door);
 
         PopulateMap(map);
@@ -293,7 +292,7 @@ public static class MapGenerator
             mainPath.Add(map[currentX, currentY]);
         }
         endRoom = new Vector2i(currentX, currentY);
-
+        mainPath[mainPath.Count-1].roomType = RoomType.BossRoom;
         return map;
     }
 
@@ -323,6 +322,8 @@ public static class MapGenerator
                     map.rooms[x, y] = RoomDatabase.GetRoom(RoomType.Hub);
                     continue;
                 }
+
+                
 
                 if (y < depths[x])
                 {
@@ -356,6 +357,7 @@ public static class MapGenerator
 
         map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
         Vector2i door = AddDoorTile(map, endRoom.x, endRoom.y);
+        map.exitTile = door;
         //Debug.Log("Door tile " + door);
 
         map.SetTile(door.x, door.y, TileType.Door);
@@ -379,10 +381,32 @@ public static class MapGenerator
 
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map);
+        PopulateBoss(map);
 
         AddFallingRock(map);
 
         return map;
+    }
+
+    public static Map CreationMap()
+    {
+        Map map = new Map(MapType.Hub, WorldType.Hub, 20, 20);
+
+
+
+        AddBounds(map);
+
+
+        map.startTile = GetStartTile(map, 0, 0);
+        Vector2i door = AddDoorTile(map, 0, 0);
+        map.exitTile = door;
+        //Debug.Log("Door tile " + door);
+
+        map.SetTile(door.x, door.y, TileType.Door);
+
+
+        return map;
+
     }
 
     static void PostProcessing(Map map)
@@ -419,7 +443,21 @@ public static class MapGenerator
 
     static void PopulateBoss(Map map)
     {
-        map.AddEntity(new EnemyData(10, 5, EnemyType.LavaBoss));
+
+        for (int x = 0; x < map.MapChunksX; x++)
+        {
+            for (int y = 0; y < map.MapChunksY; y++)
+            {
+                if(map.rooms[x,y].roomType == RoomType.BossRoom)
+                {
+                    map.bossTile = new Vector2i(x * Constants.cMapChunkSizeX + 5, y * Constants.cMapChunkSizeY + 1);
+                    map.AddEntity(new EnemyData(map.bossTile.x, map.bossTile.y, (EnemyType)Random.Range((int)EnemyType.LavaBoss, (int)EnemyType.CatBoss + 1)));
+
+                }
+            }
+        }
+        
+
     }
 
     static void PopulateMap(Map map)

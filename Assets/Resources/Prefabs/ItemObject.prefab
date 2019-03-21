@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 4
-  mCollidesWith: 03000000
+  mCollidesWith: 0300000002000000
   colorPallete: []
   mMovingSpeed: 0
   BodySize: {x: 5, y: 5}
@@ -105,9 +105,6 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
-      onIce: 0
-      onConveyorLeft: 0
-      onConveyorRight: 0
       leftTile:
         x: 0
         y: 0
@@ -124,6 +121,7 @@ MonoBehaviour:
     mIgnoresOneWay: 0
     mOnOneWayPlatform: 0
     mIsKinematic: 0
+    mIsHeavy: 0
     mIgnoresGravity: 0
     mCollisions: []
     mSpriteDepth: 0

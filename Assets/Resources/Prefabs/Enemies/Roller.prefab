@@ -182,7 +182,7 @@ MonoBehaviour:
   mToRemove: 0
   mUpdateId: -1
   mEnemyState: 0
-  mEnemyType: 3
+  mEnemyType: 2
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}

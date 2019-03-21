@@ -182,12 +182,12 @@ MonoBehaviour:
   mAnimator: {fileID: 0}
   mToRemove: 0
   mUpdateId: -1
-  mEnemyType: 2
+  mEnemyState: 0
+  mEnemyType: 1
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
-  mBehaviour: {fileID: 0}
 --- !u!95 &95194250073010510
 Animator:
   serializedVersion: 3

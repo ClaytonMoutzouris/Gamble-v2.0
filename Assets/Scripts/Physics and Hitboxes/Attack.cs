@@ -238,6 +238,20 @@ public class RangedAttack : Attack
 
     }
 
+    public void Activate(Bullet bullet, Vector2 direction)
+    {
+        if (mIsActive || OnCooldown())
+        {
+            return;
+        }
+
+        base.Activate();
+
+        mEntity.Shoot(bullet, this, direction);
+
+    }
+
+
     public override void Deactivate()
     {
         base.Deactivate();

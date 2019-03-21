@@ -6,6 +6,7 @@ public class Bullet : Entity, IProjectile {
 
     public bool mPierce = false;
     public bool IgnoreGravity = true;
+    public bool isAngled = false;
     //public Vector2 direction = Vector2.zero;
     //Should be a constant
     [HideInInspector]
@@ -14,6 +15,7 @@ public class Bullet : Entity, IProjectile {
     public float mTimeAlive = 0;
     [HideInInspector]
     Hitbox mHitbox;
+    public AudioClip sfx;
 
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
@@ -55,11 +57,28 @@ public class Bullet : Entity, IProjectile {
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
         body.mIgnoresGravity = IgnoreGravity;
+        body.mIgnoresOneWay = true;
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.PlaySingle(sfx);
+        }
+        //AudioSource.PlayClipAtPoint(sfx, Body.mPosition);
     }
 
     public void SetInitialDirection(Vector3 direction)
     {
         Body.mSpeed = mMovingSpeed * direction;
+        if (isAngled)
+        {
+            if(direction.y > 0)
+            {
+                transform.Rotate(0, 0, Vector2.Angle(Vector2.right, direction));
+            }
+            else
+            {
+                transform.Rotate(0, 0, -Vector2.Angle(Vector2.right, direction));
+            }
+        }
     }
 
     public override void EntityUpdate()

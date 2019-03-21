@@ -9,8 +9,12 @@ public class MiniMap : MonoBehaviour
     public static MiniMap instance;
     public MapManager mapManager;
     public Texture2D mapTexture;
-    int mapSizeX = 100;
-    int mapSizeY = 100;
+    public static int mapSizeX = 100;
+    public static int mapSizeY = 100;
+    public GameObject playerIcon;
+    public GameObject doorIcon;
+    public MiniMapIcon prefab;
+    public List<MiniMapIcon> icons;
 
     public RawImage image;
     TilePalette tilePalette;
@@ -35,9 +39,42 @@ public class MiniMap : MonoBehaviour
         
     }
 
-    public void CreateMapTexture()
+    public MiniMapIcon AddStaticIcon(MinimapIconType type, Vector2i tilePos)
     {
-      
+        prefab.type = type;
+        MiniMapIcon icon = Instantiate(prefab, transform);
+        icon.UpdateIcon(tilePos);
+        icons.Add(icon);
+        return icon;
+    }
+
+    public void SetMap(Map map, Player[] players)
+    {
+        ClearMinimap();
+
+        icons.Add(AddStaticIcon(MinimapIconType.Door, map.exitTile));
+        icons.Add(AddStaticIcon(MinimapIconType.Boss, map.bossTile));
+
+        foreach(Player player in players)
+        {
+            player.MiniMapIcon = AddStaticIcon(MinimapIconType.Player, map.startTile);
+            icons.Add(player.MiniMapIcon);
+        }
+
+        SetMapTexture(map.GetMap(), map.sizeX, map.sizeY);
+    }
+
+    public static Vector2 TileToMinimap(Vector2i tilePos)
+    {
+        return ((Vector2)tilePos) * 2 - (Vector2.up * mapSizeX) * 2;
+    }
+    public void ClearMinimap()
+    {
+        foreach(MiniMapIcon icon in icons)
+        {
+            Destroy(icon.gameObject);
+        }
+        icons.Clear();
     }
 
     void BuildInitialTexture()
@@ -65,7 +102,7 @@ public class MiniMap : MonoBehaviour
         image.texture = mapTexture;
     }
 
-    public void SetMap(TileType[,] tiles, int sizeX, int sizeY)
+    public void SetMapTexture(TileType[,] tiles, int sizeX, int sizeY)
     {
         Color c = Color.gray;
 
@@ -82,6 +119,13 @@ public class MiniMap : MonoBehaviour
                             break;
                         case TileType.Door:
                             c = Color.red;
+                            break;
+                        case TileType.Spikes:
+                            c = Color.white;
+                            break;
+                        case TileType.Ladder:
+                        case TileType.LadderTop:
+                            c = Color.yellow;
                             break;
                         default:
                             c = Color.gray;

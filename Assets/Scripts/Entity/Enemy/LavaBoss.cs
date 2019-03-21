@@ -122,7 +122,7 @@ public class LavaBoss : Enemy
             KnockedCoolDownTimer += Time.deltaTime;
             if (KnockedCoolDownTimer > KnockedCooldown && (body.mPS.pushesLeftTile || body.mPS.pushesRightTile))
             {
-                mAudioSource.PlayOneShot(mCrashSFX);
+                SoundManager.instance.PlaySingle(mCrashSFX);
                 ChargeDirection = -1 * ChargeDirection;
                 Knocked = true;
                 KnockTimer = 0;
@@ -166,7 +166,8 @@ public class LavaBoss : Enemy
             EruptTimer += Time.deltaTime;
         }
 
-        Shoot(VolcanicBombPrefab, mAttackManager.AttackList[0], Vector2.zero);
+        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+        attack.Activate(VolcanicBombPrefab, new Vector2(UnityEngine.Random.Range(-1,1), 1));
 
     }
 

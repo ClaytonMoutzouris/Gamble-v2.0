@@ -6,6 +6,9 @@ using UnityEngine;
 public class Map
 {
     public Vector2i startTile = new Vector2i(1, 1);
+    public Vector2i exitTile = new Vector2i(1, 1);
+    public Vector2i bossTile = new Vector2i(1, 1);
+
     public RoomData[,] rooms;
     public WorldType type;
     public MapType mapType;

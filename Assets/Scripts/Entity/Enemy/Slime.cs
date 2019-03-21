@@ -50,7 +50,7 @@ public class Slime : Enemy {
 
                         if (Target.Position.x > body.mPosition.x)
                         {
-                            if (body.mPS.pushesRightTile)
+                            if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
                             {
                                 EnemyBehaviour.Jump(this, 460);
                             }
@@ -58,7 +58,7 @@ public class Slime : Enemy {
                         }
                         else
                         {
-                            if (body.mPS.pushesLeftTile)
+                            if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
                             {
                                 EnemyBehaviour.Jump(this, 460);
                             }

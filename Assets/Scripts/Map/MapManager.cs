@@ -191,25 +191,8 @@ public class MapManager : MonoBehaviour
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
-        /*
-        switch (data.mapType)
-        {
-            case MapType.Hub:
-                mCurrentMap = MapGenerator.GenerateHubMap();
-                SoundManager.instance.PlayMusic(0);
-                break;
-            case MapType.World:
-                SoundManager.instance.PlayMusic(1);
-                break;
-            case MapType.BossMap:
-                mCurrentMap = MapGenerator.GenerateBossMap(data.type);
-                break;
-        }
-        */
-
 
         mCurrentMap = MapGenerator.GenerateMap(data);
-        SoundManager.instance.PlayMusic((int)data.mapType);
 
 
         mWidth = mCurrentMap.sizeX;
@@ -219,7 +202,31 @@ public class MapManager : MonoBehaviour
         AddEntities(mCurrentMap);
 
         mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
-        MiniMap.instance.SetMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY);
+
+
+    }
+
+    public void CreationMap()
+    {
+        mWidth = Constants.cDefaultMapWidth;
+        mHeight = Constants.cDefaultMapHeight;
+
+
+        //set the position
+
+        mUpdatedAreas = new HashSet<Vector2i>();
+
+
+        mCurrentMap = MapGenerator.CreationMap();
+
+
+        mWidth = mCurrentMap.sizeX;
+        mHeight = mCurrentMap.sizeY;
+
+        mTileData = mCurrentMap.GetMap();
+
+        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
+
     }
 
 

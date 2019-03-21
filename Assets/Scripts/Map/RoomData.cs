@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public enum RoomType { Hub, SideRoom, LeftRight, LeftRightBottom, LeftRightBottomTop, Count };
+public enum RoomType { Hub, SideRoom, LeftRight, LeftRightBottom, LeftRightBottomTop, BossRoom, Count };
 public enum RoomType2 { Hub, UpDownLeftRight, UpDownLeft, UpDownRight, DownLeftRight,  UpLeftRight, UpDown, UpLeft, UpRight, DownLeft, DownRight, LeftRight, Up, Down, Left, Right }
 
 public class RoomData

@@ -19,6 +19,7 @@ public enum KeyInput
     Attack,
     Item,
     Inventory,
+    Pause,
 	Count
 }
 

@@ -17,5 +17,6 @@ public static class ItemDatabase {
         return mItemDatabase[Random.Range(0, mItemDatabase.Length)];
     }
 
+    
    
 }

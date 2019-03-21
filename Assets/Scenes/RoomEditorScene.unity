@@ -6757,11 +6757,11 @@ MonoBehaviour:
   tileSize: 32
   CurrentMapType: 0
   terrainTiles:
-  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
-  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
-  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
-  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
-  - {fileID: 2800000, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 2800000, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 2800000, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}
+  - {fileID: 2800000, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
+  - {fileID: 2800000, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 2800000, guid: fa772b6751bcc284a96c948523e90e39, type: 3}
 --- !u!23 &2036786036
 MeshRenderer:
   m_ObjectHideFlags: 0
