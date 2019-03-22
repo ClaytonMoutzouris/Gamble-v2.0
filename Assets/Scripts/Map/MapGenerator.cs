@@ -375,13 +375,13 @@ public static class MapGenerator
 
             //PopulateMap(map);
 
+            PopulateBoss(map);
 
             //PopulateBoss(map);
         }
 
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map);
-        PopulateBoss(map);
 
         AddFallingRock(map);
 
