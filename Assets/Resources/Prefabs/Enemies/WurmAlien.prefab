@@ -117,7 +117,7 @@ MonoBehaviour:
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
   colorPallete: []
-  mMovingSpeed: 150
+  mMovingSpeed: 90
   BodySize: {x: 32, y: 24}
   body:
     mEntity: {fileID: 0}
@@ -207,6 +207,8 @@ MonoBehaviour:
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
+  mSlimePrefab: {fileID: 6602547828588852119, guid: 6149206737d36e54ba23ecfbe91c4586,
+    type: 3}
 --- !u!114 &3716963431004284409
 MonoBehaviour:
   m_ObjectHideFlags: 0

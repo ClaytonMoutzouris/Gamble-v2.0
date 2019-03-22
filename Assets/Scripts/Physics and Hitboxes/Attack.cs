@@ -238,7 +238,7 @@ public class RangedAttack : Attack
 
     }
 
-    public void Activate(Bullet bullet, Vector2 direction)
+    public void Activate(Vector2 direction)
     {
         if (mIsActive || OnCooldown())
         {
@@ -247,7 +247,7 @@ public class RangedAttack : Attack
 
         base.Activate();
 
-        mEntity.Shoot(bullet, this, direction);
+        mEntity.Shoot(projectile, this, direction);
 
     }
 

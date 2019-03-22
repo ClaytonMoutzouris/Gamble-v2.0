@@ -107,7 +107,7 @@ public abstract class Enemy : Entity, IHurtable
         sight.UpdatePosition();
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
-        temp.transform.localPosition = new Vector3(0, BodySize.y * 2);
+        temp.transform.localPosition = new Vector3(0, BodySize.y * 2 + 10);
         temp.InitHealthbar(this);
         mStats.health.healthbar = temp;
         

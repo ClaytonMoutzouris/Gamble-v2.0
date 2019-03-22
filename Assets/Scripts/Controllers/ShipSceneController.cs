@@ -26,25 +26,31 @@ public class ShipSceneController : LevelManager
 
     private void Update()
     {
-        if (Input.GetButtonDown("Player1_Button0"))
+
+        for(int i = 0; i < players.Length; i++)
         {
-            if (!joinedPlayers[0])
+
+            if (Input.GetButtonDown("Player" + (i+1) + "_Button7"))
             {
-                PlayerJoinGame(0);
+                if (!joinedPlayers[i])
+                {
+                    PlayerJoinGame(i);
+
+                }
+                else if (players[i] == null)
+                {
+                    AddPlayer(i);
+                    panels[i].Close();
+                }
 
             }
-            else if(players[0] == null)
+
+            if (Input.GetButtonDown("Player" + (i + 1) + "_Button6"))
             {
-                AddPlayer(0);
-                panels[0].Close();
+                RemovePlayer(i);
             }
-
         }
-
-        if (Input.GetButtonDown("Player1_Button1"))
-        {
-            RemovePlayer(0);
-        }
+        
     }
 
     public void PlayerJoinGame(int index)
@@ -70,6 +76,7 @@ public class ShipSceneController : LevelManager
         //newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
         //newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
         newPlayer.EntityInit();
+        newPlayer.playerIndex = index + 1;
         players[index] = newPlayer;
         newPlayer.Body.SetTilePosition(new Vector2i(1, 1));
 

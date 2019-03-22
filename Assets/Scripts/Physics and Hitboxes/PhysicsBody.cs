@@ -534,10 +534,6 @@ public class PhysicsBody : CustomCollider2D
             mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
 
 
-        if(mPS.pushesBottomTile && mPS.pushesTopTile && mPS.pushesLeftTile && mPS.pushesRightTile)
-        {
-            mSpeed.y = 1;
-        }
         /* Here is where we should update tile physics changes */
         HandleTilePhysics();
 

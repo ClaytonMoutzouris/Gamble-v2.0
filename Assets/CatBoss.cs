@@ -8,6 +8,7 @@ public class CatBoss : Enemy
     #region SetInInspector
     public BossState mBossState = BossState.Idle;
     public Bullet iciclePrefab;
+    public bool bossTrigger = false;
 
     #endregion
 
@@ -24,7 +25,7 @@ public class CatBoss : Enemy
         EnemyInit();
 
         mAttackManager.AttackList.Clear();
-        mEnemyState = EnemyState.Moving;
+        mEnemyState = EnemyState.Idle;
         RangedAttack ranged = new RangedAttack(this, 0.1f, 10, 0.5f, Range.Far, iciclePrefab);
         mAttackManager.AttackList.Add(ranged);
     }
@@ -35,14 +36,25 @@ public class CatBoss : Enemy
         EnemyUpdate();
         base.EntityUpdate();
 
-        if (Hostility == Hostility.Hostile)
-        {
-            EnemyBehaviour.CheckForTargets(this);
-        }
+
 
         switch (mEnemyState)
         {
             case EnemyState.Idle:
+
+                this.Target = null;
+                if (Sight.mEntitiesInSight != null)
+                {
+                    foreach (Entity entity in Sight.mEntitiesInSight)
+                    {
+                        if (entity is Player)
+                        {
+                            this.Target = entity;
+                            TriggerBoss();
+                            break;
+                        }
+                    }
+                }
 
                 break;
             case EnemyState.Moving:
@@ -55,7 +67,7 @@ public class CatBoss : Enemy
                     {
                         Vector2 dir = ((Vector2)Target.Position - Body.mPosition).normalized;
                         RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
-                        attack.Activate(iciclePrefab, dir);
+                        attack.Activate(dir);
                     }
 
 
@@ -156,7 +168,16 @@ public class CatBoss : Enemy
         //make sure the hitbox follows the object
     }
 
-    
+    public void TriggerBoss()
+    {
+        if (bossTrigger)
+            return;
+
+        mEnemyState = EnemyState.Moving;
+
+        SoundManager.instance.PlayMusic(2);
+    }
+
 
     public override void SecondUpdate()
     {

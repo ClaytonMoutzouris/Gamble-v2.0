@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class WurmAlien : Enemy
 {
+
+    public Bullet mSlimePrefab;
+
     public override void EntityInit()
     {
 
         base.EntityInit();
+        EnemyInit();
 
 
 
@@ -15,11 +19,11 @@ public class WurmAlien : Enemy
         Body.mIsKinematic = false;
         Body.mIsHeavy = false;
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
+        mAttackManager.AttackList[0] = new RangedAttack(this, 0, 2, .5f, Range.Far, mSlimePrefab);
 
 
-
-        EnemyInit();
         StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
+
 
     }
 
@@ -45,31 +49,29 @@ public class WurmAlien : Enemy
                 {
                     //Replace this with pathfinding to the target
 
-                    if (EnemyBehaviour.TargetInRange(this, Target, 20))
+
+                    RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+
+                    attack.Activate((Target.Position - Position).normalized);
+
+
+                    if (Target.Position.x > body.mPosition.x)
                     {
-                        mAttackManager.AttackList[0].Activate();
+                        if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
+                        {
+                            EnemyBehaviour.Jump(this, 460);
+                        }
+                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
                     }
                     else
                     {
-
-                        if (Target.Position.x > body.mPosition.x)
+                        if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
                         {
-                            if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
-                            {
-                                EnemyBehaviour.Jump(this, 460);
-                            }
-                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                            EnemyBehaviour.Jump(this, 460);
                         }
-                        else
-                        {
-                            if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
-                            {
-                                EnemyBehaviour.Jump(this, 460);
-                            }
-                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
-                        }
+                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
-
+                    
                 }
                 else
                 {

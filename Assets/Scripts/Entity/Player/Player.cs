@@ -16,6 +16,7 @@ public class Player : Entity, IHurtable
     public float mTimeToExit = 1;
     public int playerIndex;
     public HealthBar mHealthBar;
+    public bool mCannotClimb = false;
 
     public Bullet mBullet;
     [SerializeField]
@@ -274,15 +275,17 @@ public class Player : Entity, IHurtable
         //
         if (Pressed(KeyInput.Inventory))
         {
-            PlayerUIPanels.instance.OpenClosePanel(playerIndex);
+            PlayerUIPanels.instance.OpenClosePanel(playerIndex-1);
 
         }
 
 
-
-
         mAttackManager.UpdateAttacks();
-
+        
+        if(mCannotClimb && !Body.mPS.onLadder)
+        {
+            mCannotClimb = false;
+        }
 
 
         //Handle each of the players states
@@ -364,7 +367,7 @@ public class Player : Entity, IHurtable
                     if (body.mPS.onDoor)
                     {
                         mExitDoorTimer += Time.deltaTime;
-                        if(mExitDoorTimer > mTimeToExit)
+                        if(mExitDoorTimer > Constants.exitDoorTime)
                         {
                             //load map
                             mGame.mMapChangeFlag = true;
@@ -497,8 +500,17 @@ public class Player : Entity, IHurtable
                         mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
                     else if (Pressed(KeyInput.Jump))
                         body.mSpeed.y = mJumpSpeed;
+
+                    
                 }
 
+
+                // we can climb ladders from this state
+                if ((KeyState(KeyInput.LeftStick_Up) || KeyState(KeyInput.LeftStick_Down)) && body.mPS.onLadder && (!mCannotClimb || Pressed(KeyInput.LeftStick_Up)))
+                {
+                    mCurrentState = PlayerState.Climb;
+                    break;
+                }
 
                 /*
                 if (Pressed(KeyInput.Jump) && mDoubleJump)
@@ -578,12 +590,8 @@ public class Player : Entity, IHurtable
 
 
                 if (KeyState(KeyInput.LeftStick_Down))
-                    body.mPS.tmpIgnoresOneWay = true;
-
-                // we can climb ladders from this state
-                if ((KeyState(KeyInput.LeftStick_Up) || KeyState(KeyInput.LeftStick_Down)) && body.mPS.onLadder)
                 {
-                    mCurrentState = PlayerState.Climb;
+                    body.mPS.tmpIgnoresOneWay = true;
                 }
 
 
@@ -598,9 +606,9 @@ public class Player : Entity, IHurtable
                 bool ledgeOnRight = !ledgeOnLeft;
 
                 //if down button is held then drop down
-                if (mInputs[(int)KeyInput.LeftStick_Down]
-                    || (mInputs[(int)KeyInput.LeftStick_Left] && ledgeOnRight)
-                    || (mInputs[(int)KeyInput.LeftStick_Right] && ledgeOnLeft))
+                if (KeyState(KeyInput.LeftStick_Down)
+                    || (KeyState(KeyInput.LeftStick_Left) && ledgeOnRight)
+                    || (KeyState(KeyInput.LeftStick_Right) && ledgeOnLeft))
                 {
                     if (ledgeOnLeft)
                         mCannotGoLeftFrames = 3;
@@ -610,7 +618,7 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Jump;
                     //mGame.PlayOneShot(SoundType.Character_LedgeRelease, mPosition, Game.sSfxVolume);
                 }
-                else if (mInputs[(int)KeyInput.Jump])
+                else if (Pressed(KeyInput.Jump))
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
@@ -625,12 +633,13 @@ public class Player : Entity, IHurtable
 
                 break;
             case PlayerState.Climb:
-/*
-                //Update the animator
-                if (Mathf.Abs(body.mSpeed.y) > 0)
-                else
-                    mAnimator.Play("LadderIdle");
-*/
+                mCannotClimb = true;
+                /*
+                                //Update the animator
+                                if (Mathf.Abs(body.mSpeed.y) > 0)
+                                else
+                                    mAnimator.Play("LadderIdle");
+                */
                 //On a ladder, we always assume we are still until we receive input
                 body.mSpeed = Vector2.zero;
                 body.mPS.isClimbing = true;
@@ -683,7 +692,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (mInputs[(int)KeyInput.Jump])
+                if (Pressed(KeyInput.Jump))
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
@@ -696,20 +705,16 @@ public class Player : Entity, IHurtable
 
 
 
-        if (mInputs[(int)KeyInput.Attack])
+        if (KeyState(KeyInput.Attack))
         {
             mAttackManager.AttackList[0].Activate();
         }
 
-        if(mInputs[(int)KeyInput.RightStick_Left] || mInputs[(int)KeyInput.RightStick_Right] || 
-            mInputs[(int)KeyInput.RightStick_Down] || mInputs[(int)KeyInput.RightStick_Up])
+        if(KeyState(KeyInput.RightStick_Left) || KeyState(KeyInput.RightStick_Right) ||
+            KeyState(KeyInput.RightStick_Up) || KeyState(KeyInput.RightStick_Down))
         {
-            if (KeyState(KeyInput.Shoot))
-            {
                 RangedAttack attack = (RangedAttack)mAttackManager.AttackList[1];
-                attack.Activate(mBullet, GetAim());
-
-            }
+                attack.Activate(GetAim());
         }
 
 
@@ -725,7 +730,6 @@ public class Player : Entity, IHurtable
 
         if (body.mPS.pushedBottom && !body.mPS.pushesBottom || Body.mPS.isClimbing)
         mFramesFromJumpStart = 0;
-
 
         //Update the animator last
         UpdateAnimator();
@@ -807,6 +811,12 @@ public class Player : Entity, IHurtable
         //HurtBox.mState = ColliderState.Closed;
         //HurtBox.mCollisions.Clear();
         
+    }
+
+    public override void Destroy()
+    {
+        base.Destroy();
+        HurtBox.mState = ColliderState.Closed;
     }
 
     public override void ActuallyDie()

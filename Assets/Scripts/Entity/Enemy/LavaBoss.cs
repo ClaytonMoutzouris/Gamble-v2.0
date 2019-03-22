@@ -32,6 +32,8 @@ public class LavaBoss : Enemy
     private int ChargeDirection = 1;
     private float KnockedCoolDownTimer = 0;
 
+    public bool bossTrigger = false;
+
 
 
     public override void EntityInit()
@@ -50,7 +52,7 @@ public class LavaBoss : Enemy
         EnemyInit();
         mAttackManager.AttackList.Clear();
 
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f,Range.Far, VolcanicBombPrefab);
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, Range.Far, VolcanicBombPrefab);
         mAttackManager.AttackList.Add(ranged);
 
     }
@@ -95,6 +97,16 @@ public class LavaBoss : Enemy
         //UpdatePhysics();
 
         //make sure the hitbox follows the object
+    }
+
+    public void TriggerBoss()
+    {
+        if (bossTrigger)
+            return;
+
+        mBossState = BossState.Aggrivated;
+
+        SoundManager.instance.PlayMusic(2);
     }
 
     private void Charge()
@@ -167,7 +179,7 @@ public class LavaBoss : Enemy
         }
 
         RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
-        attack.Activate(VolcanicBombPrefab, new Vector2(UnityEngine.Random.Range(-1,1), 1));
+        attack.Activate(new Vector2(UnityEngine.Random.Range(-1.0f, 1.0f), 1));
 
     }
 
@@ -222,7 +234,7 @@ public class LavaBoss : Enemy
                 if (entity is Player)
                 {
                     this.Target = entity;
-                    mBossState = BossState.Aggrivated;
+                    TriggerBoss();
                     break;
                 }
             }
@@ -255,13 +267,4 @@ public class LavaBoss : Enemy
         body.mSpeed.x = mMovingSpeed;
     }
 
-    public override void Shoot(Bullet prefab, Attack attack, Vector2 Dir)
-    {
-        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
-        temp.EntityInit();
-        temp.Attack = attack;
-        temp.Owner = this;
-        temp.SetInitialDirection(new Vector2(UnityEngine.Random.Range(-.7f, .7f), 1));
-        
-    }
 }

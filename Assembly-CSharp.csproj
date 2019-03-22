@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\ShipSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\GameData.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />

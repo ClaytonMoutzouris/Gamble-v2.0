@@ -98,7 +98,7 @@ MonoBehaviour:
   mCollidesWith: 000000000200000003000000
   colorPallete: []
   mMovingSpeed: 60
-  BodySize: {x: 8, y: 5}
+  BodySize: {x: 15, y: 8}
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -187,22 +187,6 @@ MonoBehaviour:
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
-  dashTrigger: 0
-  hitbox:
-    mEntity: {fileID: 0}
-    mAABB:
-      center: {x: 0, y: 0, z: 0}
-      halfSize: {x: 0, y: 0, z: 0}
-      offset: {x: 0, y: 0, z: 0}
-      baseOffset: {x: 0, y: 0, z: 0}
-      baseHalfSize: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      rotation: 0
-      isCircle: 0
-      flipped: 0
-    mState: 0
-    mAreas: []
-    mIdsInAreas: 
 --- !u!114 &1613120553129927952
 MonoBehaviour:
   m_ObjectHideFlags: 0
