@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 212904801216801504}
   - component: {fileID: 114847323615810482}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,6 +97,7 @@ MonoBehaviour:
   colorPallete: []
   mMovingSpeed: 300
   BodySize: {x: 2, y: 1.5}
+  mDirection: 1
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -181,6 +182,7 @@ MonoBehaviour:
   mUpdateId: -1
   mPierce: 0
   IgnoreGravity: 1
+  isAngled: 0
   mMaxTime: 10
   mTimeAlive: 0
   sfx: {fileID: 8300000, guid: 8637a5123489f544dba8dfb27de501b9, type: 3}

@@ -7,7 +7,7 @@ public class CatBoss : Enemy
 {
     #region SetInInspector
     public BossState mBossState = BossState.Idle;
-    public Bullet iciclePrefab;
+    public Projectile iciclePrefab;
     public bool bossTrigger = false;
 
     #endregion

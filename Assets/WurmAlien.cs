@@ -5,7 +5,7 @@ using UnityEngine;
 public class WurmAlien : Enemy
 {
 
-    public Bullet mSlimePrefab;
+    public Projectile mSlimePrefab;
 
     public override void EntityInit()
     {

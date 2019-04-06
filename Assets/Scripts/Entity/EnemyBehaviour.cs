@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyState { Idle, Moving, Jumping, Attacking, Aggrivated, Attack1, Attack2, Attack3 };
-public enum TargetRange {  Close, Near, Far, OutOfRange };
+
 public static class EnemyBehaviour
 {
 
@@ -23,7 +23,7 @@ public static class EnemyBehaviour
         }
     }
 
-    public static bool TargetInRange(Enemy enemy, Entity target, int range)
+    public static bool TargetInRange(Enemy enemy, Entity target, float range)
     {
         if((enemy.Position - target.Position).magnitude < range)
         {
@@ -52,26 +52,29 @@ public static class EnemyBehaviour
 
     }
 
-    public static void Move(Enemy enemy, Vector2 movement)
+    public static void Move(Enemy enemy)
     {
-        
+
 
     }
 
-    public static void MoveHorizontal(Enemy enemy, int movespeed)
+    public static void MoveHorizontal(Enemy enemy)
     {
-
+        enemy.Body.mSpeed.x = enemy.mMovingSpeed * (int)enemy.mDirection;
     }
 
-    public static void MoveVertical(Enemy enemy, int movespeed)
+    public static void MoveVertical(Enemy enemy)
     {
-
+        //enemy.Body.mSpeed.y = enemy.mMovingSpeed * (int)enemy.mDirection;
     }
 
 
     public static void Attack(Enemy enemy, int index)
     {
         enemy.mAttackManager.AttackList[index].Activate();
+        enemy.mEnemyState = EnemyState.Attacking;
+        enemy.Body.mSpeed.x = 0;
     }
+
 
 }

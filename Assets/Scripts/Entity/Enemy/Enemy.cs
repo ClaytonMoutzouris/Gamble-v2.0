@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
-
+public enum TargetRange { Close, Near, Far, OutOfRange };
 public abstract class Enemy : Entity, IHurtable
 {
     public EnemyState mEnemyState = EnemyState.Idle;
@@ -105,6 +105,7 @@ public abstract class Enemy : Entity, IHurtable
         mStats = GetComponent<Stats>();
         sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
+
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
         temp.transform.localPosition = new Vector3(0, BodySize.y * 2 + 10);

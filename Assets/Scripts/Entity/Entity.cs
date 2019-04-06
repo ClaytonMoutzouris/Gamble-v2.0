@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EntityDirection { Left = -1, Right = 1 };
+
 public abstract class Entity : MonoBehaviour {
     public EntityType mEntityType;
     public List<EntityType> mCollidesWith;
     public List<Color> colorPallete;
     public float mMovingSpeed;
     public Vector2 BodySize;
+    public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
     public PhysicsBody body;
     [HideInInspector]
@@ -119,9 +122,9 @@ public abstract class Entity : MonoBehaviour {
         Body.UpdatePhysicsP2();
     }
 
-    public virtual void Shoot(Bullet prefab, Attack attack, Vector2 Dir)
+    public virtual void Shoot(Projectile prefab, Attack attack, Vector2 Dir)
     {
-        Bullet temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
+        Projectile temp = Instantiate(prefab, body.mAABB.Center, Quaternion.identity);
         temp.EntityInit();
         temp.Attack = attack;
         temp.Owner = this;

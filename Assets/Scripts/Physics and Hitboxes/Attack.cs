@@ -219,9 +219,9 @@ public class MeleeAttack : Attack
 [System.Serializable]
 public class RangedAttack : Attack
 {
-    public Bullet projectile;
+    public Projectile projectile;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, Range range, Bullet proj) : base(entity, duration, damage, cd, range)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, Range range, Projectile proj) : base(entity, duration, damage, cd, range)
     {
         projectile = proj;
     }

@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour
                 playerInputs[(int)KeyInput.Item] = Input.GetButton("Player" + player.playerIndex + "_Button2");
                 playerInputs[(int)KeyInput.Inventory] = Input.GetButton("Player" + player.playerIndex + "_Button3");
                 playerInputs[(int)KeyInput.Pause] = Input.GetButton("Player" + player.playerIndex + "_Button7");
+                playerInputs[(int)KeyInput.RangeSwap] = Input.GetButton("Player" + player.playerIndex + "_Button4");
                 break;
             case InputMode.Inventory:
 

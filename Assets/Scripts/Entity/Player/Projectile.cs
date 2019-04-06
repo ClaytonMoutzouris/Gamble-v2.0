@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : Entity, IProjectile {
+public class Projectile : Entity, IProjectile {
 
     public bool mPierce = false;
     public bool IgnoreGravity = true;

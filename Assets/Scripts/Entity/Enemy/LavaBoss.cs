@@ -20,7 +20,7 @@ public class LavaBoss : Enemy
     public AudioClip mCrashSFX;
     public AudioClip mEruptSFX;
 
-    public Bullet VolcanicBombPrefab;
+    public Projectile VolcanicBombPrefab;
     #endregion
 
 

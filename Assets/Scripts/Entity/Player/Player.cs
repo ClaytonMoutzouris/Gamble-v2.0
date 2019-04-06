@@ -18,7 +18,8 @@ public class Player : Entity, IHurtable
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
 
-    public Bullet mBullet;
+    public List<Projectile> bullets;
+    public int activeBullet;
     [SerializeField]
     private PlayerState mCurrentState = PlayerState.Stand;
     public int mPlayerIndex = 0;
@@ -121,8 +122,12 @@ public class Player : Entity, IHurtable
         MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .5f, Range.Close, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, .1f, Range.Far, mBullet);
-        mAttackManager.AttackList.Add(ranged);
+        foreach( Projectile projectile in bullets)
+        {
+            RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, Range.Far, projectile);
+            mAttackManager.AttackList.Add(ranged);
+        }
+
 
         if (MiniMap.instance != null)
         {
@@ -704,6 +709,14 @@ public class Player : Entity, IHurtable
         }
 
 
+        if (Pressed(KeyInput.RangeSwap))
+        {
+            activeBullet++;
+            if(activeBullet >= bullets.Count)
+            {
+                activeBullet = 0;
+            }
+        }
 
         if (KeyState(KeyInput.Attack))
         {
@@ -711,9 +724,9 @@ public class Player : Entity, IHurtable
         }
 
         if(KeyState(KeyInput.RightStick_Left) || KeyState(KeyInput.RightStick_Right) ||
-            KeyState(KeyInput.RightStick_Up) || KeyState(KeyInput.RightStick_Down))
+            KeyState(KeyInput.RightStick_Up) || KeyState(KeyInput.RightStick_Down))     
         {
-                RangedAttack attack = (RangedAttack)mAttackManager.AttackList[1];
+                RangedAttack attack = (RangedAttack)mAttackManager.AttackList[activeBullet + 1];
                 attack.Activate(GetAim());
         }
 
