@@ -377,8 +377,10 @@ public static class MapGenerator
 
             PopulateBoss(map);
 
+
             //PopulateBoss(map);
         }
+
 
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map);
@@ -451,7 +453,7 @@ public static class MapGenerator
                 if(map.rooms[x,y].roomType == RoomType.BossRoom)
                 {
                     map.bossTile = new Vector2i(x * Constants.cMapChunkSizeX + 5, y * Constants.cMapChunkSizeY + 1);
-                    map.AddEntity(new EnemyData(map.bossTile.x, map.bossTile.y, (EnemyType)Random.Range((int)EnemyType.LavaBoss, (int)EnemyType.CatBoss + 1)));
+                    map.AddEntity(new EnemyData(map.bossTile.x, map.bossTile.y, (EnemyType)Random.Range((int)EnemyType.LavaBoss, (int)EnemyType.BossCount + 1)));
 
                 }
             }

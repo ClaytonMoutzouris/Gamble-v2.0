@@ -10,6 +10,7 @@ public abstract class Entity : MonoBehaviour {
     public List<Color> colorPallete;
     public float mMovingSpeed;
     public Vector2 BodySize;
+    public bool collidesWithMap = true;
     public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
     public PhysicsBody body;
@@ -95,6 +96,7 @@ public abstract class Entity : MonoBehaviour {
         mUpdateId = mGame.AddToUpdateList(this);
 
         //Set the physicsBody
+        
         body = new PhysicsBody(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
 
 
