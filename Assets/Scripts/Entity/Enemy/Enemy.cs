@@ -7,7 +7,7 @@ public abstract class Enemy : Entity, IHurtable
 {
     public EnemyState mEnemyState = EnemyState.Idle;
     public EnemyType mEnemyType;
-
+    public BossType bossType = BossType.Count;
     //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
@@ -116,7 +116,7 @@ public abstract class Enemy : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
 
-        MeleeAttack defaultAttack = new MeleeAttack(this, 1f, 5, 2f, Range.Close, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
     }

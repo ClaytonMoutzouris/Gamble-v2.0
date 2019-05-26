@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using LocalCoop;
 
 public enum GameMode
 {
@@ -45,18 +45,19 @@ public class LevelManager : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
+        /*
         for(int i = 0; i < numPlayers; i++)
         {
             Player newPlayer = Instantiate(mPlayerPrefab) as Player;
-            newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[i].healthBar;
-            newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[i].inventoryUI;
+            newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
+            newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
             newPlayer.EntityInit();
-            newPlayer.playerIndex = i+1;
+            newPlayer.playerIndex = i;
             //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
             players[i] = newPlayer;
             
         }
-
+        */
         
 
 
@@ -65,6 +66,28 @@ public class LevelManager : MonoBehaviour
 
         NewGameMap(MapType.Hub);
         
+    }
+
+    public void AddPlayer(int index, PlayerInput input)
+    {
+        Player newPlayer = Instantiate(mPlayerPrefab) as Player;
+        newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
+        newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
+        newPlayer.playerIndex = index;
+        newPlayer.SetInput(input);
+        newPlayer.EntityInit();
+        newPlayer.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+
+        //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
+        players[index] = newPlayer;
+    }
+
+    public void DropPlayer(int index)
+    {
+        //players[index].mToRemove = true;
+        players[index].ActuallyDie();
+
+
     }
 
     public void NewGameMap(MapType type)
@@ -81,14 +104,14 @@ public class LevelManager : MonoBehaviour
         {
             if(!(entity is Player))
             entity.mToRemove = true;
-            
 
         }
 
-        mMap.NewMap(MapDatabase.GetMap(type));
+        mMap.NewMap(MapDatabase.GetNextMap(type));
         int count = 0;
         foreach (Player player in players)
         {
+            if(player != null)
             player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
         }
 
@@ -161,6 +184,7 @@ public class LevelManager : MonoBehaviour
     void FixedUpdate()
     {
 
+        
         //The game doesnt run in editor mode
         if (mGameMode == GameMode.Paused)
             return;

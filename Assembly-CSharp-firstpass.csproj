@@ -81,7 +81,13 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\Util\SMappingRanges.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\SwapIndex.cs" />
+    <Compile Include="Assets\Plugins\Coop UI\Scripts\Characters\Player\PlayerInput.cs" />
+    <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\CustomEventSystem.cs" />
+    <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\X_InputModule.cs" />
+    <Compile Include="Assets\Plugins\XInputDotNet\Examples\XInputTestCS.cs" />
     <None Include="Assets\Plugins\Color Swap Package\ColorSwap.shader" />
+    <None Include="Assets\Plugins\XInputDotNet\Docs.txt" />
+    <None Include="Assets\Plugins\XInputDotNet\MITLicense.txt" />
     <None Include="Assets\Plugins\Pixel Font - Tripfive\_README.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -295,6 +301,9 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="XInputDotNetPure">
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Assets/Plugins/XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>

@@ -251,6 +251,9 @@ public class MapManager : MonoBehaviour
                 case EntityType.Enemy:
                     AddEnemyEntity((EnemyData)eD);
                     break;
+                case EntityType.Boss:
+                    AddBossEntity((BossData)eD);
+                    break;
             }
             
         }
@@ -275,8 +278,16 @@ public class MapManager : MonoBehaviour
 
     public void AddEnemyEntity(EnemyData data)
     {
-  
+        
         Enemy temp = Instantiate(EnemyDatabase.GetEnemyPrefab(data.type));
+        temp.EntityInit();
+        temp.Body.SetTilePosition(data.TilePosition);
+    }
+
+    public void AddBossEntity(BossData data)
+    {
+
+        Enemy temp = Instantiate(EnemyDatabase.GetBossPrefab(data.type));
         temp.EntityInit();
         temp.Body.SetTilePosition(data.TilePosition);
     }

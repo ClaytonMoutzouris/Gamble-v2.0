@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LocalCoop;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -16,6 +18,7 @@ public class PauseMenu : MonoBehaviour {
 
     public void Open()
     {
+        EventSystem.current.SetSelectedGameObject(defaultObject);
         gameObject.SetActive(true);
     }
 

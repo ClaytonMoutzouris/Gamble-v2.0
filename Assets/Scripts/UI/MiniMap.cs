@@ -57,8 +57,12 @@ public class MiniMap : MonoBehaviour
 
         foreach(Player player in players)
         {
-            player.MiniMapIcon = AddStaticIcon(MinimapIconType.Player, map.startTile);
-            icons.Add(player.MiniMapIcon);
+            if (player != null)
+            {
+                player.MiniMapIcon = AddStaticIcon(MinimapIconType.Player, map.startTile);
+
+                icons.Add(player.MiniMapIcon);
+            }
         }
 
         SetMapTexture(map.GetMap(), map.sizeX, map.sizeY);

@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using LocalCoop;
 
 public class Player : Entity, IHurtable
 {
     [System.Serializable]
-    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, };
+    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting };
 
-    public InputMode mInputMode = InputMode.Game;
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
@@ -17,7 +18,9 @@ public class Player : Entity, IHurtable
     public int playerIndex;
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
-
+    public Inventory mInventory;
+    [SerializeField]
+    public PlayerInput mInput;
     public List<Projectile> bullets;
     public int activeBullet;
     [SerializeField]
@@ -37,8 +40,6 @@ public class Player : Entity, IHurtable
 
     protected int mFramesFromJumpStart = 0;
 
-    protected bool[] mInputs;
-    protected bool[] mPrevInputs;
     [HideInInspector]
     public Vector2i mLedgeTile;
     [HideInInspector]
@@ -85,9 +86,15 @@ public class Player : Entity, IHurtable
         }
     }
 
+    public void SetInput(PlayerInput input)
+    {
+        mInput = input;
+    }
 
     public override void EntityInit()
     {
+
+
         base.EntityInit();
 
         Debug.Log("Setting player body" + Body);
@@ -100,6 +107,14 @@ public class Player : Entity, IHurtable
 
         mStats = GetComponent<Stats>();
         mStats.health.healthbar = mHealthBar;
+
+        mInventory = GetComponent<Inventory>();
+
+        //mInput = PlayerInputManager.singleton.;
+        //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
+        EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
+
+
 
         if (mStats.health.healthbar != null)
         {
@@ -119,12 +134,12 @@ public class Player : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
         //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .5f, Range.Close, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
+        MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .1f, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(temp);
         mAttackManager.meleeAttacks.Add(temp);
         foreach( Projectile projectile in bullets)
         {
-            RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, Range.Far, projectile);
+            RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, projectile);
             mAttackManager.AttackList.Add(ranged);
         }
 
@@ -135,43 +150,26 @@ public class Player : Entity, IHurtable
         }
 
     }
-
-    public void SetInputs(bool[] inputs, bool[] prevInputs)
-    {
-        mInputs = inputs;
-        mPrevInputs = prevInputs;
-    }
-
-    protected bool Released(KeyInput key)
-    {
-        return (!mInputs[(int)key] && mPrevInputs[(int)key]);
-    }
-
-    protected bool KeyState(KeyInput key)
-    {
-        return (mInputs[(int)key]);
-    }
-
-    protected bool Pressed(KeyInput key)
-    {
-        return (mInputs[(int)key] && !mPrevInputs[(int)key]);
-    }
-
-    public void UpdatePrevInputs()
-    {
-        var count = (byte)KeyInput.Count;
-
-        for (byte i = 0; i < count; ++i)
-            mPrevInputs[i] = mInputs[i];
-    }
     
     public void Jump()
     {
+        
         if (mCurrentState == PlayerState.Jump && !mDoubleJump)
             return;
         body.mSpeed.y = mJumpSpeed;
         mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
         mCurrentState = PlayerState.Jump;
+        
+        body.mSpeed.y = mJumpSpeed;
+    }
+
+    public void JetMode()
+    {
+        if (mCurrentState == PlayerState.Jetting)
+            return;
+        body.mSpeed = Vector2.zero;
+        mCurrentState = PlayerState.Jetting;
+
     }
 
     public void ClimbLadder()
@@ -187,7 +185,7 @@ public class Player : Entity, IHurtable
         //and top left corner of the aabb when we want to grab the left edge
         Vector2 aabbCornerOffset;
 
-        if (body.mPS.pushesRight && mInputs[(int)KeyInput.LeftStick_Right])
+        if (body.mPS.pushesRight && mInput.xAxisLeft > 0)
             aabbCornerOffset = body.mAABB.HalfSize;
         else
             aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
@@ -245,6 +243,10 @@ public class Player : Entity, IHurtable
         Debug.Log("You picked up " + itemObject.name);
         //mAllCollidingObjects.Remove(item);
         mGame.FlagObjectForRemoval(itemObject);
+        
+        //Should be something like itemObject.pickup(Inventory inventory);
+
+        mInventory.AddItemToInventory(itemObject.mItemData);
         InventoryUI.AddItem(itemObject.mItemData);
         return true;
     }
@@ -277,10 +279,16 @@ public class Player : Entity, IHurtable
 
     public override void EntityUpdate()
     {
-        //
-        if (Pressed(KeyInput.Inventory))
+
+        if (mInput.StartDown())
         {
-            PlayerUIPanels.instance.OpenClosePanel(playerIndex-1);
+            LevelManager.instance.PauseGame();
+            //PauseMenu.instance.defaultObject;
+        }
+        //
+        if (mInput.ButtonYDown())
+        {
+            PlayerUIPanels.instance.OpenClosePanel(playerIndex);
 
         }
 
@@ -292,6 +300,35 @@ public class Player : Entity, IHurtable
             mCannotClimb = false;
         }
 
+        if (mInput.ButtonXDown())
+        {
+            GainLife(5);
+        }
+
+        //Check to see if a player is trying to pick up an item
+        if (mInput.D_Pad_Down_Pressed())
+        {
+            ItemObject item = CheckForItems();
+            if (item != null)
+            {
+                Debug.Log("You picked up " + item.name);
+                //mAllCollidingObjects.Remove(item);
+                PickUp(item);
+            }
+        }
+
+        //Check to see if a player is trying to open a chest
+        if (mInput.D_Pad_Up_Pressed())
+        {
+            Chest chest = CheckForChest();
+            if (chest != null)
+            {
+                //Debug.Log("You picked up " + item.name);
+                //mAllCollidingObjects.Remove(item);
+                //mGame.FlagObjectForRemoval(item);
+                chest.OpenChest();
+            }
+        }
 
         //Handle each of the players states
         switch (mCurrentState)
@@ -309,55 +346,35 @@ public class Player : Entity, IHurtable
 
 
                 body.mSpeed = Vector2.zero;
-                
-                
+
+                //Check to see if the player is trying to pass through a one way
+                if (mInput.yAxisLeft < 0 && mInput.ButtonAPressed())
+                {
+                    if (body.mPS.onOneWay)
+                    {
+                        body.mPS.tmpIgnoresOneWay = true;
+                        break;
+                    }
+
+                }
+
+                if (mInput.ButtonADown())
+                {
+                    Jump();
+                    break;
+                }
 
                 //if left or right key is pressed, but not both
-                if (KeyState(KeyInput.LeftStick_Right) != KeyState(KeyInput.LeftStick_Left))
+                if (mInput.xAxisLeft != 0)
                 {
                     mCurrentState = PlayerState.Walk;
                     break;
                 }
 
 
-                if (Pressed(KeyInput.Item))
-                {
-                    GainLife(5);
-                }
-
-                if (KeyState(KeyInput.LeftStick_Down))
-                {
-                    if (KeyState(KeyInput.LeftStick_Down) && Pressed(KeyInput.Jump))
-                    {
-                        if (body.mPS.onOneWay)
-                        {
-                            body.mPS.tmpIgnoresOneWay = true;
-                            break;
-                        }
-                    }
 
 
-                }
-
-                if (Pressed(KeyInput.LeftStick_Down))
-                {
-                    ItemObject item = CheckForItems();
-                    if (item != null)
-                    {
-                        Debug.Log("You picked up " + item.name);
-                        //mAllCollidingObjects.Remove(item);
-                        PickUp(item);
-                    }
-                }
-
-
-                if (Pressed(KeyInput.Jump))
-                {
-                    Jump();
-                    break;
-                }
-
-                if (KeyState(KeyInput.LeftStick_Up) )
+                if (mInput.yAxisLeft > 0)
                 {
                     if (body.mPS.onLadder)
                     {
@@ -381,17 +398,7 @@ public class Player : Entity, IHurtable
 
                     }
 
-                    if (Pressed(KeyInput.LeftStick_Up))
-                    {
-                        Chest chest = CheckForChest();
-                        if (chest != null)
-                        {
-                            //Debug.Log("You picked up " + item.name);
-                            //mAllCollidingObjects.Remove(item);
-                            //mGame.FlagObjectForRemoval(item);
-                            chest.OpenChest();
-                        }
-                    }
+                    
                 } else
                 {
                     mExitDoorTimer = 0;
@@ -414,15 +421,32 @@ public class Player : Entity, IHurtable
                     break;
                 }
 
+                //Check to see if the player is trying to pass through a one way
+                if (mInput.yAxisLeft < 0 && mInput.ButtonAPressed())
+                {
+                    if (body.mPS.onOneWay)
+                    {
+                        body.mPS.tmpIgnoresOneWay = true;
+                        break;
+                    }
+
+                }
+
+                if (mInput.ButtonADown())
+                {
+                    Jump();
+                    break;
+                }
+
                 //if both or neither left nor right keys are pressed then stop walking and stand
 
-                if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
+                if (mInput.xAxisLeft == 0)
                 {
                     mCurrentState = PlayerState.Stand;
                     //mSpeed = Vector2.zero;
                     break;
                 }
-                else if (KeyState(KeyInput.LeftStick_Right))
+                else if (mInput.xAxisLeft > 0)
                 {
                     if (body.mPS.pushesRightTile)
                     {
@@ -436,7 +460,7 @@ public class Player : Entity, IHurtable
                     }
                     body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
-                else if (KeyState(KeyInput.LeftStick_Left))
+                else if (mInput.xAxisLeft < 0)
                 {
                     if (body.mPS.pushesLeftTile)
                     {
@@ -450,9 +474,9 @@ public class Player : Entity, IHurtable
                     body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
                 }
 
-                if (KeyState(KeyInput.LeftStick_Down))
+                if (mInput.yAxisLeft < 0)
                 {
-                    if (KeyState(KeyInput.LeftStick_Down) && Pressed(KeyInput.Jump))
+                    if (mInput.ButtonADown())
                     {
                         if (body.mPS.onOneWay)
                         {
@@ -462,27 +486,10 @@ public class Player : Entity, IHurtable
 
                     }
 
-                    if (Pressed(KeyInput.LeftStick_Down))
-                    {
-                        ItemObject item = CheckForItems();
-                        if (item != null)
-                        {
-                            Debug.Log("You picked up " + item.name);
-                            //mAllCollidingObjects.Remove(item);
-                            PickUp(item);
-                        }
-                    }
                 }
 
 
-                if (Pressed(KeyInput.Jump))
-                {
-                    Jump();
-                    break;
-                }
-
-
-                if (KeyState(KeyInput.LeftStick_Up) && body.mPS.onLadder)
+                if (mInput.yAxisLeft > 0 && body.mPS.onLadder)
                 {
                     body.mSpeed = Vector2.zero;
                     body.mPS.isClimbing = true;
@@ -503,7 +510,7 @@ public class Player : Entity, IHurtable
                 {
                     if (body.mPS.pushesTop || body.mSpeed.y > 0.0f)
                         mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
-                    else if (Pressed(KeyInput.Jump))
+                    else if (mInput.ButtonAPressed())
                         body.mSpeed.y = mJumpSpeed;
 
                     
@@ -511,19 +518,20 @@ public class Player : Entity, IHurtable
 
 
                 // we can climb ladders from this state
-                if ((KeyState(KeyInput.LeftStick_Up) || KeyState(KeyInput.LeftStick_Down)) && body.mPS.onLadder && (!mCannotClimb || Pressed(KeyInput.LeftStick_Up)))
+                if ((mInput.yAxisLeft>0 || mInput.yAxisLeft < 0) && body.mPS.onLadder && (!mCannotClimb || mInput.yAxisLeft > 0))
                 {
                     mCurrentState = PlayerState.Climb;
                     break;
                 }
 
-                /*
-                if (Pressed(KeyInput.Jump) && mDoubleJump)
+                
+                if (mInput.ButtonADown() && mDoubleJump)
                 {
-                    Jump();
+                    JetMode();
+                    break;
                 }
-                 *
-                 * /
+                
+                 
 
                 mWalkSfxTimer = cWalkSfxTime;
 
@@ -532,16 +540,16 @@ public class Player : Entity, IHurtable
 
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
                 */
-                if (!KeyState(KeyInput.Jump) && body.mSpeed.y > 0.0f && !body.mPS.isBounce)
+                if (!mInput.ButtonAPressed() && body.mSpeed.y > 0.0f && !body.mPS.isBounce)
                 {
                     body.mSpeed.y = Mathf.Min(body.mSpeed.y, 200.0f);
                 }
 
-                if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
+                if (mInput.xAxisLeft == 0)
                 {
                     body.mSpeed.x = 0.0f;
                 }
-                else if (KeyState(KeyInput.LeftStick_Right))
+                else if (mInput.xAxisLeft > 0)
                 {
                     if (body.mPS.pushesRightTile)
                         body.mSpeed.x = 0.0f;
@@ -549,7 +557,7 @@ public class Player : Entity, IHurtable
                         body.mSpeed.x = mWalkSpeed;
                     body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
                 }
-                else if (KeyState(KeyInput.LeftStick_Left))
+                else if (mInput.xAxisLeft < 0)
                 {
                     if (body.mPS.pushesLeftTile)
                         body.mSpeed.x = 0.0f;
@@ -562,7 +570,7 @@ public class Player : Entity, IHurtable
                 if (body.mPS.pushesBottom)
                 {
                     //if there's no movement change state to standing
-                    if (KeyState(KeyInput.LeftStick_Right) == KeyState(KeyInput.LeftStick_Left))
+                    if (mInput.xAxisLeft == 0)
                     {
                         mCurrentState = PlayerState.Stand;
                         //mSpeed = Vector2.zero;
@@ -579,22 +587,22 @@ public class Player : Entity, IHurtable
                 if (mCannotGoLeftFrames > 0)
                 {
                     --mCannotGoLeftFrames;
-                    mInputs[(int)KeyInput.LeftStick_Left] = false;
+                    body.mSpeed.x = Mathf.Max(body.mSpeed.x, 0);
                 }
                 if (mCannotGoRightFrames > 0)
                 {
                     --mCannotGoRightFrames;
-                    mInputs[(int)KeyInput.LeftStick_Right] = false;
+                    body.mSpeed.x = Mathf.Min(body.mSpeed.x, 0);
                 }
             
                 if (body.mSpeed.y <= 0.0f && !body.mPS.pushesTop
-                    && ((body.mPS.pushesRight && mInputs[(int)KeyInput.LeftStick_Right]) || (body.mPS.pushesLeft && mInputs[(int)KeyInput.LeftStick_Left])))
+                    && ((body.mPS.pushesRight && mInput.xAxisLeft > 0) || (body.mPS.pushesLeft && mInput.xAxisLeft < 0)))
                 {
                     TryGrabLedge();
                 }
 
 
-                if (KeyState(KeyInput.LeftStick_Down))
+                if (mInput.yAxisLeft < 0)
                 {
                     body.mPS.tmpIgnoresOneWay = true;
                 }
@@ -611,9 +619,9 @@ public class Player : Entity, IHurtable
                 bool ledgeOnRight = !ledgeOnLeft;
 
                 //if down button is held then drop down
-                if (KeyState(KeyInput.LeftStick_Down)
-                    || (KeyState(KeyInput.LeftStick_Left) && ledgeOnRight)
-                    || (KeyState(KeyInput.LeftStick_Right) && ledgeOnLeft))
+                if (mInput.yAxisLeft < 0
+                    || (mInput.xAxisLeft < 0 && ledgeOnRight)
+                    || (mInput.xAxisLeft > 0 && ledgeOnLeft))
                 {
                     if (ledgeOnLeft)
                         mCannotGoLeftFrames = 3;
@@ -623,7 +631,7 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Jump;
                     //mGame.PlayOneShot(SoundType.Character_LedgeRelease, mPosition, Game.sSfxVolume);
                 }
-                else if (Pressed(KeyInput.Jump))
+                else if (mInput.ButtonADown())
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
@@ -664,7 +672,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                else if (KeyState(KeyInput.LeftStick_Down))
+                else if (mInput.yAxisLeft < 0)
                 {
                     if (body.mPS.pushesBottom)
                     {
@@ -679,7 +687,7 @@ public class Player : Entity, IHurtable
                     }
                    // ScaleX = Mathf.Abs(ScaleX);
                 }
-                else if (KeyState(KeyInput.LeftStick_Up))
+                else if (mInput.yAxisLeft > 0)
                 {
                     if (body.mPS.pushesTop)
                         body.mSpeed.y = 0.0f;
@@ -688,7 +696,7 @@ public class Player : Entity, IHurtable
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
-                if (Pressed(KeyInput.LeftStick_Left) || Pressed(KeyInput.LeftStick_Right))
+                if (mInput.xAxisLeft != 0)
                 {
                     body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Walk;
@@ -697,7 +705,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (Pressed(KeyInput.Jump))
+                if (mInput.ButtonADown())
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
@@ -706,10 +714,77 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Jump;
                 }
                 break;
+            case PlayerState.Jetting:
+                body.mPS.isJetting = true;
+                body.mSpeed = Vector2.zero;
+                body.mIgnoresGravity = true;
+
+
+                
+
+                if (mInput.yAxisLeft > 0)
+                {
+                    if (body.mPS.pushesTop)
+                        body.mSpeed.y = 0.0f;
+                    else
+                        body.mSpeed.y = mClimbSpeed;
+                }
+                else if (mInput.yAxisLeft < 0)
+                {
+                    body.mSpeed.y = -mClimbSpeed;
+                }
+
+                if (mInput.xAxisLeft == 0)
+                {
+                    body.mSpeed.x = 0.0f;
+                }
+                else if (mInput.xAxisLeft > 0)
+                {
+                    if (body.mPS.pushesRightTile)
+                        body.mSpeed.x = 0.0f;
+                    else
+                        body.mSpeed.x = mWalkSpeed;
+                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
+                }
+                else if (mInput.xAxisLeft < 0)
+                {
+                    if (body.mPS.pushesLeftTile)
+                        body.mSpeed.x = 0.0f;
+                    else
+                        body.mSpeed.x = -mWalkSpeed;
+                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
+                }
+
+                //if we hit the ground
+                if (body.mPS.pushesBottom)
+                {
+                    //if there's no movement change state to standing
+                    if (mInput.xAxisLeft == 0)
+                    {
+                        mCurrentState = PlayerState.Stand;
+                        //mSpeed = Vector2.zero;
+                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                    }
+                    else	//either go right or go left are pressed so we change the state to walk
+                    {
+                        mCurrentState = PlayerState.Walk;
+                        body.mSpeed.y = 0.0f;
+                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                    }
+                }
+
+                if (mInput.ButtonADown())
+                {
+                    mCurrentState = PlayerState.Jump;
+                    break;
+                }
+
+
+                break;
         }
 
 
-        if (Pressed(KeyInput.RangeSwap))
+        if (mInput.LeftBumperDown())
         {
             activeBullet++;
             if(activeBullet >= bullets.Count)
@@ -718,13 +793,12 @@ public class Player : Entity, IHurtable
             }
         }
 
-        if (KeyState(KeyInput.Attack))
+        if (mInput.ButtonBDown())
         {
             mAttackManager.AttackList[0].Activate();
         }
 
-        if(KeyState(KeyInput.RightStick_Left) || KeyState(KeyInput.RightStick_Right) ||
-            KeyState(KeyInput.RightStick_Up) || KeyState(KeyInput.RightStick_Down))     
+        if(mInput.RightAxisTilted)     
         {
                 RangedAttack attack = (RangedAttack)mAttackManager.AttackList[activeBullet + 1];
                 attack.Activate(GetAim());
@@ -748,29 +822,29 @@ public class Player : Entity, IHurtable
         UpdateAnimator();
 
 
-        UpdatePrevInputs();
     }
 
     public Vector2 GetAim()
     {
         Vector2 aim = Vector2.zero;
 
-        if (KeyState(KeyInput.RightStick_Down)){
+        if (mInput.yAxisRight < 0)
+        {
             aim += Vector2.down;
 
         }
-        else if (KeyState(KeyInput.RightStick_Up))
+        else if (mInput.yAxisRight > 0)
         {
             aim += Vector2.up;
 
         }
 
-        if (KeyState(KeyInput.RightStick_Left))
+        if (mInput.xAxisRight < 0)
         {
             aim += Vector2.left;
 
         }
-        else if (KeyState(KeyInput.RightStick_Right))
+        else if (mInput.xAxisRight > 0)
         {
             aim += Vector2.right;
 
@@ -845,6 +919,9 @@ public class Player : Entity, IHurtable
             }
 
         }
+
+        CollisionManager.RemoveObjectFromAreas(HurtBox);
+        //CollisionManager.RemoveObjectFromAreas(sight);
 
         //Do other stuff first because the base destroys the object
         base.ActuallyDie();

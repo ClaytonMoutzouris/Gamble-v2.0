@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 4989206604878757318}
   - component: {fileID: 3215723004739739211}
   - component: {fileID: 5966099494035067405}
-  - component: {fileID: 4274070873785881906}
+  - component: {fileID: 2314102040400047369}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 0
-  mCollidesWith: 010000000200000003000000
+  mCollidesWith: 01000000020000000300000006000000
   colorPallete:
   - {r: 0.7103927, g: 1, b: 0, a: 1}
   - {r: 0, g: 0.10847686, b: 0.7058824, a: 1}
@@ -246,6 +246,7 @@ MonoBehaviour:
   - {r: 0.72925043, g: 0, b: 1, a: 1}
   mMovingSpeed: 0
   BodySize: {x: 6, y: 12}
+  collidesWithMap: 1
   mDirection: 1
   body:
     mEntity: {fileID: 0}
@@ -303,6 +304,7 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
+      isJetting: 0
       leftTile:
         x: 0
         y: 0
@@ -329,15 +331,16 @@ MonoBehaviour:
   mAnimator: {fileID: 9507910}
   mToRemove: 0
   mUpdateId: -1
-  mInputMode: 0
   mJumpSpeed: 410
   mWalkSpeed: 140
   mClimbSpeed: 100
-  mDoubleJump: 0
+  mDoubleJump: 1
   mTimeToExit: 1
   playerIndex: 0
   mHealthBar: {fileID: 0}
   mCannotClimb: 0
+  mInventory: {fileID: 0}
+  mInput: {fileID: 0}
   bullets:
   - {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66, type: 3}
   - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}
@@ -533,7 +536,7 @@ MonoBehaviour:
     value: 0
   - type: 0
     value: 0
---- !u!114 &4274070873785881906
+--- !u!114 &2314102040400047369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -542,11 +545,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 174408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9716a9e2a7fa134da0158a0a877586a, type: 3}
+  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
-  player: {fileID: 11443564}
-  playerInputs: 
-  playerPrevInputs: 
-  playerAxis: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10

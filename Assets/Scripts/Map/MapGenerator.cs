@@ -365,8 +365,9 @@ public static class MapGenerator
 
         if(data.mapType == MapType.Hub)
         {
-            map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
-            map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
+            //map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
+            //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
+            map.AddEntity(new BossData(5, 5, BossType.HedgehogBoss));
 
         }
 
@@ -376,7 +377,8 @@ public static class MapGenerator
             //PopulateMap(map);
 
             PopulateBoss(map);
-
+            
+            AddFallingRock(map);
 
             //PopulateBoss(map);
         }
@@ -385,7 +387,6 @@ public static class MapGenerator
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map);
 
-        AddFallingRock(map);
 
         return map;
     }
@@ -453,7 +454,9 @@ public static class MapGenerator
                 if(map.rooms[x,y].roomType == RoomType.BossRoom)
                 {
                     map.bossTile = new Vector2i(x * Constants.cMapChunkSizeX + 5, y * Constants.cMapChunkSizeY + 1);
-                    map.AddEntity(new EnemyData(map.bossTile.x, map.bossTile.y, (EnemyType)Random.Range((int)EnemyType.LavaBoss, (int)EnemyType.BossCount + 1)));
+
+                    //This needs a +1 to hit all the bosses
+                    map.AddEntity(new BossData(map.bossTile.x, map.bossTile.y, (BossType)Random.Range(0, (int)BossType.Count)));
 
                 }
             }

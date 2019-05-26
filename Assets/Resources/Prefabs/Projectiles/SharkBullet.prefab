@@ -155,6 +155,7 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
+      isJetting: 0
       leftTile:
         x: 0
         y: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
   mUpdateId: -1
   mPierce: 0
   IgnoreGravity: 1
-  isAngled: 0
+  isAngled: 1
   mMaxTime: 10
   mTimeAlive: 0
   sfx: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}

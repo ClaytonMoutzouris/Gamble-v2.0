@@ -15,5 +15,5 @@ MonoBehaviour:
   mName: Bomb
   mValue: 1
   sprite: {fileID: 21300000, guid: 23d303a5fbb2f3c4ca9fa07119351a67, type: 3}
-  mSlot: 0
+  mSlot: 4
   mDamage: 10

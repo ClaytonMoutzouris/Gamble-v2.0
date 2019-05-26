@@ -44,6 +44,7 @@ public struct PositionState
     public bool isClimbing;
     public bool isBounce;
     public bool onDoor;
+    public bool isJetting;
 
     public Vector2i leftTile;
     public Vector2i rightTile;

@@ -37,6 +37,16 @@ public class EnemyData : EntityData
     }
 }
 
+public class BossData : EntityData
+{
+    public BossType type;
+    public BossData(int x, int y, BossType t) : base(x, y)
+    {
+        type = t;
+        EntityType = EntityType.Boss;
+    }
+}
+
 public class ObjectData : EntityData
 {
     public ObjectType type;

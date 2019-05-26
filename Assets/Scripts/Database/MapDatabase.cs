@@ -6,6 +6,7 @@ public static class MapDatabase
 {
 
     static MapData[] mMapDatabase;
+    static int currentMapIndex = 0;
 
     public static bool InitializeDatabase()
     {
@@ -39,5 +40,31 @@ public static class MapDatabase
         }
 
         return maplist[Random.Range(0, maplist.Count)];
+    }
+
+    public static MapData GetNextMap(MapType type)
+    {
+        List<MapData> maplist = new List<MapData>();
+        foreach (MapData data in mMapDatabase)
+        {
+            if (data.mapType == type)
+            {
+                maplist.Add(data);
+            }
+        }
+
+        MapData map = maplist[currentMapIndex];
+
+        currentMapIndex++;
+
+        if(currentMapIndex >= maplist.Count)
+        {
+            currentMapIndex = 0;
+        }
+
+        
+
+        return map;
+
     }
 }

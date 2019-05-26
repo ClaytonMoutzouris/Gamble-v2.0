@@ -6,6 +6,8 @@ public static class EnemyDatabase
 {
 
     static Dictionary<EnemyType, Enemy> mEnemyDatabase;
+    static Dictionary<BossType, Enemy> mBossDatabase;
+
 
     public static bool InitializeDatabase()
     {
@@ -15,6 +17,12 @@ public static class EnemyDatabase
             mEnemyDatabase.Add(obj.mEnemyType, obj);
         }
 
+        mBossDatabase = new Dictionary<BossType, Enemy>();
+        foreach (Enemy obj in Resources.LoadAll<Enemy>("Prefabs/Bosses"))
+        {
+            mBossDatabase.Add(obj.bossType, obj);
+        }
+
         return true;
     }
 
@@ -22,6 +30,13 @@ public static class EnemyDatabase
     {
 
         return mEnemyDatabase[id];
+
+    }
+
+    public static Enemy GetBossPrefab(BossType id)
+    {
+
+        return mBossDatabase[id];
 
     }
 

@@ -14,7 +14,6 @@ public class Attack {
     public float elapsed;
     public float coolDown;
     public bool onCooldown;
-    public Range range;
     public float coolDownTimer = 0;
     //List of effects
 
@@ -30,13 +29,12 @@ public class Attack {
         this.damage = damage;
     }
 
-    public Attack(Entity entity, float duration, int damage, float cd, Range range)
+    public Attack(Entity entity, float duration, int damage, float cd)
     {
         mEntity = entity;
         this.duration = duration;
         this.damage = damage;
         coolDown = cd;
-        this.range = range;
     }
 
     public virtual void UpdateAttack()
@@ -95,7 +93,7 @@ public class DashAttack : Attack
 {
     public Hitbox hitbox;
 
-    public DashAttack(Entity entity, float duration, int damage, float cd, Range range, Hitbox hit) : base(entity, duration, damage, cd, range)
+    public DashAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
@@ -157,7 +155,7 @@ public class DashAttack : Attack
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, int damage, float cd, Range range, Hitbox hit) : base(entity, duration, damage, cd, range)
+    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
@@ -221,7 +219,7 @@ public class RangedAttack : Attack
 {
     public Projectile projectile;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, Range range, Projectile proj) : base(entity, duration, damage, cd, range)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, Projectile proj) : base(entity, duration, damage, cd)
     {
         projectile = proj;
     }

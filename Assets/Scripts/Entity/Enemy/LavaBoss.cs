@@ -52,7 +52,7 @@ public class LavaBoss : Enemy
         EnemyInit();
         mAttackManager.AttackList.Clear();
 
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, Range.Far, VolcanicBombPrefab);
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         mAttackManager.AttackList.Add(ranged);
 
     }
@@ -267,4 +267,10 @@ public class LavaBoss : Enemy
         body.mSpeed.x = mMovingSpeed;
     }
 
+    public override void Die()
+    {
+        SoundManager.instance.PlayMusic(1);
+
+        base.Die();
+    }
 }

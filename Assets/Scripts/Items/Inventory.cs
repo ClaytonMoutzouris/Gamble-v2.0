@@ -13,6 +13,19 @@ public class Inventory : MonoBehaviour
         items = new List<Item>();
     }
 
+    public void AddItemToInventory(Item item)
+    {
+        items.Add(item);
+    }
 
+    public void AddItemsToInventory(List<Item> items)
+    {
+        this.items.AddRange(items);
+    }
+
+    public Item GetItemAtIndex(int index)
+    {
+        return items[index];
+    }
 
 }

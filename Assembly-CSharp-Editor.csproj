@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Editor\ItemEditor.cs" />
     <Compile Include="Assets\Editor\MapEditor.cs" />
+    <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -311,6 +312,9 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="XInputDotNetPure">
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Assets/Plugins/XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
