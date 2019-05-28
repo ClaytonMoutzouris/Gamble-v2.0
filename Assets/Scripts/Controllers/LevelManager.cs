@@ -122,9 +122,9 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    public void PauseGame()
+    public void PauseGame(int index)
     {
-        PauseMenu.instance.Open();
+        PauseMenu.instance.Open(index);
         mGameMode = GameMode.Paused;
     }
 

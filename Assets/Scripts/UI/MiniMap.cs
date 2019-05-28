@@ -124,13 +124,15 @@ public class MiniMap : MonoBehaviour
                         case TileType.Door:
                             c = Color.red;
                             break;
+                        /*
                         case TileType.Spikes:
                             c = Color.white;
-                            break;
+                            break;    
                         case TileType.Ladder:
                         case TileType.LadderTop:
                             c = Color.yellow;
                             break;
+                        */
                         default:
                             c = Color.gray;
                             break;

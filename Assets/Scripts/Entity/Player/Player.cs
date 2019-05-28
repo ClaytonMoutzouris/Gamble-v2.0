@@ -282,7 +282,7 @@ public class Player : Entity, IHurtable
 
         if (mInput.StartDown())
         {
-            LevelManager.instance.PauseGame();
+            LevelManager.instance.PauseGame(playerIndex);
             //PauseMenu.instance.defaultObject;
         }
         //
