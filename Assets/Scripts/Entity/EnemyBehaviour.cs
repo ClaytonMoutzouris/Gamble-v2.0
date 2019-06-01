@@ -14,7 +14,7 @@ public static class EnemyBehaviour
         {
             foreach (Entity entity in enemy.Sight.mEntitiesInSight)
             {
-                if (entity is Player && enemy.Hostility == Hostility.Hostile)
+                if (entity is Player)
                 {
                     enemy.Target = entity;
                     break;

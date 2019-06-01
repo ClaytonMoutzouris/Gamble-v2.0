@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 6
-  mCollidesWith: 000000000200000003000000
+  mCollidesWith: 0200000003000000
   colorPallete: []
-  mMovingSpeed: 80
+  mMovingSpeed: 70
   BodySize: {x: 28, y: 32}
   collidesWithMap: 1
   mDirection: 1
@@ -236,8 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mEntity: {fileID: 5158736756416829606}
   health:
-    currentHealth: 400
-    maxHealth: 400
+    currentHealth: 500
+    maxHealth: 500
     healthbar: {fileID: 0}
   stats: []
 --- !u!114 &4027091950170936776

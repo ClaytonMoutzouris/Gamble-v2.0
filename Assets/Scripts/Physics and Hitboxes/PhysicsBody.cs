@@ -315,7 +315,7 @@ public class PhysicsBody : CustomCollider2D
                         continue;
                     }
 
-                    if (mSpeed.y < 0)
+                    if (mSpeed.y < 0 && !state.pushesBottom)
                     {
                         //flag this to be dealt with after we've checked other tiles we're colliding with
                         spiked = true;
@@ -812,7 +812,7 @@ public class PhysicsBody : CustomCollider2D
                         Crush();
                     }
                     mPS.pushesTopObject = true;
-                    mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
+                    //mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {

@@ -1,0 +1,2 @@
+D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-Editor.csprojAssemblyReference.cache
+D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache

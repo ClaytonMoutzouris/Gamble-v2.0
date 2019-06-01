@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityDirection { Left = -1, Right = 1 };
+public enum Alignment { Player, Neutral, Enemy };
 
 public abstract class Entity : MonoBehaviour {
     public EntityType mEntityType;

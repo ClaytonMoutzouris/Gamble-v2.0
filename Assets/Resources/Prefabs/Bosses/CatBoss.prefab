@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 6
-  mCollidesWith: 000000000200000003000000
+  mCollidesWith: 0200000003000000
   colorPallete: []
   mMovingSpeed: 50
   BodySize: {x: 32, y: 24}
@@ -212,8 +212,9 @@ MonoBehaviour:
   target: {fileID: 0}
   mStats: {fileID: 0}
   mBossState: 0
-  iciclePrefab: {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1,
-    type: 3}
+  AttackTimer: 4
+  projectilePrefabs:
+  - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}
   bossTrigger: 0
 --- !u!114 &1719939396667230332
 MonoBehaviour:
@@ -229,8 +230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mEntity: {fileID: 8240416320240172590}
   health:
-    currentHealth: 500
-    maxHealth: 500
+    currentHealth: 550
+    maxHealth: 550
     healthbar: {fileID: 0}
   stats: []
 --- !u!114 &7623523486424285025

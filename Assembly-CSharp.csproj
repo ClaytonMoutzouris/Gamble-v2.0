@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\CharacterCreationPanel.cs" />
     <Compile Include="Assets\DropdownOptionObject.cs" />
-    <Compile Include="Assets\HedgehogBoss.cs" />
+    <Compile Include="Assets\EventSystemManager.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
     <Compile Include="Assets\OptionObject.cs" />
     <Compile Include="Assets\Roller.cs" />
@@ -78,12 +78,15 @@
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
-    <Compile Include="Assets\Scripts\Entity\Enemy\CatBoss.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossEnemy.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\CatBoss.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\HedgehogBoss.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\LavaBoss.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\SharkBoss.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\TentacleBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Hedgehog.cs" />
-    <Compile Include="Assets\Scripts\Entity\Enemy\LavaBoss.cs" />
-    <Compile Include="Assets\Scripts\Entity\Enemy\SharkBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />

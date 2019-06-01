@@ -39,6 +39,11 @@ public class MiniMap : MonoBehaviour
         
     }
 
+    public void Toggle()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
+
     public MiniMapIcon AddStaticIcon(MinimapIconType type, Vector2i tilePos)
     {
         prefab.type = type;

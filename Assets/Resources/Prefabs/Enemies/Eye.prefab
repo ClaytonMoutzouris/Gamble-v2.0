@@ -98,8 +98,10 @@ MonoBehaviour:
   mEntityType: 1
   mCollidesWith: 000000000200000003000000
   colorPallete: []
-  mMovingSpeed: 20
+  mMovingSpeed: 40
   BodySize: {x: 10, y: 10}
+  collidesWithMap: 1
+  mDirection: 1
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -156,6 +158,7 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
+      isJetting: 0
       leftTile:
         x: 0
         y: 0
@@ -184,7 +187,8 @@ MonoBehaviour:
   mUpdateId: -1
   mEnemyState: 0
   mEnemyType: 1
-  hostility: 1
+  bossType: 5
+  hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}

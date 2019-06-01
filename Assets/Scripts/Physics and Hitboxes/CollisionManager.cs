@@ -256,12 +256,18 @@ public static class CollisionManager {
 
     public static void HitCollision(Hitbox obj1, Hurtbox obj2)
     {
-        if(obj1.mEntity is IProjectile)
+        if (obj1.mEntity.mEntityType == obj2.mEntity.mEntityType)
+        {
+            return;
+        }
+
+        if (obj1.mEntity is IProjectile)
         {
             IProjectile proj = (IProjectile)obj1.mEntity;
-            if (proj.Owner == obj2.mEntity)
+            if (proj.Owner.mEntityType == obj2.mEntity.mEntityType)
                 return;
         }
+
 
         if (obj1.mAABB.Overlaps(obj2.mAABB) && !obj1.mCollisions.Contains((IHurtable)obj2.mEntity))
         {

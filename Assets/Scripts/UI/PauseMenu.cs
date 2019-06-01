@@ -20,12 +20,13 @@ public class PauseMenu : MonoBehaviour {
     public void Open(int playerIndex)
     {
         pausedIndex = playerIndex;
-        EventSystem.current.SetSelectedGameObject(defaultObject);
+        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
         gameObject.SetActive(true);
     }
 
     public void Close()
     {
+        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
         pausedIndex = -1;
         gameObject.SetActive(false);
     }

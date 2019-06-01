@@ -172,3 +172,4 @@ D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.dll
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.pdb
+D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache

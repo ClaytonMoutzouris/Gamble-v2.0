@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 0
-  mCollidesWith: 01000000020000000300000006000000
+  mCollidesWith: 010000000200000003000000
   colorPallete:
   - {r: 0.7103927, g: 1, b: 0, a: 1}
   - {r: 0, g: 0.10847686, b: 0.7058824, a: 1}
@@ -524,8 +524,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mEntity: {fileID: 11443564}
   health:
-    currentHealth: 50
-    maxHealth: 50
+    currentHealth: 100
+    maxHealth: 100
     healthbar: {fileID: 0}
   stats:
   - type: 0

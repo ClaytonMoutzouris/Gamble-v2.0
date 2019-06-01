@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     public Camera gameCamera;
     public int numPlayers = 1;
     public Player[] players = new Player[4];
-
+    public int levelIndex = 0;
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
 
@@ -71,8 +71,8 @@ public class LevelManager : MonoBehaviour
     public void AddPlayer(int index, PlayerInput input)
     {
         Player newPlayer = Instantiate(mPlayerPrefab) as Player;
-        newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
-        newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
+        newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[index].healthBar;
+        newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[index].inventoryUI;
         newPlayer.playerIndex = index;
         newPlayer.SetInput(input);
         newPlayer.EntityInit();
@@ -106,8 +106,19 @@ public class LevelManager : MonoBehaviour
             entity.mToRemove = true;
 
         }
-
-        mMap.NewMap(MapDatabase.GetNextMap(type));
+        if(type == MapType.Hub)
+        {
+            mMap.NewMap(MapDatabase.GetMap(type));
+        }
+        else
+        {
+            mMap.NewMap(MapDatabase.GetMap((WorldType)levelIndex));
+            levelIndex++;
+            if (levelIndex >= (int)WorldType.Count)
+            {
+                levelIndex = 0;
+            }
+        }
         int count = 0;
         foreach (Player player in players)
         {
@@ -116,7 +127,9 @@ public class LevelManager : MonoBehaviour
         }
 
         MiniMap.instance.SetMap(mMap.mCurrentMap, players);
-        SoundManager.instance.PlayMusic((int)type);
+
+        SoundManager.instance.PlayLevelMusic((int)mMap.mCurrentMap.type);
+
 
 
 

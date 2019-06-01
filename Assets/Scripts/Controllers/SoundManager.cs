@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
     public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
     public List<AudioClip> levelMusic;
+    public List<AudioClip> bossMusic;
 
     void Awake()
     {
@@ -34,7 +35,14 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public void PlayMusic(int musicIndex)
+    public void PlayBossMusic(int musicIndex)
+    {
+        musicSource.clip = bossMusic[musicIndex];
+        //Play the clip.
+        musicSource.Play();
+    }
+
+    public void PlayLevelMusic(int musicIndex)
     {
         musicSource.clip = levelMusic[musicIndex];
         //Play the clip.

@@ -164,8 +164,9 @@ D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.Timeline.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.Networking.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
-D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.csprojResolveAssemblyReference.cache
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.csproj.CopyComplete
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.dll
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.pdb
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\XInputDotNetPure.dll
+D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp-firstpass.csprojAssemblyReference.cache

@@ -193,7 +193,10 @@ MonoBehaviour:
   target: {fileID: 0}
   mStats: {fileID: 0}
   mBossState: 0
-  bullets: {fileID: 4346056369594929162, guid: 4304864a85203934184e5f4e58385a91, type: 3}
+  AttackTimer: 4
+  projectilePrefabs:
+  - {fileID: 4346056369594929162, guid: 4304864a85203934184e5f4e58385a91, type: 3}
+  - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}
   bossTrigger: 0
   attackAnchor: {x: 0, y: 25, z: 0}
 --- !u!95 &6150250753026082871

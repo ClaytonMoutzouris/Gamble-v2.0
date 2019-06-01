@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss };
 public enum EnemyType { Slime, Eye, Roller, WurmAlien, Hedghehog, Treedude, Count, Boss };
-public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, Count }
+public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 public enum ItemType { };

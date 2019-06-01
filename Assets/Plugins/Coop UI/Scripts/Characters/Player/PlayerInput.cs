@@ -244,6 +244,28 @@ namespace LocalCoop {
 
             return false;
         }
+
+        public bool LeftStickTapLeft()
+        {
+            if (Use_X_Input)
+            {
+                return (prevState.ThumbSticks.Left.X >= 0 &&
+              state.ThumbSticks.Left.X < 0) ? true : false;
+            }
+
+            return false;
+        }
+
+        public bool LeftStickTapRight()
+        {
+            if (Use_X_Input)
+            {
+                return (prevState.ThumbSticks.Left.X <= 0 &&
+              state.ThumbSticks.Left.X > 0) ? true : false;
+            }
+
+            return false;
+        }
         #endregion
 
         #region Triggers

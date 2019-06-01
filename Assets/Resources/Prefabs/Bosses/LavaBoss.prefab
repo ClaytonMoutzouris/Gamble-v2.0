@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mEntityType: 6
-  mCollidesWith: 000000000300000002000000
+  mCollidesWith: 0200000003000000
   colorPallete: []
   mMovingSpeed: 50
   BodySize: {x: 40, y: 55}
@@ -213,6 +213,9 @@ MonoBehaviour:
   mStats: {fileID: 0}
   mBossState: 0
   AttackTimer: 1
+  projectilePrefabs:
+  - {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb, type: 3}
+  bossTrigger: 0
   EruptDuration: 1
   ChargeDuration: 2
   ChargeSpeed: 1000
@@ -220,9 +223,6 @@ MonoBehaviour:
   KnockedCooldown: 0.2
   mCrashSFX: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
   mEruptSFX: {fileID: 0}
-  VolcanicBombPrefab: {fileID: 6960962194619835025, guid: de3ba776872cb2f42949130dd98ed0cb,
-    type: 3}
-  bossTrigger: 0
 --- !u!114 &1605136653131188733
 MonoBehaviour:
   m_ObjectHideFlags: 0

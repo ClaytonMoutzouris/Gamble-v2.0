@@ -58,6 +58,7 @@ public class Projectile : Entity, IProjectile {
         //mMovingSpeed = 100;
         body.mIgnoresGravity = IgnoreGravity;
         body.mIgnoresOneWay = true;
+
         if (SoundManager.instance != null)
         {
             SoundManager.instance.PlaySingle(sfx);

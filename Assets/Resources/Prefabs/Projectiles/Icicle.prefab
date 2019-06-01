@@ -97,6 +97,8 @@ MonoBehaviour:
   colorPallete: []
   mMovingSpeed: 300
   BodySize: {x: 5, y: 5}
+  collidesWithMap: 1
+  mDirection: 1
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -153,6 +155,7 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
+      isJetting: 0
       leftTile:
         x: 0
         y: 0

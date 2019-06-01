@@ -367,7 +367,7 @@ public static class MapGenerator
         {
             //map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
             //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
-            map.AddEntity(new BossData(5, 5, BossType.HedgehogBoss));
+            //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
         }
 
@@ -377,7 +377,7 @@ public static class MapGenerator
             //PopulateMap(map);
 
             PopulateBoss(map);
-            
+            AddChests(map);
             AddFallingRock(map);
 
             //PopulateBoss(map);

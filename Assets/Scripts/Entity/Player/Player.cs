@@ -285,6 +285,11 @@ public class Player : Entity, IHurtable
             LevelManager.instance.PauseGame(playerIndex);
             //PauseMenu.instance.defaultObject;
         }
+
+        if (mInput.SelectDown())
+        {
+            MiniMap.instance.Toggle();
+        }
         //
         if (mInput.ButtonYDown())
         {
@@ -696,7 +701,7 @@ public class Player : Entity, IHurtable
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
-                if (mInput.xAxisLeft != 0)
+                if (mInput.LeftStickTapLeft() || mInput.LeftStickTapRight())
                 {
                     body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Walk;

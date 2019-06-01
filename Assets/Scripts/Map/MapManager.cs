@@ -276,12 +276,14 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void AddEnemyEntity(EnemyData data)
+    public Enemy AddEnemyEntity(EnemyData data)
     {
         
         Enemy temp = Instantiate(EnemyDatabase.GetEnemyPrefab(data.type));
         temp.EntityInit();
         temp.Body.SetTilePosition(data.TilePosition);
+
+        return temp;
     }
 
     public void AddBossEntity(BossData data)
