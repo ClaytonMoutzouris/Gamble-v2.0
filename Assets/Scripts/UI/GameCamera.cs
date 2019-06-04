@@ -77,18 +77,19 @@ public class GameCamera : MonoBehaviour
         float minY = mMap.mHeight * MapManager.cTileSize;
         float maxY = 0;
 
-        foreach (Player target in LevelManager.instance.players)
+        for(int i = 0; i < 4; i++)
         {
-            if (target == null)
+            if (LevelManager.instance.players[i] == null)
                 continue;
 
-            Vector3 position = target.transform.position;
+            Vector3 position = LevelManager.instance.players[i].transform.position;
 
             minX = Mathf.Min(minX, position.x);
             minY = Mathf.Min(minY, position.y);
             maxX = Mathf.Max(maxX, position.x);
             maxY = Mathf.Max(maxY, position.y);
         }
+
 
         return Rect.MinMaxRect(minX - mBoundingBoxPadding, maxY + mBoundingBoxPadding, maxX + mBoundingBoxPadding, minY - mBoundingBoxPadding);
     }

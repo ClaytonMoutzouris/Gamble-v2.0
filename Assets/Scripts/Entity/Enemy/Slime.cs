@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
-    float closeRange = 30f;
+    float closeRange = 35f;
     float midRange = 70f;
     float longRange = 140f;
+
 
     public override void EntityInit()
     {
@@ -17,6 +18,12 @@ public class Slime : Enemy {
         body.mIsKinematic = false;
 
         EnemyInit();
+
+        mAttackManager.AttackList.RemoveAt(0);
+        MeleeAttack tentacleAttack = new MeleeAttack(this, 1f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        mAttackManager.AttackList.Add(tentacleAttack);
+        mAttackManager.meleeAttacks.Add(tentacleAttack);
+
         StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
     }
 
@@ -34,7 +41,7 @@ public class Slime : Enemy {
         switch (mEnemyState)
         {
             case EnemyState.Idle:
-
+                mAnimator.Play("Idle");
                 break;
             case EnemyState.Moving:
 
@@ -46,7 +53,9 @@ public class Slime : Enemy {
                     {
                         if (!mAttackManager.AttackList[0].onCooldown)
                         {
-                            EnemyBehaviour.Attack(this, 0);                       
+                            mAnimator.Play("Slime_Attack");
+                            EnemyBehaviour.Attack(this, 0);
+                            EnemyBehaviour.Wait(this, 2, EnemyState.Idle);
                         }
                         //StartCoroutine(EnemyBehaviour.Wait(this, mAttackManager.AttackList[0].duration + 2, EnemyState.Moving));
                     }
@@ -55,6 +64,7 @@ public class Slime : Enemy {
 
                         if (Target.Position.x > body.mPosition.x)
                         {
+                            //If they can't proceed horizontally, try jumping.
                             if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
                             {
                                 EnemyBehaviour.Jump(this, 460);
@@ -71,7 +81,11 @@ public class Slime : Enemy {
                             mDirection = EntityDirection.Left;
                         }
 
-                        EnemyBehaviour.MoveHorizontal(this);
+                        if (!EnemyBehaviour.TargetInRange(this, Target, midRange)){
+                            mAnimator.Play("Slime_Move");
+                            EnemyBehaviour.MoveHorizontal(this);                
+                        }
+                        
 
                     }
 
@@ -88,7 +102,7 @@ public class Slime : Enemy {
                     {
                         mDirection = EntityDirection.Left;
                     }
-
+                    mAnimator.Play("Slime_Move");
                     EnemyBehaviour.MoveHorizontal(this);
 
                 }
@@ -136,12 +150,14 @@ public class Slime : Enemy {
                 {
                     if (attack.mIsActive)
                     {
+                        mAnimator.Play("Slime_Attack");
                         done = false;
                     }
                 }
 
                 if (done)
                 {
+                    mAnimator.Play("Slime_Move");
                     mEnemyState = EnemyState.Moving;
                 }
 
@@ -161,9 +177,9 @@ public class Slime : Enemy {
         CollisionManager.UpdateAreas(Sight);
         Sight.mEntitiesInSight.Clear();
 
-
         
     }
+
 
     public override void OnDrawGizmos()
     {

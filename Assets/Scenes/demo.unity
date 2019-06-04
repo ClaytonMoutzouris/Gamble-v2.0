@@ -2722,7 +2722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ac6af499a13274bb27d1e0298731cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 389080747}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!114 &550761500 stripped
@@ -4944,7 +4944,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 2
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -5182,7 +5182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameMode: 0
   gameCamera: {fileID: 1799959646}
-  numPlayers: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
@@ -5478,7 +5477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ac6af499a13274bb27d1e0298731cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 389080747}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &1216638656
@@ -5777,7 +5776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ac6af499a13274bb27d1e0298731cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 389080747}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &1346552048 stripped
@@ -8861,7 +8860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ac6af499a13274bb27d1e0298731cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 389080747}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!1 &2071477696

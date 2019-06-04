@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour
     public GameMode mGameMode;
     public static LevelManager instance;
     public Camera gameCamera;
-    public int numPlayers = 1;
     public Player[] players = new Player[4];
     public int levelIndex = 0;
     int lastMouseTileX = -1;
@@ -209,7 +208,8 @@ public class LevelManager : MonoBehaviour
         //Update all the entities
         for (int i = 0; i < mEntities.Count; ++i)
         {
-            mEntities[i].EntityUpdate();          
+            if(!mMapChangeFlag)
+                mEntities[i].EntityUpdate();          
         }
 
         //Check for entities flagged for removal

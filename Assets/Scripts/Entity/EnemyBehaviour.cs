@@ -68,6 +68,17 @@ public static class EnemyBehaviour
         //enemy.Body.mSpeed.y = enemy.mMovingSpeed * (int)enemy.mDirection;
     }
 
+    public static void MoveAway(Enemy enemy, Entity target)
+    {
+        if(enemy.body.mPosition.x > target.body.mPosition.x)
+        {
+            enemy.Body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
+        }
+        else
+        {
+            enemy.Body.mSpeed.x = enemy.mMovingSpeed * -1;
+        }
+    }
 
     public static void Attack(Enemy enemy, int index)
     {

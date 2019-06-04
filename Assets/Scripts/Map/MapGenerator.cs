@@ -337,6 +337,7 @@ public static class MapGenerator
                     temp = SurfaceLayer.Surface;
                 }
 
+                
                 if (roomPath[x, y] != null)
                 {
                     map.rooms[x, y] = RoomDatabase.GetRoom(roomPath[x, y].roomType, temp);

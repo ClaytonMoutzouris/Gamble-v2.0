@@ -167,6 +167,7 @@ public class MeleeAttack : Attack
 
         base.Activate();
 
+
         hitbox.mState = ColliderState.Open;
         hitbox.mDealthWith.Clear();
         //hitbox.colliderType = ColliderType.Hitbox;
@@ -184,6 +185,7 @@ public class MeleeAttack : Attack
 
     public override void UpdateAttack()
     {
+
         foreach (IHurtable hit in hitbox.mCollisions)
         {
             if (!hitbox.mDealthWith.Contains(hit))

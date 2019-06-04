@@ -1,6 +1,5 @@
 D:\Documents\GitHub\Gamble v2.0\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 D:\Documents\GitHub\Gamble v2.0\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
-D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\Assembly-CSharp.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\Assembly-CSharp.pdb
@@ -173,3 +172,4 @@ D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.dll
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.pdb
 D:\Documents\GitHub\Gamble-v2.0\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\XInputDotNetPure.dll

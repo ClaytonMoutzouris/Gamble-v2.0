@@ -98,6 +98,8 @@ public abstract class Enemy : Entity, IHurtable
     public virtual void EnemyInit()
     {
 
+        mAnimator = GetComponent<Animator>();
+
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
         HurtBox.UpdatePosition();
 
@@ -116,7 +118,7 @@ public abstract class Enemy : Entity, IHurtable
 
         mAttackManager = GetComponent<AttackManager>();
 
-        MeleeAttack defaultAttack = new MeleeAttack(this, .5f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
+        MeleeAttack defaultAttack = new MeleeAttack(this, 0.8f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
         mAttackManager.AttackList.Add(defaultAttack);
         mAttackManager.meleeAttacks.Add(defaultAttack);
     }
