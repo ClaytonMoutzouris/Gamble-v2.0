@@ -549,12 +549,25 @@ public class PhysicsBody : CustomCollider2D
             {
                 //if (mCollisionType == CollisionType.Player)
                    // Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
+
+                
                 Vector2 parentOffset = mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
 
+                /*
+                if (!mIsKinematic && parentOffset.y >= 0)
+                {
+                    parentOffset.y = 0;
+                }
+                */
+
                 //This is my hacky way of fixing sliding off of a parent if its moving into another object, maybe
-                if(parentOffset.x > 0 && !mMountParent.Body.mPS.pushesRight || parentOffset.x < 0 && !mMountParent.Body.mPS.pushesLeft)
+                if((parentOffset.y >= 0 || mMountParent.Body.mIsKinematic) && (parentOffset.x > 0 && !mMountParent.Body.mPS.pushesRight) || (parentOffset.x < 0 && !mMountParent.Body.mPS.pushesLeft))
                 {
                     mOffset += mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
+                }
+                else
+                {
+                    mMountParent = null;
                 }
 
             }

@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
             return;
 
         LevelManager.instance.DropPlayer(pausedIndex);
+        //Close();
     }
 
 }
