@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6027242962120491413, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -301,11 +306,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6852935666352631606, guid: 33b557322a76a8d418d6db8001360d2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1909,6 +1909,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6027242962120491413, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2075,11 +2080,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6852935666352631606, guid: 33b557322a76a8d418d6db8001360d2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4062,7 +4062,7 @@ MonoBehaviour:
   options: []
   optionPrefab: {fileID: 7540584943353979816, guid: 6eef24b20b43751459149e0123a15fad,
     type: 3}
-  returnObject: {fileID: 0}
+  focusedSlot: {fileID: 0}
 --- !u!114 &234297237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4217,7 +4217,7 @@ MonoBehaviour:
   options: []
   optionPrefab: {fileID: 7540584943353979816, guid: 6eef24b20b43751459149e0123a15fad,
     type: 3}
-  returnObject: {fileID: 0}
+  focusedSlot: {fileID: 0}
 --- !u!114 &324134163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5108,6 +5108,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6027242962120491413, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5274,11 +5279,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6852935666352631606, guid: 33b557322a76a8d418d6db8001360d2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7936,7 +7936,7 @@ MonoBehaviour:
   options: []
   optionPrefab: {fileID: 7540584943353979816, guid: 6eef24b20b43751459149e0123a15fad,
     type: 3}
-  returnObject: {fileID: 0}
+  focusedSlot: {fileID: 0}
 --- !u!114 &1317180435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8867,7 +8867,7 @@ MonoBehaviour:
   options: []
   optionPrefab: {fileID: 7540584943353979816, guid: 6eef24b20b43751459149e0123a15fad,
     type: 3}
-  returnObject: {fileID: 0}
+  focusedSlot: {fileID: 0}
 --- !u!114 &1783213038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9715,7 +9715,7 @@ GameObject:
   - component: {fileID: 2136608932}
   - component: {fileID: 2136608933}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: PlayerGamepadManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9775,6 +9775,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6027242962120491413, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
@@ -9942,11 +9947,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6852935666352631606, guid: 33b557322a76a8d418d6db8001360d2b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9072492070354303208, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_IsActive
       value: 0

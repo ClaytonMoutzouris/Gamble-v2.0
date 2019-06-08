@@ -72,6 +72,7 @@
     <Compile Include="Assets\Roller.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\ShipSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
@@ -103,16 +104,17 @@
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Projectile.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Stats.cs" />
     <Compile Include="Assets\Scripts\Interfaces\Entity Interfaces.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEntity.cs" />
     <Compile Include="Assets\Scripts\Items\Armor.cs" />
     <Compile Include="Assets\Scripts\Items\ConsumableItem.cs" />
-    <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
-    <Compile Include="Assets\Scripts\Items\PlayerEquipment.cs" />
     <Compile Include="Assets\Scripts\Items\QuestItem.cs" />
     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
     <Compile Include="Assets\Scripts\Map\EditorMap.cs" />

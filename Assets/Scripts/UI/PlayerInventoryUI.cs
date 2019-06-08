@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    public PlayerPanel playerPanel;
+    public Player player;
     public int numStartingSlots;
     public List<InventorySlot> slots;
     public InventorySlot slotPrefab;
@@ -91,6 +91,11 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         getFirstEmpty().SetItem(item);
 
+    }
+
+    public void RemoveItem(int index)
+    {
+        slots[index].ClearItem();
     }
 
     public void OpenOptionsList(InventorySlot slot)

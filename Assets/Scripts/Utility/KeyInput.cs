@@ -4,27 +4,27 @@ using System.Collections;
 /// <summary>
 /// Key input enumeration for easy input sending.
 /// </summary>
-public enum KeyInput
+public enum ButtonInput
 {
 	LeftStick_Left = 0,
 	LeftStick_Right,
 	LeftStick_Down,
     LeftStick_Up,
-    RightStick_Left,
-    RightStick_Right,
-    RightStick_Down,
-    RightStick_Up,
+    DPad_Left,
+    DPad_Right,
+    DPad_Down,
+    DPad_Up,
     Jump,
-    Shoot,
     Attack,
     Item,
     Inventory,
-    RangeSwap,
+    Swap,
     Pause,
+    Select,
 	Count
 }
 
-public enum StickInput
+public enum AxisInput
 {
     LeftStickX = 0,
     LeftStickY,

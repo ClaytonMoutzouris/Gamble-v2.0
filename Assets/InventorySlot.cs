@@ -33,6 +33,14 @@ public class InventorySlot : MonoBehaviour
 
     }
 
+    public void ClearItem()
+    {
+        item = null;
+        mImage.sprite = null;
+        mImage.color = Color.clear;
+
+    }
+
     public bool isEmpty()
     {
         return item == null;
@@ -45,7 +53,10 @@ public class InventorySlot : MonoBehaviour
 
     public void SlotSelected()
     {
-        playerInventory.OpenOptionsList(this);
+        if (!isEmpty())
+        {
+            playerInventory.OpenOptionsList(this);
+        }
     }
 
 }

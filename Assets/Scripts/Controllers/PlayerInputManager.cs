@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour {
 
     GamePadState[] controllerStates = new GamePadState[4];
     PlayerIndex[] controllerIDs = new PlayerIndex[4];
-    public PlayerInput[] playerInputs = new PlayerInput[4];
+    public PlayerGamepadInput[] playerInputs = new PlayerGamepadInput[4];
 
     public LevelManager levelManager;
     public bool use_X_Input = true;

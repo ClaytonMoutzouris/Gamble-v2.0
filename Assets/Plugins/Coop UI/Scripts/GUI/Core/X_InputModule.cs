@@ -23,7 +23,7 @@ namespace UnityEngine.EventSystems {
 
         private PointerEventData m_InputPointerEvent;
 
-        public PlayerInput playerInput;
+        public PlayerGamepadInput playerInput;
 
         protected override void Awake() {
 

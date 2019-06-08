@@ -81,7 +81,7 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\Util\SMappingRanges.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\SwapIndex.cs" />
-    <Compile Include="Assets\Plugins\Coop UI\Scripts\Characters\Player\PlayerInput.cs" />
+    <Compile Include="Assets\Plugins\Coop UI\Scripts\Characters\Player\PlayerGamepadInput.cs" />
     <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\CustomEventSystem.cs" />
     <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\X_InputModule.cs" />
     <Compile Include="Assets\Plugins\XInputDotNet\Examples\XInputTestCS.cs" />

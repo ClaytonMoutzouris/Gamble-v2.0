@@ -67,11 +67,10 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    public void AddPlayer(int index, PlayerInput input)
+    public void AddPlayer(int index, PlayerGamepadInput input)
     {
         Player newPlayer = Instantiate(mPlayerPrefab) as Player;
         newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[index].healthBar;
-        newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[index].inventoryUI;
         newPlayer.playerIndex = index;
         newPlayer.SetInput(input);
         newPlayer.EntityInit();

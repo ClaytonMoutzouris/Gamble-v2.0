@@ -10,7 +10,7 @@ public class InventoryOptionList : MonoBehaviour
     public PlayerInventoryUI playerInventory;
     public List<InventoryOptionButton> options;
     public InventoryOptionButton optionPrefab;
-    public Selectable returnObject;
+    public InventorySlot focusedSlot;
 
     // Start is called before the first frame update
     void Start()
@@ -55,17 +55,30 @@ public class InventoryOptionList : MonoBehaviour
 
     public void SetOptions(InventorySlot slot)
     {
-        returnObject = slot.button;
+        focusedSlot = slot;
         gameObject.SetActive(true);
         transform.position = slot.transform.position;
-        EventSystemManager.instance.GetEventSystem(playerInventory.playerPanel.playerIndex).SetSelectedGameObject(options[0].gameObject);
+        EventSystemManager.instance.GetEventSystem(playerInventory.player.playerIndex).SetSelectedGameObject(options[0].gameObject);
     }
 
     public void OptionSelected(InventoryOption option)
     {
+        switch (option)
+        {
+            case InventoryOption.Drop:
+                playerInventory.player.mInventory.DropItem(focusedSlot.slotID);
+                break;
+            case InventoryOption.Cancel:
+                
+                break;
+        }
 
-        EventSystemManager.instance.GetEventSystem(playerInventory.playerPanel.playerIndex).SetSelectedGameObject(returnObject.gameObject);
+        Close();
+    }
+
+    public void Close()
+    {
+        EventSystemManager.instance.GetEventSystem(playerInventory.player.playerIndex).SetSelectedGameObject(focusedSlot.button.gameObject);
         gameObject.SetActive(false);
-
     }
 }
