@@ -16,7 +16,6 @@ public class Player : Entity, IHurtable
     public float mClimbSpeed;
     public bool mDoubleJump = true;
     public float mTimeToExit = 1;
-    public int playerIndex;
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
     public PlayerInventory mInventory;
@@ -26,7 +25,7 @@ public class Player : Entity, IHurtable
     public int activeBullet;
     [SerializeField]
     private PlayerState mCurrentState = PlayerState.Stand;
-    public int mPlayerIndex = 0;
+    public int mPlayerIndex;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -109,7 +108,7 @@ public class Player : Entity, IHurtable
         mStats = GetComponent<Stats>();
         mStats.health.healthbar = mHealthBar;
 
-        mInventory = GetComponent<PlayerInventory>();
+        mInventory = new PlayerInventory(this);
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
@@ -160,7 +159,7 @@ public class Player : Entity, IHurtable
 
         if (mInput.playerButtonInput[(int)ButtonInput.Pause])
         {
-            LevelManager.instance.PauseGame(playerIndex);
+            LevelManager.instance.PauseGame(mPlayerIndex);
             //PauseMenu.instance.defaultObject;
         }
 
@@ -171,7 +170,7 @@ public class Player : Entity, IHurtable
         //
         if (mInput.playerButtonInput[(int)ButtonInput.Inventory] && !mInput.previousButtonInput[(int)ButtonInput.Inventory])
         {
-            PlayerUIPanels.instance.OpenClosePanel(playerIndex);
+            PlayerUIPanels.instance.OpenClosePanel(mPlayerIndex);
             if (mInput.inputState == PlayerInputState.Inventory)
             {
                 mInput.inputState = PlayerInputState.Game;

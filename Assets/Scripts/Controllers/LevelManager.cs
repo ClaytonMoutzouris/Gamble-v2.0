@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
     {
         Player newPlayer = Instantiate(mPlayerPrefab) as Player;
         newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[index].healthBar;
-        newPlayer.playerIndex = index;
+        newPlayer.mPlayerIndex = index;
         newPlayer.SetInput(input);
         newPlayer.EntityInit();
         newPlayer.Body.SetTilePosition(mMap.mCurrentMap.startTile);
@@ -86,6 +86,11 @@ public class LevelManager : MonoBehaviour
         players[index].ActuallyDie();
 
 
+    }
+
+    public Entity AddEntity(Entity obj)
+    {
+        return Instantiate(obj);
     }
 
     public void NewGameMap(MapType type)

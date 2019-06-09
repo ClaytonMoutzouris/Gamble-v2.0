@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 9507910}
   - component: {fileID: 8258700}
   - component: {fileID: 4989206604878757318}
-  - component: {fileID: 3215723004739739211}
   - component: {fileID: 5966099494035067405}
   - component: {fileID: 2314102040400047369}
   m_Layer: 0
@@ -339,7 +338,11 @@ MonoBehaviour:
   playerIndex: 0
   mHealthBar: {fileID: 0}
   mCannotClimb: 0
-  mInventory: {fileID: 3215723004739739211}
+  mInventory:
+    inventoryUI: {fileID: 0}
+    mPlayer: {fileID: 0}
+    items: []
+  mInput: {fileID: 0}
   bullets:
   - {fileID: 114847323615810482, guid: 147278dff8d5de243ba26840e5e1bc66, type: 3}
   - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}
@@ -494,20 +497,6 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &3215723004739739211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfee5390bb8f0948a74c41e6ecc4691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mPlayer: {fileID: 0}
-  items: []
 --- !u!114 &5966099494035067405
 MonoBehaviour:
   m_ObjectHideFlags: 0

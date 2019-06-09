@@ -290,6 +290,11 @@ PrefabInstance:
       propertyPath: panelHeight
       value: 130
       objectReference: {fileID: 0}
+    - target: {fileID: 6027242962120491416, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: playerIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7227511373831175568, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
       propertyPath: m_IsActive
@@ -2063,6 +2068,11 @@ PrefabInstance:
         type: 3}
       propertyPath: panelHeight
       value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027242962120491416, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: playerIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7227511373831175568, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}
@@ -5262,6 +5272,11 @@ PrefabInstance:
         type: 3}
       propertyPath: panelHeight
       value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027242962120491416, guid: 33b557322a76a8d418d6db8001360d2b,
+        type: 3}
+      propertyPath: playerIndex
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7227511373831175568, guid: 33b557322a76a8d418d6db8001360d2b,
         type: 3}

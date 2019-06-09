@@ -105,7 +105,7 @@ public class PlayerInputManager : MonoBehaviour {
                         {
                             playerInputs[i].controllerID = (int)controllerIDs[i];
                             levelManager.AddPlayer(i, playerInputs[i]);
-                            print("Controller with ID 0 pressed start");
+                            Debug.Log("Controller with ID " + i + " pressed start");
                             //you can call a function here to instantiate a player and then assign this ID to the player input's script to connect the player to the controller that pressed start for example
                             //you then also need to assign that player input script to one of the X input modules to connect it with unity's input system
                         }

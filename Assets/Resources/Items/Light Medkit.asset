@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d884c526808e74492294356d3cae80, type: 3}
-  m_Name: Medipac
+  m_Script: {fileID: 11500000, guid: e2282d2013e190847af6b728e74073d2, type: 3}
+  m_Name: Light Medkit
   m_EditorClassIdentifier: 
-  mName: Medipac
-  mValue: 10
+  mName: Light Medkit
+  mValue: 20
   sprite: {fileID: 21300000, guid: 582b5009518075448a071834df09cf05, type: 3}
+  value: 50

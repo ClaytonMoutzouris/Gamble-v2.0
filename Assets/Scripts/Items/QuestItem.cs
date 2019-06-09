@@ -9,4 +9,11 @@ public class QuestItem : Item
         
     }
 
+    public override List<InventoryOption> GetInventoryOptions()
+    {
+        return new List<InventoryOption>() {
+            InventoryOption.Move,
+            InventoryOption.Drop,
+            InventoryOption.Cancel };
+    }
 }

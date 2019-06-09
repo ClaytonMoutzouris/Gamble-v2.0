@@ -75,7 +75,7 @@ public class ShipSceneController : LevelManager
         Player newPlayer = Instantiate(mPlayerPrefab) as Player;
         //newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[0].healthBar;
         //newPlayer.InventoryUI = PlayerUIPanels.instance.playerPanels[0].inventoryUI;
-        newPlayer.playerIndex = index;
+        newPlayer.mPlayerIndex = index;
         newPlayer.EntityInit();
         players[index] = newPlayer;
         newPlayer.Body.SetTilePosition(new Vector2i(1, 1));

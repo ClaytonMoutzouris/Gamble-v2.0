@@ -1,28 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerInventory : MonoBehaviour
+[System.Serializable]
+public class PlayerInventory
 {
-    PlayerInventoryUI inventoryUI;
+    public PlayerInventoryUI inventoryUI;
     public Player mPlayer;
     public List<Item> items;
-
-    private void Start()
+     
+    public PlayerInventory(Player player)
     {
-        mPlayer = GetComponent<Player>();
+        mPlayer = player;
         items = new List<Item>();
         inventoryUI = PlayerUIPanels.instance.playerPanels[mPlayer.mPlayerIndex].inventoryUI;
         inventoryUI.player = mPlayer;
 
     }
 
+
     public void AddItemToInventory(Item item)
     {
-        items.Add(item);
-        inventoryUI.AddItem(item);
-    }
 
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] == null)
+            {
+                items[i] = item;
+                inventoryUI.AddItem(item, i);
+                return;
+            }
+        }
+
+        items.Add(item);
+        inventoryUI.AddItem(item, items.Count - 1);
+
+    }
+    /*
     public void AddItemsToInventory(List<Item> items)
     {
         this.items.AddRange(items);
@@ -32,21 +45,42 @@ public class PlayerInventory : MonoBehaviour
         }
 
     }
-
+    */
     public Item GetItemAtIndex(int index)
     {
         return items[index];
     }
 
-    public void DropItem(int index)
-    { 
+    public bool UseItem(int index)
+    {
+        Debug.Log("User Item:" + index);
+        if (items[index] is ConsumableItem)
+        {
+            ((ConsumableItem)items[index]).Use(mPlayer, index);
+            
 
-        ItemObject temp = Instantiate(Resources.Load<ItemObject>("Prefabs/ItemObject")) as ItemObject;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void RemoveItem(int index)
+    {
+        items[index] = null;
+        inventoryUI.RemoveItem(index);
+    }
+
+    public void DropItem(int index)
+    {
+        ItemObject temp = (ItemObject)LevelManager.instance.AddEntity(Resources.Load<ItemObject>("Prefabs/ItemObject"));
         temp.SetItem(items[index]);
-        items.Remove(items[index]);
+        items[index] = null;
         inventoryUI.RemoveItem(index);
         temp.EntityInit();
         temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);
     }
+
+
 
 }

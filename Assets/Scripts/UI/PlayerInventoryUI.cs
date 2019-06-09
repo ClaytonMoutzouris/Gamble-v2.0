@@ -87,9 +87,9 @@ public class PlayerInventoryUI : MonoBehaviour
         return AddSlot();
     }
 
-    public void AddItem(Item item)
+    public void AddItem(Item item, int index)
     {
-        getFirstEmpty().SetItem(item);
+        slots[index].SetItem(item);
 
     }
 
@@ -100,7 +100,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void OpenOptionsList(InventorySlot slot)
     {
-        optionsList.SetOptions(slot);
+        optionsList.OpenOptions(slot);
     }
     
 }

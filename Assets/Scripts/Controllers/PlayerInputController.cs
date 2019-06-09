@@ -72,6 +72,7 @@ public class PlayerInputController : MonoBehaviour
                 playerButtonInput[(int)ButtonInput.Inventory] = mGamepadInput.ButtonYPressed();
                 playerButtonInput[(int)ButtonInput.Swap] = mGamepadInput.RightBumperPressed();
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
+                playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.SelectDown();
 
 
                 break;
@@ -100,6 +101,8 @@ public class PlayerInputController : MonoBehaviour
                 playerButtonInput[(int)ButtonInput.Inventory] = mGamepadInput.ButtonYPressed();
                 playerButtonInput[(int)ButtonInput.Swap] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = false;
+                playerButtonInput[(int)ButtonInput.Select] = false;
+
                 break;
 
             case PlayerInputState.Paused:
@@ -126,6 +129,8 @@ public class PlayerInputController : MonoBehaviour
                 playerButtonInput[(int)ButtonInput.Inventory] = false;
                 playerButtonInput[(int)ButtonInput.Swap] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
+                playerButtonInput[(int)ButtonInput.Select] = false;
+
                 break;
         }
         

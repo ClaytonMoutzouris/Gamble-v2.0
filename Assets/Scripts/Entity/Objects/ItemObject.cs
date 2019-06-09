@@ -16,7 +16,14 @@ public class ItemObject : Entity {
     public void SetItem(Item data)
     {
         mItemData = data;
-        GetComponent<SpriteRenderer>().sprite = data.sprite;
+        if(mItemData != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = data.sprite;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = null;
+        }
     }
 
     public override void EntityUpdate()

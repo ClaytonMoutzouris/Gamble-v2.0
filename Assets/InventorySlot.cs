@@ -28,8 +28,17 @@ public class InventorySlot : MonoBehaviour
     public void SetItem(Item i)
     {
         item = i;
-        mImage.sprite = item.sprite;
-        mImage.color = Color.white;
+        if(i != null)
+        {
+            mImage.sprite = item.sprite;
+            mImage.color = Color.white;
+        }
+        else
+        {
+            mImage.sprite = null;
+            mImage.color = Color.clear;
+        }
+
 
     }
 

@@ -20,6 +20,16 @@ public class ItemEditor
     {
         ScriptableObjectUtility.CreateAsset<ConsumableItem>();
     }
+    [MenuItem("Assets/Create/Items/Consumable/Medkit")]
+    public static void CreateMedkitAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Medkit>();
+    }
+    [MenuItem("Assets/Create/Items/Consumable/Food")]
+    public static void CreateFoodAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Food>();
+    }
     [MenuItem("Assets/Create/Items/QuestItem")]
     public static void CreateBaseQuestItemAsset()
     {
