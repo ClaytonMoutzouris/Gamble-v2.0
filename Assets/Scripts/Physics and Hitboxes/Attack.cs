@@ -15,6 +15,7 @@ public class Attack {
     public float coolDown;
     public bool onCooldown;
     public float coolDownTimer = 0;
+    public int startUpFrames = 0;
     //List of effects
 
     public bool mIsActive = false;

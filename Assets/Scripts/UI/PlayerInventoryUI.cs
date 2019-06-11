@@ -98,6 +98,12 @@ public class PlayerInventoryUI : MonoBehaviour
         slots[index].ClearItem();
     }
 
+    public void EquipItem(int index)
+    {
+        slots[index].SetEquipped(true);
+
+    }
+
     public void OpenOptionsList(InventorySlot slot)
     {
         optionsList.OpenOptions(slot);

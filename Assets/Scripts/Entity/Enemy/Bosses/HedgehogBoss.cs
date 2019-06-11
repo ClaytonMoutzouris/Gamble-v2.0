@@ -17,12 +17,6 @@ public class HedgehogBoss : BossEnemy
                 Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         EnemyInit();
-        
-        mAttackManager.AttackList.Clear();
-        MeleeAttack meleeAttack = new MeleeAttack(this, .1f, 2, .05f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, Vector3.zero, new Vector3(1.1f, 1.1f, 1.1f))));
-        mAttackManager.AttackList.Add(meleeAttack);
-        mAttackManager.meleeAttacks.Add(meleeAttack);
-
 
         //RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         //mAttackManager.AttackList.Add(ranged);

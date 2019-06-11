@@ -19,6 +19,7 @@ public class Player : Entity, IHurtable
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
     public PlayerInventory mInventory;
+    public PlayerEquipment mEquipment;
     [SerializeField]
     public PlayerInputController mInput;
     public List<Projectile> bullets;
@@ -109,6 +110,8 @@ public class Player : Entity, IHurtable
         mStats.health.healthbar = mHealthBar;
 
         mInventory = new PlayerInventory(this);
+        mEquipment = new PlayerEquipment();
+
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
@@ -189,7 +192,7 @@ public class Player : Entity, IHurtable
             mCannotClimb = false;
         }
 
-        Debug.Log("Current Input: " + mInput.playerButtonInput[(int)ButtonInput.Item] + ", Pevious Input: " + mInput.previousButtonInput[(int)ButtonInput.Item]);
+
         if (mInput.playerButtonInput[(int)ButtonInput.Item] && !mInput.previousButtonInput[(int)ButtonInput.Item])
         {
             GainLife(5);

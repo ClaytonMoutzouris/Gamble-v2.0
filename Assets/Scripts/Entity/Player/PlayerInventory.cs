@@ -81,6 +81,18 @@ public class PlayerInventory
         temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);
     }
 
+    public void EquipItem(int index)
+    {
+        if(items[index] is Equipment)
+        {
+            Equipment equippable = (Equipment)items[index];
+            if (mPlayer.mEquipment.Equip(equippable))
+            {
+                inventoryUI.EquipItem(index);
+            }
+            
 
+        }
+    }
 
 }

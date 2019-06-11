@@ -20,9 +20,6 @@ public class CatBoss : BossEnemy
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         EnemyInit();
-        mAttackManager.AttackList.Clear();
-        RangedAttack ranged = new RangedAttack(this, 0.1f, 10, 0.5f, projectilePrefabs[0]);
-        mAttackManager.AttackList.Add(ranged);
     }
     
     public override void EntityUpdate()
@@ -33,14 +30,14 @@ public class CatBoss : BossEnemy
 
 
 
-        switch (mEnemyState)
+        switch (mBossState)
         {
-            case EnemyState.Idle:
+            case BossState.Idle:
 
                 CheckForTargets();
 
                 break;
-            case EnemyState.Moving:
+            case BossState.Aggrivated:
                 CheckForTargets();
 
                 if (Target != null)
@@ -59,7 +56,8 @@ public class CatBoss : BossEnemy
                     {
                         if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
                         {
-                            EnemyBehaviour.Jump(this, 460);
+                            Body.mSpeed.y = 460;
+
                         }
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
                     }
@@ -67,7 +65,7 @@ public class CatBoss : BossEnemy
                     {
                         if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
                         {
-                            EnemyBehaviour.Jump(this, 460);
+                            Body.mSpeed.y = 460;
                         }
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
@@ -93,31 +91,7 @@ public class CatBoss : BossEnemy
                 body.mSpeed.x = mMovingSpeed;
 
                 break;
-            case EnemyState.Jumping:
-                if (body.mPS.pushesBottom)
-                {
-                    mEnemyState = EnemyState.Moving;
-                    break;
-                }
-
-                if (Target != null)
-                {
-                    //Replace this with pathfinding to the target
-                    if (Target.Position.x > body.mPosition.x)
-                    {
-                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                    }
-                    else
-                    {
-                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
-                    }
-                    
-                }
-
-                body.mSpeed.x = mMovingSpeed;
-
-
-                break;
+            
         }
 
         if (body.mSpeed.x > 0)

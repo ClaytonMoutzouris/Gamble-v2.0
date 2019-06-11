@@ -187,7 +187,7 @@ MonoBehaviour:
   mUpdateId: -1
   mEnemyState: 0
   mEnemyType: 1
-  bossType: 5
+  prototype: {fileID: 11400000, guid: 07061ce9de977304bbe9a14dca108585, type: 2}
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}

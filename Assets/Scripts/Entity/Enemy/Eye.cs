@@ -44,7 +44,17 @@ public class Eye : Enemy
                 if (Target != null)
                 {
                     mAnimator.Play("Eye_Fly");
-                    if(body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+
+                    //Replace this with pathfinding to the target
+                    Vector2 dir = (Target.Body.mAABB.Center - (body.mAABB.Center)).normalized;
+
+                    if (!mAttackManager.AttackList[0].onCooldown)
+                    {
+                        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                        attack.Activate(dir);
+                    }
+
+                    if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
                     {
                         if(Target.Position.y < Position.y)
                         {

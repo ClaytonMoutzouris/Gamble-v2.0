@@ -106,6 +106,10 @@ public class InventoryOptionList : MonoBehaviour
                 playerInventory.player.mInventory.UseItem(focusedSlot.slotID);
 
                 break;
+            case InventoryOption.Equip:
+                playerInventory.player.mInventory.EquipItem(focusedSlot.slotID);
+
+                break;
         }
 
         Close();

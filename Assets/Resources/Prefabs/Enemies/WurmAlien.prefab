@@ -119,6 +119,8 @@ MonoBehaviour:
   colorPallete: []
   mMovingSpeed: 90
   BodySize: {x: 32, y: 24}
+  collidesWithMap: 1
+  mDirection: 1
   body:
     mEntity: {fileID: 0}
     mAABB:
@@ -175,6 +177,7 @@ MonoBehaviour:
       isClimbing: 0
       isBounce: 0
       onDoor: 0
+      isJetting: 0
       leftTile:
         x: 0
         y: 0
@@ -202,7 +205,8 @@ MonoBehaviour:
   mToRemove: 0
   mUpdateId: -1
   mEnemyState: 0
-  mEnemyType: 3
+  mEnemyType: 2
+  prototype: {fileID: 11400000, guid: 72739667ed13929438df0d0551421413, type: 2}
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}

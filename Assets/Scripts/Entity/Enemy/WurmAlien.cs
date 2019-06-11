@@ -19,7 +19,6 @@ public class WurmAlien : Enemy
         Body.mIsKinematic = false;
         Body.mIsHeavy = false;
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
-        mAttackManager.AttackList[0] = new RangedAttack(this, 0, 2, .5f, mSlimePrefab);
 
 
         StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));

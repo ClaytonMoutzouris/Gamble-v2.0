@@ -15,15 +15,10 @@ public class SharkBoss : BossEnemy
     public override void EntityInit()
     {
         base.EntityInit();
+        base.EnemyInit();
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
-        EnemyInit();
-        mAttackManager.AttackList.Clear();
-        RangedAttack ranged = new RangedAttack(this, 0.1f, 4, .25f, projectilePrefabs[0]);
-        mAttackManager.AttackList.Add(ranged);
 
-        RangedAttack ranged2 = new RangedAttack(this, 0.1f, 30, .1f, projectilePrefabs[1]);
-        mAttackManager.AttackList.Add(ranged2);
     }
 
     public override void EntityUpdate()

@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
 public enum TargetRange { Close, Near, Far, OutOfRange };
 public abstract class Enemy : Entity, IHurtable
 {
     public EnemyState mEnemyState = EnemyState.Idle;
     public EnemyType mEnemyType;
-    public BossType bossType = BossType.Count;
+    [SerializeField]
+    EnemyPrototype prototype;
     //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
@@ -99,28 +98,46 @@ public abstract class Enemy : Entity, IHurtable
     {
 
         mAnimator = GetComponent<Animator>();
+        mEnemyType = prototype.enemyType;
 
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, BodySize, Vector3.zero, new Vector3(1, 1, 1)));
+        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, prototype.bodySize, Vector3.zero, new Vector3(1, 1, 1)));
         HurtBox.UpdatePosition();
+        hostility = prototype.hostility;
 
-
-        mStats = GetComponent<Stats>();
-        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(200, 200), Vector3.zero, new Vector3(1, 1, 1)));
+        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(prototype.sightRange, prototype.sightRange), Vector3.zero, new Vector3(1, 1, 1)));
         sight.UpdatePosition();
 
 
         EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
-        temp.transform.localPosition = new Vector3(0, BodySize.y * 2 + 10);
+        temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
         temp.InitHealthbar(this);
+
+        //Stats
+        mStats = GetComponent<Stats>();
+        mStats.health.currentHealth = prototype.health;
+        mStats.health.maxHealth = prototype.health;
         mStats.health.healthbar = temp;
-        
         mStats.health.healthbar.SetHealth(mStats.health);
+
 
         mAttackManager = GetComponent<AttackManager>();
 
-        MeleeAttack defaultAttack = new MeleeAttack(this, 0.8f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
-        mAttackManager.AttackList.Add(defaultAttack);
-        mAttackManager.meleeAttacks.Add(defaultAttack);
+        foreach(AttackPrototype attack in prototype.attacks)
+        {
+            if(attack is MeleeAttackPrototype)
+            {
+                MeleeAttackPrototype meleeAttack = (MeleeAttackPrototype)attack;
+                MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(transform.position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset, new Vector3(1, 1, 1))));
+                mAttackManager.AttackList.Add(melee);
+                mAttackManager.meleeAttacks.Add(melee);
+
+            }
+            else if (attack is RangedAttackPrototype)
+            {
+                RangedAttackPrototype rangedAttack = (RangedAttackPrototype)attack;
+                mAttackManager.AttackList.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile));
+            }
+        }
     }
 
     public override void SecondUpdate()

@@ -50,7 +50,7 @@ public class Hedgehog : Enemy
                 {
                     //Replace this with pathfinding to the target
 
-                    if (EnemyBehaviour.TargetInRange(this, Target, BodySize.x + 20))
+                    if (EnemyBehaviour.TargetInRange(this, Target, Body.mAABB.HalfSizeX + 20))
                     {
                         mAttackManager.AttackList[0].Activate();
                         mAnimator.Play("Attack1");

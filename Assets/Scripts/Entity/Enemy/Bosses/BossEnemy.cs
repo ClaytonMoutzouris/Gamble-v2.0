@@ -9,6 +9,7 @@ public class BossEnemy : Enemy
 {
     #region SetInInspector
     public BossState mBossState = BossState.Idle;
+    public BossType bossType = BossType.Count;
 
     public float AttackTimer = 4.0f;
     public List<Projectile> projectilePrefabs;

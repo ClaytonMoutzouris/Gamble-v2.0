@@ -205,22 +205,16 @@ MonoBehaviour:
   mToRemove: 0
   mUpdateId: -1
   mEnemyState: 0
-  mEnemyType: 7
-  bossType: 3
+  mEnemyType: 6
+  prototype: {fileID: 11400000, guid: f4858ab01026da04d84c0387c9c3f830, type: 2}
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
   mBossState: 0
+  bossType: 3
   AttackTimer: 0.5
-  EruptDuration: 5
-  ChargeDuration: 8
-  ChargeSpeed: 1200
-  KnockDuration: 1
-  KnockedCooldown: 1
-  mCrashSFX: {fileID: 0}
-  mEruptSFX: {fileID: 0}
-  VolcanicBombPrefab: {fileID: 0}
+  projectilePrefabs: []
   bossTrigger: 0
 --- !u!114 &6594389117259544079
 MonoBehaviour:

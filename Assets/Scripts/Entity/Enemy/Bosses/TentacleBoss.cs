@@ -23,9 +23,7 @@ public class TentacleBoss : BossEnemy
         Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
         EnemyInit();
-        mAttackManager.AttackList.Clear();
-        RangedAttack ranged = new RangedAttack(this, 0.1f, 10, 0.5f, projectilePrefabs[0]);
-        mAttackManager.AttackList.Add(ranged);
+
     }
 
     public override void EntityUpdate()

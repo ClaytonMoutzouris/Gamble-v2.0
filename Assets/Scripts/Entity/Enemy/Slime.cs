@@ -19,11 +19,6 @@ public class Slime : Enemy {
 
         EnemyInit();
 
-        mAttackManager.AttackList.RemoveAt(0);
-        MeleeAttack tentacleAttack = new MeleeAttack(this, 1f, 5, .5f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, new Vector3(Body.mAABB.HalfSizeX, 0), new Vector3(1, 1, 1))));
-        mAttackManager.AttackList.Add(tentacleAttack);
-        mAttackManager.meleeAttacks.Add(tentacleAttack);
-
         StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
     }
 

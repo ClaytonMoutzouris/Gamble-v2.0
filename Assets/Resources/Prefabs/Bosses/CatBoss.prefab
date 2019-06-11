@@ -206,12 +206,13 @@ MonoBehaviour:
   mUpdateId: -1
   mEnemyState: 0
   mEnemyType: 6
-  bossType: 1
+  prototype: {fileID: 11400000, guid: c6c71552a28254442b7489f8d550cd72, type: 2}
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
   mStats: {fileID: 0}
   mBossState: 0
+  bossType: 1
   AttackTimer: 4
   projectilePrefabs:
   - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}

@@ -10,6 +10,9 @@ public class InventorySlot : MonoBehaviour
     public int slotID;
     public Button button;
     public Item item = null;
+    public bool isEquipped = false;
+    [SerializeField]
+    GameObject equipFlag;
     [SerializeField]
     Image mImage;
 
@@ -23,6 +26,7 @@ public class InventorySlot : MonoBehaviour
     {
         mImage.color  = Color.clear;
         button = GetComponent<Button>();
+        equipFlag.SetActive(false);
     }
 
     public void SetItem(Item i)
@@ -58,6 +62,18 @@ public class InventorySlot : MonoBehaviour
     public Item GetItem()
     {
         return item;
+    }
+
+    public void SetEquipped(bool equipped)
+    {
+        isEquipped = equipped;
+        if(isEquipped)
+        {
+            equipFlag.SetActive(true);
+        } else
+        {
+            equipFlag.SetActive(false);
+        }
     }
 
     public void SlotSelected()

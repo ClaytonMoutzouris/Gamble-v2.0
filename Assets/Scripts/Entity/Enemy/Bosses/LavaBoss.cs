@@ -33,12 +33,6 @@ public class LavaBoss : BossEnemy
         Body.mIsHeavy = true;
         EnemyInit();
 
-        mAttackManager.AttackList.Clear();
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.1f, projectilePrefabs[0]);
-        mAttackManager.AttackList.Add(ranged);
-        MeleeAttack meleeAttack = new MeleeAttack(this, 5f, 20, .1f, new Hitbox(this, new CustomAABB(transform.position, Body.mAABB.HalfSize, Vector3.zero, new Vector3(1.1f, 1.1f, 1.1f))));
-        mAttackManager.AttackList.Add(meleeAttack);
-        mAttackManager.meleeAttacks.Add(meleeAttack);
 
     }
 
