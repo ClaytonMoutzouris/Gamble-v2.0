@@ -9,6 +9,7 @@ using LocalCoop;
 
 public class Player : Entity, IHurtable
 {
+    public Health mHealth;
     [System.Serializable]
     public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting };
     public float mJumpSpeed;
@@ -27,6 +28,8 @@ public class Player : Entity, IHurtable
     [SerializeField]
     private PlayerState mCurrentState = PlayerState.Stand;
     public int mPlayerIndex;
+    public Stats mStats;
+
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -55,8 +58,6 @@ public class Player : Entity, IHurtable
     public int mCannotGoLeftFrames = 0;
     [HideInInspector]
     public int mCannotGoRightFrames = 0;
-    [HideInInspector]
-    public Stats mStats;
     [HideInInspector]
     public AttackManager mAttackManager;
     private Hurtbox hurtBox;
@@ -106,8 +107,8 @@ public class Player : Entity, IHurtable
         }
         ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
-        mStats = GetComponent<Stats>();
-        mStats.health.healthbar = mHealthBar;
+        mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
+        mHealth = new Health(50, mHealthBar);
 
         mInventory = new PlayerInventory(this);
         mEquipment = new PlayerEquipment();
@@ -117,14 +118,7 @@ public class Player : Entity, IHurtable
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
 
 
-
-        if (mStats.health.healthbar != null)
-        {
-            mStats.health.healthbar.SetHealth(mStats.health);
-        }
-
         HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
-
         HurtBox.UpdatePosition();
 
         /*
@@ -895,10 +889,10 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        int damage = (int)mStats.health.LoseHP(attack.damage);
+        int damage = (int)mHealth.LoseHP(attack.damage);
         ShowFloatingText(damage, Color.red);
 
-        if (mStats.health.currentHealth == 0)
+        if (mHealth.currentHealth == 0)
         {
             Die();
         }
@@ -907,7 +901,7 @@ public class Player : Entity, IHurtable
 
     public void GainLife(int health)
     {
-        int life = (int)mStats.health.GainHP(health);
+        int life = (int)mHealth.GainHP(health);
         ShowFloatingText(life, Color.green);
 
 
@@ -986,13 +980,6 @@ public class Player : Entity, IHurtable
     public override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
-
-        if (mStats != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(Body.mAABB.Center + (Body.mAABB.HalfSizeY + 3) * Vector3.up, new Vector3(30 * (mStats.health.currentHealth / mStats.health.maxHealth), 6, 1));
-        }
-
 
         Gizmos.color = new Color(1, 0, 0, 0.5f);
 

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2208565764481078891}
   - component: {fileID: 5765733777148415279}
   - component: {fileID: 6150250753026082871}
-  - component: {fileID: 379516520604777393}
   - component: {fileID: 4680936237759372780}
   m_Layer: 0
   m_Name: SharkBoss
@@ -191,7 +190,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mBossState: 0
   bossType: 2
   AttackTimer: 4
@@ -219,24 +217,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &379516520604777393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7333172536035702397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 750
-    maxHealth: 750
-    healthbar: {fileID: 0}
-  stats: []
 --- !u!114 &4680936237759372780
 MonoBehaviour:
   m_ObjectHideFlags: 0

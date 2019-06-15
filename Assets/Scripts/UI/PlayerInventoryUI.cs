@@ -14,6 +14,8 @@ public class PlayerInventoryUI : MonoBehaviour
     public InventoryOptionList optionsList;
 
     public Selectable interactableUp;
+    public bool selectionMode = false;
+    public InventorySlot moving;
 
     private void Start()
     {
@@ -101,12 +103,44 @@ public class PlayerInventoryUI : MonoBehaviour
     public void EquipItem(int index)
     {
         slots[index].SetEquipped(true);
+    }
 
+    public void UnequipItem(int index)
+    {
+        slots[index].SetEquipped(false);
+    }
+
+    public void MoveItem(int index)
+    {
+        moving = slots[index];
+        selectionMode = true;
     }
 
     public void OpenOptionsList(InventorySlot slot)
     {
+        if (slot.IsEmpty())
+        {
+            return;
+        }
         optionsList.OpenOptions(slot);
+    }
+
+    public void SlotSelected(InventorySlot slot)
+    {
+        if(selectionMode)
+        {
+            if(moving.slotID != slot.slotID)
+            {
+                player.mInventory.MoveItem(moving.slotID, slot.slotID);
+            }
+
+            moving = null;
+            selectionMode = false;
+        }
+        else
+        {
+            OpenOptionsList(slot);
+        }
     }
     
 }

@@ -2,80 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEquipment : MonoBehaviour
+public class PlayerEquipment
 {
     //Do it with dictionary, or with slots
     //We will start with slots so we can see it in inspector
+
+    Dictionary<EquipmentSlot, Equipment> Equipment;
     Player mPlayer;
-    Equipment head;
-    Equipment body;
-    Equipment gloves;
-    Equipment boots;
-    Equipment leftHand;
-    Equipment rightHand;
 
-    public bool Equip(Equipment item)
+    public PlayerEquipment()
     {
-        switch (item.mSlot)
+        Equipment = new Dictionary<EquipmentSlot, Equipment>();
+
+        foreach(EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot)))
         {
-            case EquipmentSlot.Head:
-                head = item;
-                return true;
-            case EquipmentSlot.Body:
-                body = item;
-                return true;
-            case EquipmentSlot.Gloves:
-                gloves = item;
-                return true;
-            case EquipmentSlot.Boots:
-                boots = item;
-                return true;
-            case EquipmentSlot.LeftHand:
-                leftHand = item;
-                return true;
-            case EquipmentSlot.RightHand:
-                rightHand = item;
-                return true;
+            Equipment.Add(slot, null);
         }
+    }
 
-        return false;
-    } 
-
-    public bool EquipArmor(Armor item)
+    public bool EquipItem(Equipment item)
     {
-        switch (item.mSlot)
+        if (Equipment.ContainsKey(item.mSlot))
         {
-            case EquipmentSlot.Head:
-                head = item;
-                return true;
-            case EquipmentSlot.Body:
-                body = item;
-                return true;
-            case EquipmentSlot.Gloves:
-                gloves = item;
-                return true;
-            case EquipmentSlot.Boots:
-                boots = item;
-                return true;
+            if (Equipment[item.mSlot] != null)
+            {
+                Debug.Log("Item in the slot");
+                Equipment[item.mSlot].GetInventorySlot().SetEquipped(false);
+            }
+
+            Equipment[item.mSlot] = item;
+
+            return true;
         }
 
         return false;
     }
 
-    public bool EquipWeapon(Weapon item)
+    public void Unequip(EquipmentSlot slot)
     {
-        switch (item.mSlot)
+        if (Equipment.ContainsKey(slot))
         {
-            case EquipmentSlot.LeftHand:
-                leftHand = item;
-                return true;
-            case EquipmentSlot.RightHand:
-                rightHand = item;
-                return true;
-
+            if (Equipment[slot] != null)
+            {
+                Equipment[slot].GetInventorySlot().SetEquipped(false);
+            }
         }
-
-        return false;
     }
 
 }

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5158736756416829604}
   - component: {fileID: 5158736756416829605}
   - component: {fileID: 5158736756416829606}
-  - component: {fileID: 6594389117259544079}
   - component: {fileID: 4027091950170936776}
   m_Layer: 0
   m_Name: HedgehogBoss
@@ -210,30 +209,11 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mBossState: 0
   bossType: 3
   AttackTimer: 0.5
   projectilePrefabs: []
   bossTrigger: 0
---- !u!114 &6594389117259544079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5158736756416829602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 5158736756416829606}
-  health:
-    currentHealth: 500
-    maxHealth: 500
-    healthbar: {fileID: 0}
-  stats: []
 --- !u!114 &4027091950170936776
 MonoBehaviour:
   m_ObjectHideFlags: 0

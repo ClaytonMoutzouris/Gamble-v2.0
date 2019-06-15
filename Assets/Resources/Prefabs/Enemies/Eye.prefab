@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 212992731995653070}
   - component: {fileID: 114667629719467648}
   - component: {fileID: 95194250073010510}
-  - component: {fileID: 6399982450656871162}
   - component: {fileID: 114404760516863551}
   m_Layer: 0
   m_Name: Eye
@@ -191,7 +190,6 @@ MonoBehaviour:
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
 --- !u!95 &95194250073010510
 Animator:
   serializedVersion: 3
@@ -211,32 +209,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6399982450656871162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956054827893182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 25
-    maxHealth: 25
-    healthbar: {fileID: 0}
-  stats:
-  - type: 0
-    value: 0
-  - type: 1
-    value: 0
-  - type: 2
-    value: 0
-  - type: 3
-    value: 0
 --- !u!114 &114404760516863551
 MonoBehaviour:
   m_ObjectHideFlags: 0

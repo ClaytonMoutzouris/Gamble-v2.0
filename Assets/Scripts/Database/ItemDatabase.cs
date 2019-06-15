@@ -8,13 +8,14 @@ public static class ItemDatabase {
 
     public static bool InitializeDatabase()
     {
-        mItemDatabase = Resources.LoadAll<Item>("Items");
+        mItemDatabase = Resources.LoadAll<Item>("Prototypes/Items");
         return true;
     }
 
     public static Item GetRandomItem()
     {
-        return mItemDatabase[Random.Range(0, mItemDatabase.Length)];
+        Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
+        return item;
     }
 
     

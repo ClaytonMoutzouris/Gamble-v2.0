@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 9507910}
   - component: {fileID: 8258700}
   - component: {fileID: 4989206604878757318}
-  - component: {fileID: 5966099494035067405}
   - component: {fileID: 2314102040400047369}
   m_Layer: 0
   m_Name: Player
@@ -335,7 +334,6 @@ MonoBehaviour:
   mClimbSpeed: 100
   mDoubleJump: 1
   mTimeToExit: 1
-  playerIndex: 0
   mHealthBar: {fileID: 0}
   mCannotClimb: 0
   mInventory:
@@ -365,7 +363,6 @@ MonoBehaviour:
   mWalkSfxTimer: 0
   mCannotGoLeftFrames: 0
   mCannotGoRightFrames: 0
-  mStats: {fileID: 0}
   mAttackManager: {fileID: 4989206604878757318}
 --- !u!95 &9507910
 Animator:
@@ -497,32 +494,6 @@ MonoBehaviour:
   mEntity: {fileID: 0}
   AttackList: []
   meleeAttacks: []
---- !u!114 &5966099494035067405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 11443564}
-  health:
-    currentHealth: 100
-    maxHealth: 100
-    healthbar: {fileID: 0}
-  stats:
-  - type: 0
-    value: 0
-  - type: 0
-    value: 0
-  - type: 0
-    value: 0
-  - type: 0
-    value: 0
 --- !u!114 &2314102040400047369
 MonoBehaviour:
   m_ObjectHideFlags: 0

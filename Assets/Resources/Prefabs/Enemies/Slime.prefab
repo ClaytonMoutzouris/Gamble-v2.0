@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4516062173263090}
   - component: {fileID: 212171719442141220}
   - component: {fileID: 114562500152961564}
-  - component: {fileID: 1613120553129927952}
   - component: {fileID: 5025981402742140755}
   - component: {fileID: 2635856844351988696}
   m_Layer: 0
@@ -191,33 +190,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
---- !u!114 &1613120553129927952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937429433522054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 20
-    maxHealth: 20
-    healthbar: {fileID: 0}
-  stats:
-  - type: 0
-    value: 0
-  - type: 1
-    value: 0
-  - type: 2
-    value: 0
-  - type: 3
-    value: 0
 --- !u!114 &5025981402742140755
 MonoBehaviour:
   m_ObjectHideFlags: 0

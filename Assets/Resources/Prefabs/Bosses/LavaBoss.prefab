@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4341517193014481819}
   - component: {fileID: 5008275162836723558}
   - component: {fileID: 9178708738724330315}
-  - component: {fileID: 1605136653131188733}
   - component: {fileID: 4574250162577053720}
   m_Layer: 0
   m_Name: LavaBoss
@@ -210,7 +209,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mBossState: 0
   bossType: 0
   AttackTimer: 1
@@ -224,32 +222,6 @@ MonoBehaviour:
   KnockedCooldown: 0.2
   mCrashSFX: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
   mEruptSFX: {fileID: 0}
---- !u!114 &1605136653131188733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7590620537515642921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 600
-    maxHealth: 600
-    healthbar: {fileID: 0}
-  stats:
-  - type: 0
-    value: 25
-  - type: 1
-    value: 1
-  - type: 2
-    value: 6
-  - type: 3
-    value: 2
 --- !u!114 &4574250162577053720
 MonoBehaviour:
   m_ObjectHideFlags: 0

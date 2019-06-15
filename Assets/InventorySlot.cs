@@ -31,30 +31,38 @@ public class InventorySlot : MonoBehaviour
 
     public void SetItem(Item i)
     {
-        item = i;
-        if(i != null)
+        if(i == null)
         {
-            mImage.sprite = item.sprite;
-            mImage.color = Color.white;
-        }
-        else
-        {
-            mImage.sprite = null;
-            mImage.color = Color.clear;
+            Debug.LogError("Item is trying to be set as null");
+            return;
         }
 
+        item = i;
+        item.SetInventorySlot(this);
+        mImage.sprite = item.sprite;
+        mImage.color = Color.white;   
 
     }
 
     public void ClearItem()
     {
+        if(item == null)
+        {
+            return;
+        }
+
+
+        item.SetInventorySlot(null);
         item = null;
+        SetEquipped(false);
+
+
         mImage.sprite = null;
         mImage.color = Color.clear;
 
     }
 
-    public bool isEmpty()
+    public bool IsEmpty()
     {
         return item == null;
     }
@@ -78,10 +86,8 @@ public class InventorySlot : MonoBehaviour
 
     public void SlotSelected()
     {
-        if (!isEmpty())
-        {
-            playerInventory.OpenOptionsList(this);
-        }
+        playerInventory.SlotSelected(this);
+
     }
 
 }

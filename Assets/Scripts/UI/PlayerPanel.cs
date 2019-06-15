@@ -8,6 +8,7 @@ public class PlayerPanel : MonoBehaviour
     public int playerIndex;
     public HealthBar healthBar;
     public PlayerInventoryUI inventoryUI;
+    public UIPlayerTab uiPlayerTab;
     public int selectedTabIndex = 0;
     public List<GameObject> tabs;
     public GameObject inputAnchor;

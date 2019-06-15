@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7771034971656551006}
   - component: {fileID: 7771034971656550993}
   - component: {fileID: 7771034971656550992}
-  - component: {fileID: 6916857565718770591}
   - component: {fileID: 5965943136300935937}
   m_Layer: 0
   m_Name: Hedgehog
@@ -210,25 +209,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
---- !u!114 &6916857565718770591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771034971656550995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 50
-    maxHealth: 50
-    healthbar: {fileID: 0}
-  stats: []
 --- !u!114 &5965943136300935937
 MonoBehaviour:
   m_ObjectHideFlags: 0

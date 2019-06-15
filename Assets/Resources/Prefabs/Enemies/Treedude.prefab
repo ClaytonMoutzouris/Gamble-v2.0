@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 75086311158165846}
   - component: {fileID: 75086311158165847}
   - component: {fileID: 75086311158165832}
-  - component: {fileID: 5178419798309597383}
   - component: {fileID: 5720512605603623667}
   m_Layer: 0
   m_Name: Treedude
@@ -210,33 +209,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
---- !u!114 &5178419798309597383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75086311158165844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 0}
-  health:
-    currentHealth: 200
-    maxHealth: 200
-    healthbar: {fileID: 0}
-  stats:
-  - type: 0
-    value: 0
-  - type: 1
-    value: 0
-  - type: 2
-    value: 0
-  - type: 3
-    value: 0
 --- !u!114 &5720512605603623667
 MonoBehaviour:
   m_ObjectHideFlags: 0

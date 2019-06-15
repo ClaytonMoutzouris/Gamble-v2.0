@@ -176,7 +176,9 @@
     <Compile Include="Assets\Scripts\Utility\Enums.cs" />
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
-    <Compile Include="Assets\TestAA.cs" />
+    <Compile Include="Assets\UIPlayerTab.cs" />
+    <Compile Include="Assets\UIStatContainer.cs" />
+    <Compile Include="Assets\UIStatElement.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

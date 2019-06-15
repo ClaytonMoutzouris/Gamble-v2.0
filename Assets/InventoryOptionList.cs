@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum InventoryOption { Use, Equip, Move, Drop, Cancel };
+public enum InventoryOption { Use, Equip, Unequip, Move, Drop, Cancel };
 
 public class InventoryOptionList : MonoBehaviour
 {
@@ -47,6 +47,12 @@ public class InventoryOptionList : MonoBehaviour
         }
 
         List<InventoryOption> validOptions = focusedSlot.item.GetInventoryOptions();
+
+        if(validOptions.Contains(InventoryOption.Equip) && focusedSlot.isEquipped)
+        {
+            validOptions.Remove(InventoryOption.Equip);
+            validOptions.Insert(0, InventoryOption.Unequip);
+        }
 
         if(validOptions.Count == 0)
         {
@@ -109,6 +115,13 @@ public class InventoryOptionList : MonoBehaviour
             case InventoryOption.Equip:
                 playerInventory.player.mInventory.EquipItem(focusedSlot.slotID);
 
+                break;
+            case InventoryOption.Unequip:
+                playerInventory.player.mInventory.UnequipItem(focusedSlot.slotID);
+
+                break;
+            case InventoryOption.Move:
+                playerInventory.MoveItem(focusedSlot.slotID);
                 break;
         }
 

@@ -591,6 +591,10 @@ public class PhysicsBody : CustomCollider2D
 
     public void TryAutoMount(Entity platform)
     {
+        if(!platform.Body.mIsKinematic)
+        {
+            return;
+        }
         
         if (mMountParent == null && !mIsHeavy)
         {

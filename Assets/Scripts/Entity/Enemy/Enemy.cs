@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
 public enum TargetRange { Close, Near, Far, OutOfRange };
-public abstract class Enemy : Entity, IHurtable
+public class Enemy : Entity, IHurtable
 {
     public EnemyState mEnemyState = EnemyState.Idle;
     public EnemyType mEnemyType;
+    public Health mHealth;
     [SerializeField]
     EnemyPrototype prototype;
     //Behaviour
@@ -81,12 +82,6 @@ public abstract class Enemy : Entity, IHurtable
     {
         base.OnDrawGizmos();
 
-        if (mStats != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(Body.mAABB.Center + (Body.mAABB.HalfSizeY + 3) * Vector3.up, new Vector3(30 * (mStats.health.currentHealth / mStats.health.maxHealth), 6, 1));
-        }
-
         if (sight != null)
         {
             Gizmos.color = Color.yellow;
@@ -113,12 +108,8 @@ public abstract class Enemy : Entity, IHurtable
         temp.InitHealthbar(this);
 
         //Stats
-        mStats = GetComponent<Stats>();
-        mStats.health.currentHealth = prototype.health;
-        mStats.health.maxHealth = prototype.health;
-        mStats.health.healthbar = temp;
-        mStats.health.healthbar.SetHealth(mStats.health);
-
+        mStats = new Stats(this);
+        mHealth = new Health(prototype.health, temp);
 
         mAttackManager = GetComponent<AttackManager>();
 
@@ -191,12 +182,12 @@ public abstract class Enemy : Entity, IHurtable
             Hostility = Hostility.Hostile;
         }
 
-        int damage = (int)mStats.health.LoseHP(attack.damage);
+        int damage = (int)mHealth.LoseHP(attack.damage);
         ShowFloatingText(damage, Color.white);
 
-        Debug.Log("Current health: " + mStats.health.currentHealth + " damage");
+        Debug.Log("Current health: " + mHealth.currentHealth + " damage");
 
-        if (mStats.health.currentHealth == 0)
+        if (mHealth.currentHealth == 0)
         {
             Die();
         }

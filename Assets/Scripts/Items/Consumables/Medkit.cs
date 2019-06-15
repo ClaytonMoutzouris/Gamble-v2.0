@@ -8,7 +8,7 @@ public class Medkit : ConsumableItem
 
     public override void Use(Player player, int index)
     {
-        player.mStats.health.GainHP(value);
+        player.mHealth.GainHP(value);
 
         base.Use(player, index);
     }

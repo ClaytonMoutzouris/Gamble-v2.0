@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5819960870173771514}
   - component: {fileID: 5528048934706921316}
   - component: {fileID: 7720131890191558341}
-  - component: {fileID: 7410216992825161529}
   m_Layer: 0
   m_Name: TentacleBoss
   m_TagString: Untagged
@@ -210,7 +209,6 @@ MonoBehaviour:
   hostility: 1
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mBossState: 0
   bossType: 4
   AttackTimer: 4
@@ -236,21 +234,3 @@ MonoBehaviour:
   mEntity: {fileID: 5528048934706921316}
   AttackList: []
   meleeAttacks: []
---- !u!114 &7410216992825161529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7839418320385587885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 5528048934706921316}
-  health:
-    currentHealth: 650
-    maxHealth: 650
-    healthbar: {fileID: 0}
-  stats: []

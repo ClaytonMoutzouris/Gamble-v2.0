@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5945219118214601151}
   - component: {fileID: 8531533195140659690}
   - component: {fileID: 8240416320240172590}
-  - component: {fileID: 1719939396667230332}
   - component: {fileID: 7623523486424285025}
   m_Layer: 0
   m_Name: CatBoss
@@ -210,31 +209,12 @@ MonoBehaviour:
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mBossState: 0
   bossType: 1
   AttackTimer: 4
   projectilePrefabs:
   - {fileID: 22979631120664233, guid: 7c395f1e0aa477f4f9d2af42304614c1, type: 3}
   bossTrigger: 0
---- !u!114 &1719939396667230332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5832449909359105776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 8240416320240172590}
-  health:
-    currentHealth: 550
-    maxHealth: 550
-    healthbar: {fileID: 0}
-  stats: []
 --- !u!114 &7623523486424285025
 MonoBehaviour:
   m_ObjectHideFlags: 0

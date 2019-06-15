@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6495761037271007894}
   - component: {fileID: 3081220742821294056}
   - component: {fileID: 4368314574435726273}
-  - component: {fileID: 3716963431004284409}
   - component: {fileID: 5912700080200280542}
   m_Layer: 0
   m_Name: WurmAlien
@@ -210,27 +209,8 @@ MonoBehaviour:
   hostility: 2
   mAttackManager: {fileID: 0}
   target: {fileID: 0}
-  mStats: {fileID: 0}
   mSlimePrefab: {fileID: 6602547828588852119, guid: 6149206737d36e54ba23ecfbe91c4586,
     type: 3}
---- !u!114 &3716963431004284409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2147949403193954951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf427f12894cae47beb4cafc715573d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mEntity: {fileID: 4368314574435726273}
-  health:
-    currentHealth: 60
-    maxHealth: 60
-    healthbar: {fileID: 0}
-  stats: []
 --- !u!114 &5912700080200280542
 MonoBehaviour:
   m_ObjectHideFlags: 0
