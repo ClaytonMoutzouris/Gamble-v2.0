@@ -95,6 +95,11 @@ public class PlayerInventory
 
     public void EquipItem(int index)
     {
+        if (items[index].GetInventorySlot().isEquipped)
+        {
+            return;
+        }
+
         if(items[index] is Equipment)
         {
             Equipment equippable = (Equipment)items[index];

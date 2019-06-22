@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82102480c650cd04fbed1ec2b128cd15, type: 3}
+  m_Name: Blade
+  m_EditorClassIdentifier: 
+  mName: Blade
+  mValue: 50
+  sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
+  mSlot: 5
+  statBonuses:
+  - type: 0
+    bonusValue: 2
+  - type: 3
+    bonusValue: 2
+  isEquipped: 0
+  attack: {fileID: 11400000, guid: b5b3ba9c757dd4c49becf47bcde626c6, type: 2}

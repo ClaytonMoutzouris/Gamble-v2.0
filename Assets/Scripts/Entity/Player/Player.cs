@@ -111,7 +111,7 @@ public class Player : Entity, IHurtable
         mHealth = new Health(50, mHealthBar);
 
         mInventory = new PlayerInventory(this);
-        mEquipment = new PlayerEquipment();
+        mEquipment = new PlayerEquipment(this);
 
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();

@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80cf0e0539f73a4194ca27cdb105fc0, type: 3}
-  m_Name: LightSaber
+  m_Script: {fileID: 11500000, guid: f23902b556308ef47a67a1f189b401cd, type: 3}
+  m_Name: PlayerBaseRanged
   m_EditorClassIdentifier: 
-  mName: LightSaber
-  mValue: 100
-  sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
-  mSlot: 5
-  mDamage: 20
+  damage: 8
+  duration: 0.1
+  cooldown: 0.1
+  startUpFrames: 0
+  projectile: {fileID: 6027314182755826426, guid: 511adf294ae54774aad02e4c641fc40b,
+    type: 3}

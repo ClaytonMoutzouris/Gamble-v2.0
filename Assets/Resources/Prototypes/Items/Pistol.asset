@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  mName: Pistol
+  mValue: 25
+  sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
+  mSlot: 6
+  statBonuses:
+  - type: 4
+    bonusValue: 5
+  isEquipped: 0
+  attack: {fileID: 11400000, guid: a21493764c16e284480bf70a1055cfd4, type: 2}

@@ -4,10 +4,16 @@ using UnityEngine;
 public class ItemEditor
 {
 
-    [MenuItem("Assets/Create/Items/Weapon")]
-    public static void CreateBaseWeaponAsset()
+    [MenuItem("Assets/Create/Items/Weapon/MeleeWeapon")]
+    public static void CreateBaseMeleeWeaponAsset()
     {
-        ScriptableObjectUtility.CreateAsset<Weapon>();
+        ScriptableObjectUtility.CreateAsset<MeleeWeapon>();
+    }
+
+    [MenuItem("Assets/Create/Items/Weapon/RangedWeapon")]
+    public static void CreateBaseRangedWeaponAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<RangedWeapon>();
     }
 
     [MenuItem("Assets/Create/Items/Armor")]

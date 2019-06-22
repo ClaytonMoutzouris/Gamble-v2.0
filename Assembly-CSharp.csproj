@@ -124,6 +124,8 @@
     <Compile Include="Assets\Scripts\Items\Quest Items\Key.cs" />
     <Compile Include="Assets\Scripts\Items\QuestItem.cs" />
     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\MeleeWeapon.cs" />
+    <Compile Include="Assets\Scripts\Items\Weapons\RangedWeapon.cs" />
     <Compile Include="Assets\Scripts\Map\EditorMap.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
     <Compile Include="Assets\Scripts\Map\MapData.cs" />

@@ -17,6 +17,6 @@ public class UIStatElement : MonoBehaviour
 
     public void SetStat(Stat stat)
     {
-        statValue.text = stat.value.ToString();
+        statValue.text = stat.GetValue().ToString();
     }
 }

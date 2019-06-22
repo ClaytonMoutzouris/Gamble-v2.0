@@ -7,7 +7,7 @@ public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss,
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
 
 public enum ItemType { };
-public enum EquipmentSlot { Head, Body, Gloves, Boots, LeftHand, RightHand };
+public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Count, Hub };
@@ -28,8 +28,8 @@ public enum TileType
     SmallEnemy,
     LargeEnemy,
     ObstacleBlock1, //suppose a size of 2x2
-    ObstacleBlock2, //suppose size of 2x4
-    ObstacleBlock3, //suppose a size of 3x3
+    FallingRock,
+    Chest,
     Boss,
     Count,
 }
@@ -45,10 +45,11 @@ public enum RoomTile
     Ladder,
     LadderTop,
     SmallEnemy,
+    MediumEnemy,
     LargeEnemy,
-    ObstacleBlock1, //suppose a size of 2x2
-    ObstacleBlock2, //suppose size of 2x4
-    ObstacleBlock3, //suppose a size of 3x3
+    ObstacleBlock1,
+    FallingRock,
+    Chest,
     Count,
 
 }

@@ -33,15 +33,20 @@ public abstract class Equipment : Item
 {
 
     public EquipmentSlot mSlot;
-    public List<Stat> stats;
+    public List<StatBonus> statBonuses;
+    //public Trait trait;
     public bool isEquipped;
 
-    public virtual void Equip(Player player)
+    public virtual void OnEquip(Player player)
     {
-        foreach(Stat stat in stats)
-        {
 
-        }
+        player.mStats.AddBonuses(statBonuses);
+
+    }
+
+    public virtual void OnUnequip(Player player)
+    {
+        player.mStats.RemoveBonuses(statBonuses);
     }
 
     public override List<InventoryOption> GetInventoryOptions()
@@ -54,5 +59,9 @@ public abstract class Equipment : Item
     }
 }
 
+public abstract class Weapon : Equipment
+{
+
+}
 
 

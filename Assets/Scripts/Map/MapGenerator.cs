@@ -378,8 +378,8 @@ public static class MapGenerator
             //PopulateMap(map);
 
             PopulateBoss(map);
-            AddChests(map);
-            AddFallingRock(map);
+            //AddChests(map);
+            //AddFallingRock(map);
 
             //PopulateBoss(map);
         }
@@ -422,24 +422,34 @@ public static class MapGenerator
         {
             for (int y = 0; y < map.sizeY; y++)
             {
-                if(map.GetTile(x, y) == TileType.SmallEnemy)
+                switch(map.GetTile(x, y))
                 {
-                    Debug.Log("SmallEnemy");
-                    enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
-                    map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
-                    map.SetTile(x, y, TileType.Empty);
-                } else if(map.GetTile(x, y) == TileType.LargeEnemy)
-                {
-                    Debug.Log("LargeEnemy");
-                    map.AddEntity(new EnemyData(x, y, EnemyType.Treedude));
-                    map.SetTile(x, y, TileType.Empty);
+                    case TileType.SmallEnemy:
+                        Debug.Log("SmallEnemy");
+                        enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
+                        map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.LargeEnemy:
+                        Debug.Log("LargeEnemy");
+                        map.AddEntity(new EnemyData(x, y, EnemyType.Treedude));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.ObstacleBlock1:
+                        //Debug.Log("Obstacle1");
+                        blockRandom = Random.Range(0, 3); //This is between empty and bounce
+                        map.SetTile(x, y, (TileType)blockRandom);
+                        break;
+                    case TileType.FallingRock:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.FallingRock));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.Chest:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.Chest));
+                        map.SetTile(x, y, TileType.Empty);  
+                        break;
                 }
-                else if (map.GetTile(x, y) == TileType.ObstacleBlock1)
-                {
-                    //Debug.Log("Obstacle1");
-                    blockRandom = Random.Range(0, 3); //This is between empty and bounce
-                    map.SetTile(x, y, (TileType)blockRandom);
-                }
+
             }
         }
 

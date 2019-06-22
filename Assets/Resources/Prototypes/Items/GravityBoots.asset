@@ -16,3 +16,9 @@ MonoBehaviour:
   mValue: 50
   sprite: {fileID: 21300000, guid: 659b669969aba1f4f9a63ebedc90b7af, type: 3}
   mSlot: 3
+  statBonuses:
+  - type: 1
+    bonusValue: 1
+  - type: 3
+    bonusValue: 1
+  isEquipped: 0

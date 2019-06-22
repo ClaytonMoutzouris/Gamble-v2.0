@@ -10,8 +10,9 @@ public class PlayerEquipment
     Dictionary<EquipmentSlot, Equipment> Equipment;
     Player mPlayer;
 
-    public PlayerEquipment()
+    public PlayerEquipment(Player player)
     {
+        mPlayer = player;
         Equipment = new Dictionary<EquipmentSlot, Equipment>();
 
         foreach(EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot)))
@@ -26,11 +27,12 @@ public class PlayerEquipment
         {
             if (Equipment[item.mSlot] != null)
             {
-                Debug.Log("Item in the slot");
+                Equipment[item.mSlot].OnUnequip(mPlayer);
                 Equipment[item.mSlot].GetInventorySlot().SetEquipped(false);
             }
 
             Equipment[item.mSlot] = item;
+            item.OnEquip(mPlayer);
 
             return true;
         }
@@ -44,6 +46,7 @@ public class PlayerEquipment
         {
             if (Equipment[slot] != null)
             {
+                Equipment[slot].OnUnequip(mPlayer);
                 Equipment[slot].GetInventorySlot().SetEquipped(false);
             }
         }
