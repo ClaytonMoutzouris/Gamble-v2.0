@@ -366,7 +366,7 @@ public static class MapGenerator
 
         if(data.mapType == MapType.Hub)
         {
-            //map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
+            map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
             //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
             //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
@@ -425,13 +425,11 @@ public static class MapGenerator
                 switch(map.GetTile(x, y))
                 {
                     case TileType.SmallEnemy:
-                        Debug.Log("SmallEnemy");
                         enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
                         map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.LargeEnemy:
-                        Debug.Log("LargeEnemy");
                         map.AddEntity(new EnemyData(x, y, EnemyType.Treedude));
                         map.SetTile(x, y, TileType.Empty);
                         break;

@@ -12,21 +12,16 @@ public class Chest : Entity {
     public bool mOpen = false;
 
 
-    public override void EntityInit()
+    public Chest() : base()
     {
-        base.EntityInit();
+        mEntityType = EntityType.Object;
 
-        //SetTilePosition(mMap.GetMapTileAtPoint(transform.position));
-        //mPosition = RoundVector(transform.position);
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(8,8), Vector2.zero));
 
-        //mAABB.Center = mPosition;
         Body.mIsKinematic = false;
 
-
-
-
-
     }
+
 
     public override void EntityUpdate()
     {
@@ -42,12 +37,11 @@ public class Chest : Entity {
             return false;
 
         mOpen = true;
-        mAnimator.Play("ChestOpen");
-        
-        ItemObject temp = Instantiate(Resources.Load<ItemObject>("Prefabs/ItemObject")) as ItemObject;
-        temp.SetItem(ItemDatabase.GetRandomItem());
-        temp.EntityInit();
-        temp.Body.mPosition = Body.mPosition +new Vector2(0, MapManager.cTileSize/2);
+        Renderer.SetAnimState("ChestOpen");
+
+        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem());
+        temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
+        //temp.Position = Body.mPosition +new Vector2(0, MapManager.cTileSize/2);
         //temp.mOldSpeed.y = Constants.cJumpSpeed;
         //temp.mSpeed.y = Constants.cJumpSpeed*10;
 

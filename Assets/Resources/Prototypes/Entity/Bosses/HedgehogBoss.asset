@@ -9,15 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e3d8544320e8fe4187c3231ef5b21bc, type: 3}
   m_Name: HedgehogBoss
   m_EditorClassIdentifier: 
-  enemyType: 6
+  entityType: 6
   mName: HedgehogBoss
+  bodySize: {x: 28, y: 32}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: b8ee25db38c4cc04e8704203ac1ed861, type: 2}
+  enemyType: 6
   movementSpeed: 70
   sightRange: 100
   hostility: 2
-  bodySize: {x: 28, y: 32}
   health: 500
-  attacks:
+  rangedAttacks: []
+  meleeAttacks:
   - {fileID: 11400000, guid: d87e317ffefd7214895ce80722e1e0c9, type: 2}
+  bossType: 3

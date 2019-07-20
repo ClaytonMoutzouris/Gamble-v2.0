@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class Health
 {
     public float currentHealth;
@@ -17,6 +16,7 @@ public class Health
         healthbar = bar;
         if(healthbar != null)
         {
+            Debug.Log("Setting health to " + currentHealth);
             healthbar.SetHealth(this);
         }
     }

@@ -8,4 +8,10 @@ public class EnemyPrototypeEditor
     {
         ScriptableObjectUtility.CreateAsset<EnemyPrototype>();
     }
+
+    [MenuItem("Assets/Create/Boss Prototype")]
+    public static void CreateBossPrototypeAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<BossPrototype>();
+    }
 }

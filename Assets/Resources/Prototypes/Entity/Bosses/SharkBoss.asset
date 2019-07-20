@@ -9,15 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e3d8544320e8fe4187c3231ef5b21bc, type: 3}
   m_Name: SharkBoss
   m_EditorClassIdentifier: 
-  enemyType: 6
+  entityType: 6
   mName: SharkBoss
+  bodySize: {x: 32, y: 64}
+  CollidesWith: 
+  sprite: {fileID: 21300000, guid: 7b8085cebc3451c46a66ff2136146b71, type: 3}
+  animationController: {fileID: 0}
+  enemyType: 6
   movementSpeed: 0
   sightRange: 100
   hostility: 2
-  bodySize: {x: 32, y: 64}
   health: 500
-  attacks:
+  rangedAttacks:
   - {fileID: 11400000, guid: e9e8e01ee9f50114b963e37b79c5d596, type: 2}
+  meleeAttacks: []
+  bossType: 2

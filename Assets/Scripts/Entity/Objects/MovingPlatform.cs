@@ -13,10 +13,8 @@ public class MovingPlatform : Entity
 
     PlatformAxis axis;
 
-    public override void EntityInit()
+    public MovingPlatform() : base()
     {
-        base.EntityInit();
-
         mWait = false;
 
         Body.mIsKinematic = true;
@@ -31,11 +29,8 @@ public class MovingPlatform : Entity
             axis = PlatformAxis.Horizontal;
 
         }
-
-
-
-
     }
+
     public void VerticalPlatform()
     {
         if (Body.mPS.pushesBottomTile)

@@ -12,25 +12,20 @@ public class FallingRock : Entity
     [HideInInspector]
     public int sizeDown = 0;
 
-    public override void OnDrawGizmos()
+    public FallingRock() :base()
     {
-        base.OnDrawGizmos();
 
-        Gizmos.color = Color.yellow;
-        if(trigger != null)
-        Gizmos.DrawCube(trigger.mAABB.Center, trigger.mAABB.HalfSize * 2);
-    }
-
-    public override void EntityInit()
-    {
-        base.EntityInit();
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(15, 15), new Vector2(0, 15)));
 
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
-        
 
+        mCollidesWith.Add(EntityType.Player);
+        mCollidesWith.Add(EntityType.Enemy);
+        mCollidesWith.Add(EntityType.Obstacle);
+        mCollidesWith.Add(EntityType.Platform);
         /*
         
         */
@@ -40,16 +35,33 @@ public class FallingRock : Entity
         isTriggered = false;
     }
 
+    public override void Spawn(Vector2 spawnPoint)
+    {
+        base.Spawn(spawnPoint);
+
+        Renderer.SetSprite(Resources.Load<Sprite>("Sprites/FallingRock") as Sprite);
+        //Vector2i tilePos = mMap.GetMapTileAtPoint(pos);
+        sizeDown = Map.CheckEmptySpacesBelow(Map.GetMapTileAtPoint(spawnPoint));
+        if (sizeDown == 0)
+            mToRemove = true;
+        trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0, -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2))));
+        trigger.UpdatePosition();
+        if (sizeDown <= 0)
+        {
+            isTriggered = true;
+        }
+    }
+
     public void InitPosition(Vector2i pos)
     {
         //Vector2i tilePos = mMap.GetMapTileAtPoint(pos);
         Body.SetTilePosition(pos);
         tilePos = pos;
 
-        sizeDown = mMap.CheckEmptySpacesBelow(pos);
+        sizeDown = Map.CheckEmptySpacesBelow(pos);
         if (sizeDown == 0)
             mToRemove = true;
-        trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0,  -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2)), new Vector3(1, 1, 1)));
+        trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0, -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2))));
         trigger.UpdatePosition();
         if(sizeDown <= 0)
         {
@@ -86,7 +98,7 @@ public class FallingRock : Entity
 
         base.EntityUpdate();
 
-        if (Body.mIsKinematic && body.mPS.pushedBottom)
+        if (Body.mIsKinematic && Body.mPS.pushedBottom)
         {
             Body.mIsKinematic = false;
 

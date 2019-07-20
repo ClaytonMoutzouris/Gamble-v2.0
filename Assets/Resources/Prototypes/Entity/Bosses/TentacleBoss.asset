@@ -9,15 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e3d8544320e8fe4187c3231ef5b21bc, type: 3}
   m_Name: TentacleBoss
   m_EditorClassIdentifier: 
-  enemyType: 6
+  entityType: 6
   mName: TentacleBoss
-  movementSpeed: 18
-  sightRange: 100
-  hostility: 2
   bodySize: {x: 28, y: 28}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 5a7a72c8f6ee23b4a868e2e4d74e9b98, type: 2}
+  enemyType: 6
+  movementSpeed: 18
+  sightRange: 50
+  hostility: 2
   health: 500
-  attacks:
+  rangedAttacks:
   - {fileID: 11400000, guid: 445e4d0aa51bc6341815dd7140e0b8f6, type: 2}
+  meleeAttacks: []
+  bossType: 4

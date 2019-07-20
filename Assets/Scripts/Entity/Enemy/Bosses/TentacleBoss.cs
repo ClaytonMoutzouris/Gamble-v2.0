@@ -16,20 +16,17 @@ public class TentacleBoss : BossEnemy
 
 
 
-    public override void EntityInit()
+    public TentacleBoss(BossPrototype proto) : base(proto)
     {
-        base.EntityInit();
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
-        EnemyInit();
 
     }
 
     public override void EntityUpdate()
     {
 
-        EnemyUpdate();
         base.EntityUpdate();
 
         mSummonTimer += Time.deltaTime;
@@ -57,32 +54,32 @@ public class TentacleBoss : BossEnemy
 
                 if (Target != null)
                 {
-                    Vector2 dir = ((Vector2)Target.Position - Body.mPosition).normalized;
+                    Vector2 dir = ((Vector2)Target.Position - Position).normalized;
 
-                    if (!mAttackManager.AttackList[0].onCooldown)
+                    if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
-                        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                        RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir);
                     }
 
-                    body.mSpeed = dir * mMovingSpeed;
+                    Body.mSpeed = dir * mMovingSpeed;
 
                 }
                 else
                 {
 
-                    if (body.mPS.pushedLeftTile)
+                    if (Body.mPS.pushedLeftTile)
                     {
 
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
 
                     }
-                    else if (body.mPS.pushedRightTile)
+                    else if (Body.mPS.pushedRightTile)
                     {
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
 
-                    body.mSpeed.x = mMovingSpeed;
+                    Body.mSpeed.x = mMovingSpeed;
 
                 }
 
@@ -95,17 +92,17 @@ public class TentacleBoss : BossEnemy
                 {
                     //Replace this with pathfinding to the target
 
-                    if (!mAttackManager.AttackList[0].onCooldown)
+                    if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
-                        Vector2 dir = ((Vector2)Target.Position - Body.mPosition).normalized;
-                        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                        Vector2 dir = ((Vector2)Target.Position - Position).normalized;
+                        RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir);
                     }
 
 
-                    if (Target.Position.x > body.mPosition.x)
+                    if (Target.Position.x > Position.x)
                     {
-                        if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
+                        if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
                         {
                             EnemyBehaviour.Jump(this, 460);
                         }
@@ -113,7 +110,7 @@ public class TentacleBoss : BossEnemy
                     }
                     else
                     {
-                        if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
+                        if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
                         {
                             EnemyBehaviour.Jump(this, 460);
                         }
@@ -125,13 +122,13 @@ public class TentacleBoss : BossEnemy
                 break;
         }
 
-        if (body.mSpeed.x > 0)
+        if (Body.mSpeed.x > 0)
         {
-            body.mAABB.ScaleX = 1;
+            Body.mAABB.ScaleX = 1;
         }
         else
         {
-            body.mAABB.ScaleX = -1;
+            Body.mAABB.ScaleX = -1;
 
         }
 

@@ -7,25 +7,18 @@ public class Eye : Enemy
 
     
 
-    public override void EntityInit()
-    {
-        base.EntityInit();
-
+    public Eye(EnemyPrototype proto) : base(proto)
+    { 
 
         Body.mIsKinematic = false;
         Body.mIgnoresGravity = true;
         Body.mIgnoresOneWay = true;
 
 
-        EnemyInit();
-        StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
-
-
     }
 
     public override void EntityUpdate()
     {
-        EnemyUpdate();
         //This is just a test, probably dont need to do it this way
         base.EntityUpdate();
 
@@ -43,56 +36,56 @@ public class Eye : Enemy
 
                 if (Target != null)
                 {
-                    mAnimator.Play("Eye_Fly");
+                    Renderer.SetAnimState("Eye_Fly");
 
                     //Replace this with pathfinding to the target
-                    Vector2 dir = (Target.Body.mAABB.Center - (body.mAABB.Center)).normalized;
+                    Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center)).normalized;
 
-                    if (!mAttackManager.AttackList[0].onCooldown)
+                    if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
-                        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                        RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir);
                     }
 
-                    if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+                    if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
                     {
                         if(Target.Position.y < Position.y)
                         {
-                            body.mSpeed.y = -mMovingSpeed;
+                            Body.mSpeed.y = -mMovingSpeed;
                         } else
                         {
-                            body.mSpeed.y = mMovingSpeed;
+                            Body.mSpeed.y = mMovingSpeed;
                         }
-                    } else if (body.mPS.pushesBottomTile || body.mPS.pushesTopTile)
+                    } else if (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile)
                     {
                         if (Target.Position.x < Position.x)
                         {
-                            body.mSpeed.x = -mMovingSpeed;
+                            Body.mSpeed.x = -mMovingSpeed;
                         }
                         else
                         {
-                            body.mSpeed.x = mMovingSpeed;
+                            Body.mSpeed.x = mMovingSpeed;
                         }
                     } else
                     {
-                        body.mSpeed = ((Vector2)Target.Position - body.mPosition).normalized * mMovingSpeed;
+                        Body.mSpeed = ((Vector2)Target.Position - Position).normalized * mMovingSpeed;
                     }
 
                 }
                 else
                 {
-                    if (!body.mPS.pushesTop)
+                    if (!Body.mPS.pushesTop)
                     {
-                        mAnimator.Play("Eye_Fly");
-                        body.mSpeed.y = mMovingSpeed;
+                        Renderer.SetAnimState("Eye_Fly");
+                        Body.mSpeed.y = mMovingSpeed;
                     }
                     else
                     {
-                        mAnimator.Play("Eye_Sleep");
-                        body.mSpeed.y = 0;
+                        Renderer.SetAnimState("Eye_Sleep");
+                        Body.mSpeed.y = 0;
                     }
 
-                    body.mSpeed.x = 0;
+                    Body.mSpeed.x = 0;
 
 
                 }

@@ -5,40 +5,50 @@ using UnityEngine;
 public static class EnemyDatabase
 {
 
-    static Dictionary<EnemyType, Enemy> mEnemyDatabase;
-    static Dictionary<BossType, BossEnemy> mBossDatabase;
+    static List<EnemyPrototype> mEnemyDatabase;
 
+    static private bool isDatabaseLoaded = false;
 
-    public static bool InitializeDatabase()
+    static public void LoadDatabase()
     {
-        mEnemyDatabase = new Dictionary<EnemyType, Enemy>();
-        foreach (Enemy obj in Resources.LoadAll<Enemy>("Prefabs/Enemies"))
+        if (isDatabaseLoaded) return;
+        isDatabaseLoaded = true;
+        LoadDatabaseForce();
+    }
+
+
+    public static void LoadDatabaseForce()
+    {
+        ValidateDatabase();
+        EnemyPrototype[] resources = Resources.LoadAll<EnemyPrototype>(@"Prototypes/Entity/Enemies"); // Load all items from the Resources/Items folder
+        foreach (EnemyPrototype enemy in resources)
         {
-            mEnemyDatabase.Add(obj.mEnemyType, obj);
+            if (!mEnemyDatabase.Contains(enemy)) // If list doesn't contain item then add it 
+            {
+                mEnemyDatabase.Add(enemy);
+            }
         }
+    }
 
-        mBossDatabase = new Dictionary<BossType, BossEnemy>();
-        foreach (BossEnemy obj in Resources.LoadAll<BossEnemy>("Prefabs/Bosses"))
+    static private void ValidateDatabase() // Is list null and/or loaded?
+    {
+        if (mEnemyDatabase == null) mEnemyDatabase = new List<EnemyPrototype>(); // If list is null, create list
+        if (!isDatabaseLoaded) LoadDatabase(); // If database is not loaded, load database
+    }
+
+    public static EnemyPrototype GetEnemyPrototype(EnemyType id)
+    {
+        ValidateDatabase();
+
+        foreach (EnemyPrototype enemy in mEnemyDatabase)
         {
-            mBossDatabase.Add(obj.bossType, obj);
+            if (enemy.enemyType == id)
+            {
+                return ScriptableObject.Instantiate(enemy) as EnemyPrototype;
+            }
         }
-
-        return true;
-    }
-
-    public static Enemy GetEnemyPrefab(EnemyType id)
-    {
-
-        return mEnemyDatabase[id];
+        return null;
 
     }
-
-    public static BossEnemy GetBossPrefab(BossType id)
-    {
-
-        return mBossDatabase[id];
-
-    }
-
 
 }

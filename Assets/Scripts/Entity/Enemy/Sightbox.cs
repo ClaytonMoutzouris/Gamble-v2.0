@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class Sightbox : CustomCollider2D
 {
     public List<Entity> mEntitiesInSight;

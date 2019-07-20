@@ -23,7 +23,6 @@ public class InventoryNode : MonoBehaviour
         item = i;
 
 
-        Debug.Log("I.sprite " + i.sprite);
 
         mImage.sprite = item.sprite;
     }

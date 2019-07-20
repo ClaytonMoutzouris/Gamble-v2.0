@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class RangedAttackPrototype : AttackPrototype
 {
-    public Projectile projectile;
+    public ProjectilePrototype projectile;
 }

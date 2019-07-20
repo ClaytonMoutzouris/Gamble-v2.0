@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //A hitbox shouldnt know what it does when its hitting something, just that it hit something
-[System.Serializable]
 public class Hitbox : CustomCollider2D
 {
 
     public List<IHurtable> mCollisions;
-    public List<IHurtable> mDealthWith;
+    public List<IHurtable> mDealtWith;
 
     public int Collisions
     {
@@ -20,7 +19,7 @@ public class Hitbox : CustomCollider2D
     public Hitbox(Entity entity, CustomAABB aABB) : base(entity, aABB)
     {
         mCollisions = new List<IHurtable>();
-        mDealthWith = new List<IHurtable>();
+        mDealtWith = new List<IHurtable>();
     }
 
 }

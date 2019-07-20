@@ -9,8 +9,6 @@ public class GameCamera : MonoBehaviour
     /// A reference to the the player.
     /// </summary>
 
-    public List<Transform> targets;
-
     /// <summary>
     /// The position.
     /// </summary>
@@ -77,12 +75,12 @@ public class GameCamera : MonoBehaviour
         float minY = mMap.mHeight * MapManager.cTileSize;
         float maxY = 0;
 
-        for(int i = 0; i < 4; i++)
+        foreach(Player player in LevelManager.instance.players)
         {
-            if (LevelManager.instance.players[i] == null)
+            if (player == null)
                 continue;
 
-            Vector3 position = LevelManager.instance.players[i].transform.position;
+            Vector3 position = player.Position;
 
             minX = Mathf.Min(minX, position.x);
             minY = Mathf.Min(minY, position.y);

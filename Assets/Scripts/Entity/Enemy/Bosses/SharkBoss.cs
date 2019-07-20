@@ -12,10 +12,9 @@ public class SharkBoss : BossEnemy
 
 
 
-    public override void EntityInit()
+    public SharkBoss(BossPrototype proto) : base(proto)
     {
-        base.EntityInit();
-        base.EnemyInit();
+
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
 
@@ -42,11 +41,11 @@ public class SharkBoss : BossEnemy
                 if (Target != null)
                 {
                     //Replace this with pathfinding to the target
-                    Vector2 dir = (Target.Body.mAABB.Center - (body.mAABB.Center + attackAnchor)).normalized;
+                    Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center + attackAnchor)).normalized;
 
-                    if (!mAttackManager.AttackList[0].onCooldown)
+                    if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
-                        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                        RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir);
                     }
 
@@ -54,11 +53,11 @@ public class SharkBoss : BossEnemy
 
                     if (dir.x < 0)
                     {
-                        body.mAABB.ScaleX = 1;
+                        Body.mAABB.ScaleX = 1;
                     }
                     else
                     {
-                        body.mAABB.ScaleX = -1;
+                        Body.mAABB.ScaleX = -1;
 
                     }
 
@@ -70,7 +69,7 @@ public class SharkBoss : BossEnemy
 
                 }
 
-                body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = mMovingSpeed;
 
                 break;
             }
@@ -84,17 +83,5 @@ public class SharkBoss : BossEnemy
         //make sure the hitbox follows the object
     }
 
-
-
-    public override void Shoot(Projectile prefab, Attack attack, Vector2 Dir)
-    {
-        Dir = Dir + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized*.3f;
-        Projectile temp = Instantiate(prefab, body.mAABB.Center + attackAnchor, Quaternion.identity);
-        temp.EntityInit();
-        temp.Attack = attack;
-        temp.Owner = this;
-        temp.SetInitialDirection(Dir);
-
-    }
 
 }

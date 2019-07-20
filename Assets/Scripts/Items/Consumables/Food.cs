@@ -8,7 +8,7 @@ public class Food : ConsumableItem
 
     public override void Use(Player player, int index)
     {
-        player.mHealth.GainHP(value);
+        player.Health.GainHP(value);
 
         base.Use(player, index);
     }

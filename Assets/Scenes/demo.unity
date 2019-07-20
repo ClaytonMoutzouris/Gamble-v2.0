@@ -4557,15 +4557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameMode: 0
   gameCamera: {fileID: 1799959646}
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   levelIndex: 0
   mMap: {fileID: 2106156355}
-  mPlayerPrefab: {fileID: 11443564, guid: d1464cb122959e44080dd376f21d6734, type: 3}
-  mSlimePrefab: {fileID: 0}
   mEntities: []
   mMouseSprite: {fileID: 0}
   mMapChangeFlag: 0
@@ -11698,7 +11691,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f261dafe1387f1459e4652c02b89d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
   mMap: {fileID: 2106156355}
   mZoomSpeed: 5
   mMinOrthographicSize: 120

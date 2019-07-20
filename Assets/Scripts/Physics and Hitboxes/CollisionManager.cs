@@ -202,8 +202,8 @@ public static class CollisionManager {
         if (obj1.mAABB.OverlapsSigned(obj2.mAABB, out overlapWidth, out overlapHeight) && !obj1.HasCollisionDataFor(obj2))
         {
 
-            obj1.mCollisions.Add(new CollisionData(obj2, new Vector2(overlapWidth, overlapHeight), obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mPosition, obj2.mEntity.Body.mPosition));
-            obj2.mCollisions.Add(new CollisionData(obj1, -new Vector2(overlapWidth, overlapHeight), obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mPosition, obj1.mEntity.Body.mPosition));
+            obj1.mCollisions.Add(new CollisionData(obj2, new Vector2(overlapWidth, overlapHeight), obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Position, obj2.mEntity.Position));
+            obj2.mCollisions.Add(new CollisionData(obj1, -new Vector2(overlapWidth, overlapHeight), obj2.mEntity.Body.mSpeed, obj1.mEntity.Body.mSpeed, obj2.mEntity.Body.mOldPosition, obj1.mEntity.Body.mOldPosition, obj2.mEntity.Position, obj1.mEntity.Position));
             //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
             //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
         }

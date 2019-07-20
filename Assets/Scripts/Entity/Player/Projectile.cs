@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class Projectile : Entity, IProjectile {
 
-    public bool mPierce = false;
-    public bool IgnoreGravity = true;
-    public bool isAngled = false;
-    //public Vector2 direction = Vector2.zero;
-    //Should be a constant
-    [HideInInspector]
-    public float mMaxTime = 10;
-    [HideInInspector]
-    public float mTimeAlive = 0;
-    [HideInInspector]
     Hitbox mHitbox;
-    public AudioClip sfx;
-
+    ProjectilePrototype prototype;
+    Vector2 direction;
+    public float mMaxTime = 10;
+    public float mTimeAlive = 0;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
     private Entity owner;
@@ -49,55 +41,88 @@ public class Projectile : Entity, IProjectile {
         }
     }
 
-    public override void EntityInit()
+    public Projectile(ProjectilePrototype proto, Vector2 direction) : base()
     {
-        base.EntityInit();
+        prototype = proto;
+        mEntityType = EntityType.Projectile;
+        mHitbox = new Hitbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
+        //mHitbox.mState = ColliderState.Closed;
+        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
+        //Body.mState = ColliderState.Closed;
 
-        mHitbox = new Hitbox(this, new CustomAABB(transform.position, BodySize, new Vector2(0, BodySize.y), new Vector3(1, 1, 1)));
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
-        body.mIgnoresGravity = IgnoreGravity;
-        body.mIgnoresOneWay = true;
+        Body.mIgnoresGravity = prototype.ignoreGravity;
+        Body.mIgnoresOneWay = true;
 
         if (SoundManager.instance != null)
         {
-            SoundManager.instance.PlaySingle(sfx);
+            SoundManager.instance.PlaySingle(prototype.sfx);
         }
+
+        attack = new Attack(10);
+        mMovingSpeed = prototype.speed;
+        this.direction = direction;
         //AudioSource.PlayClipAtPoint(sfx, Body.mPosition);
     }
 
-    public void SetInitialDirection(Vector3 direction)
+    public void SetInitialDirection()
     {
-        Body.mSpeed = mMovingSpeed * direction;
-        if (isAngled)
+        Body.mSpeed = mMovingSpeed*direction;
+
+        if (prototype.angled)
         {
             if(direction.y > 0)
             {
-                transform.Rotate(0, 0, Vector2.Angle(Vector2.right, direction));
+                Renderer.transform.Rotate(0, 0, Vector2.Angle(Vector2.right, direction));
             }
             else
             {
-                transform.Rotate(0, 0, -Vector2.Angle(Vector2.right, direction));
+                Renderer.transform.Rotate(0, 0, -Vector2.Angle(Vector2.right, direction));
             }
         }
+    }
+
+    public override void Spawn(Vector2 spawnPoint)
+    {
+        base.Spawn(spawnPoint);
+
+        if (prototype.animationController != null)
+        {
+            Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+        }
+        SetInitialDirection();
+        //mHitbox.mState = ColliderState.Open;
+
     }
 
     public override void EntityUpdate()
     {
+
         foreach (IHurtable hit in mHitbox.mCollisions)
         {
-            if (!mHitbox.mDealthWith.Contains(hit))
+            Debug.Log("Something in the collisions");
+            if (!mHitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(Attack);
-                if (!mPierce)
+                if (!prototype.pierce)
                 {
                     mToRemove = true;
                     return;
                 }
-                mHitbox.mDealthWith.Add(hit);
+                mHitbox.mDealtWith.Add(hit);
             }
 
         }
+
+
+
+        mTimeAlive += Time.deltaTime;
+
+        //Debug.Log("Pushes Bottom: " + Body.mPS.pushesBottomTile);
+        //Debug.Log("Pushes Top: " + Body.mPS.pushesTopTile);
+        //Debug.Log("Pushes Left: " + Body.mPS.pushesLeftTile);
+        //Debug.Log("Pushes Right: " + Body.mPS.pushesRightTile);
 
         if (mTimeAlive >= mMaxTime || Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
         {
@@ -105,14 +130,15 @@ public class Projectile : Entity, IProjectile {
             return;
         }
 
-        mTimeAlive += Time.deltaTime;
+        Body.mSpeed = mMovingSpeed * direction;
 
-        //Body.mSpeed = mMovingSpeed * direction;
-
+        //Calling this pretty much just updates the body
+        //Let's seee if we can make it update collision stuff aswell
         base.EntityUpdate();
 
-        CollisionManager.UpdateAreas(mHitbox);
+        // 
 
+        CollisionManager.UpdateAreas(mHitbox);
 
     }
 
@@ -121,7 +147,6 @@ public class Projectile : Entity, IProjectile {
         //Should be in the habit of doing this first, i guess
         base.SecondUpdate();
         mHitbox.UpdatePosition();
-
     }
 
     public override void Die()
@@ -134,7 +159,6 @@ public class Projectile : Entity, IProjectile {
     public override void ActuallyDie()
     {
         CollisionManager.RemoveObjectFromAreas(mHitbox);
-
         base.ActuallyDie();
 
     }

@@ -60,6 +60,7 @@ public static class EnemyBehaviour
 
     public static void MoveHorizontal(Enemy enemy)
     {
+
         enemy.Body.mSpeed.x = enemy.mMovingSpeed * (int)enemy.mDirection;
     }
 
@@ -70,7 +71,7 @@ public static class EnemyBehaviour
 
     public static void MoveAway(Enemy enemy, Entity target)
     {
-        if(enemy.body.mPosition.x > target.body.mPosition.x)
+        if(enemy.Position.x > target.Position.x)
         {
             enemy.Body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
         }
@@ -80,9 +81,16 @@ public static class EnemyBehaviour
         }
     }
 
-    public static void Attack(Enemy enemy, int index)
+    public static void RangedAttack(Enemy enemy, int index)
     {
-        enemy.mAttackManager.AttackList[index].Activate();
+        enemy.mAttackManager.rangedAttacks[index].Activate();
+        enemy.mEnemyState = EnemyState.Attacking;
+        //enemy.Body.mSpeed.x = 0;
+    }
+
+    public static void MeleeAttack(Enemy enemy, int index)
+    {
+        enemy.mAttackManager.meleeAttacks[index].Activate();
         enemy.mEnemyState = EnemyState.Attacking;
         enemy.Body.mSpeed.x = 0;
     }

@@ -37,7 +37,6 @@ public class PlayerInventory
         inventoryUI.AddItem(item, items.Count - 1);
         */
 
-        Debug.Log("Inventory Full");
         return false;
 
     }
@@ -85,12 +84,11 @@ public class PlayerInventory
 
     public void DropItem(int index)
     {
-        ItemObject temp = (ItemObject)LevelManager.instance.AddEntity(Resources.Load<ItemObject>("Prefabs/ItemObject"));
-        temp.SetItem(items[index]);
+        ItemObject temp = new ItemObject(items[index]);
+        temp.Spawn(mPlayer.Position + new Vector2(0, MapManager.cTileSize / 2));
         items[index] = null;
         inventoryUI.RemoveItem(index);
-        temp.EntityInit();
-        temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);
+        //temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);
     }
 
     public void EquipItem(int index)
@@ -103,7 +101,7 @@ public class PlayerInventory
         if(items[index] is Equipment)
         {
             Equipment equippable = (Equipment)items[index];
-            if (mPlayer.mEquipment.EquipItem(equippable))
+            if (mPlayer.Equipment.EquipItem(equippable))
             {
                 inventoryUI.EquipItem(index);
             }
@@ -117,7 +115,7 @@ public class PlayerInventory
         if (items[index] is Equipment)
         {
             Equipment equippable = (Equipment)items[index];
-            mPlayer.mEquipment.Unequip(equippable.mSlot);
+            mPlayer.Equipment.Unequip(equippable.mSlot);
         }
     }
 

@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Treedude
   m_EditorClassIdentifier: 
-  enemyType: 4
+  entityType: 1
   mName: Treedude
+  bodySize: {x: 32, y: 64}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: d302a90472ce9be4db2299f7580d9829, type: 2}
+  enemyType: 4
   movementSpeed: 15
   sightRange: 75
   hostility: 1
-  bodySize: {x: 32, y: 64}
   health: 150
-  attacks:
+  rangedAttacks: []
+  meleeAttacks:
   - {fileID: 11400000, guid: d37f45000d37dff43af55df42c1ef112, type: 2}

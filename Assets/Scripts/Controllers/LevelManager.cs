@@ -21,8 +21,6 @@ public class LevelManager : MonoBehaviour
 
     public MapManager mMap;
 
-    public Player mPlayerPrefab;
-    public Transform mSlimePrefab;
     [SerializeField]
     protected List<Entity> mEntities = new List<Entity>();
 
@@ -34,7 +32,7 @@ public class LevelManager : MonoBehaviour
         instance = this;
         CollisionManager.InitializeCollisionManager();
         ItemDatabase.InitializeDatabase();
-        EnemyDatabase.InitializeDatabase();
+        EnemyDatabase.LoadDatabase();
         MapDatabase.InitializeDatabase();
         RoomDatabase.InitializeDatabase();
 
@@ -69,15 +67,13 @@ public class LevelManager : MonoBehaviour
 
     public void AddPlayer(int index, PlayerGamepadInput input)
     {
-        Player newPlayer = Instantiate(mPlayerPrefab) as Player;
-        newPlayer.mHealthBar = PlayerUIPanels.instance.playerPanels[index].healthBar;
-        newPlayer.mPlayerIndex = index;
+        Player newPlayer = new Player(Resources.Load("PrototypeS/Entity/Player/PlayerPrototype") as PlayerPrototype, index);
         newPlayer.SetInput(input);
-        newPlayer.EntityInit();
-        newPlayer.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+        players[index] = newPlayer;
+
+        newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
 
         //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
-        players[index] = newPlayer;
     }
 
     public void DropPlayer(int index)
@@ -86,11 +82,6 @@ public class LevelManager : MonoBehaviour
         players[index].ActuallyDie();
 
 
-    }
-
-    public Entity AddEntity(Entity obj)
-    {
-        return Instantiate(obj);
     }
 
     public void NewGameMap(MapType type)
@@ -153,7 +144,13 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-
+        foreach(Player player in players)
+        {
+            if(player != null)
+            {
+                player.Input.Update();
+            }
+        }
         //UpdateCursor();
 
     }

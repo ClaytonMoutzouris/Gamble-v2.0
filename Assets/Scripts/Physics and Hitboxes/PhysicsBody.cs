@@ -11,11 +11,9 @@ using System;
 
     //This will serve as both the physical body with which entities will bump into eachother, and also as the bounds when entities are overlapping but do not block eachothers movement
     //Potentially we could split these
-[System.Serializable]
 public class PhysicsBody : CustomCollider2D
 {
     public LevelManager mGame;
-    public MapManager mMap;
     //public Entity mEntity;
 
 
@@ -27,10 +25,6 @@ public class PhysicsBody : CustomCollider2D
     /// </summary>
     public Vector2 mOldPosition;
     //Entity can get this but not set it, maybe we should change that
-    /// <summary>
-    /// The current position.
-    /// </summary>
-    public Vector2 mPosition;
 
 
     //
@@ -79,7 +73,6 @@ public class PhysicsBody : CustomCollider2D
     {
         mCollisions = new List<CollisionData>();
         mGame = LevelManager.instance;
-        mMap = mGame.mMap;
         mEntity = entity;
         mAABB = aABB;
 
@@ -89,11 +82,9 @@ public class PhysicsBody : CustomCollider2D
         //colliderType = ColliderType.Pushbox;
         //mAABB.Scale = Vector2.one;
 
-        mPosition = RoundVector(mEntity.transform.position);
-
         //This should suffice for all physics bodies, maybe we'll come back to this
-        mAABB.Center = mPosition;
-        mAABB.OffsetY = mAABB.HalfSizeY;
+        //mAABB.Center = RoundVector(mEntity.Position);
+        //mAABB.OffsetY = mAABB.HalfSizeY;
 
         //Check to see if we're in editorMode
 
@@ -114,19 +105,20 @@ public class PhysicsBody : CustomCollider2D
         CollidesWithTileBottom(ref position, ref topRight, ref bottomLeft, ref state);
         CollidesWithTileLeft(ref pos, ref tr, ref bl, ref state);
         CollidesWithTileRight(ref pos, ref tr, ref bl, ref state);
+
     }
 
     public bool CollidesWithTileRight(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
     {
-        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x + 0.5f, topRight.y - 0.5f));
-        Vector2i bottomLeftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
+        Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x + 0.5f, topRight.y - 0.5f));
+        Vector2i bottomLeftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
 
         //mPS.rightInOneWay = false;
 
 
         for (int y = bottomLeftTile.y; y <= topRightTile.y; ++y)
         {
-            var tileCollisionType = mMap.GetTile(topRightTile.x, y);
+            var tileCollisionType = mEntity.Map.GetTile(topRightTile.x, y);
 
             switch (tileCollisionType)
             {
@@ -150,13 +142,13 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (Mathf.Abs(mMap.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x ) < Constants.cLadderThreshold)                  
+                    if (Mathf.Abs(mEntity.Map.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x ) < Constants.cLadderThreshold)                  
                         mPS.onLadder = true;
 
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(topRightTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mEntity.Map.GetMapTilePosition(topRightTile.x, y) == mEntity.Map.GetMapTilePosition(mEntity.Map.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -173,14 +165,14 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileLeft(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
     {
-        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
-        Vector2i bottomLeftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x - 0.5f, bottomLeft.y + 0.5f));
+        Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
+        Vector2i bottomLeftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x - 0.5f, bottomLeft.y + 0.5f));
         //mPS.leftInOneWay = false;
 
 
         for (int y = bottomLeftTile.y; y <= topRightTile.y; ++y)
         {
-            var tileCollisionType = mMap.GetTile(bottomLeftTile.x, y);
+            var tileCollisionType = mEntity.Map.GetTile(bottomLeftTile.x, y);
 
 
             switch (tileCollisionType)
@@ -202,12 +194,12 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.LadderTop:
                 case TileType.Ladder:
                     //If the players center is on the ladder tile, we can climb it
-                    if (Mathf.Abs(mMap.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x) < Constants.cLadderThreshold)
+                    if (Mathf.Abs(mEntity.Map.GetMapTilePosition(topRightTile.x, y).x - mAABB.Center.x) < Constants.cLadderThreshold)
                         mPS.onLadder = true;
                     break;
                 case TileType.Door:
                     //If the players center is on the ladder tile, we can climb it
-                    if (mMap.GetMapTilePosition(bottomLeftTile.x, y) == mMap.GetMapTilePosition(mMap.GetMapTileAtPoint(mAABB.Center)))
+                    if (mEntity.Map.GetMapTilePosition(bottomLeftTile.x, y) == mEntity.Map.GetMapTilePosition(mEntity.Map.GetMapTileAtPoint(mAABB.Center)))
                         mPS.onDoor = true;
                     break;
                 case TileType.Bounce:
@@ -223,12 +215,12 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileTop(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
     {
-        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y + 0.5f));
-        Vector2i bottomleftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
+        Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y + 0.5f));
+        Vector2i bottomleftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
 
         for (int x = bottomleftTile.x; x <= topRightTile.x; ++x)
         {
-            var tileCollisionType = mMap.GetTile(x, topRightTile.y);
+            var tileCollisionType = mEntity.Map.GetTile(x, topRightTile.y);
 
             switch (tileCollisionType)
             {
@@ -260,14 +252,14 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileBottom(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
     {
-        Vector2i topRightTile = mMap.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
-        Vector2i bottomleftTile = mMap.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y - 0.5f));
+        Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
+        Vector2i bottomleftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y - 0.5f));
         bool isOneWay;
         bool spiked = false;
 
         for (int x = bottomleftTile.x; x <= topRightTile.x; ++x)
         {
-            var tileCollisionType = mMap.GetTile(x, bottomleftTile.y);
+            var tileCollisionType = mEntity.Map.GetTile(x, bottomleftTile.y);
 
             //Check if we're on a one way platform
             isOneWay = (tileCollisionType == TileType.OneWay || tileCollisionType == TileType.LadderTop);
@@ -293,7 +285,7 @@ public class PhysicsBody : CustomCollider2D
                     break;
                 case TileType.LadderTop:
                 case TileType.OneWay:
-                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize /2;
 
                     if (topTileEdge > bottomLeft.y+0.5f || mSpeed.y > 0)
@@ -308,7 +300,7 @@ public class PhysicsBody : CustomCollider2D
                     return true;
                     //break;
                 case TileType.Spikes:
-                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
                     if (topTileEdge > bottomLeft.y + 0.5f || mSpeed.y > 0)
                     {
@@ -322,7 +314,7 @@ public class PhysicsBody : CustomCollider2D
                     }
                     break;
                 case TileType.Bounce:
-                    tileCenter = mMap.GetMapTilePosition(x, bottomleftTile.y);
+                    tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
                     if (topTileEdge > bottomLeft.y + 0.5f)
                     {
@@ -438,7 +430,7 @@ public class PhysicsBody : CustomCollider2D
             else
                 state.pushesTopTile = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
 
-            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mMap.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
+            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mEntity.Map.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
                 state.tmpIgnoresOneWay = false;
         }
         else
@@ -473,7 +465,7 @@ public class PhysicsBody : CustomCollider2D
                 state.pushesTopTile = CollidesWithTileTop(ref position, ref topRight, ref bottomLeft, ref state);
 
             //if we've fallen farther than the oneway tile threshold, we can again check for one way tiles
-            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mMap.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
+            if (!mIgnoresOneWay && state.tmpIgnoresOneWay && mEntity.Map.GetMapTileYAtPoint(bottomLeft.y - 0.5f) != state.oneWayY)
                 state.tmpIgnoresOneWay = false;
 
 
@@ -494,11 +486,6 @@ public class PhysicsBody : CustomCollider2D
         mPS.pushedRightTile = mPS.pushesRightTile;
         mPS.pushedTopTile = mPS.pushesTopTile;
 
-        mPS.pushesBottomTile = mPS.pushesBottom;
-        mPS.pushesTopTile = mPS.pushesTop;
-        mPS.pushesRightTile = mPS.pushesRight;
-        mPS.pushesLeftTile = mPS.pushesLeft;
-
         mPS.pushesBottomTile = mPS.pushesLeftTile = mPS.pushesRightTile = mPS.pushesTopTile =
         mPS.pushesBottomObject = mPS.pushesLeftObject = mPS.pushesRightObject = mPS.pushesTopObject = false;
 
@@ -513,33 +500,36 @@ public class PhysicsBody : CustomCollider2D
         Vector2 topRight = mAABB.Max();
         Vector2 bottomLeft = mAABB.Min();
 
-
-            CollidesWithTiles(ref mPosition, ref topRight, ref bottomLeft, ref mPS);
-
-
+        CollidesWithTiles(ref mEntity.Position, ref topRight, ref bottomLeft, ref mPS);
 
         mOldSpeed = mSpeed;
+
         //This is the cutoff of updating
         //Lets try applying gravity here
-        if(!mIgnoresGravity && !mPS.pushesBottom)
-        ApplyGravity();
+        if (!mIgnoresGravity && !mPS.pushesBottom)
+            ApplyGravity();
 
         if (mPS.pushesBottomTile)
+        {
             mSpeed.y = Mathf.Max(0.0f, mSpeed.y);
+        }
         if (mPS.pushesTopTile)
+        {
             mSpeed.y = Mathf.Min(0.0f, mSpeed.y);
+        }
         if (mPS.pushesLeftTile)
+        {
             mSpeed.x = Mathf.Max(0.0f, mSpeed.x);
+        }
         if (mPS.pushesRightTile)
+        {
             mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
-
+        }
 
         /* Here is where we should update tile physics changes */
-        HandleTilePhysics();
-
 
         //save the position to the oldPosition vector
-        mOldPosition = mPosition;
+        mOldPosition = mEntity.Position;
 
         mOffset = mSpeed * Time.deltaTime;
 
@@ -548,10 +538,10 @@ public class PhysicsBody : CustomCollider2D
             if (HasCollisionDataFor(mMountParent.Body))
             {
                 //if (mCollisionType == CollisionType.Player)
-                   // Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mPosition + " , " + mMountParent.mOldPosition);
+                   // Debug.Log("Player mounting " + mMountParent.name + " - Offset: " + mMountParent.mEntity.Position + " , " + mMountParent.mOldPosition);
 
                 
-                Vector2 parentOffset = mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
+                Vector2 parentOffset = mMountParent.Body.mEntity.Position - mMountParent.Body.mOldPosition;
 
                 /*
                 if (!mIsKinematic && parentOffset.y >= 0)
@@ -563,7 +553,7 @@ public class PhysicsBody : CustomCollider2D
                 //This is my hacky way of fixing sliding off of a parent if its moving into another object, maybe
                 if((parentOffset.y >= 0 || mMountParent.Body.mIsKinematic) && (parentOffset.x > 0 && !mMountParent.Body.mPS.pushesRight) || (parentOffset.x < 0 && !mMountParent.Body.mPS.pushesLeft))
                 {
-                    mOffset += mMountParent.Body.mPosition - mMountParent.Body.mOldPosition;
+                    mOffset += mMountParent.Body.mEntity.Position - mMountParent.Body.mOldPosition;
                 }
                 else
                 {
@@ -577,14 +567,13 @@ public class PhysicsBody : CustomCollider2D
             }
         }
 
-        mPosition += RoundVector(mOffset + mReminder);
-
-        mAABB.Center = mPosition;
+        mEntity.Position += RoundVector(mOffset + mReminder);
+        mAABB.Center = mEntity.Position;
     }
 
     public void ApplyGravity()
     {
-        mSpeed.y += mMap.GetGravity() * Time.deltaTime;
+        mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
 
         mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
     }
@@ -604,36 +593,16 @@ public class PhysicsBody : CustomCollider2D
         }
     }
 
-    public void HandleTilePhysics()
-    {
-        /*
-        if (mPS.onIce)
-        {
-            //mSpeed.x = mSpeed.x * Time.deltaTime;
-        }
-        else if (mPS.onConveyorLeft)
-        {
-            mSpeed.x += -Constants.cConveyorSpeed;
-        }
-        else if (mPS.onConveyorRight)
-        {
-            mSpeed.x +=  Constants.cConveyorSpeed;
-        }
-
-        mSpeed.x = Mathf.Clamp(mSpeed.x, -Constants.cMaxWalkSpeed, Constants.cMaxWalkSpeed);
-        */
-    }
-
     public void Crush()
     {
         //Kinematic things cant be spiked or crushed
         if (mIsKinematic || mIsHeavy)
             return;
-        //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
+        //Vector2 temp = mEntity.mMap.GetMapTilePosition(mEntity.mMap.mWidth/2 , mEntity.mMap.mHeight / 2 );
         /*
-        mEntity.transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
-        mPosition = mEntity.transform.position;
-        mAABB.Center = mPosition;
+        mEntity.transform.position = mEntity.mMap.GetMapTilePosition(mEntity.mMap.mMapData.startTile);
+        mEntity.Position = mEntity.transform.position;
+        mAABB.Center = mEntity.Position;
         mPS.Reset();
         */
 
@@ -647,9 +616,8 @@ public class PhysicsBody : CustomCollider2D
 
     public void SetTilePosition(Vector2i tile)
     {
-        mEntity.transform.position = mMap.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
-        mPosition = mEntity.transform.position;
-        mAABB.Center = mPosition;
+        mEntity.Position = mEntity.Map.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
+        mAABB.Center = mEntity.Position;
     }
 
     private void UpdatePhysicsResponse()
@@ -683,7 +651,7 @@ public class PhysicsBody : CustomCollider2D
                 continue;
 
             //if (other.mUpdateId < mUpdateId)
-            //    overlap -= other.mPosition - data.pos1;
+            //    overlap -= other.mEntity.Position - data.pos1;
 
             //If there is no overlap in the x axis (kind hard but sure)
             if (overlap.x == 0.0f)
@@ -763,7 +731,9 @@ public class PhysicsBody : CustomCollider2D
                     if (data.other.mEntity.Body.mPS.pushesRight)
                     {
                         offsetX = overlap.x;
-                    } else
+                        mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
+                    }
+                    else
                     {
                         offsetX = overlap.x * speedRatioX;
 
@@ -777,13 +747,14 @@ public class PhysicsBody : CustomCollider2D
                         Crush();
 
                     mPS.pushesRightObject = true;
-                    mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
                 }
                 else
                 {
                     if (data.other.mEntity.Body.mPS.pushesLeft)
                     {
                         offsetX = overlap.x;
+                        mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
+
                     }
                     else
                     {
@@ -797,7 +768,7 @@ public class PhysicsBody : CustomCollider2D
                         Crush();
 
                     mPS.pushesLeftObject = true;
-                    mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
+                    //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
                 }
             }
             else
@@ -829,7 +800,7 @@ public class PhysicsBody : CustomCollider2D
                         Crush();
                     }
                     mPS.pushesTopObject = true;
-                    //mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
+                    mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
@@ -838,7 +809,7 @@ public class PhysicsBody : CustomCollider2D
 
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
-                    //mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                    mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
                 }
             }
         }
@@ -860,15 +831,14 @@ public class PhysicsBody : CustomCollider2D
         //if (mType == ObjectType.Player) 
         //Debug.Log(name + " Offset " + mOffset);
 
-        mPosition -= RoundVector(mOffset + mReminder);
-        mAABB.Center = mPosition;
+        mEntity.Position -= RoundVector(mOffset + mReminder);
+        mAABB.Center = mEntity.Position;
 
         UpdatePhysicsResponse();
 
-
         if (mOffset != Vector2.zero)
         {
-            Move(mOffset, mSpeed, ref mPosition, ref mReminder, this, ref mPS);
+            Move(mOffset, mSpeed, ref mEntity.Position, ref mReminder, this, ref mPS);
         }
 
         mPS.pushesBottom = mPS.pushesBottomTile || mPS.pushesBottomObject;
@@ -877,13 +847,12 @@ public class PhysicsBody : CustomCollider2D
         mPS.pushesTop = mPS.pushesTopTile || mPS.pushesTopObject;
 
 
-
         //update the aabb
-        mAABB.Center = mPosition;
+        mAABB.Center = mEntity.Position;
 
         //apply the changes to the transform
-        mEntity.transform.position = new Vector3(Mathf.Round(mPosition.x), Mathf.Round(mPosition.y), mSpriteDepth);
-        mEntity.transform.localScale = new Vector3(mAABB.ScaleX, mAABB.ScaleY, 1.0f);
+        mEntity.Position = new Vector3(Mathf.Round(mEntity.Position.x), Mathf.Round(mEntity.Position.y), mSpriteDepth);
+        //mEntity.Scale = new Vector3(mAABB.ScaleX, mAABB.ScaleY, 1.0f);
     }
 
  

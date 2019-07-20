@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Wurm
   m_EditorClassIdentifier: 
-  enemyType: 2
+  entityType: 1
   mName: Wurm
+  bodySize: {x: 32, y: 24}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: dc56448cc0c027a44bf463b21b8a0064, type: 2}
+  enemyType: 2
   movementSpeed: 75
   sightRange: 75
   hostility: 2
-  bodySize: {x: 32, y: 24}
   health: 60
-  attacks:
+  rangedAttacks:
   - {fileID: 11400000, guid: a63521d31cf16e34191c8134e0e6456e, type: 2}
+  meleeAttacks: []

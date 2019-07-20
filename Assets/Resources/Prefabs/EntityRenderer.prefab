@@ -1,0 +1,1329 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7839210419364862927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9023472735035817320}
+  - component: {fileID: 6596833890046007077}
+  - component: {fileID: 143003855592091733}
+  - component: {fileID: 65945987243896001}
+  m_Layer: 0
+  m_Name: EntityRenderer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9023472735035817320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839210419364862927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &6596833890046007077
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839210419364862927}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &143003855592091733
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839210419364862927}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &65945987243896001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839210419364862927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac71fa5705c03f249b093392b277c4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity:
+    Name: 
+    mEntityType: 0
+    mCollidesWith: 
+    colorPallete: []
+    mMovingSpeed: 0
+    Position: {x: 0, y: 0}
+    collidesWithMap: 1
+    mDirection: 1
+    mRenderer: {fileID: 0}
+    body:
+      mEntity:
+        Name: 
+        mEntityType: 0
+        mCollidesWith: 
+        colorPallete: []
+        mMovingSpeed: 0
+        Position: {x: 0, y: 0}
+        collidesWithMap: 1
+        mDirection: 1
+        mRenderer: {fileID: 0}
+        body:
+          mEntity:
+            Name: 
+            mEntityType: 0
+            mCollidesWith: 
+            colorPallete: []
+            mMovingSpeed: 0
+            Position: {x: 0, y: 0}
+            collidesWithMap: 1
+            mDirection: 1
+            mRenderer: {fileID: 0}
+            body:
+              mEntity:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 49
+              mAABB:
+                center: {x: 0, y: 0, z: 0}
+                halfSize: {x: 0, y: 0, z: 0}
+                offset: {x: 0, y: 0, z: 0}
+                baseOffset: {x: 0, y: 0, z: 0}
+                baseHalfSize: {x: 0, y: 0, z: 0}
+                scale: {x: 0, y: 0, z: 0}
+                rotation: 0
+                isCircle: 0
+                flipped: 0
+              mState: 0
+              mAreas: []
+              mIdsInAreas: 
+              mGame: {fileID: 0}
+              mMap: {fileID: 0}
+              mOldPosition: {x: 0, y: 0}
+              mPosition: {x: 0, y: 0}
+              mReminder: {x: 0, y: 0}
+              mOffset: {x: 0, y: 0}
+              mSpeed: {x: 0, y: 0}
+              mOldSpeed: {x: 0, y: 0}
+              mPS:
+                pushesRight: 0
+                pushesLeft: 0
+                pushesBottom: 0
+                pushesTop: 0
+                pushedTop: 0
+                pushedBottom: 0
+                pushedRight: 0
+                pushedLeft: 0
+                pushedLeftObject: 0
+                pushedRightObject: 0
+                pushedBottomObject: 0
+                pushedTopObject: 0
+                pushesLeftObject: 0
+                pushesRightObject: 0
+                pushesBottomObject: 0
+                pushesTopObject: 0
+                pushedLeftTile: 0
+                pushedRightTile: 0
+                pushedBottomTile: 0
+                pushedTopTile: 0
+                pushesLeftTile: 0
+                pushesRightTile: 0
+                pushesBottomTile: 0
+                pushesTopTile: 0
+                onOneWay: 0
+                tmpIgnoresOneWay: 0
+                tmpSticksToSlope: 0
+                oneWayY: 0
+                onLadder: 0
+                isClimbing: 0
+                isBounce: 0
+                onDoor: 0
+                isJetting: 0
+                leftTile:
+                  x: 0
+                  y: 0
+                rightTile:
+                  x: 0
+                  y: 0
+                topTile:
+                  x: 0
+                  y: 0
+                bottomTile:
+                  x: 0
+                  y: 0
+              mMountParent:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 50
+              mIgnoresOneWay: 0
+              mOnOneWayPlatform: 0
+              mIsKinematic: 0
+              mIsHeavy: 0
+              mIgnoresGravity: 0
+              mCollisions: []
+              mSpriteDepth: 0
+            mGame: {fileID: 0}
+            mMap: {fileID: 0}
+            mToRemove: 0
+            mUpdateId: 48
+          mAABB:
+            center: {x: 0, y: 0, z: 0}
+            halfSize: {x: 0, y: 0, z: 0}
+            offset: {x: 0, y: 0, z: 0}
+            baseOffset: {x: 0, y: 0, z: 0}
+            baseHalfSize: {x: 0, y: 0, z: 0}
+            scale: {x: 0, y: 0, z: 0}
+            rotation: 0
+            isCircle: 0
+            flipped: 0
+          mState: 0
+          mAreas: []
+          mIdsInAreas: 
+          mGame: {fileID: 0}
+          mMap: {fileID: 0}
+          mOldPosition: {x: 0, y: 0}
+          mPosition: {x: 0, y: 0}
+          mReminder: {x: 0, y: 0}
+          mOffset: {x: 0, y: 0}
+          mSpeed: {x: 0, y: 0}
+          mOldSpeed: {x: 0, y: 0}
+          mPS:
+            pushesRight: 0
+            pushesLeft: 0
+            pushesBottom: 0
+            pushesTop: 0
+            pushedTop: 0
+            pushedBottom: 0
+            pushedRight: 0
+            pushedLeft: 0
+            pushedLeftObject: 0
+            pushedRightObject: 0
+            pushedBottomObject: 0
+            pushedTopObject: 0
+            pushesLeftObject: 0
+            pushesRightObject: 0
+            pushesBottomObject: 0
+            pushesTopObject: 0
+            pushedLeftTile: 0
+            pushedRightTile: 0
+            pushedBottomTile: 0
+            pushedTopTile: 0
+            pushesLeftTile: 0
+            pushesRightTile: 0
+            pushesBottomTile: 0
+            pushesTopTile: 0
+            onOneWay: 0
+            tmpIgnoresOneWay: 0
+            tmpSticksToSlope: 0
+            oneWayY: 0
+            onLadder: 0
+            isClimbing: 0
+            isBounce: 0
+            onDoor: 0
+            isJetting: 0
+            leftTile:
+              x: 0
+              y: 0
+            rightTile:
+              x: 0
+              y: 0
+            topTile:
+              x: 0
+              y: 0
+            bottomTile:
+              x: 0
+              y: 0
+          mMountParent:
+            Name: 
+            mEntityType: 0
+            mCollidesWith: 
+            colorPallete: []
+            mMovingSpeed: 0
+            Position: {x: 0, y: 0}
+            collidesWithMap: 1
+            mDirection: 1
+            mRenderer: {fileID: 0}
+            body:
+              mEntity:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 52
+              mAABB:
+                center: {x: 0, y: 0, z: 0}
+                halfSize: {x: 0, y: 0, z: 0}
+                offset: {x: 0, y: 0, z: 0}
+                baseOffset: {x: 0, y: 0, z: 0}
+                baseHalfSize: {x: 0, y: 0, z: 0}
+                scale: {x: 0, y: 0, z: 0}
+                rotation: 0
+                isCircle: 0
+                flipped: 0
+              mState: 0
+              mAreas: []
+              mIdsInAreas: 
+              mGame: {fileID: 0}
+              mMap: {fileID: 0}
+              mOldPosition: {x: 0, y: 0}
+              mPosition: {x: 0, y: 0}
+              mReminder: {x: 0, y: 0}
+              mOffset: {x: 0, y: 0}
+              mSpeed: {x: 0, y: 0}
+              mOldSpeed: {x: 0, y: 0}
+              mPS:
+                pushesRight: 0
+                pushesLeft: 0
+                pushesBottom: 0
+                pushesTop: 0
+                pushedTop: 0
+                pushedBottom: 0
+                pushedRight: 0
+                pushedLeft: 0
+                pushedLeftObject: 0
+                pushedRightObject: 0
+                pushedBottomObject: 0
+                pushedTopObject: 0
+                pushesLeftObject: 0
+                pushesRightObject: 0
+                pushesBottomObject: 0
+                pushesTopObject: 0
+                pushedLeftTile: 0
+                pushedRightTile: 0
+                pushedBottomTile: 0
+                pushedTopTile: 0
+                pushesLeftTile: 0
+                pushesRightTile: 0
+                pushesBottomTile: 0
+                pushesTopTile: 0
+                onOneWay: 0
+                tmpIgnoresOneWay: 0
+                tmpSticksToSlope: 0
+                oneWayY: 0
+                onLadder: 0
+                isClimbing: 0
+                isBounce: 0
+                onDoor: 0
+                isJetting: 0
+                leftTile:
+                  x: 0
+                  y: 0
+                rightTile:
+                  x: 0
+                  y: 0
+                topTile:
+                  x: 0
+                  y: 0
+                bottomTile:
+                  x: 0
+                  y: 0
+              mMountParent:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 53
+              mIgnoresOneWay: 0
+              mOnOneWayPlatform: 0
+              mIsKinematic: 0
+              mIsHeavy: 0
+              mIgnoresGravity: 0
+              mCollisions: []
+              mSpriteDepth: 0
+            mGame: {fileID: 0}
+            mMap: {fileID: 0}
+            mToRemove: 0
+            mUpdateId: 51
+          mIgnoresOneWay: 0
+          mOnOneWayPlatform: 0
+          mIsKinematic: 0
+          mIsHeavy: 0
+          mIgnoresGravity: 0
+          mCollisions: []
+          mSpriteDepth: 0
+        mGame: {fileID: 0}
+        mMap: {fileID: 0}
+        mToRemove: 0
+        mUpdateId: 47
+      mAABB:
+        center: {x: 0, y: 0, z: 0}
+        halfSize: {x: 0, y: 0, z: 0}
+        offset: {x: 0, y: 0, z: 0}
+        baseOffset: {x: 0, y: 0, z: 0}
+        baseHalfSize: {x: 0, y: 0, z: 0}
+        scale: {x: 0, y: 0, z: 0}
+        rotation: 0
+        isCircle: 0
+        flipped: 0
+      mState: 0
+      mAreas: []
+      mIdsInAreas: 
+      mGame: {fileID: 0}
+      mMap: {fileID: 0}
+      mOldPosition: {x: 0, y: 0}
+      mPosition: {x: 0, y: 0}
+      mReminder: {x: 0, y: 0}
+      mOffset: {x: 0, y: 0}
+      mSpeed: {x: 0, y: 0}
+      mOldSpeed: {x: 0, y: 0}
+      mPS:
+        pushesRight: 0
+        pushesLeft: 0
+        pushesBottom: 0
+        pushesTop: 0
+        pushedTop: 0
+        pushedBottom: 0
+        pushedRight: 0
+        pushedLeft: 0
+        pushedLeftObject: 0
+        pushedRightObject: 0
+        pushedBottomObject: 0
+        pushedTopObject: 0
+        pushesLeftObject: 0
+        pushesRightObject: 0
+        pushesBottomObject: 0
+        pushesTopObject: 0
+        pushedLeftTile: 0
+        pushedRightTile: 0
+        pushedBottomTile: 0
+        pushedTopTile: 0
+        pushesLeftTile: 0
+        pushesRightTile: 0
+        pushesBottomTile: 0
+        pushesTopTile: 0
+        onOneWay: 0
+        tmpIgnoresOneWay: 0
+        tmpSticksToSlope: 0
+        oneWayY: 0
+        onLadder: 0
+        isClimbing: 0
+        isBounce: 0
+        onDoor: 0
+        isJetting: 0
+        leftTile:
+          x: 0
+          y: 0
+        rightTile:
+          x: 0
+          y: 0
+        topTile:
+          x: 0
+          y: 0
+        bottomTile:
+          x: 0
+          y: 0
+      mMountParent:
+        Name: 
+        mEntityType: 0
+        mCollidesWith: 
+        colorPallete: []
+        mMovingSpeed: 0
+        Position: {x: 0, y: 0}
+        collidesWithMap: 1
+        mDirection: 1
+        mRenderer: {fileID: 0}
+        body:
+          mEntity:
+            Name: 
+            mEntityType: 0
+            mCollidesWith: 
+            colorPallete: []
+            mMovingSpeed: 0
+            Position: {x: 0, y: 0}
+            collidesWithMap: 1
+            mDirection: 1
+            mRenderer: {fileID: 0}
+            body:
+              mEntity:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 56
+              mAABB:
+                center: {x: 0, y: 0, z: 0}
+                halfSize: {x: 0, y: 0, z: 0}
+                offset: {x: 0, y: 0, z: 0}
+                baseOffset: {x: 0, y: 0, z: 0}
+                baseHalfSize: {x: 0, y: 0, z: 0}
+                scale: {x: 0, y: 0, z: 0}
+                rotation: 0
+                isCircle: 0
+                flipped: 0
+              mState: 0
+              mAreas: []
+              mIdsInAreas: 
+              mGame: {fileID: 0}
+              mMap: {fileID: 0}
+              mOldPosition: {x: 0, y: 0}
+              mPosition: {x: 0, y: 0}
+              mReminder: {x: 0, y: 0}
+              mOffset: {x: 0, y: 0}
+              mSpeed: {x: 0, y: 0}
+              mOldSpeed: {x: 0, y: 0}
+              mPS:
+                pushesRight: 0
+                pushesLeft: 0
+                pushesBottom: 0
+                pushesTop: 0
+                pushedTop: 0
+                pushedBottom: 0
+                pushedRight: 0
+                pushedLeft: 0
+                pushedLeftObject: 0
+                pushedRightObject: 0
+                pushedBottomObject: 0
+                pushedTopObject: 0
+                pushesLeftObject: 0
+                pushesRightObject: 0
+                pushesBottomObject: 0
+                pushesTopObject: 0
+                pushedLeftTile: 0
+                pushedRightTile: 0
+                pushedBottomTile: 0
+                pushedTopTile: 0
+                pushesLeftTile: 0
+                pushesRightTile: 0
+                pushesBottomTile: 0
+                pushesTopTile: 0
+                onOneWay: 0
+                tmpIgnoresOneWay: 0
+                tmpSticksToSlope: 0
+                oneWayY: 0
+                onLadder: 0
+                isClimbing: 0
+                isBounce: 0
+                onDoor: 0
+                isJetting: 0
+                leftTile:
+                  x: 0
+                  y: 0
+                rightTile:
+                  x: 0
+                  y: 0
+                topTile:
+                  x: 0
+                  y: 0
+                bottomTile:
+                  x: 0
+                  y: 0
+              mMountParent:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 57
+              mIgnoresOneWay: 0
+              mOnOneWayPlatform: 0
+              mIsKinematic: 0
+              mIsHeavy: 0
+              mIgnoresGravity: 0
+              mCollisions: []
+              mSpriteDepth: 0
+            mGame: {fileID: 0}
+            mMap: {fileID: 0}
+            mToRemove: 0
+            mUpdateId: 55
+          mAABB:
+            center: {x: 0, y: 0, z: 0}
+            halfSize: {x: 0, y: 0, z: 0}
+            offset: {x: 0, y: 0, z: 0}
+            baseOffset: {x: 0, y: 0, z: 0}
+            baseHalfSize: {x: 0, y: 0, z: 0}
+            scale: {x: 0, y: 0, z: 0}
+            rotation: 0
+            isCircle: 0
+            flipped: 0
+          mState: 0
+          mAreas: []
+          mIdsInAreas: 
+          mGame: {fileID: 0}
+          mMap: {fileID: 0}
+          mOldPosition: {x: 0, y: 0}
+          mPosition: {x: 0, y: 0}
+          mReminder: {x: 0, y: 0}
+          mOffset: {x: 0, y: 0}
+          mSpeed: {x: 0, y: 0}
+          mOldSpeed: {x: 0, y: 0}
+          mPS:
+            pushesRight: 0
+            pushesLeft: 0
+            pushesBottom: 0
+            pushesTop: 0
+            pushedTop: 0
+            pushedBottom: 0
+            pushedRight: 0
+            pushedLeft: 0
+            pushedLeftObject: 0
+            pushedRightObject: 0
+            pushedBottomObject: 0
+            pushedTopObject: 0
+            pushesLeftObject: 0
+            pushesRightObject: 0
+            pushesBottomObject: 0
+            pushesTopObject: 0
+            pushedLeftTile: 0
+            pushedRightTile: 0
+            pushedBottomTile: 0
+            pushedTopTile: 0
+            pushesLeftTile: 0
+            pushesRightTile: 0
+            pushesBottomTile: 0
+            pushesTopTile: 0
+            onOneWay: 0
+            tmpIgnoresOneWay: 0
+            tmpSticksToSlope: 0
+            oneWayY: 0
+            onLadder: 0
+            isClimbing: 0
+            isBounce: 0
+            onDoor: 0
+            isJetting: 0
+            leftTile:
+              x: 0
+              y: 0
+            rightTile:
+              x: 0
+              y: 0
+            topTile:
+              x: 0
+              y: 0
+            bottomTile:
+              x: 0
+              y: 0
+          mMountParent:
+            Name: 
+            mEntityType: 0
+            mCollidesWith: 
+            colorPallete: []
+            mMovingSpeed: 0
+            Position: {x: 0, y: 0}
+            collidesWithMap: 1
+            mDirection: 1
+            mRenderer: {fileID: 0}
+            body:
+              mEntity:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 59
+              mAABB:
+                center: {x: 0, y: 0, z: 0}
+                halfSize: {x: 0, y: 0, z: 0}
+                offset: {x: 0, y: 0, z: 0}
+                baseOffset: {x: 0, y: 0, z: 0}
+                baseHalfSize: {x: 0, y: 0, z: 0}
+                scale: {x: 0, y: 0, z: 0}
+                rotation: 0
+                isCircle: 0
+                flipped: 0
+              mState: 0
+              mAreas: []
+              mIdsInAreas: 
+              mGame: {fileID: 0}
+              mMap: {fileID: 0}
+              mOldPosition: {x: 0, y: 0}
+              mPosition: {x: 0, y: 0}
+              mReminder: {x: 0, y: 0}
+              mOffset: {x: 0, y: 0}
+              mSpeed: {x: 0, y: 0}
+              mOldSpeed: {x: 0, y: 0}
+              mPS:
+                pushesRight: 0
+                pushesLeft: 0
+                pushesBottom: 0
+                pushesTop: 0
+                pushedTop: 0
+                pushedBottom: 0
+                pushedRight: 0
+                pushedLeft: 0
+                pushedLeftObject: 0
+                pushedRightObject: 0
+                pushedBottomObject: 0
+                pushedTopObject: 0
+                pushesLeftObject: 0
+                pushesRightObject: 0
+                pushesBottomObject: 0
+                pushesTopObject: 0
+                pushedLeftTile: 0
+                pushedRightTile: 0
+                pushedBottomTile: 0
+                pushedTopTile: 0
+                pushesLeftTile: 0
+                pushesRightTile: 0
+                pushesBottomTile: 0
+                pushesTopTile: 0
+                onOneWay: 0
+                tmpIgnoresOneWay: 0
+                tmpSticksToSlope: 0
+                oneWayY: 0
+                onLadder: 0
+                isClimbing: 0
+                isBounce: 0
+                onDoor: 0
+                isJetting: 0
+                leftTile:
+                  x: 0
+                  y: 0
+                rightTile:
+                  x: 0
+                  y: 0
+                topTile:
+                  x: 0
+                  y: 0
+                bottomTile:
+                  x: 0
+                  y: 0
+              mMountParent:
+                Name: 
+                mEntityType: 0
+                mCollidesWith: 
+                colorPallete: []
+                mMovingSpeed: 0
+                Position: {x: 0, y: 0}
+                collidesWithMap: 1
+                mDirection: 1
+                mRenderer: {fileID: 0}
+                body:
+                  mState: 0
+                  mOldPosition: {x: 0, y: 0}
+                  mPosition: {x: 0, y: 0}
+                  mReminder: {x: 0, y: 0}
+                  mOffset: {x: 0, y: 0}
+                  mSpeed: {x: 0, y: 0}
+                  mOldSpeed: {x: 0, y: 0}
+                  mPS:
+                    pushesRight: 0
+                    pushesLeft: 0
+                    pushesBottom: 0
+                    pushesTop: 0
+                    pushedTop: 0
+                    pushedBottom: 0
+                    pushedRight: 0
+                    pushedLeft: 0
+                    pushedLeftObject: 0
+                    pushedRightObject: 0
+                    pushedBottomObject: 0
+                    pushedTopObject: 0
+                    pushesLeftObject: 0
+                    pushesRightObject: 0
+                    pushesBottomObject: 0
+                    pushesTopObject: 0
+                    pushedLeftTile: 0
+                    pushedRightTile: 0
+                    pushedBottomTile: 0
+                    pushedTopTile: 0
+                    pushesLeftTile: 0
+                    pushesRightTile: 0
+                    pushesBottomTile: 0
+                    pushesTopTile: 0
+                    onOneWay: 0
+                    tmpIgnoresOneWay: 0
+                    tmpSticksToSlope: 0
+                    oneWayY: 0
+                    onLadder: 0
+                    isClimbing: 0
+                    isBounce: 0
+                    onDoor: 0
+                    isJetting: 0
+                    leftTile:
+                      x: 0
+                      y: 0
+                    rightTile:
+                      x: 0
+                      y: 0
+                    topTile:
+                      x: 0
+                      y: 0
+                    bottomTile:
+                      x: 0
+                      y: 0
+                  mIgnoresOneWay: 0
+                  mOnOneWayPlatform: 0
+                  mIsKinematic: 0
+                  mIsHeavy: 0
+                  mIgnoresGravity: 0
+                  mSpriteDepth: 0
+                mGame: {fileID: 0}
+                mMap: {fileID: 0}
+                mToRemove: 0
+                mUpdateId: 60
+              mIgnoresOneWay: 0
+              mOnOneWayPlatform: 0
+              mIsKinematic: 0
+              mIsHeavy: 0
+              mIgnoresGravity: 0
+              mCollisions: []
+              mSpriteDepth: 0
+            mGame: {fileID: 0}
+            mMap: {fileID: 0}
+            mToRemove: 0
+            mUpdateId: 58
+          mIgnoresOneWay: 0
+          mOnOneWayPlatform: 0
+          mIsKinematic: 0
+          mIsHeavy: 0
+          mIgnoresGravity: 0
+          mCollisions: []
+          mSpriteDepth: 0
+        mGame: {fileID: 0}
+        mMap: {fileID: 0}
+        mToRemove: 0
+        mUpdateId: 54
+      mIgnoresOneWay: 0
+      mOnOneWayPlatform: 0
+      mIsKinematic: 0
+      mIsHeavy: 0
+      mIgnoresGravity: 0
+      mCollisions: []
+      mSpriteDepth: 0
+    mGame: {fileID: 0}
+    mMap: {fileID: 0}
+    mToRemove: 0
+    mUpdateId: 46

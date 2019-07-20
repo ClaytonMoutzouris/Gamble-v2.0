@@ -26,12 +26,10 @@ public class LavaBoss : BossEnemy
     private float KnockedCoolDownTimer = 0;
 
 
-    public override void EntityInit()
+    public LavaBoss(BossPrototype proto) : base(proto)
     {
-        base.EntityInit();
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
-        EnemyInit();
 
 
     }
@@ -80,7 +78,7 @@ public class LavaBoss : BossEnemy
 
     private void Charge()
     {
-        mAnimator.Play("LavaBossWalk");
+        Renderer.SetAnimState("LavaBossWalk");
         //mAnimator.playbackTime = ;
 
         if (ChargeTimer >= ChargeDuration)
@@ -90,7 +88,7 @@ public class LavaBoss : BossEnemy
             ChargeTimer = 0;
             KnockTimer = 0;
             Knocked = false;
-            mAttackManager.AttackList[1].Deactivate();
+            mAttackManager.meleeAttacks[0].Deactivate();
             return;
         }
 
@@ -99,17 +97,17 @@ public class LavaBoss : BossEnemy
 
         if (!Knocked)
         {
-            mAttackManager.AttackList[1].Activate();
+            mAttackManager.meleeAttacks[0].Activate();
 
             //mMovingSpeed = ChargeSpeed * ChargeDirection;
-            body.mSpeed.x = ChargeSpeed * ChargeDirection;
+            Body.mSpeed.x = ChargeSpeed * ChargeDirection;
             KnockedCoolDownTimer += Time.deltaTime;
-            if (KnockedCoolDownTimer > KnockedCooldown && (body.mPS.pushesLeftTile || body.mPS.pushesRightTile))
+            if (KnockedCoolDownTimer > KnockedCooldown && (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile))
             {
                 SoundManager.instance.PlaySingle(mCrashSFX);
                 ChargeDirection = -1 * ChargeDirection;
                 Knocked = true;
-                mAttackManager.AttackList[1].Deactivate();
+                mAttackManager.meleeAttacks[0].Deactivate();
                 KnockTimer = 0;
                 Body.mAABB.ScaleX *= -1;
 
@@ -129,7 +127,7 @@ public class LavaBoss : BossEnemy
             }
             //Body.mAABB.ScaleX = -1;
             //mMovingSpeed = 0;
-            body.mSpeed.x = 0;
+            Body.mSpeed.x = 0;
         }
         
 
@@ -137,9 +135,9 @@ public class LavaBoss : BossEnemy
 
     private void Erupt()
     {
-        body.mSpeed = Vector2.zero;
+        Body.mSpeed = Vector2.zero;
 
-        mAnimator.Play("LavaBossErupt");
+        Renderer.SetAnimState("LavaBossErupt");
 
         if (EruptTimer >= EruptDuration)
         {
@@ -152,14 +150,14 @@ public class LavaBoss : BossEnemy
             EruptTimer += Time.deltaTime;
         }
 
-        RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+        RangedAttack attack = (RangedAttack)mAttackManager.rangedAttacks[0];
         attack.Activate(new Vector2(UnityEngine.Random.Range(-1.0f, 1.0f), 1));
 
     }
 
     private void Aggrivated()
     {
-        mAnimator.Play("LavaBossWalk");
+        Renderer.SetAnimState("LavaBossWalk");
         //This works amazing!
         //CheckForTargets();
         if(Target == null)
@@ -179,7 +177,7 @@ public class LavaBoss : BossEnemy
             Body.mAABB.ScaleX = 1;
         }
 
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
 
         if (AttackCooldown >= AttackTimer)
         {
@@ -205,7 +203,7 @@ public class LavaBoss : BossEnemy
     protected override void Idle()
     {
         base.Idle();
-        mAnimator.Play("LavaBossIdle");
+        Renderer.SetAnimState("LavaBossIdle");
     }
 
 }

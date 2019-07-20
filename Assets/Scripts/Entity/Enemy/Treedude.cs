@@ -4,28 +4,18 @@ using UnityEngine;
 
 public class Treedude : Enemy
 {
-    public override void EntityInit()
+    public Treedude(EnemyPrototype proto) : base(proto)
     {
 
-        base.EntityInit();
-
-
-
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
         Body.mIsKinematic = false;
         Body.mIsHeavy = true;
-        //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
 
-
-
-        EnemyInit();
-        StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
 
     }
 
     public override void EntityUpdate()
     {
-        EnemyUpdate();
 
        base.EntityUpdate();
 
@@ -47,14 +37,14 @@ public class Treedude : Enemy
 
                     if (EnemyBehaviour.TargetInRange(this, Target, 20))
                     {
-                        mAttackManager.AttackList[0].Activate();
+                        mAttackManager.meleeAttacks[0].Activate();
                     }
                     else
                     {
 
-                        if (Target.Position.x > body.mPosition.x)
+                        if (Target.Position.x > Position.x)
                         {
-                            if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
+                            if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
                             {
                                 EnemyBehaviour.Jump(this, 460);
                             }
@@ -62,7 +52,7 @@ public class Treedude : Enemy
                         }
                         else
                         {
-                            if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
+                            if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
                             {
                                 EnemyBehaviour.Jump(this, 460);
                             }
@@ -73,13 +63,13 @@ public class Treedude : Enemy
                 }
                 else
                 {
-                    if (body.mPS.pushedLeftTile)
+                    if (Body.mPS.pushedLeftTile)
                     {
 
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
 
                     }
-                    else if (body.mPS.pushedRightTile)
+                    else if (Body.mPS.pushedRightTile)
                     {
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
@@ -87,11 +77,11 @@ public class Treedude : Enemy
 
                 }
 
-                body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = mMovingSpeed;
 
                 break;
             case EnemyState.Jumping:
-                if (body.mPS.pushesBottom)
+                if (Body.mPS.pushesBottom)
                 {
                     mEnemyState = EnemyState.Moving;
                     break;
@@ -103,12 +93,12 @@ public class Treedude : Enemy
 
                     if (EnemyBehaviour.TargetInRange(this, Target, 20))
                     {
-                        mAttackManager.AttackList[0].Activate();
+                        mAttackManager.meleeAttacks[0].Activate();
                     }
                     else
                     {
 
-                        if (Target.Position.x > body.mPosition.x)
+                        if (Target.Position.x > Position.x)
                         {
                             mMovingSpeed = Mathf.Abs(mMovingSpeed);
                         }
@@ -120,19 +110,19 @@ public class Treedude : Enemy
 
                 }
 
-                body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = mMovingSpeed;
 
 
                 break;
         }
 
-        if (body.mSpeed.x > 0)
+        if (Body.mSpeed.x > 0)
         {
-            body.mAABB.ScaleX = 1;
+            Body.mAABB.ScaleX = 1;
         }
         else
         {
-            body.mAABB.ScaleX = -1;
+            Body.mAABB.ScaleX = -1;
 
         }
 

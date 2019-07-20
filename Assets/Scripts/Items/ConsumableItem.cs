@@ -7,8 +7,7 @@ public class ConsumableItem : Item
 
     public virtual void Use(Player player, int index)
     {
-        Debug.Log("User Item:" + index);
-        player.mInventory.RemoveItem(index);
+        player.Inventory.RemoveItem(index);
     }
 
     public override List<InventoryOption> GetInventoryOptions()

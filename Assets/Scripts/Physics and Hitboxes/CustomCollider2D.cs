@@ -10,6 +10,7 @@ public enum ColliderType { Unknown, Hitbox, Hurtbox, Pushbox }
 public abstract class CustomCollider2D {
 
     //public ColliderType colliderType;
+    [HideInInspector]
     public Entity mEntity;
     public CustomAABB mAABB;
     public ColliderState mState;
@@ -33,7 +34,6 @@ public abstract class CustomCollider2D {
         //This should make sure the collider moves with whatever object it is attached to
         //and also keeps its scale correctly (though scaling isnt used yet)
         mAABB.Center = mEntity.Position;
-        mAABB.Scale = mEntity.Scale;
     }
 
 }

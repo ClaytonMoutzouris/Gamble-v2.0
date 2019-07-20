@@ -69,14 +69,15 @@
     <Compile Include="Assets\InventorySlot.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
     <Compile Include="Assets\OptionObject.cs" />
+    <Compile Include="Assets\PlayerInventoryUI.cs" />
     <Compile Include="Assets\Roller.cs" />
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerInputManager.cs" />
-    <Compile Include="Assets\Scripts\Controllers\ShipSceneController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\Database\BossDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\GameData.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
@@ -96,8 +97,9 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\WurmAlien.cs" />
     <Compile Include="Assets\Scripts\Entity\EnemyBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Entity\Entity Data\EntityData.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityRenderer.cs" />
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Chest.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FallingRock.cs" />
@@ -113,7 +115,11 @@
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\MeleeAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\RangedAttackPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\BossPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EnemyPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\EntityPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\PlayerPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\ProjectilePrototype.cs" />
     <Compile Include="Assets\Scripts\Interfaces\Entity Interfaces.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEntity.cs" />
     <Compile Include="Assets\Scripts\Items\Armor.cs" />
@@ -164,7 +170,6 @@
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerIndicator.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayerInventoryUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerPanel.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerUIPanels.cs" />
     <Compile Include="Assets\Scripts\UI\RenderExtensions.cs" />

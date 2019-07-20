@@ -5,13 +5,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LocalCoop;
 
-
-
 public class Player : Entity, IHurtable
 {
-    public Health mHealth;
-    [System.Serializable]
+    private Health health;
     public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting };
+    PlayerPrototype prototype;
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
@@ -19,16 +17,15 @@ public class Player : Entity, IHurtable
     public float mTimeToExit = 1;
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
-    public PlayerInventory mInventory;
-    public PlayerEquipment mEquipment;
-    [SerializeField]
-    public PlayerInputController mInput;
-    public List<Projectile> bullets;
+    private PlayerInventory inventory;
+    private PlayerEquipment equipment;
+    private PlayerInputController input;
+    public List<ProjectilePrototype> bullets;
     public int activeBullet;
-    [SerializeField]
     private PlayerState mCurrentState = PlayerState.Stand;
     public int mPlayerIndex;
     public Stats mStats;
+    private AttackManager attackManager;
 
 
     public AudioClip mHitWallSfx;
@@ -58,8 +55,6 @@ public class Player : Entity, IHurtable
     public int mCannotGoLeftFrames = 0;
     [HideInInspector]
     public int mCannotGoRightFrames = 0;
-    [HideInInspector]
-    public AttackManager mAttackManager;
     private Hurtbox hurtBox;
 
     #endregion
@@ -87,38 +82,117 @@ public class Player : Entity, IHurtable
         }
     }
 
-    public void SetInput(PlayerGamepadInput input)
+    public AttackManager AttackManager
     {
-        mInput = gameObject.AddComponent<PlayerInputController>();
-        mInput.mGamepadInput = input;
+        get
+        {
+            return attackManager;
+        }
+
+        set
+        {
+            attackManager = value;
+        }
     }
 
-    public override void EntityInit()
+    public PlayerInventory Inventory
     {
+        get
+        {
+            return inventory;
+        }
+
+        set
+        {
+            inventory = value;
+        }
+    }
+
+    public PlayerEquipment Equipment
+    {
+        get
+        {
+            return equipment;
+        }
+
+        set
+        {
+            equipment = value;
+        }
+    }
+
+    public Health Health
+    {
+        get
+        {
+            return health;
+        }
+
+        set
+        {
+            health = value;
+        }
+    }
+
+    public PlayerInputController Input
+    {
+        get
+        {
+            return input;
+        }
+
+        set
+        {
+            input = value;
+        }
+    }
+
+    public void SetInput(PlayerGamepadInput input)
+    {
+        this.Input = new PlayerInputController(this, input);
+    }
+
+    public Player(PlayerPrototype proto, int index) : base()
+    {
+        prototype = proto;
+        mEntityType = proto.entityType;
+        bullets = new List<ProjectilePrototype>();
+
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0, Constants.cHalfSizeY)));
 
 
-        base.EntityInit();
+        mWalkSpeed = prototype.walkSpeed;
+        mJumpSpeed = prototype.jumpSpeed;
+        mClimbSpeed = prototype.climbSpeed;
 
-        Debug.Log("Setting player body" + Body);
+        mCollidesWith.Add(EntityType.Enemy);
+        mCollidesWith.Add(EntityType.Boss);
+        mCollidesWith.Add(EntityType.Obstacle);
+        mCollidesWith.Add(EntityType.Platform);
+        HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
 
+        Health = new Health(prototype.baseHealth, bar);
+
+
+        /*
         for (int c = 0; c < colorPallete.Count; c++)
         {
             colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         }
-        ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
+        */
+        //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
         mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
-        mHealth = new Health(50, mHealthBar);
 
-        mInventory = new PlayerInventory(this);
-        mEquipment = new PlayerEquipment(this);
+        Inventory = new PlayerInventory(this);
+        Equipment = new PlayerEquipment(this);
 
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
 
 
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), Vector3.zero, new Vector3(1, 1, 1)));
+        HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0, Constants.cHalfSizeY)));
         HurtBox.UpdatePosition();
 
         /*
@@ -128,58 +202,68 @@ public class Player : Entity, IHurtable
         */
 
 
-        mAttackManager = GetComponent<AttackManager>();
+        AttackManager = new AttackManager(this);
         //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .1f, new Hitbox(this, new CustomAABB(Body.mAABB.Center, new Vector3(5, 10, 0), new Vector3(8, 0, 0), new Vector3(1, 1, 1))));
-        mAttackManager.AttackList.Add(temp);
-        mAttackManager.meleeAttacks.Add(temp);
-        foreach (Projectile projectile in bullets)
-        {
-            RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, projectile);
-            mAttackManager.AttackList.Add(ranged);
-        }
+        MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .1f, new Hitbox(this, new CustomAABB(Position, new Vector3(5, 10, 0), new Vector3(10, 0, 0))));
+        AttackManager.meleeAttacks.Add(temp);
+
+        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, prototype.projectiles[0]);
+        AttackManager.rangedAttacks.Add(ranged);
+        
 
 
         if (MiniMap.instance != null)
         {
-            MiniMapIcon = MiniMap.instance.AddStaticIcon(MinimapIconType.Player, mMap.GetMapTileAtPoint(Body.mPosition));
+            MiniMapIcon = MiniMap.instance.AddStaticIcon(MinimapIconType.Player, Map.GetMapTileAtPoint(Position));
         }
 
     }
 
+    public override void Spawn(Vector2 spawnPoint)
+    {
+        base.Spawn(spawnPoint);
+        if (prototype.animationController != null)
+        {
+            Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+        }
+
+        HurtBox.UpdatePosition();
+    }
+
     public override void EntityUpdate()
     {
-        if (mInput == null)
+        if (Input == null)
         {
+            Debug.Log("Input is null");
             return;
         }
 
-        if (mInput.playerButtonInput[(int)ButtonInput.Pause])
+        if (Input.playerButtonInput[(int)ButtonInput.Pause])
         {
             LevelManager.instance.PauseGame(mPlayerIndex);
             //PauseMenu.instance.defaultObject;
         }
 
-        if (mInput.playerButtonInput[(int)ButtonInput.Select])
+        if (Input.playerButtonInput[(int)ButtonInput.Select])
         {
             MiniMap.instance.Toggle();
         }
         //
-        if (mInput.playerButtonInput[(int)ButtonInput.Inventory] && !mInput.previousButtonInput[(int)ButtonInput.Inventory])
+        if (Input.playerButtonInput[(int)ButtonInput.Inventory] && !Input.previousButtonInput[(int)ButtonInput.Inventory])
         {
             PlayerUIPanels.instance.OpenClosePanel(mPlayerIndex);
-            if (mInput.inputState == PlayerInputState.Inventory)
+            if (Input.inputState == PlayerInputState.Inventory)
             {
-                mInput.inputState = PlayerInputState.Game;
+                Input.inputState = PlayerInputState.Game;
             }
             else
             {
-                mInput.inputState = PlayerInputState.Inventory;
+                Input.inputState = PlayerInputState.Inventory;
             }
         }
 
 
-        mAttackManager.UpdateAttacks();
+        AttackManager.UpdateAttacks();
 
         if (mCannotClimb && !Body.mPS.onLadder)
         {
@@ -187,25 +271,24 @@ public class Player : Entity, IHurtable
         }
 
 
-        if (mInput.playerButtonInput[(int)ButtonInput.Item] && !mInput.previousButtonInput[(int)ButtonInput.Item])
+        if (Input.playerButtonInput[(int)ButtonInput.Item] && !Input.previousButtonInput[(int)ButtonInput.Item])
         {
             GainLife(5);
         }
 
         //Check to see if a player is trying to pick up an item
-        if (mInput.playerButtonInput[(int)ButtonInput.DPad_Down] && !mInput.previousButtonInput[(int)ButtonInput.DPad_Down])
+        if (Input.playerButtonInput[(int)ButtonInput.DPad_Down] && !Input.previousButtonInput[(int)ButtonInput.DPad_Down])
         {
             ItemObject item = CheckForItems();
             if (item != null)
             {
-                Debug.Log("You picked up " + item.name);
                 //mAllCollidingObjects.Remove(item);
                 PickUp(item);
             }
         }
 
         //Check to see if a player is trying to open a chest
-        if (mInput.playerButtonInput[(int)ButtonInput.DPad_Up] && !mInput.previousButtonInput[(int)ButtonInput.DPad_Up])
+        if (Input.playerButtonInput[(int)ButtonInput.DPad_Up] && !Input.previousButtonInput[(int)ButtonInput.DPad_Up])
         {
             Chest chest = CheckForChest();
             if (chest != null)
@@ -225,34 +308,34 @@ public class Player : Entity, IHurtable
 
                 mWalkSfxTimer = cWalkSfxTime;
 
-                if (!body.mPS.pushesBottom)
+                if (!Body.mPS.pushesBottom)
                 {
                     mCurrentState = PlayerState.Jump;
                     break;
                 }
 
 
-                body.mSpeed = Vector2.zero;
+                Body.mSpeed = Vector2.zero;
 
                 //Check to see if the player is trying to pass through a one way
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && mInput.playerButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && Input.playerButtonInput[(int)ButtonInput.Jump])
                 {
-                    if (body.mPS.onOneWay)
+                    if (Body.mPS.onOneWay)
                     {
-                        body.mPS.tmpIgnoresOneWay = true;
+                        Body.mPS.tmpIgnoresOneWay = true;
                         break;
                     }
 
                 }
 
-                if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
                     break;
                 }
 
                 //if left or right key is pressed, but not both
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] != 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] != 0)
                 {
                     mCurrentState = PlayerState.Walk;
                     break;
@@ -261,25 +344,25 @@ public class Player : Entity, IHurtable
 
 
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
                 {
-                    if (body.mPS.onLadder)
+                    if (Body.mPS.onLadder)
                     {
-                        body.mSpeed = Vector2.zero;
-                        body.mPS.isClimbing = true;
+                        Body.mSpeed = Vector2.zero;
+                        Body.mPS.isClimbing = true;
                         mCurrentState = PlayerState.Climb;
-                        body.mIgnoresGravity = true;
+                        Body.mIgnoresGravity = true;
 
                         break;
                     }
 
-                    if (body.mPS.onDoor)
+                    if (Body.mPS.onDoor)
                     {
                         mExitDoorTimer += Time.deltaTime;
                         if (mExitDoorTimer > Constants.exitDoorTime)
                         {
                             //load map
-                            mGame.mMapChangeFlag = true;
+                            Game.mMapChangeFlag = true;
                             mExitDoorTimer = 0;
                         }
 
@@ -300,27 +383,27 @@ public class Player : Entity, IHurtable
                 if (mWalkSfxTimer > cWalkSfxTime)
                 {
                     mWalkSfxTimer = 0.0f;
-                    mAudioSource.PlayOneShot(mWalkSfx);
+                    SoundManager.instance.PlaySingle(mWalkSfx);
                 }
 
-                if (!body.mPS.pushesBottom)
+                if (!Body.mPS.pushesBottom)
                 {
                     mCurrentState = PlayerState.Jump;
                     break;
                 }
 
                 //Check to see if the player is trying to pass through a one way
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && mInput.playerButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && Input.playerButtonInput[(int)ButtonInput.Jump])
                 {
-                    if (body.mPS.onOneWay)
+                    if (Body.mPS.onOneWay)
                     {
-                        body.mPS.tmpIgnoresOneWay = true;
+                        Body.mPS.tmpIgnoresOneWay = true;
                         break;
                     }
 
                 }
 
-                if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
                     break;
@@ -328,47 +411,47 @@ public class Player : Entity, IHurtable
 
                 //if both or neither left nor right keys are pressed then stop walking and stand
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                 {
                     mCurrentState = PlayerState.Stand;
                     //mSpeed = Vector2.zero;
                     break;
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
                 {
-                    if (body.mPS.pushesRightTile)
+                    if (Body.mPS.pushesRightTile)
                     {
-                        body.mSpeed.x = 0.0f;
+                        Body.mSpeed.x = 0.0f;
                     }
                     else
                     {
 
-                        body.mSpeed.x = mWalkSpeed;
+                        Body.mSpeed.x = mWalkSpeed;
 
                     }
-                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
+                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
-                    if (body.mPS.pushesLeftTile)
+                    if (Body.mPS.pushesLeftTile)
                     {
-                        body.mSpeed.x = 0.0f;
+                        Body.mSpeed.x = 0.0f;
                     }
                     else
                     {
-                        body.mSpeed.x = -mWalkSpeed;
+                        Body.mSpeed.x = -mWalkSpeed;
                     }
 
-                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
+                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
-                    if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                    if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                     {
-                        if (body.mPS.onOneWay)
+                        if (Body.mPS.onOneWay)
                         {
-                            body.mPS.tmpIgnoresOneWay = true;
+                            Body.mPS.tmpIgnoresOneWay = true;
                             break;
                         }
 
@@ -377,12 +460,12 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] > 0 && body.mPS.onLadder)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0 && Body.mPS.onLadder)
                 {
-                    body.mSpeed = Vector2.zero;
-                    body.mPS.isClimbing = true;
+                    Body.mSpeed = Vector2.zero;
+                    Body.mPS.isClimbing = true;
                     mCurrentState = PlayerState.Climb;
-                    body.mIgnoresGravity = true;
+                    Body.mIgnoresGravity = true;
 
                     break;
                 }
@@ -391,29 +474,29 @@ public class Player : Entity, IHurtable
             case PlayerState.Jump:
 
                 //we do not ignore gravity while in the air
-                body.mIgnoresGravity = false;
+                Body.mIgnoresGravity = false;
                 ++mFramesFromJumpStart;
 
                 if (mFramesFromJumpStart <= Constants.cJumpFramesThreshold)
                 {
-                    if (body.mPS.pushesTop || body.mSpeed.y > 0.0f)
+                    if (Body.mPS.pushesTop || Body.mSpeed.y > 0.0f)
                         mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
-                    else if (mInput.playerButtonInput[(int)ButtonInput.Jump])
-                        body.mSpeed.y = mJumpSpeed;
+                    else if (Input.playerButtonInput[(int)ButtonInput.Jump])
+                        Body.mSpeed.y = mJumpSpeed;
 
 
                 }
 
 
                 // we can climb ladders from this state
-                if ((mInput.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && body.mPS.onLadder && (!mCannotClimb || mInput.playerAxisInput[(int)AxisInput.LeftStickY] > 0))
+                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && (!mCannotClimb || Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0))
                 {
                     mCurrentState = PlayerState.Climb;
                     break;
                 }
 
 
-                if (mDoubleJump && mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                if (mDoubleJump && Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     JetMode();
                     break;
@@ -428,71 +511,71 @@ public class Player : Entity, IHurtable
 
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
                 */
-                if (!mInput.playerButtonInput[(int)ButtonInput.Jump] && body.mSpeed.y > 0.0f && !body.mPS.isBounce)
+                if (!Input.playerButtonInput[(int)ButtonInput.Jump] && Body.mSpeed.y > 0.0f && !Body.mPS.isBounce)
                 {
-                    body.mSpeed.y = Mathf.Min(body.mSpeed.y, 200.0f);
+                    Body.mSpeed.y = Mathf.Min(Body.mSpeed.y, 200.0f);
                 }
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                 {
-                    body.mSpeed.x = 0.0f;
+                    Body.mSpeed.x = 0.0f;
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
                 {
-                    if (body.mPS.pushesRightTile)
-                        body.mSpeed.x = 0.0f;
+                    if (Body.mPS.pushesRightTile)
+                        Body.mSpeed.x = 0.0f;
                     else
-                        body.mSpeed.x = mWalkSpeed;
-                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
+                        Body.mSpeed.x = mWalkSpeed;
+                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
-                    if (body.mPS.pushesLeftTile)
-                        body.mSpeed.x = 0.0f;
+                    if (Body.mPS.pushesLeftTile)
+                        Body.mSpeed.x = 0.0f;
                     else
-                        body.mSpeed.x = -mWalkSpeed;
-                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
+                        Body.mSpeed.x = -mWalkSpeed;
+                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
-                if (body.mPS.pushesBottom)
+                if (Body.mPS.pushesBottom)
                 {
                     //if there's no movement change state to standing
-                    if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                    if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                     {
                         mCurrentState = PlayerState.Stand;
                         //mSpeed = Vector2.zero;
-                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                     else	//either go right or go left are pressed so we change the state to walk
                     {
                         mCurrentState = PlayerState.Walk;
-                        body.mSpeed.y = 0.0f;
-                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        Body.mSpeed.y = 0.0f;
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                 }
 
                 if (mCannotGoLeftFrames > 0)
                 {
                     --mCannotGoLeftFrames;
-                    body.mSpeed.x = Mathf.Max(body.mSpeed.x, 0);
+                    Body.mSpeed.x = Mathf.Max(Body.mSpeed.x, 0);
                 }
                 if (mCannotGoRightFrames > 0)
                 {
                     --mCannotGoRightFrames;
-                    body.mSpeed.x = Mathf.Min(body.mSpeed.x, 0);
+                    Body.mSpeed.x = Mathf.Min(Body.mSpeed.x, 0);
                 }
 
-                if (body.mSpeed.y <= 0.0f && !body.mPS.pushesTop
-                    && ((body.mPS.pushesRight && mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0) || (body.mPS.pushesLeft && mInput.playerAxisInput[(int)AxisInput.LeftStickX] < 0)))
+                if (Body.mSpeed.y <= 0.0f && !Body.mPS.pushesTop
+                    && ((Body.mPS.pushesRight && Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0) || (Body.mPS.pushesLeft && Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)))
                 {
                     TryGrabLedge();
                 }
 
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
-                    body.mPS.tmpIgnoresOneWay = true;
+                    Body.mPS.tmpIgnoresOneWay = true;
                 }
 
 
@@ -501,15 +584,15 @@ public class Player : Entity, IHurtable
                 break;
 
             case PlayerState.GrabLedge:
-                body.mIgnoresGravity = true;
+                Body.mIgnoresGravity = true;
 
-                bool ledgeOnLeft = mLedgeTile.x * MapManager.cTileSize < body.mPosition.x;
+                bool ledgeOnLeft = mLedgeTile.x * MapManager.cTileSize < Position.x;
                 bool ledgeOnRight = !ledgeOnLeft;
 
                 //if down button is held then drop down
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0
-                    || (mInput.playerAxisInput[(int)AxisInput.LeftStickX] < 0 && ledgeOnRight)
-                    || (mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0 && ledgeOnLeft))
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0
+                    || (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0 && ledgeOnRight)
+                    || (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0 && ledgeOnLeft))
                 {
                     if (ledgeOnLeft)
                         mCannotGoLeftFrames = 3;
@@ -519,17 +602,17 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Jump;
                     //mGame.PlayOneShot(SoundType.Character_LedgeRelease, mPosition, Game.sSfxVolume);
                 }
-                else if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                else if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
-                    body.mSpeed.y = mJumpSpeed;
-                    mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
+                    Body.mSpeed.y = mJumpSpeed;
+                    SoundManager.instance.PlaySingle(mJumpSfx);
                     mCurrentState = PlayerState.Jump;
                 }
 
                 //when the tile we grab onto gets destroyed
-                if (!mMap.IsObstacle(mLedgeTile.x, mLedgeTile.y))
+                if (!Map.IsObstacle(mLedgeTile.x, mLedgeTile.y))
                     mCurrentState = PlayerState.Jump;
 
                 break;
@@ -542,126 +625,126 @@ public class Player : Entity, IHurtable
                                     mAnimator.Play("LadderIdle");
                 */
                 //On a ladder, we always assume we are still until we receive input
-                body.mSpeed = Vector2.zero;
-                body.mPS.isClimbing = true;
+                Body.mSpeed = Vector2.zero;
+                Body.mPS.isClimbing = true;
                 //While we are climbing, we always ignore gravity
-                body.mIgnoresGravity = true;
+                Body.mIgnoresGravity = true;
 
                 int tx = 0, ty = 0;
-                mMap.GetMapTileAtPoint(body.mAABB.Center, out tx, out ty);
-                body.mPosition.x = tx * MapManager.cTileSize;
+                Map.GetMapTileAtPoint(Body.mAABB.Center, out tx, out ty);
+                Position.x = tx * MapManager.cTileSize;
 
 
 
-                if (!body.mPS.onLadder)
+                if (!Body.mPS.onLadder)
                 {
-                    body.mPS.isClimbing = false;
+                    Body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Stand;
                 }
 
 
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
-                    if (body.mPS.pushesBottom)
+                    if (Body.mPS.pushesBottom)
                     {
-                        body.mPS.isClimbing = false;
+                        Body.mPS.isClimbing = false;
                         mCurrentState = PlayerState.Stand;
-                        body.mSpeed.y = 0.0f;
+                        Body.mSpeed.y = 0.0f;
                     }
                     else
                     {
 
-                        body.mSpeed.y = -mClimbSpeed;
+                        Body.mSpeed.y = -mClimbSpeed;
                     }
                     // ScaleX = Mathf.Abs(ScaleX);
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
                 {
-                    if (body.mPS.pushesTop)
-                        body.mSpeed.y = 0.0f;
+                    if (Body.mPS.pushesTop)
+                        Body.mSpeed.y = 0.0f;
                     else
-                        body.mSpeed.y = mClimbSpeed;
+                        Body.mSpeed.y = mClimbSpeed;
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
-                if (mInput.previousButtonInput[(int)ButtonInput.LeftStick_Left] || mInput.previousButtonInput[(int)ButtonInput.LeftStick_Left])
+                if (Input.previousButtonInput[(int)ButtonInput.LeftStick_Left] || Input.previousButtonInput[(int)ButtonInput.LeftStick_Left])
                 {
-                    body.mPS.isClimbing = false;
+                    Body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Jump;
 
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
 
-                if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
-                    body.mPS.isClimbing = false;
-                    body.mSpeed.y = mJumpSpeed;
+                    Body.mPS.isClimbing = false;
+                    Body.mSpeed.y = mJumpSpeed;
                     mCurrentState = PlayerState.Jump;
                 }
                 break;
             case PlayerState.Jetting:
-                body.mPS.isJetting = true;
-                body.mSpeed = Vector2.zero;
-                body.mIgnoresGravity = true;
+                Body.mPS.isJetting = true;
+                Body.mSpeed = Vector2.zero;
+                Body.mIgnoresGravity = true;
 
 
 
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
                 {
-                    if (body.mPS.pushesTop)
-                        body.mSpeed.y = 0.0f;
+                    if (Body.mPS.pushesTop)
+                        Body.mSpeed.y = 0.0f;
                     else
-                        body.mSpeed.y = mClimbSpeed;
+                        Body.mSpeed.y = mClimbSpeed;
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
-                    body.mSpeed.y = -mClimbSpeed;
+                    Body.mSpeed.y = -mClimbSpeed;
                 }
 
-                if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                 {
-                    body.mSpeed.x = 0.0f;
+                    Body.mSpeed.x = 0.0f;
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
                 {
-                    if (body.mPS.pushesRightTile)
-                        body.mSpeed.x = 0.0f;
+                    if (Body.mPS.pushesRightTile)
+                        Body.mSpeed.x = 0.0f;
                     else
-                        body.mSpeed.x = mWalkSpeed;
-                    body.mAABB.ScaleX = Mathf.Abs(body.mAABB.ScaleX);
+                        Body.mSpeed.x = mWalkSpeed;
+                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
-                else if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
-                    if (body.mPS.pushesLeftTile)
-                        body.mSpeed.x = 0.0f;
+                    if (Body.mPS.pushesLeftTile)
+                        Body.mSpeed.x = 0.0f;
                     else
-                        body.mSpeed.x = -mWalkSpeed;
-                    body.mAABB.ScaleX = -Mathf.Abs(body.mAABB.ScaleX);
+                        Body.mSpeed.x = -mWalkSpeed;
+                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
-                if (body.mPS.pushesBottom)
+                if (Body.mPS.pushesBottom)
                 {
                     //if there's no movement change state to standing
-                    if (mInput.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                    if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                     {
                         mCurrentState = PlayerState.Stand;
                         //mSpeed = Vector2.zero;
-                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                     else	//either go right or go left are pressed so we change the state to walk
                     {
                         mCurrentState = PlayerState.Walk;
-                        body.mSpeed.y = 0.0f;
-                        mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
+                        Body.mSpeed.y = 0.0f;
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                 }
 
-                if (mInput.playerButtonInput[(int)ButtonInput.Jump] && !mInput.previousButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     mCurrentState = PlayerState.Jump;
                     break;
@@ -671,8 +754,8 @@ public class Player : Entity, IHurtable
                 break;
         }
 
-
-        if (mInput.playerButtonInput[(int)ButtonInput.Swap] && !mInput.previousButtonInput[(int)ButtonInput.Swap])
+        /*
+        if (Input.playerButtonInput[(int)ButtonInput.Swap] && !Input.previousButtonInput[(int)ButtonInput.Swap])
         {
             activeBullet++;
             if (activeBullet >= bullets.Count)
@@ -680,15 +763,16 @@ public class Player : Entity, IHurtable
                 activeBullet = 0;
             }
         }
+        */
 
-        if (mInput.playerButtonInput[(int)ButtonInput.Attack] && !mInput.previousButtonInput[(int)ButtonInput.Attack])
+        if (Input.playerButtonInput[(int)ButtonInput.Attack] && !Input.previousButtonInput[(int)ButtonInput.Attack])
         {
-            mAttackManager.AttackList[0].Activate();
+            AttackManager.meleeAttacks[0].Activate();
         }
 
-        if (mInput.playerAxisInput[(int)AxisInput.RightStickX] != 0 || mInput.playerAxisInput[(int)AxisInput.RightStickY] != 0)
+        if (Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0)
         {
-            RangedAttack attack = (RangedAttack)mAttackManager.AttackList[activeBullet + 1];
+            RangedAttack attack = AttackManager.rangedAttacks[0];
             attack.Activate(GetAim());
         }
 
@@ -703,7 +787,7 @@ public class Player : Entity, IHurtable
 
         //Pretty sure this lets use jump forever
 
-        if (body.mPS.pushedBottom && !body.mPS.pushesBottom || Body.mPS.isClimbing)
+        if (Body.mPS.pushedBottom && !Body.mPS.pushesBottom || Body.mPS.isClimbing)
             mFramesFromJumpStart = 0;
 
         //Update the animator last
@@ -717,25 +801,24 @@ public class Player : Entity, IHurtable
 
         if (mCurrentState == PlayerState.Jump && !mDoubleJump)
             return;
-        body.mSpeed.y = mJumpSpeed;
-        mAudioSource.PlayOneShot(mJumpSfx, 1.0f);
+        Body.mSpeed.y += mJumpSpeed;
+        SoundManager.instance.PlaySingle(mJumpSfx);
         mCurrentState = PlayerState.Jump;
 
-        body.mSpeed.y = mJumpSpeed;
     }
 
     public void JetMode()
     {
         if (mCurrentState == PlayerState.Jetting)
             return;
-        body.mSpeed = Vector2.zero;
+        Body.mSpeed = Vector2.zero;
         mCurrentState = PlayerState.Jetting;
 
     }
 
     public void ClimbLadder()
     {
-        body.mPS.isClimbing = true;
+        Body.mPS.isClimbing = true;
         mCurrentState = PlayerState.Climb;
     }
 
@@ -746,51 +829,51 @@ public class Player : Entity, IHurtable
         //and top left corner of the aabb when we want to grab the left edge
         Vector2 aabbCornerOffset;
 
-        if (body.mPS.pushesRight && mInput.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
-            aabbCornerOffset = body.mAABB.HalfSize;
+        if (Body.mPS.pushesRight && Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+            aabbCornerOffset = Body.mAABB.HalfSize;
         else
-            aabbCornerOffset = new Vector2(-body.mAABB.HalfSizeX - 1.0f, body.mAABB.HalfSizeY);
+            aabbCornerOffset = new Vector2(-Body.mAABB.HalfSizeX - 1.0f, Body.mAABB.HalfSizeY);
 
         int tileX, topY, bottomY;
-        tileX = mMap.GetMapTileXAtPoint(body.mAABB.CenterX + aabbCornerOffset.x);
+        tileX = Map.GetMapTileXAtPoint(Body.mAABB.CenterX + aabbCornerOffset.x);
 
-        if ((body.mPS.pushedLeft && body.mPS.pushesLeft) || (body.mPS.pushedRight && body.mPS.pushesRight))
+        if ((Body.mPS.pushedLeft && Body.mPS.pushesLeft) || (Body.mPS.pushedRight && Body.mPS.pushesRight))
         {
-            topY = mMap.GetMapTileYAtPoint(body.mOldPosition.y + body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = Map.GetMapTileYAtPoint(Body.mOldPosition.y + Body.mAABB.OffsetY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = Map.GetMapTileYAtPoint(Body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
         else
         {
-            topY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
-            bottomY = mMap.GetMapTileYAtPoint(body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
+            topY = Map.GetMapTileYAtPoint(Body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeStartY);
+            bottomY = Map.GetMapTileYAtPoint(Body.mAABB.CenterY + aabbCornerOffset.y - Constants.cGrabLedgeEndY);
         }
 
         for (int y = topY; y >= bottomY; --y)
         {
-            if (!mMap.IsObstacle(tileX, y) && mMap.IsObstacle(tileX, y - 1))
+            if (!Map.IsObstacle(tileX, y) && Map.IsObstacle(tileX, y - 1))
             {
                 //calculate the appropriate corner
-                var tileCorner = mMap.GetMapTilePosition(tileX, y - 1);
+                var tileCorner = Map.GetMapTilePosition(tileX, y - 1);
                 tileCorner.x -= Mathf.Sign(aabbCornerOffset.x) * MapManager.cTileSize / 2;
                 tileCorner.y += MapManager.cTileSize / 2;
 
                 //check whether the tile's corner is between our grabbing Vector2is
                 if (y > bottomY ||
-                    ((body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
-                    && tileCorner.y - (body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
+                    ((Body.mAABB.CenterY + aabbCornerOffset.y) - tileCorner.y <= Constants.cGrabLedgeEndY
+                    && tileCorner.y - (Body.mAABB.CenterY + aabbCornerOffset.y) >= Constants.cGrabLedgeStartY))
                 {
                     //save the tile we are holding so we can check later on if we can still hold onto it
                     mLedgeTile = new Vector2i(tileX, y - 1);
 
                     //calculate our position so the corner of our AABB and the tile's are next to each other
-                    body.mPosition.y = tileCorner.y - aabbCornerOffset.y - body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
-                    body.mSpeed = Vector2.zero;
+                    Position.y = tileCorner.y - aabbCornerOffset.y - Body.mAABB.OffsetY - Constants.cGrabLedgeStartY + Constants.cGrabLedgeTileOffsetY;
+                    Body.mSpeed = Vector2.zero;
 
                     //finally grab the edge
                     mCurrentState = PlayerState.GrabLedge;
-                    body.mIgnoresGravity = true;
-                    body.mAABB.ScaleX *= -1;
-                    mAnimator.Play("GrabLedge");
+                    Body.mIgnoresGravity = true;
+                    Body.mAABB.ScaleX *= -1;
+                    Renderer.SetAnimState("GrabLedge");
                     //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     break;
                     //mGame.PlayOneShot(SoundType.Character_LedgeGrab, mPosition, Game.sSfxVolume);
@@ -801,23 +884,22 @@ public class Player : Entity, IHurtable
 
     public bool PickUp(ItemObject itemObject)
     {
-        Debug.Log("You picked up " + itemObject.name);
         //mAllCollidingObjects.Remove(item);
-        mGame.FlagObjectForRemoval(itemObject);
+        Game.FlagObjectForRemoval(itemObject);
 
         //Should be something like itemObject.pickup(Inventory inventory);
 
-        mInventory.AddItemToInventory(itemObject.mItemData);
+        Inventory.AddItemToInventory(itemObject.mItemData);
         return true;
     }
 
     public void UpdateAnimator()
     {
-        foreach (Attack attack in mAttackManager.AttackList)
+        foreach (Attack attack in AttackManager.meleeAttacks)
         {
             if (attack.mIsActive)
             {
-                mAnimator.Play("Attack");
+                Renderer.SetAnimState("Attack");
                 return;
             }
         }
@@ -825,14 +907,14 @@ public class Player : Entity, IHurtable
         if (mCurrentState == PlayerState.Climb)
         {
             //Update the animator
-            if (Mathf.Abs(body.mSpeed.y) > 0)
-                mAnimator.Play("Climb");
+            if (Mathf.Abs(Body.mSpeed.y) > 0)
+                Renderer.SetAnimState("Climb");
             else
-                mAnimator.Play("LadderIdle");
+                Renderer.SetAnimState("LadderIdle");
         }
         else
         {
-            mAnimator.Play(mCurrentState.ToString());
+            Renderer.SetAnimState(mCurrentState.ToString());
 
         }
 
@@ -843,28 +925,28 @@ public class Player : Entity, IHurtable
 
         if (freeAxis)
         {
-            return new Vector2(mInput.playerAxisInput[(int)AxisInput.RightStickX], mInput.playerAxisInput[(int)AxisInput.RightStickY]).normalized;
+            return new Vector2(Input.playerAxisInput[(int)AxisInput.RightStickX], Input.playerAxisInput[(int)AxisInput.RightStickY]).normalized;
         }
 
         Vector2 aim = Vector2.zero;
 
-        if (mInput.playerAxisInput[(int)AxisInput.RightStickY] < 0)
+        if (Input.playerAxisInput[(int)AxisInput.RightStickY] < 0)
         {
             aim += Vector2.down;
 
         }
-        else if (mInput.playerAxisInput[(int)AxisInput.RightStickY] > 0)
+        else if (Input.playerAxisInput[(int)AxisInput.RightStickY] > 0)
         {
             aim += Vector2.up;
 
         }
 
-        if (mInput.playerAxisInput[(int)AxisInput.RightStickX] < 0)
+        if (Input.playerAxisInput[(int)AxisInput.RightStickX] < 0)
         {
             aim += Vector2.left;
 
         }
-        else if (mInput.playerAxisInput[(int)AxisInput.RightStickX] > 0)
+        else if (Input.playerAxisInput[(int)AxisInput.RightStickX] > 0)
         {
             aim += Vector2.right;
 
@@ -878,30 +960,32 @@ public class Player : Entity, IHurtable
     {
         //Should be in the habit of doing this first, i guess
         base.SecondUpdate();
-        mAttackManager.SecondUpdate();
+        AttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
 
         if (MiniMapIcon != null)
         {
-            MiniMapIcon.UpdateIcon(mMap.GetMapTileAtPoint(Body.mPosition));
+            MiniMapIcon.UpdateIcon(Map.GetMapTileAtPoint(Position));
         }
     }
 
     public void GetHurt(Attack attack)
     {
-        int damage = (int)mHealth.LoseHP(attack.damage);
+        int damage = (int)Health.LoseHP(attack.damage);
         ShowFloatingText(damage, Color.red);
 
-        if (mHealth.currentHealth == 0)
+        if (Health.currentHealth == 0)
         {
             Die();
         }
+
+        //Debug.Log("Hurt by " + );
 
     }
 
     public void GainLife(int health)
     {
-        int life = (int)mHealth.GainHP(health);
+        int life = (int)this.Health.GainHP(health);
         ShowFloatingText(life, Color.green);
 
 
@@ -930,14 +1014,10 @@ public class Player : Entity, IHurtable
     {
 
         //we have to remove the hitboxes
-        foreach (Attack attack in mAttackManager.AttackList)
+        foreach (MeleeAttack attack in AttackManager.meleeAttacks)
         {
-            if (attack is MeleeAttack)
-            {
-                MeleeAttack temp = (MeleeAttack)attack;
-                CollisionManager.RemoveObjectFromAreas(temp.hitbox);
-            }
-
+                CollisionManager.RemoveObjectFromAreas(attack.hitbox);
+            
         }
 
         CollisionManager.RemoveObjectFromAreas(HurtBox);
@@ -950,12 +1030,12 @@ public class Player : Entity, IHurtable
     public ItemObject CheckForItems()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mCollisions.Count; ++i)
+        for (int i = 0; i < Body.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (body.mCollisions[i].other.mEntity is ItemObject)
+            if (Body.mCollisions[i].other.mEntity is ItemObject)
             {
-                return (ItemObject)body.mCollisions[i].other.mEntity;
+                return (ItemObject)Body.mCollisions[i].other.mEntity;
             }
         }
 
@@ -965,28 +1045,16 @@ public class Player : Entity, IHurtable
     public Chest CheckForChest()
     {
         //ItemObject item = null;
-        for (int i = 0; i < body.mCollisions.Count; ++i)
+        for (int i = 0; i < Body.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (body.mCollisions[i].other.mEntity is Chest)
+            if (Body.mCollisions[i].other.mEntity is Chest)
             {
-                return (Chest)body.mCollisions[i].other.mEntity;
+                return (Chest)Body.mCollisions[i].other.mEntity;
             }
         }
 
         return null;
-    }
-
-    public override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
-
-        if (HurtBox != null)
-            Gizmos.DrawCube(Position, HurtBox.mAABB.halfSize * 2);
-
-
     }
 
 }

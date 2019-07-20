@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Hedgehog
   m_EditorClassIdentifier: 
-  enemyType: 3
+  entityType: 1
   mName: Hedgehog
+  bodySize: {x: 14, y: 16}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: b26d5ef37874bfe418fd8d814ef50f22, type: 2}
+  enemyType: 3
   movementSpeed: 30
   sightRange: 75
   hostility: 2
-  bodySize: {x: 14, y: 16}
   health: 50
-  attacks:
+  rangedAttacks: []
+  meleeAttacks:
   - {fileID: 11400000, guid: 56572fb6e44abd148aa3547cb78e8f3c, type: 2}

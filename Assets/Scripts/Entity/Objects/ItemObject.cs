@@ -6,24 +6,18 @@ public class ItemObject : Entity {
 
     public Item mItemData;
 
-    public override void EntityInit()
+    public ItemObject(Item iData) : base()
     {
-        base.EntityInit();
-        body.mIsKinematic = false;
+        mItemData = iData;
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(5,5), Vector2.zero));
+        Body.mIsKinematic = false;
 
     }
-
-    public void SetItem(Item data)
+    public override void Spawn(Vector2 spawnPoint)
     {
-        mItemData = data;
-        if(mItemData != null)
-        {
-            GetComponent<SpriteRenderer>().sprite = data.sprite;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().sprite = null;
-        }
+        base.Spawn(spawnPoint);
+        Renderer.SetSprite(mItemData.sprite);
+
     }
 
     public override void EntityUpdate()

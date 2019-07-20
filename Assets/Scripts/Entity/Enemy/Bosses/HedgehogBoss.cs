@@ -11,12 +11,10 @@ public class HedgehogBoss : BossEnemy
     #endregion
 
 
-    public override void EntityInit()
+    public HedgehogBoss(BossPrototype proto) : base(proto)
     {
-        base.EntityInit();
-                Body.mIsKinematic = true;
+        Body.mIsKinematic = true;
         Body.mIsHeavy = true;
-        EnemyInit();
 
         //RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         //mAttackManager.AttackList.Add(ranged);
@@ -68,9 +66,9 @@ public class HedgehogBoss : BossEnemy
     private void AirSpin()
     {
         CheckForTargets();
-        mAnimator.Play("Attack1");
+        Renderer.SetAnimState("Attack1");
         //mAnimator.playbackTime = ;
-        if (mEnemyState == EnemyState.Jumping && body.mPS.pushesBottom && !body.mPS.pushedBottom)
+        if (mEnemyState == EnemyState.Jumping && Body.mPS.pushesBottom && !Body.mPS.pushedBottom)
         {
             mBossState = BossState.Aggrivated;
             mEnemyState = EnemyState.Aggrivated;
@@ -93,9 +91,9 @@ public class HedgehogBoss : BossEnemy
             }
         }
 
-        mAttackManager.AttackList[0].Activate();
+        mAttackManager.meleeAttacks[0].Activate();
 
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
 
 
 
@@ -106,7 +104,7 @@ public class HedgehogBoss : BossEnemy
     void GroundSpin()
     {
         CheckForTargets();
-        mAnimator.Play("Attack1");
+        Renderer.SetAnimState("Attack1");
         mMovingSpeed = 120;
 
         CheckForTargets();
@@ -125,11 +123,11 @@ public class HedgehogBoss : BossEnemy
                 Body.mAABB.ScaleX = 1;
             }
         }
-        mAttackManager.AttackList[0].Activate();
+        mAttackManager.meleeAttacks[0].Activate();
 
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
 
-        if (body.mPS.pushesLeftTile || body.mPS.pushesRightTile)
+        if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
         {
             mBossState = BossState.Aggrivated;
             mMovingSpeed = 80;
@@ -140,9 +138,9 @@ public class HedgehogBoss : BossEnemy
 
     private void Aggrivated()
     {
-        mAnimator.Play("Idle");
+        Renderer.SetAnimState("Idle");
         //This works amazing!
-        body.mSpeed.x = 0;
+        Body.mSpeed.x = 0;
 
         if (AttackCooldown >= AttackTimer)
         {
@@ -171,6 +169,6 @@ public class HedgehogBoss : BossEnemy
     protected override void Idle()
     {
         base.Idle();
-        mAnimator.Play("Idle");
+        Renderer.SetAnimState("Idle");
     }
 }

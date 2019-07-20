@@ -19,6 +19,11 @@ public class BossEnemy : Enemy
     protected float AttackCooldown = 0.0f;
     public bool bossTrigger = false;
 
+    public BossEnemy(BossPrototype proto) : base(proto)
+    {
+        bossType = proto.bossType;
+
+    }
 
     public void CheckForTargets()
     {

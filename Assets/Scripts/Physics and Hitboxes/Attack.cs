@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Range { Close, Near, Far };
-[System.Serializable]
+
 public class Attack {
 
     public Entity mEntity;
@@ -107,7 +107,7 @@ public class DashAttack : Attack
         base.Activate();
 
         hitbox.mState = ColliderState.Open;
-        hitbox.mDealthWith.Clear();
+        hitbox.mDealtWith.Clear();
         //hitbox.colliderType = ColliderType.Hitbox;
     }
 
@@ -117,7 +117,7 @@ public class DashAttack : Attack
 
         hitbox.mState = ColliderState.Closed;
         hitbox.mCollisions.Clear();
-        hitbox.mDealthWith.Clear();
+        hitbox.mDealtWith.Clear();
 
     }
 
@@ -125,10 +125,10 @@ public class DashAttack : Attack
     {
         foreach (IHurtable hit in hitbox.mCollisions)
         {
-            if (!hitbox.mDealthWith.Contains(hit))
+            if (!hitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(this);
-                hitbox.mDealthWith.Add(hit);
+                hitbox.mDealtWith.Add(hit);
             }
 
         }
@@ -152,7 +152,6 @@ public class DashAttack : Attack
     }
 }
 
-[System.Serializable]
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
@@ -170,7 +169,7 @@ public class MeleeAttack : Attack
 
 
         hitbox.mState = ColliderState.Open;
-        hitbox.mDealthWith.Clear();
+        hitbox.mDealtWith.Clear();
         //hitbox.colliderType = ColliderType.Hitbox;
     }
 
@@ -180,7 +179,7 @@ public class MeleeAttack : Attack
 
         hitbox.mState = ColliderState.Closed;
         hitbox.mCollisions.Clear();
-        hitbox.mDealthWith.Clear();
+        hitbox.mDealtWith.Clear();
 
     }
 
@@ -189,10 +188,10 @@ public class MeleeAttack : Attack
 
         foreach (IHurtable hit in hitbox.mCollisions)
         {
-            if (!hitbox.mDealthWith.Contains(hit))
+            if (!hitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(this);
-                hitbox.mDealthWith.Add(hit);
+                hitbox.mDealtWith.Add(hit);
             }
 
         }
@@ -217,12 +216,11 @@ public class MeleeAttack : Attack
 
 }
 
-[System.Serializable]
 public class RangedAttack : Attack
 {
-    public Projectile projectile;
+    public ProjectilePrototype projectile;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, Projectile proj) : base(entity, duration, damage, cd)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, ProjectilePrototype proj) : base(entity, duration, damage, cd)
     {
         projectile = proj;
     }
@@ -248,8 +246,10 @@ public class RangedAttack : Attack
 
         base.Activate();
 
-        mEntity.Shoot(projectile, this, direction);
-
+        Projectile shot = new Projectile(projectile, direction);
+        shot.Owner = mEntity;
+        shot.Spawn(mEntity.Position+new Vector2(0, mEntity.Body.mAABB.HalfSizeY));
+        
     }
 
 

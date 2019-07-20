@@ -106,18 +106,18 @@ public class InventoryOptionList : MonoBehaviour
         switch (option)
         {
             case InventoryOption.Drop:
-                playerInventory.player.mInventory.DropItem(focusedSlot.slotID);
+                playerInventory.player.Inventory.DropItem(focusedSlot.slotID);
                 break;
             case InventoryOption.Use:
-                playerInventory.player.mInventory.UseItem(focusedSlot.slotID);
+                playerInventory.player.Inventory.UseItem(focusedSlot.slotID);
 
                 break;
             case InventoryOption.Equip:
-                playerInventory.player.mInventory.EquipItem(focusedSlot.slotID);
+                playerInventory.player.Inventory.EquipItem(focusedSlot.slotID);
 
                 break;
             case InventoryOption.Unequip:
-                playerInventory.player.mInventory.UnequipItem(focusedSlot.slotID);
+                playerInventory.player.Inventory.UnequipItem(focusedSlot.slotID);
 
                 break;
             case InventoryOption.Move:

@@ -7,28 +7,22 @@ public class WurmAlien : Enemy
 
     public Projectile mSlimePrefab;
 
-    public override void EntityInit()
+    public WurmAlien(EnemyPrototype proto) : base(proto)
     {
 
-        base.EntityInit();
-        EnemyInit();
 
-
-
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
         Body.mIsKinematic = false;
         Body.mIsHeavy = false;
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
+        
 
-
-        StartCoroutine(EnemyBehaviour.Wait(this, 2, EnemyState.Moving));
 
 
     }
 
     public override void EntityUpdate()
     {
-        EnemyUpdate();
 
         base.EntityUpdate();
 
@@ -49,14 +43,14 @@ public class WurmAlien : Enemy
                     //Replace this with pathfinding to the target
 
 
-                    RangedAttack attack = (RangedAttack)mAttackManager.AttackList[0];
+                    RangedAttack attack = mAttackManager.rangedAttacks[0];
 
                     attack.Activate((Target.Position - Position).normalized);
 
 
-                    if (Target.Position.x > body.mPosition.x)
+                    if (Target.Position.x > Position.x)
                     {
-                        if (body.mPS.pushesRightTile && body.mPS.pushesBottom)
+                        if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
                         {
                             EnemyBehaviour.Jump(this, 460);
                         }
@@ -64,7 +58,7 @@ public class WurmAlien : Enemy
                     }
                     else
                     {
-                        if (body.mPS.pushesLeftTile && body.mPS.pushesBottom)
+                        if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
                         {
                             EnemyBehaviour.Jump(this, 460);
                         }
@@ -74,13 +68,13 @@ public class WurmAlien : Enemy
                 }
                 else
                 {
-                    if (body.mPS.pushedLeftTile)
+                    if (Body.mPS.pushedLeftTile)
                     {
 
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
 
                     }
-                    else if (body.mPS.pushedRightTile)
+                    else if (Body.mPS.pushedRightTile)
                     {
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
@@ -88,11 +82,11 @@ public class WurmAlien : Enemy
 
                 }
 
-                body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = mMovingSpeed;
 
                 break;
             case EnemyState.Jumping:
-                if (body.mPS.pushesBottom)
+                if (Body.mPS.pushesBottom)
                 {
                     mEnemyState = EnemyState.Moving;
                     break;
@@ -104,12 +98,12 @@ public class WurmAlien : Enemy
 
                     if (EnemyBehaviour.TargetInRange(this, Target, 20))
                     {
-                        mAttackManager.AttackList[0].Activate();
+                        mAttackManager.meleeAttacks[0].Activate();
                     }
                     else
                     {
 
-                        if (Target.Position.x > body.mPosition.x)
+                        if (Target.Position.x > Position.x)
                         {
                             mMovingSpeed = Mathf.Abs(mMovingSpeed);
                         }
@@ -121,19 +115,19 @@ public class WurmAlien : Enemy
 
                 }
 
-                body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = mMovingSpeed;
 
 
                 break;
         }
 
-        if (body.mSpeed.x > 0)
+        if (Body.mSpeed.x > 0)
         {
-            body.mAABB.ScaleX = 1;
+            Body.mAABB.ScaleX = 1;
         }
         else
         {
-            body.mAABB.ScaleX = -1;
+            Body.mAABB.ScaleX = -1;
 
         }
 

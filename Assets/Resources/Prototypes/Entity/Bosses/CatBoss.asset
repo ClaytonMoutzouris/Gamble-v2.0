@@ -9,15 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e3d8544320e8fe4187c3231ef5b21bc, type: 3}
   m_Name: CatBoss
   m_EditorClassIdentifier: 
-  enemyType: 6
+  entityType: 6
   mName: CatBoss
-  movementSpeed: 50
+  bodySize: {x: 32, y: 24}
+  CollidesWith: 
+  sprite: {fileID: 21300000, guid: 2eb28b65716df224dbdd6ad0ecbb4fed, type: 3}
+  animationController: {fileID: 0}
+  enemyType: 6
+  movementSpeed: 40
   sightRange: 100
   hostility: 2
-  bodySize: {x: 32, y: 24}
   health: 500
-  attacks:
+  rangedAttacks:
   - {fileID: 11400000, guid: 2045475057a71564484fb72707f45644, type: 2}
+  meleeAttacks: []
+  bossType: 1

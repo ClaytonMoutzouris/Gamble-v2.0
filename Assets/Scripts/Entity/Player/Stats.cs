@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Stats
 {
     public Dictionary<StatType, Stat> stats;
     public UIStatContainer uiStats;
-    public Entity entity;
+    private Entity entity;
 
     public Stats(Entity e, UIStatContainer ui = null)
     {
@@ -23,7 +22,10 @@ public class Stats
         }
 
         //Update the UI
-        RefreshUI();
+        if(e != null)
+        {
+            RefreshUI();
+        }
 
     }
 

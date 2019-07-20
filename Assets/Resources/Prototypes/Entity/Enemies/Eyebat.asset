@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Eyebat
   m_EditorClassIdentifier: 
-  enemyType: 1
+  entityType: 1
   mName: Eyebat
+  bodySize: {x: 10, y: 10}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 3f72f09c2c24a8a44bff2d7229d3ab5e, type: 2}
+  enemyType: 1
   movementSpeed: 40
   sightRange: 75
   hostility: 2
-  bodySize: {x: 10, y: 10}
   health: 25
-  attacks:
+  rangedAttacks:
   - {fileID: 11400000, guid: 89da0a88b9e276f418403c05590ecd91, type: 2}
+  meleeAttacks: []

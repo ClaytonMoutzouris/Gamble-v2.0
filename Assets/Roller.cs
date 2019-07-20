@@ -5,26 +5,22 @@ using UnityEngine;
 public class Roller : Enemy
 {
 
-    public override void EntityInit()
+    public Roller(EnemyPrototype proto) : base(proto)
     {
-        base.EntityInit();
         //Body.mAABB.ScaleX *= -1;
-        body.mAABB.baseOffset = Vector3.zero;
-        body.mAABB.Offset = Vector3.zero;
+        Body.mAABB.baseOffset = Vector3.zero;
+        Body.mAABB.Offset = Vector3.zero;
 
 
-        body.mIsKinematic = true;
-        body.mIgnoresGravity = true;
-
-        EnemyInit();
+        Body.mIsKinematic = true;
+        Body.mIgnoresGravity = true;
 
         mEnemyState = EnemyState.Moving;
-        body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed;
     }
 
     public override void EntityUpdate()
     {
-        EnemyUpdate();
         base.EntityUpdate();
 
         switch (mEnemyState)
@@ -34,27 +30,27 @@ public class Roller : Enemy
                 break;
 
             case EnemyState.Moving:
-                if (body.mPS.pushesLeftTile)
+                if (Body.mPS.pushesLeftTile)
                 {
-                    body.mSpeed.y = -mMovingSpeed;
+                    Body.mSpeed.y = -mMovingSpeed;
 
                 }
 
-                 if (body.mPS.pushesBottomTile)
+                 if (Body.mPS.pushesBottomTile)
                 {
-                    body.mSpeed.x = mMovingSpeed;
+                    Body.mSpeed.x = mMovingSpeed;
 
                 }
 
-                 if (body.mPS.pushesTopTile)
+                 if (Body.mPS.pushesTopTile)
                 {
-                    body.mSpeed.x = -mMovingSpeed;
+                    Body.mSpeed.x = -mMovingSpeed;
 
                 }
 
-                 if (body.mPS.pushesRightTile)
+                 if (Body.mPS.pushesRightTile)
                 {
-                    body.mSpeed.y = mMovingSpeed;
+                    Body.mSpeed.y = mMovingSpeed;
 
                 }
 

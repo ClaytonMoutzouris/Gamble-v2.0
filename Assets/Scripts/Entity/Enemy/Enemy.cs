@@ -3,10 +3,9 @@ public enum Hostility { Friendly, Neutral, Hostile };
 public enum TargetRange { Close, Near, Far, OutOfRange };
 public class Enemy : Entity, IHurtable
 {
-    public EnemyState mEnemyState = EnemyState.Idle;
+    public EnemyState mEnemyState = EnemyState.Moving;
     public EnemyType mEnemyType;
     public Health mHealth;
-    [SerializeField]
     EnemyPrototype prototype;
     //Behaviour
     [SerializeField]
@@ -78,58 +77,74 @@ public class Enemy : Entity, IHurtable
         }
     }
 
-    public override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
 
-        if (sight != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(sight.mAABB.Center, sight.mAABB.HalfSize.x);
-        }
-    }
 
-    public virtual void EnemyInit()
+    public Enemy(EnemyPrototype proto) : base()
     {
 
-        mAnimator = GetComponent<Animator>();
+        prototype = proto;
+        mEntityType = EntityType.Enemy;
+
         mEnemyType = prototype.enemyType;
+        mMovingSpeed = proto.movementSpeed;
 
-        HurtBox = new Hurtbox(this, new CustomAABB(transform.position, prototype.bodySize, Vector3.zero, new Vector3(1, 1, 1)));
+        mCollidesWith.Add(EntityType.Player);
+        mCollidesWith.Add(EntityType.Obstacle);
+        mCollidesWith.Add(EntityType.Platform);
+
+        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
+
+
+        HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         HurtBox.UpdatePosition();
         hostility = prototype.hostility;
 
-        sight = new Sightbox(this, new CustomAABB(transform.position, new Vector2(prototype.sightRange, prototype.sightRange), Vector3.zero, new Vector3(1, 1, 1)));
+        sight = new Sightbox(this, new CustomAABB(Position, new Vector2(prototype.sightRange, prototype.sightRange), new Vector2(0, prototype.bodySize.y)));
         sight.UpdatePosition();
 
 
-        EnemyHealthBar temp = Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), transform) as EnemyHealthBar;
-        temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
-        temp.InitHealthbar(this);
 
         //Stats
         mStats = new Stats(this);
-        mHealth = new Health(prototype.health, temp);
+        mHealth = new Health(prototype.health);
 
-        mAttackManager = GetComponent<AttackManager>();
+        mAttackManager = new AttackManager(this);
 
-        foreach(AttackPrototype attack in prototype.attacks)
+        //Debug.Log("Melee Attacks: " + prototype.meleeAttacks.Count);
+        foreach (MeleeAttackPrototype meleeAttack in prototype.meleeAttacks)
         {
-            if(attack is MeleeAttackPrototype)
-            {
-                MeleeAttackPrototype meleeAttack = (MeleeAttackPrototype)attack;
-                MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(transform.position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset, new Vector3(1, 1, 1))));
-                mAttackManager.AttackList.Add(melee);
-                mAttackManager.meleeAttacks.Add(melee);
-
-            }
-            else if (attack is RangedAttackPrototype)
-            {
-                RangedAttackPrototype rangedAttack = (RangedAttackPrototype)attack;
-                mAttackManager.AttackList.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile));
-            }
+        MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)));
+        mAttackManager.meleeAttacks.Add(melee);
+        //Debug.Log("Adding Slime melee attack");
         }
+
+        foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
+        {
+        mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile));
+        }
+
+        
     }
+
+    public override void Spawn(Vector2 spawnPoint)
+    {
+        base.Spawn(spawnPoint);
+        Renderer.SetSprite(prototype.sprite);
+        
+        if (prototype.animationController != null)
+        {
+            Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+        }
+        HurtBox.UpdatePosition();
+        sight.UpdatePosition();
+
+        //Renderer.SetSprite(prototype.)
+        EnemyHealthBar temp = GameObject.Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), Renderer.transform) as EnemyHealthBar;
+        temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
+        temp.InitHealthbar(this);
+        mHealth.healthbar = temp;
+    }
+
 
     public override void SecondUpdate()
     {
@@ -143,9 +158,12 @@ public class Enemy : Entity, IHurtable
     }
 
 
-    public void EnemyUpdate()
+    public override void EntityUpdate()
     {
+        base.EntityUpdate();
         mAttackManager.UpdateAttacks();
+        CollisionManager.UpdateAreas(HurtBox);
+
     }
 
 
@@ -159,10 +177,8 @@ public class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
-        ItemObject temp = Instantiate(Resources.Load<ItemObject>("Prefabs/ItemObject")) as ItemObject;
-        temp.SetItem(ItemDatabase.GetRandomItem());
-        temp.EntityInit();
-        temp.Body.mPosition = Body.mPosition + new Vector2(0, MapManager.cTileSize / 2);
+        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem());
+        temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
     }
 
     public override void ActuallyDie()
@@ -185,7 +201,6 @@ public class Enemy : Entity, IHurtable
         int damage = (int)mHealth.LoseHP(attack.damage);
         ShowFloatingText(damage, Color.white);
 
-        Debug.Log("Current health: " + mHealth.currentHealth + " damage");
 
         if (mHealth.currentHealth == 0)
         {

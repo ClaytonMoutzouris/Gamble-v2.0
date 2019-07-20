@@ -6,7 +6,7 @@ using LocalCoop;
 public enum PlayerInputState { Game, Inventory, Paused };
 
 
-public class PlayerInputController : MonoBehaviour
+public class PlayerInputController
 {
     Player player;
     public PlayerGamepadInput mGamepadInput;
@@ -18,12 +18,11 @@ public class PlayerInputController : MonoBehaviour
     public bool[] playerButtonInput = new bool[(int)ButtonInput.Count];
     public bool[] previousButtonInput = new bool[(int)ButtonInput.Count];
 
-    // Start is called before the first frame update
-    void Start()
+    public PlayerInputController(Player p, PlayerGamepadInput gamepad)
     {
-        
+        player = p;
+        mGamepadInput = gamepad;
     }
-
 
     void UpdatePreviousInputs()
     {
@@ -42,10 +41,10 @@ public class PlayerInputController : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         UpdatePreviousInputs();
-
+        //Debug.Log("Player input " + player.mPlayerIndex + " in " + inputState.ToString());
         switch (inputState)
         {
             case PlayerInputState.Game:

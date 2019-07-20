@@ -65,6 +65,8 @@
     <Compile Include="Assets\Editor\EnemyPrototypeEditor.cs" />
     <Compile Include="Assets\Editor\ItemEditor.cs" />
     <Compile Include="Assets\Editor\MapEditor.cs" />
+    <Compile Include="Assets\Editor\PlayerPrototypeEditor.cs" />
+    <Compile Include="Assets\Editor\ProjectilePrototypeEditor.cs" />
     <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

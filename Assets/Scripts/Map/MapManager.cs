@@ -264,35 +264,81 @@ public class MapManager : MonoBehaviour
         switch (data.type)
         {
             case ObjectType.Chest:
-                Chest temp = Instantiate(Resources.Load<Chest>("Prefabs/Objects/Chest")) as Chest;
-                temp.EntityInit();
-                temp.Body.SetTilePosition(data.TilePosition);
+                Chest temp = new Chest();
+                temp.Spawn(data.TilePosition);
                 break;
             case ObjectType.FallingRock:
-                FallingRock temp2 = Instantiate(Resources.Load<FallingRock>("Prefabs/Objects/FallingRock")) as FallingRock;
-                temp2.EntityInit();
-                temp2.InitPosition(data.TilePosition);
+                FallingRock temp2 = new FallingRock();
+                temp2.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }
     }
 
     public Enemy AddEnemyEntity(EnemyData data)
     {
-        
-        Enemy temp = Instantiate(EnemyDatabase.GetEnemyPrefab(data.type));
-        temp.EntityInit();
-        temp.Body.SetTilePosition(data.TilePosition);
+        EnemyPrototype proto = EnemyDatabase.GetEnemyPrototype(data.type);
+        Enemy temp = null;
+
+        switch (proto.enemyType)
+        {
+            case EnemyType.Slime:
+                temp = new Slime(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Eye:
+                temp = new Eye(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.WurmAlien:
+                temp = new WurmAlien(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Treedude:
+                temp = new Treedude(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Hedgehog:
+                temp = new Hedgehog(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+        }
 
         return temp;
     }
 
-    public void AddBossEntity(BossData data)
+    public BossEnemy AddBossEntity(BossData data)
     {
+        BossPrototype proto = BossDatabase.GetBossPrototype(data.type);
+        BossEnemy temp = null;
 
-        Enemy temp = Instantiate(EnemyDatabase.GetBossPrefab(data.type));
-        temp.EntityInit();
-        temp.Body.SetTilePosition(data.TilePosition);
+        switch (proto.bossType)
+        {
+            case BossType.CatBoss:
+                temp = new CatBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case BossType.LavaBoss:
+                temp = new LavaBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case BossType.SharkBoss:
+                temp = new SharkBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case BossType.HedgehogBoss:
+                temp = new HedgehogBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case BossType.TentacleBoss:
+                temp = new TentacleBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+        }
+
+        return temp;
     }
+
+
 
 
     public void Save(BinaryWriter writer)

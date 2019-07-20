@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  enemyType: 0
+  entityType: 1
   mName: Slime
+  bodySize: {x: 15, y: 8}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: a3668685d34585d47a157727a1bc2fbb, type: 2}
+  enemyType: 0
   movementSpeed: 60
   sightRange: 75
   hostility: 2
-  bodySize: {x: 15, y: 8}
   health: 35
-  attacks:
+  rangedAttacks: []
+  meleeAttacks:
   - {fileID: 11400000, guid: 7502e7b8856f077449422b2725788b5b, type: 2}

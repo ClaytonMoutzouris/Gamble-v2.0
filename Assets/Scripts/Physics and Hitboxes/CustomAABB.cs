@@ -19,11 +19,11 @@ public class CustomAABB
     public bool isCircle;
     public bool flipped;
 
-    public CustomAABB(Vector3 pCenter, Vector3 pHalfSize, Vector3 pOffset, Vector3 pScale)
+    public CustomAABB(Vector3 pCenter, Vector3 pHalfSize, Vector2 offset)
     {
-        scale = pScale;
+        scale = Vector3.one;
         HalfSize = pHalfSize;
-        Offset = pOffset;
+        Offset = offset;
         Center = pCenter;
 
     }
