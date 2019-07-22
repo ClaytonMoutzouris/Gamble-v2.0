@@ -18,6 +18,7 @@ public class Entity {
     public bool collidesWithMap = true;
     public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
+    private EntityPrototype prototype;
     private EntityRenderer renderer;
     private PhysicsBody body;
     private LevelManager game;
@@ -112,8 +113,10 @@ public class Entity {
     #endregion
 
 
-    public Entity()
+    public Entity(EntityPrototype proto)
     {
+        prototype = proto;
+        mEntityType = prototype.entityType;
         Game = LevelManager.instance;
         Map = Game.mMap;
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
@@ -130,7 +133,12 @@ public class Entity {
         GameObject gameObject = GameObject.Instantiate(Resources.Load("Prefabs/EntityRenderer")) as GameObject;
         Renderer = gameObject.GetComponent<EntityRenderer>();
         Renderer.SetEntity(this);
-        
+
+        if (prototype.animationController != null)
+        {
+            Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+        }
+
         Position = spawnPoint;
         Renderer.Draw();
         Body.UpdatePosition();

@@ -246,7 +246,7 @@ public class RangedAttack : Attack
 
         base.Activate();
 
-        Projectile shot = new Projectile(projectile, direction);
+        Projectile shot = new Projectile(projectile, this, direction);
         shot.Owner = mEntity;
         shot.Spawn(mEntity.Position+new Vector2(0, mEntity.Body.mAABB.HalfSizeY));
         

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: Pistol
   mValue: 25
-  sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
+  sprite: {fileID: 21300000, guid: 734c01c5bedd82d4bb49030f8bb6d026, type: 3}
   mSlot: 6
   statBonuses:
   - type: 4
     bonusValue: 5
   isEquipped: 0
-  attack: {fileID: 11400000, guid: a21493764c16e284480bf70a1055cfd4, type: 2}
+  attack: {fileID: 11400000, guid: 30f97f3f2a5c82d4fb2e7db330ac3d18, type: 2}

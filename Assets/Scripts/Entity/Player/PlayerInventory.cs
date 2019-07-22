@@ -84,7 +84,7 @@ public class PlayerInventory
 
     public void DropItem(int index)
     {
-        ItemObject temp = new ItemObject(items[index]);
+        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(mPlayer.Position + new Vector2(0, MapManager.cTileSize / 2));
         items[index] = null;
         inventoryUI.RemoveItem(index);

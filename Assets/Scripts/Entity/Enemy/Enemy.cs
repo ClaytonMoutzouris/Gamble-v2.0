@@ -79,11 +79,10 @@ public class Enemy : Entity, IHurtable
 
 
 
-    public Enemy(EnemyPrototype proto) : base()
+    public Enemy(EnemyPrototype proto) : base(proto)
     {
 
         prototype = proto;
-        mEntityType = EntityType.Enemy;
 
         mEnemyType = prototype.enemyType;
         mMovingSpeed = proto.movementSpeed;
@@ -177,7 +176,7 @@ public class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
-        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem());
+        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
     }
 

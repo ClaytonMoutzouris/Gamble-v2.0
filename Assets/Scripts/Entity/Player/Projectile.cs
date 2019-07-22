@@ -41,7 +41,7 @@ public class Projectile : Entity, IProjectile {
         }
     }
 
-    public Projectile(ProjectilePrototype proto, Vector2 direction) : base()
+    public Projectile(ProjectilePrototype proto, RangedAttack rAttack, Vector2 direction) : base(proto)
     {
         prototype = proto;
         mEntityType = EntityType.Projectile;
@@ -60,7 +60,7 @@ public class Projectile : Entity, IProjectile {
             SoundManager.instance.PlaySingle(prototype.sfx);
         }
 
-        attack = new Attack(10);
+        attack = rAttack;
         mMovingSpeed = prototype.speed;
         this.direction = direction;
         //AudioSource.PlayClipAtPoint(sfx, Body.mPosition);
@@ -86,7 +86,7 @@ public class Projectile : Entity, IProjectile {
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);
-
+        Renderer.SetSprite(prototype.sprite);
         if (prototype.animationController != null)
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;

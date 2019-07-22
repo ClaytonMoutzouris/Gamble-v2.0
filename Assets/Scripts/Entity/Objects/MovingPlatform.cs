@@ -13,7 +13,7 @@ public class MovingPlatform : Entity
 
     PlatformAxis axis;
 
-    public MovingPlatform() : base()
+    public MovingPlatform(EntityPrototype proto) : base(proto)
     {
         mWait = false;
 

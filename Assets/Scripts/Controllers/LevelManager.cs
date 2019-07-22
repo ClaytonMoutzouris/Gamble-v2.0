@@ -68,8 +68,8 @@ public class LevelManager : MonoBehaviour
     public void AddPlayer(int index, PlayerGamepadInput input)
     {
         Player newPlayer = new Player(Resources.Load("PrototypeS/Entity/Player/PlayerPrototype") as PlayerPrototype, index);
-        newPlayer.SetInput(input);
         players[index] = newPlayer;
+        newPlayer.SetInput(input);
 
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
 

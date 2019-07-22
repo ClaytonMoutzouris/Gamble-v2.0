@@ -8,7 +8,7 @@ public class RollingBoulder : Entity
     [HideInInspector]
     public float mDir = 1;
 
-    public RollingBoulder() : base()
+    public RollingBoulder(EntityPrototype proto) : base(proto)
     {
 
 

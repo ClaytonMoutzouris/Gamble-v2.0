@@ -12,9 +12,8 @@ public class FallingRock : Entity
     [HideInInspector]
     public int sizeDown = 0;
 
-    public FallingRock() :base()
+    public FallingRock(EntityPrototype proto) :base(proto)
     {
-
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(15, 15), new Vector2(0, 15)));
 
         Body.mSpeed = Vector2.zero;

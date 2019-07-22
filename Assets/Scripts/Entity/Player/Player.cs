@@ -152,23 +152,19 @@ public class Player : Entity, IHurtable
         this.Input = new PlayerInputController(this, input);
     }
 
-    public Player(PlayerPrototype proto, int index) : base()
+    public Player(PlayerPrototype proto, int index) : base(proto)
     {
         prototype = proto;
-        mEntityType = proto.entityType;
         bullets = new List<ProjectilePrototype>();
-
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0, Constants.cHalfSizeY)));
+        mPlayerIndex = index;
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
 
 
         mWalkSpeed = prototype.walkSpeed;
         mJumpSpeed = prototype.jumpSpeed;
         mClimbSpeed = prototype.climbSpeed;
+        mCollidesWith = proto.CollidesWith;
 
-        mCollidesWith.Add(EntityType.Enemy);
-        mCollidesWith.Add(EntityType.Boss);
-        mCollidesWith.Add(EntityType.Obstacle);
-        mCollidesWith.Add(EntityType.Platform);
         HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
 
         Health = new Health(prototype.baseHealth, bar);
@@ -192,7 +188,7 @@ public class Player : Entity, IHurtable
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
 
 
-        HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(Constants.cHalfSizeX, Constants.cHalfSizeY), new Vector2(0, Constants.cHalfSizeY)));
+        HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         HurtBox.UpdatePosition();
 
         /*
@@ -203,13 +199,19 @@ public class Player : Entity, IHurtable
 
 
         AttackManager = new AttackManager(this);
-        //Hitbox hitbox = Instantiate<Hitbox>(HurtBox);
-        MeleeAttack temp = new MeleeAttack(this, 0.5f, 50, .1f, new Hitbox(this, new CustomAABB(Position, new Vector3(5, 10, 0), new Vector3(10, 0, 0))));
-        AttackManager.meleeAttacks.Add(temp);
 
-        RangedAttack ranged = new RangedAttack(this, 0.05f, 5, 0.05f, prototype.projectiles[0]);
-        AttackManager.rangedAttacks.Add(ranged);
-        
+        foreach (MeleeAttackPrototype meleeAttack in prototype.meleeAttacks)
+        {
+            MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)));
+            AttackManager.meleeAttacks.Add(melee);
+            //Debug.Log("Adding Slime melee attack");
+        }
+
+        foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
+        {
+            AttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile));
+        }
+
 
 
         if (MiniMap.instance != null)
@@ -429,6 +431,7 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = mWalkSpeed;
 
                     }
+                    Renderer.Sprite.flipX = false;
                     Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
@@ -441,7 +444,7 @@ public class Player : Entity, IHurtable
                     {
                         Body.mSpeed.x = -mWalkSpeed;
                     }
-
+                    Renderer.Sprite.flipX = true;
                     Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 

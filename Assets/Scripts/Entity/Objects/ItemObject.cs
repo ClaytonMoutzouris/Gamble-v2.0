@@ -6,10 +6,11 @@ public class ItemObject : Entity {
 
     public Item mItemData;
 
-    public ItemObject(Item iData) : base()
+    public ItemObject(Item iData, EntityPrototype proto) : base(proto)
     {
+        
         mItemData = iData;
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(5,5), Vector2.zero));
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(5,5),new Vector2(0,5)));
         Body.mIsKinematic = false;
 
     }

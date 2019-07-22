@@ -12,11 +12,11 @@ public class Chest : Entity {
     public bool mOpen = false;
 
 
-    public Chest() : base()
+    public Chest(EntityPrototype proto) : base(proto)
     {
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(8,8), Vector2.zero));
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(8,8), new Vector2(0,8)));
 
         Body.mIsKinematic = false;
 
@@ -39,8 +39,8 @@ public class Chest : Entity {
         mOpen = true;
         Renderer.SetAnimState("ChestOpen");
 
-        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem());
-        temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
+        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+        temp.Spawn(Position);
         //temp.Position = Body.mPosition +new Vector2(0, MapManager.cTileSize/2);
         //temp.mOldSpeed.y = Constants.cJumpSpeed;
         //temp.mSpeed.y = Constants.cJumpSpeed*10;

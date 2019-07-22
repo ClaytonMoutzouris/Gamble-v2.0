@@ -22,7 +22,7 @@ public class Stats
         }
 
         //Update the UI
-        if(e != null)
+        if(uiStats != null)
         {
             RefreshUI();
         }

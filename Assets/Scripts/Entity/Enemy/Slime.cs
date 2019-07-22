@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
-    float closeRange = 35f;
+    float closeRange = 30f;
     float midRange = 70f;
     float longRange = 140f;
 
@@ -84,12 +84,13 @@ public class Slime : Enemy {
                 {
                     if (Body.mPS.pushedLeftTile)
                     {
-
+                        //Renderer.Sprite.flipX = true;
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
 
                     }
                     else if (Body.mPS.pushedRightTile)
                     {
+                        //Renderer.Sprite.flipX = true;
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
 
@@ -155,16 +156,17 @@ public class Slime : Enemy {
 
                 break;
         }
-
+        /*
         if (Body.mSpeed.x > 0)
         {
+            Renderer.Sprite.flipX = true;
             Body.mAABB.ScaleX = 1;
         } else if (Body.mSpeed.x < 0)
         {
+            Renderer.Sprite.flipX = false;
             Body.mAABB.ScaleX = -1;
-
         }
-
+        */
         CollisionManager.UpdateAreas(HurtBox);
         CollisionManager.UpdateAreas(Sight);
         Sight.mEntitiesInSight.Clear();

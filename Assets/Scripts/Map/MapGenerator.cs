@@ -378,7 +378,7 @@ public static class MapGenerator
             //PopulateMap(map);
 
             PopulateBoss(map);
-            //AddChests(map);
+            AddChests(map);
             //AddFallingRock(map);
 
             //PopulateBoss(map);

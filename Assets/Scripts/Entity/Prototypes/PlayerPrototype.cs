@@ -11,5 +11,6 @@ public class PlayerPrototype : EntityPrototype
 
     public List<ProjectilePrototype> projectiles;
 
-
+    public List<RangedAttackPrototype> rangedAttacks;
+    public List<MeleeAttackPrototype> meleeAttacks;
 }

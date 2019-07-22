@@ -264,11 +264,11 @@ public class MapManager : MonoBehaviour
         switch (data.type)
         {
             case ObjectType.Chest:
-                Chest temp = new Chest();
-                temp.Spawn(data.TilePosition);
+                Chest temp = new Chest(Resources.Load("Prototypes/Entity/Objects/Chest") as EntityPrototype);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case ObjectType.FallingRock:
-                FallingRock temp2 = new FallingRock();
+                FallingRock temp2 = new FallingRock(Resources.Load("Prototypes/Entity/Objects/FallingRock") as EntityPrototype);
                 temp2.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }

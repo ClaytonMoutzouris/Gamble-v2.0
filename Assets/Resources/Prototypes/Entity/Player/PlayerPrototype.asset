@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerPrototype
   m_EditorClassIdentifier: 
   entityType: 0
-  mName: 
-  bodySize: {x: 0, y: 0}
-  CollidesWith: 
+  mName: Player
+  bodySize: {x: 12, y: 6}
+  CollidesWith: 010000000200000003000000
   sprite: {fileID: 0}
   animationController: {fileID: 9100000, guid: 7b088691a18fcef41bc65e57bd2418b1, type: 2}
   baseHealth: 100
@@ -24,3 +24,7 @@ MonoBehaviour:
   climbSpeed: 90
   projectiles:
   - {fileID: 11400000, guid: cda1aac8af354c646bb5760708318773, type: 2}
+  rangedAttacks:
+  - {fileID: 11400000, guid: a21493764c16e284480bf70a1055cfd4, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: b5b3ba9c757dd4c49becf47bcde626c6, type: 2}

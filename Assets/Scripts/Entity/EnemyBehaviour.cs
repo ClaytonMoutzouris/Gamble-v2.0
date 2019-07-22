@@ -60,8 +60,28 @@ public static class EnemyBehaviour
 
     public static void MoveHorizontal(Enemy enemy)
     {
-
+        if((int)enemy.mDirection == -1)
+        {
+            enemy.Renderer.Sprite.flipX = false;
+        }
+        else
+        {
+            enemy.Renderer.Sprite.flipX = true;
+        }
         enemy.Body.mSpeed.x = enemy.mMovingSpeed * (int)enemy.mDirection;
+
+        if (enemy.Body.mSpeed.x > 0)
+        {
+            enemy.mDirection = EntityDirection.Right;
+            enemy.Renderer.Sprite.flipX = true;
+            enemy.Body.mAABB.ScaleX = 1;
+        }
+        else if (enemy.Body.mSpeed.x < 0)
+        {
+            enemy.mDirection = EntityDirection.Left;
+            enemy.Renderer.Sprite.flipX = false;
+            enemy.Body.mAABB.ScaleX = -1;
+        }
     }
 
     public static void MoveVertical(Enemy enemy)
@@ -74,10 +94,12 @@ public static class EnemyBehaviour
         if(enemy.Position.x > target.Position.x)
         {
             enemy.Body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
+            //enemy.Body.mAABB.ScaleX = 1;
         }
         else
         {
             enemy.Body.mSpeed.x = enemy.mMovingSpeed * -1;
+            //enemy.Body.mAABB.ScaleX = -1;
         }
     }
 
@@ -90,6 +112,15 @@ public static class EnemyBehaviour
 
     public static void MeleeAttack(Enemy enemy, int index)
     {
+        if((int)enemy.mDirection == 1)
+        {
+            enemy.mAttackManager.meleeAttacks[index].hitbox.mAABB.ScaleX = 1;
+        }
+        else
+        {
+            enemy.mAttackManager.meleeAttacks[index].hitbox.mAABB.ScaleX = -1;
+
+        }
         enemy.mAttackManager.meleeAttacks[index].Activate();
         enemy.mEnemyState = EnemyState.Attacking;
         enemy.Body.mSpeed.x = 0;
