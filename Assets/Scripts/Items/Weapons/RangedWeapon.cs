@@ -14,15 +14,26 @@ public class RangedWeapon : Weapon
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        player.AttackManager.rangedAttacks[0] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.projectile);
+        if(mSlot == EquipmentSlot.Mainhand)
+        {
+            player.AttackManager.rangedAttacks[0] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.projectile, attack.offset);
+            ((PlayerRenderer)player.Renderer).weapon.sprite = sprite;
+
+
+        } else
+        {
+            //player.AttackManager.rangedAttacks[1] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.projectile, attack.offset);
+            //((PlayerRenderer)player.Renderer).weapon.sprite = sprite;
+        }
     }
 
     public override void OnUnequip(Player player)
     {
         base.OnUnequip(player);
 
-        //player.AttackManager.rangedAttacks[0] = new RangedAttack(player, player.prototype.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile);
-     
+        player.AttackManager.rangedAttacks[0] = player.defaultRanged;
+        ((PlayerRenderer)player.Renderer).weapon.sprite = null;
+
     }
 
 }

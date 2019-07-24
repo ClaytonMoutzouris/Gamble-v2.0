@@ -15,7 +15,7 @@ MonoBehaviour:
   mName: Pistol
   mValue: 25
   sprite: {fileID: 21300000, guid: 734c01c5bedd82d4bb49030f8bb6d026, type: 3}
-  mSlot: 6
+  mSlot: 5
   statBonuses:
   - type: 4
     bonusValue: 5

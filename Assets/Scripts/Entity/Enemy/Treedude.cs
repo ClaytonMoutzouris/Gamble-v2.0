@@ -118,11 +118,13 @@ public class Treedude : Enemy
 
         if (Body.mSpeed.x > 0)
         {
-            Body.mAABB.ScaleX = 1;
+            mDirection = EntityDirection.Right;
+            //Body.mAABB.ScaleX = 1;
         }
         else
         {
-            Body.mAABB.ScaleX = -1;
+            mDirection = EntityDirection.Left;
+            //Body.mAABB.ScaleX = -1;
 
         }
 

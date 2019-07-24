@@ -219,10 +219,12 @@ public class MeleeAttack : Attack
 public class RangedAttack : Attack
 {
     public ProjectilePrototype projectile;
+    public Vector2 projectileOffset;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, ProjectilePrototype proj) : base(entity, duration, damage, cd)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, ProjectilePrototype proj, Vector2 offset) : base(entity, duration, damage, cd)
     {
         projectile = proj;
+        projectileOffset = offset;
     }
 
     //These only cover the shooting animation really
@@ -248,8 +250,8 @@ public class RangedAttack : Attack
 
         Projectile shot = new Projectile(projectile, this, direction);
         shot.Owner = mEntity;
-        shot.Spawn(mEntity.Position+new Vector2(0, mEntity.Body.mAABB.HalfSizeY));
-        
+        shot.Spawn(mEntity.Position+new Vector2(0, projectileOffset.y) + (projectileOffset * direction));
+
     }
 
 

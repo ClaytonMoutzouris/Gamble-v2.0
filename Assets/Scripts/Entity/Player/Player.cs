@@ -26,7 +26,8 @@ public class Player : Entity, IHurtable
     public int mPlayerIndex;
     public Stats mStats;
     private AttackManager attackManager;
-
+    public MeleeAttack defaultMelee;
+    public RangedAttack defaultRanged;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -170,13 +171,12 @@ public class Player : Entity, IHurtable
         Health = new Health(prototype.baseHealth, bar);
 
 
-        /*
-        for (int c = 0; c < colorPallete.Count; c++)
+        
+        for (int c = 0; c < prototype.colorPallete.Count; c++)
         {
-            colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+            prototype.colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         }
-        */
-        //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
+        
 
         mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
 
@@ -204,12 +204,16 @@ public class Player : Entity, IHurtable
         {
             MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)));
             AttackManager.meleeAttacks.Add(melee);
+            defaultMelee = melee;
             //Debug.Log("Adding Slime melee attack");
         }
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-            AttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile));
+            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile, rangedAttack.offset);
+            AttackManager.rangedAttacks.Add(ranged);
+            defaultRanged = ranged;
+
         }
 
 
@@ -223,11 +227,22 @@ public class Player : Entity, IHurtable
 
     public override void Spawn(Vector2 spawnPoint)
     {
-        base.Spawn(spawnPoint);
+        //base.Spawn(spawnPoint);
+        GameObject gameObject = GameObject.Instantiate(Resources.Load("Prefabs/PlayerRenderer")) as GameObject;
+        Renderer = gameObject.GetComponent<PlayerRenderer>();
+        Renderer.SetEntity(this);
+
         if (prototype.animationController != null)
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+            ColorSwap.SwapSpritesTexture(Renderer.GetComponent<SpriteRenderer>(), prototype.colorPallete);
+
         }
+
+        Position = spawnPoint;
+        Renderer.Draw();
+        Body.UpdatePosition();
+        isSpawned = true;
 
         HurtBox.UpdatePosition();
     }
@@ -431,8 +446,8 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = mWalkSpeed;
 
                     }
-                    Renderer.Sprite.flipX = false;
-                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Right;
+                    //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
@@ -444,8 +459,9 @@ public class Player : Entity, IHurtable
                     {
                         Body.mSpeed.x = -mWalkSpeed;
                     }
-                    Renderer.Sprite.flipX = true;
-                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Left;
+                    //Renderer.Sprite.flipX = true;
+                    //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
@@ -529,7 +545,8 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = 0.0f;
                     else
                         Body.mSpeed.x = mWalkSpeed;
-                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Right;
+                    //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
@@ -537,7 +554,8 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = 0.0f;
                     else
                         Body.mSpeed.x = -mWalkSpeed;
-                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Left;
+                    //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
@@ -718,7 +736,8 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = 0.0f;
                     else
                         Body.mSpeed.x = mWalkSpeed;
-                    Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Right;
+                    //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
                 {
@@ -726,7 +745,8 @@ public class Player : Entity, IHurtable
                         Body.mSpeed.x = 0.0f;
                     else
                         Body.mSpeed.x = -mWalkSpeed;
-                    Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
+                    mDirection = EntityDirection.Left;
+                    //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
                 //if we hit the ground
@@ -776,7 +796,10 @@ public class Player : Entity, IHurtable
         if (Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0)
         {
             RangedAttack attack = AttackManager.rangedAttacks[0];
+            Vector2 aim = GetAim();
+            ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
             attack.Activate(GetAim());
+
         }
 
 
@@ -875,7 +898,8 @@ public class Player : Entity, IHurtable
                     //finally grab the edge
                     mCurrentState = PlayerState.GrabLedge;
                     Body.mIgnoresGravity = true;
-                    Body.mAABB.ScaleX *= -1;
+                    mDirection = (EntityDirection)((int)mDirection * -1);
+                    //Body.mAABB.ScaleX *= -1;
                     Renderer.SetAnimState("GrabLedge");
                     //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
                     break;
@@ -954,7 +978,6 @@ public class Player : Entity, IHurtable
             aim += Vector2.right;
 
         }
-
 
         return aim;
     }

@@ -16,4 +16,4 @@ MonoBehaviour:
   duration: 0.05
   cooldown: 0.1
   startUpFrames: 0
-  projectile: {fileID: 11400000, guid: cda1aac8af354c646bb5760708318773, type: 2}
+  projectile: {fileID: 11400000, guid: c36b34104119e4148b3c9d044ca52f13, type: 2}

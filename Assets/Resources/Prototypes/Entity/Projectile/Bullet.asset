@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf637496bbacce41808c56d28caee01, type: 3}
   m_Name: Bullet
   m_EditorClassIdentifier: 
+  entityType: 5
+  mName: 
+  bodySize: {x: 5, y: 5}
+  CollidesWith: 
+  sprite: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 666554ec3c0e4a24f9fc727b64de1cc3, type: 2}
   pierce: 0
   ignoreGravity: 1
   angled: 1
-  bodySize: {x: 5, y: 5}
+  maxTime: 10
   sfx: {fileID: 0}
   speed: 100
-  animationController: {fileID: 9100000, guid: 666554ec3c0e4a24f9fc727b64de1cc3, type: 2}

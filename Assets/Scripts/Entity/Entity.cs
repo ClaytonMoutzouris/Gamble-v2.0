@@ -12,7 +12,6 @@ public class Entity {
     public string Name;
     public EntityType mEntityType;
     public List<EntityType> mCollidesWith;
-    public List<Color> colorPallete;
     public float mMovingSpeed;
     public Vector2 Position;
     public bool collidesWithMap = true;
@@ -28,7 +27,7 @@ public class Entity {
     [HideInInspector]
     public int mUpdateId = -1; //The order in the update list that the entity is updated, this matters for things like mounting
     #endregion
-    private bool isSpawned = false;
+    protected bool isSpawned = false;
 
     //This might be better served as an entity type matrix rather than collision type
 

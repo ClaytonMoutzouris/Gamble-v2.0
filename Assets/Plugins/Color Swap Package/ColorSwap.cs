@@ -31,6 +31,18 @@ public static class ColorSwap {
 
     }
 
+    public static void SwapSpritesTexture(SpriteRenderer sR, SwapIndex index, Color color)
+    {
+
+        //InitColorSwapTex(sR);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        SwapColor(index, color);
+
+        mColorSwapTex.Apply();
+
+
+    }
+
     public static void InitColorSwapTex(SpriteRenderer sR)
     {
         Texture2D colorSwapTex = new Texture2D(256, 1, TextureFormat.RGBA32, false, false);

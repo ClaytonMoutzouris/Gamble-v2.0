@@ -82,12 +82,14 @@ public class HedgehogBoss : BossEnemy
             if (Target.Position.x > Position.x)
             {
                 mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                Body.mAABB.ScaleX = -1;
+                mDirection = EntityDirection.Right;
+                //Body.mAABB.ScaleX = -1;
             }
             else if (Target.Position.x < Position.x)
             {
                 mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-                Body.mAABB.ScaleX = 1;
+                mDirection = EntityDirection.Left;
+                //Body.mAABB.ScaleX = 1;
             }
         }
 
@@ -115,12 +117,14 @@ public class HedgehogBoss : BossEnemy
             if (Target.Position.x > Position.x)
             {
                 mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                Body.mAABB.ScaleX = -1;
+                mDirection = EntityDirection.Right;
+                //Body.mAABB.ScaleX = -1;
             }
             else if (Target.Position.x < Position.x)
             {
                 mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-                Body.mAABB.ScaleX = 1;
+                mDirection = EntityDirection.Left;
+                //Body.mAABB.ScaleX = 1;
             }
         }
         mAttackManager.meleeAttacks[0].Activate();

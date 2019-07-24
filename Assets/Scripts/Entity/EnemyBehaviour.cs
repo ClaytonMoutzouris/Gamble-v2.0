@@ -73,14 +73,14 @@ public static class EnemyBehaviour
         if (enemy.Body.mSpeed.x > 0)
         {
             enemy.mDirection = EntityDirection.Right;
-            enemy.Renderer.Sprite.flipX = true;
-            enemy.Body.mAABB.ScaleX = 1;
+            //enemy.Renderer.Sprite.flipX = true;
+            //enemy.Body.mAABB.ScaleX = 1;
         }
         else if (enemy.Body.mSpeed.x < 0)
         {
             enemy.mDirection = EntityDirection.Left;
-            enemy.Renderer.Sprite.flipX = false;
-            enemy.Body.mAABB.ScaleX = -1;
+            //enemy.Renderer.Sprite.flipX = false;
+            //enemy.Body.mAABB.ScaleX = -1;
         }
     }
 

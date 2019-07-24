@@ -109,7 +109,8 @@ public class LavaBoss : BossEnemy
                 Knocked = true;
                 mAttackManager.meleeAttacks[0].Deactivate();
                 KnockTimer = 0;
-                Body.mAABB.ScaleX *= -1;
+                mDirection = (EntityDirection)((int)mDirection * -1);
+                //Body.mAABB.ScaleX *= -1;
 
             }
         }
@@ -169,12 +170,14 @@ public class LavaBoss : BossEnemy
         if (Target.Position.x > Position.x)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed);
-            Body.mAABB.ScaleX = -1;
+            mDirection = EntityDirection.Right;
+            //Body.mAABB.ScaleX = -1;
         }
         else if (Target.Position.x < Position.x)
         {
             mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-            Body.mAABB.ScaleX = 1;
+            mDirection = EntityDirection.Left;
+            //Body.mAABB.ScaleX = 1;
         }
 
         Body.mSpeed.x = mMovingSpeed;

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
+
 [System.Serializable]
 public struct PositionState
 {
+
     public bool pushesRight;
     public bool pushesLeft;
     public bool pushesBottom;

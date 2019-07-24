@@ -50,7 +50,7 @@ public class EntityRenderer : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -77,7 +77,18 @@ public class EntityRenderer : MonoBehaviour
             //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
 
             Gizmos.DrawCube(P.HurtBox.mAABB.Center, P.HurtBox.mAABB.HalfSize * 2);
+
+            if(P.AttackManager != null && P.AttackManager.meleeAttacks != null && P.AttackManager.meleeAttacks[0] != null && P.AttackManager.meleeAttacks[0].mIsActive)
+            {
+                Gizmos.color = Color.blue;
+
+                Gizmos.DrawCube(P.AttackManager.meleeAttacks[0].hitbox.mAABB.Center, P.AttackManager.meleeAttacks[0].hitbox.mAABB.HalfSize* 2);
+
+                
+            }
         }
+
+        
 
         Gizmos.color = Color.green;
 
@@ -95,7 +106,7 @@ public class EntityRenderer : MonoBehaviour
 
     public void Draw()
     {
-
+        sprite.flipX = (Entity.mDirection == EntityDirection.Left);
         transform.position = entity.Position;
         
     }

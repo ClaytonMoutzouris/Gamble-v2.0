@@ -9,4 +9,6 @@ public abstract class AttackPrototype : ScriptableObject
     public float cooldown;
     public int startUpFrames;
 
+    public Vector2 offset = new Vector2(0,0);
+
 }

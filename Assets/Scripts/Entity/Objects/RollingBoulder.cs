@@ -19,13 +19,15 @@ public class RollingBoulder : Entity
         if (r == 1)
         {
             mDir = 1;
-            Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
+            mDirection = EntityDirection.Right;
+            //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
 
         }
         else
         {
             mDir = -1;
-            Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
+            mDirection = EntityDirection.Left;
+            //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
         }
 
 

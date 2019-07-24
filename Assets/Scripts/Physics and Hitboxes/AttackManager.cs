@@ -9,6 +9,7 @@ using UnityEngine;
 public class AttackManager {
 
     public Entity mEntity;
+
     public List<RangedAttack> rangedAttacks;
     public List<MeleeAttack> meleeAttacks;
 
@@ -16,6 +17,7 @@ public class AttackManager {
     {
         mEntity = entity;
         rangedAttacks = new List<RangedAttack>();
+
         meleeAttacks = new List<MeleeAttack>();
     }
 

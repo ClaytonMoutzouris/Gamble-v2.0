@@ -14,12 +14,12 @@ public class MeleeWeapon : Weapon
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        //player.mAttackManager.AttackList[0] = attack;
+        player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, attack.duration, attack.damage, attack.cooldown, new Hitbox(player, new CustomAABB(player.Position, attack.hitboxSize, attack.hitboxOffset)));
     }
 
     public override void OnUnequip(Player player)
     {
         base.OnUnequip(player);
-
+        player.AttackManager.meleeAttacks[0] = player.defaultMelee;
     }
 }
