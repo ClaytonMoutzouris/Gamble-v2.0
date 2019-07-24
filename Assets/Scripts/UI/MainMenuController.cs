@@ -23,7 +23,7 @@ public class MainMenuController : MonoBehaviour
 
     public void StartGame()
     {
-
+        SceneManager.LoadScene(1);
     }
 
     // Update is called once per frame

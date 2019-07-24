@@ -47,9 +47,9 @@ public class Projectile : Entity, IProjectile {
         mEntityType = EntityType.Projectile;
         mMaxTime = proto.maxTime;
 
-        mHitbox = new Hitbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
+        mHitbox = new Hitbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, 0)));
         //mHitbox.mState = ColliderState.Closed;
-        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, 0)));
         //Body.mState = ColliderState.Closed;
 
         Body.mIsKinematic = true;
