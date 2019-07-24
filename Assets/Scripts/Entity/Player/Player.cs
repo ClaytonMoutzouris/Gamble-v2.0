@@ -210,7 +210,7 @@ public class Player : Entity, IHurtable
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile, rangedAttack.offset);
+            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset);
             AttackManager.rangedAttacks.Add(ranged);
             defaultRanged = ranged;
 

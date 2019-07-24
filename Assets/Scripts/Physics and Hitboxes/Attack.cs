@@ -220,13 +220,16 @@ public class RangedAttack : Attack
 {
     public ProjectilePrototype projectile;
     public Vector2 projectileOffset;
+    public int numberOfProjectiles;
+    public float spreadAngle;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, ProjectilePrototype proj, Vector2 offset) : base(entity, duration, damage, cd)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, int numProj, float spreadAngle, ProjectilePrototype proj, Vector2 offset) : base(entity, duration, damage, cd)
     {
         projectile = proj;
         projectileOffset = offset;
+        numberOfProjectiles = numProj;
+        this.spreadAngle = spreadAngle;
     }
-
     //These only cover the shooting animation really
     public override void Activate()
     {
@@ -248,12 +251,37 @@ public class RangedAttack : Attack
 
         base.Activate();
 
-        Projectile shot = new Projectile(projectile, this, direction);
-        shot.Owner = mEntity;
-        shot.Spawn(mEntity.Position+new Vector2(0, projectileOffset.y) + (projectileOffset * direction));
+        float interval = spreadAngle / numberOfProjectiles;
+
+        for (int i = 0; i < numberOfProjectiles; i++)
+        {
+            Vector2 tempDir = direction;
+            if(numberOfProjectiles > 1)
+            {
+                tempDir = tempDir.Rotate(-spreadAngle/2 + (interval*i));
+            }
+
+            tempDir.Normalize();
+
+            Projectile shot = new Projectile(projectile, this, tempDir);
+            shot.Owner = mEntity;
+            shot.Spawn(mEntity.Position + new Vector2(0, projectileOffset.y) + (projectileOffset * tempDir));
+        }
+
+
 
     }
 
+
+    public static Vector2 RadianToVector2(float radian)
+    {
+        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+    }
+
+    public static Vector2 DegreeToVector2(float degree)
+    {
+        return RadianToVector2(degree * Mathf.Deg2Rad);
+    }
 
     public override void Deactivate()
     {

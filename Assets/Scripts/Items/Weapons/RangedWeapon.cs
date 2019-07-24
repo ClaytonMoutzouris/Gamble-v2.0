@@ -16,7 +16,7 @@ public class RangedWeapon : Weapon
         base.OnEquip(player);
         if(mSlot == EquipmentSlot.Mainhand)
         {
-            player.AttackManager.rangedAttacks[0] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.projectile, attack.offset);
+            player.AttackManager.rangedAttacks[0] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.numberOfProjectiles, attack.spreadAngle, attack.projectile, attack.offset);
             ((PlayerRenderer)player.Renderer).weapon.sprite = sprite;
 
 

@@ -119,7 +119,7 @@ public class Enemy : Entity, IHurtable
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-        mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.projectile, rangedAttack.offset));
+        mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset));
         }
 
         

@@ -18,3 +18,5 @@ MonoBehaviour:
   startUpFrames: 0
   offset: {x: 6, y: 12}
   projectile: {fileID: 11400000, guid: d336cdc49150243468c1f2796ba65cd0, type: 2}
+  numberOfProjectiles: 1
+  spreadAngle: 0
