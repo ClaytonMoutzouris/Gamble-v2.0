@@ -271,9 +271,17 @@ public class MapManager : MonoBehaviour
                 FallingRock temp2 = new FallingRock(Resources.Load("Prototypes/Entity/Objects/FallingRock") as EntityPrototype);
                 temp2.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case ObjectType.FlowerBed:
+                FlowerBed temp3 = new FlowerBed(Resources.Load("Prototypes/Entity/Objects/FlowerBed") as EntityPrototype);
+                temp3.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.Tree:
+                Tree temp4 = new Tree(Resources.Load("Prototypes/Entity/Objects/Tree") as EntityPrototype);
+                temp4.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
-
+        
     public Enemy AddEnemyEntity(EnemyData data)
     {
         EnemyPrototype proto = EnemyDatabase.GetEnemyPrototype(data.type);

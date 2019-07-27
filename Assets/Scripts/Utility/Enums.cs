@@ -4,7 +4,7 @@ using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss };
 public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Treedude, Count, Boss };
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count }
-public enum ObjectType { FallingRock, RollingBoulder, Chest, Item };
+public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree};
 
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
@@ -30,6 +30,8 @@ public enum TileType
     ObstacleBlock1, //suppose a size of 2x2
     FallingRock,
     Chest,
+    FlowerBed,
+    Tree,
     Boss,
     Count,
 }
@@ -50,6 +52,8 @@ public enum RoomTile
     ObstacleBlock1,
     FallingRock,
     Chest,
+    FlowerBed,
+    Tree,
     Count,
 
 }
