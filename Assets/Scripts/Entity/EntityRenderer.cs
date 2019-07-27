@@ -95,7 +95,7 @@ public class EntityRenderer : MonoBehaviour
 
         Gizmos.color = Color.green;
 
-        Gizmos.DrawWireCube(Entity.Body.mAABB.Center, Entity.Body.mAABB.HalfSize*2);
+        //Gizmos.DrawWireCube(Entity.Body.mAABB.Center, Entity.Body.mAABB.HalfSize*2);
 
 
 

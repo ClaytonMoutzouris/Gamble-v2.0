@@ -104,9 +104,11 @@
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Chest.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FallingRock.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\FlowerBed.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />

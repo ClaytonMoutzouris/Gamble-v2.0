@@ -379,6 +379,7 @@ public static class MapGenerator
 
             PopulateBoss(map);
             AddChests(map);
+            AddFauna(map);
             //AddFallingRock(map);
 
             //PopulateBoss(map);
@@ -422,7 +423,19 @@ public static class MapGenerator
         {
             for (int y = 0; y < map.sizeY; y++)
             {
-                switch(map.GetTile(x, y))
+                /*
+                if (map.GetTile(x, y) == TileType.Empty)
+                {
+                    int r;
+                    r = Random.Range(0, 100);
+                    if (r < 50)
+                        continue;
+
+                    if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
+                        map.AddEntity(new ObjectData(x, y, ObjectType.FlowerBed));
+                }
+                */
+                switch (map.GetTile(x, y))
                 {
                     case TileType.SmallEnemy:
                         enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
@@ -444,7 +457,11 @@ public static class MapGenerator
                         break;
                     case TileType.Chest:
                         map.AddEntity(new ObjectData(x, y, ObjectType.Chest));
-                        map.SetTile(x, y, TileType.Empty);  
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.FlowerBed:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.FlowerBed));
+                        map.SetTile(x, y, TileType.Empty);
                         break;
                 }
 
@@ -477,13 +494,43 @@ public static class MapGenerator
     static void PopulateMap(Map map)
     {
         AddChests(map);
+        AddFauna(map);
         AddEnemies(map);
         AddFallingRock(map);
 
 
 
     }
+    
+    static void AddFauna(Map map)
+    {
+        Debug.Log("Adding Fauna");
+        int r;
 
+        for (int x = 0; x < map.sizeX; x++)
+        {
+            for (int y = 0; y < map.sizeY; y++)
+            {
+                r = Random.Range(0, 100);
+                if (r < 30)
+                    continue;
+
+                if (map.GetTile(x, y) == TileType.Empty)
+                {
+                    if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
+                        if (r >= 40)
+                        {
+                            map.AddEntity(new ObjectData(x, y, ObjectType.FlowerBed));
+                        }
+                        else
+                        {
+                            map.AddEntity(new ObjectData(x, y, ObjectType.Tree));
+                        }
+                }
+            }
+        }
+    }
+    
     static void AddChests(Map map)
     {
         int r;
