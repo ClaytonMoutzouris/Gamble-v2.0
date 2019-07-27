@@ -10,6 +10,7 @@ public class EntityPrototype : ScriptableObject
     public List<EntityType> CollidesWith;
 
     public Sprite sprite;
+    public SortingLayerEnum sortingLayer;
     public RuntimeAnimatorController animationController;
 
 }

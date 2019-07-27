@@ -7,23 +7,28 @@ public class LavaBoss : BossEnemy
 {
     #region SetInInspector
 
-    public float EruptDuration = 5;
-    public float ChargeDuration = 8;
-    public float ChargeSpeed = 1200;
-    public float KnockDuration = 1;
-    public float KnockedCooldown = 1;
+    public float EruptDuration = 4;
+    private float EruptTimer = 0;
+
+    public float KnockDuration = 0.5f;
+    public float KnockedCooldown = .2f;
+    private float KnockedCoolDownTimer = 0;
+    private float KnockTimer = 0;
+    private bool Knocked = false;
 
     public AudioClip mCrashSFX;
     public AudioClip mEruptSFX;
     #endregion
 
 
-    private float EruptTimer = 0;
+
+
     private float ChargeTimer = 0;
-    private float KnockTimer = 0;
-    private bool Knocked = false;
+    public float ChargeDuration = 6;
+    public float ChargeSpeed = 1200;
     private int ChargeDirection = 1;
-    private float KnockedCoolDownTimer = 0;
+
+
 
 
     public LavaBoss(BossPrototype proto) : base(proto)
@@ -151,8 +156,7 @@ public class LavaBoss : BossEnemy
             EruptTimer += Time.deltaTime;
         }
 
-        RangedAttack attack = (RangedAttack)mAttackManager.rangedAttacks[0];
-        attack.Activate(new Vector2(UnityEngine.Random.Range(-1.0f, 1.0f), 1));
+        mAttackManager.rangedAttacks[0].Activate(new Vector2(UnityEngine.Random.Range(-1.0f, 1.0f), 1));
 
     }
 
@@ -182,22 +186,16 @@ public class LavaBoss : BossEnemy
 
         Body.mSpeed.x = mMovingSpeed;
 
-        if (AttackCooldown >= AttackTimer)
+        int randomAttack = UnityEngine.Random.Range(0, 2);
+        if(randomAttack == 1)
         {
-            int randomAttack = UnityEngine.Random.Range(0, 2);
-            if(randomAttack == 1)
-            {
-                mBossState = BossState.Attack1;
-            } else
-            {
-                mBossState = BossState.Attack2;
-            }
-            
-            AttackCooldown = 0;
+            mBossState = BossState.Attack1;
         } else
         {
-            AttackCooldown += Time.deltaTime;
+            mBossState = BossState.Attack2;
         }
+            
+
 
 
         //body.mSpeed = ((Vector2)target.Position - body.mPosition).normalized * Mathf.Abs(mMovingSpeed);

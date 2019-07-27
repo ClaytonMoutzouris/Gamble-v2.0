@@ -129,7 +129,6 @@ public class Enemy : Entity, IHurtable
     {
         base.Spawn(spawnPoint);
         Renderer.SetSprite(prototype.sprite);
-        
         if (prototype.animationController != null)
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;

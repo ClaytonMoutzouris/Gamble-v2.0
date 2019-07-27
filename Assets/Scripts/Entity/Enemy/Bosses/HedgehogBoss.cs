@@ -9,13 +9,15 @@ public class HedgehogBoss : BossEnemy
     #region SetInInspector
 
     #endregion
-
+    float AttackCooldown = 1;
+    float AttackTimer = 0;
 
     public HedgehogBoss(BossPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
-
+        AttackCooldown = 1;
+        AttackTimer = 0;
         //RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         //mAttackManager.AttackList.Add(ranged);
 
@@ -111,25 +113,9 @@ public class HedgehogBoss : BossEnemy
 
         CheckForTargets();
 
-
-        if (Target != null)
-        {
-            if (Target.Position.x > Position.x)
-            {
-                mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                mDirection = EntityDirection.Right;
-                //Body.mAABB.ScaleX = -1;
-            }
-            else if (Target.Position.x < Position.x)
-            {
-                mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-                mDirection = EntityDirection.Left;
-                //Body.mAABB.ScaleX = 1;
-            }
-        }
         mAttackManager.meleeAttacks[0].Activate();
 
-        Body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = mMovingSpeed * (int)mDirection;
 
         if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
         {

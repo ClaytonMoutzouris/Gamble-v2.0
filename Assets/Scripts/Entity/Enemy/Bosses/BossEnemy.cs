@@ -10,13 +10,12 @@ public class BossEnemy : Enemy
     #region SetInInspector
     public BossState mBossState = BossState.Idle;
     public BossType bossType = BossType.Count;
+    public List<int> phaseTimers;
 
-    public float AttackTimer = 4.0f;
     public List<Projectile> projectilePrefabs;
     #endregion
 
 
-    protected float AttackCooldown = 0.0f;
     public bool bossTrigger = false;
 
     public BossEnemy(BossPrototype proto) : base(proto)

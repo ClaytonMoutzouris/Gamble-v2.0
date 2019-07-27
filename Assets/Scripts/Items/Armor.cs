@@ -10,7 +10,7 @@ public class Armor : Equipment
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        ColorSwap.SwapSpritesTexture(player.Renderer.GetComponent<SpriteRenderer>(), colorIndex, color);
+        player.Renderer.colorSwapper.SwapColor(colorIndex, color);
         //player.mAttackManager.AttackList[0] = attack;
     }
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
+  m_Name: Shirt
+  m_EditorClassIdentifier: 
+  mName: Shirt
+  mValue: 10
+  sprite: {fileID: 21300002, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
+  mSlot: 1
+  statBonuses:
+  - type: 1
+    bonusValue: 2
+  - type: 2
+    bonusValue: 4
+  isEquipped: 0
+  color: {r: 1, g: 0, b: 0.9312868, a: 1}
+  colorIndex: 133

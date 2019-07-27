@@ -37,7 +37,7 @@ public class SharkBoss : BossEnemy
                 break;
             case BossState.Aggrivated:
                 CheckForTargets();
-                Debug.Log("Got here 1");
+                //Debug.Log("Got here 1");
                 if (Target != null)
                 {
                     //Replace this with pathfinding to the target
@@ -48,8 +48,6 @@ public class SharkBoss : BossEnemy
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir);
                     }
-
-
 
                     if (dir.x < 0)
                     {

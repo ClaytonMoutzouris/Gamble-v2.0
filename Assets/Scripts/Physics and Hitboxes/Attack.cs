@@ -264,7 +264,6 @@ public class RangedAttack : Attack
             tempDir.Normalize();
 
             Projectile shot = new Projectile(projectile, this, tempDir);
-            shot.Owner = mEntity;
             shot.Spawn(mEntity.Position + new Vector2(0, projectileOffset.y) + (projectileOffset * tempDir));
         }
 

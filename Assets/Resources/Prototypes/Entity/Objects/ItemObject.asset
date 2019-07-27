@@ -17,4 +17,5 @@ MonoBehaviour:
   bodySize: {x: 5, y: 5}
   CollidesWith: 
   sprite: {fileID: 0}
+  sortingLayer: 7
   animationController: {fileID: 0}

@@ -6,4 +6,6 @@ public class BossPrototype : EnemyPrototype
 {
     public BossType bossType;
 
+    public List<int> phaseTimers;
+
 }

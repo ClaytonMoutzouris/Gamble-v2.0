@@ -50,10 +50,13 @@ public class EntityRenderer : MonoBehaviour
         }
     }
 
+    public ColorSwap colorSwapper;
+
     protected virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        colorSwapper = new ColorSwap(sprite);
     }
 
     public void OnDrawGizmos()

@@ -139,6 +139,7 @@ public class Entity {
         }
 
         Position = spawnPoint;
+        Renderer.Sprite.sortingLayerName = prototype.sortingLayer.ToString();
         Renderer.Draw();
         Body.UpdatePosition();
         isSpawned = true;

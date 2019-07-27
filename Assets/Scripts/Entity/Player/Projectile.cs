@@ -44,6 +44,7 @@ public class Projectile : Entity, IProjectile {
     public Projectile(ProjectilePrototype proto, RangedAttack rAttack, Vector2 direction) : base(proto)
     {
         prototype = proto;
+        owner = rAttack.mEntity;
         mEntityType = EntityType.Projectile;
         mMaxTime = proto.maxTime;
 
@@ -103,7 +104,7 @@ public class Projectile : Entity, IProjectile {
 
         foreach (IHurtable hit in mHitbox.mCollisions)
         {
-            Debug.Log("Something in the collisions");
+            //Debug.Log("Something in the collisions");
             if (!mHitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(Attack);
@@ -132,7 +133,7 @@ public class Projectile : Entity, IProjectile {
             return;
         }
 
-        Body.mSpeed = mMovingSpeed * direction;
+        //Body.mSpeed = mMovingSpeed * direction;
 
         //Calling this pretty much just updates the body
         //Let's seee if we can make it update collision stuff aswell

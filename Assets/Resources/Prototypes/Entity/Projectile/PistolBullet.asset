@@ -17,9 +17,11 @@ MonoBehaviour:
   bodySize: {x: 5, y: 5}
   CollidesWith: 
   sprite: {fileID: 21300000, guid: aabdffa93f4ac864489bb01bb1a3d467, type: 3}
+  sortingLayer: 8
   animationController: {fileID: 0}
   pierce: 0
   ignoreGravity: 1
   angled: 1
+  maxTime: 10
   sfx: {fileID: 0}
   speed: 100

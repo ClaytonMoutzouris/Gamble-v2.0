@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Database\BossDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Assets\Scripts\Utility\Constants.cs" />
     <Compile Include="Assets\Scripts\Utility\Enums.cs" />
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
+    <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
     <Compile Include="Assets\UIPlayerTab.cs" />

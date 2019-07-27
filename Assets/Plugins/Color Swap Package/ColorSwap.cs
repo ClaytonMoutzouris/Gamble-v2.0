@@ -4,19 +4,26 @@ using UnityEngine;
 
 
 
-public static class ColorSwap {
+public class ColorSwap {
 
-    static Texture2D mColorSwapTex;
-    static Color[] mSpriteColors;
+    public Texture2D mColorSwapTex;
+    public SpriteRenderer sR;
+    //static Color[] mSpriteColors;
 
-    public static void LoadSwapTexture(){
+    public ColorSwap(SpriteRenderer renderer)
+    {
+        mColorSwapTex = new Texture2D(256, 1);
+        sR = renderer;
+        InitColorSwapTex();
+    }
+
+    public void LoadSwapTexture(){
 
     }
 
     // Use this for initialization
-    public static void SwapSpritesTexture (SpriteRenderer sR, List<Color> colors) {
+    public void SwapSpritesTexture (List<Color> colors) {
 
-        InitColorSwapTex(sR);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
         SwapColor(SwapIndex.Skin, colors[0]);
         //SwapColor(SwapIndex.Eyes, Color.red);
@@ -31,7 +38,7 @@ public static class ColorSwap {
 
     }
 
-    public static void SwapSpritesTexture(SpriteRenderer sR, SwapIndex index, Color color)
+    public void SwapSpritesTexture(SwapIndex index, Color color)
     {
 
         //InitColorSwapTex(sR);
@@ -43,7 +50,7 @@ public static class ColorSwap {
 
     }
 
-    public static void InitColorSwapTex(SpriteRenderer sR)
+    public void InitColorSwapTex()
     {
         Texture2D colorSwapTex = new Texture2D(256, 1, TextureFormat.RGBA32, false, false);
         colorSwapTex.filterMode = FilterMode.Point;
@@ -55,35 +62,37 @@ public static class ColorSwap {
 
         sR.material.SetTexture("_SwapTex", colorSwapTex);
 
-        mSpriteColors = new Color[colorSwapTex.width];
+       // mSpriteColors = new Color[colorSwapTex.width];
         mColorSwapTex = colorSwapTex;
     }
 
-    public static void SwapColor(SwapIndex index, Color color)
+    public void SwapColor(SwapIndex index, Color color)
     {
-        mSpriteColors[(int)index] = color;
+       // mSpriteColors[(int)index] = color;
         mColorSwapTex.SetPixel((int)index, 0, color);
+        mColorSwapTex.Apply();
+
     }
 
 
-    public static void SwapColors(List<SwapIndex> indexes, List<Color> colors)
+    public void SwapColors(List<SwapIndex> indexes, List<Color> colors)
     {
         for (int i = 0; i < indexes.Count; ++i)
         {
-            mSpriteColors[(int)indexes[i]] = colors[i];
+            //mSpriteColors[(int)indexes[i]] = colors[i];
             mColorSwapTex.SetPixel((int)indexes[i], 0, colors[i]);
         }
         mColorSwapTex.Apply();
     }
 
-    public static void ClearColor(SwapIndex index)
+    public void ClearColor(SwapIndex index)
     {
         Color c = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-        mSpriteColors[(int)index] = c;
+        //mSpriteColors[(int)index] = c;
         mColorSwapTex.SetPixel((int)index, 0, c);
     }
 
-    public static void SwapAllSpritesColors(Color color)
+    public void SwapAllSpritesColors(Color color)
     {
         for (int i = 0; i < mColorSwapTex.width; ++i)
             mColorSwapTex.SetPixel(i, 0, color);

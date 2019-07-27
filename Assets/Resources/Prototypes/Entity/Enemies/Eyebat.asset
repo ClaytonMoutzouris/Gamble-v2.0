@@ -17,6 +17,7 @@ MonoBehaviour:
   bodySize: {x: 10, y: 10}
   CollidesWith: 
   sprite: {fileID: 0}
+  sortingLayer: 4
   animationController: {fileID: 9100000, guid: 3f72f09c2c24a8a44bff2d7229d3ab5e, type: 2}
   enemyType: 1
   movementSpeed: 40

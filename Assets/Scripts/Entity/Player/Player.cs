@@ -235,8 +235,8 @@ public class Player : Entity, IHurtable
         if (prototype.animationController != null)
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
-            ColorSwap.SwapSpritesTexture(Renderer.GetComponent<SpriteRenderer>(), prototype.colorPallete);
-
+            //ColorSwap.SwapSpritesTexture(Renderer.GetComponent<SpriteRenderer>(), prototype.colorPallete);
+            Renderer.colorSwapper.SwapSpritesTexture(prototype.colorPallete);
         }
 
         Position = spawnPoint;
@@ -282,7 +282,7 @@ public class Player : Entity, IHurtable
 
         AttackManager.UpdateAttacks();
 
-        if (mCannotClimb && !Body.mPS.onLadder)
+        if (mCannotClimb && !Body.mPS.onLadder && !Input.playerButtonInput[(int)ButtonInput.Jump])
         {
             mCannotClimb = false;
         }
@@ -508,7 +508,7 @@ public class Player : Entity, IHurtable
 
 
                 // we can climb ladders from this state
-                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && (!mCannotClimb || Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0))
+                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
                 {
                     mCurrentState = PlayerState.Climb;
                     break;
@@ -663,6 +663,24 @@ public class Player : Entity, IHurtable
                     mCurrentState = PlayerState.Stand;
                 }
 
+                if (Input.playerButtonInput[(int)ButtonInput.LeftStick_Left] || Input.playerButtonInput[(int)ButtonInput.LeftStick_Right])
+                {
+                    Body.mPS.isClimbing = false;
+                    mCurrentState = PlayerState.Jump;
+
+                    //ScaleX = -Mathf.Abs(ScaleX);
+                }
+
+
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
+                {
+                    //the speed is positive so we don't have to worry about hero grabbing an edge
+                    //right after he jumps because he doesn't grab if speed.y > 0
+                    Body.mPS.isClimbing = false;
+                    Body.mSpeed.y = mJumpSpeed;
+                    mCurrentState = PlayerState.Jump;
+                }
+
 
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
@@ -688,28 +706,13 @@ public class Player : Entity, IHurtable
                     //ScaleX = -Mathf.Abs(ScaleX);
                 }
 
-                if (Input.previousButtonInput[(int)ButtonInput.LeftStick_Left] || Input.previousButtonInput[(int)ButtonInput.LeftStick_Left])
-                {
-                    Body.mPS.isClimbing = false;
-                    mCurrentState = PlayerState.Jump;
-
-                    //ScaleX = -Mathf.Abs(ScaleX);
-                }
-
-
-                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
-                {
-                    //the speed is positive so we don't have to worry about hero grabbing an edge
-                    //right after he jumps because he doesn't grab if speed.y > 0
-                    Body.mPS.isClimbing = false;
-                    Body.mSpeed.y = mJumpSpeed;
-                    mCurrentState = PlayerState.Jump;
-                }
+                
                 break;
             case PlayerState.Jetting:
                 Body.mPS.isJetting = true;
                 Body.mSpeed = Vector2.zero;
                 Body.mIgnoresGravity = true;
+                mCannotClimb = true;
 
 
 

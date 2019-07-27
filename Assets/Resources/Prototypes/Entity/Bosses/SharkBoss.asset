@@ -17,13 +17,15 @@ MonoBehaviour:
   bodySize: {x: 32, y: 64}
   CollidesWith: 
   sprite: {fileID: 21300000, guid: 7b8085cebc3451c46a66ff2136146b71, type: 3}
+  sortingLayer: 3
   animationController: {fileID: 0}
   enemyType: 6
   movementSpeed: 0
-  sightRange: 100
+  sightRange: 150
   hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: e9e8e01ee9f50114b963e37b79c5d596, type: 2}
   meleeAttacks: []
   bossType: 2
+  phaseTimers: 

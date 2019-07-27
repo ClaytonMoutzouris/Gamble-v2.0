@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23902b556308ef47a67a1f189b401cd, type: 3}
   m_Name: SharkBoss Attack
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 15
   duration: 0.1
-  cooldown: 0.25
+  cooldown: 3
   startUpFrames: 0
-  projectile: {fileID: 11400000, guid: cda1aac8af354c646bb5760708318773, type: 2}
+  offset: {x: 24, y: 64}
+  projectile: {fileID: 11400000, guid: 67b8984aa7202dc4aa536f5e7355579b, type: 2}
+  numberOfProjectiles: 6
+  spreadAngle: 60

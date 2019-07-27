@@ -18,4 +18,4 @@ MonoBehaviour:
   sizeY: 100
   gravity: -1200
   baseDepth: 6
-  depthVariance: 3
+  depthVariance: 2
