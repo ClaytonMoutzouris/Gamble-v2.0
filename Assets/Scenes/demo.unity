@@ -6527,7 +6527,7 @@ MonoBehaviour:
     bossTile:
       x: 0
       y: 0
-    type: 0
+    type: 6
     mapType: 0
     sizeX: 0
     sizeY: 0

@@ -104,15 +104,44 @@ public class LevelManager : MonoBehaviour
         {
             mMap.NewMap(MapDatabase.GetMap(type));
         }
-        else
+        
+        else if(type == MapType.BossMap)
         {
-            mMap.NewMap(MapDatabase.GetMap((WorldType)levelIndex));
+            
+            mMap.NewMap(MapDatabase.GetBossMap(type, (WorldType)levelIndex));
             levelIndex++;
             if (levelIndex >= (int)WorldType.Count)
             {
                 levelIndex = 0;
             }
+            
         }
+        
+        else if(type == MapType.World)
+        {
+            mMap.NewMap(MapDatabase.GetMap((WorldType)levelIndex));
+
+            /*
+            else
+            {
+                levelIndex++;
+                
+                if (levelIndex >= (int)WorldType.Count)
+                {
+                    levelIndex = 0;
+                }
+                
+            }
+            */
+            //levelIndex++;
+            /*
+            if (levelIndex >= (int)WorldType.Count)
+            {
+                levelIndex = 0;
+            }
+            */
+        }
+        
         int count = 0;
         foreach (Player player in players)
         {
@@ -235,11 +264,26 @@ public class LevelManager : MonoBehaviour
 
         /*If we want to change the map, we have to either abort everything or wait until we're finished updating
         * to perform the change. This method waits until everything is updated.
-        */ 
+        */
         if (mMapChangeFlag)
         {
-            NewGameMap(MapType.World);
-            mMapChangeFlag = false;
+            if (mMap.mCurrentMap.mapType == MapType.Hub)
+            {
+                Debug.Log("Going to world from hub.");
+                NewGameMap(MapType.World);
+                mMapChangeFlag = false;
+            }
+
+            else if (mMap.mCurrentMap.mapType == MapType.World){
+                NewGameMap(MapType.BossMap);
+                mMapChangeFlag = false;
+            }
+            else if(mMap.mCurrentMap.mapType == MapType.BossMap)
+            {
+                NewGameMap(MapType.World);
+                mMapChangeFlag = false;
+            }
+
         }
         
     }

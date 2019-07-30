@@ -28,6 +28,21 @@ public static class MapDatabase
         return maplist[Random.Range(0, maplist.Count)];
     }
 
+    public static MapData GetBossMap(MapType type, WorldType worldType)
+    {
+        List<MapData> maplist = new List<MapData>();
+        foreach (MapData data in mMapDatabase)
+        {
+            data.type = worldType;
+            if (data.mapType == type)
+            {
+                maplist.Add(data);
+            }
+        }
+
+        return maplist[Random.Range(0, maplist.Count)];
+    }
+
     public static MapData GetMap(MapType type)
     {
         List<MapData> maplist = new List<MapData>();

@@ -205,7 +205,7 @@ public class MapManager : MonoBehaviour
 
 
     }
-
+    /*
     public void CreationMap()
     {
         mWidth = Constants.cDefaultMapWidth;
@@ -228,7 +228,7 @@ public class MapManager : MonoBehaviour
         mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
 
     }
-
+    */
 
 
     public virtual void Init()
@@ -251,9 +251,11 @@ public class MapManager : MonoBehaviour
                 case EntityType.Enemy:
                     AddEnemyEntity((EnemyData)eD);
                     break;
+                    
                 case EntityType.Boss:
                     AddBossEntity((BossData)eD);
                     break;
+                    
             }
             
         }

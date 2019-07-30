@@ -313,6 +313,7 @@ public static class MapGenerator
 
         RoomData[,] roomPath = RoomMap(map.MapChunksX, map.MapChunksY, startRoom, out endRoom, data.baseDepth);
         SurfaceLayer temp;
+
         for (int x = 0; x < map.MapChunksX; x++)
         {
             for (int y = 0; y < map.MapChunksY; y++)
@@ -322,7 +323,12 @@ public static class MapGenerator
                     map.rooms[x, y] = RoomDatabase.GetRoom(RoomType.Hub);
                     continue;
                 }
-
+                
+                if(data.mapType == MapType.BossMap)
+                {
+                    map.rooms[x, y] = RoomDatabase.GetRoom(RoomType.BossRoom);
+                    continue;
+                }               
                 
 
                 if (y < depths[x])
@@ -372,12 +378,18 @@ public static class MapGenerator
 
         }
 
-        if (data.mapType != MapType.Hub)
+        if(data.mapType == MapType.BossMap)
+        {
+            
+            PopulateBoss(map);
+        }
+
+        if (data.mapType != MapType.Hub && data.mapType != MapType.BossMap)
         {
 
             //PopulateMap(map);
 
-            PopulateBoss(map);
+            //PopulateBoss(map);
             AddChests(map);
             AddFauna(map);
             //AddFallingRock(map);
