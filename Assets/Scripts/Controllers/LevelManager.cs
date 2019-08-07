@@ -104,11 +104,10 @@ public class LevelManager : MonoBehaviour
         {
             mMap.NewMap(MapDatabase.GetMap(type));
         }
-        
         else if(type == MapType.BossMap)
         {
             
-            mMap.NewMap(MapDatabase.GetBossMap(type, (WorldType)levelIndex));
+            mMap.NewBossMap(MapDatabase.GetBossMap(type), (WorldType)levelIndex);
             levelIndex++;
             if (levelIndex >= (int)WorldType.Count)
             {
@@ -116,33 +115,11 @@ public class LevelManager : MonoBehaviour
             }
             
         }
-        
         else if(type == MapType.World)
         {
             mMap.NewMap(MapDatabase.GetMap((WorldType)levelIndex));
-
-            /*
-            else
-            {
-                levelIndex++;
-                
-                if (levelIndex >= (int)WorldType.Count)
-                {
-                    levelIndex = 0;
-                }
-                
-            }
-            */
-            //levelIndex++;
-            /*
-            if (levelIndex >= (int)WorldType.Count)
-            {
-                levelIndex = 0;
-            }
-            */
         }
         
-        int count = 0;
         foreach (Player player in players)
         {
             if(player != null)
@@ -151,7 +128,7 @@ public class LevelManager : MonoBehaviour
 
         MiniMap.instance.SetMap(mMap.mCurrentMap, players);
 
-        SoundManager.instance.PlayLevelMusic((int)mMap.mCurrentMap.type);
+        SoundManager.instance.PlayLevelMusic((int)mMap.mCurrentMap.worldType);
 
 
 

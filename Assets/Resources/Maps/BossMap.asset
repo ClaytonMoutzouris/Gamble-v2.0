@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BossMap
   m_EditorClassIdentifier: 
   mapType: 2
-  type: 0
+  type: 7
   sizeX: 20
-  sizeY: 10
-  gravity: -500
+  sizeY: 20
+  gravity: -900
   baseDepth: 0
   depthVariance: 0

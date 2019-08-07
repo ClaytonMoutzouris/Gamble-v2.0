@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HubMap
   m_EditorClassIdentifier: 
   mapType: 0
-  type: 0
+  type: 6
   sizeX: 20
   sizeY: 10
   gravity: -800

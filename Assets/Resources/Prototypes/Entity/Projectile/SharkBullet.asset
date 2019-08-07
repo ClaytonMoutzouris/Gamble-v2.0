@@ -24,4 +24,4 @@ MonoBehaviour:
   angled: 1
   maxTime: 10
   sfx: {fileID: 0}
-  speed: 55
+  speed: 50

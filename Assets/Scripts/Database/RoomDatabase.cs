@@ -78,4 +78,18 @@ public static class RoomDatabase
         return roomList[Random.Range(0, roomList.Count)].Copy();
     }
 
+    public static RoomData GetBossRoom(WorldType type)
+    {
+        List<RoomData> roomList = new List<RoomData>();
+        foreach (RoomData data in RoomDictionary)
+        {
+            if (data.roomType == RoomType.BossRoom)
+            {
+                roomList.Add(data);
+            }
+        }
+
+        return roomList[Random.Range(0, roomList.Count)].Copy();
+    }
+
 }

@@ -378,12 +378,6 @@ public static class MapGenerator
 
         }
 
-        if(data.mapType == MapType.BossMap)
-        {
-            
-            PopulateBoss(map);
-        }
-
         if (data.mapType != MapType.Hub && data.mapType != MapType.BossMap)
         {
 
@@ -403,6 +397,62 @@ public static class MapGenerator
 
 
         return map;
+    }
+
+    public static Map GenerateBossMap(MapData data, WorldType worldType)
+    {
+        Map map = new Map(data);
+        for (int x = 0; x < map.MapChunksX; x++)
+        {
+            for (int y = 0; y < map.MapChunksY; y++)
+            {
+                map.rooms[x, y] = RoomDatabase.GetBossRoom(WorldType.BossMap);
+
+            }
+        }
+        map.worldType = worldType;
+        AddBounds(map);
+
+
+        map.startTile = GetStartTile(map, 0, 0);
+        Vector2i door = AddDoorTile(map, 0, 0);
+        map.exitTile = door;
+        //Debug.Log("Door tile " + door);
+
+        map.SetTile(door.x, door.y, TileType.Door);
+
+        map.bossTile = new Vector2i(5, 5);
+
+        //This needs a +1 to hit all the bosses
+        map.AddEntity(new BossData(map.bossTile.x, map.bossTile.y, GetBossForWorld(map.worldType)));
+        //Post process the map based on probabilistic tiles and such
+        //PostProcessing(map);
+        return map;
+    }
+
+    public static BossType GetBossForWorld(WorldType world)
+    {
+        BossType temp = BossType.Count;
+        switch (world)
+        {
+            case WorldType.Forest:
+                temp = BossType.HedgehogBoss;
+                break;
+            case WorldType.Tundra:
+                temp = BossType.CatBoss;
+                break;
+            case WorldType.Lava:
+                temp = BossType.LavaBoss;
+                break;
+            case WorldType.Purple:
+                temp = BossType.SharkBoss;
+                break;
+            case WorldType.Yellow:
+                temp = BossType.TentacleBoss;
+                break;
+
+        }
+        return temp;
     }
 
     public static Map CreationMap()
@@ -482,26 +532,6 @@ public static class MapGenerator
 
     }
 
-    static void PopulateBoss(Map map)
-    {
-
-        for (int x = 0; x < map.MapChunksX; x++)
-        {
-            for (int y = 0; y < map.MapChunksY; y++)
-            {
-                if(map.rooms[x,y].roomType == RoomType.BossRoom)
-                {
-                    map.bossTile = new Vector2i(x * Constants.cMapChunkSizeX + 5, y * Constants.cMapChunkSizeY + 1);
-
-                    //This needs a +1 to hit all the bosses
-                    map.AddEntity(new BossData(map.bossTile.x, map.bossTile.y, (BossType)Random.Range(0, (int)BossType.Count)));
-
-                }
-            }
-        }
-        
-
-    }
 
     static void PopulateMap(Map map)
     {
