@@ -201,11 +201,36 @@ public class MapManager : MonoBehaviour
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
+        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.worldType);
 
 
     }
 
+    public void NewBossMap(MapData data, WorldType type)
+    {
+        mWidth = Constants.cDefaultMapWidth;
+        mHeight = Constants.cDefaultMapHeight;
+
+
+        //set the position
+
+        mUpdatedAreas = new HashSet<Vector2i>();
+
+
+        mCurrentMap = MapGenerator.GenerateBossMap(data, type);
+        mCurrentMap.worldType = type;
+
+        mWidth = mCurrentMap.sizeX;
+        mHeight = mCurrentMap.sizeY;
+
+        mTileData = mCurrentMap.GetMap();
+        AddEntities(mCurrentMap);
+
+        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.worldType);
+
+
+    }
+    /*
     public void CreationMap()
     {
         mWidth = Constants.cDefaultMapWidth;
@@ -228,7 +253,7 @@ public class MapManager : MonoBehaviour
         mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
 
     }
-
+    */
 
 
     public virtual void Init()
@@ -251,9 +276,11 @@ public class MapManager : MonoBehaviour
                 case EntityType.Enemy:
                     AddEnemyEntity((EnemyData)eD);
                     break;
+                    
                 case EntityType.Boss:
                     AddBossEntity((BossData)eD);
                     break;
+                    
             }
             
         }

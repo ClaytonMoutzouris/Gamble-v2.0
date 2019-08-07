@@ -20,7 +20,7 @@ MonoBehaviour:
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: a3668685d34585d47a157727a1bc2fbb, type: 2}
   enemyType: 0
-  movementSpeed: 60
+  movementSpeed: 40
   sightRange: 75
   hostility: 2
   health: 35

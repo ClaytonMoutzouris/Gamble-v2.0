@@ -14,18 +14,10 @@ public class RoomData
     public int mWidth;
     public int mHeight;
 
-    public RoomData()
+    public RoomData(RoomType type = RoomType.SideRoom, int sizex = Constants.cMapChunkSizeX, int sizey = Constants.cMapChunkSizeY)
     {
-        mWidth = Constants.cMapChunkSizeX;
-        mHeight = Constants.cMapChunkSizeY;
-        roomType = RoomType.SideRoom;
-        tiles = new TileType[mWidth, mHeight];
-    }
-
-    public RoomData(RoomType type)
-    {
-        mWidth = Constants.cMapChunkSizeX;
-        mHeight = Constants.cMapChunkSizeY;
+        mWidth = sizex;
+        mHeight = sizey;
         roomType = type;
         tiles = new TileType[mWidth, mHeight];
     }

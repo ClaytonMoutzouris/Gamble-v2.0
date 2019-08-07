@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityType: 6
   mName: HedgehogBoss
-  bodySize: {x: 28, y: 32}
+  bodySize: {x: 26, y: 26}
   CollidesWith: 
   sprite: {fileID: 0}
   sortingLayer: 3

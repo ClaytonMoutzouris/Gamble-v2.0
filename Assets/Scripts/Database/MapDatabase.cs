@@ -24,6 +24,20 @@ public static class MapDatabase
                 maplist.Add(data);
             }
         }
+        Debug.Log(worldType);
+        return maplist[Random.Range(0, maplist.Count)];
+    }
+
+    public static MapData GetBossMap(MapType type)
+    {
+        List<MapData> maplist = new List<MapData>();
+        foreach (MapData data in mMapDatabase)
+        {
+            if (data.mapType == type)
+            {
+                maplist.Add(data);
+            }
+        }
 
         return maplist[Random.Range(0, maplist.Count)];
     }
@@ -42,29 +56,5 @@ public static class MapDatabase
         return maplist[Random.Range(0, maplist.Count)];
     }
 
-    public static MapData GetNextMap(MapType type)
-    {
-        List<MapData> maplist = new List<MapData>();
-        foreach (MapData data in mMapDatabase)
-        {
-            if (data.mapType == type)
-            {
-                maplist.Add(data);
-            }
-        }
-
-        MapData map = maplist[currentMapIndex];
-
-        currentMapIndex++;
-
-        if(currentMapIndex >= maplist.Count)
-        {
-            currentMapIndex = 0;
-        }
-
-        
-
-        return map;
-
-    }
+    
 }

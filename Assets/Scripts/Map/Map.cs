@@ -10,7 +10,7 @@ public class Map
     public Vector2i bossTile = new Vector2i(1, 1);
 
     public RoomData[,] rooms;
-    public WorldType type;
+    public WorldType worldType;
     public MapType mapType;
     public int sizeX;
     public int sizeY;
@@ -41,7 +41,7 @@ public class Map
     public Map(MapType mapType = MapType.Hub, WorldType type = WorldType.Forest, int sizex = Constants.cDefaultMapWidth, int sizey = Constants.cDefaultMapHeight)
     {
         this.mapType = mapType;
-        this.type = type;
+        this.worldType = type;
         sizeX = sizex;
         sizeY = sizey;
 
@@ -62,7 +62,7 @@ public class Map
     public Map(MapData data)
     {
         mapType = data.mapType;
-        type = data.type;
+        worldType = data.type;
 
         sizeX = data.sizeX;
         sizeY = data.sizeY;
