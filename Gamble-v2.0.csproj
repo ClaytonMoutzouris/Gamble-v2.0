@@ -323,6 +323,7 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Database\BossDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
@@ -350,9 +351,11 @@
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Chest.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FallingRock.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\FlowerBed.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
@@ -363,6 +366,7 @@
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\MeleeAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\RangedAttackPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\SpreadAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\BossPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EnemyPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EntityPrototype.cs" />
@@ -431,6 +435,8 @@
     <Compile Include="Assets\Scripts\Utility\Constants.cs" />
     <Compile Include="Assets\Scripts\Utility\Enums.cs" />
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
+    <Compile Include="Assets\Scripts\Utility\Timer.cs" />
+    <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />

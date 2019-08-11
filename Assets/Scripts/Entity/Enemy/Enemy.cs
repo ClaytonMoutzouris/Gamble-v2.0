@@ -168,6 +168,10 @@ public class Enemy : Entity, IHurtable
 
     public override void Die()
     {
+        if (mToRemove)
+        {
+            return;
+        }
         base.Die();
         DropLoot();
         HurtBox.mState = ColliderState.Closed;

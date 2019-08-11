@@ -8,13 +8,72 @@ public class ColorSwap {
 
     public Texture2D mColorSwapTex;
     public SpriteRenderer sR;
-    //static Color[] mSpriteColors;
+    public Color[] mBaseColors;
+    public Color[] mCurrentColors;
 
     public ColorSwap(SpriteRenderer renderer)
     {
         mColorSwapTex = new Texture2D(256, 1);
         sR = renderer;
         InitColorSwapTex();
+    }
+
+    public void SetBaseColors(List<Color> colors)
+    {
+        mBaseColors = new Color[7];
+        mBaseColors[0] = colors[0];
+        mBaseColors[1] = colors[1];
+        mBaseColors[2] = colors[2];
+        mBaseColors[3] = colors[3];
+        mBaseColors[4] = colors[4];
+        mBaseColors[5] = colors[5];
+        mBaseColors[6] = colors[6];
+
+        SwapToBase();
+    }
+
+    public void SwapIndexToBase(SwapIndex index)
+    {
+        switch (index)
+        {
+            case SwapIndex.Skin:
+                SwapColor(index, mBaseColors[0]);
+                break;
+            case SwapIndex.HoodPrimary:
+                SwapColor(index, mBaseColors[1]);
+                break;
+            case SwapIndex.HoodSecondary:
+                SwapColor(index, mBaseColors[2]);
+                break;
+            case SwapIndex.ShirtPrimary:
+                SwapColor(index, mBaseColors[3]);
+                break;
+            case SwapIndex.ShirtSecondary:
+                SwapColor(index, mBaseColors[4]);
+                break;
+            case SwapIndex.Shoes:
+                SwapColor(index, mBaseColors[5]);
+                break;
+            case SwapIndex.Pants:
+                SwapColor(index, mBaseColors[6]);
+                break;
+        }
+
+        mColorSwapTex.Apply();
+    }
+
+    public void SwapToBase()
+    {
+      //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        SwapColor(SwapIndex.Skin, mBaseColors[0]);
+        //SwapColor(SwapIndex.Eyes, Color.red);
+        SwapColor(SwapIndex.HoodPrimary, mBaseColors[1]);
+        SwapColor(SwapIndex.HoodSecondary, mBaseColors[2]);
+        SwapColor(SwapIndex.ShirtPrimary, mBaseColors[3]);
+        SwapColor(SwapIndex.ShirtSecondary, mBaseColors[4]);
+        SwapColor(SwapIndex.Shoes, mBaseColors[5]);
+        SwapColor(SwapIndex.Pants, mBaseColors[6]);
+        mColorSwapTex.Apply();
     }
 
     public void LoadSwapTexture(){

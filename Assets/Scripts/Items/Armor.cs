@@ -17,6 +17,7 @@ public class Armor : Equipment
     public override void OnUnequip(Player player)
     {
         base.OnUnequip(player);
+        player.Renderer.colorSwapper.SwapIndexToBase(colorIndex);
 
     }
 }

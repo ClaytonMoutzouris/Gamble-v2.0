@@ -236,7 +236,7 @@ public class Player : Entity, IHurtable
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
             //ColorSwap.SwapSpritesTexture(Renderer.GetComponent<SpriteRenderer>(), prototype.colorPallete);
-            Renderer.colorSwapper.SwapSpritesTexture(prototype.colorPallete);
+            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
         }
 
         Position = spawnPoint;
