@@ -195,6 +195,7 @@
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />
     <Compile Include="Assets\UIStatElement.cs" />
+    <None Include="Assets\Resources\Sprites\test-merge-file.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
