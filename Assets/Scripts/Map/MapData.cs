@@ -9,7 +9,9 @@ public class MapData : ScriptableObject {
     public WorldType type;
     public int sizeX = 100;
     public int sizeY = 100;
-
+    //Only matters for non boss
+    public int roomSizeX = 10;
+    public int roomSizeY = 10;
     public float gravity = Constants.cDefaultGravity;
     public int baseDepth = 6;
     public int depthVariance = 3;

@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapType: 0
   type: 6
-  sizeX: 20
-  sizeY: 10
+  sizeX: 2
+  sizeY: 2
+  roomSizeX: 10
+  roomSizeY: 10
   gravity: -800
   baseDepth: 0
   depthVariance: 0

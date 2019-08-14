@@ -44,6 +44,8 @@ public class RoomData
         mWidth = reader.ReadByte();
         mHeight = reader.ReadByte();
 
+        tiles = new TileType[mWidth, mHeight];
+
         for (int x = 0; x < mWidth; x++)
         {
             for (int y = 0; y < mHeight; y++)
