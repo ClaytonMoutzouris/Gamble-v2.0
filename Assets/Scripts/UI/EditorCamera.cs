@@ -1,61 +1,173 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EditorCamera : MonoBehaviour
 {
-
+    public static EditorCamera instance;
+    /// <summary>
+    /// A reference to the the player.
+    /// </summary>
 
     /// <summary>
     /// The position.
     /// </summary>
-    public Vector3 mPosition;
-    public Vector2 targetPos;
+    Camera mCamera;
     /// <summary>
     /// The map. Assigned from editor.
     /// </summary>
     public EditorMap mMap;
-    Camera camera;
 
-    public float smoothTime = 0.15f;
-    private Vector3 velocity = Vector3.zero;
-    public float MinZoom, stiMaxZoom;
+    public Vector3 velocity;
+    public float smoothSpeed = .1f;
+    public float mZoomSpeed = 10f;
+    public float mMinOrthographicSize = 120;
+    public float mBoundingBoxPadding = 32;
 
-    const int cOuterVisibilityX = 0;
-    const int cOuterVisibilityY = 0;
-    float zoom = 1f;
-    public float mCameraMoveSpeed = 25;
-    int UIsize = 15;
-
-
-    void Start()
+    void Awake()
     {
-        //transform.position = new Vector3((mMap.mWidth*Map.cTileSize) / 2, (mMap.mHeight*Map.cTileSize) / 2, -10);
-        camera = GetComponent<Camera>();
+        instance = this;
+        mCamera = GetComponent<Camera>();
+
+        //mCamera.orthographicSize = mMinOrthographicSize;
+        //mPosition = transform.position;
     }
 
-
-    public void FixedUpdate()
+    public void LateUpdate()
     {
+        Rect boundingBox = CalculateTargetsBoundingBox();
+        transform.position = Vector3.SmoothDamp(transform.position, CalculateCameraPosition(boundingBox), ref velocity, smoothSpeed);
+        //transform.position = CalculateCameraPosition(boundingBox);
+        mCamera.orthographicSize = CalculateOrthographicSize(boundingBox);
+        StayWithinBounds();
+    }
+
+    void StayWithinBounds()
+    {
+        var cameraPos = transform.position;
+        var halfHeight = mCamera.orthographicSize;
+        var halfWidth = mCamera.aspect * halfHeight;
+        //Keep the camera within the bounds of the maps width
+        if (cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
+        {
+            cameraPos.x = halfWidth - MapManager.cTileSize / 2;
+        }
+        else if (cameraPos.x + halfWidth + MapManager.cTileSize / 2 > mMap.mWidth * MapManager.cTileSize)
+        {
+            cameraPos.x = mMap.mWidth * MapManager.cTileSize - (halfWidth + MapManager.cTileSize / 2);
+        }
+
+        //Keep the camera within the bounds of the maps height
+        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 < 0)
+        {
+            cameraPos.y = halfHeight - MapManager.cTileSize / 2;
+        }
+        else if (cameraPos.y + halfHeight + MapManager.cTileSize / 2 > mMap.mHeight * MapManager.cTileSize)
+        {
+            cameraPos.y = mMap.mHeight * MapManager.cTileSize - (halfHeight + MapManager.cTileSize / 2);
+        }
+
+        transform.position = new Vector3(cameraPos.x, cameraPos.y, transform.position.z);
+    }
+
+    Rect CalculateTargetsBoundingBox()
+    {
+        float minX = mMap.mWidth * MapManager.cTileSize;
+        float maxX = 0;
+        float minY = mMap.mHeight * MapManager.cTileSize;
+        float maxY = 0;
+
+
+            Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            minX = Mathf.Min(minX, position.x);
+            minY = Mathf.Min(minY, position.y);
+            maxX = Mathf.Max(maxX, position.x);
+            maxY = Mathf.Max(maxY, position.y);
+
+        return Rect.MinMaxRect(minX - mBoundingBoxPadding, maxY + mBoundingBoxPadding, maxX + mBoundingBoxPadding, minY - mBoundingBoxPadding);
+    }
+
+    float CalculateOrthographicSize(Rect boundingBox)
+    {
+        float orthographicSize = mCamera.orthographicSize;
+        Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
+        Vector3 topRightAsViewport = mCamera.WorldToViewportPoint(topRight);
+
+        if (topRightAsViewport.x >= topRightAsViewport.y)
+            orthographicSize = Mathf.Abs(boundingBox.width) / mCamera.aspect / 2f;
+        else
+            orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
+
+        return Mathf.Clamp(Mathf.Lerp(mCamera.orthographicSize, orthographicSize, Time.deltaTime * mZoomSpeed), mMinOrthographicSize, Mathf.Infinity);
+    }
+
+    Vector3 CalculateCameraPosition(Rect boundingBox)
+    {
+        Vector2 boundingBoxCenter = boundingBox.center;
+
+        return new Vector3(boundingBoxCenter.x, boundingBoxCenter.y, mCamera.transform.position.z);
+    }
+
+    /* Old Code
+    void UpdateZoom()
+    {
+        halfHeight = mCamera.orthographicSize;
+        halfWidth = mCamera.aspect * halfHeight;
+        float tempSize = mCamera.orthographicSize;
+        bool growY = false, growX = false;
+        bool shrinkY = false, shrinkX = false;
+
+        //First try to expand
+        if (PlayerDistance.x > (halfWidth*2) - EdgeBuffer.x)
+        {
+            growX = true;
+        }
+
+        if ((halfWidth * 2) >= PlayerDistance.x + EdgeBuffer.x)
+        {
+            shrinkX = true;
+        }
+
+        
+        //If the players are farther apart than the camera is tall, expand the camera
+        if (PlayerDistance.y > (halfHeight*2) - EdgeBuffer.y)
+        {
+            growY = true;
+        }
+
+        
+        if ((halfHeight * 2) >= PlayerDistance.y + EdgeBuffer.y)
+        {
+            shrinkY = true;
+        }
 
 
 
+        if (growY || shrinkY)
+        {
+            tempSize = tempSize * ((PlayerDistance.y + EdgeBuffer.y) / (halfHeight * 2));
+        }
 
+        if (growX || shrinkX)
+        {
+            tempSize = tempSize * ((PlayerDistance.x + EdgeBuffer.x) / (halfWidth * 2));
+        }
 
+        if (tempSize < mMinOrthographicSize)
+            tempSize = mMinOrthographicSize;
+
+        mCamera.orthographicSize = tempSize;
+    }
+
+    void CameraFollow()
+    {
+        targetPos = (mPlayer1.position + mPlayer2.position) * 0.5f;
 
         var cameraPos = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
         //Debug.Log("Camera position " + cameraPos);
 
-        float halfHeight = camera.orthographicSize;
-        float halfWidth = camera.aspect * halfHeight;
 
-        if(halfWidth * 2 > mMap.mWidth * MapManager.cTileSize)
-        {
-            camera.orthographicSize = camera.orthographicSize *( (mMap.mWidth*MapManager.cTileSize) / (halfWidth * 2));
-        }
 
         //Keep the camera within the bounds of the maps width
         if (cameraPos.x - halfWidth + MapManager.cTileSize / 2 < 0)
@@ -68,9 +180,9 @@ public class EditorCamera : MonoBehaviour
         }
 
         //Keep the camera within the bounds of the maps height
-        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 + UIsize < 0)
+        if (cameraPos.y - halfHeight + MapManager.cTileSize / 2 < 0)
         {
-            cameraPos.y = halfHeight - MapManager.cTileSize / 2 - UIsize;
+            cameraPos.y = halfHeight - MapManager.cTileSize / 2;
         }
         else if (cameraPos.y + halfHeight + MapManager.cTileSize / 2 > mMap.mHeight * MapManager.cTileSize)
         {
@@ -78,27 +190,6 @@ public class EditorCamera : MonoBehaviour
         }
 
         transform.position = new Vector3(cameraPos.x, cameraPos.y, transform.position.z);
-
     }
-
-    public void Update()
-    {
-        
-        float zDelta = Input.GetAxis("Vertical");
-
-        if ( zDelta != 0f)
-        {
-            AdjustPosition( zDelta);
-        }
-        
-        //Debug.Log(Camera.main.pixelWidth + " " + Camera.main.pixelHeight);
-        //camera.rect = Rect((Screen.width - 512.0) / Screen.width, (Screen.height - 256.0) / Screen.height, 384.0 / Screen.width, 96.0 / Screen.height);
-    }
-
-    public void AdjustPosition( float y)
-    {
-        targetPos = transform.position + new Vector3(0, y * mCameraMoveSpeed);
-
-    }
-
+    */
 }

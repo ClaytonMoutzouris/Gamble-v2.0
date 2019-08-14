@@ -25,13 +25,11 @@ public class EditorMap : MonoBehaviour
 
     public void Init()
     {
-        mWidth = Constants.cMapChunkSizeX;
-        mHeight = Constants.cMapChunkSizeY;
         //set the position
         mPosition = transform.position;
 
-        room = new RoomData();
-        room.roomType = RoomType.Hub;
+        room = new RoomData(RoomType.Hub, mWidth, mHeight);
+        //room.roomType = RoomType.Hub;
 
         mTileMap.DrawMap(room.tiles, mWidth, mHeight);
 
@@ -39,6 +37,8 @@ public class EditorMap : MonoBehaviour
 
     public void Draw()
     {
+        mWidth = room.mWidth;
+        mHeight = room.mHeight;
         mTileMap.DrawMap(room.tiles, mWidth, mHeight);
     }
 
