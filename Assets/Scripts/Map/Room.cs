@@ -13,16 +13,16 @@ public class Room
     public int mHeight;
 
     public Room(){
-        mWidth = Constants.cMapChunkSizeX;
-        mHeight = Constants.cMapChunkSizeY;
+        mWidth = Constants.cRoomSizeX;
+        mHeight = Constants.cRoomSizeY;
         roomType = RoomType.SideRoom;
         tiles = new TileType[mWidth, mHeight];
     }
 
     public Room(RoomType type)
     {
-        mWidth = Constants.cMapChunkSizeX;
-        mHeight = Constants.cMapChunkSizeY;
+        mWidth = Constants.cRoomSizeX;
+        mHeight = Constants.cRoomSizeY;
         //layer = layerType;
         roomType = type;
         tiles = new TileType[mWidth, mHeight];

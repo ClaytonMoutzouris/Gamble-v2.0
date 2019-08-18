@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerPanel : MonoBehaviour
 {
     public int playerIndex;
+    public PlayerPanelTooltip tooltip;
     public HealthBar healthBar;
     public PlayerInventoryUI inventoryUI;
     public UIPlayerTab uiPlayerTab;

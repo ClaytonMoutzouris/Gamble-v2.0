@@ -18,6 +18,6 @@ MonoBehaviour:
   sizeY: 10
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -1200
+  gravity: -1000
   baseDepth: 6
   depthVariance: 2

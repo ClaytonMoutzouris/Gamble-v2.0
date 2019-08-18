@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    public PlayerInventoryUI playerInventory;
+    public PlayerPanel playerPanel;
     public int slotID;
     public Button button;
     public Item item = null;
@@ -16,10 +17,10 @@ public class InventorySlot : MonoBehaviour
     [SerializeField]
     Image mImage;
 
-    public void SetSlot(int id, PlayerInventoryUI inv)
+    public void SetSlot(int id, PlayerPanel panel)
     {
         slotID = id;
-        playerInventory = inv;
+        playerPanel = panel;
     }
 
     public void Awake()
@@ -86,8 +87,21 @@ public class InventorySlot : MonoBehaviour
 
     public void SlotSelected()
     {
-        playerInventory.SlotSelected(this);
+        playerPanel.inventoryUI.SlotSelected(this);
 
     }
 
+    public void OnSelect(BaseEventData eventData)
+    {
+        //Show tooltip in playerpanel
+        if (item != null)
+        {
+            playerPanel.tooltip.SetTooptip(item.getTooltip());
+        }
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        playerPanel.tooltip.ClearTooltip();
+    }
 }

@@ -189,8 +189,10 @@ public class Entity {
         //before we remove it from the update list, we have to remove it from the update areas
         CollisionManager.RemoveObjectFromAreas(Body);
         Game.RemoveFromUpdateList(this);
-        GameObject.Destroy(Renderer.gameObject);
-
+        if (Renderer != null)
+        {
+            UnityEngine.Object.Destroy(Renderer.gameObject);
+        }
     }
 
     public virtual void Crush()

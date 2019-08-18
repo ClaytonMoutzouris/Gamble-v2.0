@@ -32,6 +32,7 @@ public class Map
         roomSizeX = 10;
         roomSizeY = 10;
         tiles = new TileType[sizeX*roomSizeX, sizeY * roomSizeY];
+        objects = new List<EntityData>();
 
     }
 
@@ -46,6 +47,8 @@ public class Map
         roomSizeY = data.roomSizeY;
         tiles = new TileType[sizeX * roomSizeX, sizeY * roomSizeY];
         gravity = data.gravity;
+        objects = new List<EntityData>();
+
     }
 
     public TileType[,] GetMap()
@@ -66,6 +69,11 @@ public class Map
     public void SetTile(int x, int y, TileType tileType)
     {
         tiles[x, y] = tileType;
+    }
+
+    public void SetTileMap(TileType[,] map)
+    {
+        tiles = map;
     }
 
     public void AddEntity(EntityData e)

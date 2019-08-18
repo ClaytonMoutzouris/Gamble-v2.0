@@ -104,7 +104,7 @@ public class TentacleBoss : BossEnemy
                     {
                         if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
                         {
-                            EnemyBehaviour.Jump(this, 460);
+                            EnemyBehaviour.Jump(this, jumpHeight);
                         }
                         mMovingSpeed = Mathf.Abs(mMovingSpeed);
                     }
@@ -112,7 +112,7 @@ public class TentacleBoss : BossEnemy
                     {
                         if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
                         {
-                            EnemyBehaviour.Jump(this, 460);
+                            EnemyBehaviour.Jump(this, jumpHeight);
                         }
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }

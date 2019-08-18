@@ -183,8 +183,6 @@ public class MapManager : MonoBehaviour
 
     public void NewMap(MapData data)
     {
-        mWidth = Constants.cDefaultMapWidth;
-        mHeight = Constants.cDefaultMapHeight;
 
 
         //set the position
@@ -195,22 +193,19 @@ public class MapManager : MonoBehaviour
         mCurrentMap = MapGenerator.GenerateMap(data);
 
 
-        mWidth = mCurrentMap.sizeX;
-        mHeight = mCurrentMap.sizeY;
+        mWidth = mCurrentMap.getMapSize().x;
+        mHeight = mCurrentMap.getMapSize().y;
 
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.worldType);
+        mTileMap.DrawMap(mTileData, mWidth, mHeight, mCurrentMap.worldType);
 
 
     }
 
     public void NewBossMap(MapData data, WorldType type)
     {
-        mWidth = Constants.cDefaultMapWidth;
-        mHeight = Constants.cDefaultMapHeight;
-
 
         //set the position
 
@@ -220,13 +215,13 @@ public class MapManager : MonoBehaviour
         mCurrentMap = MapGenerator.GenerateBossMap(data, type);
         mCurrentMap.worldType = type;
 
-        mWidth = mCurrentMap.sizeX;
-        mHeight = mCurrentMap.sizeY;
+        mWidth = mCurrentMap.getMapSize().x;
+        mHeight = mCurrentMap.getMapSize().y;
 
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.worldType);
+        mTileMap.DrawMap(mTileData, mWidth, mHeight, mCurrentMap.worldType);
 
 
     }

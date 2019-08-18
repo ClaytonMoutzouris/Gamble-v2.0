@@ -14,7 +14,7 @@ public class RoomData
     public int mWidth;
     public int mHeight;
 
-    public RoomData(RoomType type = RoomType.SideRoom, int sizex = Constants.cMapChunkSizeX, int sizey = Constants.cMapChunkSizeY)
+    public RoomData(RoomType type = RoomType.SideRoom, int sizex = Constants.cRoomSizeX, int sizey = Constants.cRoomSizeY)
     {
         mWidth = sizex;
         mHeight = sizey;

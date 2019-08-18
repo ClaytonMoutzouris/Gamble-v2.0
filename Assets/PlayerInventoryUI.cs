@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerInventoryUI : MonoBehaviour
 {
     public Player player;
+    public PlayerPanel panel;
     public int numStartingSlots;
     public List<InventorySlot> slots;
     public InventorySlot slotPrefab;
@@ -72,7 +73,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         slot.GetComponent<Button>().navigation = customNav;
         slots.Add(slot);
-        slot.SetSlot(index, this);
+        slot.SetSlot(index, panel);
         return slot;
     }
 

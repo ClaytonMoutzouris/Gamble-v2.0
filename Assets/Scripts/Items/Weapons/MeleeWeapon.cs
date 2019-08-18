@@ -22,4 +22,12 @@ public class MeleeWeapon : Weapon
         base.OnUnequip(player);
         player.AttackManager.meleeAttacks[0] = player.defaultMelee;
     }
+
+    public override string getTooltip()
+    {
+        string tooltip = base.getTooltip();
+        tooltip += attack.getToolTip();
+
+        return tooltip;
+    }
 }
