@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using LocalCoop;
 using UnityEngine.EventSystems;
 
@@ -21,6 +22,7 @@ public class PauseMenu : MonoBehaviour {
     {
         pausedIndex = playerIndex;
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+        defaultObject.GetComponent<Button>().OnSelect(null);
         gameObject.SetActive(true);
     }
 

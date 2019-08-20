@@ -14,7 +14,7 @@ public class FallingRock : Entity
 
     public FallingRock(EntityPrototype proto) :base(proto)
     {
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(15, 15), new Vector2(0, 15)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
 
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
@@ -46,23 +46,6 @@ public class FallingRock : Entity
         trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0, -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2))));
         trigger.UpdatePosition();
         if (sizeDown <= 0)
-        {
-            isTriggered = true;
-        }
-    }
-
-    public void InitPosition(Vector2i pos)
-    {
-        //Vector2i tilePos = mMap.GetMapTileAtPoint(pos);
-        Body.SetTilePosition(pos);
-        tilePos = pos;
-
-        sizeDown = Map.CheckEmptySpacesBelow(pos);
-        if (sizeDown == 0)
-            mToRemove = true;
-        trigger = new Sightbox(this, new CustomAABB(Position, new Vector2(MapManager.cTileSize / 2, (sizeDown * MapManager.cTileSize / 2)), new Vector2(0, -(sizeDown * MapManager.cTileSize / 2) - (MapManager.cTileSize / 2))));
-        trigger.UpdatePosition();
-        if(sizeDown <= 0)
         {
             isTriggered = true;
         }

@@ -180,7 +180,8 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-        
+        mGameMode = GameMode.GameOver;
+        GameOverScreen.instance.DisplayScreen();
     }
     
     public void SwapUpdateIds(Entity a, Entity b)
@@ -226,7 +227,18 @@ public class LevelManager : MonoBehaviour
     {
         if(mGameMode == GameMode.GameOver)
         {
-            StartNewGame();
+            foreach (Player p in players)
+            {
+                if (p != null)
+                {
+                    if (p.Input.playerButtonInput[(int)ButtonInput.Pause])
+                    {
+                        StartNewGame();
+                        GameOverScreen.instance.DisplayScreen(false);
+                    }
+                }
+            }
+            return;
         }
         //The game doesnt run in editor mode
         if (mGameMode == GameMode.Paused)
@@ -282,7 +294,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("APD: " + allPlayersDead + ", PE: " + playersExist);
         if(allPlayersDead && playersExist)
         {
-            mGameMode = GameMode.GameOver;
+            GameOver();
             return;
         }
 

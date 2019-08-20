@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LocalCoop;
 
-public enum PlayerInputState { Game, Inventory, Paused };
+public enum PlayerInputState { Game, Inventory, Paused, GameOver };
 
 
 public class PlayerInputController

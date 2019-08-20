@@ -30,7 +30,7 @@ public abstract class Item : ScriptableObject
     {
         string tooltip = "";
 
-        tooltip += mName;
+        tooltip += "<color=orange>"+mName+"</color>";
 
         return tooltip;
     }
@@ -79,10 +79,14 @@ public abstract class Equipment : Item
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();
-        tooltip += "\n" + mSlot.ToString();
+        tooltip += "\n<color=black>" + mSlot.ToString() + "</color>";
+        foreach (PlayerAbility ability in abilities)
+        {
+            tooltip += "\n<color=magenta>" + ability.ToString() + "</color>";
+        }
         foreach(StatBonus stat in statBonuses)
         {
-            tooltip += "\n" + stat.getTooltip();
+            tooltip += "\n<color=green>" + stat.getTooltip() + "</color>";
         }
 
         return tooltip;

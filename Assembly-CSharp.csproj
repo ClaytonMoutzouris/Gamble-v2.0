@@ -64,6 +64,7 @@
     <Compile Include="Assets\CharacterCreationPanel.cs" />
     <Compile Include="Assets\DropdownOptionObject.cs" />
     <Compile Include="Assets\EventSystemManager.cs" />
+    <Compile Include="Assets\GameOverScreen.cs" />
     <Compile Include="Assets\InventoryOptionButton.cs" />
     <Compile Include="Assets\InventoryOptionList.cs" />
     <Compile Include="Assets\InventorySlot.cs" />

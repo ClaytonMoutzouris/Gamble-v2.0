@@ -138,7 +138,7 @@ public class Entity {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
         }
 
-        Position = spawnPoint;
+        Position = spawnPoint + body.mOffset;
         Renderer.Sprite.sortingLayerName = prototype.sortingLayer.ToString();
         Renderer.Draw();
         Body.UpdatePosition();
