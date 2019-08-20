@@ -11,4 +11,14 @@ public abstract class AttackPrototype : ScriptableObject
 
     public Vector2 offset = new Vector2(0,0);
 
+    public List<WeaponAbility> abilities;
+
+    public virtual string getToolTip()
+    {
+        string tooltip = "";
+        tooltip += "\n" + damage + " DMG";
+
+
+        return tooltip;
+    }
 }

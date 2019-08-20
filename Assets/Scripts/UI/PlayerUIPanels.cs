@@ -27,7 +27,7 @@ public class PlayerUIPanels : MonoBehaviour
 
     public void RemovePlayer(int index)
     {
-        Destroy(playerPanels[index]);
+        Destroy(playerPanels[index].gameObject);
 
     }
 

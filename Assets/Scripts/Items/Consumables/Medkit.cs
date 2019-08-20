@@ -12,4 +12,13 @@ public class Medkit : ConsumableItem
 
         base.Use(player, index);
     }
+
+    public override string getTooltip()
+    {
+        string tooltip = base.getTooltip();
+        tooltip += "\nRestores " + value.ToString() + " health when eaten.";
+
+        return tooltip;
+
+    }
 }

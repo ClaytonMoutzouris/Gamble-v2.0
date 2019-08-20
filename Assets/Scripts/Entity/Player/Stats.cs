@@ -146,4 +146,12 @@ public class StatBonus
         bonusValue = min;
     }
 
+    public string getTooltip()
+    {
+        string tooltip = "";
+
+        tooltip += type.ToString() + " +" + bonusValue; 
+
+        return tooltip;
+    }
 }

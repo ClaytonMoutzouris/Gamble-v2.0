@@ -70,7 +70,7 @@ public class MiniMap : MonoBehaviour
             }
         }
 
-        SetMapTexture(map.GetMap(), map.sizeX, map.sizeY);
+        SetMapTexture(map.GetMap(), map.getMapSize().x, map.getMapSize().y);
     }
 
     public static Vector2 TileToMinimap(Vector2i tilePos)

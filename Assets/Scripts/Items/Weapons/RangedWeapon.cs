@@ -36,4 +36,12 @@ public class RangedWeapon : Weapon
 
     }
 
+    public override string getTooltip()
+    {
+        string tooltip = base.getTooltip();
+        tooltip += attack.getToolTip();
+
+        return tooltip;
+    }
+
 }

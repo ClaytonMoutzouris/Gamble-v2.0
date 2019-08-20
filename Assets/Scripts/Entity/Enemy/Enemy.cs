@@ -7,6 +7,7 @@ public class Enemy : Entity, IHurtable
     public EnemyType mEnemyType;
     public Health mHealth;
     EnemyPrototype prototype;
+    public int jumpHeight = 0;
     //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
@@ -86,6 +87,7 @@ public class Enemy : Entity, IHurtable
 
         mEnemyType = prototype.enemyType;
         mMovingSpeed = proto.movementSpeed;
+        jumpHeight = proto.jumpHeight;
 
         mCollidesWith.Add(EntityType.Player);
         mCollidesWith.Add(EntityType.Obstacle);

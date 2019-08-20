@@ -21,6 +21,7 @@ MonoBehaviour:
   animationController: {fileID: 9100000, guid: b8ee25db38c4cc04e8704203ac1ed861, type: 2}
   enemyType: 6
   movementSpeed: 70
+  jumpHeight: 600
   sightRange: 150
   hostility: 2
   health: 500

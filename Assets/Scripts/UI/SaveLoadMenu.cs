@@ -54,6 +54,7 @@ public class SaveLoadMenu : MonoBehaviour
             //to determine what format a map we are loading is
             writer.Write(version);
 
+            Debug.Log("Room Size: " + mMap.room.mWidth + ", " + mMap.room.mHeight);
             mMap.room.Save(writer);
 
         }
@@ -76,6 +77,7 @@ public class SaveLoadMenu : MonoBehaviour
             {
                 mMap.room.Load(reader);
                 mMap.Draw();
+                Debug.Log("Room Size: " + mMap.room.mWidth + ", " + mMap.room.mHeight);
 
                 RoomEditor.SetEditorValues(mMap.room.roomType, mMap.room.surfaceLayer);
             }

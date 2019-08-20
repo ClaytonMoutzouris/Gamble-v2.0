@@ -6,7 +6,8 @@ using LocalCoop;
 public enum GameMode
 {
     Game,
-    Paused
+    Paused,
+    GameOver
 }
 
 public class LevelManager : MonoBehaviour
@@ -55,14 +56,27 @@ public class LevelManager : MonoBehaviour
             
         }
         */
-        
+
+
 
 
 
         //player2.GetComponent<SpriteRenderer>().color = Color.gray;
 
+        StartNewGame();        
+    }
+
+    public void StartNewGame()
+    {
+        foreach (Player player in players)
+        {
+            if (player != null)
+            {
+                DropPlayer(player.mPlayerIndex);
+            }
+        }
         NewGameMap(MapType.Hub);
-        
+        mGameMode = GameMode.Game;
     }
 
     public void AddPlayer(int index, PlayerGamepadInput input)
@@ -80,7 +94,9 @@ public class LevelManager : MonoBehaviour
     public void DropPlayer(int index)
     {
         //players[index].mToRemove = true;
+        PlayerUIPanels.instance.RemovePlayer(index);
         players[index].ActuallyDie();
+        players[index] = null;
 
 
     }
@@ -161,6 +177,11 @@ public class LevelManager : MonoBehaviour
         //UpdateCursor();
 
     }
+
+    public void GameOver()
+    {
+        
+    }
     
     public void SwapUpdateIds(Entity a, Entity b)
     {
@@ -203,8 +224,10 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        
+        if(mGameMode == GameMode.GameOver)
+        {
+            StartNewGame();
+        }
         //The game doesnt run in editor mode
         if (mGameMode == GameMode.Paused)
             return;
@@ -225,6 +248,7 @@ public class LevelManager : MonoBehaviour
         {
             if (mEntities[i].mToRemove)
             {
+                Debug.Log(mEntities[i].Renderer.name + " Is being removed");
                 mEntities[i].ActuallyDie();
                 
             }
@@ -238,6 +262,28 @@ public class LevelManager : MonoBehaviour
         {
             //if(!mObjects[i].mToRemove)
             mEntities[i].SecondUpdate();
+        }
+
+        
+        //Check for game over
+        bool allPlayersDead = true;
+        bool playersExist = false;
+        foreach (Player player in players)
+        {
+            if (player == null)
+                continue;
+
+            playersExist = true;
+
+            if (!player.IsDead)
+                allPlayersDead = false;
+        }
+
+        Debug.Log("APD: " + allPlayersDead + ", PE: " + playersExist);
+        if(allPlayersDead && playersExist)
+        {
+            mGameMode = GameMode.GameOver;
+            return;
         }
 
         /*If we want to change the map, we have to either abort everything or wait until we're finished updating
@@ -263,6 +309,8 @@ public class LevelManager : MonoBehaviour
             }
 
         }
+
+
         
     }
 }

@@ -8,4 +8,11 @@ public class RangedAttackPrototype : AttackPrototype
     public int numberOfProjectiles = 1;
     public float spreadAngle = 0;
 
+    public override string getToolTip()
+    {
+        string tooltip = base.getToolTip();
+
+        return tooltip;
+    }
+
 }

@@ -57,7 +57,7 @@ public class Slime : Enemy {
                             //If they can't proceed horizontally, try jumping.
                             if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
                             {
-                                EnemyBehaviour.Jump(this, 460);
+                                EnemyBehaviour.Jump(this, jumpHeight);
                             }
                             //body.mSpeed.x = mMovingSpeed;
                             mDirection = EntityDirection.Right;
@@ -66,7 +66,7 @@ public class Slime : Enemy {
                         {
                             if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
                             {
-                                EnemyBehaviour.Jump(this, 460);
+                                EnemyBehaviour.Jump(this, jumpHeight);
                             }
                             mDirection = EntityDirection.Left;
                         }

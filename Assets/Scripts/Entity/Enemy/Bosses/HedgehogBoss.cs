@@ -9,15 +9,15 @@ public class HedgehogBoss : BossEnemy
     #region SetInInspector
 
     #endregion
-    float AttackCooldown = 1;
-    float AttackTimer = 0;
+    float AttackCooldown = 0;
+    float AttackTimer = 1;
 
     public HedgehogBoss(BossPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
-        AttackCooldown = 1;
-        AttackTimer = 0;
+        AttackCooldown = 0;
+        AttackTimer = 1;
         //RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);
         //mAttackManager.AttackList.Add(ranged);
 
@@ -76,7 +76,7 @@ public class HedgehogBoss : BossEnemy
             mEnemyState = EnemyState.Aggrivated;
         } else if (mEnemyState != EnemyState.Jumping)
         {
-            EnemyBehaviour.Jump(this, 400);
+            EnemyBehaviour.Jump(this, jumpHeight);
 
         }
         if (Target != null)

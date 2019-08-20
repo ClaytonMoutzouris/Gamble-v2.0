@@ -8,7 +8,7 @@ using LocalCoop;
 public class Player : Entity, IHurtable
 {
     private Health health;
-    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting };
+    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Dead };
     PlayerPrototype prototype;
     public float mJumpSpeed;
     public float mWalkSpeed;
@@ -28,6 +28,8 @@ public class Player : Entity, IHurtable
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
+
+    public List<PlayerAbility> activeAbilities;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -148,6 +150,15 @@ public class Player : Entity, IHurtable
         }
     }
 
+    public bool IsDead
+    {
+        get
+        {
+            return mCurrentState == PlayerState.Dead;
+        }
+
+    }
+
     public void SetInput(PlayerGamepadInput input)
     {
         this.Input = new PlayerInputController(this, input);
@@ -182,7 +193,7 @@ public class Player : Entity, IHurtable
 
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
-
+        activeAbilities = new List<PlayerAbility>();
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
@@ -259,6 +270,11 @@ public class Player : Entity, IHurtable
         {
             LevelManager.instance.PauseGame(mPlayerIndex);
             //PauseMenu.instance.defaultObject;
+        }
+
+        if(mCurrentState == PlayerState.Dead)
+        {
+            return;
         }
 
         if (Input.playerButtonInput[(int)ButtonInput.Select])
@@ -925,6 +941,17 @@ public class Player : Entity, IHurtable
 
     public void UpdateAnimator()
     {
+        if (activeAbilities.Contains(PlayerAbility.Invisible))
+        {
+            Renderer.Sprite.color = Color.clear;
+            return;
+        }
+        else
+        {
+            Renderer.Sprite.color = Color.white;
+
+        }
+
         foreach (Attack attack in AttackManager.meleeAttacks)
         {
             if (attack.mIsActive)
@@ -1025,11 +1052,9 @@ public class Player : Entity, IHurtable
     {
 
         //The player never dies
-
-        //base.Die();
-
-        //HurtBox.mState = ColliderState.Closed;
-        //HurtBox.mCollisions.Clear();
+        Body.mState = ColliderState.Closed;
+        mCurrentState = PlayerState.Dead;
+        HurtBox.mState = ColliderState.Closed;
 
     }
 

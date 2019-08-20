@@ -25,6 +25,15 @@ public abstract class Item : ScriptableObject
     {
         inventorySlot = value;
     }
+
+    public virtual string getTooltip()
+    {
+        string tooltip = "";
+
+        tooltip += mName;
+
+        return tooltip;
+    }
     
 }
 
@@ -34,6 +43,7 @@ public abstract class Equipment : Item
 
     public EquipmentSlot mSlot;
     public List<StatBonus> statBonuses;
+    public List<PlayerAbility> abilities;
     //public Trait trait;
     public bool isEquipped;
 
@@ -41,12 +51,20 @@ public abstract class Equipment : Item
     {
 
         player.mStats.AddBonuses(statBonuses);
+        foreach(PlayerAbility ability in abilities)
+        {
+            player.activeAbilities.Add(ability);
+        }
 
     }
 
     public virtual void OnUnequip(Player player)
     {
         player.mStats.RemoveBonuses(statBonuses);
+        foreach(PlayerAbility ability in abilities)
+        {
+            player.activeAbilities.Remove(ability);
+        }
     }
 
     public override List<InventoryOption> GetInventoryOptions()
@@ -56,6 +74,19 @@ public abstract class Equipment : Item
             InventoryOption.Move,
             InventoryOption.Drop,
             InventoryOption.Cancel };
+    }
+
+    public override string getTooltip()
+    {
+        string tooltip = base.getTooltip();
+        tooltip += "\n" + mSlot.ToString();
+        foreach(StatBonus stat in statBonuses)
+        {
+            tooltip += "\n" + stat.getTooltip();
+        }
+
+        return tooltip;
+
     }
 }
 

@@ -21,10 +21,8 @@ public class Constants
     //public const float cJumpSpeed = 380.0f; //4
     //public const float cJumpSpeed = 410.0f; //5
     //public const float cJumpSpeed = 460.0f; //6
-    public const int cDefaultMapWidth = 100;
-    public const int cDefaultMapHeight = 100;
-    public const int cMapChunkSizeX = 10;
-    public const int cMapChunkSizeY = 10;
+    public const int cRoomSizeX = 10; 
+    public const int cRoomSizeY = 10;
     public const int cTileResolution = 32;
     public const int MAX_NUM_PLAYERS = 4;
     public const float cLadderThreshold = 5.0f;

@@ -7,8 +7,8 @@ public class MapData : ScriptableObject {
 
     public MapType mapType;
     public WorldType type;
-    public int sizeX = 100;
-    public int sizeY = 100;
+    public int sizeX = 10;
+    public int sizeY = 10;
     //Only matters for non boss
     public int roomSizeX = 10;
     public int roomSizeY = 10;

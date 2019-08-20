@@ -21,6 +21,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   enemyType: 6
   movementSpeed: 40
+  jumpHeight: 460
   sightRange: 150
   hostility: 2
   health: 500

@@ -40,9 +40,9 @@ public static class MapGenerator
 
         //int chunkX = Random.Range(0, Constants.cMapChunksX);
 
-        for (int y = 1; y < map.sizeY; y++)
+        for (int y = 1; y < Constants.cRoomSizeY; y++)
         {
-            for (int x = 0; x < map.sizeX; x++)
+            for (int x = 0; x < Constants.cRoomSizeX; x++)
             {
 
                 if (map.GetTile(roomX*map.roomSizeX + x, roomY * map.roomSizeY + y) == TileType.Empty)
@@ -67,9 +67,9 @@ public static class MapGenerator
         List<Vector2i> possibleTiles = new List<Vector2i>();
         Vector2i tile = new Vector2i(1, 1);
 
-        for (int y = 1; y < map.sizeY; y++)
+        for (int y = 1; y < Constants.cRoomSizeY; y++)
         {
-            for (int x = 0; x < map.sizeX; x++)
+            for (int x = 0; x < Constants.cRoomSizeX; x++)
             {
 
                 if (map.GetTile(roomX * map.roomSizeX + x, roomY * map.roomSizeY + y) == TileType.Empty)
@@ -90,12 +90,12 @@ public static class MapGenerator
 
     public static void AddBounds(Map map)
     {
-        for (int i = 0; i < map.sizeY; i++)
+        for (int i = 0; i < map.getMapSize().y; i++)
         {
-            for (int j = 0; j < map.sizeX; j++)
+            for (int j = 0; j < map.getMapSize().x; j++)
             {
 
-                if (j == 0 || i == 0 || j == map.sizeX - 1 || i == map.sizeY - 1)
+                if (j == 0 || i == 0 || j == map.getMapSize().x - 1 || i == map.getMapSize().y - 1)
                 {
                     //Debug.Log("X: " + i + ", Y: " + j);
                     map.SetTile(j, i, TileType.Block);
@@ -307,6 +307,7 @@ public static class MapGenerator
             }
         }
 
+        map.SetTileMap(RoomsToMap(rooms, data.sizeX, data.sizeY));
         
         //TODO Turn room array into map
 
@@ -352,15 +353,48 @@ public static class MapGenerator
         return map;
     }
 
+    public static TileType[,] RoomsToMap(RoomData[,] rooms, int numRoomsX, int numRoomsY)
+    {
+        int mapsizeX = Constants.cRoomSizeX * numRoomsX;
+        int mapSizeY = Constants.cRoomSizeY * numRoomsY;
+
+        TileType[,] tileMap = new TileType[mapsizeX, mapSizeY];
+        
+        for(int rx = 0; rx < numRoomsX; rx++)
+        {
+            for(int ry = 0; ry < numRoomsY; ry++)
+            {
+                for(int tx = 0; tx < Constants.cRoomSizeX; tx++)
+                 {
+                    for(int ty = 0; ty < Constants.cRoomSizeY; ty++)
+                    {
+                        tileMap[rx * Constants.cRoomSizeX + tx, ry * Constants.cRoomSizeY + ty] = rooms[rx, ry].tiles[tx, ty];
+                    }
+                }
+            }
+        }
+
+
+        return tileMap;
+    }
+
     public static Map GenerateBossMap(MapData data, WorldType worldType)
     {
-        RoomData roomData = RoomDatabase.GetBossRoom(WorldType.BossMap);
-        data.sizeX = roomData.mWidth;
-        data.sizeY = roomData.mHeight;
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
 
+        RoomData roomData = RoomDatabase.GetBossRoom(WorldType.BossMap);
+        data.roomSizeX = roomData.mWidth;
+        data.roomSizeY = roomData.mHeight;
+
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
         Map map = new Map(data);
 
+
+
         map.worldType = worldType;
+        map.SetTileMap(roomData.tiles);
+        Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
+
         AddBounds(map);
 
 
@@ -371,7 +405,7 @@ public static class MapGenerator
 
         map.SetTile(door.x, door.y, TileType.Door);
 
-        map.bossTile = new Vector2i(5, 5);
+        map.bossTile = new Vector2i(8, 2);
 
         //This needs a +1 to hit all the bosses
         map.AddEntity(new BossData(map.bossTile.x, map.bossTile.y, GetBossForWorld(map.worldType)));
@@ -431,9 +465,9 @@ public static class MapGenerator
         int enemyRandom = 0;
         int blockRandom = 0;
 
-        for (int x = 0; x < map.sizeX; x++)
+        for (int x = 0; x < map.getMapSize().x; x++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int y = 0; y < map.getMapSize().y; y++)
             {
                 /*
                 if (map.GetTile(x, y) == TileType.Empty)
@@ -499,9 +533,9 @@ public static class MapGenerator
         Debug.Log("Adding Fauna");
         int r;
 
-        for (int x = 0; x < map.sizeX; x++)
+        for (int x = 0; x < map.getMapSize().x; x++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int y = 0; y < map.getMapSize().y; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 30)
@@ -527,9 +561,9 @@ public static class MapGenerator
     {
         int r;
 
-        for (int x = 0; x < map.sizeX; x++)
+        for (int x = 0; x < map.getMapSize().x; x++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int y = 0; y < map.getMapSize().y; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 95)
@@ -548,9 +582,9 @@ public static class MapGenerator
     {
         int r;
 
-        for (int x = 0; x < map.sizeX; x++)
+        for (int x = 0; x < map.getMapSize().x; x++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int y = 0; y < map.getMapSize().y; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 95)
@@ -569,9 +603,9 @@ public static class MapGenerator
     {
         int r;
 
-        for (int x = 0; x < map.sizeX; x++)
+        for (int x = 0; x < map.getMapSize().x; x++)
         {
-            for (int y = 0; y < map.sizeY; y++)
+            for (int y = 0; y < map.getMapSize().y; y++)
             {
                 r = Random.Range(0, 100);
                 if (r < 98)
