@@ -7,7 +7,7 @@ public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Treedude, Count, Boss }
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree};
 
-public enum WeaponAbility { Knockback };
+public enum WeaponAbility { Knockback, Exploding };
 public enum PlayerAbility { Hover, Invisible };
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };

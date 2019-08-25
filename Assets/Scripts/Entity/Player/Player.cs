@@ -213,7 +213,7 @@ public class Player : Entity, IHurtable
 
         foreach (MeleeAttackPrototype meleeAttack in prototype.meleeAttacks)
         {
-            MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)));
+            MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)), meleeAttack.abilities);
             AttackManager.meleeAttacks.Add(melee);
             defaultMelee = melee;
             //Debug.Log("Adding Slime melee attack");
@@ -221,7 +221,7 @@ public class Player : Entity, IHurtable
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset);
+            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset, rangedAttack.abilities);
             AttackManager.rangedAttacks.Add(ranged);
             defaultRanged = ranged;
 

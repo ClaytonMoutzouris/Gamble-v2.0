@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1000
   duration: 0
-  cooldown: 5
+  cooldown: 1
   startUpFrames: 0
   offset: {x: 6, y: 12}
-  projectile: {fileID: 11400000, guid: 65eac33884eb9cc45826284e7af78ed6, type: 2}
+  abilities: 
+  projectile: {fileID: 11400000, guid: 8250cb645ff447b429030972f7f01084, type: 2}
   numberOfProjectiles: 1
   spreadAngle: 0

@@ -17,5 +17,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 3378b0aa667cf4b4199ab9c31a35e01a, type: 3}
   mSlot: 5
   statBonuses: []
+  abilities: 
   isEquipped: 0
+  weaponAbilities: 01000000
   attack: {fileID: 11400000, guid: 82d736aa44494614fbb08f9362b407c8, type: 2}

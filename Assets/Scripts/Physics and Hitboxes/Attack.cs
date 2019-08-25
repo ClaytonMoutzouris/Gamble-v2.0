@@ -8,7 +8,7 @@ public enum Range { Close, Near, Far };
 public class Attack {
 
     public Entity mEntity;
-
+    public List<WeaponAbility> abilities;
     public int damage;
     public float duration;
     public float elapsed;
@@ -30,9 +30,10 @@ public class Attack {
         this.damage = damage;
     }
 
-    public Attack(Entity entity, float duration, int damage, float cd)
+    public Attack(Entity entity, float duration, int damage, float cd, List<WeaponAbility> abilities)
     {
         mEntity = entity;
+        this.abilities = abilities;
         this.duration = duration;
         this.damage = damage;
         coolDown = cd;
@@ -94,7 +95,7 @@ public class DashAttack : Attack
 {
     public Hitbox hitbox;
 
-    public DashAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
+    public DashAttack(Entity entity, float duration, int damage, float cd, Hitbox hit, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
@@ -155,7 +156,7 @@ public class DashAttack : Attack
 public class MeleeAttack : Attack
 {
     public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit) : base(entity, duration, damage, cd)
+    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
     {
         hitbox = hit;
         hitbox.mState = ColliderState.Closed;
@@ -223,8 +224,9 @@ public class RangedAttack : Attack
     public int numberOfProjectiles;
     public float spreadAngle;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, int numProj, float spreadAngle, ProjectilePrototype proj, Vector2 offset) : base(entity, duration, damage, cd)
+    public RangedAttack(Entity entity, float duration, int damage, float cd, int numProj, float spreadAngle, ProjectilePrototype proj, Vector2 offset, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
     {
+
         projectile = proj;
         projectileOffset = offset;
         numberOfProjectiles = numProj;

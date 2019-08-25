@@ -500,7 +500,10 @@ public class PhysicsBody : CustomCollider2D
         Vector2 topRight = mAABB.Max();
         Vector2 bottomLeft = mAABB.Min();
 
-        CollidesWithTiles(ref mEntity.Position, ref topRight, ref bottomLeft, ref mPS);
+        if (!mEntity.ignoreTilemap)
+        {
+            CollidesWithTiles(ref mEntity.Position, ref topRight, ref bottomLeft, ref mPS);
+        }
 
         mOldSpeed = mSpeed;
 

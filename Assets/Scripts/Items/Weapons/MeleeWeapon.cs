@@ -14,7 +14,7 @@ public class MeleeWeapon : Weapon
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, attack.duration, attack.damage, attack.cooldown, new Hitbox(player, new CustomAABB(player.Position, attack.hitboxSize, attack.hitboxOffset)));
+        player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, attack.duration, attack.damage, attack.cooldown, new Hitbox(player, new CustomAABB(player.Position, attack.hitboxSize, attack.hitboxOffset)), attack.abilities);
     }
 
     public override void OnUnequip(Player player)

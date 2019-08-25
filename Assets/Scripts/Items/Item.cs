@@ -96,6 +96,7 @@ public abstract class Equipment : Item
 
 public abstract class Weapon : Equipment
 {
+    public List<WeaponAbility> weaponAbilities;
 
 }
 

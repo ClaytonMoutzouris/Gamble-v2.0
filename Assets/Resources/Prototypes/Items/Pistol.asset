@@ -19,5 +19,7 @@ MonoBehaviour:
   statBonuses:
   - type: 4
     bonusValue: 5
+  abilities: 
   isEquipped: 0
+  weaponAbilities: 01000000
   attack: {fileID: 11400000, guid: 30f97f3f2a5c82d4fb2e7db330ac3d18, type: 2}

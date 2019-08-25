@@ -14,7 +14,6 @@ public class Entity {
     public List<EntityType> mCollidesWith;
     public float mMovingSpeed;
     public Vector2 Position;
-    public bool collidesWithMap = true;
     public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
     private EntityPrototype prototype;
@@ -28,6 +27,7 @@ public class Entity {
     public int mUpdateId = -1; //The order in the update list that the entity is updated, this matters for things like mounting
     #endregion
     protected bool isSpawned = false;
+    public bool ignoreTilemap = false;
 
     //This might be better served as an entity type matrix rather than collision type
 

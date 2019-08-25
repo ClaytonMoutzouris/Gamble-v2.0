@@ -41,13 +41,13 @@ public class Projectile : Entity, IProjectile {
         }
     }
 
-    public Projectile(ProjectilePrototype proto, RangedAttack rAttack, Vector2 direction) : base(proto)
+    public Projectile(ProjectilePrototype proto, Attack rAttack, Vector2 direction) : base(proto)
     {
         prototype = proto;
         owner = rAttack.mEntity;
         mEntityType = EntityType.Projectile;
         mMaxTime = proto.maxTime;
-
+        ignoreTilemap = proto.ignoreTilemap;
         mHitbox = new Hitbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, 0)));
         //mHitbox.mState = ColliderState.Closed;
         Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, 0)));
@@ -99,6 +99,14 @@ public class Projectile : Entity, IProjectile {
 
     }
 
+    public void Explode()
+    {
+        //TODO: spawn an explosion here
+        Debug.Log("BOOM");
+        Projectile shot = new Projectile(Resources.Load<ProjectilePrototype>("Prototypes/Entity/Projectile/Explosion") as ProjectilePrototype, (RangedAttack)attack, Vector2.zero);
+        shot.Spawn(this.Position);
+    }
+
     public override void EntityUpdate()
     {
 
@@ -108,12 +116,17 @@ public class Projectile : Entity, IProjectile {
             if (!mHitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(Attack);
+                if (attack.abilities.Contains(WeaponAbility.Exploding))
+                {
+                    Explode();
+                }
                 if (!prototype.pierce)
                 {
                     mToRemove = true;
                     return;
                 }
                 mHitbox.mDealtWith.Add(hit);
+
             }
 
         }

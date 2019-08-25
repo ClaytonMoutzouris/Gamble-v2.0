@@ -114,14 +114,14 @@ public class Enemy : Entity, IHurtable
         //Debug.Log("Melee Attacks: " + prototype.meleeAttacks.Count);
         foreach (MeleeAttackPrototype meleeAttack in prototype.meleeAttacks)
         {
-        MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)));
+        MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)), meleeAttack.abilities);
         mAttackManager.meleeAttacks.Add(melee);
         //Debug.Log("Adding Slime melee attack");
         }
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-        mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset));
+        mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset, rangedAttack.abilities));
         }
 
         
