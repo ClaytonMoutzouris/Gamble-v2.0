@@ -103,7 +103,9 @@ public class Projectile : Entity, IProjectile {
     {
         //TODO: spawn an explosion here
         Debug.Log("BOOM");
-        Projectile shot = new Projectile(Resources.Load<ProjectilePrototype>("Prototypes/Entity/Projectile/Explosion") as ProjectilePrototype, (RangedAttack)attack, Vector2.zero);
+        ProjectilePrototype prototype = Resources.Load<ProjectilePrototype>("Prototypes/Entity/Projectile/Explosion") as ProjectilePrototype;
+        RangedAttack rattack = new RangedAttack(this, attack.duration, 50, 0, 1, 0, prototype, Vector2.zero, new List<WeaponAbility>());
+        Projectile shot = new Projectile(prototype, rattack, Vector2.zero);
         shot.Spawn(this.Position);
     }
 

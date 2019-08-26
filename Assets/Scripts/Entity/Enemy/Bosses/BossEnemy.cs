@@ -3,17 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BossState { Idle, Aggrivated, Attack1, Attack2, Attack3 };
+public enum BossState { Idle, Aggrivated, Attack1, Attack2, Attack3, Attack4, Attack5 };
 
 public class BossEnemy : Enemy
 {
-    #region SetInInspector
     public BossState mBossState = BossState.Idle;
     public BossType bossType = BossType.Count;
     public List<int> phaseTimers;
 
     public List<Projectile> projectilePrefabs;
-    #endregion
 
 
     public bool bossTrigger = false;
@@ -33,9 +31,12 @@ public class BossEnemy : Enemy
             {
                 if (entity is Player)
                 {
-                    this.Target = entity;
-                    TriggerBoss();
-                    break;
+                    if(!((Player)entity).IsDead)
+                    {
+                        this.Target = (Player)entity;
+                        TriggerBoss();
+                        break;
+                    }
                 }
             }
         }

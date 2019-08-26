@@ -75,9 +75,9 @@ public class GameCamera : MonoBehaviour
         float minY = mMap.mHeight * MapManager.cTileSize;
         float maxY = 0;
 
-        foreach(Player player in LevelManager.instance.players)
+        foreach (Player player in LevelManager.instance.players)
         {
-            if (player == null)
+            if (player == null || player.IsDead)
                 continue;
 
             Vector3 position = player.Position;

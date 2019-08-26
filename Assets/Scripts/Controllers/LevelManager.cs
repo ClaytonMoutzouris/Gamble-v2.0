@@ -140,7 +140,11 @@ public class LevelManager : MonoBehaviour
         foreach (Player player in players)
         {
             if(player != null)
-            player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+            {
+                player.Body.SetTilePosition(mMap.mCurrentMap.startTile);
+                if (player.IsDead)
+                    player.Ressurect();
+            }
         }
 
         MiniMap.instance.SetMap(mMap.mCurrentMap, players);

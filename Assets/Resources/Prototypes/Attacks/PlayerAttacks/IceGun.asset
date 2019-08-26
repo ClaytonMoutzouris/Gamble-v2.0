@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23902b556308ef47a67a1f189b401cd, type: 3}
   m_Name: IceGun
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 12
   duration: 0
   cooldown: 0.5
   startUpFrames: 0
   offset: {x: 12, y: 12}
+  abilities: 
   projectile: {fileID: 11400000, guid: 4d541bdc7bef42543af1549d21bc5146, type: 2}
-  numberOfProjectiles: 6
+  numberOfProjectiles: 2
   spreadAngle: 45

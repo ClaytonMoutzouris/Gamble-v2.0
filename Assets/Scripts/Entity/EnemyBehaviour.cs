@@ -9,15 +9,18 @@ public static class EnemyBehaviour
 
     public static void CheckForTargets(Enemy enemy)
     {
-        //First enemies check sight
+        enemy.Target = null;
         if (enemy.Sight.mEntitiesInSight != null)
         {
             foreach (Entity entity in enemy.Sight.mEntitiesInSight)
             {
                 if (entity is Player)
                 {
-                    enemy.Target = entity;
-                    break;
+                    if (!((Player)entity).IsDead)
+                    {
+                        enemy.Target = (Player)entity;
+                        break;
+                    }
                 }
             }
         }

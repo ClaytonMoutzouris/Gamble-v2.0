@@ -5,10 +5,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LocalCoop;
 
+public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Dead };
+
+
 public class Player : Entity, IHurtable
 {
     private Health health;
-    public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Dead };
     PlayerPrototype prototype;
     public float mJumpSpeed;
     public float mWalkSpeed;
@@ -22,7 +24,7 @@ public class Player : Entity, IHurtable
     private PlayerInputController input;
     public List<ProjectilePrototype> bullets;
     public int activeBullet;
-    private PlayerState mCurrentState = PlayerState.Stand;
+    public PlayerState mCurrentState = PlayerState.Stand;
     public int mPlayerIndex;
     public Stats mStats;
     private AttackManager attackManager;
@@ -1014,6 +1016,10 @@ public class Player : Entity, IHurtable
 
     public override void SecondUpdate()
     {
+        if (mCurrentState == PlayerState.Dead)
+        {
+            return;
+        }
         //Should be in the habit of doing this first, i guess
         base.SecondUpdate();
         AttackManager.SecondUpdate();
@@ -1056,6 +1062,14 @@ public class Player : Entity, IHurtable
         mCurrentState = PlayerState.Dead;
         HurtBox.mState = ColliderState.Closed;
 
+    }
+
+    public void Ressurect()
+    {
+        Body.mState = ColliderState.Open;
+        mCurrentState = PlayerState.Stand;
+        HurtBox.mState = ColliderState.Open;
+        health.currentHealth = health.maxHealth/2;
     }
 
     public override void Destroy()

@@ -22,6 +22,7 @@ MonoBehaviour:
   pierce: 0
   ignoreGravity: 1
   angled: 0
+  ignoreTilemap: 0
   maxTime: 1
-  sfx: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
   speed: 40

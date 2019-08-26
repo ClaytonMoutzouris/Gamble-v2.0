@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Catboss Attack
   m_EditorClassIdentifier: 
   damage: 10
-  duration: 0.1
+  duration: 0.25
   cooldown: 0.5
   startUpFrames: 0
   offset: {x: 32, y: 24}
+  abilities: 
   projectile: {fileID: 11400000, guid: 4d541bdc7bef42543af1549d21bc5146, type: 2}
   numberOfProjectiles: 1
   spreadAngle: 0

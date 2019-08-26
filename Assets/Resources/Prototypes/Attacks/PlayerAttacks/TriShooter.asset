@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23902b556308ef47a67a1f189b401cd, type: 3}
   m_Name: TriShooter
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 4
   duration: 0.1
   cooldown: 0.05
   startUpFrames: 0
   offset: {x: 0, y: 12}
+  abilities: 
   projectile: {fileID: 11400000, guid: 331c2511c97f6f645bc35bf713101402, type: 2}
   numberOfProjectiles: 3
   spreadAngle: 360

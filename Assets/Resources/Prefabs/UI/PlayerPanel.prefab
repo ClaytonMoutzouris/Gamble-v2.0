@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: hhh
+  m_Text: 
 --- !u!114 &1865350560221371278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,11 +1718,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -1832,6 +1827,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2091,16 +2091,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6027242962120491413}
     m_Modifications:
-    - target: {fileID: 205533805052395110, guid: 69e7451cb593208489b7f4e9bdbc9511,
-        type: 3}
-      propertyPath: m_Name
-      value: InventoryOptionList
-      objectReference: {fileID: 0}
     - target: {fileID: 4446186047811362923, guid: 69e7451cb593208489b7f4e9bdbc9511,
         type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 6027242960745599685}
+    - target: {fileID: 205533805052395110, guid: 69e7451cb593208489b7f4e9bdbc9511,
+        type: 3}
+      propertyPath: m_Name
+      value: InventoryOptionList
+      objectReference: {fileID: 0}
     - target: {fileID: 7966794467397773898, guid: 69e7451cb593208489b7f4e9bdbc9511,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2233,11 +2233,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement
-      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2347,6 +2342,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2435,11 +2435,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2549,6 +2544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (4)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2637,11 +2637,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2751,6 +2746,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2839,11 +2839,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2953,6 +2948,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}

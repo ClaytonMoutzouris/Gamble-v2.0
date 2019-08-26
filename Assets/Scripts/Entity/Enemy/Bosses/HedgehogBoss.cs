@@ -41,14 +41,6 @@ public class HedgehogBoss : BossEnemy
                 break;
         }
 
-
-        mAttackManager.UpdateAttacks();
-
-
-
-
-
-
         //This is just a test, probably dont need to do it this way
         base.EntityUpdate();
 
@@ -67,41 +59,33 @@ public class HedgehogBoss : BossEnemy
 
     private void AirSpin()
     {
-        CheckForTargets();
         Renderer.SetAnimState("Attack1");
+        mMovingSpeed = 170;
+
         //mAnimator.playbackTime = ;
-        if (mEnemyState == EnemyState.Jumping && Body.mPS.pushesBottom && !Body.mPS.pushedBottom)
+        if (Body.mPS.pushesBottom && !Body.mPS.pushedBottom)
         {
             mBossState = BossState.Aggrivated;
-            mEnemyState = EnemyState.Aggrivated;
-        } else if (mEnemyState != EnemyState.Jumping)
+        } else if (Body.mPS.pushesBottom)
         {
             EnemyBehaviour.Jump(this, jumpHeight);
 
         }
-        if (Target != null)
+
+        if(!Body.mPS.pushesBottom)
         {
-            if (Target.Position.x > Position.x)
-            {
-                mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                mDirection = EntityDirection.Right;
-                //Body.mAABB.ScaleX = -1;
-            }
-            else if (Target.Position.x < Position.x)
-            {
-                mMovingSpeed = Mathf.Abs(mMovingSpeed) * -1;
-                mDirection = EntityDirection.Left;
-                //Body.mAABB.ScaleX = 1;
-            }
+            mAttackManager.rangedAttacks[0].Activate(Vector2.right*(int)mDirection);
+        }
+
+        if (Body.mPS.pushesLeftTile && !Body.mPS.pushedLeftTile || Body.mPS.pushesRightTile && !Body.mPS.pushedRightTile)
+        {
+            mDirection = (EntityDirection)((int)mDirection * -1);
+            mBossState = BossState.Aggrivated;
         }
 
         mAttackManager.meleeAttacks[0].Activate();
 
-        Body.mSpeed.x = mMovingSpeed;
-
-
-
-
+        Body.mSpeed.x = mMovingSpeed * (int)mDirection;
 
     }
 
@@ -109,18 +93,16 @@ public class HedgehogBoss : BossEnemy
     {
         CheckForTargets();
         Renderer.SetAnimState("Attack1");
-        mMovingSpeed = 120;
-
-        CheckForTargets();
+        mMovingSpeed = 230;
 
         mAttackManager.meleeAttacks[0].Activate();
 
         Body.mSpeed.x = mMovingSpeed * (int)mDirection;
 
-        if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
+        if (Body.mPS.pushesLeftTile && !Body.mPS.pushedLeftTile || Body.mPS.pushesRightTile && !Body.mPS.pushedRightTile)
         {
+            mDirection = (EntityDirection)((int)mDirection * -1);
             mBossState = BossState.Aggrivated;
-            mMovingSpeed = 80;
         }
 
     }
@@ -128,6 +110,7 @@ public class HedgehogBoss : BossEnemy
 
     private void Aggrivated()
     {
+        mMovingSpeed = 80;
         Renderer.SetAnimState("Idle");
         //This works amazing!
         Body.mSpeed.x = 0;

@@ -120,7 +120,9 @@ public class RoomEditor : MonoBehaviour
         var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         int mouseTileX, mouseTileY;
-        mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
+        Vector2 mousePos = mMap.GetMapTileAtPoint(mousePosInWorld);
+        mouseTileX = (int)mousePos.x;
+        mouseTileY = (int)mousePos.y;
 
         if (Input.GetKey(KeyCode.Mouse1) || Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
         {

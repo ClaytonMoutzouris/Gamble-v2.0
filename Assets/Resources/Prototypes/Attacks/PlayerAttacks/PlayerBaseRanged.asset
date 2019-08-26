@@ -17,6 +17,7 @@ MonoBehaviour:
   cooldown: 0.1
   startUpFrames: 0
   offset: {x: 10, y: 12}
+  abilities: 
   projectile: {fileID: 11400000, guid: 4d0d2843b4ddb044a9e20a8e56f89abf, type: 2}
-  numberOfProjectiles: 6
-  spreadAngle: 45
+  numberOfProjectiles: 1
+  spreadAngle: 0

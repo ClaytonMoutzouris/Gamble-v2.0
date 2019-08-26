@@ -20,7 +20,7 @@ public class Enemy : Entity, IHurtable
     public AttackManager mAttackManager;
 
     [SerializeField]
-    private Entity target = null;
+    private Player target = null;
 
     [HideInInspector]
     public Stats mStats;
@@ -38,7 +38,7 @@ public class Enemy : Entity, IHurtable
         }
     }
 
-    public Entity Target
+    public Player Target
     {
         get
         {
