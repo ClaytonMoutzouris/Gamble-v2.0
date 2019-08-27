@@ -89,7 +89,7 @@ public class CatBoss : BossEnemy
             {
                 Vector2 dir = ((Vector2)Target.Position - Position).normalized;
                 RangedAttack attack = mAttackManager.rangedAttacks[1];
-                attack.Activate(dir);
+                attack.Activate(dir, Position);
 
                 mBossState = BossState.Aggrivated;
                 return;
@@ -113,7 +113,7 @@ public class CatBoss : BossEnemy
 
                     Vector2 dir = ((Vector2)Target.Position - Position).normalized;
                     RangedAttack attack = mAttackManager.rangedAttacks[1];
-                    attack.Activate(dir);
+                    attack.Activate(dir, Position);
 
                     mBossState = BossState.Aggrivated;
                     jumped = false;
@@ -167,7 +167,7 @@ public class CatBoss : BossEnemy
 
                     Vector2 dir = ((Vector2)Target.Position - Position).normalized;
                     RangedAttack attack = mAttackManager.rangedAttacks[0];
-                    attack.Activate(dir);
+                    attack.Activate(dir, Position);
 
                     mBossState = BossState.Aggrivated;
 

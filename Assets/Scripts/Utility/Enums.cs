@@ -6,6 +6,7 @@ public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Pla
 public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Treedude, Count, Boss };
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree};
+public enum Rarity { Common, Uncommon, Rare, Legendary }
 
 public enum WeaponAbility { Knockback, Exploding };
 public enum PlayerAbility { Hover, Invisible };

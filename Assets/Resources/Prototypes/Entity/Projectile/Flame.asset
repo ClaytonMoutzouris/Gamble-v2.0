@@ -24,5 +24,5 @@ MonoBehaviour:
   angled: 0
   ignoreTilemap: 0
   maxTime: 1
-  sfx: {fileID: 8300000, guid: 7b3da162083bd1843913301d43ce9840, type: 3}
+  sfx: {fileID: 8300000, guid: 626547f26b49ab3489bc4de634699b89, type: 3}
   speed: 40

@@ -46,7 +46,7 @@ public class SharkBoss : BossEnemy
                     if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
-                        attack.Activate(dir);
+                        attack.Activate(dir, Position);
                     }
 
                     if (dir.x < 0)

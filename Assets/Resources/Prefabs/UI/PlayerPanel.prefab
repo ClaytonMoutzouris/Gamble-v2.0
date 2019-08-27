@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3508631408985253320}
   - component: {fileID: 1466279755078998744}
   - component: {fileID: 1865350560221371278}
+  - component: {fileID: 534152577938048213}
   m_Layer: 5
   m_Name: TooltipText
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.78079355, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -72,9 +73,9 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 200
     m_Alignment: 7
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
@@ -94,6 +95,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &534152577938048213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520346959551594476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 0.25, y: -0.25}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2555276779384838082
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,8 +166,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -192,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6509804}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1718,6 +1734,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -1827,11 +1848,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2091,16 +2107,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6027242962120491413}
     m_Modifications:
-    - target: {fileID: 4446186047811362923, guid: 69e7451cb593208489b7f4e9bdbc9511,
-        type: 3}
-      propertyPath: playerInventory
-      value: 
-      objectReference: {fileID: 6027242960745599685}
     - target: {fileID: 205533805052395110, guid: 69e7451cb593208489b7f4e9bdbc9511,
         type: 3}
       propertyPath: m_Name
       value: InventoryOptionList
       objectReference: {fileID: 0}
+    - target: {fileID: 4446186047811362923, guid: 69e7451cb593208489b7f4e9bdbc9511,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 6027242960745599685}
     - target: {fileID: 7966794467397773898, guid: 69e7451cb593208489b7f4e9bdbc9511,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2233,6 +2249,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement
+      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2342,11 +2363,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2435,6 +2451,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2544,11 +2565,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (4)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2637,6 +2653,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2746,11 +2767,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
@@ -2839,6 +2855,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1385922089897469385}
     m_Modifications:
+    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
+        type: 3}
+      propertyPath: m_Name
+      value: UIStatElement (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1533358481201682554, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}
       propertyPath: type
@@ -2948,11 +2969,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8752372223932439608, guid: b847429bd0f1f9048b6a2ddf20234364,
-        type: 3}
-      propertyPath: m_Name
-      value: UIStatElement (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8803331306630820793, guid: b847429bd0f1f9048b6a2ddf20234364,
         type: 3}

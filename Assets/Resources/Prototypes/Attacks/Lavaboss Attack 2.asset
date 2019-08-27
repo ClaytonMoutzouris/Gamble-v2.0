@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa67dc67821db640b2881607c61b4fe, type: 3}
+  m_Script: {fileID: 11500000, guid: f23902b556308ef47a67a1f189b401cd, type: 3}
   m_Name: Lavaboss Attack 2
   m_EditorClassIdentifier: 
-  damage: 20
-  duration: 5
-  cooldown: 0.1
+  damage: 15
+  duration: 0
+  cooldown: 0
   startUpFrames: 0
-  hitboxSize: {x: 40, y: 55}
-  hitboxOffset: {x: 0, y: 0}
+  offset: {x: 0, y: 0}
+  abilities: 
+  projectile: {fileID: 11400000, guid: 721ec4ae006aa1c478e8829ef7450b3b, type: 2}
+  numberOfProjectiles: 1
+  spreadAngle: 0

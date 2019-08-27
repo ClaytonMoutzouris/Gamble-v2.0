@@ -74,7 +74,7 @@ public class HedgehogBoss : BossEnemy
 
         if(!Body.mPS.pushesBottom)
         {
-            mAttackManager.rangedAttacks[0].Activate(Vector2.right*(int)mDirection);
+            mAttackManager.rangedAttacks[0].Activate(Vector2.right*(int)mDirection, Position);
         }
 
         if (Body.mPS.pushesLeftTile && !Body.mPS.pushedLeftTile || Body.mPS.pushesRightTile && !Body.mPS.pushedRightTile)

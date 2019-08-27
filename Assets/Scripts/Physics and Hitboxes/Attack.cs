@@ -244,7 +244,7 @@ public class RangedAttack : Attack
 
     }
 
-    public void Activate(Vector2 direction)
+    public void Activate(Vector2 direction, Vector2 spawnPoint)
     {
         if (mIsActive || OnCooldown())
         {
@@ -266,7 +266,7 @@ public class RangedAttack : Attack
             tempDir.Normalize();
 
             Projectile shot = new Projectile(projectile, this, tempDir);
-            shot.Spawn(mEntity.Position + new Vector2(0, projectileOffset.y) + (projectileOffset * tempDir));
+            shot.Spawn(spawnPoint + new Vector2(0, projectileOffset.y) + (projectileOffset * tempDir));
         }
 
 

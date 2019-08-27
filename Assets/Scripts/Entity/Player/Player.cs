@@ -819,7 +819,7 @@ public class Player : Entity, IHurtable
             RangedAttack attack = AttackManager.rangedAttacks[0];
             Vector2 aim = GetAim();
             ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
-            attack.Activate(GetAim());
+            attack.Activate(GetAim(), Position);
 
         }
 

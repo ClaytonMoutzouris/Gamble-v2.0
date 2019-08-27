@@ -59,7 +59,7 @@ public class TentacleBoss : BossEnemy
                     if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
-                        attack.Activate(dir);
+                        attack.Activate(dir, Position);
                     }
 
                     Body.mSpeed = dir * mMovingSpeed;
@@ -96,7 +96,7 @@ public class TentacleBoss : BossEnemy
                     {
                         Vector2 dir = ((Vector2)Target.Position - Position).normalized;
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
-                        attack.Activate(dir);
+                        attack.Activate(dir, Position);
                     }
 
 

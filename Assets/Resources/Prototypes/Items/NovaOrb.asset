@@ -19,5 +19,5 @@ MonoBehaviour:
   statBonuses: []
   abilities: 
   isEquipped: 0
-  weaponAbilities: 01000000
+  weaponAbilities: 
   attack: {fileID: 11400000, guid: 82d736aa44494614fbb08f9362b407c8, type: 2}

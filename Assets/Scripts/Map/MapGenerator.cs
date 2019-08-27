@@ -420,13 +420,13 @@ public static class MapGenerator
         switch (world)
         {
             case WorldType.Forest:
-                temp = BossType.HedgehogBoss;
+                temp = BossType.LavaBoss;
                 break;
             case WorldType.Tundra:
                 temp = BossType.CatBoss;
                 break;
             case WorldType.Lava:
-                temp = BossType.LavaBoss;
+                temp = BossType.HedgehogBoss;
                 break;
             case WorldType.Purple:
                 temp = BossType.SharkBoss;

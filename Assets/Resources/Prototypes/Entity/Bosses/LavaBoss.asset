@@ -21,12 +21,13 @@ MonoBehaviour:
   animationController: {fileID: 9100000, guid: d05e52b06a46abe47b06e89246c834f0, type: 2}
   enemyType: 6
   movementSpeed: 30
+  jumpHeight: 120
   sightRange: 150
   hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: a401747ee44c5ec4d882be380d4aed4b, type: 2}
-  meleeAttacks:
-  - {fileID: 11400000, guid: 703e453777197244280701064d57b58c, type: 2}
+  - {fileID: 11400000, guid: 8506a9fd3f327cd409c9c1a1e3dd4955, type: 2}
+  meleeAttacks: []
   bossType: 0
   phaseTimers: 

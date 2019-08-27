@@ -45,7 +45,7 @@ public class WurmAlien : Enemy
 
                     RangedAttack attack = mAttackManager.rangedAttacks[0];
 
-                    attack.Activate((Target.Position - Position).normalized);
+                    attack.Activate((Target.Position - Position).normalized, Position);
 
 
                     if (Target.Position.x > Position.x)

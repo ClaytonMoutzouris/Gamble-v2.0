@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: TriShooter
   m_EditorClassIdentifier: 
   mName: TriShooter
+  mRarity: 1
   mValue: 1000
   sprite: {fileID: 21300004, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
   mSlot: 5
   statBonuses: []
+  abilities: 
   isEquipped: 0
+  weaponAbilities: 
   attack: {fileID: 11400000, guid: ad87a14319fca4642a3c06e311368c93, type: 2}

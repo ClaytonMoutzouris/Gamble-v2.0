@@ -7,6 +7,7 @@ public abstract class Item : ScriptableObject
 {
     
     public string mName;
+    public Rarity mRarity;
     public string mValue;
     public Sprite sprite;
     private InventorySlot inventorySlot = null;
@@ -30,11 +31,32 @@ public abstract class Item : ScriptableObject
     {
         string tooltip = "";
 
-        tooltip += "<color=orange>"+mName+"</color>";
+        tooltip += "<color=" + getColorFromRarity() + ">" + mName+"</color>";
 
         return tooltip;
     }
     
+    public string getColorFromRarity()
+    {
+        string rarity = "grey";
+        switch(mRarity)
+        {
+            case Rarity.Common:
+                rarity = "white";
+                break;
+            case Rarity.Uncommon:
+                rarity = "green";
+                break;
+            case Rarity.Rare:
+                rarity = "blue";
+                break;
+            case Rarity.Legendary:
+                rarity = "orange";
+                break;
+        }
+
+        return rarity;
+    }
 }
 
 
@@ -79,7 +101,7 @@ public abstract class Equipment : Item
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();
-        tooltip += "\n<color=black>" + mSlot.ToString() + "</color>";
+        tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
         foreach (PlayerAbility ability in abilities)
         {
             tooltip += "\n<color=magenta>" + ability.ToString() + "</color>";

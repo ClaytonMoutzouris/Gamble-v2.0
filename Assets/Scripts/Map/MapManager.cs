@@ -170,6 +170,19 @@ public class MapManager : MonoBehaviour
 
     }
 
+
+    public Vector2i GetRoofTile(Vector2i start)
+    {
+        Vector2i currTile = start;
+
+        while (currTile.y < mCurrentMap.getMapSize().y && GetTile(currTile.x, currTile.y + 1) != TileType.Block)
+        {
+            currTile = GetMapTileAtPoint(GetMapTilePosition(new Vector2i(currTile.x, currTile.y + 1)));
+        }
+
+        return currTile;
+
+    }
     public float GetGravity()
     {
         return mCurrentMap.gravity;

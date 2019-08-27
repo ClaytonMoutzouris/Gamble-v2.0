@@ -44,7 +44,7 @@ public class Eye : Enemy
                     if (!mAttackManager.rangedAttacks[0].onCooldown)
                     {
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
-                        attack.Activate(dir);
+                        attack.Activate(dir, Position);
                     }
 
                     if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)

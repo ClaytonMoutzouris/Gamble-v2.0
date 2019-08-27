@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class LavaBoss : BossEnemy
 {
     #region SetInInspector
 
-    public float EruptDuration = 4;
+    public float EruptDuration = 2;
     private float EruptTimer = 0;
 
     public float KnockDuration = 0.5f;
@@ -24,7 +23,7 @@ public class LavaBoss : BossEnemy
 
 
     private float ChargeTimer = 0;
-    public float ChargeDuration = 6;
+    public float ChargeDuration = 2;
     public float ChargeSpeed = 1200;
     private int ChargeDirection = 1;
 
@@ -93,7 +92,6 @@ public class LavaBoss : BossEnemy
             ChargeTimer = 0;
             KnockTimer = 0;
             Knocked = false;
-            mAttackManager.meleeAttacks[0].Deactivate();
             return;
         }
 
@@ -102,7 +100,6 @@ public class LavaBoss : BossEnemy
 
         if (!Knocked)
         {
-            mAttackManager.meleeAttacks[0].Activate();
 
             //mMovingSpeed = ChargeSpeed * ChargeDirection;
             Body.mSpeed.x = ChargeSpeed * ChargeDirection;
@@ -111,8 +108,15 @@ public class LavaBoss : BossEnemy
             {
                 SoundManager.instance.PlaySingle(mCrashSFX);
                 ChargeDirection = -1 * ChargeDirection;
+                for(int i = 0; i < 3; i++)
+                {
+                    Vector2i spawnPoint = MapManager.instance.GetRoofTile(new Vector2i(Random.Range(4, Map.mCurrentMap.getMapSize().x-4), 1));
+                    mAttackManager.rangedAttacks[1].Activate(Vector2.zero, MapManager.instance.GetMapTilePosition(spawnPoint));
+                    mAttackManager.rangedAttacks[1].Deactivate();
+
+
+                }
                 Knocked = true;
-                mAttackManager.meleeAttacks[0].Deactivate();
                 KnockTimer = 0;
                 mDirection = (EntityDirection)((int)mDirection * -1);
                 //Body.mAABB.ScaleX *= -1;
@@ -156,7 +160,7 @@ public class LavaBoss : BossEnemy
             EruptTimer += Time.deltaTime;
         }
 
-        mAttackManager.rangedAttacks[0].Activate(new Vector2(UnityEngine.Random.Range(-1.0f, 1.0f), 1));
+        mAttackManager.rangedAttacks[0].Activate(Vector2.up, Position);
 
     }
 

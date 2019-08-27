@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cape
   m_EditorClassIdentifier: 
   mName: Midnight Cape
+  mRarity: 3
   mValue: 
   sprite: {fileID: 21300000, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
   mSlot: 0

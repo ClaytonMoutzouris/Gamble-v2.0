@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: DeathGun
   m_EditorClassIdentifier: 
   mName: DeathGun
+  mRarity: 3
   mValue: 10000
   sprite: {fileID: 21300000, guid: 734c01c5bedd82d4bb49030f8bb6d026, type: 3}
   mSlot: 5
   statBonuses:
   - type: 0
     bonusValue: 5
+  abilities: 
   isEquipped: 0
+  weaponAbilities: 
   attack: {fileID: 11400000, guid: 789b9a7648c07354aa3e7217e1e0787a, type: 2}

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Lavaboss Attack 1
   m_EditorClassIdentifier: 
   damage: 5
-  duration: 0.05
-  cooldown: 0.1
+  duration: 0.25
+  cooldown: 1
   startUpFrames: 0
   offset: {x: 0, y: 64}
+  abilities: 
   projectile: {fileID: 11400000, guid: 878f442fae35750469b871b0ed5576c3, type: 2}
-  numberOfProjectiles: 1
-  spreadAngle: 0
+  numberOfProjectiles: 8
+  spreadAngle: 120

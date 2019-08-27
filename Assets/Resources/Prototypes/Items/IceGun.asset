@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: IceGun
   m_EditorClassIdentifier: 
   mName: IceGun
+  mRarity: 1
   mValue: 15
   sprite: {fileID: 21300000, guid: 15a5bf89146437c4fbf228bcc4e33bba, type: 3}
   mSlot: 5
   statBonuses: []
+  abilities: 
   isEquipped: 0
+  weaponAbilities: 
   attack: {fileID: 11400000, guid: da24d8cb8871b41498930316a949615c, type: 2}
