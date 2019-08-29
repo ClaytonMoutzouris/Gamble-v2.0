@@ -252,7 +252,7 @@ public static class MapGenerator
         Vector2i startRoom;
         Vector2i endRoom;
 
-        int[] depths = new int[map.sizeY];
+        int[] depths = new int[map.sizeX];
         for(int i = 0; i < depths.Length; i++)
         {
             depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
@@ -347,7 +347,7 @@ public static class MapGenerator
 
 
         //Post process the map based on probabilistic tiles and such
-        PostProcessing(map);
+        PostProcessing(map, data);
 
 
         return map;
@@ -420,13 +420,13 @@ public static class MapGenerator
         switch (world)
         {
             case WorldType.Forest:
-                temp = BossType.LavaBoss;
+                temp = BossType.HedgehogBoss;
                 break;
             case WorldType.Tundra:
                 temp = BossType.CatBoss;
                 break;
             case WorldType.Lava:
-                temp = BossType.HedgehogBoss;
+                temp = BossType.LavaBoss;
                 break;
             case WorldType.Purple:
                 temp = BossType.SharkBoss;
@@ -460,7 +460,7 @@ public static class MapGenerator
 
     }
 
-    static void PostProcessing(Map map)
+    static void PostProcessing(Map map, MapData data)
     {
         int enemyRandom = 0;
         int blockRandom = 0;
@@ -484,12 +484,13 @@ public static class MapGenerator
                 switch (map.GetTile(x, y))
                 {
                     case TileType.SmallEnemy:
-                        enemyRandom = Random.Range(0, (int)EnemyType.Treedude);
-                        map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
+                        enemyRandom = Random.Range(0, data.smallEnemies.Count);
+                        map.AddEntity(new EnemyData(x, y, data.smallEnemies[enemyRandom]));
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.LargeEnemy:
-                        map.AddEntity(new EnemyData(x, y, EnemyType.Treedude));
+                        enemyRandom = Random.Range(0, data.largeEnemies.Count);
+                        map.AddEntity(new EnemyData(x, y, data.largeEnemies[enemyRandom]));
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.ObstacleBlock1:

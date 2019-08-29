@@ -47,10 +47,6 @@ public class CatBoss : BossEnemy
 
         base.EntityUpdate();
 
-        CollisionManager.UpdateAreas(HurtBox);
-
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
 
         //HurtBox.mCollisions.Clear();
         //UpdatePhysics();

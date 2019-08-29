@@ -23,8 +23,6 @@ public class SharkBoss : BossEnemy
     public override void EntityUpdate()
     {
 
-        mAttackManager.UpdateAttacks();
-        base.EntityUpdate();
 
 
 
@@ -74,11 +72,8 @@ public class SharkBoss : BossEnemy
                 break;
             }
 
+        base.EntityUpdate();
 
-        CollisionManager.UpdateAreas(HurtBox);
-
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
 
         //make sure the hitbox follows the object
     }

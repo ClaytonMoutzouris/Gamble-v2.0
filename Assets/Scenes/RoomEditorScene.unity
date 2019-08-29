@@ -3296,8 +3296,8 @@ MonoBehaviour:
   mTileMap: {fileID: 2036786035}
   instance: {fileID: 0}
   mPosition: {x: 0, y: 0, z: 0}
-  mWidth: 25
-  mHeight: 25
+  mWidth: 10
+  mHeight: 10
 --- !u!1 &1171523073
 GameObject:
   m_ObjectHideFlags: 0

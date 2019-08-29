@@ -163,6 +163,8 @@ public class Enemy : Entity, IHurtable
         base.EntityUpdate();
         mAttackManager.UpdateAttacks();
         CollisionManager.UpdateAreas(HurtBox);
+        CollisionManager.UpdateAreas(Sight);
+        Sight.mEntitiesInSight.Clear();
 
     }
 

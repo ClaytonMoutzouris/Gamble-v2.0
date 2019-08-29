@@ -75,6 +75,7 @@ public class LevelManager : MonoBehaviour
                 DropPlayer(player.mPlayerIndex);
             }
         }
+        levelIndex = 0;
         NewGameMap(MapType.Hub);
         mGameMode = GameMode.Game;
     }

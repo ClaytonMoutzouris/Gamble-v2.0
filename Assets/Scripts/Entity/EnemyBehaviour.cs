@@ -73,18 +73,6 @@ public static class EnemyBehaviour
         }
         enemy.Body.mSpeed.x = enemy.mMovingSpeed * (int)enemy.mDirection;
 
-        if (enemy.Body.mSpeed.x > 0)
-        {
-            enemy.mDirection = EntityDirection.Right;
-            //enemy.Renderer.Sprite.flipX = true;
-            //enemy.Body.mAABB.ScaleX = 1;
-        }
-        else if (enemy.Body.mSpeed.x < 0)
-        {
-            enemy.mDirection = EntityDirection.Left;
-            //enemy.Renderer.Sprite.flipX = false;
-            //enemy.Body.mAABB.ScaleX = -1;
-        }
     }
 
     public static void MoveVertical(Enemy enemy)

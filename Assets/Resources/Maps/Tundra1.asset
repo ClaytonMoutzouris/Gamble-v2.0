@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapType: 1
   type: 1
-  sizeX: 10
-  sizeY: 10
+  sizeX: 8
+  sizeY: 4
   roomSizeX: 10
   roomSizeY: 10
   gravity: -800
-  baseDepth: 6
-  depthVariance: 1
+  baseDepth: 3
+  depthVariance: 0
+  smallEnemies: 00000000010000000300000005000000
+  largeEnemies: 0700000008000000

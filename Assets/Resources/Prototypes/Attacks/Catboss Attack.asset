@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   duration: 0.25
-  cooldown: 0.5
+  cooldown: 1.5
   startUpFrames: 0
   offset: {x: 32, y: 24}
   abilities: 

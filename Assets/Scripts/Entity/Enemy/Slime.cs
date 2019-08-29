@@ -21,8 +21,6 @@ public class Slime : Enemy {
     public override void EntityUpdate()
     {
 
-        base.EntityUpdate();
-
         if (Hostility == Hostility.Hostile)
         {
             EnemyBehaviour.CheckForTargets(this);
@@ -85,13 +83,13 @@ public class Slime : Enemy {
                     if (Body.mPS.pushedLeftTile)
                     {
                         //Renderer.Sprite.flipX = true;
-                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Right;
 
                     }
                     else if (Body.mPS.pushedRightTile)
                     {
                         //Renderer.Sprite.flipX = true;
-                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Left;
                     }
 
                     Body.mSpeed.x = mMovingSpeed;
@@ -167,11 +165,11 @@ public class Slime : Enemy {
             Body.mAABB.ScaleX = -1;
         }
         */
-        CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
+        base.EntityUpdate();
 
-        
+
+
+
     }
 
 }

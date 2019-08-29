@@ -20,8 +20,6 @@ public class Hedgehog : Enemy
     public override void EntityUpdate()
     {
 
-        base.EntityUpdate();
-
         if (Hostility == Hostility.Hostile)
         {
             EnemyBehaviour.CheckForTargets(this);
@@ -137,9 +135,8 @@ public class Hedgehog : Enemy
 
         }
 
-        CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
+
+        base.EntityUpdate();
 
         //HurtBox.mCollisions.Clear();
 

@@ -24,7 +24,6 @@ public class WurmAlien : Enemy
     public override void EntityUpdate()
     {
 
-        base.EntityUpdate();
 
         if (Hostility == Hostility.Hostile)
         {
@@ -133,9 +132,8 @@ public class WurmAlien : Enemy
 
         }
 
-        CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
+
+        base.EntityUpdate();
 
         //HurtBox.mCollisions.Clear();
 

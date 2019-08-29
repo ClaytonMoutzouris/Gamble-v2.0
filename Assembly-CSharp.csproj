@@ -97,6 +97,10 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Hedgehog.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Snek.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Snowball.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Snowdrift.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Stag.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\WurmAlien.cs" />
     <Compile Include="Assets\Scripts\Entity\EnemyBehaviour.cs" />
@@ -194,6 +198,7 @@
     <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
+    <Compile Include="Assets\Scripts\Utility\WeaponAbilities.cs" />
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />
     <Compile Include="Assets\UIStatElement.cs" />

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Projectile : Entity, IProjectile {
 
-    Hitbox mHitbox;
-    ProjectilePrototype prototype;
-    Vector2 direction;
+    public Hitbox mHitbox;
+    public ProjectilePrototype prototype;
+    public Vector2 direction;
     public float mMaxTime = 10;
     public float mTimeAlive = 0;
     //Does a bullet have a reference to an attack?
@@ -71,7 +71,7 @@ public class Projectile : Entity, IProjectile {
 
     public void SetInitialDirection()
     {
-        Body.mSpeed = mMovingSpeed*direction;
+        Body.mSpeed = mMovingSpeed*direction.normalized;
 
         if (prototype.angled)
         {
@@ -99,16 +99,6 @@ public class Projectile : Entity, IProjectile {
 
     }
 
-    public void Explode()
-    {
-        //TODO: spawn an explosion here
-        Debug.Log("BOOM");
-        ProjectilePrototype prototype = Resources.Load<ProjectilePrototype>("Prototypes/Entity/Projectile/Explosion") as ProjectilePrototype;
-        RangedAttack rattack = new RangedAttack(this, attack.duration, 50, 0, 1, 0, prototype, Vector2.zero, new List<WeaponAbility>());
-        Projectile shot = new Projectile(prototype, rattack, Vector2.zero);
-        shot.Spawn(this.Position);
-    }
-
     public override void EntityUpdate()
     {
 
@@ -120,7 +110,11 @@ public class Projectile : Entity, IProjectile {
                 hit.GetHurt(Attack);
                 if (attack.abilities.Contains(WeaponAbility.Exploding))
                 {
-                    Explode();
+                    WeaponAbilities.Explode(Owner, Position);
+                }
+                if (attack.abilities.Contains(WeaponAbility.Split))
+                {
+                    WeaponAbilities.Split(this, hit);
                 }
                 if (!prototype.pierce)
                 {

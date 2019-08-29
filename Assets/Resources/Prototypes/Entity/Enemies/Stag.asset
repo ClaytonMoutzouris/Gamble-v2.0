@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Name: Stag
+  m_EditorClassIdentifier: 
+  entityType: 1
+  mName: Stag
+  bodySize: {x: 31, y: 24}
+  CollidesWith: 000000000200000003000000
+  sprite: {fileID: 21300000, guid: d3564f966e575d64a941151448a48e03, type: 3}
+  sortingLayer: 4
+  animationController: {fileID: 0}
+  enemyType: 7
+  movementSpeed: 120
+  jumpHeight: 120
+  sightRange: 150
+  hostility: 2
+  health: 100
+  rangedAttacks: []
+  meleeAttacks: []

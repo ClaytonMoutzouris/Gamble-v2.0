@@ -15,5 +15,8 @@ public class MapData : ScriptableObject {
     public float gravity = Constants.cDefaultGravity;
     public int baseDepth = 6;
     public int depthVariance = 3;
+    public List<EnemyType> smallEnemies;
+    public List<EnemyType> largeEnemies;
+
 
 }

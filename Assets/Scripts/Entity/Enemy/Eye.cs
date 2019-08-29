@@ -20,8 +20,6 @@ public class Eye : Enemy
     public override void EntityUpdate()
     {
         //This is just a test, probably dont need to do it this way
-        base.EntityUpdate();
-
         if (Hostility == Hostility.Hostile)
         {
             EnemyBehaviour.CheckForTargets(this);
@@ -94,10 +92,7 @@ public class Eye : Enemy
 
         }
 
-
-        CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
+        base.EntityUpdate();
 
 
         //HurtBox.mCollisions.Clear();

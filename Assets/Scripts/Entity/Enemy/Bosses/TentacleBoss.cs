@@ -27,8 +27,6 @@ public class TentacleBoss : BossEnemy
     public override void EntityUpdate()
     {
 
-        base.EntityUpdate();
-
         mSummonTimer += Time.deltaTime;
 
 
@@ -134,11 +132,8 @@ public class TentacleBoss : BossEnemy
 
         }
 
+        base.EntityUpdate();
 
-        CollisionManager.UpdateAreas(HurtBox);
-
-        CollisionManager.UpdateAreas(Sight);
-        Sight.mEntitiesInSight.Clear();
 
 
         //HurtBox.mCollisions.Clear();

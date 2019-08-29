@@ -21,3 +21,5 @@ MonoBehaviour:
   gravity: -900
   baseDepth: 3
   depthVariance: 1
+  smallEnemies: 00000000010000000300000004000000
+  largeEnemies: 0600000007000000

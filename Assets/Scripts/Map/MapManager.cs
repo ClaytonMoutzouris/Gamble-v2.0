@@ -336,6 +336,22 @@ public class MapManager : MonoBehaviour
                 temp = new WurmAlien(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case EnemyType.Snek:
+                temp = new Snek(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Stag:
+                temp = new Stag(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Snowball:
+                temp = new Snowball(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Snowdrift:
+                temp = new Snowdrift(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
             case EnemyType.Treedude:
                 temp = new Treedude(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));

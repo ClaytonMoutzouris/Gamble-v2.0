@@ -25,4 +25,4 @@ MonoBehaviour:
   ignoreTilemap: 0
   maxTime: 10
   sfx: {fileID: 0}
-  speed: 60
+  speed: 90

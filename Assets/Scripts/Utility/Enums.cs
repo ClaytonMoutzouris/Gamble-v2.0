@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss };
 public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Player, PlayerWeapon, ItemObject, Projectile };
-public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Treedude, Count, Boss };
+public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Treedude, Stag, Snowdrift, Count, Boss };
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree};
 public enum Rarity { Common, Uncommon, Rare, Legendary }
 
-public enum WeaponAbility { Knockback, Exploding };
+public enum WeaponAbility { Knockback, Exploding, Split };
 public enum PlayerAbility { Hover, Invisible };
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
