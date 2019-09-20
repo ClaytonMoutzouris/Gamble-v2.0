@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: LavaBoss
   bodySize: {x: 40, y: 55}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: d05e52b06a46abe47b06e89246c834f0, type: 2}
@@ -26,8 +27,8 @@ MonoBehaviour:
   hostility: 2
   health: 500
   rangedAttacks:
-  - {fileID: 11400000, guid: a401747ee44c5ec4d882be380d4aed4b, type: 2}
-  - {fileID: 11400000, guid: 8506a9fd3f327cd409c9c1a1e3dd4955, type: 2}
+  - {fileID: 11400000, guid: b325466b0d276574b9c6cb83a3309edb, type: 2}
+  - {fileID: 11400000, guid: 74792bdb110628341a9a6765424bd075, type: 2}
   meleeAttacks: []
   bossType: 0
   phaseTimers: 

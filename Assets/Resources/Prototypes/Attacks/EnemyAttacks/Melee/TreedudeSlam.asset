@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fdf9b0136fcac4ca1e50a95dd5d662, type: 3}
+  m_Name: TreedudeSlam
+  m_EditorClassIdentifier: 
+  duration: 2
+  cooldown: 5
+  startUpFrames: 0
+  offset: {x: 32, y: 48}
+  animationController: {fileID: 0}
+  damage: 20
+  abilities: 
+  sfx: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
+  meleeObjectPrototype: {fileID: 11400000, guid: f7a73cc2c6b38394abe5dcfbabdb1e7f,
+    type: 2}

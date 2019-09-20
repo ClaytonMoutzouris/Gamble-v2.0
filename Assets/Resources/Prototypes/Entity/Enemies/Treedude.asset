@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Treedude
   bodySize: {x: 32, y: 64}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: d302a90472ce9be4db2299f7580d9829, type: 2}
@@ -27,4 +28,4 @@ MonoBehaviour:
   health: 150
   rangedAttacks: []
   meleeAttacks:
-  - {fileID: 11400000, guid: d37f45000d37dff43af55df42c1ef112, type: 2}
+  - {fileID: 11400000, guid: 873f8750c10b2a04b97bb03ecdea1fbe, type: 2}

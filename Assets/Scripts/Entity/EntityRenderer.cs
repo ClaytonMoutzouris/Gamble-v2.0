@@ -74,7 +74,7 @@ public class EntityRenderer : MonoBehaviour
 
         }
 
-        if(Entity is Player)
+        if (Entity is Player)
         {
             Player P = (Player)Entity;
             //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
@@ -84,14 +84,20 @@ public class EntityRenderer : MonoBehaviour
             if(P.AttackManager != null && P.AttackManager.meleeAttacks != null && P.AttackManager.meleeAttacks[0] != null && P.AttackManager.meleeAttacks[0].mIsActive)
             {
                 Gizmos.color = Color.blue;
-
-                Gizmos.DrawCube(P.AttackManager.meleeAttacks[0].hitbox.mAABB.Center, P.AttackManager.meleeAttacks[0].hitbox.mAABB.HalfSize* 2);
-
                 
             }
         }
 
-        
+        if (Entity is AttackObject)
+        {
+            Gizmos.color = Color.blue;
+
+            AttackObject E = (AttackObject)Entity;
+            //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
+
+            Gizmos.DrawCube(E.hitbox.mAABB.Center, E.hitbox.mAABB.HalfSize * 2);
+
+        }
 
         Gizmos.color = Color.green;
 

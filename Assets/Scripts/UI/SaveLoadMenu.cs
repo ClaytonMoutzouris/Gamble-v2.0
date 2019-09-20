@@ -93,7 +93,7 @@ public class SaveLoadMenu : MonoBehaviour
     {
         string path;
 
-        path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
+        path = Application.dataPath + "/RoomsWorkingDir/" + nameInput.text + ".txt";
         
 
         if (path == null)
@@ -124,7 +124,7 @@ public class SaveLoadMenu : MonoBehaviour
         }
 
         string[] paths =
-            Directory.GetFiles(Application.dataPath + "/Rooms", "*.room", SearchOption.AllDirectories);
+            Directory.GetFiles(Application.dataPath + "/RoomsWorkingDir", "*.txt", SearchOption.AllDirectories);
 
         Array.Sort(paths);
 

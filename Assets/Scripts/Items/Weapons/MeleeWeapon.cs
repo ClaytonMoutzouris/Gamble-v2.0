@@ -14,7 +14,7 @@ public class MeleeWeapon : Weapon
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, attack.duration, attack.damage, attack.cooldown, new Hitbox(player, new CustomAABB(player.Position, attack.hitboxSize, attack.hitboxOffset)), attack.abilities);
+        player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, this);
     }
 
     public override void OnUnequip(Player player)
@@ -26,7 +26,7 @@ public class MeleeWeapon : Weapon
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();
-        tooltip += attack.getToolTip();
+        tooltip += attack.GetToolTip();
 
         return tooltip;
     }

@@ -16,7 +16,7 @@ public class RangedWeapon : Weapon
         base.OnEquip(player);
         if(mSlot == EquipmentSlot.Mainhand)
         {
-            player.AttackManager.rangedAttacks[0] = new RangedAttack(player, attack.duration, attack.damage, attack.cooldown, attack.numberOfProjectiles, attack.spreadAngle, attack.projectile, attack.offset, weaponAbilities);
+            player.AttackManager.rangedAttacks[0] = new RangedAttack(player, this);
             ((PlayerRenderer)player.Renderer).weapon.sprite = sprite;
 
 
@@ -39,7 +39,7 @@ public class RangedWeapon : Weapon
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();
-        tooltip += attack.getToolTip();
+        tooltip += attack.GetToolTip();
 
         return tooltip;
     }
