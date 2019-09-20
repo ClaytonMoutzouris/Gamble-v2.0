@@ -11,6 +11,7 @@ public abstract class Item : ScriptableObject
     public string mValue;
     public Sprite sprite;
     private InventorySlot inventorySlot = null;
+    public bool isStackable = false;
 
     public virtual List<InventoryOption> GetInventoryOptions()
     {
@@ -118,7 +119,9 @@ public abstract class Equipment : Item
 
 public abstract class Weapon : Equipment
 {
+    public int damage;
     public List<WeaponAbility> weaponAbilities;
+
 
 }
 

@@ -22,7 +22,6 @@ public class Player : Entity, IHurtable
     private PlayerInventory inventory;
     private PlayerEquipment equipment;
     private PlayerInputController input;
-    public List<ProjectilePrototype> bullets;
     public int activeBullet;
     public PlayerState mCurrentState = PlayerState.Stand;
     public int mPlayerIndex;
@@ -169,7 +168,6 @@ public class Player : Entity, IHurtable
     public Player(PlayerPrototype proto, int index) : base(proto)
     {
         prototype = proto;
-        bullets = new List<ProjectilePrototype>();
         mPlayerIndex = index;
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
 
@@ -215,7 +213,7 @@ public class Player : Entity, IHurtable
 
         foreach (MeleeAttackPrototype meleeAttack in prototype.meleeAttacks)
         {
-            MeleeAttack melee = new MeleeAttack(this, meleeAttack.duration, meleeAttack.damage, meleeAttack.cooldown, new Hitbox(this, new CustomAABB(Position, meleeAttack.hitboxSize, meleeAttack.hitboxOffset)), meleeAttack.abilities);
+            MeleeAttack melee = new MeleeAttack(this, meleeAttack);
             AttackManager.meleeAttacks.Add(melee);
             defaultMelee = melee;
             //Debug.Log("Adding Slime melee attack");
@@ -223,7 +221,7 @@ public class Player : Entity, IHurtable
 
         foreach (RangedAttackPrototype rangedAttack in prototype.rangedAttacks)
         {
-            RangedAttack ranged = new RangedAttack(this, rangedAttack.duration, rangedAttack.damage, rangedAttack.cooldown, rangedAttack.numberOfProjectiles, rangedAttack.spreadAngle, rangedAttack.projectile, rangedAttack.offset, rangedAttack.abilities);
+            RangedAttack ranged = new RangedAttack(this, rangedAttack);
             AttackManager.rangedAttacks.Add(ranged);
             defaultRanged = ranged;
 
@@ -1080,13 +1078,6 @@ public class Player : Entity, IHurtable
 
     public override void ActuallyDie()
     {
-
-        //we have to remove the hitboxes
-        foreach (MeleeAttack attack in AttackManager.meleeAttacks)
-        {
-                CollisionManager.RemoveObjectFromAreas(attack.hitbox);
-            
-        }
 
         CollisionManager.RemoveObjectFromAreas(HurtBox);
         //CollisionManager.RemoveObjectFromAreas(sight);

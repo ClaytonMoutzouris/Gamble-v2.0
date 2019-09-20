@@ -9,8 +9,6 @@ public class PlayerPrototype : EntityPrototype
     public int walkSpeed;
     public int climbSpeed;
 
-    public List<ProjectilePrototype> projectiles;
-
     public List<RangedAttackPrototype> rangedAttacks;
     public List<MeleeAttackPrototype> meleeAttacks;
 

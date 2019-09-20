@@ -261,10 +261,9 @@ public static class CollisionManager {
             return;
         }
 
-        if (obj1.mEntity is IProjectile)
+        if (obj1.mEntity is AttackObject proj)
         {
-            IProjectile proj = (IProjectile)obj1.mEntity;
-            if (proj.Owner.mEntityType == obj2.mEntity.mEntityType)
+            if (proj.owner.mEntityType == obj2.mEntity.mEntityType)
                 return;
         }
 

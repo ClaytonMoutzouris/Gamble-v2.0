@@ -61,7 +61,7 @@ public class CatBoss : BossEnemy
         //This works amazing!
         if (Target != null)
         {
-            if (!mAttackManager.rangedAttacks[1].OnCooldown() && !mAttackManager.rangedAttacks[1].mIsActive)
+            if (!mAttackManager.rangedAttacks[0].OnCooldown() && !mAttackManager.rangedAttacks[0].mIsActive)
             {
                 mBossState = BossState.Attack2;
             }
@@ -83,9 +83,8 @@ public class CatBoss : BossEnemy
 
             if (Body.mPS.pushesBottom && !Body.mPS.pushedBottom)
             {
-                Vector2 dir = ((Vector2)Target.Position - Position).normalized;
-                RangedAttack attack = mAttackManager.rangedAttacks[1];
-                attack.Activate(dir, Position);
+                MeleeAttack attack = mAttackManager.meleeAttacks[0];
+                attack.Activate();
 
                 mBossState = BossState.Aggrivated;
                 return;
@@ -103,13 +102,12 @@ public class CatBoss : BossEnemy
             if (Vector2.Distance(Target.Position, Position) < 64)
             {
                 //Replace this with pathfinding to the target
-                if (!mAttackManager.rangedAttacks[1].mIsActive)
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
                 {
                     Debug.Log("Claw Swipe is not active.");
 
-                    Vector2 dir = ((Vector2)Target.Position - Position).normalized;
-                    RangedAttack attack = mAttackManager.rangedAttacks[1];
-                    attack.Activate(dir, Position);
+                    MeleeAttack attack = mAttackManager.meleeAttacks[0];
+                    attack.Activate();
 
                     mBossState = BossState.Aggrivated;
                     jumped = false;

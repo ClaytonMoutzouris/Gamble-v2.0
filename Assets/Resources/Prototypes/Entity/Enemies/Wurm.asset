@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Wurm
   bodySize: {x: 32, y: 24}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: dc56448cc0c027a44bf463b21b8a0064, type: 2}
@@ -26,5 +27,5 @@ MonoBehaviour:
   hostility: 2
   health: 60
   rangedAttacks:
-  - {fileID: 11400000, guid: a63521d31cf16e34191c8134e0e6456e, type: 2}
+  - {fileID: 11400000, guid: daa7bcf50d3b3e24cb32b553e544b28b, type: 2}
   meleeAttacks: []

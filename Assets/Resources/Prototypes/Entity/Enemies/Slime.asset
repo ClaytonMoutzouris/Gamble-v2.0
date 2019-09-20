@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Slime
   bodySize: {x: 15, y: 8}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: a3668685d34585d47a157727a1bc2fbb, type: 2}
@@ -27,4 +28,4 @@ MonoBehaviour:
   health: 35
   rangedAttacks: []
   meleeAttacks:
-  - {fileID: 11400000, guid: 7502e7b8856f077449422b2725788b5b, type: 2}
+  - {fileID: 11400000, guid: bc3a018296a131c4cb5df5809764fd07, type: 2}

@@ -103,15 +103,7 @@ public static class EnemyBehaviour
 
     public static void MeleeAttack(Enemy enemy, int index)
     {
-        if((int)enemy.mDirection == 1)
-        {
-            enemy.mAttackManager.meleeAttacks[index].hitbox.mAABB.ScaleX = 1;
-        }
-        else
-        {
-            enemy.mAttackManager.meleeAttacks[index].hitbox.mAABB.ScaleX = -1;
 
-        }
         enemy.mAttackManager.meleeAttacks[index].Activate();
         enemy.mEnemyState = EnemyState.Attacking;
         enemy.Body.mSpeed.x = 0;

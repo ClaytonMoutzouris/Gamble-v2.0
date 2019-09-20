@@ -12,11 +12,12 @@ public class Entity {
     public string Name;
     public EntityType mEntityType;
     public List<EntityType> mCollidesWith;
+    public List<StatusEffect> statusEffects;
     public float mMovingSpeed;
     public Vector2 Position;
     public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
-    private EntityPrototype prototype;
+    protected EntityPrototype prototype;
     private EntityRenderer renderer;
     private PhysicsBody body;
     private LevelManager game;
@@ -118,9 +119,11 @@ public class Entity {
         mEntityType = prototype.entityType;
         Game = LevelManager.instance;
         Map = Game.mMap;
+        ignoreTilemap = proto.ignoreTilemap;
+
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
         mCollidesWith = new List<EntityType>();
-        
+        statusEffects = new List<StatusEffect>();
         //if (colorPallete != null && colorPallete.Count > 0)
         //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
@@ -147,10 +150,12 @@ public class Entity {
 
     public virtual void EntityUpdate()
     {
+        //Any way to do this earlier?
+        UpdateStatusEffects();
 
 
         Body.UpdatePhysics();
-        Renderer.Draw();
+        //Renderer.Draw();
 
         //Update the areas of the the colliders
         CollisionManager.UpdateAreas(Body);
@@ -161,6 +166,14 @@ public class Entity {
         //Right now it works without doing this here, but ill leave it until im sure its fine to remove
         //mHurtBox.UpdatePosition();
 
+    }
+
+    public void UpdateStatusEffects()
+    {
+        foreach(StatusEffect effect in statusEffects)
+        {
+            effect.UpdateEffect();
+        }
     }
 
     public virtual void SecondUpdate()

@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: CatBoss
   bodySize: {x: 30, y: 20}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 21300000, guid: 2eb28b65716df224dbdd6ad0ecbb4fed, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
@@ -26,8 +27,8 @@ MonoBehaviour:
   hostility: 2
   health: 500
   rangedAttacks:
-  - {fileID: 11400000, guid: 2045475057a71564484fb72707f45644, type: 2}
-  - {fileID: 11400000, guid: edf56ecebb69a5f499ad239fe7101789, type: 2}
-  meleeAttacks: []
+  - {fileID: 11400000, guid: 6079a5ce6481caf4594e5f1b8a857a1a, type: 2}
+  meleeAttacks:
+  - {fileID: 0}
   bossType: 1
   phaseTimers: 

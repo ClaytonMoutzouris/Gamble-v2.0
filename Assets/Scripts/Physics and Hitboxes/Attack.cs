@@ -7,8 +7,11 @@ public enum Range { Close, Near, Far };
 
 public class Attack {
 
+    //The owner of this attack
     public Entity mEntity;
+    public AttackPrototype attackPrototype;
     public List<WeaponAbility> abilities;
+    public List<StatusEffectType> statusEffects;
     public int damage;
     public float duration;
     public float elapsed;
@@ -16,6 +19,8 @@ public class Attack {
     public bool onCooldown;
     public float coolDownTimer = 0;
     public int startUpFrames = 0;
+    public Vector2 attackOffset;
+
     //List of effects
 
     public bool mIsActive = false;
@@ -30,14 +35,18 @@ public class Attack {
         this.damage = damage;
     }
 
-    public Attack(Entity entity, float duration, int damage, float cd, List<WeaponAbility> abilities)
+    public Attack(Entity entity, AttackPrototype prototype)
     {
+        attackPrototype = prototype;
         mEntity = entity;
-        this.abilities = abilities;
-        this.duration = duration;
-        this.damage = damage;
-        coolDown = cd;
+        abilities = prototype.abilities;
+        duration = prototype.duration;
+        damage = prototype.damage;
+        coolDown = prototype.cooldown;
+        attackOffset = prototype.offset;
     }
+
+
 
     public virtual void UpdateAttack()
     {
@@ -77,6 +86,7 @@ public class Attack {
 
         elapsed = 0;
         mIsActive = true;
+
     }
 
     public virtual void Deactivate()
@@ -86,152 +96,104 @@ public class Attack {
         mIsActive = false;
     }
 
-
-
-	
-}
-
-public class DashAttack : Attack
-{
-    public Hitbox hitbox;
-
-    public DashAttack(Entity entity, float duration, int damage, float cd, Hitbox hit, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
-    {
-        hitbox = hit;
-        hitbox.mState = ColliderState.Closed;
-    }
-    public override void Activate()
-    {
-        if (mIsActive || OnCooldown())
-            return;
-
-        base.Activate();
-
-        hitbox.mState = ColliderState.Open;
-        hitbox.mDealtWith.Clear();
-        //hitbox.colliderType = ColliderType.Hitbox;
-    }
-
-    public override void Deactivate()
-    {
-        base.Deactivate();
-
-        hitbox.mState = ColliderState.Closed;
-        hitbox.mCollisions.Clear();
-        hitbox.mDealtWith.Clear();
-
-    }
-
-    public override void UpdateAttack()
-    {
-        foreach (IHurtable hit in hitbox.mCollisions)
-        {
-            if (!hitbox.mDealtWith.Contains(hit))
-            {
-                hit.GetHurt(this);
-                hitbox.mDealtWith.Add(hit);
-            }
-
-        }
-        //hitbox.mCollisions.Clear();
-
-
-        base.UpdateAttack();
-
-        hitbox.UpdatePosition();
-        CollisionManager.UpdateAreas(hitbox);
-    }
-
-    public override void SecondUpdate()
-    {
-        base.SecondUpdate();
-
-        hitbox.UpdatePosition();
-
-
-
-    }
 }
 
 public class MeleeAttack : Attack
 {
-    public Hitbox hitbox;
-    public MeleeAttack(Entity entity, float duration, int damage, float cd, Hitbox hit, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
+    public MeleeAttackObjectPrototype meleeObject;
+
+    public MeleeAttack(Entity entity, MeleeAttackPrototype proto) : base(entity, proto)
     {
-        hitbox = hit;
-        hitbox.mState = ColliderState.Closed;
+        meleeObject = proto.meleeObjectPrototype;
     }
+
+    public MeleeAttack(Entity entity, MeleeWeapon meleeWeapon) :base(entity, meleeWeapon.attack)
+    {
+        meleeObject = meleeWeapon.attack.meleeObjectPrototype;
+
+        //Override these values with the weapons values
+        damage = meleeWeapon.damage;
+        abilities = meleeWeapon.weaponAbilities;
+    }
+
     public override void Activate()
     {
+
         if (mIsActive || OnCooldown())
+        {
             return;
+        }
 
         base.Activate();
 
 
-        hitbox.mState = ColliderState.Open;
-        hitbox.mDealtWith.Clear();
-        //hitbox.colliderType = ColliderType.Hitbox;
+        MeleeAttackObject attack = new MeleeAttackObject(meleeObject, this);
+        attack.Spawn(mEntity.Position);
+        
+
+
+
     }
+
 
     public override void Deactivate()
     {
         base.Deactivate();
 
-        hitbox.mState = ColliderState.Closed;
-        hitbox.mCollisions.Clear();
-        hitbox.mDealtWith.Clear();
 
     }
 
     public override void UpdateAttack()
     {
 
-        foreach (IHurtable hit in hitbox.mCollisions)
-        {
-            if (!hitbox.mDealtWith.Contains(hit))
-            {
-                hit.GetHurt(this);
-                hitbox.mDealtWith.Add(hit);
-            }
-
-        }
         //hitbox.mCollisions.Clear();
 
 
         base.UpdateAttack();
 
-        hitbox.UpdatePosition();
-        CollisionManager.UpdateAreas(hitbox);
     }
 
     public override void SecondUpdate()
     {
         base.SecondUpdate();
 
-        hitbox.UpdatePosition();
-
-
-
     }
 
 }
 
+
 public class RangedAttack : Attack
 {
-    public ProjectilePrototype projectile;
-    public Vector2 projectileOffset;
+
     public int numberOfProjectiles;
     public float spreadAngle;
+    public ProjectilePrototype projProto;
 
-    public RangedAttack(Entity entity, float duration, int damage, float cd, int numProj, float spreadAngle, ProjectilePrototype proj, Vector2 offset, List<WeaponAbility> abilities) : base(entity, duration, damage, cd, abilities)
+    /*
+     * Constructor used for player attacks... fuck me I should just seperate these into different classes
+     */
+
+    public RangedAttack(Entity entity, RangedAttackPrototype prototype) : base(entity, prototype)
     {
 
-        projectile = proj;
-        projectileOffset = offset;
-        numberOfProjectiles = numProj;
-        this.spreadAngle = spreadAngle;
+        numberOfProjectiles = prototype.numberOfProjectiles;
+        spreadAngle = prototype.spreadAngle;
+        projProto = prototype.projectilePrototype;
     }
+
+    public RangedAttack(Entity entity, RangedWeapon rangedWeapon) : base(entity, rangedWeapon.attack)
+    {
+
+        numberOfProjectiles = rangedWeapon.attack.numberOfProjectiles;
+        spreadAngle = rangedWeapon.attack.spreadAngle;
+        projProto = rangedWeapon.attack.projectilePrototype;
+
+        //Override these values with the weapons values
+        damage = rangedWeapon.damage;
+        abilities = rangedWeapon.weaponAbilities;
+    }
+
+
     //These only cover the shooting animation really
     public override void Activate()
     {
@@ -265,8 +227,8 @@ public class RangedAttack : Attack
 
             tempDir.Normalize();
 
-            Projectile shot = new Projectile(projectile, this, tempDir);
-            shot.Spawn(spawnPoint + new Vector2(0, projectileOffset.y) + (projectileOffset * tempDir));
+            Projectile shot = new Projectile(projProto, this, tempDir);
+            shot.Spawn(spawnPoint + new Vector2(0, attackOffset.y) + (attackOffset * tempDir));
         }
 
 

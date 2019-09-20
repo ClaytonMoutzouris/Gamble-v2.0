@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Hedgehog
   bodySize: {x: 14, y: 16}
   CollidesWith: 
+  ignoreTilemap: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: b26d5ef37874bfe418fd8d814ef50f22, type: 2}
@@ -27,4 +28,4 @@ MonoBehaviour:
   health: 50
   rangedAttacks: []
   meleeAttacks:
-  - {fileID: 11400000, guid: 56572fb6e44abd148aa3547cb78e8f3c, type: 2}
+  - {fileID: 11400000, guid: 5e473795e33b0234eb25beb9433ae964, type: 2}
