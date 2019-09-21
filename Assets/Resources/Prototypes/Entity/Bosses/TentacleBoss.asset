@@ -23,7 +23,7 @@ MonoBehaviour:
   enemyType: 10
   movementSpeed: 18
   jumpHeight: 120
-  sightRange: 150
+  sightRange: 300
   hostility: 2
   health: 500
   rangedAttacks:

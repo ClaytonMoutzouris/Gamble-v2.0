@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: SlimeMeleeAttack
   m_EditorClassIdentifier: 
   duration: 1
-  cooldown: 1
+  cooldown: 0.5
   startUpFrames: 0
   offset: {x: 16, y: 4}
   animationController: {fileID: 0}
-  damage: 3
+  damage: 4
   abilities: 
   sfx: {fileID: 0}
   meleeObjectPrototype: {fileID: 11400000, guid: a896ce9c496b67548b9230978254c5d0,

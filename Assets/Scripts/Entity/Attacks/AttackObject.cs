@@ -14,9 +14,6 @@ public class AttackObject : Entity
     public AttackObject(AttackObjectPrototype proto, Attack attack) : base(proto)
     {
         mEntityType = EntityType.Projectile;
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
-        hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
-
         mMaxTime = proto.maxTime;
         isAngled = proto.angled;
 

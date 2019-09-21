@@ -23,12 +23,12 @@ MonoBehaviour:
   enemyType: 10
   movementSpeed: 160
   jumpHeight: 460
-  sightRange: 250
+  sightRange: 300
   hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: 6079a5ce6481caf4594e5f1b8a857a1a, type: 2}
   meleeAttacks:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6132be70e82cdca4bb87dedc5343f1d8, type: 2}
   bossType: 1
   phaseTimers: 

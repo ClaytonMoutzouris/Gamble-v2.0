@@ -18,5 +18,5 @@ public class MapData : ScriptableObject {
     public List<EnemyType> smallEnemies;
     public List<EnemyType> largeEnemies;
 
-
+    public List<Sprite> tileSprites;
 }

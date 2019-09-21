@@ -20,7 +20,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
-  hitboxSize: {x: 6, y: 6}
+  hitboxSize: {x: 12, y: 5}
   angled: 0
   maxTime: 1
   sfx: {fileID: 0}

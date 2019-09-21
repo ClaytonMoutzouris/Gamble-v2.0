@@ -72,6 +72,9 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Swap] = mGamepadInput.RightBumperPressed();
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.SelectDown();
+                playerButtonInput[(int)ButtonInput.SkipLevel] = mGamepadInput.RightBumperDown();
+                playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
 
 
                 break;
@@ -101,6 +104,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Swap] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = false;
                 playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.SkipLevel] = false;
+                playerButtonInput[(int)ButtonInput.Teleport] = false;
 
                 break;
 
@@ -129,6 +134,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Swap] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.SkipLevel] = false;
+                playerButtonInput[(int)ButtonInput.Teleport] = false;
 
                 break;
         }

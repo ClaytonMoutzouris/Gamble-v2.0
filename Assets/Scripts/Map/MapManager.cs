@@ -8,8 +8,10 @@ public class MapManager : MonoBehaviour
 {
     [HideInInspector]
     protected TileType[,] mTileData;
+
+    public Map HubMap;
     public Map mCurrentMap;
-    public TileMapObject mTileMap;
+    public TileMapRenderer mTileMap;
     public static MapManager instance;
     public Vector3 mPosition;
     public int mWidth;
@@ -47,7 +49,7 @@ public class MapManager : MonoBehaviour
             return;
 
         mTileData[x, y] = tType;
-        mTileMap.DrawTile(x, y, tType);
+        //mTileMap.DrawTile(x, y, tType);
     }
 
     public TileType GetCollisionType(Vector2i pos)
@@ -194,6 +196,11 @@ public class MapManager : MonoBehaviour
 
     }
 
+    public void GoToHub()
+    {
+
+    }
+
     public void NewMap(MapData data)
     {
 
@@ -212,7 +219,7 @@ public class MapManager : MonoBehaviour
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, mWidth, mHeight, mCurrentMap.worldType);
+        mTileMap.DrawMap(mTileData, data);
 
 
     }
@@ -234,7 +241,7 @@ public class MapManager : MonoBehaviour
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, mWidth, mHeight, mCurrentMap.worldType);
+        mTileMap.DrawMap(mTileData, data);
 
 
     }
@@ -427,7 +434,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        mTileMap.DrawMap(mTileData, mWidth, mHeight);
+        //mTileMap.DrawMap(mTileData, mWidth, mHeight);
     }
 
   

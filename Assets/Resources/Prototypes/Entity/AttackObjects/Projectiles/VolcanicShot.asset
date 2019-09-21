@@ -26,4 +26,4 @@ MonoBehaviour:
   sfx: {fileID: 0}
   pierce: 0
   ignoreGravity: 0
-  speed: 280
+  speed: 440

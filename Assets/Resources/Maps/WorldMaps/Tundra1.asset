@@ -15,7 +15,7 @@ MonoBehaviour:
   mapType: 1
   type: 1
   sizeX: 8
-  sizeY: 4
+  sizeY: 5
   roomSizeX: 10
   roomSizeY: 10
   gravity: -800
@@ -23,3 +23,4 @@ MonoBehaviour:
   depthVariance: 0
   smallEnemies: 00000000010000000300000005000000
   largeEnemies: 0700000008000000
+  tileSprites: []

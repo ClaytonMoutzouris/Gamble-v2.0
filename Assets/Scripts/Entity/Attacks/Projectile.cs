@@ -14,6 +14,9 @@ public class Projectile : AttackObject {
         this.attack = attack;
         //Body.mState = ColliderState.Closed;
         owner = this.attack.mEntity;
+        hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
+
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
         Body.mIgnoresOneWay = true;
@@ -65,11 +68,11 @@ public class Projectile : AttackObject {
             if (!hitbox.mDealtWith.Contains(hit))
             {
                 hit.GetHurt(attack);
-                if (attack.abilities.Contains(WeaponAbility.Exploding))
+                if (attack.traits.Contains(AttackTrait.Exploding))
                 {
                     WeaponAbilities.Explode(owner, Position);
                 }
-                if (attack.abilities.Contains(WeaponAbility.Split))
+                if (attack.traits.Contains(AttackTrait.Split))
                 {
                     WeaponAbilities.Split(this, hit);
                 }

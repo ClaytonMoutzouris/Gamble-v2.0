@@ -7,7 +7,6 @@ using LocalCoop;
 
 public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Dead };
 
-
 public class Player : Entity, IHurtable
 {
     private Health health;
@@ -272,7 +271,28 @@ public class Player : Entity, IHurtable
             //PauseMenu.instance.defaultObject;
         }
 
-        if(mCurrentState == PlayerState.Dead)
+        if (Input.playerButtonInput[(int)ButtonInput.BeamUp] & !input.previousButtonInput[(int)ButtonInput.BeamUp])
+        {
+            Game.warpToHubFlag = true;
+            return;
+        }
+
+
+        if (Input.playerButtonInput[(int)ButtonInput.SkipLevel])
+        {
+            Game.mMapChangeFlag = true;
+        }
+
+
+        if (Input.playerButtonInput[(int)ButtonInput.Teleport])
+        {
+            Vector2 aim = GetAim();
+
+            Position = Position + GetAim()*150;
+            //Game.mMapChangeFlag = true;
+        }
+
+        if (mCurrentState == PlayerState.Dead)
         {
             return;
         }
@@ -677,14 +697,7 @@ public class Player : Entity, IHurtable
                 {
                     Body.mPS.isClimbing = false;
                     mCurrentState = PlayerState.Stand;
-                }
-
-                if (Input.playerButtonInput[(int)ButtonInput.LeftStick_Left] || Input.playerButtonInput[(int)ButtonInput.LeftStick_Right])
-                {
-                    Body.mPS.isClimbing = false;
-                    mCurrentState = PlayerState.Jump;
-
-                    //ScaleX = -Mathf.Abs(ScaleX);
+                    break;
                 }
 
 
@@ -693,8 +706,15 @@ public class Player : Entity, IHurtable
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
                     Body.mPS.isClimbing = false;
-                    Body.mSpeed.y = mJumpSpeed;
-                    mCurrentState = PlayerState.Jump;
+                    if (Input.playerAxisInput[(int)AxisInput.LeftStickY] >= 0)
+                    {
+                        Jump();
+                    }
+                    else
+                    {
+                        mCurrentState = PlayerState.Jump;
+                    }
+                    break;
                 }
 
 

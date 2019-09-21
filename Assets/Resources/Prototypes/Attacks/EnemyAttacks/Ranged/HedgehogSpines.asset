@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
   m_Name: HedgehogSpines
   m_EditorClassIdentifier: 
-  duration: 0.2
+  duration: 0
   cooldown: 0.3
   startUpFrames: 0
   offset: {x: 0, y: 0}

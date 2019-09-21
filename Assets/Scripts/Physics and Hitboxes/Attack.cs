@@ -10,7 +10,7 @@ public class Attack {
     //The owner of this attack
     public Entity mEntity;
     public AttackPrototype attackPrototype;
-    public List<WeaponAbility> abilities;
+    public List<AttackTrait> traits;
     public List<StatusEffectType> statusEffects;
     public int damage;
     public float duration;
@@ -39,7 +39,7 @@ public class Attack {
     {
         attackPrototype = prototype;
         mEntity = entity;
-        abilities = prototype.abilities;
+        traits = prototype.abilities;
         duration = prototype.duration;
         damage = prototype.damage;
         coolDown = prototype.cooldown;
@@ -113,7 +113,7 @@ public class MeleeAttack : Attack
 
         //Override these values with the weapons values
         damage = meleeWeapon.damage;
-        abilities = meleeWeapon.weaponAbilities;
+        traits = meleeWeapon.weaponAbilities;
     }
 
     public override void Activate()
@@ -190,7 +190,7 @@ public class RangedAttack : Attack
 
         //Override these values with the weapons values
         damage = rangedWeapon.damage;
-        abilities = rangedWeapon.weaponAbilities;
+        traits = rangedWeapon.weaponAbilities;
     }
 
 

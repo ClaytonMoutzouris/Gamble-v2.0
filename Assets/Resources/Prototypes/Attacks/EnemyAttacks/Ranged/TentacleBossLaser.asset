@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TentacleBossLaser
   m_EditorClassIdentifier: 
   duration: 0.1
-  cooldown: 2
+  cooldown: 0.5
   startUpFrames: 0
-  offset: {x: 0, y: 0}
+  offset: {x: 0, y: 32}
   animationController: {fileID: 0}
   damage: 12
   abilities: 

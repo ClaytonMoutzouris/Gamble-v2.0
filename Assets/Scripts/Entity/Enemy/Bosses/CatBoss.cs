@@ -61,7 +61,7 @@ public class CatBoss : BossEnemy
         //This works amazing!
         if (Target != null)
         {
-            if (!mAttackManager.rangedAttacks[0].OnCooldown() && !mAttackManager.rangedAttacks[0].mIsActive)
+            if (!mAttackManager.meleeAttacks[0].OnCooldown() && !mAttackManager.meleeAttacks[0].mIsActive)
             {
                 mBossState = BossState.Attack2;
             }
@@ -160,8 +160,7 @@ public class CatBoss : BossEnemy
             {
 
                     Vector2 dir = ((Vector2)Target.Position - Position).normalized;
-                    RangedAttack attack = mAttackManager.rangedAttacks[0];
-                    attack.Activate(dir, Position);
+                    mAttackManager.rangedAttacks[0].Activate(dir, Position);
 
                     mBossState = BossState.Aggrivated;
 

@@ -22,8 +22,8 @@ MonoBehaviour:
   animationController: {fileID: 9100000, guid: 28564e8b72b897c4bb6df77ee90fb271, type: 2}
   hitboxSize: {x: 8, y: 8}
   angled: 1
-  maxTime: 10
+  maxTime: 1
   sfx: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
   pierce: 0
   ignoreGravity: 1
-  speed: 80
+  speed: 50

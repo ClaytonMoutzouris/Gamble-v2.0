@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4858b67e4cf262e4a9bf2f2abebe7ba0, type: 3}
-  m_Name: Lava1
+  m_Name: Yellow1
   m_EditorClassIdentifier: 
   mapType: 1
-  type: 2
-  sizeX: 5
-  sizeY: 5
+  type: 4
+  sizeX: 8
+  sizeY: 8
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -1000
-  baseDepth: 2
+  gravity: -300
+  baseDepth: 3
   depthVariance: 1
-  smallEnemies: 000000000100000002000000
-  largeEnemies: 
+  smallEnemies: 000000000100000002000000030000000400000005000000
+  largeEnemies: 060000000700000008000000
+  tileSprites: []

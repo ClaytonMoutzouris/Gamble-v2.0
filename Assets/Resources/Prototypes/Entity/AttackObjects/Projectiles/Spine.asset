@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityType: 5
   mName: Spine
-  bodySize: {x: 6, y: 3}
+  bodySize: {x: 5, y: 3}
   CollidesWith: 
   ignoreTilemap: 0
   sprite: {fileID: 21300000, guid: 59c10f18c89dfad4dbe5dce35fd5d695, type: 3}
@@ -26,4 +26,4 @@ MonoBehaviour:
   sfx: {fileID: 0}
   pierce: 1
   ignoreGravity: 1
-  speed: 120
+  speed: 200

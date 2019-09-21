@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
 
+    public bool warpToHubFlag = false;
+
     private void Awake()
     {
         instance = this;
@@ -57,7 +59,7 @@ public class LevelManager : MonoBehaviour
         }
         */
 
-
+        players = new Player[4];
 
 
 
@@ -120,12 +122,12 @@ public class LevelManager : MonoBehaviour
         }
         if(type == MapType.Hub)
         {
-            mMap.NewMap(MapDatabase.GetMap(type));
+            mMap.NewMap(MapDatabase.GetHubMap());
         }
         else if(type == MapType.BossMap)
         {
             
-            mMap.NewBossMap(MapDatabase.GetBossMap(type), (WorldType)levelIndex);
+            mMap.NewBossMap(MapDatabase.GetBossMap((WorldType)levelIndex), (WorldType)levelIndex);
             levelIndex++;
             if (levelIndex >= (int)WorldType.Count)
             {
@@ -230,6 +232,7 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if(mGameMode == GameMode.GameOver)
         {
             foreach (Player p in players)
@@ -249,6 +252,11 @@ public class LevelManager : MonoBehaviour
         if (mGameMode == GameMode.Paused)
             return;
 
+        if (players != null && players[0] != null && players[0].Input.playerButtonInput[(int)ButtonInput.Pause])
+        {
+            StartNewGame();
+            GameOverScreen.instance.DisplayScreen(false);
+        }
 
 
         //Right now, this update loop is nice and generic, I hope to keep it that way
@@ -325,6 +333,13 @@ public class LevelManager : MonoBehaviour
                 mMapChangeFlag = false;
             }
 
+        }
+
+        if(warpToHubFlag)
+        {
+            NewGameMap(MapType.Hub);
+
+            warpToHubFlag = false;
         }
 
 

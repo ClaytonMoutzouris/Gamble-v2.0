@@ -21,6 +21,9 @@ public enum ButtonInput
     Swap,
     Pause,
     Select,
+    SkipLevel,
+    Teleport,
+    BeamUp,
 	Count
 }
 

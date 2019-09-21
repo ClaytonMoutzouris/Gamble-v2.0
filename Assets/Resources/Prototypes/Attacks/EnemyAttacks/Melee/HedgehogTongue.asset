@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HedgehogTongue
   m_EditorClassIdentifier: 
   duration: 1
-  cooldown: 1.5
+  cooldown: 0.5
   startUpFrames: 0
-  offset: {x: 16, y: 12}
+  offset: {x: 16, y: 8}
   animationController: {fileID: 0}
   damage: 6
   abilities: 

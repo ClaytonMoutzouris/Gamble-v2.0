@@ -10,14 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4858b67e4cf262e4a9bf2f2abebe7ba0, type: 3}
-  m_Name: BossMap
+  m_Name: Purple1
   m_EditorClassIdentifier: 
-  mapType: 2
-  type: 7
-  sizeX: 1
-  sizeY: 1
+  mapType: 1
+  type: 3
+  sizeX: 4
+  sizeY: 8
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -1030
-  baseDepth: 0
-  depthVariance: 0
+  gravity: -750
+  baseDepth: 5
+  depthVariance: 1
+  smallEnemies: 0000000001000000020000000400000005000000
+  largeEnemies: 08000000
+  tileSprites: []

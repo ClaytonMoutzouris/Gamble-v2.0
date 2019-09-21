@@ -9,6 +9,9 @@ public class MeleeAttackObject : AttackObject
 
     public MeleeAttackObject(MeleeAttackObjectPrototype proto, MeleeAttack attack) : base(proto, attack)
     {
+        hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
+
         this.attack = attack;
         mMaxTime = attack.duration;
         //Body.mState = ColliderState.Closed;
