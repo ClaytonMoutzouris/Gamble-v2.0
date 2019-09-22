@@ -363,6 +363,10 @@ public class MapManager : MonoBehaviour
                 temp = new Treedude(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case EnemyType.FrogLegs:
+                temp = new FrogLegs(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
             case EnemyType.Hedgehog:
                 temp = new Hedgehog(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));

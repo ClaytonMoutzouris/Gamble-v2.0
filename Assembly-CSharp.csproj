@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\TentacleBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Hedgehog.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />

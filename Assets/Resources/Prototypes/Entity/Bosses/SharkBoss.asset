@@ -20,7 +20,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 7b8085cebc3451c46a66ff2136146b71, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
-  enemyType: 10
+  enemyType: 11
   movementSpeed: 0
   jumpHeight: 120
   sightRange: 300

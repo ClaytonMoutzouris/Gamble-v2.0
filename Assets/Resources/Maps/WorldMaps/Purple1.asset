@@ -22,5 +22,5 @@ MonoBehaviour:
   baseDepth: 5
   depthVariance: 1
   smallEnemies: 0000000001000000020000000400000005000000
-  largeEnemies: 08000000
+  largeEnemies: 0800000009000000
   tileSprites: []
