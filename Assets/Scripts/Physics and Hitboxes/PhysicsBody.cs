@@ -323,8 +323,12 @@ public class PhysicsBody : CustomCollider2D
 
 
                     //flag this to be dealt with after we've checked other tiles we're colliding with
-                    mPS.isBounce = true;
-                    mSpeed.y = Constants.cBounceSpeed;
+                    if(!(mEntity is Projectile) && !mEntity.Body.mIsHeavy)
+                    {
+                        mPS.isBounce = true;
+                        mSpeed.y = Constants.cBounceSpeed;
+                    }
+
 
                     state.onOneWay = false;
                     state.pushesBottomTile = true;

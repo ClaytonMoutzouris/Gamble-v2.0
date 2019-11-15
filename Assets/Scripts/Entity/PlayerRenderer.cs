@@ -5,20 +5,27 @@ using UnityEngine;
 public class PlayerRenderer : EntityRenderer
 {
 
-    public SpriteRenderer weapon;
+    public SpriteRenderer rangedWeapon;
+    public SpriteRenderer shield;
+    public SpriteRenderer meleeWeapon;
     public Player player;
     public Vector2 weaponOffset;
 
     protected override void Awake()
     {
         base.Awake();
-        weapon.transform.localPosition = weaponOffset;
+        rangedWeapon.transform.localPosition = weaponOffset;
     }
 
     public void SetWeaponOffset(Vector2 offset)
     {
         weaponOffset = offset;
 
+    }
+
+    public void SetShieldActive(bool active)
+    {
+        shield.gameObject.SetActive(active);
     }
 
 
@@ -34,20 +41,44 @@ public class PlayerRenderer : EntityRenderer
         
         if (angle <= -90)
         {
-            weapon.flipY = true;
+            rangedWeapon.flipY = true;
             //weapon.transform.localScale = new Vector3(1, -1, 1);
-            weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
-            weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
-            weapon.transform.localPosition = new Vector2(-weaponOffset.x,weaponOffset.y);
+            rangedWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            rangedWeapon.transform.SetPositionAndRotation(rangedWeapon.transform.position, Quaternion.Euler(0, 0, -angle));
+            rangedWeapon.transform.localPosition = new Vector2(-weaponOffset.x,weaponOffset.y);
         }
         else
         {
-            weapon.flipY = false;
+            rangedWeapon.flipY = false;
             //weapon.transform.localScale = new Vector3(1, 1, 1);
-            weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
-            weapon.transform.localPosition = weaponOffset;
+            rangedWeapon.transform.SetPositionAndRotation(rangedWeapon.transform.position, Quaternion.Euler(0, 0, -angle));
+            rangedWeapon.transform.localPosition = weaponOffset;
         }
         
         //weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
+    }
+
+    public void SetShieldRotation(Vector2 direction)
+    {
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg - 90;
+        //print("Angle: " + angle);
+
+
+        //Rotate Player when aiming behind
+        //print("THIS HAPPENED! Player should be facing left.");
+        //Rotate the animation for the gun on the Z-axis
+
+            //weapon.transform.localScale = new Vector3(1, 1, 1);
+        shield.transform.SetPositionAndRotation(shield.transform.position, Quaternion.Euler(0, 0, -angle));
+        shield.transform.localPosition = weaponOffset;
+
+        //weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
+    }
+
+    public override void Draw()
+    {
+        base.Draw();
+        //meleeWeapon.flipX = (Entity.mDirection == EntityDirection.Left);
+
     }
 }

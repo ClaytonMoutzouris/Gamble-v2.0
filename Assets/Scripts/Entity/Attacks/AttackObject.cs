@@ -11,11 +11,13 @@ public class AttackObject : Entity
     public float mMaxTime = 10;
     public float mTimeAlive = 0;
 
-    public AttackObject(AttackObjectPrototype proto, Attack attack) : base(proto)
+    public AttackObject(AttackObjectPrototype proto, Attack attack, Vector2 direction) : base(proto)
     {
         mEntityType = EntityType.Projectile;
         mMaxTime = proto.maxTime;
         isAngled = proto.angled;
+        this.direction = direction;
+
 
 
     }
@@ -31,7 +33,16 @@ public class AttackObject : Entity
     public override void SecondUpdate()
     {
         base.SecondUpdate();
-        hitbox.UpdatePosition();
+        if(isAngled)
+        {
+            hitbox.UpdatePositionAndRotation(direction);
+
+        }
+        else
+        {
+            hitbox.UpdatePosition();
+
+        }
 
     }
 
@@ -69,4 +80,8 @@ public class AttackObject : Entity
         }
     }
 
+    public virtual void Blocked()
+    {
+        Destroy();
+    }
 }

@@ -252,12 +252,13 @@ public class LevelManager : MonoBehaviour
         if (mGameMode == GameMode.Paused)
             return;
 
+        /*
         if (players != null && players[0] != null && players[0].Input.playerButtonInput[(int)ButtonInput.Pause])
         {
             StartNewGame();
             GameOverScreen.instance.DisplayScreen(false);
         }
-
+        */
 
         //Right now, this update loop is nice and generic, I hope to keep it that way
 
@@ -304,7 +305,7 @@ public class LevelManager : MonoBehaviour
                 allPlayersDead = false;
         }
 
-        Debug.Log("APD: " + allPlayersDead + ", PE: " + playersExist);
+        //Debug.Log("APD: " + allPlayersDead + ", PE: " + playersExist);
         if(allPlayersDead && playersExist)
         {
             GameOver();

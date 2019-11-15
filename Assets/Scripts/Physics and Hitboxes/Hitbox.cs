@@ -8,6 +8,8 @@ public class Hitbox : CustomCollider2D
 
     public List<IHurtable> mCollisions;
     public List<IHurtable> mDealtWith;
+    public List<Blockbox> mBlocks;
+    public AttackObject attackObject;
 
     public int Collisions
     {
@@ -16,10 +18,17 @@ public class Hitbox : CustomCollider2D
             return mCollisions.Count;
         }
     }
-    public Hitbox(Entity entity, CustomAABB aABB) : base(entity, aABB)
+    public Hitbox(AttackObject entity, CustomAABB aABB) : base(entity, aABB)
     {
+        attackObject = entity;
         mCollisions = new List<IHurtable>();
         mDealtWith = new List<IHurtable>();
     }
 
+    public void Blocked()
+    {
+        mCollisions.Clear();
+        mState = ColliderState.Closed;
+        attackObject.Blocked();
+    }
 }

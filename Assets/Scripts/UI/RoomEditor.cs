@@ -137,9 +137,13 @@ public class RoomEditor : MonoBehaviour
         {
 
             if ((int)mPlacedTileType < (int)TileType.Count)
+            {
                 mPlacedTileType += 1;
+            }
             else
+            {
                 mPlacedTileType = TileType.Empty;
+            }
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }

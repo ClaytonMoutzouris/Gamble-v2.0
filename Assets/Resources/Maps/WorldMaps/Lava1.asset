@@ -21,6 +21,31 @@ MonoBehaviour:
   gravity: -1000
   baseDepth: 2
   depthVariance: 1
-  smallEnemies: 000000000100000002000000
+  smallEnemies: 0000000001000000020000000a000000
   largeEnemies: 
-  tileSprites: []
+  tileSprites:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300002, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300004, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300006, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300008, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300010, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300012, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300014, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300016, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300018, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

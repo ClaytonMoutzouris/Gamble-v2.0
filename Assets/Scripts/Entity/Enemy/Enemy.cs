@@ -177,6 +177,16 @@ public class Enemy : Entity, IHurtable
             return;
         }
         base.Die();
+        foreach(Attack attack in mAttackManager.meleeAttacks)
+        {
+            attack.Deactivate();
+        }
+
+        foreach (Attack attack in mAttackManager.rangedAttacks)
+        {
+            attack.Deactivate();
+        }
+
         DropLoot();
         HurtBox.mState = ColliderState.Closed;
     }

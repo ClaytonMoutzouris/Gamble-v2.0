@@ -17,7 +17,7 @@ public class RangedWeapon : Weapon
         if(mSlot == EquipmentSlot.Mainhand)
         {
             player.AttackManager.rangedAttacks[0] = new RangedAttack(player, this);
-            ((PlayerRenderer)player.Renderer).weapon.sprite = sprite;
+            ((PlayerRenderer)player.Renderer).rangedWeapon.sprite = sprite;
 
 
         } else
@@ -32,7 +32,7 @@ public class RangedWeapon : Weapon
         base.OnUnequip(player);
 
         player.AttackManager.rangedAttacks[0] = player.defaultRanged;
-        ((PlayerRenderer)player.Renderer).weapon.sprite = null;
+        ((PlayerRenderer)player.Renderer).rangedWeapon.sprite = null;
 
     }
 

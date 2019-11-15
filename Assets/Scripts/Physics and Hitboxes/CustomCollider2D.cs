@@ -16,6 +16,7 @@ public abstract class CustomCollider2D {
     public ColliderState mState;
     public List<Vector2i> mAreas = new List<Vector2i>();
     public List<int> mIdsInAreas = new List<int>();
+    public float offsetDistance = 5;
 
     public CustomCollider2D(Entity entity, CustomAABB aABB)
     {
@@ -29,11 +30,16 @@ public abstract class CustomCollider2D {
     
 
 
-    public void UpdatePosition()
+    public virtual void UpdatePosition()
     {
         //This should make sure the collider moves with whatever object it is attached to
         //and also keeps its scale correctly (though scaling isnt used yet)
         mAABB.Center = mEntity.Position;
     }
 
+    public virtual void UpdatePositionAndRotation(Vector2 dir)
+    {
+        mAABB.Center = mEntity.Position + dir.normalized * offsetDistance;
+
+    }
 }

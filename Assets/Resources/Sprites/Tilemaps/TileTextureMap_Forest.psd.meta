@@ -1,19 +1,39 @@
 fileFormatVersion: 2
 guid: ea5b57bbbe4a07a4aba2ae0274f84d57
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: TileTextureMap_Forest_0
-    21300002: TileTextureMap_Forest_1
-    21300004: TileTextureMap_Forest_2
-    21300006: TileTextureMap_Forest_3
-    21300008: TileTextureMap_Forest_4
-    21300010: TileTextureMap_Forest_5
-    21300012: TileTextureMap_Forest_6
-    21300014: TileTextureMap_Forest_7
-    21300016: TileTextureMap_Forest_8
-    21300018: TileTextureMap_Forest_9
+  internalIDToNameTable:
+  - first:
+      213: -3892585987376870222
+    second: TileTextureMap_Forest_0
+  - first:
+      213: 7246281661905125112
+    second: TileTextureMap_Forest_1
+  - first:
+      213: -6383394805507679268
+    second: TileTextureMap_Forest_2
+  - first:
+      213: 4487611389904843941
+    second: TileTextureMap_Forest_3
+  - first:
+      213: 331156121016089927
+    second: TileTextureMap_Forest_4
+  - first:
+      213: 7130472341855191249
+    second: TileTextureMap_Forest_5
+  - first:
+      213: 6302801568098920539
+    second: TileTextureMap_Forest_6
+  - first:
+      213: 483862569786616746
+    second: TileTextureMap_Forest_7
+  - first:
+      213: -4544912816351164547
+    second: TileTextureMap_Forest_8
+  - first:
+      213: 2867020483019585006
+    second: TileTextureMap_Forest_9
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -68,7 +88,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -79,7 +99,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -90,28 +111,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -119,8 +119,8 @@ TextureImporter:
       name: TileTextureMap_Forest_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
+        x: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -130,7 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddf5505e997aefd4f9a0ca188000b500
+      spriteID: 5f680c363d1ee3444b139720bd3072b2
+      internalID: -3892585987376870222
       vertices: []
       indices: 
       edges: []
@@ -139,8 +140,8 @@ TextureImporter:
       name: TileTextureMap_Forest_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 224
+        x: 32
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -150,7 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 659aa76cdffe48444ad7f9138cc528ce
+      spriteID: bdc8438da8f9c414387d620105c11c76
+      internalID: 7246281661905125112
       vertices: []
       indices: 
       edges: []
@@ -159,8 +161,8 @@ TextureImporter:
       name: TileTextureMap_Forest_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 224
+        x: 64
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -170,7 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a5b4ce47159ca646a1ce751d6aff1ad
+      spriteID: 72da20450c4ad1744a959204e25b6e40
+      internalID: -6383394805507679268
       vertices: []
       indices: 
       edges: []
@@ -179,8 +182,8 @@ TextureImporter:
       name: TileTextureMap_Forest_3
       rect:
         serializedVersion: 2
-        x: 128
-        y: 224
+        x: 32
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -190,7 +193,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d54eb902853476f45aed66910935a516
+      spriteID: 886aa70c7905f31448f02cf5855b2dee
+      internalID: 4487611389904843941
       vertices: []
       indices: 
       edges: []
@@ -199,8 +203,8 @@ TextureImporter:
       name: TileTextureMap_Forest_4
       rect:
         serializedVersion: 2
-        x: 160
-        y: 224
+        x: 64
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -210,7 +214,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b20dbc36c35e5f242b6dd746b49254f0
+      spriteID: 254b3b379478f924a93171e13b8cb29c
+      internalID: 331156121016089927
       vertices: []
       indices: 
       edges: []
@@ -219,8 +224,8 @@ TextureImporter:
       name: TileTextureMap_Forest_5
       rect:
         serializedVersion: 2
-        x: 192
-        y: 224
+        x: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -230,7 +235,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92c84974b652c574faf6952dc19d2641
+      spriteID: 8109e1847f5afc64590d0aacc46f032b
+      internalID: 7130472341855191249
       vertices: []
       indices: 
       edges: []
@@ -239,8 +245,8 @@ TextureImporter:
       name: TileTextureMap_Forest_6
       rect:
         serializedVersion: 2
-        x: 224
-        y: 224
+        x: 128
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -250,7 +256,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02b385fb7504a3d4fb0fee2723a2faef
+      spriteID: 611be0201fbd567449394f83af61a96d
+      internalID: 6302801568098920539
       vertices: []
       indices: 
       edges: []
@@ -259,8 +266,8 @@ TextureImporter:
       name: TileTextureMap_Forest_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 160
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -270,7 +277,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 102242449267a344fafbfb4f3c3f87ce
+      spriteID: 0e31cf7186f40d74e84e7c7e4705458c
+      internalID: 483862569786616746
       vertices: []
       indices: 
       edges: []
@@ -279,8 +287,8 @@ TextureImporter:
       name: TileTextureMap_Forest_8
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
+        x: 192
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -290,7 +298,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b8774dc27d459943832a451f20f2b49
+      spriteID: a8f71f32b97086c4ca1716e816236549
+      internalID: -4544912816351164547
       vertices: []
       indices: 
       edges: []
@@ -299,8 +308,8 @@ TextureImporter:
       name: TileTextureMap_Forest_9
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
+        x: 224
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -310,7 +319,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b80f9a52d8a1eb4985a0a17345d4171
+      spriteID: 153e51f47016c304caeef6deeb4d0a72
+      internalID: 2867020483019585006
       vertices: []
       indices: 
       edges: []
@@ -319,13 +329,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: fe60adc9b5bf2db45a9011e2cdab3d0e
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

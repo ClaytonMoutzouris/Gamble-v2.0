@@ -72,9 +72,12 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Swap] = mGamepadInput.RightBumperPressed();
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.SelectDown();
-                playerButtonInput[(int)ButtonInput.SkipLevel] = mGamepadInput.RightBumperDown();
+                playerButtonInput[(int)ButtonInput.SkipLevel] = mGamepadInput.RightBumperDown() && mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
+                playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.rightTrigger > 0;
+                playerButtonInput[(int)ButtonInput.Shield] = mGamepadInput.RightBumperPressed();
+
 
 
                 break;
@@ -102,10 +105,12 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Item] = false;
                 playerButtonInput[(int)ButtonInput.Inventory] = mGamepadInput.ButtonYPressed();
                 playerButtonInput[(int)ButtonInput.Swap] = false;
-                playerButtonInput[(int)ButtonInput.Pause] = false;
+                playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Fire] = false;
+                playerButtonInput[(int)ButtonInput.Shield] = false;
 
                 break;
 
@@ -136,6 +141,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Fire] = false;
+                playerButtonInput[(int)ButtonInput.Shield] = false;
 
                 break;
         }

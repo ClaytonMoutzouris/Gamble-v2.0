@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
   m_Name: SharkbossBurst
   m_EditorClassIdentifier: 
-  duration: 0.1
-  cooldown: 2
-  startUpFrames: 0
+  duration: 30
+  cooldown: 1.5
+  startUpFrames: 15
   offset: {x: 24, y: 64}
   animationController: {fileID: 0}
   damage: 15

@@ -81,11 +81,16 @@ public class EntityRenderer : MonoBehaviour
 
             Gizmos.DrawCube(P.HurtBox.mAABB.Center, P.HurtBox.mAABB.HalfSize * 2);
 
-            if(P.AttackManager != null && P.AttackManager.meleeAttacks != null && P.AttackManager.meleeAttacks[0] != null && P.AttackManager.meleeAttacks[0].mIsActive)
+
+
+
+            if (P.AttackManager != null && P.AttackManager.meleeAttacks != null && P.AttackManager.meleeAttacks[0] != null && P.AttackManager.meleeAttacks[0].mIsActive)
             {
                 Gizmos.color = Color.blue;
                 
             }
+
+
         }
 
         if (Entity is AttackObject)
@@ -113,7 +118,7 @@ public class EntityRenderer : MonoBehaviour
         
     }
 
-    public void Draw()
+    public virtual void Draw()
     {
         sprite.flipX = (Entity.mDirection == EntityDirection.Left);
         transform.position = entity.Position;

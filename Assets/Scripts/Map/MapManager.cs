@@ -371,6 +371,10 @@ public class MapManager : MonoBehaviour
                 temp = new Hedgehog(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case EnemyType.Nest:
+                temp = new Nest(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
 
         return temp;

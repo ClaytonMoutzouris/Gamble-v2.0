@@ -10,8 +10,8 @@ public class Snowball : Enemy
 
     }
 
-        public override void EntityUpdate()
-        {
+    public override void EntityUpdate()
+    {
 
         if (Hostility == Hostility.Hostile)
         {

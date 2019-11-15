@@ -12,7 +12,7 @@ public class BossEnemy : Enemy
     public List<int> phaseTimers;
 
     public List<Projectile> projectilePrefabs;
-
+    public List<Action> bossActions;
 
     public bool bossTrigger = false;
 

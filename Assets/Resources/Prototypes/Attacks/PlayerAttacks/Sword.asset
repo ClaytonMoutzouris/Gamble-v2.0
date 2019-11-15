@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fdf9b0136fcac4ca1e50a95dd5d662, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  duration: 0.5
+  duration: 30
   cooldown: 0.5
-  startUpFrames: 0
-  offset: {x: 8, y: 8}
+  startUpFrames: 10
+  offset: {x: 8, y: 0}
   animationController: {fileID: 0}
   damage: 10
   abilities: 

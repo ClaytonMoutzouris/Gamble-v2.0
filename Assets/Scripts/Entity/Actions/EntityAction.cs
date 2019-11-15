@@ -6,7 +6,15 @@ public enum ActionType { Attack };
 
 public class EntityAction
 {
+    int startUpFrames;
+    float coolDown;
+    bool isActive;
+    float duration;
 
+    public void Activate()
+    {
+
+    }
     
 
 }

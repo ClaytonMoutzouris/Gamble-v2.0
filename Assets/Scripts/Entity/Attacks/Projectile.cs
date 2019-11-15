@@ -9,7 +9,7 @@ public class Projectile : AttackObject {
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 
-    public Projectile(ProjectilePrototype proto, RangedAttack attack, Vector2 direction) : base(proto, attack)
+    public Projectile(ProjectilePrototype proto, RangedAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
         this.attack = attack;
         //Body.mState = ColliderState.Closed;
@@ -26,7 +26,6 @@ public class Projectile : AttackObject {
 
         mMovingSpeed = proto.speed;
 
-        this.direction = direction;
         if (SoundManager.instance != null)
         {
             SoundManager.instance.PlaySingle(proto.sfx);
@@ -61,33 +60,34 @@ public class Projectile : AttackObject {
 
     public override void EntityUpdate()
     {
-
-        foreach (IHurtable hit in hitbox.mCollisions)
+        if (hitbox.mState != ColliderState.Closed)
         {
-            //Debug.Log("Something in the collisions");
-            if (!hitbox.mDealtWith.Contains(hit))
+            foreach (IHurtable hit in hitbox.mCollisions)
             {
-                hit.GetHurt(attack);
-                if (attack.traits.Contains(AttackTrait.Exploding))
+                //Debug.Log("Something in the collisions");
+                if (!hitbox.mDealtWith.Contains(hit))
                 {
-                    WeaponAbilities.Explode(owner, Position);
-                }
-                if (attack.traits.Contains(AttackTrait.Split))
-                {
-                    WeaponAbilities.Split(this, hit);
-                }
+                    hit.GetHurt(attack);
+                    if (attack.traits.Contains(AttackTrait.Exploding))
+                    {
+                        WeaponAbilities.Explode(owner, Position);
+                    }
+                    if (attack.traits.Contains(AttackTrait.Split))
+                    {
+                        WeaponAbilities.Split(this, hit);
+                    }
 
-                if (!pierce)
-                {
-                    mToRemove = true;
-                    return;
+                    if (!pierce)
+                    {
+                        mToRemove = true;
+                        return;
+                    }
+                    hitbox.mDealtWith.Add(hit);
+
                 }
-                hitbox.mDealtWith.Add(hit);
 
             }
-
         }
-
 
 
         mTimeAlive += Time.deltaTime;

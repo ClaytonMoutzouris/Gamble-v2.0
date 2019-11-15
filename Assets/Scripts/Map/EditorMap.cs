@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EditorMap : MonoBehaviour
 {
+    public MapData mapData;
     public RoomData room;
     public TileMapRenderer mTileMap;
     public EditorMap instance;
@@ -31,13 +32,15 @@ public class EditorMap : MonoBehaviour
         room = new RoomData(RoomType.Hub, mWidth, mHeight);
         //room.roomType = RoomType.Hub;
 
-
+        mTileMap.DrawMap(room.tiles, mWidth, mHeight, mapData.tileSprites);
     }
 
     public void Draw()
     {
         mWidth = room.mWidth;
         mHeight = room.mHeight;
+        mTileMap.DrawMap(room.tiles, mWidth, mHeight, mapData.tileSprites);
+
     }
 
     public void SetTile(int x, int y, TileType tType)
@@ -47,6 +50,7 @@ public class EditorMap : MonoBehaviour
             return;
 
         room.tiles[x, y] = tType;
+        mTileMap.DrawTile(x, y, tType, mapData);
        // mTileMap.DrawTile(x, y, tType);
     }
 

@@ -15,6 +15,8 @@ public class MeleeWeapon : Weapon
     {
         base.OnEquip(player);
         player.AttackManager.meleeAttacks[0] = new MeleeAttack(player, this);
+        ((PlayerRenderer)player.Renderer).meleeWeapon.sprite = sprite;
+
     }
 
     public override void OnUnequip(Player player)

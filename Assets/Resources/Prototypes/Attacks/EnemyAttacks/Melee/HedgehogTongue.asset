@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fdf9b0136fcac4ca1e50a95dd5d662, type: 3}
   m_Name: HedgehogTongue
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 45
   cooldown: 0.5
-  startUpFrames: 0
+  startUpFrames: 10
   offset: {x: 16, y: 8}
   animationController: {fileID: 0}
   damage: 6

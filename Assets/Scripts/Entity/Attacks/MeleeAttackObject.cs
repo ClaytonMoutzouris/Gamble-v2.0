@@ -7,7 +7,7 @@ public class MeleeAttackObject : AttackObject
     public MeleeAttack attack;
 
 
-    public MeleeAttackObject(MeleeAttackObjectPrototype proto, MeleeAttack attack) : base(proto, attack)
+    public MeleeAttackObject(MeleeAttackObjectPrototype proto, MeleeAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
         hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
@@ -27,14 +27,17 @@ public class MeleeAttackObject : AttackObject
 
     public override void EntityUpdate()
     {
-        foreach (IHurtable hit in hitbox.mCollisions)
+        if (hitbox.mState != ColliderState.Closed)
         {
-            //Debug.Log("Something in the collisions");
-            if (!hitbox.mDealtWith.Contains(hit))
+            foreach (IHurtable hit in hitbox.mCollisions)
             {
-                hit.GetHurt(attack);
-                hitbox.mDealtWith.Add(hit);
+                //Debug.Log("Something in the collisions");
+                if (!hitbox.mDealtWith.Contains(hit))
+                {
+                    hit.GetHurt(attack);
+                    hitbox.mDealtWith.Add(hit);
 
+                }
             }
         }
 
@@ -58,6 +61,7 @@ public class MeleeAttackObject : AttackObject
     {
         base.SecondUpdate();
         Position = owner.Position;
+        Renderer.Sprite.flipX = (owner.mDirection == EntityDirection.Left);
 
     }
 

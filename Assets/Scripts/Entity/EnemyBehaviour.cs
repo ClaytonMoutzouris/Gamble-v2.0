@@ -109,5 +109,9 @@ public static class EnemyBehaviour
         enemy.Body.mSpeed.x = 0;
     }
 
+    public static void SpawnMinion(Enemy enemy)
+    {
+
+    }
 
 }

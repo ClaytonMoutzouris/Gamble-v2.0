@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HedgehogSpines
   m_EditorClassIdentifier: 
   duration: 0
-  cooldown: 0.3
+  cooldown: 0.2
   startUpFrames: 0
   offset: {x: 0, y: 0}
   animationController: {fileID: 0}

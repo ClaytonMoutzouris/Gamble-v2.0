@@ -56,6 +56,28 @@ public class TileMapRenderer : MonoBehaviour
     }
 
 
+    public void DrawMap(TileType[,] tiles, int sizeX, int sizeY, List<Sprite> sprites)
+    {
+        //MapSize = new Vector2(MAXSIZEY, MAXSIZEY);
+        for (int y = 0; y < MAXSIZEY; y++)
+        {
+            for (int x = 0; x < MAXSIZEY; x++)
+            {
+                if (x < sizeX && y < sizeY)
+                {
+
+                    spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
+                }
+                else
+                {
+                    spriteMap[x, y].ClearSprite();
+
+                }
+
+            }
+        }
+    }
+
     //If we need to update 1 tile
     public void DrawTile(int x, int y, TileType tile, MapData data)
     {

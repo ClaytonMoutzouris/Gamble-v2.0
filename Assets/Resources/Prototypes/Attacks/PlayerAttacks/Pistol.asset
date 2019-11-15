@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  duration: 0.1
+  duration: 5
   cooldown: 0.1
-  startUpFrames: 0
+  startUpFrames: 2
   offset: {x: 18, y: 12}
   animationController: {fileID: 0}
   damage: 5

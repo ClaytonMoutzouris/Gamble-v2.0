@@ -28,6 +28,7 @@ public class Player : Entity, IHurtable
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
+    public Blockbox blockbox;
 
     public List<PlayerAbility> activeAbilities;
 
@@ -201,6 +202,8 @@ public class Player : Entity, IHurtable
         HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         HurtBox.UpdatePosition();
 
+        blockbox = new Blockbox(this, new CustomAABB(Position, new Vector2(2, 16), Vector3.zero));
+        blockbox.mState = ColliderState.Closed;
         /*
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
@@ -255,6 +258,22 @@ public class Player : Entity, IHurtable
         isSpawned = true;
 
         HurtBox.UpdatePosition();
+    }
+
+    public void UpdateShield()
+    {
+
+        foreach (Hitbox hit in blockbox.mCollisions)
+        {
+            //Debug.Log("Something in the collisions");
+            if (!blockbox.mDealtWith.Contains(hit))
+            {
+                hit.mState = ColliderState.Closed;
+                hit.mCollisions.Clear();
+                blockbox.mDealtWith.Add(hit);
+
+            }
+        }
     }
 
     public override void EntityUpdate()
@@ -317,6 +336,8 @@ public class Player : Entity, IHurtable
 
 
         AttackManager.UpdateAttacks();
+        UpdateShield();
+        
 
         if (mCannotClimb && !Body.mPS.onLadder && !Input.playerButtonInput[(int)ButtonInput.Jump])
         {
@@ -827,6 +848,8 @@ public class Player : Entity, IHurtable
         }
         */
 
+        //Attacks
+
         if (Input.playerButtonInput[(int)ButtonInput.Attack] && !Input.previousButtonInput[(int)ButtonInput.Attack])
         {
             AttackManager.meleeAttacks[0].Activate();
@@ -834,12 +857,39 @@ public class Player : Entity, IHurtable
 
         if (Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0)
         {
-            RangedAttack attack = AttackManager.rangedAttacks[0];
             Vector2 aim = GetAim();
             ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
-            attack.Activate(GetAim(), Position);
+
+            if (Input.playerButtonInput[(int)ButtonInput.Fire])
+            {
+                Debug.Log("Pressed Fire");
+                AttackManager.rangedAttacks[0].Activate(aim, Position);
+            }
+
+
 
         }
+
+        if ((Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0) && Input.playerButtonInput[(int)ButtonInput.Shield])
+        {
+            Vector2 aim = GetAim();
+
+            ((PlayerRenderer)Renderer).SetShieldRotation(aim);
+            blockbox.mAABB.SetAngle(Vector2.Angle(Vector2.right, aim));
+            blockbox.UpdatePositionAndRotation(aim);
+            blockbox.mState = ColliderState.Open;
+
+            ((PlayerRenderer)Renderer).SetShieldActive(true);
+
+        }
+        else
+        {
+            ((PlayerRenderer)Renderer).SetShieldActive(false);
+            blockbox.mState = ColliderState.Closed;
+
+        }
+
+        //Shield
 
 
         //Calling this pretty much just updates the body
@@ -848,6 +898,8 @@ public class Player : Entity, IHurtable
 
 
         CollisionManager.UpdateAreas(HurtBox);
+        CollisionManager.UpdateAreas(blockbox);
+
         //HurtBox.mCollisions.Clear();
 
         //Pretty sure this lets use jump forever

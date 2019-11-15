@@ -22,19 +22,29 @@ MonoBehaviour:
   baseDepth: 3
   depthVariance: 1
   smallEnemies: 00000000010000000300000004000000
-  largeEnemies: 060000000700000009000000
+  largeEnemies: 0600000007000000090000000a000000
   tileSprites:
   - {fileID: 0}
-  - {fileID: 21300000, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300002, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300004, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300006, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300008, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300010, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300012, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300014, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300016, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
-  - {fileID: 21300018, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 331156121016089927, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 7130472341855191249, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 6302801568098920539, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 483862569786616746, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: -4544912816351164547, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 2867020483019585006, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

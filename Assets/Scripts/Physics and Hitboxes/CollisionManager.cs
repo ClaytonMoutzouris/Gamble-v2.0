@@ -216,12 +216,12 @@ public static class CollisionManager {
             return;
 
         //First we'll check to see if its a pushbox collision
-        if(obj1 is PhysicsBody && obj2 is PhysicsBody)
+        if (obj1 is PhysicsBody && obj2 is PhysicsBody)
         {
             PhysicsCollision((PhysicsBody)obj1, (PhysicsBody)obj2);
         }
 
-        if(obj1 is Hitbox && obj2 is Hurtbox)
+        if (obj1 is Hitbox && obj2 is Hurtbox)
         {
             HitCollision((Hitbox)obj1, (Hurtbox)obj2);
         }
@@ -231,7 +231,16 @@ public static class CollisionManager {
             HitCollision((Hitbox)obj2, (Hurtbox)obj1);
         }
 
-        if(obj1 is Sightbox && obj2 is PhysicsBody)
+        if (obj1 is Blockbox && obj2 is Hitbox) {
+            BlockCollision((Blockbox)obj1, (Hitbox)obj2);
+        }
+
+        if(obj2 is Blockbox && obj1 is Hitbox)
+        {
+            BlockCollision((Blockbox)obj2, (Hitbox)obj1);
+        }
+
+        if (obj1 is Sightbox && obj2 is PhysicsBody)
         {
             SightCollision((Sightbox)obj1, (PhysicsBody)obj2);
         }
@@ -272,6 +281,29 @@ public static class CollisionManager {
         {
 
             obj1.mCollisions.Add((IHurtable)obj2.mEntity);
+            //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
+            //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
+        }
+    }
+
+    public static void BlockCollision(Blockbox obj1, Hitbox obj2)
+    {
+        if (obj1.mEntity.mEntityType == obj2.mEntity.mEntityType)
+        {
+            return;
+        }
+
+        if (obj2.mEntity is AttackObject proj)
+        {
+            if (proj.owner.mEntityType == obj1.mEntity.mEntityType)
+                return;
+        }
+
+
+        if (obj1.mAABB.Overlaps(obj2.mAABB))
+        {
+
+            obj2.Blocked();
             //new CollisionData(hurtbox, new Vector2(overlapWidth, overlapHeight), hitbox.mSpeed, hurtbox.mSpeed, hitbox.mOldPosition, hurtbox.mOldPosition, hitbox.mPosition, hurtbox.mPosition));
             //hurtbox.mAllCollidingObjects.Add(new CollisionData(hitbox, -new Vector2(overlapWidth, overlapHeight), hurtbox.mSpeed, hitbox.mSpeed, hurtbox.mOldPosition, hitbox.mOldPosition, hurtbox.mPosition, hitbox.mPosition));
         }
