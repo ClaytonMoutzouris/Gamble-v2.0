@@ -14,7 +14,7 @@ public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
-public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Count, Hub, BossMap};
+public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Count, Hub};
 public enum MapType {  Hub, World, BossMap };
 public enum SurfaceLayer { Above, Surface, Inner, Count };
 
@@ -35,7 +35,7 @@ public enum TileType
     FallingRock,
     Chest,
     FlowerBed,
-    Tree,
+    StartTile,
     RollingRock,
     Count,
 }

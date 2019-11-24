@@ -10,6 +10,7 @@ public class RoomData
 {
     public TileType[,] tiles;
     public RoomType roomType;
+    public WorldType worldType;
     public SurfaceLayer surfaceLayer;
     public int mWidth;
     public int mHeight;
@@ -27,6 +28,7 @@ public class RoomData
         RoomData copy = new RoomData();
         copy.tiles = tiles.Clone() as TileType[,];
         copy.roomType = roomType;
+        copy.worldType = worldType;
         copy.surfaceLayer = surfaceLayer;
         copy.mWidth = mWidth;
         copy.mHeight = mHeight;
@@ -38,6 +40,7 @@ public class RoomData
     public void Load(BinaryReader reader)
     {
         roomType = (RoomType)reader.ReadByte();
+        worldType = (WorldType)reader.ReadByte();
         surfaceLayer = (SurfaceLayer)reader.ReadByte();
         //Debug.Log("Reading Surface Type " + surfaceLayer);
 
@@ -60,6 +63,7 @@ public class RoomData
     {
         //First write the type
         writer.Write((byte)roomType);
+        writer.Write((byte)worldType);
         writer.Write((byte)surfaceLayer);
 
         //Then write the size

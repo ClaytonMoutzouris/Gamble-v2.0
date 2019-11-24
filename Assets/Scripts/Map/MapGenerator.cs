@@ -40,9 +40,9 @@ public static class MapGenerator
 
         //int chunkX = Random.Range(0, Constants.cMapChunksX);
 
-        for (int y = 1; y < Constants.cRoomSizeY; y++)
+        for (int y = 1; y < map.roomSizeX; y++)
         {
-            for (int x = 0; x < Constants.cRoomSizeX; x++)
+            for (int x = 0; x < map.roomSizeY; x++)
             {
 
                 if (map.GetTile(roomX*map.roomSizeX + x, roomY * map.roomSizeY + y) == TileType.Empty)
@@ -67,9 +67,9 @@ public static class MapGenerator
         List<Vector2i> possibleTiles = new List<Vector2i>();
         Vector2i tile = new Vector2i(1, 1);
 
-        for (int y = 1; y < Constants.cRoomSizeY; y++)
+        for (int y = 1; y < map.roomSizeX; y++)
         {
-            for (int x = 0; x < Constants.cRoomSizeX; x++)
+            for (int x = 0; x < map.roomSizeY; x++)
             {
 
                 if (map.GetTile(roomX * map.roomSizeX + x, roomY * map.roomSizeY + y) == TileType.Empty)
@@ -381,8 +381,9 @@ public static class MapGenerator
     public static Map GenerateBossMap(MapData data, WorldType worldType)
     {
         Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
+        Debug.Log("Map Data: " + data.name + ", " + worldType);
 
-        RoomData roomData = RoomDatabase.GetBossRoom(WorldType.BossMap);
+        RoomData roomData = RoomDatabase.GetBossRoom(worldType);
         data.roomSizeX = roomData.mWidth;
         data.roomSizeY = roomData.mHeight;
 
@@ -398,7 +399,7 @@ public static class MapGenerator
         AddBounds(map);
 
 
-        map.startTile = GetStartTile(map, 0, 0);
+        //map.startTile = GetStartTile(map, 0, 0);
         Vector2i door = AddDoorTile(map, 0, 0);
         map.exitTile = door;
         //Debug.Log("Door tile " + door);
@@ -410,7 +411,7 @@ public static class MapGenerator
         //This needs a +1 to hit all the bosses
         map.AddEntity(new BossData(map.bossTile.x, map.bossTile.y, GetBossForWorld(map.worldType)));
         //Post process the map based on probabilistic tiles and such
-        //PostProcessing(map);
+        PostProcessing(map, data);
         return map;
     }
 
@@ -508,6 +509,10 @@ public static class MapGenerator
                         break;
                     case TileType.FlowerBed:
                         map.AddEntity(new ObjectData(x, y, ObjectType.FlowerBed));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.StartTile:
+                        map.startTile = new Vector2i(x, y);
                         map.SetTile(x, y, TileType.Empty);
                         break;
                 }

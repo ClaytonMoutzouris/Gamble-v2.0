@@ -95,12 +95,29 @@ public class EntityRenderer : MonoBehaviour
 
         if (Entity is AttackObject)
         {
-            Gizmos.color = Color.blue;
+            if(Entity is MeleeAttackObject)
+            {
+                MeleeAttackObject mAttack = (MeleeAttackObject)Entity;
+                if (mAttack.hitbox.mState == ColliderState.Open)
+                {
+                    Gizmos.color = Color.blue;
 
-            AttackObject E = (AttackObject)Entity;
-            //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
+                    AttackObject E = (AttackObject)Entity;
+                    //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
 
-            Gizmos.DrawCube(E.hitbox.mAABB.Center, E.hitbox.mAABB.HalfSize * 2);
+                    Gizmos.DrawCube(E.hitbox.mAABB.Center, E.hitbox.mAABB.HalfSize * 2);
+                }
+            }
+            else
+            {
+                Gizmos.color = Color.blue;
+
+                AttackObject E = (AttackObject)Entity;
+                //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
+
+                Gizmos.DrawCube(E.hitbox.mAABB.Center, E.hitbox.mAABB.HalfSize * 2);
+            }
+
 
         }
 

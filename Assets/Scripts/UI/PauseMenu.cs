@@ -10,6 +10,9 @@ public class PauseMenu : MonoBehaviour {
     public static PauseMenu instance;
     public GameObject defaultObject;
     public int pausedIndex = -1;
+    public List<GameObject> menuPanels;
+    public int activePanel = 0;
+    public GameObject mainPanel;
 
     public void Start()
     {
@@ -24,6 +27,7 @@ public class PauseMenu : MonoBehaviour {
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
         defaultObject.GetComponent<Button>().OnSelect(null);
         gameObject.SetActive(true);
+        activePanel = 0;
     }
 
     public void Close()
@@ -42,4 +46,26 @@ public class PauseMenu : MonoBehaviour {
         //Close();
     }
 
+    public void OpenOptionsMenu()
+    {
+        OptionsMenu.instance.Open();
+        mainPanel.SetActive(false);
+    }
+
+    public void OpenMainMenu()
+    {
+        mainPanel.SetActive(true);
+        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+        defaultObject.GetComponent<Button>().OnSelect(null);
+    }
+
+    public void SetActivePanel (int index)
+    {
+        foreach(GameObject panel in menuPanels)
+        {
+            panel.SetActive(false);
+        }
+
+        menuPanels[index].SetActive(true);
+    }
 }

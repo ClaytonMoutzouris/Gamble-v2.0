@@ -71,6 +71,7 @@
     <Compile Include="Assets\InventorySlot.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
     <Compile Include="Assets\OptionObject.cs" />
+    <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayerInventoryUI.cs" />
     <Compile Include="Assets\PlayerLevelScreen.cs" />
     <Compile Include="Assets\PlayerPanelTooltip.cs" />
@@ -226,6 +227,7 @@
     <None Include="Assets\Resources\Rooms\SurfaceSR4.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR1.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT3.txt" />
+    <None Include="Assets\RoomsWorkingDir\EyeBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR7.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR7.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR1NEW.txt" />
@@ -244,6 +246,7 @@
     <None Include="Assets\Resources\Rooms\InnerSR1.txt" />
     <None Include="Assets\Resources\Rooms\InnerLRBT2.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR1.txt" />
+    <None Include="Assets\RoomsWorkingDir\SharkBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLRBT2.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLRBT3.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR4.txt" />
@@ -259,6 +262,7 @@
     <None Include="Assets\Resources\Rooms\SurfaceLR1.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerSR1.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerSR3.txt" />
+    <None Include="Assets\RoomsWorkingDir\LavaBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR5.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLR1.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceSR3.txt" />
@@ -273,19 +277,24 @@
     <None Include="Assets\Resources\Rooms\SurfaceSR3.txt" />
     <None Include="Assets\RoomsWorkingDir\Hub.txt" />
     <None Include="Assets\Resources\Rooms\Test.txt" />
+    <None Include="Assets\Resources\Rooms\LavaBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR6.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceSR1.txt" />
     <None Include="Assets\Resources\Rooms\InnerSR3.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceSR1.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT1.txt" />
+    <None Include="Assets\Resources\Rooms\SharkBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR2.txt" />
     <None Include="Assets\RoomsWorkingDir\HedgeHogBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\AboveSR4.txt" />
     <None Include="Assets\RoomsWorkingDir\Test.txt" />
+    <None Include="Assets\RoomsWorkingDir\CatBossRoom.txt" />
+    <None Include="Assets\Resources\Rooms\CatBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR4.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR5.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR1.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR2.txt" />
+    <None Include="Assets\Resources\Rooms\EyeBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerSR2.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLRBT2.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR3.txt" />

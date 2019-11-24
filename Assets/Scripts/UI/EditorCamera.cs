@@ -24,6 +24,8 @@ public class EditorCamera : MonoBehaviour
     public float mMinOrthographicSize = 120;
     public float mBoundingBoxPadding = 32;
 
+    Vector2i targetTile;
+
     void Awake()
     {
         instance = this;
@@ -35,6 +37,7 @@ public class EditorCamera : MonoBehaviour
 
     public void LateUpdate()
     {
+        //mMinOrthographicSize = Mathf.Clamp(mMinOrthographicSize - Input.GetAxis("Mouse ScrollWheel") * mZoomSpeed, 80, 160);
         Rect boundingBox = CalculateTargetsBoundingBox();
         transform.position = Vector3.SmoothDamp(transform.position, CalculateCameraPosition(boundingBox), ref velocity, smoothSpeed);
         //transform.position = CalculateCameraPosition(boundingBox);
@@ -77,13 +80,19 @@ public class EditorCamera : MonoBehaviour
         float minY = mMap.mHeight * MapManager.cTileSize;
         float maxY = 0;
 
+        Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
 
-            Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Vector2.Distance(Input.mousePosition, screenCenter) > 350)
+        {
+            targetTile = mMap.GetMapTileAtPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
 
-            minX = Mathf.Min(minX, position.x);
-            minY = Mathf.Min(minY, position.y);
-            maxX = Mathf.Max(maxX, position.x);
-            maxY = Mathf.Max(maxY, position.y);
+        Vector3 position = mMap.GetMapTilePosition(targetTile.x, targetTile.y);
+
+        minX = Mathf.Min(minX, position.x);
+        minY = Mathf.Min(minY, position.y);
+        maxX = Mathf.Max(maxX, position.x);
+        maxY = Mathf.Max(maxY, position.y);
 
         return Rect.MinMaxRect(minX - mBoundingBoxPadding, maxY + mBoundingBoxPadding, maxX + mBoundingBoxPadding, minY - mBoundingBoxPadding);
     }

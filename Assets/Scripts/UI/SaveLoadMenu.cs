@@ -78,8 +78,9 @@ public class SaveLoadMenu : MonoBehaviour
                 mMap.room.Load(reader);
                 mMap.Draw();
                 Debug.Log("Room Size: " + mMap.room.mWidth + ", " + mMap.room.mHeight);
+                Debug.Log("Room Type: " + mMap.room.roomType + ", World Type: " + mMap.room.worldType);
 
-                RoomEditor.SetEditorValues(mMap.room.roomType, mMap.room.surfaceLayer);
+                RoomEditor.UpdateEditorValues();
             }
             else
             {

@@ -79,9 +79,9 @@ public class TileMapRenderer : MonoBehaviour
     }
 
     //If we need to update 1 tile
-    public void DrawTile(int x, int y, TileType tile, MapData data)
+    public void DrawTile(int x, int y, TileType tile, Sprite sprite)
     {
-        spriteMap[x, y].SetSprite(data.tileSprites[(int)tile]);
+        spriteMap[x, y].SetSprite(sprite);
     }
 
 

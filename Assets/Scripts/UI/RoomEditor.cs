@@ -24,6 +24,7 @@ public class RoomEditor : MonoBehaviour
 
     public Dropdown roomTypeDropdown;
     public Dropdown mapLayerDropdown;
+    public Dropdown worldTypeDropdown;
 
 
     public Text tilePreview;
@@ -55,6 +56,15 @@ public class RoomEditor : MonoBehaviour
             edgeOptions.Add(((SurfaceLayer)i).ToString());
         }
         mapLayerDropdown.AddOptions(edgeOptions);
+
+        edgeOptions.Clear();
+
+        for (int i = 0; i < (int)WorldType.Count; i++)
+        {
+            edgeOptions.Add(((WorldType)i).ToString());
+        }
+        worldTypeDropdown.AddOptions(edgeOptions);
+
     }
 
     void Update()
@@ -65,10 +75,11 @@ public class RoomEditor : MonoBehaviour
     }
 
 
-    public void SetEditorValues(RoomType type, SurfaceLayer layer)
+    public void UpdateEditorValues()
     {
-        roomTypeDropdown.value = (int)type;
-        mapLayerDropdown.value = (int)layer;
+        roomTypeDropdown.value = (int)mMap.room.roomType;
+        worldTypeDropdown.value = (int)mMap.room.worldType;
+        mapLayerDropdown.value = (int)mMap.room.surfaceLayer;
         //SetChunkEdgeType();
     }
 
@@ -81,6 +92,11 @@ public class RoomEditor : MonoBehaviour
     public void ChangeRoomType(int index)
     {
         mMap.room.roomType = (RoomType)index;
+    }
+
+    public void ChangeWorldType(int index)
+    {
+        mMap.room.worldType = (WorldType)index;
     }
 
     public void ChangeMapLayer(int index)

@@ -100,7 +100,7 @@ public static class RoomDatabase
         List<RoomData> roomList = new List<RoomData>();
         foreach (RoomData data in RoomDictionary)
         {
-            if (data.roomType == RoomType.BossRoom)
+            if (data.roomType == RoomType.BossRoom && data.worldType == type)
             {
                 roomList.Add(data);
             }

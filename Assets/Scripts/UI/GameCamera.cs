@@ -33,13 +33,6 @@ public class GameCamera : MonoBehaviour
 
     public void LateUpdate()
     {
-        if(mMap.mCurrentMap.mapType == MapType.Hub)
-        {
-            mMinOrthographicSize = 80;
-        } else
-        {
-            mMinOrthographicSize = 120;
-        }
 
         Rect boundingBox = CalculateTargetsBoundingBox();
         

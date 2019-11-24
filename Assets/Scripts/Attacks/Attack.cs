@@ -5,6 +5,8 @@ using UnityEngine;
 
 public enum Range { Close, Near, Far };
 
+public enum AttackState { Inactive, Startup, Active, Exit };
+
 public class Attack {
 
     //The owner of this attack
@@ -22,7 +24,7 @@ public class Attack {
     public Vector2 attackOffset;
 
     //List of effects
-
+    public AttackState state = AttackState.Inactive;
     public bool mIsActive = false;
 
     public static Attack CrushAttack()
@@ -51,15 +53,18 @@ public class Attack {
 
     public virtual void UpdateAttack()
     {
-        elapsedFrames += 1;
 
         if (coolDownTimer < coolDown)
             coolDownTimer += Time.deltaTime;
+        
 
         if (!mIsActive)
             return;
 
-        if(elapsedFrames >= duration)
+        elapsedFrames += 1;
+
+
+        if (elapsedFrames >= duration)
         {
             Deactivate();
         }
@@ -146,9 +151,19 @@ public class MeleeAttack : Attack
 
     public override void UpdateAttack()
     {
+        if (attack != null)
+        {
+            //hitbox.mCollisions.Clear();
+            if (elapsedFrames < startUpFrames)
+            {
+                attack.hitbox.mState = ColliderState.Closed;
+            }
+            else
+            {
+                attack.hitbox.mState = ColliderState.Open;
 
-        //hitbox.mCollisions.Clear();
-
+            }
+        }
 
         base.UpdateAttack();
 
