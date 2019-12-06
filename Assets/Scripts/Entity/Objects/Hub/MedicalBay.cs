@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicalBay : Entity
+public class MedicalBay : Entity, IInteractable
 {
 
     /// <summary>
@@ -17,7 +17,7 @@ public class MedicalBay : Entity
     {
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(8, 8), new Vector2(0, 8)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
         Body.mIsKinematic = false;
 
@@ -32,5 +32,9 @@ public class MedicalBay : Entity
 
     }
 
-
+    public bool Interact(Player actor)
+    {
+        actor.GainLife(100);
+        return true;
+    }
 }

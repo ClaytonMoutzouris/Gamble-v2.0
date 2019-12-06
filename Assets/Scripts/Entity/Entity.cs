@@ -122,7 +122,7 @@ public class Entity {
         ignoreTilemap = proto.ignoreTilemap;
 
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
-        mCollidesWith = new List<EntityType>();
+        mCollidesWith = proto.CollidesWith;
         statusEffects = new List<StatusEffect>();
         //if (colorPallete != null && colorPallete.Count > 0)
         //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
@@ -135,6 +135,7 @@ public class Entity {
         GameObject gameObject = GameObject.Instantiate(Resources.Load("Prefabs/EntityRenderer")) as GameObject;
         Renderer = gameObject.GetComponent<EntityRenderer>();
         Renderer.SetEntity(this);
+        Renderer.SetSprite(prototype.sprite);
 
         if (prototype.animationController != null)
         {
@@ -150,6 +151,11 @@ public class Entity {
 
     public virtual void EntityUpdate()
     {
+
+        foreach (IContactTrigger contact in CheckForInteractables())
+        {
+            contact.Contact(this);
+        }
         //Any way to do this earlier?
         UpdateStatusEffects();
 
@@ -225,12 +231,28 @@ public class Entity {
 
     }
 
-    public virtual void ShowFloatingText(int damage, Color color)
+    public virtual void ShowFloatingText(String text, Color color)
     {
         FloatingText floatingText = GameObject.Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, Position, Quaternion.identity);
         floatingText.SetOffset(Vector3.up * (Body.mAABB.HalfSize.y * 2 + 7));
-        floatingText.GetComponent<TextMesh>().text = "" + damage;
+        floatingText.GetComponent<TextMesh>().text = "" + text;
         floatingText.GetComponent<TextMesh>().color = color;
+    }
+
+    public List<IContactTrigger> CheckForInteractables()
+    {
+        List<IContactTrigger> triggers = new List<IContactTrigger>();
+        //ItemObject item = null;
+        for (int i = 0; i < Body.mCollisions.Count; ++i)
+        {
+            //Debug.Log(mAllCollidingObjects[i].other.name);
+            if (Body.mCollisions[i].other.mEntity is IContactTrigger)
+            {
+                triggers.Add((IContactTrigger)Body.mCollisions[i].other.mEntity);
+            }
+        }
+
+        return triggers;
     }
 }
 

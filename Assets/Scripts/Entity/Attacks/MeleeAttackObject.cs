@@ -18,6 +18,7 @@ public class MeleeAttackObject : AttackObject
         owner = attack.mEntity;
         isAngled = proto.angled;
         //mMovingSpeed = 100;
+        
 
         if (SoundManager.instance != null)
         {
@@ -89,6 +90,7 @@ public class MeleeAttackObject : AttackObject
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint + attack.attackOffset);
+        Renderer.SetAnimState("Attack");
     }
 
 }

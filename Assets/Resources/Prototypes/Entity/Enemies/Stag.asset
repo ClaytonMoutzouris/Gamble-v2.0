@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Stag
   bodySize: {x: 31, y: 24}
   CollidesWith: 000000000200000003000000
+  ignoreTilemap: 0
   sprite: {fileID: 21300000, guid: d3564f966e575d64a941151448a48e03, type: 3}
   sortingLayer: 4
   animationController: {fileID: 0}
@@ -27,3 +28,7 @@ MonoBehaviour:
   health: 100
   rangedAttacks: []
   meleeAttacks: []
+  lootTable:
+  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}

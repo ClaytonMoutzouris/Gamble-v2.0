@@ -42,7 +42,11 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<QuestItem>();
     }
 
-
+    [MenuItem("Assets/Create/Items/Key")]
+    public static void CreateBaseKeyItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Key>();
+    }
 
 
 }

@@ -327,6 +327,10 @@ public static class MapGenerator
         if(data.mapType == MapType.Hub)
         {
             map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
+            map.AddEntity(new ObjectData(3, 1, ObjectType.Medbay));
+            map.AddEntity(new ObjectData(8, 1, ObjectType.NavSystem));
+            map.AddEntity(new NPCData(10, 1, NPCType.Shopkeeper));
+            map.AddEntity(new ObjectData(12, 1, ObjectType.BouncePad));
             //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
             //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
@@ -513,6 +517,14 @@ public static class MapGenerator
                         break;
                     case TileType.StartTile:
                         map.startTile = new Vector2i(x, y);
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.Door:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.Door));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.Bounce:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.BouncePad));
                         map.SetTile(x, y, TileType.Empty);
                         break;
                 }

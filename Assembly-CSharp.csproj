@@ -70,6 +70,7 @@
     <Compile Include="Assets\InventoryOptionList.cs" />
     <Compile Include="Assets\InventorySlot.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
+    <Compile Include="Assets\NavigationMenu.cs" />
     <Compile Include="Assets\OptionObject.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayerInventoryUI.cs" />
@@ -91,8 +92,10 @@
     <Compile Include="Assets\Scripts\Database\GameData.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
+    <Compile Include="Assets\Scripts\Database\NPCDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Actions\EntityAction.cs" />
+    <Compile Include="Assets\Scripts\Entity\Attacks\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\MeleeAttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Projectile.cs" />
@@ -123,10 +126,15 @@
     <Compile Include="Assets\Scripts\Entity\EntityData.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityRenderer.cs" />
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
+    <Compile Include="Assets\Scripts\Entity\NPC\NPC.cs" />
+    <Compile Include="Assets\Scripts\Entity\NPC\NPCPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\BouncePad.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Chest.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Door.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FallingRock.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FlowerBed.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\MedicalBay.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Hub\NavSystem.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
@@ -138,6 +146,7 @@
     <Compile Include="Assets\Scripts\Entity\Player\SkillNode.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\SkillTree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Stats.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Talent.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerRenderer.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackObject\AttackObjectPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackObject\MeleeAttackObjectPrototype.cs" />
@@ -224,6 +233,7 @@
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />
     <Compile Include="Assets\UIStatElement.cs" />
+    <Compile Include="Assets\WorldNode.cs" />
     <None Include="Assets\Resources\Rooms\SurfaceSR4.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR1.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT3.txt" />

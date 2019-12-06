@@ -30,5 +30,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdb66bdd54658ad40ae73dce7f2adbbf, type: 2}
   meleeAttacks:
   - {fileID: 11400000, guid: 17493f7349f7dd64b92413404ac9d7db, type: 2}
+  lootTable:
+  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
+  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
   bossType: 3
   phaseTimers: 

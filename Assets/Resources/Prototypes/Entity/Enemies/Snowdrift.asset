@@ -16,6 +16,7 @@ MonoBehaviour:
   mName: Snowdrift
   bodySize: {x: 32, y: 30}
   CollidesWith: 03000000
+  ignoreTilemap: 0
   sprite: {fileID: 21300000, guid: 30e9cb57c5bc9d54bb5012acf080ab6b, type: 3}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 97c8831898c29ce46adc772bca1e5cca, type: 2}
@@ -27,3 +28,8 @@ MonoBehaviour:
   health: 200
   rangedAttacks: []
   meleeAttacks: []
+  lootTable:
+  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  - {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
+  - {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
+  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}

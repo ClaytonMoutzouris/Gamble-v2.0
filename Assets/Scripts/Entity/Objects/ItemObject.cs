@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemObject : Entity {
+public class ItemObject : Entity, ILootable {
 
     public Item mItemData;
 
@@ -18,7 +18,9 @@ public class ItemObject : Entity {
     {
         base.Spawn(spawnPoint);
         Renderer.SetSprite(mItemData.sprite);
-
+        //temp.mOldSpeed.y = Constants.cJumpSpeed;
+        Body.mSpeed.y = Constants.cMinJumpSpeed;
+        Body.mSpeed.x = Random.Range(-40, 40);
     }
 
     public override void EntityUpdate()
@@ -26,6 +28,15 @@ public class ItemObject : Entity {
 
         base.EntityUpdate();
 
+        if(Body.mPS.pushesBottom)
+        {
+            Body.mSpeed = Vector2.zero;
+        }
     }
 
+    public bool Loot(Player actor)
+    {
+
+        return actor.PickUp(this);
+    }
 }

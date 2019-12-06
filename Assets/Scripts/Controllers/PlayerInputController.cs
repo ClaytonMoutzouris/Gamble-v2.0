@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LocalCoop;
 
-public enum PlayerInputState { Game, Inventory, Paused, GameOver };
+public enum PlayerInputState { Game, Inventory, Paused, NavigationMenu, GameOver };
 
 
 public class PlayerInputController
@@ -76,7 +76,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.rightTrigger > 0;
-                playerButtonInput[(int)ButtonInput.Shield] = mGamepadInput.RightBumperPressed();
+                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
 
 
 
@@ -110,7 +110,39 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Shield] = false;
+                playerButtonInput[(int)ButtonInput.Block] = false;
+
+                break;
+
+            case PlayerInputState.NavigationMenu:
+                //Update the axis inputs
+                playerAxisInput[(int)AxisInput.LeftStickX] = 0;
+                playerAxisInput[(int)AxisInput.LeftStickY] = 0;
+                playerAxisInput[(int)AxisInput.RightStickX] = 0;
+                playerAxisInput[(int)AxisInput.RightStickY] = 0;
+
+                //Update the button inputs
+                //These are for reading in "taps" of the stick buttons
+                playerButtonInput[(int)ButtonInput.LeftStick_Left] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Right] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Down] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Left] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Right] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Up] = false;
+
+                playerButtonInput[(int)ButtonInput.Jump] = false;
+                playerButtonInput[(int)ButtonInput.Attack] = mGamepadInput.ButtonBPressed();
+                playerButtonInput[(int)ButtonInput.Item] = false;
+                playerButtonInput[(int)ButtonInput.Inventory] = false;
+                playerButtonInput[(int)ButtonInput.Swap] = false;
+                playerButtonInput[(int)ButtonInput.Pause] = false;
+                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.SkipLevel] = false;
+                playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Fire] = false;
+                playerButtonInput[(int)ButtonInput.Block] = false;
 
                 break;
 
@@ -142,7 +174,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Shield] = false;
+                playerButtonInput[(int)ButtonInput.Block] = false;
 
                 break;
         }

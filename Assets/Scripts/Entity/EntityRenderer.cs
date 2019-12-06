@@ -90,6 +90,12 @@ public class EntityRenderer : MonoBehaviour
                 
             }
 
+            if(P.blockbox.mState == ColliderState.Open)
+            {
+                Gizmos.color = Color.blue;
+
+                Gizmos.DrawCube(P.blockbox.mAABB.Center, P.blockbox.mAABB.HalfSize * 2);
+            }
 
         }
 

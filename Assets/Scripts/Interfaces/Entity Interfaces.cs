@@ -24,3 +24,18 @@ public interface IProjectile
     Entity Owner { get; set; }
 
 }
+
+public interface IInteractable
+{
+    bool Interact(Player actor);
+}
+
+public interface ILootable
+{
+    bool Loot(Player looter);
+}
+
+public interface IContactTrigger
+{
+    void Contact(Entity entity);
+}

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LocalCoop;
 
-public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Dead };
+public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Blocking, Dead };
 
 public class Player : Entity, IHurtable
 {
@@ -202,7 +202,8 @@ public class Player : Entity, IHurtable
         HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         HurtBox.UpdatePosition();
 
-        blockbox = new Blockbox(this, new CustomAABB(Position, new Vector2(2, 16), Vector3.zero));
+        blockbox = new Blockbox(this, new CustomAABB(Position, new Vector2(8, 12), new Vector2(proto.bodySize.x, proto.bodySize.y)));
+        blockbox.UpdatePosition();
         blockbox.mState = ColliderState.Closed;
         /*
         mJumpSpeed = Constants.cJumpSpeed;
@@ -244,6 +245,7 @@ public class Player : Entity, IHurtable
         GameObject gameObject = GameObject.Instantiate(Resources.Load("Prefabs/PlayerRenderer")) as GameObject;
         Renderer = gameObject.GetComponent<PlayerRenderer>();
         Renderer.SetEntity(this);
+        ((PlayerRenderer)Renderer).SetPlayer(this);
 
         if (prototype.animationController != null)
         {
@@ -282,6 +284,14 @@ public class Player : Entity, IHurtable
         {
             Debug.Log("Input is null");
             return;
+        }
+
+        if(Input.inputState == PlayerInputState.NavigationMenu)
+        {
+            if (Input.playerButtonInput[(int)ButtonInput.Attack])
+            {
+                NavigationMenu.instance.Close();
+            }
         }
 
         if (Input.playerButtonInput[(int)ButtonInput.Pause])
@@ -351,27 +361,26 @@ public class Player : Entity, IHurtable
         }
 
         //Check to see if a player is trying to pick up an item
+        if (Input.playerButtonInput[(int)ButtonInput.LeftStick_Down])
+        {
+            ILootable loot = CheckForItems();
+
+            if (loot != null)
+            {
+                loot.Loot(this);
+            }
+
+        }
+        //Check to see if a player is trying to pick up an item
         if (Input.playerButtonInput[(int)ButtonInput.DPad_Down] && !Input.previousButtonInput[(int)ButtonInput.DPad_Down])
         {
-            ItemObject item = CheckForItems();
-            if (item != null)
-            {
-                //mAllCollidingObjects.Remove(item);
-                PickUp(item);
-            }
-        }
+            IInteractable interactable = CheckForInteractables();
 
-        //Check to see if a player is trying to open a chest
-        if (Input.playerButtonInput[(int)ButtonInput.DPad_Up] && !Input.previousButtonInput[(int)ButtonInput.DPad_Up])
-        {
-            Chest chest = CheckForChest();
-            if (chest != null)
+            if(interactable != null)
             {
-                //Debug.Log("You picked up " + item.name);
-                //mAllCollidingObjects.Remove(item);
-                //mGame.FlagObjectForRemoval(item);
-                chest.OpenChest();
+                interactable.Interact(this);
             }
+
         }
 
         //Handle each of the players states
@@ -870,21 +879,18 @@ public class Player : Entity, IHurtable
 
         }
 
-        if ((Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0) && Input.playerButtonInput[(int)ButtonInput.Shield])
+        if (Input.playerButtonInput[(int)ButtonInput.Block])
         {
-            Vector2 aim = GetAim();
-
-            ((PlayerRenderer)Renderer).SetShieldRotation(aim);
-            blockbox.mAABB.SetAngle(Vector2.Angle(Vector2.right, aim));
-            blockbox.UpdatePositionAndRotation(aim);
+            //blockbox.mAABB.SetAngle(Vector2.Angle(Vector2.right, aim));
+            blockbox.UpdatePosition();
             blockbox.mState = ColliderState.Open;
 
-            ((PlayerRenderer)Renderer).SetShieldActive(true);
+            ((PlayerRenderer)Renderer).SetWeaponBlock(true);
 
         }
         else
         {
-            ((PlayerRenderer)Renderer).SetShieldActive(false);
+            ((PlayerRenderer)Renderer).SetWeaponBlock(false);
             blockbox.mState = ColliderState.Closed;
 
         }
@@ -1003,11 +1009,12 @@ public class Player : Entity, IHurtable
     public bool PickUp(ItemObject itemObject)
     {
         //mAllCollidingObjects.Remove(item);
-        Game.FlagObjectForRemoval(itemObject);
 
         //Should be something like itemObject.pickup(Inventory inventory);
-
-        Inventory.AddItemToInventory(itemObject.mItemData);
+        if (Inventory.AddItemToInventory(itemObject.mItemData))
+        {
+            itemObject.Destroy();
+        }
         return true;
     }
 
@@ -1041,11 +1048,30 @@ public class Player : Entity, IHurtable
             else
                 Renderer.SetAnimState("LadderIdle");
         }
+        else if (mCurrentState == PlayerState.Blocking)
+        {
+            //Update the animator
+            if (Mathf.Abs(Body.mSpeed.y) > 0)
+            {
+                Renderer.SetAnimState("Jump");
+                //Renderer.
+            }
+            else if(Mathf.Abs(Body.mSpeed.x) > 0)
+            { 
+             Renderer.SetAnimState("Walk");
+            }
+            else
+            {
+                Renderer.SetAnimState("Stand");
+            }
+        }
         else
         {
             Renderer.SetAnimState(mCurrentState.ToString());
 
         }
+
+
 
     }
 
@@ -1094,6 +1120,8 @@ public class Player : Entity, IHurtable
         base.SecondUpdate();
         AttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
+        blockbox.UpdatePosition();
+
 
         if (MiniMapIcon != null)
         {
@@ -1101,10 +1129,15 @@ public class Player : Entity, IHurtable
         }
     }
 
+    public void Interact()
+    {
+
+    }
+
     public void GetHurt(Attack attack)
     {
         int damage = (int)Health.LoseHP(attack.damage);
-        ShowFloatingText(damage, Color.red);
+        ShowFloatingText(damage.ToString(), Color.red);
 
         if (Health.currentHealth == 0)
         {
@@ -1118,7 +1151,7 @@ public class Player : Entity, IHurtable
     public void GainLife(int health)
     {
         int life = (int)this.Health.GainHP(health);
-        ShowFloatingText(life, Color.green);
+        ShowFloatingText(life.ToString(), Color.green);
 
 
     }
@@ -1158,15 +1191,15 @@ public class Player : Entity, IHurtable
         base.ActuallyDie();
     }
 
-    public ItemObject CheckForItems()
+    public ILootable CheckForItems()
     {
         //ItemObject item = null;
         for (int i = 0; i < Body.mCollisions.Count; ++i)
         {
             //Debug.Log(mAllCollidingObjects[i].other.name);
-            if (Body.mCollisions[i].other.mEntity is ItemObject)
+            if (Body.mCollisions[i].other.mEntity is ILootable)
             {
-                return (ItemObject)Body.mCollisions[i].other.mEntity;
+                return (ILootable)Body.mCollisions[i].other.mEntity;
             }
         }
 
@@ -1182,6 +1215,21 @@ public class Player : Entity, IHurtable
             if (Body.mCollisions[i].other.mEntity is Chest)
             {
                 return (Chest)Body.mCollisions[i].other.mEntity;
+            }
+        }
+
+        return null;
+    }
+
+    public IInteractable CheckForInteractables()
+    {
+        //ItemObject item = null;
+        for (int i = 0; i < Body.mCollisions.Count; ++i)
+        {
+            //Debug.Log(mAllCollidingObjects[i].other.name);
+            if (Body.mCollisions[i].other.mEntity is IInteractable)
+            {
+                return (IInteractable)Body.mCollisions[i].other.mEntity;
             }
         }
 

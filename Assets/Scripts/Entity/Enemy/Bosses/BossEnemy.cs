@@ -57,6 +57,16 @@ public class BossEnemy : Enemy
         CheckForTargets();
     }
 
+    public override void DropLoot()
+    {
+        foreach(Item item in prototype.lootTable)
+        {
+            ItemObject temp = new ItemObject(ScriptableObject.Instantiate(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+            temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
+        }
+
+    }
+
     public override void Die()
     {
         SoundManager.instance.PlayLevelMusic((int)LevelManager.instance.mMap.mCurrentMap.worldType);

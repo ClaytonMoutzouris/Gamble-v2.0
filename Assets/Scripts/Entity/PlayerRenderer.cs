@@ -17,6 +17,12 @@ public class PlayerRenderer : EntityRenderer
         rangedWeapon.transform.localPosition = weaponOffset;
     }
 
+    public void SetPlayer(Player player)
+    {
+        this.player = player;
+
+    }
+
     public void SetWeaponOffset(Vector2 offset)
     {
         weaponOffset = offset;
@@ -26,9 +32,14 @@ public class PlayerRenderer : EntityRenderer
     public void SetShieldActive(bool active)
     {
         shield.gameObject.SetActive(active);
+        
     }
 
-
+    public void SetWeaponBlock(bool active)
+    {
+        meleeWeapon.gameObject.SetActive(active);
+        meleeWeapon.flipX = (player.mDirection == EntityDirection.Left);
+    }
     public void SetWeaponRotation(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg - 90;

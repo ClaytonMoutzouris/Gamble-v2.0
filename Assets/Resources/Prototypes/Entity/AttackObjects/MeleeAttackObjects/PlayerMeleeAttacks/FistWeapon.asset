@@ -19,7 +19,7 @@ MonoBehaviour:
   ignoreTilemap: 1
   sprite: {fileID: 0}
   sortingLayer: 8
-  animationController: {fileID: 9100000, guid: 8b8b2105bc89a414aa46ad2a3980b7f4, type: 2}
+  animationController: {fileID: 0}
   hitboxSize: {x: 10, y: 10}
   angled: 0
   maxTime: 1

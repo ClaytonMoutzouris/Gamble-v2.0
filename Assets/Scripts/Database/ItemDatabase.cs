@@ -18,6 +18,16 @@ public static class ItemDatabase {
         return item;
     }
 
-    
+    public static Item NewItem(Item item)
+    {
+        Item nItem = ScriptableObject.Instantiate(item);
+        return nItem;
+    }
+
+    public static Item GetKey()
+    {
+        Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
+        return item;
+    }
    
 }

@@ -29,3 +29,6 @@ MonoBehaviour:
   rangedAttacks: []
   meleeAttacks:
   - {fileID: 11400000, guid: bc3a018296a131c4cb5df5809764fd07, type: 2}
+  lootTable:
+  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  - {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}

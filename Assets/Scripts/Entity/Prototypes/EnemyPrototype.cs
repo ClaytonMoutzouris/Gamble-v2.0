@@ -16,5 +16,6 @@ public class EnemyPrototype : EntityPrototype
     public List<RangedAttackPrototype> rangedAttacks;
     public List<MeleeAttackPrototype> meleeAttacks;
 
+    public List<Item> lootTable;
     //Attack attack;
 }

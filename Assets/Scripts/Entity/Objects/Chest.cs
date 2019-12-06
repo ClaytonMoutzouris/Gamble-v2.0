@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : Entity {
+public class Chest : Entity, IInteractable {
 
     /// <summary>
     /// Draws the aabb and ceiling, ground and wall sensors .
@@ -10,16 +10,20 @@ public class Chest : Entity {
     /// 
     [HideInInspector]
     public bool mOpen = false;
-
+    public bool locked = false;
 
     public Chest(EntityPrototype proto) : base(proto)
     {
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(8,8), new Vector2(0,8)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
         Body.mIsKinematic = false;
 
+        if(Random.Range(0, 10) >= 8)
+        {
+            locked = true;
+        }
     }
 
 
@@ -31,19 +35,37 @@ public class Chest : Entity {
 
     }
 
-    public bool OpenChest()
+    public bool Interact(Player actor)
     {
         if (mOpen)
-            return false;
+            return true;
 
-        mOpen = true;
-        Renderer.SetAnimState("ChestOpen");
+        if(locked)
+        {
+            Item temp = actor.Inventory.GetKeyItem();
+            if (temp != null)
+            {
+                actor.Inventory.RemoveItem(temp);
+                locked = false;
+                ShowFloatingText("Unlocked!", Color.green);
+                return true;
+            }
+            else
+            {
+                ShowFloatingText("Locked", Color.red);
+                return false;
+            }
+        } else
+        {
+            mOpen = true;
+            Renderer.SetAnimState("ChestOpen");
 
-        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-        temp.Spawn(Position);
-        //temp.Position = Body.mPosition +new Vector2(0, MapManager.cTileSize/2);
-        //temp.mOldSpeed.y = Constants.cJumpSpeed;
-        //temp.mSpeed.y = Constants.cJumpSpeed*10;
+            ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+            temp.Spawn(Position);
+        }
+
+
+
 
         return true;
     }

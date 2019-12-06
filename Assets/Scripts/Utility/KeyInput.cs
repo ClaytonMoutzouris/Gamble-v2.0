@@ -25,7 +25,7 @@ public enum ButtonInput
     Teleport,
     BeamUp,
     Fire,
-    Shield,
+    Block,
 	Count
 }
 

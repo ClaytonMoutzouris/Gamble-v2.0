@@ -6,7 +6,7 @@ public class Enemy : Entity, IHurtable
     public EnemyState mEnemyState = EnemyState.Moving;
     public EnemyType mEnemyType;
     public Health mHealth;
-    EnemyPrototype prototype;
+    protected EnemyPrototype prototype;
     public int jumpHeight = 0;
     //Behaviour
     [SerializeField]
@@ -193,7 +193,7 @@ public class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
-        ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+        ItemObject temp = new ItemObject(ScriptableObject.Instantiate(prototype.lootTable[Random.Range(0, prototype.lootTable.Count)]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
     }
 
@@ -215,7 +215,7 @@ public class Enemy : Entity, IHurtable
         }
 
         int damage = (int)mHealth.LoseHP(attack.damage);
-        ShowFloatingText(damage, Color.white);
+        ShowFloatingText(damage.ToString(), Color.white);
 
 
         if (mHealth.currentHealth == 0)

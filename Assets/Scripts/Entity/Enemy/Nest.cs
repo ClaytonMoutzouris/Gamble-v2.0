@@ -81,11 +81,6 @@ public class Nest : Enemy
         base.SecondUpdate();
     }
 
-    public override void ShowFloatingText(int damage, Color color)
-    {
-        base.ShowFloatingText(damage, color);
-    }
-
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);

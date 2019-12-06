@@ -295,10 +295,29 @@ public class MapManager : MonoBehaviour
                 case EntityType.Boss:
                     AddBossEntity((BossData)eD);
                     break;
-                    
+                case EntityType.NPC:
+                    AddNPCEntity((NPCData)eD);
+                    break;
+
             }
             
         }
+    }
+
+    public NPC AddNPCEntity(NPCData data)
+    {
+        NPCPrototype proto = NPCDatabase.GetNPCPrototype(data.type);
+        NPC temp = null;
+        switch (data.type)
+        {
+            case NPCType.Shopkeeper:
+                temp = new NPC(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+        }
+    
+
+        return temp;
     }
 
     public void AddObjectEntity(ObjectData data)
@@ -320,6 +339,26 @@ public class MapManager : MonoBehaviour
             case ObjectType.Tree:
                 Tree temp4 = new Tree(Resources.Load("Prototypes/Entity/Objects/Tree") as EntityPrototype);
                 temp4.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.Medbay:
+                MedicalBay temp5 = new MedicalBay(Resources.Load("Prototypes/Entity/Objects/Medbay") as EntityPrototype);
+                temp5.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.Door:
+                Door temp6 = new Door(Resources.Load("Prototypes/Entity/Objects/Door") as EntityPrototype);
+                if(mCurrentMap.mapType == MapType.Hub || mCurrentMap.mapType == MapType.BossMap)
+                {
+                    temp6.locked = false;
+                }
+                temp6.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.NavSystem:
+                NavSystem temp7 = new NavSystem(Resources.Load("Prototypes/Entity/Objects/NavSystem") as EntityPrototype);
+                temp7.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.BouncePad:
+                BouncePad temp8 = new BouncePad(Resources.Load("Prototypes/Entity/Objects/BouncePad") as EntityPrototype);
+                temp8.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }
     }

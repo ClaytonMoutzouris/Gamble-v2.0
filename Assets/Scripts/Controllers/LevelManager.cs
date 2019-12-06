@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour
 
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
+    public MapType changeToType;
 
     public bool warpToHubFlag = false;
 
@@ -120,6 +121,7 @@ public class LevelManager : MonoBehaviour
             entity.mToRemove = true;
 
         }
+
         if(type == MapType.Hub)
         {
             mMap.NewMap(MapDatabase.GetHubMap());
@@ -128,12 +130,6 @@ public class LevelManager : MonoBehaviour
         {
             
             mMap.NewBossMap(MapDatabase.GetBossMap((WorldType)levelIndex), (WorldType)levelIndex);
-            levelIndex++;
-            if (levelIndex >= (int)WorldType.Count)
-            {
-                levelIndex = 0;
-            }
-            
         }
         else if(type == MapType.World)
         {
@@ -204,12 +200,6 @@ public class LevelManager : MonoBehaviour
     {
         mEntities.Add(obj);
         return mEntities.Count - 1;
-    }
-
-    public virtual void FlagObjectForRemoval(Entity obj)
-    {
-        obj.Die();
-        
     }
 
     public void RemoveFromUpdateList(Entity obj)
@@ -323,14 +313,13 @@ public class LevelManager : MonoBehaviour
                 NewGameMap(MapType.World);
                 mMapChangeFlag = false;
             }
-
             else if (mMap.mCurrentMap.mapType == MapType.World){
                 NewGameMap(MapType.BossMap);
                 mMapChangeFlag = false;
             }
             else if(mMap.mCurrentMap.mapType == MapType.BossMap)
             {
-                NewGameMap(MapType.World);
+                NewGameMap(MapType.Hub);
                 mMapChangeFlag = false;
             }
 

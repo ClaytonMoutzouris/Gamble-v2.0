@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [System.Serializable]
 public class PlayerInventory
 {
@@ -56,6 +57,20 @@ public class PlayerInventory
         return items[index];
     }
 
+    public Key GetKeyItem()
+    {
+
+        foreach(Item item in items)
+        {
+            if(item is Key)
+            {
+                return (Key)item;
+            }
+        }
+
+        return null;
+    }
+
     public bool UseItem(int index)
     {
         Debug.Log("User Item:" + index);
@@ -80,6 +95,19 @@ public class PlayerInventory
     {
         items[index] = null;
         inventoryUI.RemoveItem(index);
+    }
+
+    public void RemoveItem(Item item)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (items[i] != null && items[i] == item)
+            {
+                items[i] = null;
+                inventoryUI.RemoveItem(i);
+                return;
+            }
+        }
     }
 
     public void DropItem(int index)
@@ -159,6 +187,5 @@ public class PlayerInventory
         }
     }
     
-
 
 }

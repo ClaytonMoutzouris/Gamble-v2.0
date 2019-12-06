@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss };
+public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss, NPC };
 public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Player, PlayerWeapon, ItemObject, Projectile };
 public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Treedude, Stag, Snowdrift, FrogLegs, Nest, Count, Boss };
+public enum NPCType { Standard, Shopkeeper };
+
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count };
-public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree};
+public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad };
 public enum Rarity { Common, Uncommon, Rare, Legendary }
 public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned };
 public enum AttackTrait { Knockback, Exploding, Split };

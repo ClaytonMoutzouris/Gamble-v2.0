@@ -57,3 +57,13 @@ public class ObjectData : EntityData
 
     }
 }
+
+public class NPCData : EntityData
+{
+    public NPCType type;
+    public NPCData(int x, int y, NPCType t) : base(x, y)
+    {
+        EntityType = EntityType.NPC;
+        type = t;
+    }
+}

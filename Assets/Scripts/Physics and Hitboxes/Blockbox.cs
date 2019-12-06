@@ -20,5 +20,11 @@ public class Blockbox : CustomCollider2D
         mCollisions = new List<Hitbox>();
         mDealtWith = new List<Hitbox>();
     }
+
+    public override void UpdatePosition()
+    {
+        mAABB.ScaleX = (int)mEntity.mDirection;
+        mAABB.Center = mEntity.Position;
+    }
 }
 
