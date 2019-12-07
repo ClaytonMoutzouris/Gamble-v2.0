@@ -5,6 +5,7 @@ using LocalCoop;
 
 public enum GameMode
 {
+    Start,
     Game,
     Paused,
     GameOver
@@ -12,7 +13,7 @@ public enum GameMode
 
 public class LevelManager : MonoBehaviour
 {
-    public GameMode mGameMode;
+    public GameMode mGameMode = GameMode.Start;
     public static LevelManager instance;
     public Camera gameCamera;
     public Player[] players = new Player[4];
@@ -80,6 +81,11 @@ public class LevelManager : MonoBehaviour
         }
         levelIndex = 0;
         NewGameMap(MapType.Hub);
+        if(mGameMode != GameMode.Start)
+        {
+            NavigationMenu.instance.RollMaps(Random.Range(3, 5));
+        }
+
         mGameMode = GameMode.Game;
     }
 

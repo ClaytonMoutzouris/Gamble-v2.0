@@ -15,12 +15,10 @@ public class WorldNode : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void SetUp(WorldType type, int id)
+    public void SetUp(WorldType type)
     {
 
         worldType = type;
-        worldID = id;
-
         SetColor();
     }
 
@@ -49,6 +47,6 @@ public class WorldNode : MonoBehaviour
 
     public void SelectWorld()
     {
-        NavigationMenu.instance.SelectWorld(worldID);
+        NavigationMenu.instance.SelectWorld(worldType);
     }
 }

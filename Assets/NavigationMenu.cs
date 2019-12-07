@@ -21,56 +21,31 @@ public class NavigationMenu : MonoBehaviour
         gameObject.SetActive(false);
         worldNodes = new List<WorldNode>();
 
-        WorldNode temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
+        WorldNode temp;
 
-        temp.SetUp(WorldType.Forest, 0);
-        defaultObject = temp.gameObject;
+
+        /*
+        temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
+        temp.SetUp(WorldType.Tundra);
         worldNodes.Add(temp);
 
         temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(WorldType.Tundra, 1);
+        temp.SetUp(WorldType.Lava);
         worldNodes.Add(temp);
 
         temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(WorldType.Lava, 2);
+        temp.SetUp(WorldType.Purple);
         worldNodes.Add(temp);
 
         temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(WorldType.Purple, 3);
+        temp.SetUp(WorldType.Yellow);
         worldNodes.Add(temp);
+        */
 
-        temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(WorldType.Yellow, 4);
-        worldNodes.Add(temp);
+        RollMaps(Random.Range(3, 5));
 
-        Navigation nav = backButton.navigation;
-        nav.selectOnUp = worldNodes[0].button;
-        backButton.navigation = nav;
 
-        for (int i = 0; i < worldNodes.Count; i++)
-        {
-            nav = worldNodes[i].button.navigation;
-            if (i == 0)
-            {
-                nav.selectOnLeft = worldNodes[worldNodes.Count-1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            else if(i == worldNodes.Count-1)
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[0].button;
-
-            }
-            else
-            {
-                nav.selectOnLeft = worldNodes[i-1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            nav.selectOnDown = backButton;
-            worldNodes[i].button.navigation = nav;
-        }
+        
 
     }
 
@@ -85,6 +60,60 @@ public class NavigationMenu : MonoBehaviour
 
     }
 
+    public void ClearMaps()
+    {
+        foreach(WorldNode world in worldNodes)
+        {
+            Destroy(world.gameObject);
+        }
+
+        worldNodes.Clear();
+    }
+
+
+    public void RollMaps(int numMaps)
+    {
+
+        ClearMaps();
+
+        WorldNode temp;
+        for (int i = 0; i < numMaps; i++)
+        {
+            temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
+            temp.SetUp((WorldType)Random.Range(0, (int)WorldType.Count));
+            defaultObject = temp.gameObject;
+            worldNodes.Add(temp);
+        }
+
+        Navigation nav = backButton.navigation;
+        nav.selectOnUp = worldNodes[0].button;
+        backButton.navigation = nav;
+
+        for (int i = 0; i < worldNodes.Count; i++)
+        {
+            nav = worldNodes[i].button.navigation;
+            if (i == 0)
+            {
+                nav.selectOnLeft = worldNodes[worldNodes.Count - 1].button;
+                nav.selectOnRight = worldNodes[i + 1].button;
+
+            }
+            else if (i == worldNodes.Count - 1)
+            {
+                nav.selectOnLeft = worldNodes[i - 1].button;
+                nav.selectOnRight = worldNodes[0].button;
+
+            }
+            else
+            {
+                nav.selectOnLeft = worldNodes[i - 1].button;
+                nav.selectOnRight = worldNodes[i + 1].button;
+
+            }
+            nav.selectOnDown = backButton;
+            worldNodes[i].button.navigation = nav;
+        }
+    }
     public void Close()
     {
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
@@ -94,10 +123,10 @@ public class NavigationMenu : MonoBehaviour
 
     }
 
-    public void SelectWorld(int index)
+    public void SelectWorld(WorldType type)
     {
-        Debug.Log(worldNodes[index].worldType + " was selected");
-        LevelManager.instance.levelIndex = index;
+        Debug.Log(type + " was selected");
+        LevelManager.instance.levelIndex = (int)type;
         LevelManager.instance.mMapChangeFlag = true;
         Close();
     }
