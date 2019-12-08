@@ -17,16 +17,16 @@ public class BouncePad : Entity, IContactTrigger
 
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
-        Body.mIsKinematic = false;
+        Body.mIsKinematic = true;
+        Body.mIsHeavy = true;
 
     }
 
     public void Contact(Entity entity)
     {
 
-        entity.Body.mSpeed = (entity.Position - Position).normalized * entity.Body.mSpeed.magnitude*2;
-
-
+        entity.Body.mSpeed = (Position - entity.Position).normalized * -Constants.cBounceSpeed;
+        entity.Body.mPS.isBounce = true;
     }
 
     public override void EntityUpdate()

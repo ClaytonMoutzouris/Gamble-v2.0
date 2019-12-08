@@ -22,7 +22,7 @@ MonoBehaviour:
   baseDepth: 3
   depthVariance: 1
   smallEnemies: 000000000100000002000000030000000400000005000000
-  largeEnemies: 060000000700000008000000
+  largeEnemies: 070000000800000009000000
   tileSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: fa772b6751bcc284a96c948523e90e39, type: 3}

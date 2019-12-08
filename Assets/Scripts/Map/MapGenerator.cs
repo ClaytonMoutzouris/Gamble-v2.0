@@ -439,7 +439,9 @@ public static class MapGenerator
             case WorldType.Yellow:
                 temp = BossType.TentacleBoss;
                 break;
-
+            case WorldType.Void:
+                temp = (BossType)Random.Range(0, (int)BossType.Count);
+                break;
         }
         return temp;
     }
@@ -539,7 +541,7 @@ public static class MapGenerator
     {
         AddChests(map);
         AddFauna(map);
-        AddEnemies(map);
+        //AddEnemies(map);
         AddFallingRock(map);
 
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HubMap
   m_EditorClassIdentifier: 
   mapType: 0
-  type: 6
+  type: 7
   sizeX: 2
   sizeY: 2
   roomSizeX: 10

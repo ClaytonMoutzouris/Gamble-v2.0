@@ -366,6 +366,8 @@ public class MapManager : MonoBehaviour
     public Enemy AddEnemyEntity(EnemyData data)
     {
         EnemyPrototype proto = EnemyDatabase.GetEnemyPrototype(data.type);
+        if (proto == null)
+            return null;
         Enemy temp = null;
 
         switch (proto.enemyType)
@@ -392,6 +394,10 @@ public class MapManager : MonoBehaviour
                 break;
             case EnemyType.Snowball:
                 temp = new Snowball(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Ghost:
+                temp = new Ghost(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case EnemyType.Snowdrift:

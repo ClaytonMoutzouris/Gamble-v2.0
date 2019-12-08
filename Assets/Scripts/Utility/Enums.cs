@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss, NPC };
 public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Player, PlayerWeapon, ItemObject, Projectile };
-public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Treedude, Stag, Snowdrift, FrogLegs, Nest, Count, Boss };
+public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, Treedude, Stag, Snowdrift, FrogLegs, Nest, Count, Boss };
 public enum NPCType { Standard, Shopkeeper };
 
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count };
@@ -16,7 +16,7 @@ public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
 
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
-public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Count, Hub};
+public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
 public enum MapType {  Hub, World, BossMap };
 public enum SurfaceLayer { Above, Surface, Inner, Count };
 

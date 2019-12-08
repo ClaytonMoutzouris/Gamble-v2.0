@@ -110,6 +110,10 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileRight(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
     {
+        if (mEntity.ignoreTilemap)
+        {
+            return false;
+        }
         Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x + 0.5f, topRight.y - 0.5f));
         Vector2i bottomLeftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
 
@@ -165,6 +169,10 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileLeft(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state, bool move = false)
     {
+        if(mEntity.ignoreTilemap)
+        {
+            return false;
+        }
         Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
         Vector2i bottomLeftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x - 0.5f, bottomLeft.y + 0.5f));
         //mPS.leftInOneWay = false;
@@ -215,6 +223,10 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileTop(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
     {
+        if (mEntity.ignoreTilemap)
+        {
+            return false;
+        }
         Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y + 0.5f));
         Vector2i bottomleftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y + 0.5f));
 
@@ -252,6 +264,10 @@ public class PhysicsBody : CustomCollider2D
 
     public bool CollidesWithTileBottom(ref Vector2 position, ref Vector2 topRight, ref Vector2 bottomLeft, ref PositionState state)
     {
+        if (mEntity.ignoreTilemap)
+        {
+            return false;
+        }
         Vector2i topRightTile = mEntity.Map.GetMapTileAtPoint(new Vector2(topRight.x - 0.5f, topRight.y - 0.5f));
         Vector2i bottomleftTile = mEntity.Map.GetMapTileAtPoint(new Vector2(bottomLeft.x + 0.5f, bottomLeft.y - 0.5f));
         bool isOneWay;

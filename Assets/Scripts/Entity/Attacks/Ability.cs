@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+public class Ability
+{
+    string name;
+    string description;
+
+
+}
+
+
+
+
+
 /*
 //Non-Generic Ability class to make dealing with abilities easier
 public abstract class Ability

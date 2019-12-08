@@ -22,6 +22,11 @@ public class WorldNode : MonoBehaviour
         SetColor();
     }
 
+    public void SetCleared()
+    {
+        button.interactable = false;
+    }
+
     public void SetColor()
     {
         switch (worldType)
@@ -41,12 +46,15 @@ public class WorldNode : MonoBehaviour
             case WorldType.Yellow:
                 image.color = Color.yellow;
                 break;
+            case WorldType.Void:
+                image.color = Color.grey;
+                break;
 
         }
     }
 
     public void SelectWorld()
     {
-        NavigationMenu.instance.SelectWorld(worldType);
+        NavigationMenu.instance.SelectWorld(this);
     }
 }

@@ -152,7 +152,7 @@ public class Entity {
     public virtual void EntityUpdate()
     {
 
-        foreach (IContactTrigger contact in CheckForInteractables())
+        foreach (IContactTrigger contact in CheckForContacts())
         {
             contact.Contact(this);
         }
@@ -239,7 +239,7 @@ public class Entity {
         floatingText.GetComponent<TextMesh>().color = color;
     }
 
-    public List<IContactTrigger> CheckForInteractables()
+    public List<IContactTrigger> CheckForContacts()
     {
         List<IContactTrigger> triggers = new List<IContactTrigger>();
         //ItemObject item = null;

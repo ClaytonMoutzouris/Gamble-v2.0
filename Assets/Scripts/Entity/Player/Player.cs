@@ -357,7 +357,7 @@ public class Player : Entity, IHurtable
 
         if (Input.playerButtonInput[(int)ButtonInput.Item] && !Input.previousButtonInput[(int)ButtonInput.Item])
         {
-            GainLife(5);
+            UseFirstHealingItem();
         }
 
         //Check to see if a player is trying to pick up an item
@@ -1236,4 +1236,19 @@ public class Player : Entity, IHurtable
         return null;
     }
 
+
+    public bool UseFirstHealingItem()
+    {
+        //ItemObject item = null;
+        for(int i = 0; i < inventory.items.Length; i++)
+        {
+            if (inventory.items[i] is ConsumableItem temp)
+            {
+                temp.Use(this, i);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

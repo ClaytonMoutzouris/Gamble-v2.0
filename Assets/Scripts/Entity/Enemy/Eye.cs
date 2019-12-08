@@ -45,6 +45,8 @@ public class Eye : Enemy
                         attack.Activate(dir, Position);
                     }
 
+                    Body.mSpeed = ((Vector2)Target.Position - Position).normalized * mMovingSpeed;
+
                     if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
                     {
                         if(Target.Position.y < Position.y)
@@ -64,9 +66,6 @@ public class Eye : Enemy
                         {
                             Body.mSpeed.x = mMovingSpeed;
                         }
-                    } else
-                    {
-                        Body.mSpeed = ((Vector2)Target.Position - Position).normalized * mMovingSpeed;
                     }
 
                 }
