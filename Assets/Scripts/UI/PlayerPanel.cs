@@ -33,7 +33,7 @@ public class PlayerPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetTab(int index)
@@ -58,6 +58,10 @@ public class PlayerPanel : MonoBehaviour
         EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(inputAnchor);
         isOpen = true;
         transform.localPosition = transform.localPosition + new Vector3(0, panelHeight, 0);
+
+        GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
+        GameObject tabsUI = GameObject.Find("Tabs");
+        HideUI(false);
     }
 
 
@@ -66,6 +70,32 @@ public class PlayerPanel : MonoBehaviour
         EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(null);
         transform.localPosition = transform.localPosition - new Vector3(0, panelHeight, 0);
         isOpen = false;
+        HideUI(true);
+    }
+
+
+    public void HideUI(bool hide)
+    {
+        GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
+        GameObject tabsUI = GameObject.Find("Tabs");
+
+        if (hide)
+        {
+            inventoryUI.GetComponent<CanvasGroup>().alpha = 0;
+            uiPlayerTab.GetComponent<CanvasGroup>().alpha = 0;
+            tooltip.GetComponent<CanvasGroup>().alpha = 0;
+            tabHeaderUI.GetComponent<CanvasGroup>().alpha = 0;
+            tabsUI.GetComponent<CanvasGroup>().alpha = 0;
+        }
+        else
+        {
+            inventoryUI.GetComponent<CanvasGroup>().alpha = 1;
+            uiPlayerTab.GetComponent<CanvasGroup>().alpha = 1;
+            tooltip.GetComponent<CanvasGroup>().alpha = 1;
+            tabHeaderUI.GetComponent<CanvasGroup>().alpha = 1;
+            tabsUI.GetComponent<CanvasGroup>().alpha = 1;
+        }
+
 
     }
 }
