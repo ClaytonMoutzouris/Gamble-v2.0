@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
     public void AddPlayer(int index, PlayerGamepadInput input)
     {
         PlayerUIPanels.instance.AddPlayer(index);
-        Player newPlayer = new Player(Resources.Load("PrototypeS/Entity/Player/PlayerPrototype") as PlayerPrototype, index);
+        Player newPlayer = new Player(Instantiate(Resources.Load("PrototypeS/Entity/Player/PlayerPrototype") as PlayerPrototype), index);
         players[index] = newPlayer;
         newPlayer.SetInput(input);
 

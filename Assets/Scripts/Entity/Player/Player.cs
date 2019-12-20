@@ -14,7 +14,10 @@ public class Player : Entity, IHurtable
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
-    public bool mDoubleJump = true;
+    public bool mCanHover = false;
+    public int mNumJumps = 1;
+    public int mJumpCount = 0;
+
     public float mTimeToExit = 1;
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
@@ -177,9 +180,7 @@ public class Player : Entity, IHurtable
         mClimbSpeed = prototype.climbSpeed;
         mCollidesWith = proto.CollidesWith;
 
-        HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
 
-        Health = new Health(prototype.baseHealth, bar);
 
 
         
@@ -190,6 +191,11 @@ public class Player : Entity, IHurtable
         
 
         mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
+        mStats.SetStats(prototype.baseStats);
+
+        HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
+
+        Health = new Health(this, prototype.baseHealth, bar);
 
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
@@ -260,6 +266,12 @@ public class Player : Entity, IHurtable
         isSpawned = true;
 
         HurtBox.UpdatePosition();
+    }
+
+    //Function for deriving the speed value from the speed stat
+    public float GetSpeed()
+    {
+        return mWalkSpeed + 10*mStats.getStat(StatType.Speed).GetValue();
     }
 
     public void UpdateShield()
@@ -371,17 +383,28 @@ public class Player : Entity, IHurtable
             }
 
         }
-        //Check to see if a player is trying to pick up an item
-        if (Input.playerButtonInput[(int)ButtonInput.DPad_Down] && !Input.previousButtonInput[(int)ButtonInput.DPad_Down])
+
+        IInteractable interactable = CheckForInteractables();
+        if (interactable != null)
         {
-            IInteractable interactable = CheckForInteractables();
-
-            if(interactable != null)
+            ((PlayerRenderer)Renderer).ShowButtonTooltip(true);
+                    //Check to see if a player is trying to pick up an item
+            if (Input.playerButtonInput[(int)ButtonInput.DPad_Down] && !Input.previousButtonInput[(int)ButtonInput.DPad_Down])
             {
-                interactable.Interact(this);
-            }
-
+                    interactable.Interact(this);
+            } 
         }
+        else
+        {
+            ((PlayerRenderer)Renderer).ShowButtonTooltip(false);
+        }
+
+        //Check for grounded
+        if (Body.mPS.pushesBottom || Body.mPS.isClimbing)
+        {
+            mJumpCount = 0;
+        }
+
 
         //Handle each of the players states
         switch (mCurrentState)
@@ -414,7 +437,7 @@ public class Player : Entity, IHurtable
                 if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
-                    break;
+                    //break;
                 }
 
                 //if left or right key is pressed, but not both
@@ -489,7 +512,7 @@ public class Player : Entity, IHurtable
                 if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
-                    break;
+                    //break;
                 }
 
                 //if both or neither left nor right keys are pressed then stop walking and stand
@@ -509,7 +532,7 @@ public class Player : Entity, IHurtable
                     else
                     {
 
-                        Body.mSpeed.x = mWalkSpeed;
+                        Body.mSpeed.x = GetSpeed();
 
                     }
                     mDirection = EntityDirection.Right;
@@ -523,7 +546,7 @@ public class Player : Entity, IHurtable
                     }
                     else
                     {
-                        Body.mSpeed.x = -mWalkSpeed;
+                        Body.mSpeed.x = -GetSpeed();
                     }
                     mDirection = EntityDirection.Left;
                     //Renderer.Sprite.flipX = true;
@@ -581,10 +604,10 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (mDoubleJump && Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
-                    JetMode();
-                    break;
+                    Jump();
+                    //break;
                 }
 
 
@@ -610,7 +633,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesRightTile)
                         Body.mSpeed.x = 0.0f;
                     else
-                        Body.mSpeed.x = mWalkSpeed;
+                        Body.mSpeed.x = GetSpeed();
                     mDirection = EntityDirection.Right;
                     //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
@@ -619,7 +642,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesLeftTile)
                         Body.mSpeed.x = 0.0f;
                     else
-                        Body.mSpeed.x = -mWalkSpeed;
+                        Body.mSpeed.x = -GetSpeed();
                     mDirection = EntityDirection.Left;
                     //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
@@ -671,6 +694,7 @@ public class Player : Entity, IHurtable
                 break;
 
             case PlayerState.GrabLedge:
+
                 Body.mIgnoresGravity = true;
 
                 bool ledgeOnLeft = mLedgeTile.x * MapManager.cTileSize < Position.x;
@@ -693,9 +717,7 @@ public class Player : Entity, IHurtable
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
-                    Body.mSpeed.y = mJumpSpeed;
-                    SoundManager.instance.PlaySingle(mJumpSfx);
-                    mCurrentState = PlayerState.Jump;
+                    Jump();
                 }
 
                 //when the tile we grab onto gets destroyed
@@ -804,7 +826,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesRightTile)
                         Body.mSpeed.x = 0.0f;
                     else
-                        Body.mSpeed.x = mWalkSpeed;
+                        Body.mSpeed.x = GetSpeed();
                     mDirection = EntityDirection.Right;
                     //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
                 }
@@ -813,7 +835,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesLeftTile)
                         Body.mSpeed.x = 0.0f;
                     else
-                        Body.mSpeed.x = -mWalkSpeed;
+                        Body.mSpeed.x = -GetSpeed();
                     mDirection = EntityDirection.Left;
                     //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
@@ -911,7 +933,11 @@ public class Player : Entity, IHurtable
         //Pretty sure this lets use jump forever
 
         if (Body.mPS.pushedBottom && !Body.mPS.pushesBottom || Body.mPS.isClimbing)
+        {
             mFramesFromJumpStart = 0;
+        }
+
+
 
         //Update the animator last
         UpdateAnimator();
@@ -921,10 +947,24 @@ public class Player : Entity, IHurtable
 
     public void Jump()
     {
+        Debug.Log("Jumping while in air - " + mJumpCount + " ~ " + mNumJumps);
 
-        if (mCurrentState == PlayerState.Jump && !mDoubleJump)
-            return;
-        Body.mSpeed.y += mJumpSpeed;
+        if (mCurrentState == PlayerState.Jump) {
+
+            if (mCanHover)
+            {
+                JetMode();
+                return;
+            }
+            if(mJumpCount >= mNumJumps)
+            {
+                return;
+            }
+        }
+
+        mJumpCount++;
+
+        Body.mSpeed.y = mJumpSpeed;
         SoundManager.instance.PlaySingle(mJumpSfx);
         mCurrentState = PlayerState.Jump;
 
@@ -1136,7 +1176,16 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        int damage = (int)Health.LoseHP(attack.damage);
+        if(Random.Range(0, 100) < 5 + mStats.getStat(StatType.Luck).value)
+        {
+            ShowFloatingText("Missed", Color.blue);
+            return;
+        }
+
+        int damage = attack.GetDamage();
+        //Take 1 less damage for each point of defense
+        damage -= mStats.getStat(StatType.Defense).GetValue();
+        Health.LoseHP(damage);
         ShowFloatingText(damage.ToString(), Color.red);
 
         if (Health.currentHealth == 0)

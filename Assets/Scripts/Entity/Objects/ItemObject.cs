@@ -8,8 +8,17 @@ public class ItemObject : Entity, ILootable {
 
     public ItemObject(Item iData, EntityPrototype proto) : base(proto)
     {
-        
-        mItemData = iData;
+        if(iData is Equipment equipment)
+        {
+            equipment.Randomize();
+            mItemData = equipment;
+
+        }
+        else
+        {
+            mItemData = iData;
+
+        }
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(5,5),new Vector2(0,5)));
         Body.mIsKinematic = false;
 

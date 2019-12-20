@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\AttackPrototypeEditor.cs" />
+    <Compile Include="Assets\Editor\EffectEditor.cs" />
     <Compile Include="Assets\Editor\ItemEditor.cs" />
     <Compile Include="Assets\Editor\MapEditor.cs" />
     <Compile Include="Assets\Editor\PlayerPrototypeEditor.cs" />

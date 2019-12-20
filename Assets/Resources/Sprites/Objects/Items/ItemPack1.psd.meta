@@ -1,14 +1,30 @@
 fileFormatVersion: 2
 guid: b86f0933ae75358498751c0cd13c6b2e
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: ItemPack1_0
-    21300002: ItemPack1_1
-    21300004: ItemPack1_2
-    21300006: ItemPack1_3
-    21300008: ItemPack1_4
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: ItemPack1_0
+  - first:
+      213: 21300002
+    second: ItemPack1_1
+  - first:
+      213: 21300004
+    second: ItemPack1_2
+  - first:
+      213: 21300006
+    second: ItemPack1_3
+  - first:
+      213: 21300008
+    second: ItemPack1_4
+  - first:
+      213: -8731111331792144101
+    second: ItemPack1_5
+  - first:
+      213: -1304620828897909138
+    second: ItemPack1_6
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +79,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -74,7 +90,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -85,7 +102,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -96,7 +114,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -107,6 +126,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -125,7 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c53cfa8583f8fd40968380141b272e9
+      spriteID: 2a03c75d55950a847a6cc793d4e81d02
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -145,7 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acbe6c9e440f5b24a93806339c2e0b82
+      spriteID: e85ba4400d1271a41baf93435813be06
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -165,7 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a998fc62712e8cd4ba113756bdf1e0b6
+      spriteID: fd0cbc966067e8b4f9d609d24a67a910
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -185,7 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c417f82fc55c5c4993b21304dbeb80e
+      spriteID: d1f31019e8f5cfc49a48f9112bceaa6b
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -205,7 +229,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25101c34fe80ea243bde602fe3032c2d
+      spriteID: c8db257796cc3464b8654f4670ce7174
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemPack1_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76b7c65e5c582194f8661654bc223aa8
+      internalID: -8731111331792144101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ItemPack1_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6f956511a7486641ae8c3e5e5bc75a5
+      internalID: -1304620828897909138
       vertices: []
       indices: 
       edges: []
@@ -214,13 +281,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 90898e0ad4f86ab4fa57b1e55b403548
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

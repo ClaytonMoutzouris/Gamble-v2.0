@@ -29,6 +29,16 @@ public class Stats
 
     }
 
+    public void SetStats(List<Stat> stats)
+    {
+        this.stats.Clear();
+
+        foreach (Stat stat in stats)
+        {
+            this.stats.Add(stat.type, stat);
+        }
+    }
+
     public void RefreshUI()
     {
         //Update the UI

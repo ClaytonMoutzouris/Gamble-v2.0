@@ -65,3 +65,6 @@ TagManager:
   - name: Projectile
     uniqueID: 3302448597
     locked: 0
+  - name: Tooltips
+    uniqueID: 570884961
+    locked: 0

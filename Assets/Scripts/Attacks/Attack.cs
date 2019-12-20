@@ -14,7 +14,7 @@ public class Attack {
     public AttackPrototype attackPrototype;
     public List<AttackTrait> traits;
     public List<StatusEffectType> statusEffects;
-    public int damage;
+    public int baseDamage;
     public float duration;
     public float elapsedFrames;
     public float coolDown;
@@ -34,7 +34,7 @@ public class Attack {
 
     public Attack(int damage)
     {
-        this.damage = damage;
+        this.baseDamage = damage;
     }
 
     public Attack(Entity entity, AttackPrototype prototype)
@@ -43,7 +43,7 @@ public class Attack {
         mEntity = entity;
         traits = prototype.abilities;
         duration = prototype.duration;
-        damage = prototype.damage;
+        baseDamage = prototype.damage;
         coolDown = prototype.cooldown;
         attackOffset = prototype.offset;
         startUpFrames = prototype.startUpFrames;
@@ -97,6 +97,18 @@ public class Attack {
         mIsActive = false;
     }
 
+    public int GetDamage()
+    {
+        int damage = baseDamage; ;
+        if (mEntity is Player player)
+        {
+            damage += player.mStats.getStat(StatType.Attack).GetValue();
+        }
+
+        return damage;
+
+    }
+
 }
 
 public class MeleeAttack : Attack
@@ -115,7 +127,7 @@ public class MeleeAttack : Attack
         meleeObject = meleeWeapon.attack.meleeObjectPrototype;
 
         //Override these values with the weapons values
-        damage = meleeWeapon.damage;
+        baseDamage = meleeWeapon.damage;
         traits = meleeWeapon.weaponAbilities;
     }
 
@@ -205,7 +217,7 @@ public class RangedAttack : Attack
         projProto = rangedWeapon.attack.projectilePrototype;
 
         //Override these values with the weapons values
-        damage = rangedWeapon.damage;
+        baseDamage = rangedWeapon.damage;
         traits = rangedWeapon.weaponAbilities;
     }
 

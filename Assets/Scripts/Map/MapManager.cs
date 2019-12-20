@@ -360,6 +360,10 @@ public class MapManager : MonoBehaviour
                 BouncePad temp8 = new BouncePad(Resources.Load("Prototypes/Entity/Objects/BouncePad") as EntityPrototype);
                 temp8.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case ObjectType.Spikes:
+                Spikes temp9 = new Spikes(Resources.Load("Prototypes/Entity/Objects/Spikes") as EntityPrototype);
+                temp9.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
         

@@ -63,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BackgroundManager.cs" />
+    <Compile Include="Assets\ButtonTooltip.cs" />
+    <Compile Include="Assets\Character Stats\CharacterStat.cs" />
+    <Compile Include="Assets\Character Stats\StatModifier.cs" />
     <Compile Include="Assets\CharacterCreationPanel.cs" />
     <Compile Include="Assets\DropdownOptionObject.cs" />
     <Compile Include="Assets\EventSystemManager.cs" />
@@ -95,13 +98,16 @@
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\NPCDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
+    <Compile Include="Assets\Scripts\Entity\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Actions\EntityAction.cs" />
-    <Compile Include="Assets\Scripts\Entity\Attacks\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\MeleeAttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Projectile.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Shield.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\Effect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\ExtraJump.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\Hover.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossActions\BossActions.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossEnemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\CatBoss.cs" />
@@ -140,6 +146,7 @@
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Spikes.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
@@ -242,6 +249,8 @@
     <None Include="Assets\Resources\Rooms\SurfaceLRBT3.txt" />
     <None Include="Assets\RoomsWorkingDir\EyeBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR7.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR7.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR1NEW.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR1NEW.txt" />
@@ -256,6 +265,7 @@
     <None Include="Assets\Resources\Rooms\HedgeHogBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceSR4.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLRBT3.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Resources\Rooms\InnerSR1.txt" />
     <None Include="Assets\Resources\Rooms\InnerLRBT2.txt" />
     <None Include="Assets\Resources\Rooms\VoidBossRoom.txt" />
@@ -263,6 +273,7 @@
     <None Include="Assets\RoomsWorkingDir\SharkBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLRBT2.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLRBT3.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\Resources\Rooms\InnerLR4.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLR2.txt" />
     <None Include="Assets\Resources\Rooms\InnerLRBT1.txt" />
@@ -283,7 +294,10 @@
     <None Include="Assets\Resources\Rooms\AboveSR1.txt" />
     <None Include="Assets\Resources\Rooms\InnerLRBT3.txt" />
     <None Include="Assets\RoomsWorkingDir\VoidBossRoom.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT2.txt" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Resources\Rooms\AboveLRBT1.txt" />
     <None Include="Assets\Resources\Rooms\Hub.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLRBT1.txt" />
@@ -291,6 +305,7 @@
     <None Include="Assets\RoomsWorkingDir\SRClosed1.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceSR3.txt" />
     <None Include="Assets\RoomsWorkingDir\Hub.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Resources\Rooms\Test.txt" />
     <None Include="Assets\Resources\Rooms\LavaBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR6.txt" />
@@ -298,19 +313,29 @@
     <None Include="Assets\Resources\Rooms\InnerSR3.txt" />
     <None Include="Assets\RoomsWorkingDir\SurfaceSR1.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT1.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\Resources\Rooms\SharkBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR2.txt" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\RoomsWorkingDir\HedgeHogBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\AboveSR4.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\RoomsWorkingDir\Test.txt" />
     <None Include="Assets\RoomsWorkingDir\CatBossRoom.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Resources\Rooms\CatBossRoom.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR4.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\Resources\Rooms\InnerLR5.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\Resources\Rooms\InnerLR1.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\RoomsWorkingDir\AboveSR2.txt" />
     <None Include="Assets\Resources\Rooms\EyeBossRoom.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\RoomsWorkingDir\InnerSR2.txt" />
+    <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\RoomsWorkingDir\SurfaceLRBT2.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR3.txt" />
     <Reference Include="Unity.Timeline.Editor">

@@ -7,14 +7,15 @@ public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, 
 public enum NPCType { Standard, Shopkeeper };
 
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count };
-public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad };
-public enum Rarity { Common, Uncommon, Rare, Legendary }
+public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes };
+public enum Rarity { Common, Uncommon, Rare, Legendary, Count }
 public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned };
 public enum AttackTrait { Knockback, Exploding, Split };
-public enum PlayerAbility { Hover, Invisible };
+public enum WeaponAbility { };
+public enum PlayerAbility { Hover, Invisible, Count };
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
-
+public enum EffectType { ExtraJump, Hover };
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
 public enum MapType {  Hub, World, BossMap };

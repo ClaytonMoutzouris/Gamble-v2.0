@@ -25,8 +25,10 @@ public class BouncePad : Entity, IContactTrigger
     public void Contact(Entity entity)
     {
 
+        
         entity.Body.mSpeed = (Position - entity.Position).normalized * -Constants.cBounceSpeed;
         entity.Body.mPS.isBounce = true;
+        
     }
 
     public override void EntityUpdate()

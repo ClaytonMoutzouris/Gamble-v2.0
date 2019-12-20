@@ -20,4 +20,10 @@ public class Armor : Equipment
         player.Renderer.colorSwapper.SwapIndexToBase(colorIndex);
 
     }
+
+    public override void Randomize()
+    {
+        base.Randomize();
+        color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+    }
 }

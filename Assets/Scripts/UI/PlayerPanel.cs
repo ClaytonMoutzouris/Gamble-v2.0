@@ -13,6 +13,7 @@ public class PlayerPanel : MonoBehaviour
     public int selectedTabIndex = 0;
     public List<GameObject> tabs;
     public GameObject inputAnchor;
+    public GameObject menuObject;
     public bool isOpen = false;
     public int panelHeight;
 
@@ -61,7 +62,7 @@ public class PlayerPanel : MonoBehaviour
 
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
         GameObject tabsUI = GameObject.Find("Tabs");
-        HideUI(false);
+        menuObject.SetActive(true);
     }
 
 
@@ -70,10 +71,10 @@ public class PlayerPanel : MonoBehaviour
         EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(null);
         transform.localPosition = transform.localPosition - new Vector3(0, panelHeight, 0);
         isOpen = false;
-        HideUI(true);
+        menuObject.SetActive(false);
     }
 
-
+    #region deprecated
     public void HideUI(bool hide)
     {
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
@@ -98,4 +99,5 @@ public class PlayerPanel : MonoBehaviour
 
 
     }
+    #endregion
 }

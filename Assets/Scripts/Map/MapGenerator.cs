@@ -331,6 +331,9 @@ public static class MapGenerator
             map.AddEntity(new ObjectData(8, 1, ObjectType.NavSystem));
             map.AddEntity(new NPCData(10, 1, NPCType.Shopkeeper));
             map.AddEntity(new ObjectData(12, 1, ObjectType.BouncePad));
+
+            map.AddEntity(new ObjectData(14, 1, ObjectType.Spikes));
+
             //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
             //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
@@ -526,8 +529,12 @@ public static class MapGenerator
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.Bounce:
-                        map.AddEntity(new ObjectData(x, y, ObjectType.BouncePad));
-                        map.SetTile(x, y, TileType.Empty);
+                        //map.AddEntity(new ObjectData(x, y, ObjectType.BouncePad));
+                        //map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.Spikes:
+                        //map.AddEntity(new ObjectData(x, y, ObjectType.Spikes));
+                        //map.SetTile(x, y, TileType.Empty);
                         break;
                 }
 

@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-public class Ability
+//public enum AbilityTrigger { OnEquip, OnHit, OnDamaged, OnJump };
+public abstract class Ability
 {
-    string name;
-    string description;
+    public string name;
+    public string description;
+    //AbilityTrigger trigger;
+
+    public virtual void OnEquipTrigger(Player player) { }
+    public virtual void OnHitTrigger(Player player) { }
+    public virtual void OnDamagedTrigger(Player player) { }
+    public virtual void OnJumpTrigger(Player player) { }
 
 
 }

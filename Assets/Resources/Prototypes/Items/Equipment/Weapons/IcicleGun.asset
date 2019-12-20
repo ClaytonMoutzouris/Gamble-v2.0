@@ -20,6 +20,7 @@ MonoBehaviour:
   mSlot: 5
   statBonuses: []
   abilities: 
+  possibleEffects: 0000000001000000
   isEquipped: 0
   damage: 12
   weaponAbilities: 

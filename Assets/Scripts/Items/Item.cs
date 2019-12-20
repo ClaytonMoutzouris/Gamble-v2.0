@@ -67,26 +67,72 @@ public abstract class Equipment : Item
     public EquipmentSlot mSlot;
     public List<StatBonus> statBonuses;
     public List<PlayerAbility> abilities;
+    public List<EffectType> possibleEffects;
+    List<Effect> effects = new List<Effect>();
     //public Trait trait;
     public bool isEquipped;
+
+    public List<Effect> Effects { get => effects; set => effects = value; }
+
+    public virtual void Randomize()
+    {
+        Debug.Log("Randomizing item");
+        mRarity = (Rarity)Random.Range(0, (int)Rarity.Count);
+        statBonuses.Clear();
+        abilities.Clear();
+        int minBonus = 1;
+        int maxBonus = 2;
+        int numBonuses = (int)mRarity;
+        StatType statType;
+
+        List<StatType> remainingTypes = new List<StatType> ();
+        
+        remainingTypes.AddRange(System.Enum.GetValues(typeof(StatType)) as IEnumerable<StatType>);
+
+        for (int i = 0; i < numBonuses; i++)
+        {
+            int r = Random.Range(0, remainingTypes.Count);
+            statType = remainingTypes[r];
+            remainingTypes.RemoveAt(r);
+            statBonuses.Add(new StatBonus(statType, Random.Range(minBonus, maxBonus + (int)mRarity)));
+        }
+
+        if(mRarity == Rarity.Legendary && possibleEffects.Count > 0)
+        {
+
+            Effects.Add(Effect.GetEffectFromType(possibleEffects[Random.Range(0, possibleEffects.Count)]));
+            //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
+        }
+    }
 
     public virtual void OnEquip(Player player)
     {
 
         player.mStats.AddBonuses(statBonuses);
+        player.Health.UpdateHealth();
         foreach(PlayerAbility ability in abilities)
         {
             player.activeAbilities.Add(ability);
         }
 
+        foreach(Effect effect in effects)
+        {
+            effect.OnEquipTrigger(player);
+        }
     }
 
     public virtual void OnUnequip(Player player)
     {
         player.mStats.RemoveBonuses(statBonuses);
-        foreach(PlayerAbility ability in abilities)
+        player.Health.UpdateHealth();
+        foreach (PlayerAbility ability in abilities)
         {
             player.activeAbilities.Remove(ability);
+        }
+
+        foreach (Effect effect in effects)
+        {
+            effect.OnUnequipTrigger(player);
         }
     }
 
@@ -103,9 +149,9 @@ public abstract class Equipment : Item
     {
         string tooltip = base.getTooltip();
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
-        foreach (PlayerAbility ability in abilities)
+        foreach (Effect effect in effects)
         {
-            tooltip += "\n<color=magenta>" + ability.ToString() + "</color>";
+            tooltip += "\n<color=magenta>" + effect.ToString() + "</color>";
         }
         foreach(StatBonus stat in statBonuses)
         {

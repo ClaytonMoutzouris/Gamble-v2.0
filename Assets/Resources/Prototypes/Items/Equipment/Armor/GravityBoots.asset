@@ -24,6 +24,7 @@ MonoBehaviour:
   - type: 3
     bonusValue: 1
   abilities: 00000000
+  possibleEffects: 0000000001000000
   isEquipped: 0
   color: {r: 0, g: 0.9740212, b: 1, a: 1}
   colorIndex: 25

@@ -107,7 +107,7 @@ public class Enemy : Entity, IHurtable
 
         //Stats
         mStats = new Stats(this);
-        mHealth = new Health(prototype.health);
+        mHealth = new Health(this, prototype.health);
 
         mAttackManager = new AttackManager(this);
 
@@ -214,7 +214,7 @@ public class Enemy : Entity, IHurtable
             Hostility = Hostility.Hostile;
         }
 
-        int damage = (int)mHealth.LoseHP(attack.damage);
+        int damage = (int)mHealth.LoseHP(attack.GetDamage());
         ShowFloatingText(damage.ToString(), Color.white);
 
 

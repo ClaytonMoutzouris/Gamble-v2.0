@@ -8,6 +8,7 @@ public class PlayerRenderer : EntityRenderer
     public SpriteRenderer rangedWeapon;
     public SpriteRenderer shield;
     public SpriteRenderer meleeWeapon;
+    public ButtonTooltip buttonTooltip;
     public Player player;
     public Vector2 weaponOffset;
 
@@ -21,6 +22,12 @@ public class PlayerRenderer : EntityRenderer
     {
         this.player = player;
 
+    }
+
+    public void ShowButtonTooltip(bool show)
+    {
+        Debug.Log("Show Tooltip " + show);
+        buttonTooltip.ShowTooltip(show);
     }
 
     public void SetWeaponOffset(Vector2 offset)
