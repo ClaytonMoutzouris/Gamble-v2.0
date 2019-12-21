@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: 8a0ea4d53ad156547aadc8458e62418d
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Rogue_Jetting_0
-    21300002: Rogue_Jetting_1
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Rogue_Jetting_0
+  - first:
+      213: 21300002
+    second: Rogue_Jetting_1
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -60,7 +64,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -71,7 +75,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -82,7 +87,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -93,6 +99,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -112,6 +119,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f6f8659d8537ce5459f3475c9264abd8
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -132,6 +140,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9d19bf2faf6bc3c4f839b6dfeb626969
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -140,13 +149,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 167750273613c1a478fdfb1e7483d4e6
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

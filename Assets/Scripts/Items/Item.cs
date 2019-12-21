@@ -67,19 +67,25 @@ public abstract class Equipment : Item
     public EquipmentSlot mSlot;
     public List<StatBonus> statBonuses;
     public List<PlayerAbility> abilities;
-    public List<EffectType> possibleEffects;
+    private List<EffectType> possibleEffects = new List<EffectType>();
     List<Effect> effects = new List<Effect>();
     //public Trait trait;
     public bool isEquipped;
 
     public List<Effect> Effects { get => effects; set => effects = value; }
+    public List<EffectType> PossibleEffects { get => possibleEffects; set => possibleEffects = value; }
 
     public virtual void Randomize()
     {
-        Debug.Log("Randomizing item");
         mRarity = (Rarity)Random.Range(0, (int)Rarity.Count);
         statBonuses.Clear();
         abilities.Clear();
+        effects.Clear();
+        foreach(EffectType type in System.Enum.GetValues(typeof(EffectType)))
+        {
+            possibleEffects.Add(type);
+        }
+
         int minBonus = 1;
         int maxBonus = 2;
         int numBonuses = (int)mRarity;

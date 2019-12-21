@@ -33,6 +33,8 @@ public class Player : Entity, IHurtable
     public RangedAttack defaultRanged;
     public Blockbox blockbox;
 
+    public List<Effect> itemEffects;
+
     public List<PlayerAbility> activeAbilities;
 
     public AudioClip mHitWallSfx;
@@ -200,6 +202,7 @@ public class Player : Entity, IHurtable
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
         activeAbilities = new List<PlayerAbility>();
+        itemEffects = new List<Effect>();
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);

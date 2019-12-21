@@ -9,11 +9,15 @@ public abstract class Effect
     public EffectType type;
     //AbilityTrigger trigger;
 
-    public virtual void OnEquipTrigger(Player player) { }
-    public virtual void OnHitTrigger(Player player) { }
+    public virtual void OnEquipTrigger(Player player) {
+        player.itemEffects.Add(this);
+    }
+    public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Player player) { }
     public virtual void OnJumpTrigger(Player player) { }
-    public virtual void OnUnequipTrigger(Player player) { }
+    public virtual void OnUnequipTrigger(Player player) {
+        player.itemEffects.Remove(this);
+    }
 
     public static Effect GetEffectFromType(EffectType type)
     {
@@ -25,6 +29,9 @@ public abstract class Effect
                 break;
             case EffectType.Hover:
                 effect = new Hover();
+                break;
+            case EffectType.Lifesteal:
+                effect = new Lifesteal();
                 break;
         }
 

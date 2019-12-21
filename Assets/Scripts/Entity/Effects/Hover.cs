@@ -28,18 +28,27 @@ public class Hover : Effect
 
     public override void OnEquipTrigger(Player player)
     {
+        base.OnEquipTrigger(player);
         player.mCanHover = true;
     }
 
     public override void OnUnequipTrigger(Player player)
     {
+        base.OnUnequipTrigger(player);
+        foreach(Effect effect in player.itemEffects)
+        {
+            if(effect is Hover)
+            {
+                return;
+            }
+        }
         player.mCanHover = false;
 
     }
 
-    public override void OnHitTrigger(Player player)
+    public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
-        base.OnHitTrigger(player);
+        base.OnHitTrigger(attack, entity);
     }
 
     public override void OnJumpTrigger(Player player)

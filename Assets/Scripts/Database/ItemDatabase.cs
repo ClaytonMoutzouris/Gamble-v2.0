@@ -15,12 +15,22 @@ public static class ItemDatabase {
     public static Item GetRandomItem()
     {
         Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
+        if(item is Equipment equipment)
+        {
+            equipment.Randomize();
+            item = equipment;
+        }
         return item;
     }
 
     public static Item NewItem(Item item)
     {
         Item nItem = ScriptableObject.Instantiate(item);
+        if (item is Equipment equipment)
+        {
+            equipment.Randomize();
+            item = equipment;
+        }
         return nItem;
     }
 

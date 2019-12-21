@@ -193,7 +193,7 @@ public class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
-        ItemObject temp = new ItemObject(ScriptableObject.Instantiate(prototype.lootTable[Random.Range(0, prototype.lootTable.Count)]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+        ItemObject temp = new ItemObject(ItemDatabase.NewItem(prototype.lootTable[Random.Range(0, prototype.lootTable.Count)]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
     }
 

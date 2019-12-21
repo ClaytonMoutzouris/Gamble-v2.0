@@ -36,6 +36,13 @@ public class MeleeAttackObject : AttackObject
                 if (!hitbox.mDealtWith.Contains(hit))
                 {
                     hit.GetHurt(attack);
+                    if(owner is Player player)
+                    {
+                        foreach(Effect effect in player.itemEffects)
+                        {
+                            effect.OnHitTrigger(attack, hit);
+                        }
+                    }
                     hitbox.mDealtWith.Add(hit);
 
                 }

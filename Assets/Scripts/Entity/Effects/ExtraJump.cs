@@ -28,18 +28,21 @@ public class ExtraJump : Effect
 
     public override void OnEquipTrigger(Player player)
     {
+        base.OnEquipTrigger(player);
+
         player.mNumJumps++;
     }
 
     public override void OnUnequipTrigger(Player player)
     {
+        base.OnUnequipTrigger(player);
         player.mNumJumps--;
 
     }
 
-    public override void OnHitTrigger(Player player)
+    public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
-        base.OnHitTrigger(player);
+        base.OnHitTrigger(attack, entity);
     }
 
     public override void OnJumpTrigger(Player player)

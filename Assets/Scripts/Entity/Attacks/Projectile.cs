@@ -68,13 +68,12 @@ public class Projectile : AttackObject {
                 if (!hitbox.mDealtWith.Contains(hit))
                 {
                     hit.GetHurt(attack);
-                    if (attack.traits.Contains(AttackTrait.Exploding))
+                    if(owner is Player player)
                     {
-                        WeaponAbilities.Explode(owner, Position);
-                    }
-                    if (attack.traits.Contains(AttackTrait.Split))
-                    {
-                        WeaponAbilities.Split(this, hit);
+                        foreach(Effect effect in player.itemEffects)
+                        {
+                            effect.OnHitTrigger(attack, hit);
+                        }
                     }
 
                     if (!pierce)
