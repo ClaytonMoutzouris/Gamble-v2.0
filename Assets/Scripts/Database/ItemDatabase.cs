@@ -26,10 +26,10 @@ public static class ItemDatabase {
     public static Item NewItem(Item item)
     {
         Item nItem = ScriptableObject.Instantiate(item);
-        if (item is Equipment equipment)
+        if (nItem is Equipment equipment)
         {
             equipment.Randomize();
-            item = equipment;
+            nItem = equipment;
         }
         return nItem;
     }

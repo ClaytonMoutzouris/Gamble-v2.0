@@ -56,6 +56,18 @@ public class Stats
         return stats[type];
     }
 
+    public void AddBonus(StatBonus bonus)
+    {
+        stats[bonus.type].AddBonus(bonus);
+        RefreshUI();
+    }
+
+    public void RemoveBonus(StatBonus bonus)
+    {
+        stats[bonus.type].RemoveBonus(bonus);
+        RefreshUI();
+    }
+
     public void AddBonuses(List<StatBonus> bonuses)
     {
         foreach(StatBonus bonus in bonuses)

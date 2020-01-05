@@ -316,12 +316,11 @@ public static class MapGenerator
         AddBounds(map);
 
         Debug.Log("Start room: " + startRoom.x + ", " + startRoom.y);
-        map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
         Vector2i door = AddDoorTile(map, endRoom.x, endRoom.y);
         map.exitTile = door;
         //Debug.Log("Door tile " + door);
+        map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
 
-        map.SetTile(door.x, door.y, TileType.Door);
 
 
         if(data.mapType == MapType.Hub)

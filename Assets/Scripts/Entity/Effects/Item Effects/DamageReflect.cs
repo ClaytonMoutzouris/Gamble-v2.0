@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lifesteal : Effect
+public class DamageReflect : Effect
 {
 
-    public Lifesteal()
+    public DamageReflect()
     {
-        effectName = "Lifesteal";
-        type = EffectType.Lifesteal;
+        effectName = "Damage Reflect";
+        type = EffectType.DamageReflect;
     }
 
     public override bool Equals(object other)
@@ -21,9 +21,14 @@ public class Lifesteal : Effect
         return base.GetHashCode();
     }
 
-    public override void OnDamagedTrigger(Player player)
+    public override void OnDamagedTrigger(Attack attack)
     {
-        base.OnDamagedTrigger(player);
+        base.OnDamagedTrigger(attack);
+
+        if(attack.mEntity is IHurtable attacker)
+        {
+            attacker.GetHurt(new Attack(attack.GetDamage()));
+        }
     }
 
     public override void OnEquipTrigger(Player player)
@@ -40,11 +45,6 @@ public class Lifesteal : Effect
     public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
         base.OnHitTrigger(attack, entity);
-
-        if(attack.mEntity is Player player)
-        {
-            player.GainLife(attack.GetDamage());
-        }
     }
 
     public override void OnJumpTrigger(Player player)

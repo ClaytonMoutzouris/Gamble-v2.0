@@ -21,9 +21,9 @@ public class Hover : Effect
         return base.GetHashCode();
     }
 
-    public override void OnDamagedTrigger(Player player)
+    public override void OnDamagedTrigger(Attack attack)
     {
-        base.OnDamagedTrigger(player);
+        base.OnDamagedTrigger(attack);
     }
 
     public override void OnEquipTrigger(Player player)

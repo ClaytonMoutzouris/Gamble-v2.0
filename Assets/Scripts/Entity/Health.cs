@@ -35,7 +35,7 @@ public class Health
             maxHealth = baseHP + 10 * player.mStats.getStat(StatType.Constitution).GetValue();
 
         }
-        Debug.Log(entity.Name + " Updating max health: " + maxHealth);
+        //Debug.Log(entity.Name + " Updating max health: " + maxHealth);
 
         if (healthbar != null)
         {

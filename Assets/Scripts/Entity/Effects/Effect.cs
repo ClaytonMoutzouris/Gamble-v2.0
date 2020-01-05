@@ -13,7 +13,7 @@ public abstract class Effect
         player.itemEffects.Add(this);
     }
     public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
-    public virtual void OnDamagedTrigger(Player player) { }
+    public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
     public virtual void OnUnequipTrigger(Player player) {
         player.itemEffects.Remove(this);
@@ -22,7 +22,11 @@ public abstract class Effect
     public static Effect GetEffectFromType(EffectType type)
     {
         Effect effect = null;
-        switch(type)
+
+        //Use this for testing specific effects
+        //return new StunAttack();
+
+        switch (type)
         {
             case EffectType.ExtraJump:
                 effect = new ExtraJump();
@@ -32,6 +36,27 @@ public abstract class Effect
                 break;
             case EffectType.Lifesteal:
                 effect = new Lifesteal();
+                break;
+            case EffectType.DamageReflect:
+                effect = new DamageReflect();
+                break;
+            case EffectType.PoisonAttack:
+                effect = new PoisonAttack();
+                break;
+            case EffectType.StunAttack:
+                effect = new StunAttack();
+                break;
+            case EffectType.SuperSpeed:
+                effect = new SuperSpeed();
+                break;
+            case EffectType.SpikeProtection:
+                effect = new SpikeProtection();
+                break;
+            case EffectType.CrushProtection:
+                effect = new CrushProtection();
+                break;
+            default:
+                Debug.LogError("Failed to find effect of type : " + type);
                 break;
         }
 

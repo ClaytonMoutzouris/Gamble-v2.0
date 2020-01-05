@@ -15,7 +15,7 @@ public enum WeaponAbility { };
 public enum PlayerAbility { Hover, Invisible, Count };
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
-public enum EffectType { ExtraJump, Hover, Lifesteal };
+public enum EffectType { ExtraJump, Hover, Lifesteal, DamageReflect, PoisonAttack, StunAttack, SuperSpeed, SpikeProtection, CrushProtection };
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
 public enum MapType {  Hub, World, BossMap };

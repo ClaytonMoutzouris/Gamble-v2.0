@@ -30,7 +30,8 @@ public class Entity {
     protected bool isSpawned = false;
     public bool ignoreTilemap = false;
 
-    //This might be better served as an entity type matrix rather than collision type
+    public bool spikeProtection = false;
+    public bool crushProtection = false;
 
 
 
@@ -174,12 +175,9 @@ public class Entity {
 
     }
 
-    public void UpdateStatusEffects()
+    public virtual void PhysicsUpdate()
     {
-        foreach(StatusEffect effect in statusEffects)
-        {
-            effect.UpdateEffect();
-        }
+
     }
 
     public virtual void SecondUpdate()
@@ -188,6 +186,27 @@ public class Entity {
         
         Renderer.Draw();
         
+    }
+
+    public void UpdateStatusEffects()
+    {
+        List<StatusEffect> toRemove = new List<StatusEffect>();
+        foreach (StatusEffect effect in statusEffects)
+        {
+            effect.UpdateEffect();
+            if (effect.expired)
+            {
+                //Debug.Log(effect + " is ready to end.");
+                toRemove.Add(effect);
+            }
+        }
+
+        foreach (StatusEffect effect in toRemove)
+        {
+            statusEffects.Remove(effect);
+        }
+
+        toRemove.Clear();
     }
 
     public virtual void Die()
@@ -217,18 +236,39 @@ public class Entity {
     public virtual void Crush()
     {
         //Kinematic things cant be spiked or crushed
-        if (Body.mIsKinematic)
+        if (Body.mIsKinematic || Body.mIsHeavy)
             return;
-        //Vector2 temp = mMap.GetMapTilePosition(mMap.mWidth/2 , mMap.mHeight / 2 );
-        /*
-        mEntity.transform.position = mMap.GetMapTilePosition(mMap.mMapData.startTile);
-        mPosition = mEntity.transform.position;
-        mAABB.Center = mPosition;
-        mPS.Reset();
-        */
 
-        
+        if (this is IHurtable hurtable)
+        {
+            if(crushProtection)
+            {
+                hurtable.GetHurt(Attack.ProtectedCrushAttack());
+            }
+            else
+            {
+                hurtable.GetHurt(Attack.CrushAttack());
+            }
+        }
+    }
 
+    public virtual void Spiked()
+    {
+        //Kinematic things cant be spiked or crushed
+        if (Body.mIsKinematic || Body.mIsHeavy)
+            return;
+
+        if (this is IHurtable hurtable)
+        {
+            if(spikeProtection)
+            {
+                hurtable.GetHurt(Attack.ProtectedCrushAttack());
+            }
+            else
+            {
+                hurtable.GetHurt(Attack.CrushAttack());
+            }
+        }
     }
 
     public virtual void ShowFloatingText(String text, Color color)

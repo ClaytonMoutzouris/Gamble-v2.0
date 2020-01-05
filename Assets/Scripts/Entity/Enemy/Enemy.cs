@@ -225,5 +225,8 @@ public class Enemy : Entity, IHurtable
       
     }
 
-
+    public Entity GetEntity()
+    {
+        return this;
+    }
 }

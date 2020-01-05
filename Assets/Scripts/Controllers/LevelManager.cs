@@ -299,7 +299,7 @@ public class LevelManager : MonoBehaviour
         {
             if (mEntities[i].mToRemove)
             {
-                Debug.Log(mEntities[i].Renderer.name + " Is being removed");
+                //Debug.Log(mEntities[i].Renderer.name + " Is being removed");
                 mEntities[i].ActuallyDie();
                 
             }

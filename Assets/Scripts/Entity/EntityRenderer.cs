@@ -8,6 +8,7 @@ public class EntityRenderer : MonoBehaviour
 {
     SpriteRenderer sprite;
     Animator animator;
+    List<GameObject> effects = new List<GameObject>();
 
     private Entity entity;
 
@@ -57,6 +58,7 @@ public class EntityRenderer : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         colorSwapper = new ColorSwap(sprite);
+        //AddVisualEffect();
     }
 
     public void OnDrawGizmos()
@@ -158,4 +160,28 @@ public class EntityRenderer : MonoBehaviour
         animator.Play(state);
     }
 
+
+    public GameObject AddVisualEffect(ParticleSystem particleEffect, Vector2 offset)
+    {
+        //gameObject.AddComponent<ParticleSystem>().;
+        GameObject effectObject = Instantiate(particleEffect, transform).gameObject;
+        effectObject.transform.localPosition = Entity.Body.mOffset + offset;
+        effects.Add(effectObject);
+        return effectObject;
+    }
+
+    public void RemoveVisualEffect(GameObject effect)
+    {
+        //effects.Remove(instan)
+        effects.Remove(effect);
+        Destroy(effect);
+    }
+
+    public void ClearVisualEffects()
+    {
+        foreach(GameObject effect in effects)
+        {
+            Destroy(effect);
+        }
+    }
 }

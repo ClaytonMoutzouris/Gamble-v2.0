@@ -80,11 +80,6 @@ public abstract class Equipment : Item
         mRarity = (Rarity)Random.Range(0, (int)Rarity.Count);
         statBonuses.Clear();
         abilities.Clear();
-        effects.Clear();
-        foreach(EffectType type in System.Enum.GetValues(typeof(EffectType)))
-        {
-            possibleEffects.Add(type);
-        }
 
         int minBonus = 1;
         int maxBonus = 2;
@@ -103,11 +98,20 @@ public abstract class Equipment : Item
             statBonuses.Add(new StatBonus(statType, Random.Range(minBonus, maxBonus + (int)mRarity)));
         }
 
-        if(mRarity == Rarity.Legendary && possibleEffects.Count > 0)
+        if(mRarity == Rarity.Legendary || mRarity == Rarity.Rare)
         {
-
+            foreach (EffectType type in System.Enum.GetValues(typeof(EffectType)))
+            {
+                possibleEffects.Add(type);
+            }
+            Debug.Log("Randomizing Item, possible effects: " + PossibleEffects.Count);
             Effects.Add(Effect.GetEffectFromType(possibleEffects[Random.Range(0, possibleEffects.Count)]));
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
+        }
+        
+        foreach(Effect effect in Effects)
+        {
+            Debug.Log(effect.type);
         }
     }
 
@@ -121,7 +125,7 @@ public abstract class Equipment : Item
             player.activeAbilities.Add(ability);
         }
 
-        foreach(Effect effect in effects)
+        foreach(Effect effect in Effects)
         {
             effect.OnEquipTrigger(player);
         }
@@ -136,7 +140,7 @@ public abstract class Equipment : Item
             player.activeAbilities.Remove(ability);
         }
 
-        foreach (Effect effect in effects)
+        foreach (Effect effect in Effects)
         {
             effect.OnUnequipTrigger(player);
         }
@@ -155,7 +159,7 @@ public abstract class Equipment : Item
     {
         string tooltip = base.getTooltip();
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
-        foreach (Effect effect in effects)
+        foreach (Effect effect in Effects)
         {
             tooltip += "\n<color=magenta>" + effect.ToString() + "</color>";
         }

@@ -14,6 +14,11 @@ public class FlowerBed : Entity {
         };
     }
 
+    public override void EntityUpdate()
+    {
+        base.EntityUpdate();
+    }
+
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);

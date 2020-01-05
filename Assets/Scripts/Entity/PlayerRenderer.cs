@@ -26,7 +26,7 @@ public class PlayerRenderer : EntityRenderer
 
     public void ShowButtonTooltip(bool show)
     {
-        Debug.Log("Show Tooltip " + show);
+        //Debug.Log("Show Tooltip " + show);
         buttonTooltip.ShowTooltip(show);
     }
 

@@ -90,7 +90,7 @@ public class Projectile : AttackObject {
 
 
         mTimeAlive += Time.deltaTime;
-
+        //Debug.Log(mTimeAlive);
         //Debug.Log("Pushes Bottom: " + Body.mPS.pushesBottomTile);
         //Debug.Log("Pushes Top: " + Body.mPS.pushesTopTile);
         //Debug.Log("Pushes Left: " + Body.mPS.pushesLeftTile);
@@ -98,6 +98,7 @@ public class Projectile : AttackObject {
 
         if (mTimeAlive >= mMaxTime || Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
         {
+            Debug.Log("WE called this");
             mToRemove = true;
             return;
         }
@@ -125,6 +126,13 @@ public class Projectile : AttackObject {
     {
         base.Die();
 
+    }
+
+    public void GetReflected()
+    {
+        direction = direction.Rotate(180);
+
+        SetInitialDirection();
     }
 
 }

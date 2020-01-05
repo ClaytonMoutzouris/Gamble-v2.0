@@ -813,11 +813,11 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesTop)
                         Body.mSpeed.y = 0.0f;
                     else
-                        Body.mSpeed.y = mClimbSpeed;
+                        Body.mSpeed.y = GetSpeed();
                 }
                 else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
                 {
-                    Body.mSpeed.y = -mClimbSpeed;
+                    Body.mSpeed.y = -GetSpeed();
                 }
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
@@ -896,7 +896,7 @@ public class Player : Entity, IHurtable
 
             if (Input.playerButtonInput[(int)ButtonInput.Fire])
             {
-                Debug.Log("Pressed Fire");
+                //Debug.Log("Pressed Fire");
                 AttackManager.rangedAttacks[0].Activate(aim, Position);
             }
 
@@ -1188,8 +1188,17 @@ public class Player : Entity, IHurtable
         int damage = attack.GetDamage();
         //Take 1 less damage for each point of defense
         damage -= mStats.getStat(StatType.Defense).GetValue();
+        if (damage < 0)
+        {
+            damage = 0;
+        }
         Health.LoseHP(damage);
         ShowFloatingText(damage.ToString(), Color.red);
+
+        foreach(Effect effect in itemEffects)
+        {
+            effect.OnDamagedTrigger(attack);
+        }
 
         if (Health.currentHealth == 0)
         {
@@ -1302,5 +1311,10 @@ public class Player : Entity, IHurtable
         }
 
         return false;
+    }
+
+    public Entity GetEntity()
+    {
+        return this;
     }
 }

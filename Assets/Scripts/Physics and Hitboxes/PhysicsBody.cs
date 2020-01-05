@@ -365,7 +365,7 @@ public class PhysicsBody : CustomCollider2D
         //Stepping on spikes kills you
         if (spiked)
         {
-            Crush();
+            mEntity.Spiked();
         }
 
         return false;
@@ -616,27 +616,6 @@ public class PhysicsBody : CustomCollider2D
         }
     }
 
-    public void Crush()
-    {
-        //Kinematic things cant be spiked or crushed
-        if (mIsKinematic || mIsHeavy)
-            return;
-        //Vector2 temp = mEntity.mMap.GetMapTilePosition(mEntity.mMap.mWidth/2 , mEntity.mMap.mHeight / 2 );
-        /*
-        mEntity.transform.position = mEntity.mMap.GetMapTilePosition(mEntity.mMap.mMapData.startTile);
-        mEntity.Position = mEntity.transform.position;
-        mAABB.Center = mEntity.Position;
-        mPS.Reset();
-        */
-
-        if(mEntity is IHurtable)
-        {
-            IHurtable hurtable = (IHurtable)mEntity;
-            hurtable.GetHurt(Attack.CrushAttack());
-
-        }
-    }
-
     public void SetTilePosition(Vector2i tile)
     {
         mEntity.Position = mEntity.Map.GetMapTilePosition(tile) + new Vector2(0, -(MapManager.cTileSize/2));
@@ -767,7 +746,7 @@ public class PhysicsBody : CustomCollider2D
                     offsetSum.x += offsetX;
 
                     if (other.mEntity.Body.mIsHeavy && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
-                        Crush();
+                        mEntity.Crush();
 
                     mPS.pushesRightObject = true;
                 }
@@ -788,7 +767,7 @@ public class PhysicsBody : CustomCollider2D
                     mOffset.x += offsetX;
                     offsetSum.x += offsetX;
                     if (other.mEntity.Body.mIsHeavy && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
-                        Crush();
+                        mEntity.Crush();
 
                     mPS.pushesLeftObject = true;
                     //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
@@ -819,8 +798,8 @@ public class PhysicsBody : CustomCollider2D
                     //We should set an error for overlap, here is the basic implementation
                     if (other.mEntity.Body.mIsHeavy && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                     {
-                        
-                        Crush();
+
+                        mEntity.Crush();
                     }
                     mPS.pushesTopObject = true;
                     mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
@@ -828,7 +807,7 @@ public class PhysicsBody : CustomCollider2D
                 else
                 {
                     if (other.mEntity.Body.mIsHeavy && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
-                        Crush();
+                        mEntity.Crush();
 
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;

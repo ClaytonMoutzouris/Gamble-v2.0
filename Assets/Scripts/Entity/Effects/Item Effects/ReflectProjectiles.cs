@@ -2,41 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExtraJump : Effect
+public class ReflectProjectiles : Effect
 {
 
-    public ExtraJump()
+    public ReflectProjectiles()
     {
-        effectName = "Extra Jump";
-        type = EffectType.ExtraJump;
+        effectName = "Reflect Projectiles";
+        //type = EffectType.ReflectProjectiles;
     }
 
-    public override bool Equals(object other)
+    public override void OnDamagedTrigger(Attack attack)
     {
-        return base.Equals(other);
-    }
+        base.OnDamagedTrigger(attack);
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
-
-    public override void OnDamagedTrigger(Player player)
-    {
-        base.OnDamagedTrigger(player);
+        if (attack.mEntity is IHurtable attacker)
+        {
+            attacker.GetHurt(new Attack(attack.GetDamage()));
+        }
     }
 
     public override void OnEquipTrigger(Player player)
     {
         base.OnEquipTrigger(player);
-
-        player.mNumJumps++;
     }
 
     public override void OnUnequipTrigger(Player player)
     {
         base.OnUnequipTrigger(player);
-        player.mNumJumps--;
 
     }
 

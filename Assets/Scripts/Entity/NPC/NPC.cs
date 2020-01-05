@@ -248,4 +248,9 @@ public class NPC : Entity, IHurtable, IInteractable
         }
         return true;
     }
+
+    public Entity GetEntity()
+    {
+        return this;
+    }
 }

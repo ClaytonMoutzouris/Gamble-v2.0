@@ -15,7 +15,7 @@ public interface IHurtable
 {
     Hurtbox HurtBox { get; set; }
     void GetHurt(Attack attack);
-
+    Entity GetEntity();
 }
 
 public interface IProjectile

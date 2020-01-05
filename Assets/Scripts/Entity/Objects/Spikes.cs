@@ -35,7 +35,7 @@ public class Spikes : Entity, IContactTrigger
 
         if (entity.Body.mSpeed.y <= 0 && overlapY <= 3 && overlapY > 0)
         {
-            entity.Body.Crush();
+            entity.Crush();
         }
     }
 

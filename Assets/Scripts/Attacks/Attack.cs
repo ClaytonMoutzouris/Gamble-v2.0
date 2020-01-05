@@ -32,6 +32,11 @@ public class Attack {
         return new Attack(999);
     }
 
+    public static Attack ProtectedCrushAttack()
+    {
+        return new Attack(1);
+    }
+
     public Attack(int damage)
     {
         this.baseDamage = damage;
