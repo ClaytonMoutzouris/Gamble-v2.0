@@ -65,7 +65,8 @@ public abstract class Equipment : Item
 {
 
     public EquipmentSlot mSlot;
-    public List<StatBonus> statBonuses;
+    public List<StatBonus> baseBonuses;
+    List<StatBonus> statBonuses = new List<StatBonus>();
     public List<PlayerAbility> abilities;
     private List<EffectType> possibleEffects = new List<EffectType>();
     List<Effect> effects = new List<Effect>();
@@ -78,8 +79,8 @@ public abstract class Equipment : Item
     public virtual void Randomize()
     {
         mRarity = (Rarity)Random.Range(0, (int)Rarity.Count);
-        statBonuses.Clear();
-        abilities.Clear();
+        //statBonuses.Clear();
+        //abilities.Clear();
 
         int minBonus = 1;
         int maxBonus = 2;
@@ -119,6 +120,7 @@ public abstract class Equipment : Item
     {
 
         player.mStats.AddBonuses(statBonuses);
+        player.mStats.AddBonuses(baseBonuses);
         player.Health.UpdateHealth();
         foreach(PlayerAbility ability in abilities)
         {
@@ -134,6 +136,8 @@ public abstract class Equipment : Item
     public virtual void OnUnequip(Player player)
     {
         player.mStats.RemoveBonuses(statBonuses);
+        player.mStats.RemoveBonuses(baseBonuses);
+
         player.Health.UpdateHealth();
         foreach (PlayerAbility ability in abilities)
         {
@@ -158,12 +162,17 @@ public abstract class Equipment : Item
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();
+
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
         foreach (Effect effect in Effects)
         {
             tooltip += "\n<color=magenta>" + effect.ToString() + "</color>";
         }
-        foreach(StatBonus stat in statBonuses)
+        foreach (StatBonus stat in baseBonuses)
+        {
+            tooltip += "\n<color=white>" + stat.getTooltip() + "</color>";
+        }
+        foreach (StatBonus stat in statBonuses)
         {
             tooltip += "\n<color=green>" + stat.getTooltip() + "</color>";
         }

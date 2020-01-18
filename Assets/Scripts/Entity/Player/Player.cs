@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LocalCoop;
 
-public enum PlayerState { Stand, Walk, Jump, GrabLedge, Climb, Attacking, Jetting, Blocking, Dead };
+public enum PlayerState { Idle, Attacking, Blocking, Dead };
+public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting };
 
 public class Player : Entity, IHurtable
 {
@@ -25,13 +26,17 @@ public class Player : Entity, IHurtable
     private PlayerEquipment equipment;
     private PlayerInputController input;
     public int activeBullet;
-    public PlayerState mCurrentState = PlayerState.Stand;
+    public PlayerState mCurrentState = PlayerState.Idle;
+    public MovementState movementState = MovementState.Stand;
     public int mPlayerIndex;
     public Stats mStats;
+    public PlayerClass playerClass;
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
     public Blockbox blockbox;
+
+    public TalentTree talentTree;
 
     public List<Effect> itemEffects;
 
@@ -69,7 +74,8 @@ public class Player : Entity, IHurtable
     #endregion
 
     #region UI
-
+    public PlayerPanel playerPanel;
+    
     #endregion
 
     #region NotUsed
@@ -170,12 +176,17 @@ public class Player : Entity, IHurtable
         this.Input = new PlayerInputController(this, input);
     }
 
-    public Player(PlayerPrototype proto, int index) : base(proto)
+    public Player(PlayerPrototype proto, PlayerClass playerClass, int index) : base(proto)
     {
-        prototype = proto;
+        prototype = ScriptableObject.Instantiate<PlayerPrototype>(proto);
+        this.playerClass = ScriptableObject.Instantiate<PlayerClass>(playerClass);
         mPlayerIndex = index;
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
-
+        Inventory = new PlayerInventory(this);
+        Equipment = new PlayerEquipment(this);
+        activeAbilities = new List<PlayerAbility>();
+        itemEffects = new List<Effect>();
+        mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
 
         mWalkSpeed = prototype.walkSpeed;
         mJumpSpeed = prototype.jumpSpeed;
@@ -192,21 +203,17 @@ public class Player : Entity, IHurtable
         }
         
 
-        mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
-        mStats.SetStats(prototype.baseStats);
 
-        HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
 
-        Health = new Health(this, prototype.baseHealth, bar);
 
-        Inventory = new PlayerInventory(this);
-        Equipment = new PlayerEquipment(this);
-        activeAbilities = new List<PlayerAbility>();
-        itemEffects = new List<Effect>();
+
         //mInput = PlayerInputManager.singleton.;
         //CustomEventSystem eventSystem = GetComponent<CustomEventSystem>();
         //EventSystem.current.SetSelectedGameObject(PauseMenu.instance.defaultObject);
 
+        HealthBar bar = PlayerUIPanels.instance.playerPanels[index].healthBar;
+
+        Health = new Health(this, prototype.baseHealth, bar);
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         HurtBox.UpdatePosition();
@@ -219,7 +226,6 @@ public class Player : Entity, IHurtable
         mWalkSpeed = Constants.cWalkSpeed;
         mClimbSpeed = Constants.cClimbSpeed;
         */
-
 
         AttackManager = new AttackManager(this);
 
@@ -238,8 +244,6 @@ public class Player : Entity, IHurtable
             defaultRanged = ranged;
 
         }
-
-
 
         if (MiniMap.instance != null)
         {
@@ -290,6 +294,19 @@ public class Player : Entity, IHurtable
                 blockbox.mDealtWith.Add(hit);
 
             }
+        }
+    }
+
+    public void HandleInventoryInput()
+    {
+        if(Input.playerButtonInput[(int)ButtonInput.Teleport] & !input.previousButtonInput[(int)ButtonInput.Teleport])
+        {
+            playerPanel.NextTabLeft();
+        }
+
+        if (Input.playerButtonInput[(int)ButtonInput.Block] & !input.previousButtonInput[(int)ButtonInput.Block])
+        {
+            playerPanel.NextTabRight();
         }
     }
 
@@ -345,6 +362,12 @@ public class Player : Entity, IHurtable
         {
             MiniMap.instance.Toggle();
         }
+
+        if(Input.inputState == PlayerInputState.Inventory)
+        {
+            HandleInventoryInput();
+        }
+
         //
         if (Input.playerButtonInput[(int)ButtonInput.Inventory] && !Input.previousButtonInput[(int)ButtonInput.Inventory])
         {
@@ -410,16 +433,16 @@ public class Player : Entity, IHurtable
 
 
         //Handle each of the players states
-        switch (mCurrentState)
+        switch (movementState)
         {
 
-            case PlayerState.Stand:
+            case MovementState.Stand:
 
                 mWalkSfxTimer = cWalkSfxTime;
 
                 if (!Body.mPS.pushesBottom)
                 {
-                    mCurrentState = PlayerState.Jump;
+                    movementState = MovementState.Jump;
                     break;
                 }
 
@@ -446,7 +469,7 @@ public class Player : Entity, IHurtable
                 //if left or right key is pressed, but not both
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickX] != 0)
                 {
-                    mCurrentState = PlayerState.Walk;
+                    movementState = MovementState.Walk;
                     break;
                 }
 
@@ -459,7 +482,7 @@ public class Player : Entity, IHurtable
                     {
                         Body.mSpeed = Vector2.zero;
                         Body.mPS.isClimbing = true;
-                        mCurrentState = PlayerState.Climb;
+                        movementState = MovementState.Climb;
                         Body.mIgnoresGravity = true;
 
                         break;
@@ -485,7 +508,7 @@ public class Player : Entity, IHurtable
                 }
 
                 break;
-            case PlayerState.Walk:
+            case MovementState.Walk:
 
                 mWalkSfxTimer += Time.deltaTime;
 
@@ -497,8 +520,14 @@ public class Player : Entity, IHurtable
 
                 if (!Body.mPS.pushesBottom)
                 {
-                    mCurrentState = PlayerState.Jump;
+                    movementState = MovementState.Jump;
                     break;
+                }
+
+                //Trigger on walk effects
+                foreach (Effect effect in itemEffects)
+                {
+                    effect.OnWalkTrigger(this);
                 }
 
                 //Check to see if the player is trying to pass through a one way
@@ -522,7 +551,7 @@ public class Player : Entity, IHurtable
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                 {
-                    mCurrentState = PlayerState.Stand;
+                    movementState = MovementState.Stand;
                     //mSpeed = Vector2.zero;
                     break;
                 }
@@ -575,14 +604,14 @@ public class Player : Entity, IHurtable
                 {
                     Body.mSpeed = Vector2.zero;
                     Body.mPS.isClimbing = true;
-                    mCurrentState = PlayerState.Climb;
+                    movementState = MovementState.Climb;
                     Body.mIgnoresGravity = true;
 
                     break;
                 }
 
                 break;
-            case PlayerState.Jump:
+            case MovementState.Jump:
 
                 //we do not ignore gravity while in the air
                 Body.mIgnoresGravity = false;
@@ -602,7 +631,7 @@ public class Player : Entity, IHurtable
                 // we can climb ladders from this state
                 if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
                 {
-                    mCurrentState = PlayerState.Climb;
+                    movementState = MovementState.Climb;
                     break;
                 }
 
@@ -656,13 +685,13 @@ public class Player : Entity, IHurtable
                     //if there's no movement change state to standing
                     if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                     {
-                        mCurrentState = PlayerState.Stand;
+                        movementState = MovementState.Stand;
                         //mSpeed = Vector2.zero;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                     else	//either go right or go left are pressed so we change the state to walk
                     {
-                        mCurrentState = PlayerState.Walk;
+                        movementState = MovementState.Walk;
                         Body.mSpeed.y = 0.0f;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
@@ -696,7 +725,7 @@ public class Player : Entity, IHurtable
 
                 break;
 
-            case PlayerState.GrabLedge:
+            case MovementState.GrabLedge:
 
                 Body.mIgnoresGravity = true;
 
@@ -713,7 +742,7 @@ public class Player : Entity, IHurtable
                     else
                         mCannotGoRightFrames = 3;
 
-                    mCurrentState = PlayerState.Jump;
+                    movementState = MovementState.Jump;
                     //mGame.PlayOneShot(SoundType.Character_LedgeRelease, mPosition, Game.sSfxVolume);
                 }
                 else if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
@@ -725,10 +754,10 @@ public class Player : Entity, IHurtable
 
                 //when the tile we grab onto gets destroyed
                 if (!Map.IsObstacle(mLedgeTile.x, mLedgeTile.y))
-                    mCurrentState = PlayerState.Jump;
+                    movementState = MovementState.Jump;
 
                 break;
-            case PlayerState.Climb:
+            case MovementState.Climb:
                 mCannotClimb = true;
                 /*
                                 //Update the animator
@@ -751,7 +780,7 @@ public class Player : Entity, IHurtable
                 if (!Body.mPS.onLadder)
                 {
                     Body.mPS.isClimbing = false;
-                    mCurrentState = PlayerState.Stand;
+                    movementState = MovementState.Stand;
                     break;
                 }
 
@@ -767,7 +796,7 @@ public class Player : Entity, IHurtable
                     }
                     else
                     {
-                        mCurrentState = PlayerState.Jump;
+                        movementState = MovementState.Jump;
                     }
                     break;
                 }
@@ -778,7 +807,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesBottom)
                     {
                         Body.mPS.isClimbing = false;
-                        mCurrentState = PlayerState.Stand;
+                        movementState = MovementState.Stand;
                         Body.mSpeed.y = 0.0f;
                     }
                     else
@@ -799,7 +828,7 @@ public class Player : Entity, IHurtable
 
                 
                 break;
-            case PlayerState.Jetting:
+            case MovementState.Jetting:
                 Body.mPS.isJetting = true;
                 Body.mSpeed = Vector2.zero;
                 Body.mIgnoresGravity = true;
@@ -849,13 +878,13 @@ public class Player : Entity, IHurtable
                     //if there's no movement change state to standing
                     if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
                     {
-                        mCurrentState = PlayerState.Stand;
+                        movementState = MovementState.Stand;
                         //mSpeed = Vector2.zero;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                     else	//either go right or go left are pressed so we change the state to walk
                     {
-                        mCurrentState = PlayerState.Walk;
+                        movementState = MovementState.Walk;
                         Body.mSpeed.y = 0.0f;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
@@ -863,7 +892,7 @@ public class Player : Entity, IHurtable
 
                 if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
-                    mCurrentState = PlayerState.Jump;
+                    movementState = MovementState.Jump;
                     break;
                 }
 
@@ -952,7 +981,7 @@ public class Player : Entity, IHurtable
     {
         Debug.Log("Jumping while in air - " + mJumpCount + " ~ " + mNumJumps);
 
-        if (mCurrentState == PlayerState.Jump) {
+        if (movementState == MovementState.Jump) {
 
             if (mCanHover)
             {
@@ -969,23 +998,23 @@ public class Player : Entity, IHurtable
 
         Body.mSpeed.y = mJumpSpeed;
         SoundManager.instance.PlaySingle(mJumpSfx);
-        mCurrentState = PlayerState.Jump;
+        movementState = MovementState.Jump;
 
     }
 
     public void JetMode()
     {
-        if (mCurrentState == PlayerState.Jetting)
+        if (movementState == MovementState.Jetting)
             return;
         Body.mSpeed = Vector2.zero;
-        mCurrentState = PlayerState.Jetting;
+        movementState = MovementState.Jetting;
 
     }
 
     public void ClimbLadder()
     {
         Body.mPS.isClimbing = true;
-        mCurrentState = PlayerState.Climb;
+        movementState = MovementState.Climb;
     }
 
     public void TryGrabLedge()
@@ -1036,7 +1065,7 @@ public class Player : Entity, IHurtable
                     Body.mSpeed = Vector2.zero;
 
                     //finally grab the edge
-                    mCurrentState = PlayerState.GrabLedge;
+                    movementState = MovementState.GrabLedge;
                     Body.mIgnoresGravity = true;
                     mDirection = (EntityDirection)((int)mDirection * -1);
                     //Body.mAABB.ScaleX *= -1;
@@ -1054,7 +1083,7 @@ public class Player : Entity, IHurtable
         //mAllCollidingObjects.Remove(item);
 
         //Should be something like itemObject.pickup(Inventory inventory);
-        if (Inventory.AddItemToInventory(itemObject.mItemData))
+        if (Inventory.AddItemToInventory(itemObject.mItemData) != -1)
         {
             itemObject.Destroy();
         }
@@ -1083,7 +1112,7 @@ public class Player : Entity, IHurtable
             }
         }
 
-        if (mCurrentState == PlayerState.Climb)
+        if (movementState == MovementState.Climb)
         {
             //Update the animator
             if (Mathf.Abs(Body.mSpeed.y) > 0)
@@ -1091,26 +1120,9 @@ public class Player : Entity, IHurtable
             else
                 Renderer.SetAnimState("LadderIdle");
         }
-        else if (mCurrentState == PlayerState.Blocking)
-        {
-            //Update the animator
-            if (Mathf.Abs(Body.mSpeed.y) > 0)
-            {
-                Renderer.SetAnimState("Jump");
-                //Renderer.
-            }
-            else if(Mathf.Abs(Body.mSpeed.x) > 0)
-            { 
-             Renderer.SetAnimState("Walk");
-            }
-            else
-            {
-                Renderer.SetAnimState("Stand");
-            }
-        }
         else
         {
-            Renderer.SetAnimState(mCurrentState.ToString());
+            Renderer.SetAnimState(movementState.ToString());
 
         }
 
@@ -1231,7 +1243,8 @@ public class Player : Entity, IHurtable
     public void Ressurect()
     {
         Body.mState = ColliderState.Open;
-        mCurrentState = PlayerState.Stand;
+        mCurrentState = PlayerState.Idle;
+        movementState = MovementState.Stand;
         HurtBox.mState = ColliderState.Open;
         health.currentHealth = health.maxHealth/2;
     }

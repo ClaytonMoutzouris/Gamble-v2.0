@@ -22,6 +22,7 @@ public class PlayerUIPanels : MonoBehaviour
     public void AddPlayer(int index)
     {
         playerPanels[index] = Instantiate(prefab, transform);
+        playerPanels[index].Initialize();
         playerPanels[index].playerIndex = index;
     }
 

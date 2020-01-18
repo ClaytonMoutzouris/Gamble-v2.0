@@ -61,7 +61,7 @@ public class BossEnemy : Enemy
     {
         foreach(Item item in prototype.lootTable)
         {
-            ItemObject temp = new ItemObject(ScriptableObject.Instantiate(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+            ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
             temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
         }
 

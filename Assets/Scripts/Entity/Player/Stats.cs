@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Stats
 {
     public Dictionary<StatType, Stat> stats;
@@ -36,6 +37,12 @@ public class Stats
         foreach (Stat stat in stats)
         {
             this.stats.Add(stat.type, stat);
+        }
+
+        //Update the UI
+        if (uiStats != null)
+        {
+            RefreshUI();
         }
     }
 
@@ -119,6 +126,7 @@ public class Stat
 {
     public StatType type;
     public int value;
+    [HideInInspector]
     public List<StatBonus> bonuses;
 
     public Stat(StatType t, int startingValue = 5)

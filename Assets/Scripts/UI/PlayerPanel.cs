@@ -18,7 +18,7 @@ public class PlayerPanel : MonoBehaviour
     public int panelHeight;
 
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         //transform.localPosition -= new Vector3(0, panelHeight, 0);
         foreach (GameObject tab in tabs)
@@ -27,8 +27,7 @@ public class PlayerPanel : MonoBehaviour
         }
 
         tabs[selectedTabIndex].SetActive(true);
-        
-
+        inventoryUI.Initialize();
     }
 
     // Update is called once per frame
@@ -47,6 +46,33 @@ public class PlayerPanel : MonoBehaviour
         tabs[selectedTabIndex].SetActive(false);
         tabs[index].SetActive(true);
         selectedTabIndex = index;
+    }
+
+    public void NextTabRight()
+    {
+        tabs[selectedTabIndex].SetActive(false);
+
+        selectedTabIndex++;
+        if(selectedTabIndex >= tabs.Count)
+        {
+            selectedTabIndex = 0;
+        }
+
+        tabs[selectedTabIndex].SetActive(true);
+
+    }
+
+    public void NextTabLeft()
+    {
+        tabs[selectedTabIndex].SetActive(false);
+
+        selectedTabIndex--;
+        if (selectedTabIndex < 0)
+        {
+            selectedTabIndex = tabs.Count-1;
+        }
+
+        tabs[selectedTabIndex].SetActive(true);
     }
 
     public void PositionTab()

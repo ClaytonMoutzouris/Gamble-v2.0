@@ -6,11 +6,14 @@ public class Projectile : AttackObject {
 
     public RangedAttack attack;
     public bool pierce;
+    public bool collidesWithTiles = true;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 
     public Projectile(ProjectilePrototype proto, RangedAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
+        Debug.Log("On Walk Trigger");
+        this.collidesWithTiles = proto.collidesWithTiles;
         this.attack = attack;
         //Body.mState = ColliderState.Closed;
         owner = this.attack.mEntity;
@@ -39,6 +42,7 @@ public class Projectile : AttackObject {
 
         if (attack.attackPrototype)
         {
+
             if(direction.y > 0)
             {
                 Renderer.transform.Rotate(0, 0, Vector2.Angle(Vector2.right, direction));
@@ -96,7 +100,7 @@ public class Projectile : AttackObject {
         //Debug.Log("Pushes Left: " + Body.mPS.pushesLeftTile);
         //Debug.Log("Pushes Right: " + Body.mPS.pushesRightTile);
 
-        if (mTimeAlive >= mMaxTime || Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
+        if (mTimeAlive >= mMaxTime || (collidesWithTiles && (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)))
         {
             Debug.Log("WE called this");
             mToRemove = true;

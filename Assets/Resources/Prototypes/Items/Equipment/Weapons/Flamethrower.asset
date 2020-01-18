@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Flamethrower
   m_EditorClassIdentifier: 
   mName: Flamethrower
-  mRarity: 2
+  mRarity: 0
   mValue: 200
   sprite: {fileID: 21300000, guid: 43999b2b76305e44ca07b7f44d647d82, type: 3}
   isStackable: 0
   mSlot: 5
-  statBonuses: []
+  baseBonuses: []
   abilities: 
-  possibleEffects: 0000000001000000
   isEquipped: 0
   damage: 3
   weaponAbilities: 

@@ -108,9 +108,9 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Block] = false;
+                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed(); 
 
                 break;
 

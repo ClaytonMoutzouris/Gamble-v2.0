@@ -73,7 +73,15 @@ public class AttackObject : Entity
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);
+        if(prototype is AttackObjectPrototype proto)
+        {
+            if(proto.particleSystem != null)
+            {
+                Renderer.AddVisualEffect(proto.particleSystem, Vector2.zero);
+            }
+        }
         Renderer.SetSprite(prototype.sprite);
+
         if (prototype.animationController != null)
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;

@@ -7,6 +7,7 @@ public abstract class Effect
     public string effectName;
     public string description;
     public EffectType type;
+    Player owner;
     //AbilityTrigger trigger;
 
     public virtual void OnEquipTrigger(Player player) {
@@ -18,13 +19,19 @@ public abstract class Effect
     public virtual void OnUnequipTrigger(Player player) {
         player.itemEffects.Remove(this);
     }
+    public virtual void OnUpdateTrigger(Player player) { }
+
+    public virtual void OnWalkTrigger(Player player)
+    {
+
+    }
 
     public static Effect GetEffectFromType(EffectType type)
     {
         Effect effect = null;
 
         //Use this for testing specific effects
-        //return new StunAttack();
+        //return new Flamewalker();
 
         switch (type)
         {
@@ -54,6 +61,9 @@ public abstract class Effect
                 break;
             case EffectType.CrushProtection:
                 effect = new CrushProtection();
+                break;
+            case EffectType.Flamewalker:
+                effect = new Flamewalker();
                 break;
             default:
                 Debug.LogError("Failed to find effect of type : " + type);

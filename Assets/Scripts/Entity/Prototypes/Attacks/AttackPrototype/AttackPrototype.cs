@@ -19,7 +19,28 @@ public abstract class AttackPrototype : ScriptableObject
     public virtual string GetToolTip()
     {
         string tooltip = "";
-
+        tooltip += "\n<color=white>" + damage + " Damage</color>";
+        tooltip += "\n<color=white>" + AttackSpeedToString() + "</color>";
         return tooltip;
+    }
+
+    public string AttackSpeedToString()
+    {
+        string speed = "";
+        if(cooldown > 0 && cooldown < .5)
+        {
+            speed = "Fast";
+        } else if(cooldown >= 0.5 && cooldown < 1)
+        {
+            speed = "Medium";
+        }
+        else if (cooldown >= 1)
+        {
+            speed = "Slow";
+        }
+
+        speed += " Attack Speed";
+
+        return speed;
     }
 }

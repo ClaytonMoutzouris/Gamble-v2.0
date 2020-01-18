@@ -24,7 +24,6 @@ D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.CoreModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.CrashReportingModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.DirectorModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.dll
-D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.FileSystemHttpModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.GameCenterModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.GridModule.dll
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.HotReloadModule.dll
@@ -95,7 +94,6 @@ D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.ClusterRendererModule
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.CoreModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.CrashReportingModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.DirectorModule.xml
-D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.FileSystemHttpModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.GameCenterModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.GridModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.HotReloadModule.xml
@@ -291,3 +289,10 @@ D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\com.unity.multiplayer-hlapi.Runti
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.AndroidJNIModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.DSPGraphModule.xml
 D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.InputLegacyModule.xml
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.SubsystemsModule.dll
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\Unity.CompilationPipeline.Common.dll
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEditor.TestRunner.dll
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.TestRunner.dll
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.SubsystemsModule.xml
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEditor.TestRunner.pdb
+D:\Documents\GitHub\Gamble-v2.0\Temp\bin\Debug\UnityEngine.TestRunner.pdb

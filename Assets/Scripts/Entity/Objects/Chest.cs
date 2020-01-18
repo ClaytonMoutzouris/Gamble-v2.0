@@ -12,7 +12,7 @@ public class Chest : Entity, IInteractable {
     public bool mOpen = false;
     public bool locked = false;
 
-    public Chest(EntityPrototype proto) : base(proto)
+    public Chest(ChestPrototype proto) : base(proto)
     {
         mEntityType = EntityType.Object;
 
@@ -20,10 +20,7 @@ public class Chest : Entity, IInteractable {
 
         Body.mIsKinematic = false;
 
-        if(Random.Range(0, 10) >= 8)
-        {
-            locked = true;
-        }
+        locked = false;
     }
 
 

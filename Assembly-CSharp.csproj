@@ -62,11 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BackgroundLayer.cs" />
     <Compile Include="Assets\BackgroundManager.cs" />
     <Compile Include="Assets\ButtonTooltip.cs" />
     <Compile Include="Assets\Character Stats\CharacterStat.cs" />
     <Compile Include="Assets\Character Stats\StatModifier.cs" />
     <Compile Include="Assets\CharacterCreationPanel.cs" />
+    <Compile Include="Assets\DialogueManager.cs" />
     <Compile Include="Assets\DropdownOptionObject.cs" />
     <Compile Include="Assets\EventSystemManager.cs" />
     <Compile Include="Assets\GameOverScreen.cs" />
@@ -98,6 +100,8 @@
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\NPCDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\Dialogue.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\DialogueTrigger.cs" />
     <Compile Include="Assets\Scripts\Entity\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Actions\EntityAction.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
@@ -106,9 +110,11 @@
     <Compile Include="Assets\Scripts\Entity\Attacks\Shield.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Effect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\Aura.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\CrushProtection.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\DamageReflect.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\ExtraJump.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\Flamewalker.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\Hover.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\Lifesteal.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\PoisonAttack.cs" />
@@ -158,6 +164,8 @@
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Spikes.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerBackground.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerClass.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
@@ -176,8 +184,14 @@
     <Compile Include="Assets\Scripts\Entity\Prototypes\EnemyPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EntityPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\ObjectPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Prototypes\Objects\ChestPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\PlayerPrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Talents\Guard1.cs" />
+    <Compile Include="Assets\Scripts\Entity\Talents\Medic1.cs" />
+    <Compile Include="Assets\Scripts\Entity\Talents\Pilot1.cs" />
     <Compile Include="Assets\Scripts\Entity\Talents\Talent.cs" />
+    <Compile Include="Assets\Scripts\Entity\Talents\TalentTree.cs" />
+    <Compile Include="Assets\Scripts\Entity\Talents\TalentTreeBranch.cs" />
     <Compile Include="Assets\Scripts\Interfaces\Entity Interfaces.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEntity.cs" />
     <Compile Include="Assets\Scripts\Items\Armor.cs" />
@@ -247,10 +261,12 @@
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
     <Compile Include="Assets\Scripts\Utility\WeaponAbilities.cs" />
-    <Compile Include="Assets\SkillNodeUIObject.cs" />
+    <Compile Include="Assets\TalentTreeNodeUI.cs" />
+    <Compile Include="Assets\UIEffectContainer.cs" />
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />
     <Compile Include="Assets\UIStatElement.cs" />
+    <Compile Include="Assets\UiEffectElement.cs" />
     <Compile Include="Assets\WorldNode.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -347,58 +363,58 @@
     <None Include="Assets\Resources\Rooms\SharkBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\InnerSR2.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -578,7 +594,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="XInputDotNetPure">
-      <HintPath>C:/Users/ROG/Documents/GitHub/Gamble-v2.0/Assets/Plugins/XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
+      <HintPath>D:/Documents/GitHub/Gamble-v2.0/Assets/Plugins/XInputDotNet/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f3/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

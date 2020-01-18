@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a894c6c7cc319704f9454bb5eaf66c5f, type: 3}
+  m_Name: GroundFlame
+  m_EditorClassIdentifier: 
+  entityType: 5
+  mName: GroundFlame
+  bodySize: {x: 8, y: 6}
+  CollidesWith: 
+  ignoreTilemap: 0
+  sprite: {fileID: 0}
+  sortingLayer: 8
+  animationController: {fileID: 0}
+  hitboxSize: {x: 8, y: 6}
+  angled: 0
+  maxTime: 4
+  sfx: {fileID: 0}
+  particleSystem: {fileID: 8454978369600594109, guid: 743bb8bcf931b2d4693dea476eabc1f1,
+    type: 3}
+  pierce: 1
+  ignoreGravity: 0
+  collidesWithTiles: 0
+  speed: 0

@@ -337,6 +337,11 @@ public static class MapGenerator
             //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
         }
+        else
+        {
+            map.AddEntity(new ObjectData(door.x, door.y, ObjectType.Door));
+        }
+
 
         if (data.mapType != MapType.Hub && data.mapType != MapType.BossMap)
         {

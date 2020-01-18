@@ -5,8 +5,8 @@ using UnityEngine;
 public class BackgroundManager : MonoBehaviour
 {
     public Transform camera;
-    public float speedCoefficient;
     Vector3 lastpos;
+    public List<BackgroundLayer> backgroundLayers;
 
     void Start()
     {
@@ -16,7 +16,11 @@ public class BackgroundManager : MonoBehaviour
 
     private void Update()
     {
-        transform.position -= ((lastpos - camera.position) * speedCoefficient);
+        foreach(BackgroundLayer layer in backgroundLayers)
+        {
+            layer.transform.position -= ((lastpos - camera.position) * layer.speedCoefficient);
+
+        }
         lastpos = camera.position;
 
         if(MapManager.instance.mCurrentMap.worldType == WorldType.Void)

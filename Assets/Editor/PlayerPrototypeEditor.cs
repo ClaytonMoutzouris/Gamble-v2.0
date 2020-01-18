@@ -27,6 +27,12 @@ public class EntityPrototypeEditor
         ScriptableObjectUtility.CreateAsset<EntityPrototype>();
     }
 
+    [MenuItem("Assets/Create/Entity/Chest")]
+    public static void CreateChestPrototypeAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<ChestPrototype>();
+    }
+
     [MenuItem("Assets/Create/Entity/NPC")]
     public static void CreateNPCPrototypeAsset()
     {

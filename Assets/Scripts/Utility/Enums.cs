@@ -15,11 +15,15 @@ public enum WeaponAbility { };
 public enum PlayerAbility { Hover, Invisible, Count };
 public enum ItemType { };
 public enum EquipmentSlot { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand };
-public enum EffectType { ExtraJump, Hover, Lifesteal, DamageReflect, PoisonAttack, StunAttack, SuperSpeed, SpikeProtection, CrushProtection };
+public enum EffectType { ExtraJump, Hover, Lifesteal, DamageReflect, PoisonAttack, StunAttack, SuperSpeed, SpikeProtection, CrushProtection, Flamewalker };
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
 public enum MapType {  Hub, World, BossMap };
 public enum SurfaceLayer { Above, Surface, Inner, Count };
+
+public enum PlayerClassType { Pilot, Guardian, Medic };
+public enum PlayerBackgroundType { Terran, Shroom, Xorpan };
+//public enum TalentType {  };
 
 //This is for handling the tilemaps at runtime, based on what type of tile each tile is
 public enum TileType
@@ -39,7 +43,7 @@ public enum TileType
     Chest,
     FlowerBed,
     StartTile,
-    RollingRock,
+    DestructibleBlock,
     Count,
 }
 

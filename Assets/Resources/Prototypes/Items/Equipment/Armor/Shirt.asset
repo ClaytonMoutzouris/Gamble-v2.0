@@ -18,13 +18,10 @@ MonoBehaviour:
   sprite: {fileID: 21300002, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
   isStackable: 0
   mSlot: 1
-  statBonuses:
+  baseBonuses:
   - type: 1
-    bonusValue: 2
-  - type: 2
-    bonusValue: 4
+    bonusValue: 1
   abilities: 
-  possibleEffects: 0000000001000000
   isEquipped: 0
   color: {r: 1, g: 0, b: 0.9312868, a: 1}
   colorIndex: 133

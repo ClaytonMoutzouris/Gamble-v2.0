@@ -18,8 +18,11 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool selectionMode = false;
     public InventorySlot moving;
 
-    private void Start()
+    public void Initialize()
     {
+        Debug.Log("Starting Player Inventory UI");
+        Debug.Log("Starting Slots " + numStartingSlots);
+
         slots = new List<InventorySlot>();
 
         for(int i = 0; i < numStartingSlots; i++)
@@ -92,6 +95,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void AddItem(Item item, int index)
     {
+        Debug.Log("Size of slots array " + slots.Count);
         slots[index].SetItem(item);
 
     }

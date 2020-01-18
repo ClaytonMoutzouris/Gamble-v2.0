@@ -20,16 +20,17 @@ public class PlayerInventory
     }
 
 
-    public bool AddItemToInventory(Item item)
+    public int AddItemToInventory(Item item)
     {
 
         for (int i = 0; i < size; i++)
         {
             if (items[i] == null)
             {
+                Debug.Log("Item at " + i);
                 items[i] = item;
                 inventoryUI.AddItem(item, i);
-                return true;
+                return i;
             }
         }
 
@@ -38,7 +39,7 @@ public class PlayerInventory
         inventoryUI.AddItem(item, items.Count - 1);
         */
 
-        return false;
+        return -1;
 
     }
     /*

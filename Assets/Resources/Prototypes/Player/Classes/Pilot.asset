@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b268eb29ef7e00c44bcb13c4855543c0, type: 3}
+  m_Name: Pilot
+  m_EditorClassIdentifier: 
+  className: Pilot
+  classDescription: 
+  classType: 0
+  baseStats:
+  - type: 0
+    value: 1
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 1
+    bonuses: []
+  - type: 4
+    value: 1
+    bonuses: []
+  startingEquipment:
+  - {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
+  - {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
+  startingInventory:
+  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  talentTree: {fileID: 11400000, guid: a1336260eeedff94aaa23885ceaa6b31, type: 2}

@@ -111,7 +111,7 @@ public class Stunned : StatusEffect
 public class Poisoned : StatusEffect
 {
 
-    float tickFrequency = 2;
+    float tickFrequency = 1;
     float tickTimer = 0;
     int tickDamage = 1;
     Attack attack;
