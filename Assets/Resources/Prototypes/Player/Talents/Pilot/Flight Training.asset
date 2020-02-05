@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
-  m_Name: Pilot1
+  m_Name: Flight Training
   m_EditorClassIdentifier: 
   name: Flight Training
   description: Gain an extra jump
@@ -19,4 +19,5 @@ MonoBehaviour:
   effectTypes: 00000000
   statBonuses: []
   bonusItems: []
+  icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   isLearned: 0

@@ -26,6 +26,13 @@ public abstract class Effect
 
     }
 
+    public virtual void OnConsumeItem(Player player, ConsumableItem item) { }
+    public virtual void OnMapChanged(){ }
+
+    public virtual void OnPlayerDeath(Player player) { }
+
+    public virtual void OnLearned(Player player) { }
+
     public static Effect GetEffectFromType(EffectType type)
     {
         Effect effect = null;
@@ -65,6 +72,27 @@ public abstract class Effect
             case EffectType.Flamewalker:
                 effect = new Flamewalker();
                 break;
+            case EffectType.Heavy:
+                effect = new Heavy();
+                break;
+            case EffectType.Knockback:
+                effect = new Knockback();
+                break;
+            case EffectType.ExtraDamage:
+                effect = new ExtraDamage();
+                break;
+            case EffectType.CompanionDrone:
+                effect = new CompanionDrone();
+                break;
+            case EffectType.ChestFinder:
+                effect = new ChestFinder();
+                break;
+            case EffectType.HealthFromFood:
+                effect = new HealthFromFood();
+                break;
+            case EffectType.ReusableMedkits:
+                effect = new ReusableMedkits();
+                break;
             default:
                 Debug.LogError("Failed to find effect of type : " + type);
                 break;
@@ -72,5 +100,6 @@ public abstract class Effect
 
         return effect;
     }
+
 }
 

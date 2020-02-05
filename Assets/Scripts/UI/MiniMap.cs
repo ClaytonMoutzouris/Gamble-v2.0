@@ -129,6 +129,9 @@ public class MiniMap : MonoBehaviour
                         case TileType.Door:
                             c = Color.red;
                             break;
+                        case TileType.Chest:
+                            c = Color.yellow;
+                            break;
                         /*
                         case TileType.Spikes:
                             c = Color.white;

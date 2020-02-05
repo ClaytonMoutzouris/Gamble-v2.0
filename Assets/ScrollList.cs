@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundLayer : MonoBehaviour
+public class ScrollList : MonoBehaviour
 {
-    public float speedCoefficient;
     // Start is called before the first frame update
     void Start()
     {

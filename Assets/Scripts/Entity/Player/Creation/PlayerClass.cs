@@ -35,6 +35,7 @@ public class PlayerClass : ScriptableObject
         }
 
         talentTree = Instantiate<TalentTree>(talentTree);
-        talentTree.branches[0].LearnNextNode(player);
+        player.talentTree = talentTree;
+        PlayerUIPanels.instance.playerPanels[player.mPlayerIndex].talentTree.SetTalentTree(player);
     }
 }

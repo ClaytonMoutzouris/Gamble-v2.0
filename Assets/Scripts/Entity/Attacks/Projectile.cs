@@ -16,7 +16,7 @@ public class Projectile : AttackObject {
         this.collidesWithTiles = proto.collidesWithTiles;
         this.attack = attack;
         //Body.mState = ColliderState.Closed;
-        owner = this.attack.mEntity;
+        SetOwner(attack.mEntity);
         hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
 
@@ -102,7 +102,6 @@ public class Projectile : AttackObject {
 
         if (mTimeAlive >= mMaxTime || (collidesWithTiles && (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)))
         {
-            Debug.Log("WE called this");
             mToRemove = true;
             return;
         }

@@ -7,6 +7,10 @@ public class ConsumableItem : Item
 
     public virtual void Use(Player player, int index)
     {
+        foreach(Effect effect in player.itemEffects)
+        {
+            effect.OnConsumeItem(player, this);
+        }
         player.Inventory.RemoveItem(index);
     }
 

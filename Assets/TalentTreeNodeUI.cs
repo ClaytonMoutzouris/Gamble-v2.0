@@ -5,23 +5,42 @@ using UnityEngine.UI;
 
 public class TalentTreeNodeUI : MonoBehaviour
 {
-    TalentTreeBranch treeBranch;
+    TalentTreeUI talentTree;
+    Talent talent;
+    public Image background;
     public Image branchIcon;
     public Text branchTitle;
+    public bool learned = false;
 
-    public void SetBranch(TalentTreeBranch branch)
+    public void Start()
     {
-        treeBranch = branch;
-        //branchTitle.text = treeBranch.name;
+        talentTree = GetComponentInParent<TalentTreeUI>();
     }
 
-    public void SelectBranch()
+    public void SetTalent(Talent t)
     {
-        //treeBranch.LearnNextNode();
+        talent = t;
+        branchTitle.text = talent.name + "\n" + talent.description;
+        branchIcon.sprite = talent.icon;
+    }
+
+    public void OnLearned()
+    {
+        learned = true;
+        background.color = Color.yellow;
+    }
+
+    public void OnSelected()
+    {
+        if (learned)
+            return;
+        talentTree.LearnNodeAtIndex(transform.GetSiblingIndex());
     }
 
     public string GetTooltip()
     {
-        return treeBranch.talents[treeBranch.GetLearned()].description;
+        return talent.description;
     }
+
+
 }

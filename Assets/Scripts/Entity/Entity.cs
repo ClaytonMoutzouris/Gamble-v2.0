@@ -11,6 +11,7 @@ public class Entity {
 
     public string Name;
     public EntityType mEntityType;
+    public Hostility hostility = Hostility.Neutral;
     public List<EntityType> mCollidesWith;
     public List<StatusEffect> statusEffects;
     public float mMovingSpeed;
@@ -121,6 +122,7 @@ public class Entity {
         Game = LevelManager.instance;
         Map = Game.mMap;
         ignoreTilemap = proto.ignoreTilemap;
+        hostility = prototype.hostility;
 
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
         mCollidesWith = proto.CollidesWith;

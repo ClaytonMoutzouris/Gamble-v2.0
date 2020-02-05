@@ -9,8 +9,6 @@ public class EnemyPrototype : EntityPrototype
     public int jumpHeight = 120;
     public int sightRange = 50;
 
-    public Hostility hostility = Hostility.Hostile;
-
     public int health;
 
     public List<RangedAttackPrototype> rangedAttacks;

@@ -126,6 +126,21 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    public List<Chest> GetChests()
+    {
+        List<Chest> chests = new List<Chest>();
+
+        foreach(Entity entity in mEntities)
+        {
+            if(entity is Chest chest)
+            {
+                chests.Add(chest);
+            }
+        }
+
+        return chests;
+    }
+
     public void NewGameMap(MapType type)
     {
         //We have to clear/reset the players refence to the map
@@ -138,7 +153,7 @@ public class LevelManager : MonoBehaviour
         //Flag each object for removal before we switch to the new map
         foreach(Entity entity in mEntities)
         {
-            if(!(entity is Player))
+            if(!(entity is Player) && !(entity is Drone))
             entity.mToRemove = true;
 
         }
@@ -171,7 +186,15 @@ public class LevelManager : MonoBehaviour
 
         SoundManager.instance.PlayLevelMusic((int)mMap.mCurrentMap.worldType);
 
-
+        foreach(Player player in players)
+        {
+            if (player == null)
+                continue;
+            foreach (Effect effect in player.itemEffects)
+            {
+                effect.OnMapChanged();
+            }
+        }
 
 
     }

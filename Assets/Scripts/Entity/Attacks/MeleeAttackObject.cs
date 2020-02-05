@@ -15,7 +15,7 @@ public class MeleeAttackObject : AttackObject
         this.attack = attack;
         mMaxTime = attack.duration;
         //Body.mState = ColliderState.Closed;
-        owner = attack.mEntity;
+        SetOwner(attack.mEntity);
         isAngled = proto.angled;
         //mMovingSpeed = 100;
         

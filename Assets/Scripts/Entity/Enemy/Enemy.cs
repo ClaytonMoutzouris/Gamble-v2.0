@@ -98,7 +98,6 @@ public class Enemy : Entity, IHurtable
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         HurtBox.UpdatePosition();
-        hostility = prototype.hostility;
 
         sight = new Sightbox(this, new CustomAABB(Position, new Vector2(prototype.sightRange, prototype.sightRange), new Vector2(0, prototype.bodySize.y)));
         sight.UpdatePosition();

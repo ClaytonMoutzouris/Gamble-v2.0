@@ -20,6 +20,13 @@ public class AttackObject : Entity
 
 
 
+
+    }
+
+    public void SetOwner(Entity entity)
+    {
+        owner = entity;
+        hostility = owner.hostility;
     }
 
     public override void EntityUpdate()

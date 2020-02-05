@@ -120,7 +120,7 @@ public class MeleeAttack : Attack
 {
     public MeleeAttackObjectPrototype meleeObject;
 
-    MeleeAttackObject attack;
+    public MeleeAttackObject attack;
 
     public MeleeAttack(Entity entity, MeleeAttackPrototype proto) : base(entity, proto)
     {

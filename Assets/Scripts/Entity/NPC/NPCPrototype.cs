@@ -10,8 +10,6 @@ public class NPCPrototype : EntityPrototype
     public int jumpHeight = 120;
     public int sightRange = 50;
 
-    public Hostility hostility = Hostility.Friendly;
-
     public int health;
 
     public List<RangedAttackPrototype> rangedAttacks;

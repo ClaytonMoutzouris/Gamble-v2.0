@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Spikes
   m_EditorClassIdentifier: 
   entityType: 4
+  hostility: 2
   mName: Spikes
   bodySize: {x: 16, y: 16}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 7130472341855191249, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
   sortingLayer: 2
   animationController: {fileID: 0}

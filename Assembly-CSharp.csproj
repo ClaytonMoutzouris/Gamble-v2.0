@@ -62,8 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BackgroundLayer.cs" />
-    <Compile Include="Assets\BackgroundManager.cs" />
     <Compile Include="Assets\ButtonTooltip.cs" />
     <Compile Include="Assets\Character Stats\CharacterStat.cs" />
     <Compile Include="Assets\Character Stats\StatModifier.cs" />
@@ -123,6 +121,13 @@
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\StunAttack.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\SuperSpeed.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\StatusEffects\StatusEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\ChestFinder.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\CompanionDrone.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\ExtraDamage.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\HealthFromFood.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\Heavy.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\Knockback.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\ReusableMedkits.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossActions\BossActions.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossEnemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\CatBoss.cs" />
@@ -149,6 +154,8 @@
     <Compile Include="Assets\Scripts\Entity\EntityData.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityRenderer.cs" />
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
+    <Compile Include="Assets\Scripts\Entity\NPC\Drone.cs" />
+    <Compile Include="Assets\Scripts\Entity\NPC\DronePrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\NPC\NPC.cs" />
     <Compile Include="Assets\Scripts\Entity\NPC\NPCPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\BouncePad.cs" />
@@ -166,7 +173,6 @@
     <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerBackground.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerClass.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerInventory.cs" />
@@ -229,6 +235,7 @@
     <Compile Include="Assets\Scripts\Physics and Hitboxes\Hurtbox.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PhysicsBody.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PositionState.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonListControl.cs" />
     <Compile Include="Assets\Scripts\UI\EditorCamera.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyHealthBar.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
@@ -261,7 +268,9 @@
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2i.cs" />
     <Compile Include="Assets\Scripts\Utility\WeaponAbilities.cs" />
+    <Compile Include="Assets\ScrollList.cs" />
     <Compile Include="Assets\TalentTreeNodeUI.cs" />
+    <Compile Include="Assets\TalentTreeUI.cs" />
     <Compile Include="Assets\UIEffectContainer.cs" />
     <Compile Include="Assets\UIPlayerTab.cs" />
     <Compile Include="Assets\UIStatContainer.cs" />

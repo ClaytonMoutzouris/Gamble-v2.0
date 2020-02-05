@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum MinimapIconType { Player, Door, Shop, Boss };
+public enum MinimapIconType { Player, Door, Shop, Boss, Chest };
 
 public class MiniMapIcon : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class MiniMapIcon : MonoBehaviour
             case MinimapIconType.Door:
                 image.color = Color.blue;
                 break;
-            case MinimapIconType.Shop:
+            case MinimapIconType.Chest:
                 image.color = Color.yellow;
                 break;
             case MinimapIconType.Boss:

@@ -13,6 +13,7 @@ public class Talent : ScriptableObject
     public List<EffectType> effectTypes;
     public List<StatBonus> statBonuses;
     public List<Item> bonusItems;
+    public Sprite icon;
     //public Requirements requirements
     //public Prereqs prereqs
 
@@ -28,11 +29,12 @@ public class Talent : ScriptableObject
     #region TriggerEffects
     public virtual void OnLearned(Player player)
     {
-        Debug.Log("ON LEARNED");
+        Debug.Log("ON LEARNED " + name);
         foreach(EffectType effect in effectTypes)
         {
             Effect e = Effect.GetEffectFromType(effect);
             e.OnEquipTrigger(player);
+            e.OnLearned(player);
         }
 
 

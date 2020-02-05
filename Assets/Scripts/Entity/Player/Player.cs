@@ -1238,6 +1238,10 @@ public class Player : Entity, IHurtable
         mCurrentState = PlayerState.Dead;
         HurtBox.mState = ColliderState.Closed;
 
+        foreach(Effect effect in itemEffects)
+        {
+            effect.OnPlayerDeath(this);
+        }
     }
 
     public void Ressurect()

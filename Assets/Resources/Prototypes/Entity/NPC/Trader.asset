@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Trader
   m_EditorClassIdentifier: 
   entityType: 7
+  hostility: 0
   mName: Trader
   bodySize: {x: 8, y: 12}
   CollidesWith: 01000000020000000300000004000000
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 4c798a9a58ae99f4e9927b5fc5939cf4, type: 3}
   sortingLayer: 4
   animationController: {fileID: 0}

@@ -5,8 +5,8 @@ using UnityEngine;
 public class TalentTree : ScriptableObject
 {
     public string name;
-    public List<TalentTreeBranch> branches;
+    //public List<TalentTreeBranch> branches;
 
-
+    public List<Talent> talents;
 
 }
