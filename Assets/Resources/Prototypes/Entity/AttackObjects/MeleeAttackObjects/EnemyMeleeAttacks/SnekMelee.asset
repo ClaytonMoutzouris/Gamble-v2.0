@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: SnekMelee
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: SnekMelee
-  bodySize: {x: 0, y: 0}
+  bodySize: {x: 5, y: 5}
   CollidesWith: 
   ignoreTilemap: 1
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
+  effects: []
   hitboxSize: {x: 12, y: 5}
   angled: 0
   maxTime: 1
   sfx: {fileID: 0}
+  particleSystem: {fileID: 0}

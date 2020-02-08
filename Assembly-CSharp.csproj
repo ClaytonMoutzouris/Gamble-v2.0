@@ -108,6 +108,8 @@
     <Compile Include="Assets\Scripts\Entity\Attacks\Shield.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Effect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\EnemyEffects\EntityEffects.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\EnemyEffects\Spawn.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\Aura.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\CrushProtection.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\Item Effects\DamageReflect.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\HealthFromFood.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\Heavy.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\Knockback.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\PartyHeal.cs" />
     <Compile Include="Assets\Scripts\Entity\Effects\TalentEffects\ReusableMedkits.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossActions\BossActions.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossEnemy.cs" />

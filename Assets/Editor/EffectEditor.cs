@@ -4,23 +4,12 @@ using UnityEngine;
 public class EffectEditor
 {
 
-    /**
-    [MenuItem("Assets/Create/Effects/Effect")]
-    public static void CreateBaseEffectAsset()
-    {
-        //ScriptableObjectUtility.CreateAsset<MeleeWeapon>();
-    }
-    */
 
-    [MenuItem("Assets/Create/Effects/Extra Jump")]
-    public static void CreateBaseExtraJumpAsset()
+    [MenuItem("Assets/Create/Effects/EntityEffects/SpawnOnDeath")]
+    public static void CreateBaseSpawnOnDeathAsset()
     {
-        //ScriptableObjectUtility.CreateAsset<ExtraJump> ();
+        ScriptableObjectUtility.CreateAsset<Spawn>();
     }
 
-    [MenuItem("Assets/Create/Effects/Hover")]
-    public static void CreateBaseHoverAsset()
-    {
-        //ScriptableObjectUtility.CreateAsset<Hover>();
-    }
+
 }

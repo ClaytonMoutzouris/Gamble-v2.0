@@ -325,6 +325,8 @@ public static class MapGenerator
 
         if(data.mapType == MapType.Hub)
         {
+            map.AddEntity(new EnemyData(6, 5, EnemyType.Snek));
+
             map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
             map.AddEntity(new ObjectData(3, 1, ObjectType.Medbay));
             map.AddEntity(new ObjectData(8, 1, ObjectType.NavSystem));
