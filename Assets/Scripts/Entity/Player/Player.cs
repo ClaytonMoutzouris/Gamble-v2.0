@@ -1225,6 +1225,10 @@ public class Player : Entity, IHurtable
     {
         int life = (int)this.Health.GainHP(health);
         ShowFloatingText(life.ToString(), Color.green);
+        foreach(Effect effect in itemEffects)
+        {
+            effect.OnHealTrigger(this, life);
+        }
 
 
     }

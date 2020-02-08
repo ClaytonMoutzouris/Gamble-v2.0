@@ -26,6 +26,11 @@ public abstract class Effect
 
     }
 
+    public virtual void OnHealTrigger(Player player, int heals)
+    {
+
+    }
+
     public virtual void OnConsumeItem(Player player, ConsumableItem item) { }
     public virtual void OnMapChanged(){ }
 
@@ -92,6 +97,9 @@ public abstract class Effect
                 break;
             case EffectType.ReusableMedkits:
                 effect = new ReusableMedkits();
+                break;
+            case EffectType.PartyHeal:
+                effect = new PartyHeal();
                 break;
             default:
                 Debug.LogError("Failed to find effect of type : " + type);
