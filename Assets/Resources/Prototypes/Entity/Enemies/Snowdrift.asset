@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Snowdrift
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 2
   mName: Snowdrift
   bodySize: {x: 32, y: 30}
   CollidesWith: 03000000
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 30e9cb57c5bc9d54bb5012acf080ab6b, type: 3}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 97c8831898c29ce46adc772bca1e5cca, type: 2}
+  effects: []
   enemyType: 9
   movementSpeed: 15
-  jumpHeight: 120
-  sightRange: 150
-  hostility: 2
+  jumpHeight: 0
+  sightRange: 320
   health: 200
-  rangedAttacks: []
+  rangedAttacks:
+  - {fileID: 11400000, guid: 1c306478562b3934bbb29948b1b47e26, type: 2}
   meleeAttacks: []
   lootTable:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}

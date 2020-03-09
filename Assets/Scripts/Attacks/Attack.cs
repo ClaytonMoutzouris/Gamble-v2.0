@@ -147,8 +147,7 @@ public class MeleeAttack : Attack
         base.Activate();
 
 
-        attack = new MeleeAttackObject(meleeObject, this, Vector2.right);
-        attack.Spawn(mEntity.Position);
+
         
 
 
@@ -161,6 +160,7 @@ public class MeleeAttack : Attack
         if (attack != null)
         {
             attack.Destroy();
+            attack = null;
         }
         base.Deactivate();
 
@@ -168,17 +168,13 @@ public class MeleeAttack : Attack
 
     public override void UpdateAttack()
     {
-        if (attack != null)
+        if (mIsActive)
         {
             //hitbox.mCollisions.Clear();
-            if (elapsedFrames < startUpFrames)
+            if (elapsedFrames > startUpFrames && attack == null)
             {
-                attack.hitbox.mState = ColliderState.Closed;
-            }
-            else
-            {
-                attack.hitbox.mState = ColliderState.Open;
-
+                attack = new MeleeAttackObject(meleeObject, this, Vector2.right);
+                attack.Spawn(mEntity.Position);
             }
         }
 
@@ -239,11 +235,11 @@ public class RangedAttack : Attack
 
     }
 
-    public void Activate(Vector2 direction, Vector2 spawnPoint)
+    public bool Activate(Vector2 direction, Vector2 spawnPoint)
     {
         if (mIsActive || OnCooldown())
         {
-            return;
+            return false;
         }
 
         base.Activate();
@@ -264,7 +260,7 @@ public class RangedAttack : Attack
             shot.Spawn(spawnPoint + new Vector2(0, attackOffset.y) + (attackOffset * tempDir));
         }
 
-
+        return true;
 
     }
 

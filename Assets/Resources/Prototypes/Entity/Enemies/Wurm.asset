@@ -13,22 +13,25 @@ MonoBehaviour:
   m_Name: Wurm
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 2
   mName: Wurm
   bodySize: {x: 32, y: 24}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: dc56448cc0c027a44bf463b21b8a0064, type: 2}
+  effects: []
   enemyType: 2
   movementSpeed: 45
   jumpHeight: 360
-  sightRange: 75
-  hostility: 2
+  sightRange: 320
   health: 60
   rangedAttacks:
   - {fileID: 11400000, guid: daa7bcf50d3b3e24cb32b553e544b28b, type: 2}
-  meleeAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: feedbda39d4a0ba43a5ffdd1015eb15b, type: 2}
   lootTable:
   - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
   - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}

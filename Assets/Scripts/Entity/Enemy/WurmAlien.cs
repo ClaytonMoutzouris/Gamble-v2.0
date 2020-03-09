@@ -6,6 +6,7 @@ public class WurmAlien : Enemy
 {
 
     public Projectile mSlimePrefab;
+    public bool attacking = false;
 
     public WurmAlien(EnemyPrototype proto) : base(proto)
     {
@@ -37,51 +38,73 @@ public class WurmAlien : Enemy
                 break;
             case EnemyState.Moving:
 
+
                 if (Target != null)
                 {
-                    //Replace this with pathfinding to the target
+                    Vector2 positionVector = Target.Position - Position;
 
-
-                    RangedAttack attack = mAttackManager.rangedAttacks[0];
-
-                    attack.Activate((Target.Position - Position).normalized, Position);
-
-
-                    if (Target.Position.x > Position.x)
+                    if (positionVector.x > 0)
                     {
-                        if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
-                        {
-                            EnemyBehaviour.Jump(this, jumpHeight);
-                        }
-                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
+
+                        mDirection = EntityDirection.Right;
                     }
                     else
                     {
-                        if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
+
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    //Replace this with pathfinding to the target
+                    if (!mAttackManager.IsAttacking()) {
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 64))
+                        {
+                            mAttackManager.meleeAttacks[0].Activate();
+                        }
+                        else if (EnemyBehaviour.TargetInRange(this, Target, 256))
+                        {
+                            mAttackManager.rangedAttacks[0].Activate((positionVector).normalized, Position);
+                        }
+
+                        if (Body.mPS.pushesLeft || Body.mPS.pushesRight && Body.mPS.pushesBottom)
                         {
                             EnemyBehaviour.Jump(this, jumpHeight);
                         }
-                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+
+                        if (positionVector.y <= 32 && Body.mPS.onOneWay)
+                        {
+                            Body.mPS.tmpIgnoresOneWay = true;
+                        }
+
+
+                        Debug.Log("Its Active");
                     }
-                    
+
                 }
                 else
                 {
                     if (Body.mPS.pushedLeftTile)
                     {
 
-                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Right;
 
                     }
                     else if (Body.mPS.pushedRightTile)
                     {
-                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Left;
                     }
 
 
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = mMovingSpeed*(int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
 
                 break;
             case EnemyState.Jumping:
@@ -91,45 +114,16 @@ public class WurmAlien : Enemy
                     break;
                 }
 
-                if (Target != null)
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
                 {
-                    //Replace this with pathfinding to the target
-
-                    if (EnemyBehaviour.TargetInRange(this, Target, 20))
-                    {
-                        mAttackManager.meleeAttacks[0].Activate();
-                    }
-                    else
-                    {
-
-                        if (Target.Position.x > Position.x)
-                        {
-                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                        }
-                        else
-                        {
-                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
-                        }
-                    }
-
+                    Body.mSpeed.x = mMovingSpeed*(int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
-
-
                 break;
-        }
-
-        if (Body.mSpeed.x > 0)
-        {
-            mDirection = EntityDirection.Right;
-            //Body.mAABB.ScaleX = 1;
-        }
-        else
-        {
-            mDirection = EntityDirection.Left;
-            //Body.mAABB.ScaleX = -1;
-
         }
 
 

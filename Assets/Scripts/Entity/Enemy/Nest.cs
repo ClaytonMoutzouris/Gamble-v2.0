@@ -11,7 +11,7 @@ public class Nest : Enemy
 
     public Nest(EnemyPrototype proto) : base(proto)
     {
-
+        Body.mIsKinematic = true;
     }
 
     public override void ActuallyDie()

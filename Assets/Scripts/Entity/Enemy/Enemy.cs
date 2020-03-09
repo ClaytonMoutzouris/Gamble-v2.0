@@ -8,10 +8,8 @@ public class Enemy : Entity, IHurtable
     public Health mHealth;
     protected EnemyPrototype prototype;
     public int jumpHeight = 0;
+    public int ExpValue = 5;
     //Behaviour
-    [SerializeField]
-    private Hostility hostility = Hostility.Neutral;
-
     //End of Behaviour
 
     private Hurtbox hurtBox;
@@ -94,7 +92,7 @@ public class Enemy : Entity, IHurtable
         mCollidesWith.Add(EntityType.Platform);
 
         Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
-
+        Body.mIgnoresGravity = proto.ignoreGravity;
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         HurtBox.UpdatePosition();
@@ -175,6 +173,8 @@ public class Enemy : Entity, IHurtable
         {
             return;
         }
+
+        LevelManager.instance.GainPartyEXP(ExpValue);
         base.Die();
         foreach(Attack attack in mAttackManager.meleeAttacks)
         {

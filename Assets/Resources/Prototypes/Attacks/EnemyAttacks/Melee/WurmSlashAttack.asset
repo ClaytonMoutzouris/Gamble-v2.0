@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fdf9b0136fcac4ca1e50a95dd5d662, type: 3}
+  m_Name: WurmSlashAttack
+  m_EditorClassIdentifier: 
+  duration: 45
+  cooldown: 0.5
+  startUpFrames: 15
+  offset: {x: 32, y: 32}
+  animationController: {fileID: 0}
+  damage: 4
+  abilities: 
+  sfx: {fileID: 0}
+  meleeObjectPrototype: {fileID: 11400000, guid: 6bcbc3f52c539c54589ba858b2866e69,
+    type: 2}

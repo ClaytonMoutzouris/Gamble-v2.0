@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: Hedgehog
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 2
   mName: Hedgehog
   bodySize: {x: 14, y: 16}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: b26d5ef37874bfe418fd8d814ef50f22, type: 2}
+  effects: []
   enemyType: 3
   movementSpeed: 25
   jumpHeight: 180
-  sightRange: 75
-  hostility: 2
+  sightRange: 320
   health: 50
   rangedAttacks: []
   meleeAttacks:

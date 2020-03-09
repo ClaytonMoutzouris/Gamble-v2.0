@@ -24,9 +24,9 @@ MonoBehaviour:
   animationController: {fileID: 9100000, guid: 91f2cccdff439d547a9af80fe5bf08ea, type: 2}
   effects: []
   enemyType: 4
-  movementSpeed: 75
+  movementSpeed: 100
   jumpHeight: 120
-  sightRange: 100
+  sightRange: 320
   health: 15
   rangedAttacks: []
   meleeAttacks:

@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: Treedude
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 1
   mName: Treedude
   bodySize: {x: 32, y: 64}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: d302a90472ce9be4db2299f7580d9829, type: 2}
+  effects: []
   enemyType: 7
   movementSpeed: 20
-  jumpHeight: 600
-  sightRange: 75
-  hostility: 1
+  jumpHeight: 160
+  sightRange: 320
   health: 150
   rangedAttacks: []
   meleeAttacks:

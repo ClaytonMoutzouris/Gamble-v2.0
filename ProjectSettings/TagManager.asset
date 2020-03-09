@@ -68,6 +68,9 @@ TagManager:
   - name: ParticleEffects
     uniqueID: 2973934179
     locked: 0
+  - name: UI
+    uniqueID: 2134323295
+    locked: 0
   - name: Tooltips
     uniqueID: 570884961
     locked: 0

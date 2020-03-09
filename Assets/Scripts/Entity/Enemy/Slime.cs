@@ -7,8 +7,9 @@ public class Slime : Enemy {
 
     float closeRange = 30f;
     float midRange = 70f;
-    float longRange = 140f;
-
+    float longRange = 200f;
+    float jumpRangeMin = 160f;
+    float jumpRangeMax = 240f;
 
     public Slime(EnemyPrototype proto) : base(proto)
     {
@@ -45,6 +46,12 @@ public class Slime : Enemy {
                             EnemyBehaviour.MeleeAttack(this, 0);
                             EnemyBehaviour.Wait(this, 2, EnemyState.Idle);
                         }
+                        //StartCoroutine(EnemyBehaviour.Wait(this, mAttackManager.AttackList[0].duration + 2, EnemyState.Moving));
+                    }
+                    else if (EnemyBehaviour.TargetInRange(this, Target, jumpRangeMax) && !EnemyBehaviour.TargetInRange(this, Target, jumpRangeMin))
+                    {
+                        EnemyBehaviour.Jump(this, jumpHeight, Target.Position-Position);
+
                         //StartCoroutine(EnemyBehaviour.Wait(this, mAttackManager.AttackList[0].duration + 2, EnemyState.Moving));
                     }
                     else
@@ -126,7 +133,6 @@ public class Slime : Enemy {
                             mDirection = EntityDirection.Left;
                         }
 
-                        EnemyBehaviour.MoveHorizontal(this);
                     }
 
                 }

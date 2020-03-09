@@ -43,7 +43,9 @@ public class NavigationMenu : MonoBehaviour
         worldNodes.Add(temp);
         */
 
-        RollMaps();
+
+        SetMaps();
+        //RollMaps();
 
 
         //LevelManager.instance.completedWorlds = new bool[worldNodes.Count];
@@ -76,6 +78,51 @@ public class NavigationMenu : MonoBehaviour
         }
 
         worldNodes.Clear();
+    }
+
+    public void SetMaps()
+    {
+        ClearMaps();
+
+        WorldNode temp;
+        for (int i = 0; i < LevelManager.instance.numMaps; i++)
+        {
+            temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
+            temp.SetUp((WorldType)i);
+            worldNodes.Add(temp);
+        }
+
+        defaultObject = worldNodes[0].gameObject;
+
+
+        Navigation nav = backButton.navigation;
+        nav.selectOnUp = worldNodes[0].button;
+        backButton.navigation = nav;
+
+        for (int i = 0; i < worldNodes.Count; i++)
+        {
+            nav = worldNodes[i].button.navigation;
+            if (i == 0)
+            {
+                nav.selectOnLeft = worldNodes[worldNodes.Count - 1].button;
+                nav.selectOnRight = worldNodes[i + 1].button;
+
+            }
+            else if (i == worldNodes.Count - 1)
+            {
+                nav.selectOnLeft = worldNodes[i - 1].button;
+                nav.selectOnRight = worldNodes[0].button;
+
+            }
+            else
+            {
+                nav.selectOnLeft = worldNodes[i - 1].button;
+                nav.selectOnRight = worldNodes[i + 1].button;
+
+            }
+            nav.selectOnDown = backButton;
+            worldNodes[i].button.navigation = nav;
+        }
     }
 
     public void RollMaps()

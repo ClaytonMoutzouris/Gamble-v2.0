@@ -8,5 +8,5 @@ public class TalentTree : ScriptableObject
     //public List<TalentTreeBranch> branches;
 
     public List<Talent> talents;
-
+    public int skillPoints = 0;
 }

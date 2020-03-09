@@ -64,7 +64,11 @@ public class TalentTreeUI : MonoBehaviour
 
     public void LearnNodeAtIndex(int index)
     {
-        tree.talents[index].OnLearned(player);
-        talentNodes[index].OnLearned();
+        if (player.talentTree.skillPoints > 0)
+        {
+            tree.talents[index].OnLearned(player);
+            talentNodes[index].OnLearned();
+            player.talentTree.skillPoints--;
+        }
     }
 }

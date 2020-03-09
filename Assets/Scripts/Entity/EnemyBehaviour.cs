@@ -55,6 +55,13 @@ public static class EnemyBehaviour
 
     }
 
+    public static void Jump(Enemy enemy, float jumpSpeed, Vector2 dir)
+    {
+        enemy.Body.mSpeed = dir.normalized*jumpSpeed + Vector2.up*jumpSpeed/2;
+        enemy.mEnemyState = EnemyState.Jumping;
+
+    }
+
     public static void Move(Enemy enemy)
     {
 

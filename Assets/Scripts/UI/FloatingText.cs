@@ -10,6 +10,7 @@ public class FloatingText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<MeshRenderer>().sortingLayerName = "UI";
         Destroy(gameObject, DestroyTime);
         //GetComponent<MeshRenderer>().sortingLayerID = 0;
     }

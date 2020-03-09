@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Snowball
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 1
   mName: Snowball
   bodySize: {x: 10, y: 12}
   CollidesWith: 000000000200000003000000
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 21300000, guid: e4e2f6724d77cb44197961fa915fa807, type: 3}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 8f643c956f6fa9d43ba520823c715f72, type: 2}
+  effects: []
   enemyType: 5
-  movementSpeed: 45
-  jumpHeight: 120
-  sightRange: 100
-  hostility: 1
+  movementSpeed: 60
+  jumpHeight: 300
+  sightRange: 320
   health: 20
-  rangedAttacks: []
+  rangedAttacks:
+  - {fileID: 11400000, guid: 1c306478562b3934bbb29948b1b47e26, type: 2}
   meleeAttacks: []
   lootTable:
   - {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}

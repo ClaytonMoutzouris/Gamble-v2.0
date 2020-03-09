@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SnekMelee
   m_EditorClassIdentifier: 
   entityType: 5
-  hostility: 0
+  hostility: 1
   mName: SnekMelee
-  bodySize: {x: 5, y: 5}
+  bodySize: {x: 0, y: 0}
   CollidesWith: 
   ignoreTilemap: 1
-  ignoreGravity: 0
+  ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}

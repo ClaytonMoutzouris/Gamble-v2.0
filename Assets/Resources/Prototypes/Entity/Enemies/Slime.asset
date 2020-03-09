@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   entityType: 1
+  hostility: 2
   mName: Slime
   bodySize: {x: 15, y: 8}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: a3668685d34585d47a157727a1bc2fbb, type: 2}
+  effects: []
   enemyType: 0
   movementSpeed: 40
   jumpHeight: 380
-  sightRange: 75
-  hostility: 2
+  sightRange: 320
   health: 35
   rangedAttacks: []
   meleeAttacks:

@@ -47,6 +47,12 @@ public class PlayerRenderer : EntityRenderer
         meleeWeapon.gameObject.SetActive(active);
         meleeWeapon.flipX = (player.mDirection == EntityDirection.Left);
     }
+
+    public void ShowWeapon(bool show)
+    {
+        rangedWeapon.gameObject.SetActive(show);
+    }
+
     public void SetWeaponRotation(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg - 90;

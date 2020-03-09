@@ -18,33 +18,96 @@ public class Snowdrift : Enemy
             EnemyBehaviour.CheckForTargets(this);
         }
 
-        if (Target != null && !Target.IsDead)
+        switch (mEnemyState)
         {
+            case EnemyState.Idle:
 
-            if (Target.Position.x > Position.x)
-            {
-                mDirection = EntityDirection.Right;
-            }
-            else
-            {
-                mDirection = EntityDirection.Left;
+                break;
+            case EnemyState.Moving:
 
-            }
-            EnemyBehaviour.MoveHorizontal(this);
 
-        } else
-        {
-            if (Body.mPS.pushedLeftTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Right;
+                if (Target != null)
+                {
+                    Vector2 positionVector = Target.Position - Position;
 
-            }
-            else if (Body.mPS.pushedRightTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Left;
-            }
+                    if (positionVector.x > 0)
+                    {
+
+                        mDirection = EntityDirection.Right;
+                    }
+                    else
+                    {
+
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    //Replace this with pathfinding to the target
+                    if (!mAttackManager.rangedAttacks[0].mIsActive)
+                    {
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 256))
+                        {
+                            mAttackManager.rangedAttacks[0].Activate((positionVector).normalized, Position);
+                        }
+
+                        if (Body.mPS.pushesLeft || Body.mPS.pushesRight && Body.mPS.pushesBottom)
+                        {
+                            EnemyBehaviour.Jump(this, jumpHeight);
+                        }
+
+                        if (positionVector.y <= 32 && Body.mPS.onOneWay)
+                        {
+                            Body.mPS.tmpIgnoresOneWay = true;
+                        }
+
+
+                        Debug.Log("Its Active");
+                    }
+
+                }
+                else
+                {
+                    if (Body.mPS.pushedLeftTile)
+                    {
+
+                        mDirection = EntityDirection.Right;
+
+                    }
+                    else if (Body.mPS.pushedRightTile)
+                    {
+                        mDirection = EntityDirection.Left;
+                    }
+
+
+                }
+
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
+
+                break;
+            case EnemyState.Jumping:
+                if (Body.mPS.pushesBottom)
+                {
+                    mEnemyState = EnemyState.Moving;
+                    break;
+                }
+
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
+
+                break;
         }
 
         base.EntityUpdate();

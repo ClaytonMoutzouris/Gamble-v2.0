@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
   m_Name: WurmSpit
   m_EditorClassIdentifier: 
-  duration: 15
-  cooldown: 0.3
-  startUpFrames: 4
-  offset: {x: 0, y: 0}
+  duration: 60
+  cooldown: 1
+  startUpFrames: 45
+  offset: {x: 0, y: 16}
   animationController: {fileID: 0}
   damage: 4
   abilities: 
   sfx: {fileID: 0}
   projectilePrototype: {fileID: 11400000, guid: 74bd48135014dba40937e382689c035d,
     type: 2}
-  numberOfProjectiles: 1
-  spreadAngle: 0
+  numberOfProjectiles: 5
+  spreadAngle: 60

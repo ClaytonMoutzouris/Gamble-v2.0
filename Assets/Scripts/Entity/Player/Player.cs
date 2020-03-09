@@ -347,8 +347,6 @@ public class Player : Entity, IHurtable
 
         if (Input.playerButtonInput[(int)ButtonInput.Teleport])
         {
-            Vector2 aim = GetAim();
-
             Position = Position + GetAim()*150;
             //Game.mMapChangeFlag = true;
         }
@@ -918,19 +916,31 @@ public class Player : Entity, IHurtable
             AttackManager.meleeAttacks[0].Activate();
         }
 
+        Vector2 aim;
         if (Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0)
         {
-            Vector2 aim = GetAim();
+            aim = GetAim();
+            ((PlayerRenderer)Renderer).ShowWeapon(true);
+
             ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
 
-            if (Input.playerButtonInput[(int)ButtonInput.Fire])
-            {
-                //Debug.Log("Pressed Fire");
-                AttackManager.rangedAttacks[0].Activate(aim, Position);
-            }
+        } else
+        {
+            aim = Vector2.right * (int)mDirection;
+        }
 
+        if (Input.playerButtonInput[(int)ButtonInput.Fire])
+        {
+            ((PlayerRenderer)Renderer).ShowWeapon(true);
 
+            ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
 
+            //Debug.Log("Pressed Fire");
+            AttackManager.rangedAttacks[0].Activate(aim, Position);
+        }
+        else
+        {
+            ((PlayerRenderer)Renderer).ShowWeapon(false);
         }
 
         if (Input.playerButtonInput[(int)ButtonInput.Block])

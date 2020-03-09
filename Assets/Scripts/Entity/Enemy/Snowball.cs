@@ -18,44 +18,98 @@ public class Snowball : Enemy
             EnemyBehaviour.CheckForTargets(this);
         }
 
-        if (Target != null && !Target.IsDead)
+        switch (mEnemyState)
         {
+            case EnemyState.Idle:
 
-            if (Target.Position.x > Position.x)
-            {
-                //If they can't proceed horizontally, try jumping.
-                if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
+                break;
+            case EnemyState.Moving:
+
+
+                if (Target != null)
                 {
-                    EnemyBehaviour.Jump(this, jumpHeight);
+                    Vector2 positionVector = Target.Position - Position;
+
+                    if (positionVector.x > 0)
+                    {
+
+                        mDirection = EntityDirection.Right;
+                    }
+                    else
+                    {
+
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    //Replace this with pathfinding to the target
+                    if (!mAttackManager.rangedAttacks[0].mIsActive)
+                    {
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 256))
+                        {
+                            mAttackManager.rangedAttacks[0].Activate((positionVector).normalized, Position);
+                        }
+
+                        if (Body.mPS.pushesLeft || Body.mPS.pushesRight && Body.mPS.pushesBottom)
+                        {
+                            EnemyBehaviour.Jump(this, jumpHeight);
+                        }
+
+                        if (positionVector.y <= 32 && Body.mPS.onOneWay)
+                        {
+                            Body.mPS.tmpIgnoresOneWay = true;
+                        }
+
+
+                        Debug.Log("Its Active");
+                    }
+
                 }
-                //body.mSpeed.x = mMovingSpeed;
-                mDirection = EntityDirection.Right;
-            }
-            else
-            {
-                if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
+                else
                 {
-                    EnemyBehaviour.Jump(this, jumpHeight);
+                    if (Body.mPS.pushedLeftTile)
+                    {
+
+                        mDirection = EntityDirection.Right;
+
+                    }
+                    else if (Body.mPS.pushedRightTile)
+                    {
+                        mDirection = EntityDirection.Left;
+                    }
+
+
                 }
-                mDirection = EntityDirection.Left;
-            }
-        }
-        else
-        {
-            if (Body.mPS.pushedLeftTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Right;
 
-            }
-            else if (Body.mPS.pushedRightTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Left;
-            }
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
+
+                break;
+            case EnemyState.Jumping:
+                if (Body.mPS.pushesBottom)
+                {
+                    mEnemyState = EnemyState.Moving;
+                    break;
+                }
+
+                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
+
+                break;
         }
 
-        EnemyBehaviour.MoveHorizontal(this);
         base.EntityUpdate();
 
     }

@@ -21,17 +21,22 @@ public class LevelManager : MonoBehaviour
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
 
+    public GameObject expBar;
+
     public MapManager mMap;
 
     [SerializeField]
     protected List<Entity> mEntities = new List<Entity>();
+
+    public int partyEXP = 0;
+    public int partyLevel = 1;
 
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
     public MapType changeToType;
 
     public bool warpToHubFlag = false;
-    public int numMaps = 4;
+    public int numMaps = 5;
     public bool[] completedWorlds;
     public int currentWorldIndex = 0;
 
@@ -82,11 +87,14 @@ public class LevelManager : MonoBehaviour
                 DropPlayer(player.mPlayerIndex);
             }
         }
+        partyLevel = 1;
+        partyEXP = 0;
+
         levelIndex = 0;
         NewGameMap(MapType.Hub);
         if(mGameMode != GameMode.Start)
         {
-            NavigationMenu.instance.RollMaps();
+            NavigationMenu.instance.SetMaps();
         }
 
         completedWorlds = new bool[numMaps];
@@ -112,6 +120,7 @@ public class LevelManager : MonoBehaviour
 
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
         newPlayer.playerClass.LoadClass(newPlayer);
+        newPlayer.talentTree.skillPoints = partyLevel;
 
         //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
     }
@@ -124,6 +133,33 @@ public class LevelManager : MonoBehaviour
         players[index] = null;
 
 
+    }
+
+    public void PartyLevelUp()
+    {
+        partyLevel++;
+
+        foreach (Player player in players)
+        {
+            if(player != null)
+            {
+                player.talentTree.skillPoints++;
+            }
+        }
+    }
+
+    public void GainPartyEXP(int xp)
+    {
+        int levelThreshold = partyLevel * partyLevel * 10 + 50;
+        partyEXP += xp;
+
+        if (partyEXP >= levelThreshold)
+        {
+            partyEXP = partyEXP - levelThreshold;
+            PartyLevelUp();
+        }
+
+        expBar.transform.localScale = new Vector3((float)partyEXP/(float)(partyLevel * partyLevel * 10 + 50), 1, 1);
     }
 
     public List<Chest> GetChests()

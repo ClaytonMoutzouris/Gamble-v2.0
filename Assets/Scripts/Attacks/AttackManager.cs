@@ -54,4 +54,24 @@ public class AttackManager {
     }
 
 
+    public bool IsAttacking()
+    {
+        foreach (RangedAttack attack in rangedAttacks)
+        {
+            if (attack.mIsActive)
+            {
+                return true;
+            }
+        }
+
+        foreach (MeleeAttack attack in meleeAttacks)
+        {
+            if (attack.mIsActive)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -19,7 +19,7 @@ public class BossEnemy : Enemy
     public BossEnemy(BossPrototype proto) : base(proto)
     {
         bossType = proto.bossType;
-
+        ExpValue = 100;
     }
 
     public void CheckForTargets()

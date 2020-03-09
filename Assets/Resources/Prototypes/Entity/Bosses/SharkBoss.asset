@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: SharkBoss
   m_EditorClassIdentifier: 
   entityType: 6
+  hostility: 2
   mName: SharkBoss
   bodySize: {x: 32, y: 64}
   CollidesWith: 
-  ignoreTilemap: 0
+  ignoreTilemap: 1
+  ignoreGravity: 1
   sprite: {fileID: 21300000, guid: 7b8085cebc3451c46a66ff2136146b71, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
+  effects: []
   enemyType: 13
-  movementSpeed: 0
+  movementSpeed: 50
   jumpHeight: 120
   sightRange: 300
-  hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: 024f743c7dbfce5488bdf6490e4cd17a, type: 2}
+  - {fileID: 11400000, guid: 4c449261170eeaa4bae16cd768467dfd, type: 2}
   meleeAttacks: []
   lootTable:
   - {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}

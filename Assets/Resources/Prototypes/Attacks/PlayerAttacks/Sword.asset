@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 30
   cooldown: 0.5
-  startUpFrames: 10
+  startUpFrames: 0
   offset: {x: 8, y: 0}
   animationController: {fileID: 9100000, guid: 8b8b2105bc89a414aa46ad2a3980b7f4, type: 2}
   damage: 10

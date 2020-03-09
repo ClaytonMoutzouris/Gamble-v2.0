@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyPrototype : EntityPrototype
 {
     public EnemyType enemyType;
-    public int movementSpeed;
-    public int jumpHeight = 120;
-    public int sightRange = 50;
+    public int movementSpeed = 50;
+    public int jumpHeight = 160;
+    public int sightRange = 320;
 
     public int health;
 
