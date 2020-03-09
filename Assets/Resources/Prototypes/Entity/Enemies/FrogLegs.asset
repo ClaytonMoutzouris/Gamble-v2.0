@@ -28,7 +28,8 @@ MonoBehaviour:
   jumpHeight: 360
   sightRange: 320
   health: 75
-  rangedAttacks: []
+  rangedAttacks:
+  - {fileID: 11400000, guid: f78fd121a5323fd448913d80f16df45f, type: 2}
   meleeAttacks: []
   lootTable:
   - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}

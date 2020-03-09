@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\Entity\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Actions\EntityAction.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
+    <Compile Include="Assets\Scripts\Entity\Attacks\Laser.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\MeleeAttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Projectile.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Shield.cs" />

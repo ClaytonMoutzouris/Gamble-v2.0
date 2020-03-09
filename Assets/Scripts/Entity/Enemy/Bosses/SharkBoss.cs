@@ -125,7 +125,7 @@ public class SharkBoss : BossEnemy
         {
             Body.mSpeed = Vector2.zero;
 
-            Vector2 dir = (Vector2)(Quaternion.Euler(0, 0, shotcount*10 + 1) * Vector2.right);
+            Vector2 dir = (Vector2)(Quaternion.Euler(0, 0, shotcount*25 + 1) * Vector2.right);
             Debug.Log("Shark trying to do the thing " + shotcount);
             if (mAttackManager.rangedAttacks[1].Activate(dir, Position))
             {
