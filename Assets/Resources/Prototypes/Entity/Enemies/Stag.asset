@@ -21,16 +21,33 @@ MonoBehaviour:
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: d3564f966e575d64a941151448a48e03, type: 3}
   sortingLayer: 4
-  animationController: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 0db7cc5017a1a704ba8aed10796e0eb9, type: 2}
   effects: []
   enemyType: 8
-  movementSpeed: 80
-  jumpHeight: 120
-  sightRange: 320
+  movementSpeed: 60
+  jumpHeight: 300
+  sightRange: 260
   health: 100
   rangedAttacks: []
-  meleeAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 8a077c029cc066a4ba976eacc6724994, type: 2}
   lootTable:
   - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
   - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
   - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []

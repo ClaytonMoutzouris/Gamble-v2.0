@@ -12,7 +12,6 @@ public class Attack {
     //The owner of this attack
     public Entity mEntity;
     public AttackPrototype attackPrototype;
-    public List<AttackTrait> traits;
     public List<StatusEffectType> statusEffects;
     public int baseDamage;
     public float duration;
@@ -46,7 +45,6 @@ public class Attack {
     {
         attackPrototype = prototype;
         mEntity = entity;
-        traits = prototype.abilities;
         duration = prototype.duration;
         baseDamage = prototype.damage;
         coolDown = prototype.cooldown;
@@ -105,14 +103,28 @@ public class Attack {
     public int GetDamage()
     {
         int damage = baseDamage; ;
+        
         if (mEntity is Player player)
         {
             damage += player.mStats.getStat(StatType.Attack).GetValue();
+        }
+        else if (mEntity is Enemy enemy)
+        {
+            damage += enemy.mStats.getStat(StatType.Attack).GetValue();
         }
 
         return damage;
 
     }
+
+}
+
+public struct AttackData
+{
+    public int damage;
+
+    //damage type
+    //
 
 }
 
@@ -133,7 +145,6 @@ public class MeleeAttack : Attack
 
         //Override these values with the weapons values
         baseDamage = meleeWeapon.damage;
-        traits = meleeWeapon.weaponAbilities;
     }
 
     public override void Activate()
@@ -219,7 +230,6 @@ public class RangedAttack : Attack
 
         //Override these values with the weapons values
         baseDamage = rangedWeapon.damage;
-        traits = rangedWeapon.weaponAbilities;
     }
 
 

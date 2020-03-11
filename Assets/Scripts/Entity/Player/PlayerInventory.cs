@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,6 +54,45 @@ public class PlayerInventory
 
     }
     */
+
+    public void SortInventory()
+    {
+        int sortIndex = 0;
+        List<InventorySlot> indexes = new List<InventorySlot>();
+
+        for(int i = 0; i < items.Length; i++)
+        {
+            if(items[i] != null) {
+                if (items[i].GetInventorySlot().isEquipped)
+                {
+                    MoveItem(i, sortIndex);
+                    sortIndex++;
+                } 
+            }
+        }
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null)
+            {
+                if (!items[i].GetInventorySlot().isEquipped)
+                {
+                    MoveItem(i, sortIndex);
+                    sortIndex++;
+                }
+            }
+        }
+
+        /*
+        foreach(int i in indexes)
+        {
+            MoveItem(i, sortIndex);
+            sortIndex++;
+        }
+        */
+
+    }
+
     public Item GetItemAtIndex(int index)
     {
         return items[index];
@@ -113,8 +153,16 @@ public class PlayerInventory
 
     public void DropItem(int index)
     {
+        if(items[index] == null)
+        {
+            return;
+        }
         ItemObject temp = new ItemObject(items[index], Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(mPlayer.Position + new Vector2(0, MapManager.cTileSize / 2));
+        if(items[index] is Equipment equip && items[index].GetInventorySlot().isEquipped)
+        {
+            mPlayer.Equipment.Unequip(equip.mSlot);
+        }
         items[index] = null;
         inventoryUI.RemoveItem(index);
         //temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);

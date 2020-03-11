@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Lifesteal : Effect
 {
+    int procChance = 10;
+    int healPercent = 10;
 
     public Lifesteal()
     {
@@ -40,7 +42,10 @@ public class Lifesteal : Effect
     public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
         base.OnHitTrigger(attack, entity);
-
+        if(Random.Range(0, 100) > procChance)
+        {
+            return;
+        }
         if(attack.mEntity is Player player)
         {
             player.GainLife(attack.GetDamage());

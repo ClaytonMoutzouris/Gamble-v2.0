@@ -99,7 +99,7 @@ public class Slime : Enemy {
                         mDirection = EntityDirection.Left;
                     }
 
-                    Body.mSpeed.x = mMovingSpeed;
+                    Body.mSpeed.x = GetMovementSpeed();
                     Renderer.SetAnimState("Slime_Move");
                     EnemyBehaviour.MoveHorizontal(this);
 
@@ -132,6 +132,8 @@ public class Slime : Enemy {
                         {
                             mDirection = EntityDirection.Left;
                         }
+
+                        EnemyBehaviour.MoveHorizontal(this);
 
                     }
 

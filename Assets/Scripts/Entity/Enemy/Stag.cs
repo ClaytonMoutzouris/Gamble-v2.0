@@ -18,36 +18,131 @@ public class Stag : Enemy
             EnemyBehaviour.CheckForTargets(this);
         }
 
-        if (Target != null && !Target.IsDead)
+        switch (mEnemyState)
         {
+            case EnemyState.Idle:
 
-            if (Target.Position.x > Position.x)
-            {
-                mDirection = EntityDirection.Right;
-            }
-            else
-            {
-                mDirection = EntityDirection.Left;
+                break;
+            case EnemyState.Moving:
 
-            }
 
-            EnemyBehaviour.MoveHorizontal(this);
+                if (Target != null)
+                {
+                    Vector2 positionVector = Target.Position - Position;
+
+                    if (positionVector.x > 0)
+                    {
+
+                        mDirection = EntityDirection.Right;
+                    }
+                    else
+                    {
+
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    if (!mAttackManager.meleeAttacks[0].OnCooldown())
+                    {
+
+                        mMovingSpeed = prototype.movementSpeed * 2;
+
+                        if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile && Body.mPS.pushesBottom && positionVector.y > 0)
+                        {
+                            EnemyBehaviour.Jump(this, jumpHeight);
+                        }
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 64))
+                        {
+                            mAttackManager.meleeAttacks[0].Activate();
+                        }
+
+                    }
+                    else
+                    {
+                        mMovingSpeed = prototype.movementSpeed;
+                    }
+
+                    if (positionVector.y <= 32 && Body.mPS.onOneWay)
+                    {
+                        Body.mPS.tmpIgnoresOneWay = true;
+                    }
+
+                    EnemyBehaviour.MoveHorizontal(this);
+
+                }
+                else
+                {
+                    if (Body.mPS.pushedLeftTile)
+                    {
+
+                        mDirection = EntityDirection.Right;
+
+                    }
+                    else if (Body.mPS.pushedRightTile)
+                    {
+                        mDirection = EntityDirection.Left;
+                    }
+
+
+                }
+
+
+                break;
+            case EnemyState.Jumping:
+                if (Body.mPS.pushesBottom)
+                {
+                    mEnemyState = EnemyState.Moving;
+                    break;
+                }
+                if (Target != null)
+                {
+                    Vector2 positionVector = Target.Position - Position;
+
+                    if (positionVector.x > 0)
+                    {
+
+                        mDirection = EntityDirection.Right;
+                    }
+                    else
+                    {
+
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    if (!mAttackManager.meleeAttacks[0].OnCooldown())
+                    {
+
+                        mMovingSpeed = prototype.movementSpeed * 2;
+                        EnemyBehaviour.MoveHorizontal(this);
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 64))
+                        {
+                            mAttackManager.meleeAttacks[0].Activate();
+
+                        }
+
+                    }
+                    else
+                    {
+                        mMovingSpeed = prototype.movementSpeed;
+                    }
+                }
+
+                break;
+        }
+
+
+        if (mAttackManager.meleeAttacks[0].mIsActive)
+        {
+            Renderer.SetAnimState("Attack1");
 
         }
         else
         {
-            if (Body.mPS.pushedLeftTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Right;
+            Renderer.SetAnimState("Idle");
 
-            }
-            else if (Body.mPS.pushedRightTile)
-            {
-                //Renderer.Sprite.flipX = true;
-                mDirection = EntityDirection.Left;
-            }
         }
+
         base.EntityUpdate();
 
     }

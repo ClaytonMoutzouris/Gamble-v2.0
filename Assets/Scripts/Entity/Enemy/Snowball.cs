@@ -83,7 +83,7 @@ public class Snowball : Enemy
 
                 if (!mAttackManager.rangedAttacks[0].mIsActive)
                 {
-                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
                 else
                 {
@@ -100,7 +100,7 @@ public class Snowball : Enemy
 
                 if (!mAttackManager.rangedAttacks[0].mIsActive)
                 {
-                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
                 else
                 {

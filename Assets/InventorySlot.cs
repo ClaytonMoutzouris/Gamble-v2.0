@@ -98,6 +98,8 @@ public class InventorySlot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             playerPanel.tooltip.SetTooptip(item.getTooltip());
         }
+
+        playerPanel.inventoryUI.currentSlot = this;
     }
 
     public void OnDeselect(BaseEventData eventData)

@@ -12,7 +12,7 @@ public class WurmAlien : Enemy
     {
 
 
-        Body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
         Body.mIsHeavy = false;
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
@@ -97,9 +97,9 @@ public class WurmAlien : Enemy
 
                 }
 
-                if (!mAttackManager.rangedAttacks[0].mIsActive)
+                if (!mAttackManager.IsAttacking())
                 {
-                    Body.mSpeed.x = mMovingSpeed*(int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
                 else
                 {
@@ -114,13 +114,20 @@ public class WurmAlien : Enemy
                     break;
                 }
 
-                if (!mAttackManager.rangedAttacks[0].mIsActive)
+
+                if (!mAttackManager.IsAttacking())
                 {
-                    Body.mSpeed.x = mMovingSpeed*(int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
                 else
                 {
                     Body.mSpeed.x = 0;
+                }
+
+                if (Target != null)
+                {
+                    EnemyBehaviour.MoveHorizontal(this);
+
                 }
 
                 break;

@@ -10,7 +10,6 @@ public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss,
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Count }
 public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned };
-public enum AttackTrait { Knockback, Exploding, Split };
 public enum WeaponAbility { };
 public enum PlayerAbility { Hover, Invisible, Count };
 public enum ItemType { };

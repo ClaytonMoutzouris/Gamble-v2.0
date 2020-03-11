@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: FallingRock
   m_EditorClassIdentifier: 
   entityType: 2
+  hostility: 0
   mName: FallingRock
   bodySize: {x: 15, y: 16}
   CollidesWith: 00000000010000000200000006000000
+  ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 0}
+  effects: []

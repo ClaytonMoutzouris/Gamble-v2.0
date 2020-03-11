@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageReflect : Effect
 {
-
+    int procChance = 10;
     public DamageReflect()
     {
         effectName = "Damage Reflect";
@@ -24,6 +24,11 @@ public class DamageReflect : Effect
     public override void OnDamagedTrigger(Attack attack)
     {
         base.OnDamagedTrigger(attack);
+
+        if(Random.Range(0, 100) > procChance)
+        {
+            return;
+        }
 
         if(attack.mEntity is IHurtable attacker)
         {

@@ -18,6 +18,10 @@ public class ItemObject : Entity, ILootable {
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);
+        Debug.Log("Renderer: " + Renderer == null);
+        Debug.Log("mItemData: " + mItemData == null);
+        Debug.Log("sprite: " + mItemData.sprite == null);
+
         Renderer.SetSprite(mItemData.sprite);
         //temp.mOldSpeed.y = Constants.cJumpSpeed;
         Body.mSpeed.y = Constants.cMinJumpSpeed;
@@ -31,8 +35,10 @@ public class ItemObject : Entity, ILootable {
 
         if(Body.mPS.pushesBottom)
         {
-            Body.mSpeed = Vector2.zero;
+            Body.mSpeed.x = 0;
         }
+
+
     }
 
     public bool Loot(Player actor)

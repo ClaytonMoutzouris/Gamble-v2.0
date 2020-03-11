@@ -26,6 +26,9 @@ public enum ButtonInput
     BeamUp,
     Fire,
     Block,
+    InventoryDrop,
+    InventoryMove,
+    InventorySort,
 	Count
 }
 

@@ -24,8 +24,8 @@ MonoBehaviour:
   animationController: {fileID: 9100000, guid: b26d5ef37874bfe418fd8d814ef50f22, type: 2}
   effects: []
   enemyType: 3
-  movementSpeed: 25
-  jumpHeight: 180
+  movementSpeed: 35
+  jumpHeight: 260
   sightRange: 320
   health: 50
   rangedAttacks: []
@@ -36,3 +36,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
   - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
   - {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fdf9b0136fcac4ca1e50a95dd5d662, type: 3}
+  m_Name: GhostBodyAttack
+  m_EditorClassIdentifier: 
+  duration: 60
+  cooldown: 0
+  startUpFrames: 0
+  offset: {x: 0, y: 0}
+  animationController: {fileID: 0}
+  damage: 5
+  sfx: {fileID: 0}
+  meleeObjectPrototype: {fileID: 11400000, guid: bd01c6e1dbbe6c649a2ea8d0ce560de1,
+    type: 2}

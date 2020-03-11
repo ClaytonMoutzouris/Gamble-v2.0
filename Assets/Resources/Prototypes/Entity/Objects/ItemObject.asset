@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: ItemObject
   m_EditorClassIdentifier: 
   entityType: 4
+  hostility: 0
   mName: ItemObject
   bodySize: {x: 5, y: 5}
   CollidesWith: 
+  ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 7
   animationController: {fileID: 0}
+  effects: []

@@ -60,7 +60,7 @@ public class TentacleBoss : BossEnemy
                         attack.Activate(dir, Position);
                     }
 
-                    Body.mSpeed = dir * mMovingSpeed;
+                    Body.mSpeed = dir * GetMovementSpeed();
 
                 }
                 else
@@ -77,7 +77,7 @@ public class TentacleBoss : BossEnemy
                         mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                     }
 
-                    Body.mSpeed.x = mMovingSpeed;
+                    Body.mSpeed.x = GetMovementSpeed();
 
                 }
 

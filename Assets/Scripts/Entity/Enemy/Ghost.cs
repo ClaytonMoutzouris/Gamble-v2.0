@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ghost : Enemy
+public class Ghost : Enemy, IContactTrigger
 {
 
 
@@ -15,6 +15,14 @@ public class Ghost : Enemy
         Body.mIgnoresOneWay = true;
 
 
+    }
+
+    public void Contact(Entity entity)
+    {
+        if(entity is Player player)
+        {
+            mAttackManager.meleeAttacks[0].Activate();
+        }
     }
 
     public override void EntityUpdate()
@@ -35,9 +43,9 @@ public class Ghost : Enemy
                 if (Target != null)
                 {
 
-                    Body.mSpeed = ((Vector2)Target.Position - Position).normalized * mMovingSpeed;
+                    Body.mSpeed = ((Vector2)Target.Position - Position).normalized * GetMovementSpeed();
 
-
+                    
                 }
                 else
                 {

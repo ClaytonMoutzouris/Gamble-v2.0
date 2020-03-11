@@ -8,10 +8,12 @@ public class Nest : Enemy
     public List<Enemy> spawns;
     float spawnTimer = 0;
     float spawnCooldown = 5;
+    Vector2 spawnOffset = new Vector2(0, 32);
 
     public Nest(EnemyPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
+        Body.mIsHeavy = true;
     }
 
     public override void ActuallyDie()
@@ -51,8 +53,8 @@ public class Nest : Enemy
             {
                 EnemyPrototype proto = EnemyDatabase.GetEnemyPrototype(spawnType);
                 Slime temp = new Slime(proto);
-                temp.Spawn(Position);
-
+                temp.Spawn(Position + spawnOffset);
+                //EnemyBehaviour.Jump(temp, 120);
                 spawnTimer = 0;
             }
 

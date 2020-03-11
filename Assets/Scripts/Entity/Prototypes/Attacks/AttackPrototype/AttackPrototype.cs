@@ -12,7 +12,6 @@ public abstract class AttackPrototype : ScriptableObject
     //The animation performed by the user of this attack
     public RuntimeAnimatorController animationController;
     public int damage;
-    public List<AttackTrait> abilities = new List<AttackTrait>();
 
     public AudioClip sfx;
 

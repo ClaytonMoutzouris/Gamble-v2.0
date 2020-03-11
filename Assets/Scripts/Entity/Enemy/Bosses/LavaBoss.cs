@@ -182,7 +182,7 @@ public class LavaBoss : BossEnemy
             //Body.mAABB.ScaleX = 1;
         }
 
-        Body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = GetMovementSpeed();
 
         int randomAttack = UnityEngine.Random.Range(0, 2);
         if(randomAttack == 1)

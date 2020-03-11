@@ -78,7 +78,7 @@ public static class EnemyBehaviour
         {
             enemy.Renderer.Sprite.flipX = true;
         }
-        enemy.Body.mSpeed.x = enemy.mMovingSpeed * (int)enemy.mDirection;
+        enemy.Body.mSpeed.x = enemy.GetMovementSpeed() * (int)enemy.mDirection;
 
     }
 
@@ -91,12 +91,12 @@ public static class EnemyBehaviour
     {
         if(enemy.Position.x > target.Position.x)
         {
-            enemy.Body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
+            enemy.Body.mSpeed.x = Mathf.Abs(enemy.GetMovementSpeed());
             //enemy.Body.mAABB.ScaleX = 1;
         }
         else
         {
-            enemy.Body.mSpeed.x = enemy.mMovingSpeed * -1;
+            enemy.Body.mSpeed.x = enemy.GetMovementSpeed() * -1;
             //enemy.Body.mAABB.ScaleX = -1;
         }
     }

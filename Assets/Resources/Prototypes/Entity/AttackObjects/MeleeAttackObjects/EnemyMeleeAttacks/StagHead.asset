@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c776b07e6f5e042b51c03246ea2dd7, type: 3}
+  m_Name: StagHead
+  m_EditorClassIdentifier: 
+  entityType: 5
+  hostility: 1
+  mName: StagHead
+  bodySize: {x: 16, y: 32}
+  CollidesWith: 
+  ignoreTilemap: 1
+  ignoreGravity: 1
+  sprite: {fileID: 0}
+  sortingLayer: 8
+  animationController: {fileID: 0}
+  effects: []
+  hitboxSize: {x: 16, y: 32}
+  angled: 0
+  maxTime: 0.5
+  sfx: {fileID: 0}
+  particleSystem: {fileID: 0}

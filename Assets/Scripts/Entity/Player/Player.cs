@@ -308,6 +308,23 @@ public class Player : Entity, IHurtable
         {
             playerPanel.NextTabRight();
         }
+
+        if(Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
+        {
+            Inventory.DropItem(Inventory.inventoryUI.currentSlot.slotID);
+        }
+
+        if (Input.playerButtonInput[(int)ButtonInput.InventoryMove])
+        {
+            Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
+        }
+
+
+        if (Input.playerButtonInput[(int)ButtonInput.InventorySort])
+        {
+            Inventory.SortInventory();
+        }
+        
     }
 
     public override void EntityUpdate()

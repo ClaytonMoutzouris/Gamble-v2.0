@@ -7,7 +7,7 @@ public class Treedude : Enemy
     public Treedude(EnemyPrototype proto) : base(proto)
     {
 
-        Body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
         Body.mIsHeavy = true;
 
@@ -75,7 +75,7 @@ public class Treedude : Enemy
 
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = GetMovementSpeed();
 
                 break;
             case EnemyState.Jumping:
@@ -108,7 +108,7 @@ public class Treedude : Enemy
 
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = GetMovementSpeed();
 
 
                 break;

@@ -21,10 +21,6 @@ public class FallingRock : Entity
         Body.mIsHeavy = true;
         Body.mIgnoresGravity = true;
 
-        mCollidesWith.Add(EntityType.Player);
-        mCollidesWith.Add(EntityType.Enemy);
-        mCollidesWith.Add(EntityType.Obstacle);
-        mCollidesWith.Add(EntityType.Platform);
         /*
         
         */

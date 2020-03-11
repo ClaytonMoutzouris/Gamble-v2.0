@@ -185,7 +185,6 @@ public abstract class Equipment : Item
 public abstract class Weapon : Equipment
 {
     public int damage;
-    public List<AttackTrait> weaponAbilities;
 
 
 }

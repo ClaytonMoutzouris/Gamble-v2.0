@@ -104,7 +104,11 @@ public class Enemy : Entity, IHurtable
 
         //Stats
         mStats = new Stats(this);
+        mStats.SetStats(prototype.stats);
+        ScaleStatsToLevel();
         mHealth = new Health(this, prototype.health);
+
+
 
         mAttackManager = new AttackManager(this);
 
@@ -122,6 +126,16 @@ public class Enemy : Entity, IHurtable
         }
 
         
+    }
+
+    public void ScaleStatsToLevel()
+    {
+        foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
+        {
+            
+            mStats.getStat(type).value += LevelManager.instance.partyLevel* LevelManager.instance.partyLevel/2;
+        }
+
     }
 
     public override void Spawn(Vector2 spawnPoint)
@@ -207,21 +221,38 @@ public class Enemy : Entity, IHurtable
 
     public virtual void GetHurt(Attack attack)
     {
+        if (Random.Range(0, 100) < 5 + mStats.getStat(StatType.Luck).value)
+        {
+            ShowFloatingText("Missed", Color.blue);
+            return;
+        }
+
         //Debug.Log("Dude is getting hurt");
         if (Hostility == Hostility.Neutral)
         {
             Hostility = Hostility.Hostile;
         }
 
-        int damage = (int)mHealth.LoseHP(attack.GetDamage());
+        int damage = attack.GetDamage();
+        //Take 1 less damage for each point of defense
+        damage -= mStats.getStat(StatType.Defense).GetValue();
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        mHealth.LoseHP(damage);
         ShowFloatingText(damage.ToString(), Color.white);
-
 
         if (mHealth.currentHealth == 0)
         {
             Die();
         }
-      
+
+    }
+
+    public float GetMovementSpeed()
+    {
+        return mMovingSpeed + 10 * mStats.getStat(StatType.Speed).GetValue();
     }
 
     public Entity GetEntity()

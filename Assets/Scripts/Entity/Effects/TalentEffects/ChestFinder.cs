@@ -34,16 +34,14 @@ public class ChestFinder : Effect
 
         foreach (MiniMapIcon icon in icons)
         {
-            GameObject.Destroy(icon);
+            MiniMap.instance.RemoveIcon(icon);
         }
+
+        icons.Clear();
     }
 
     public override void OnMapChanged()
     {
-        foreach(MiniMapIcon icon in icons)
-        {
-            GameObject.Destroy(icon);
-        }
 
         if (MiniMap.instance != null)
         {

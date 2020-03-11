@@ -45,26 +45,26 @@ public class Eye : Enemy
                         attack.Activate(dir, Position);
                     }
 
-                    Body.mSpeed = ((Vector2)Target.Position - Position).normalized * mMovingSpeed;
+                    Body.mSpeed = ((Vector2)Target.Position - Position).normalized * GetMovementSpeed();
 
                     if (Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
                     {
                         if(Target.Position.y < Position.y)
                         {
-                            Body.mSpeed.y = -mMovingSpeed;
+                            Body.mSpeed.y = -GetMovementSpeed();
                         } else
                         {
-                            Body.mSpeed.y = mMovingSpeed;
+                            Body.mSpeed.y = GetMovementSpeed();
                         }
                     } else if (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile)
                     {
                         if (Target.Position.x < Position.x)
                         {
-                            Body.mSpeed.x = -mMovingSpeed;
+                            Body.mSpeed.x = -GetMovementSpeed();
                         }
                         else
                         {
-                            Body.mSpeed.x = mMovingSpeed;
+                            Body.mSpeed.x = GetMovementSpeed();
                         }
                     }
 
@@ -74,7 +74,7 @@ public class Eye : Enemy
                     if (!Body.mPS.pushesTop)
                     {
                         Renderer.SetAnimState("Eye_Fly");
-                        Body.mSpeed.y = mMovingSpeed;
+                        Body.mSpeed.y = GetMovementSpeed();
                     }
                     else
                     {

@@ -122,7 +122,7 @@ public class CatBoss : BossEnemy
             }
             else
             {
-                Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 if (Body.mPS.pushesLeftTile && !Body.mPS.pushedLeftTile || Body.mPS.pushesRightTile && !Body.mPS.pushedRightTile)
                 {
                     mDirection = (EntityDirection)((int)mDirection * -1);

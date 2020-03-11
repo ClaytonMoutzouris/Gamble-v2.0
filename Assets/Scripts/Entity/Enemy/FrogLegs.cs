@@ -61,7 +61,7 @@ public class FrogLegs : Enemy
                             Body.mPS.tmpIgnoresOneWay = true;
                         }
 
-                        Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                        Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
                     }
 
@@ -84,7 +84,7 @@ public class FrogLegs : Enemy
                     {
                         mDirection = EntityDirection.Left;
                     }
-                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
 
                 }
@@ -101,7 +101,7 @@ public class FrogLegs : Enemy
 
                 if (!mAttackManager.rangedAttacks[0].mIsActive)
                 {
-                    Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
                 else
                 {

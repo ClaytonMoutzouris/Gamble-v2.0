@@ -7,7 +7,7 @@ public class Hedgehog : Enemy
     public Hedgehog(EnemyPrototype proto) : base(proto)
     {
 
-        Body.mSpeed.x = mMovingSpeed;
+        Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
         Body.mIsHeavy = false;
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
@@ -84,7 +84,7 @@ public class Hedgehog : Enemy
 
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = GetMovementSpeed();
 
                 break;
             case EnemyState.Jumping:
@@ -117,7 +117,7 @@ public class Hedgehog : Enemy
 
                 }
 
-                Body.mSpeed.x = mMovingSpeed;
+                Body.mSpeed.x = GetMovementSpeed();
 
 
                 break;

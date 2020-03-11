@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
   m_Name: Nest
   m_EditorClassIdentifier: 
-  entityType: 1
+  entityType: 2
   hostility: 2
   mName: Nest
-  bodySize: {x: 64, y: 64}
+  bodySize: {x: 32, y: 11}
   CollidesWith: 
   ignoreTilemap: 0
   ignoreGravity: 0
@@ -35,3 +35,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
   - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
   - {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []

@@ -95,7 +95,7 @@ public class SharkBoss : BossEnemy
         }
         else
         {
-            Body.mSpeed = (Target.Position + new Vector2(32, 32) - Position).normalized * mMovingSpeed;
+            Body.mSpeed = (Target.Position + new Vector2(32, 32) - Position).normalized * GetMovementSpeed();
 
         }
 
@@ -116,7 +116,7 @@ public class SharkBoss : BossEnemy
     {
         if(Vector2.Distance(Position, shotLocation) > 10)
         {
-            Body.mSpeed = (shotLocation - Position).normalized * mMovingSpeed;
+            Body.mSpeed = (shotLocation - Position).normalized * GetMovementSpeed();
             Debug.Log("Shark working his way there " + Vector2.Distance(Position, shotLocation));
 
 

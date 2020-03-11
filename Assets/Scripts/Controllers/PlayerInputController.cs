@@ -77,7 +77,9 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.rightTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
-
+                playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
+                playerButtonInput[(int)ButtonInput.InventoryMove] = false;
+                playerButtonInput[(int)ButtonInput.InventorySort] = false;
 
 
                 break;
@@ -110,8 +112,10 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed(); 
-
+                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
+                playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.ButtonBDown();
+                playerButtonInput[(int)ButtonInput.InventoryMove] = mGamepadInput.ButtonXDown();
+                playerButtonInput[(int)ButtonInput.InventorySort] = mGamepadInput.SelectDown();
                 break;
 
             case PlayerInputState.NavigationMenu:
@@ -143,7 +147,9 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
                 playerButtonInput[(int)ButtonInput.Block] = false;
-
+                playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
+                playerButtonInput[(int)ButtonInput.InventoryMove] = false;
+                playerButtonInput[(int)ButtonInput.InventorySort] = false;
                 break;
 
             case PlayerInputState.Paused:
@@ -175,7 +181,9 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Teleport] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
                 playerButtonInput[(int)ButtonInput.Block] = false;
-
+                playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
+                playerButtonInput[(int)ButtonInput.InventoryMove] = false;
+                playerButtonInput[(int)ButtonInput.InventorySort] = false;
                 break;
         }
         

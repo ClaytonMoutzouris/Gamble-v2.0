@@ -79,7 +79,7 @@ public class HedgehogBoss : BossEnemy
 
         mAttackManager.meleeAttacks[0].Activate();
 
-        Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+        Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
     }
 
@@ -91,7 +91,7 @@ public class HedgehogBoss : BossEnemy
 
         mAttackManager.meleeAttacks[0].Activate();
 
-        Body.mSpeed.x = mMovingSpeed * (int)mDirection;
+        Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
         if (Body.mPS.pushesLeftTile && !Body.mPS.pushedLeftTile || Body.mPS.pushesRightTile && !Body.mPS.pushedRightTile)
         {

@@ -17,6 +17,7 @@ public class PlayerInventoryUI : MonoBehaviour
     public Selectable interactableUp;
     public bool selectionMode = false;
     public InventorySlot moving;
+    public InventorySlot currentSlot;
 
     public void Initialize()
     {
@@ -117,6 +118,10 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void MoveItem(int index)
     {
+        if(slots[index].item == null)
+        {
+            return;
+        }
         moving = slots[index];
         selectionMode = true;
     }
