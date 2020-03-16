@@ -449,7 +449,7 @@ public static class MapGenerator
                 temp = BossType.TentacleBoss;
                 break;
             case WorldType.Void:
-                temp = (BossType)Random.Range(0, (int)BossType.Count);
+                temp = BossType.VoidBoss;
                 break;
         }
         return temp;

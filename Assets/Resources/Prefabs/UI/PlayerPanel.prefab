@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 6027242962120491416}
-  numStartingSlots: 50
+  numStartingSlots: 36
   slots: []
   slotPrefab: {fileID: 2022954297922117925, guid: 1287b6aff9e202441946745bc57248a8,
     type: 3}
@@ -615,6 +615,7 @@ MonoBehaviour:
   interactableUp: {fileID: 6027242961140482684}
   selectionMode: 0
   moving: {fileID: 0}
+  currentSlot: {fileID: 0}
 --- !u!225 &4642423910172317280
 CanvasGroup:
   m_ObjectHideFlags: 0

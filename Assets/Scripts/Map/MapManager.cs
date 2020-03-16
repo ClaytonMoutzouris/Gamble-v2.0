@@ -456,6 +456,10 @@ public class MapManager : MonoBehaviour
                 temp = new TentacleBoss(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case BossType.VoidBoss:
+                temp = new VoidBoss(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
 
         return temp;

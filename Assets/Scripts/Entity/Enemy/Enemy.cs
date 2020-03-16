@@ -133,9 +133,10 @@ public class Enemy : Entity, IHurtable
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
             
-            mStats.getStat(type).value += LevelManager.instance.partyLevel* LevelManager.instance.partyLevel/2;
+            mStats.getStat(type).value += LevelManager.instance.NumCompletedWorlds();
         }
 
+        Debug.Log("Enemy Scaled to level " + LevelManager.instance.NumCompletedWorlds());
     }
 
     public override void Spawn(Vector2 spawnPoint)

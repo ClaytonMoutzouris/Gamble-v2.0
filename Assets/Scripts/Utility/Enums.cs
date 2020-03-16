@@ -6,7 +6,7 @@ public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Pla
 public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, Treedude, Stag, Snowdrift, FrogLegs, Nest, Count, Boss };
 public enum NPCType { Standard, Shopkeeper };
 
-public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, Count };
+public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, VoidBoss, Count };
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Count }
 public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned };

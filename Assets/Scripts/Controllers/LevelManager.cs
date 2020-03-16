@@ -313,6 +313,21 @@ public class LevelManager : MonoBehaviour
         return true;
     }
 
+    public int NumCompletedWorlds()
+    {
+        int completed = 0;
+
+        for (int i = 0; i < completedWorlds.Length; i++)
+        {
+            if (completedWorlds[i])
+            {
+                completed++;
+            }
+        }
+        return completed;
+
+    }
+
     public void WorldCleared(int index)
     {
         completedWorlds[index] = true;

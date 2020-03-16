@@ -24,7 +24,7 @@ MonoBehaviour:
   animationController: {fileID: 0}
   effects: []
   enemyType: 13
-  movementSpeed: 50
+  movementSpeed: 35
   jumpHeight: 120
   sightRange: 300
   health: 500
@@ -37,5 +37,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
   - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
   - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
   bossType: 2
   phaseTimers: 

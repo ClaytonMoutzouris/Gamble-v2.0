@@ -50,7 +50,6 @@ public class SharkBoss : BossEnemy
                     } else
                     {
                         mBossState = BossState.Attack2;
-                        shotcount = 0;
                     }
 
 
@@ -138,6 +137,8 @@ public class SharkBoss : BossEnemy
         if(shotcount > numShots)
         {
             mBossState = BossState.Aggrivated;
+            shotcount = 0;
+
         }
     }
 }
