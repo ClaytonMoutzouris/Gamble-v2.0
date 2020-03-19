@@ -176,6 +176,11 @@ public class Player : Entity, IHurtable
         this.Input = new PlayerInputController(this, input);
     }
 
+    public void SetColorPalette(List<Color> palette)
+    {
+        prototype.colorPallete = palette;
+    }
+
     public Player(PlayerPrototype proto, PlayerClass playerClass, int index) : base(proto)
     {
         prototype = ScriptableObject.Instantiate<PlayerPrototype>(proto);
@@ -192,15 +197,6 @@ public class Player : Entity, IHurtable
         mJumpSpeed = prototype.jumpSpeed;
         mClimbSpeed = prototype.climbSpeed;
         mCollidesWith = proto.CollidesWith;
-
-
-
-
-        
-        for (int c = 0; c < prototype.colorPallete.Count; c++)
-        {
-            prototype.colorPallete[c] = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
-        }
         
 
 
@@ -748,7 +744,7 @@ public class Player : Entity, IHurtable
                 bool ledgeOnRight = !ledgeOnLeft;
 
                 //if down button is held then drop down
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < -0.5f
                     || (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0 && ledgeOnRight)
                     || (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0 && ledgeOnLeft))
                 {

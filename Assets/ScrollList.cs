@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 using UnityEngine;
 
 public class ScrollList : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject content;
+    public CharacterCreationPanel parentPanel;
+
+    public void AddOption(Button button)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

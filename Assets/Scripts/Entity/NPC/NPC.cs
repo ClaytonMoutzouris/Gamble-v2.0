@@ -171,11 +171,45 @@ public class NPC : Entity, IHurtable, IInteractable
 
     public override void EntityUpdate()
     {
+        CheckForTargets();
+
+        if(Target != null)
+        {
+            if ((Position - Target.Position).x > 0)
+            {
+                mDirection = EntityDirection.Left;
+            }
+            else
+            {
+                mDirection = EntityDirection.Right;
+
+            }
+        }
+
         base.EntityUpdate();
         mAttackManager.UpdateAttacks();
         CollisionManager.UpdateAreas(HurtBox);
         CollisionManager.UpdateAreas(Sight);
         Sight.mEntitiesInSight.Clear();
+    }
+
+    public void CheckForTargets()
+    {
+        this.Target = null;
+        if (Sight.mEntitiesInSight != null)
+        {
+            foreach (Entity entity in Sight.mEntitiesInSight)
+            {
+                if (entity is Player)
+                {
+                    if (!((Player)entity).IsDead)
+                    {
+                        this.Target = (Player)entity;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public override bool Equals(object obj)

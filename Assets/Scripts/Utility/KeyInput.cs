@@ -29,6 +29,8 @@ public enum ButtonInput
     InventoryDrop,
     InventoryMove,
     InventorySort,
+    ZoomIn,
+    ZoomOut,
 	Count
 }
 

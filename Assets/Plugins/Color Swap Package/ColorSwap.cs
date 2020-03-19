@@ -7,14 +7,14 @@ using UnityEngine;
 public class ColorSwap {
 
     public Texture2D mColorSwapTex;
-    public SpriteRenderer sR;
+    public Material material;
     public Color[] mBaseColors;
     public Color[] mCurrentColors;
 
-    public ColorSwap(SpriteRenderer renderer)
+    public ColorSwap(Material mat)
     {
         mColorSwapTex = new Texture2D(256, 1);
-        sR = renderer;
+        material = mat;
         InitColorSwapTex();
     }
 
@@ -119,7 +119,7 @@ public class ColorSwap {
 
         colorSwapTex.Apply();
 
-        sR.material.SetTexture("_SwapTex", colorSwapTex);
+        material.SetTexture("_SwapTex", colorSwapTex);
 
        // mSpriteColors = new Color[colorSwapTex.width];
         mColorSwapTex = colorSwapTex;

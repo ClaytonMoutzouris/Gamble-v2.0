@@ -57,7 +57,7 @@ public class EntityRenderer : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        colorSwapper = new ColorSwap(sprite);
+        colorSwapper = new ColorSwap(sprite.material);
         //AddVisualEffect();
     }
 

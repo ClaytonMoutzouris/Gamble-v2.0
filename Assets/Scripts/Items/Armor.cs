@@ -10,14 +10,14 @@ public class Armor : Equipment
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        player.Renderer.colorSwapper.SwapColor(colorIndex, color);
+        //player.Renderer.colorSwapper.SwapColor(colorIndex, color);
         //player.mAttackManager.AttackList[0] = attack;
     }
 
     public override void OnUnequip(Player player)
     {
         base.OnUnequip(player);
-        player.Renderer.colorSwapper.SwapIndexToBase(colorIndex);
+        //player.Renderer.colorSwapper.SwapIndexToBase(colorIndex);
 
     }
 

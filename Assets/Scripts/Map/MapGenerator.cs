@@ -428,6 +428,35 @@ public static class MapGenerator
         return map;
     }
 
+    public static Map GenerateHubMap(MapData data)
+    {
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
+
+        RoomData roomData = RoomDatabase.GetRoom(RoomType.Hub);
+        data.roomSizeX = roomData.mWidth;
+        data.roomSizeY = roomData.mHeight;
+
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
+        Map map = new Map(data);
+
+
+
+        map.SetTileMap(roomData.tiles);
+        Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
+
+        AddBounds(map);
+
+
+        map.AddEntity(new ObjectData(12, 5, ObjectType.Medbay));
+        map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
+        map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
+
+        //Post process the map based on probabilistic tiles and such
+        PostProcessing(map, data);
+
+        return map;
+    }
+
     public static BossType GetBossForWorld(WorldType world)
     {
         BossType temp = BossType.Count;

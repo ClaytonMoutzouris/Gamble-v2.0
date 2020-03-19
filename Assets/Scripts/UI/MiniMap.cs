@@ -31,6 +31,7 @@ public class MiniMap : MonoBehaviour
         }
         tilePalette = new TilePalette(mapTexture, 1);
         BuildInitialTexture();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

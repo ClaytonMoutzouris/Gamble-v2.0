@@ -20,14 +20,9 @@ public class Hedgehog : Enemy
     public override void EntityUpdate()
     {
 
-        if (Hostility == Hostility.Hostile)
+ if (Hostility == Hostility.Hostile)
         {
             EnemyBehaviour.CheckForTargets(this);
-        }
-
-        if(!mAttackManager.meleeAttacks[0].mIsActive)
-        {
-            Renderer.SetAnimState("Idle");
         }
 
         switch (mEnemyState)
@@ -37,34 +32,48 @@ public class Hedgehog : Enemy
                 break;
             case EnemyState.Moving:
 
+
                 if (Target != null)
                 {
-                    //Replace this with pathfinding to the target
+                    Vector2 positionVector = Target.Position - Position;
 
-                    if (EnemyBehaviour.TargetInRange(this, Target, Body.mAABB.HalfSizeX + 20))
+                    if (positionVector.x > 0)
                     {
-                        mAttackManager.meleeAttacks[0].Activate();
-                        Renderer.SetAnimState("Attack1");
+
+                        mDirection = EntityDirection.Right;
                     }
                     else
                     {
 
-                        if (Target.Position.x > Position.x)
+                        mDirection = EntityDirection.Left;
+                    }
+
+                    //Replace this with pathfinding to the target
+                    if (!mAttackManager.meleeAttacks[0].mIsActive)
+                    {
+                        Renderer.SetAnimState("Idle");
+
+                        if (EnemyBehaviour.TargetInRange(this, Target, 32))
                         {
-                            if (Body.mPS.pushesRightTile && Body.mPS.pushesBottom)
-                            {
-                                EnemyBehaviour.Jump(this, jumpHeight);
-                            }
-                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                            mAttackManager.meleeAttacks[0].Activate();
                         }
-                        else
+
+                        if (Body.mPS.pushesLeft || Body.mPS.pushesRight && Body.mPS.pushesBottom)
                         {
-                            if (Body.mPS.pushesLeftTile && Body.mPS.pushesBottom)
-                            {
-                                EnemyBehaviour.Jump(this, jumpHeight);
-                            }
-                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                            EnemyBehaviour.Jump(this, jumpHeight);
                         }
+
+                        if (positionVector.y <= 32 && Body.mPS.onOneWay)
+                        {
+                            Body.mPS.tmpIgnoresOneWay = true;
+                        }
+
+
+                        Debug.Log("Its Active");
+                    } else
+                    {
+                        Renderer.SetAnimState("Attack1");
+
                     }
 
                 }
@@ -73,18 +82,25 @@ public class Hedgehog : Enemy
                     if (Body.mPS.pushedLeftTile)
                     {
 
-                        mMovingSpeed = Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Right;
 
                     }
                     else if (Body.mPS.pushedRightTile)
                     {
-                        mMovingSpeed = -Mathf.Abs(mMovingSpeed);
+                        mDirection = EntityDirection.Left;
                     }
 
 
                 }
 
-                Body.mSpeed.x = GetMovementSpeed();
+                if (!mAttackManager.meleeAttacks[0].mIsActive)
+                {
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
+                }
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
 
                 break;
             case EnemyState.Jumping:
@@ -94,52 +110,19 @@ public class Hedgehog : Enemy
                     break;
                 }
 
-                if (Target != null)
+                if (!mAttackManager.meleeAttacks[0].mIsActive)
                 {
-                    //Replace this with pathfinding to the target
-
-                    if (EnemyBehaviour.TargetInRange(this, Target, 20))
-                    {
-                        mAttackManager.meleeAttacks[0].Activate();
-                    }
-                    else
-                    {
-
-                        if (Target.Position.x > Position.x)
-                        {
-                            mMovingSpeed = Mathf.Abs(mMovingSpeed);
-                        }
-                        else
-                        {
-                            mMovingSpeed = -Mathf.Abs(mMovingSpeed);
-                        }
-                    }
-
+                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
                 }
-
-                Body.mSpeed.x = GetMovementSpeed();
-
+                else
+                {
+                    Body.mSpeed.x = 0;
+                }
 
                 break;
         }
 
-        if (Body.mSpeed.x > 0)
-        {
-            mDirection = EntityDirection.Right;
-            //Body.mAABB.ScaleX = 1;
-        }
-        else
-        {
-            mDirection = EntityDirection.Left;
-            //Body.mAABB.ScaleX = -1;
-
-        }
-
-
         base.EntityUpdate();
 
-        //HurtBox.mCollisions.Clear();
-
-        //make sure the hitbox follows the object
     }
 }

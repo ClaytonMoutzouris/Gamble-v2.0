@@ -80,6 +80,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
+                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
+                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
 
 
                 break;
@@ -116,6 +118,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.ButtonBDown();
                 playerButtonInput[(int)ButtonInput.InventoryMove] = mGamepadInput.ButtonXDown();
                 playerButtonInput[(int)ButtonInput.InventorySort] = mGamepadInput.SelectDown();
+                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
+                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
                 break;
 
             case PlayerInputState.NavigationMenu:
@@ -150,6 +154,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
+                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
+                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
                 break;
 
             case PlayerInputState.Paused:
@@ -184,6 +190,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
+                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
+                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
                 break;
         }
         

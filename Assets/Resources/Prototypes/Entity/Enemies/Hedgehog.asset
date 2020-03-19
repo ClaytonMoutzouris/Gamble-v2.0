@@ -25,7 +25,7 @@ MonoBehaviour:
   effects: []
   enemyType: 3
   movementSpeed: 35
-  jumpHeight: 260
+  jumpHeight: 280
   sightRange: 320
   health: 50
   rangedAttacks: []
@@ -36,6 +36,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
   - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
   - {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
+  - {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
+  - {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
   stats:
   - type: 0
     value: 0

@@ -114,15 +114,17 @@ public class LevelManager : MonoBehaviour
         PlayerClassType classType = (PlayerClassType)Random.Range(0, (int)PlayerClassType.Medic + 1);
 
         Player newPlayer = new Player(Instantiate(Resources.Load("Prototypes/Entity/Player/PlayerPrototype") as PlayerPrototype), Resources.Load<PlayerClass>("Prototypes/Player/Classes/"+classType.ToString()), index);
-        players[index] = newPlayer;
-        newPlayer.SetInput(input);
-        newPlayer.playerPanel = PlayerUIPanels.instance.playerPanels[index];
 
+
+        //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
+    }
+
+    public void AddPlayer(int index, Player newPlayer)
+    {
+        players[index] = newPlayer;
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
         newPlayer.playerClass.LoadClass(newPlayer);
         newPlayer.talentTree.skillPoints = partyLevel;
-
-        //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
     }
 
     public void DropPlayer(int index)
@@ -237,6 +239,7 @@ public class LevelManager : MonoBehaviour
 
     public void PauseGame(int index)
     {
+        Debug.Log("Player index " + index + " pressed pause.");
         PauseMenu.instance.Open(index);
         mGameMode = GameMode.Paused;
     }
@@ -347,6 +350,17 @@ public class LevelManager : MonoBehaviour
                     {
                         StartNewGame();
                         GameOverScreen.instance.DisplayScreen(false);
+                    }
+
+                    if (p.Input.playerButtonInput[(int)ButtonInput.ZoomIn])
+                    {
+                        GameCamera.instance.mMinOrthographicSize -= 10;
+                    }
+
+                    if (p.Input.playerButtonInput[(int)ButtonInput.ZoomOut])
+                    {
+                        GameCamera.instance.mMinOrthographicSize += 10;
+
                     }
                 }
             }

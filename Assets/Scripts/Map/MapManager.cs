@@ -209,8 +209,16 @@ public class MapManager : MonoBehaviour
 
         mUpdatedAreas = new HashSet<Vector2i>();
 
+        if(data.mapType == MapType.Hub)
+        {
+            mCurrentMap = MapGenerator.GenerateHubMap(data);
 
-        mCurrentMap = MapGenerator.GenerateMap(data);
+        }
+        else
+        {
+            mCurrentMap = MapGenerator.GenerateMap(data);
+
+        }
 
 
         mWidth = mCurrentMap.getMapSize().x;

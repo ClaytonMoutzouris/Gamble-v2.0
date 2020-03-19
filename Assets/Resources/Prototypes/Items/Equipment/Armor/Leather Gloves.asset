@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
+  m_Name: Leather Gloves
+  m_EditorClassIdentifier: 
+  mName: Leather Gloves
+  mRarity: 0
+  mValue: 
+  sprite: {fileID: -8837690844528022405, guid: b522e207807d4b24a9e5813752ec2835, type: 3}
+  isStackable: 0
+  mSlot: 2
+  baseBonuses:
+  - type: 0
+    bonusValue: 1
+  abilities: 
+  isEquipped: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
+  colorIndex: 56
