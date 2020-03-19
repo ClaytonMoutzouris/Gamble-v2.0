@@ -30,11 +30,7 @@ MonoBehaviour:
   health: 250
   rangedAttacks: []
   meleeAttacks: []
-  lootTable:
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
-  - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
-  - {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
+  lootTable: {fileID: 11400000, guid: 4bc5d4c0ff5af7d47bfa1a03a253726c, type: 2}
   stats:
   - type: 0
     value: 0

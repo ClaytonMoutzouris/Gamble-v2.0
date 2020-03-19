@@ -78,7 +78,26 @@ public abstract class Equipment : Item
 
     public virtual void Randomize()
     {
-        mRarity = (Rarity)Random.Range(0, (int)Rarity.Count);
+        int rarityRoll = Random.Range(0, 100);
+
+        if(rarityRoll < 50)
+        {
+            mRarity = Rarity.Common;
+        } else if(rarityRoll >= 50 && rarityRoll < 75)
+        {
+            mRarity = Rarity.Uncommon;
+        }
+        else if (rarityRoll >= 75 && rarityRoll < 90)
+        {
+            mRarity = Rarity.Rare;
+
+        }
+        else if (rarityRoll >= 90)
+        {
+            mRarity = Rarity.Legendary;
+        }
+
+
         //statBonuses.Clear();
         //abilities.Clear();
 

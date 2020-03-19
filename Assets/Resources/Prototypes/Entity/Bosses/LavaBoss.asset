@@ -13,27 +13,41 @@ MonoBehaviour:
   m_Name: LavaBoss
   m_EditorClassIdentifier: 
   entityType: 6
+  hostility: 2
   mName: LavaBoss
   bodySize: {x: 40, y: 55}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: d05e52b06a46abe47b06e89246c834f0, type: 2}
+  effects: []
   enemyType: 13
   movementSpeed: 30
   jumpHeight: 120
   sightRange: 300
-  hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: b325466b0d276574b9c6cb83a3309edb, type: 2}
   - {fileID: 11400000, guid: 74792bdb110628341a9a6765424bd075, type: 2}
   meleeAttacks: []
-  lootTable:
-  - {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: ecc5c4652cbe99445b33f8cb2ccfb713, type: 2}
+  lootTable: {fileID: 11400000, guid: 42b5c336bc057ee4eb1a6531152ae8e5, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
   bossType: 0
   phaseTimers: 

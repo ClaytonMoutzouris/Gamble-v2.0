@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   duration: 5
-  cooldown: 0.1
+  cooldown: 0.25
   startUpFrames: 2
   offset: {x: 18, y: 12}
   animationController: {fileID: 0}
-  damage: 5
-  abilities: 
+  damage: 3
   sfx: {fileID: 0}
   projectilePrototype: {fileID: 11400000, guid: e4649dd5b1fca734ab057b119cbd46d4,
     type: 2}

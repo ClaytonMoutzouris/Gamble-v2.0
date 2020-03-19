@@ -32,11 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 024f743c7dbfce5488bdf6490e4cd17a, type: 2}
   - {fileID: 11400000, guid: 4c449261170eeaa4bae16cd768467dfd, type: 2}
   meleeAttacks: []
-  lootTable:
-  - {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
-  - {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
-  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  lootTable: {fileID: 11400000, guid: b5dc7b8b337a1e64c88994fed15f9d13, type: 2}
   stats:
   - type: 0
     value: 0

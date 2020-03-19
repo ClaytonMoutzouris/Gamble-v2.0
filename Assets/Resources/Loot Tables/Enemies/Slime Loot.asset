@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36c4d0294221346896bb825155d613, type: 3}
+  m_Name: Slime Loot
+  m_EditorClassIdentifier: 
+  nodes:
+  - weight: 10
+    item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - weight: 50
+    item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - weight: 25
+    item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - weight: 10
+    item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - weight: 5
+    item: {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
+    minDropNum: 1
+    maxDropNum: 1

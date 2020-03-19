@@ -13,27 +13,41 @@ MonoBehaviour:
   m_Name: HedgehogBoss
   m_EditorClassIdentifier: 
   entityType: 6
+  hostility: 2
   mName: HedgehogBoss
   bodySize: {x: 26, y: 26}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: b8ee25db38c4cc04e8704203ac1ed861, type: 2}
+  effects: []
   enemyType: 13
   movementSpeed: 70
   jumpHeight: 440
   sightRange: 300
-  hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: fdb66bdd54658ad40ae73dce7f2adbbf, type: 2}
   meleeAttacks:
   - {fileID: 11400000, guid: 17493f7349f7dd64b92413404ac9d7db, type: 2}
-  lootTable:
-  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
-  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
-  - {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  lootTable: {fileID: 11400000, guid: b841b6de1245bb042934b3be0f68c3b4, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
   bossType: 3
   phaseTimers: 

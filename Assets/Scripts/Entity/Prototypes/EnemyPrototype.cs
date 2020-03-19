@@ -14,7 +14,8 @@ public class EnemyPrototype : EntityPrototype
     public List<RangedAttackPrototype> rangedAttacks;
     public List<MeleeAttackPrototype> meleeAttacks;
 
-    public List<Item> lootTable;
+    //public List<Item> lootTable;
+    public LootTable lootTable;
     public List<Stat> stats = new List<Stat>() { new Stat(StatType.Attack, 0), new Stat(StatType.Defense, 0), new Stat(StatType.Constitution, 0), new Stat(StatType.Speed, 0), new Stat(StatType.Luck, 0) };
     //Attack attack;
 }

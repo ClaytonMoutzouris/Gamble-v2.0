@@ -63,13 +63,7 @@ public class FrogLegs : Enemy
 
                         Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
-                    }
-
-
-
-
-                    Debug.Log("Its Active");
-                    
+                    }                    
 
                 }
                 else

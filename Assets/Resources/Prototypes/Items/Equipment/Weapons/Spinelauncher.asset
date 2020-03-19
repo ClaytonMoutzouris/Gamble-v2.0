@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
+  m_Name: Spinelauncher
+  m_EditorClassIdentifier: 
+  mName: Spinelauncher
+  mRarity: 3
+  mValue: 
+  sprite: {fileID: -51968960129813083, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  isStackable: 0
+  mSlot: 5
+  baseBonuses:
+  - type: 4
+    bonusValue: 2
+  abilities: 
+  isEquipped: 0
+  damage: 5
+  attack: {fileID: 11400000, guid: 2072f47ccda2a3c48916f5bcf199e3f3, type: 2}

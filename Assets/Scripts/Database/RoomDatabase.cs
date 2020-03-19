@@ -34,8 +34,6 @@ public static class RoomDatabase
                 //Debug.Log("Reading room with header " + header);
                 if (header == 1)
                 {
-                    Debug.LogWarning("Loading a room ");
-
                     temp.Load(reader);
                 }
                 else

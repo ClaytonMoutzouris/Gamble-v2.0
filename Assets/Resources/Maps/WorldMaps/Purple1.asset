@@ -49,3 +49,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  chestLoot: {fileID: 11400000, guid: e8a144e64dd370a459d54aaf15aa2160, type: 2}

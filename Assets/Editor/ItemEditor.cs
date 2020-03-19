@@ -4,6 +4,12 @@ using UnityEngine;
 public class ItemEditor
 {
 
+    [MenuItem("Assets/Create/Items/LootTable")]
+    public static void CreateBaseLootTableAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<LootTable>();
+    }
+
     [MenuItem("Assets/Create/Items/Weapon/MeleeWeapon")]
     public static void CreateBaseMeleeWeaponAsset()
     {

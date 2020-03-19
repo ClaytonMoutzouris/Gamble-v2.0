@@ -32,7 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85a98066e88c5424d8a865acb7c0feae, type: 2}
   - {fileID: 11400000, guid: 4cb045e0c43b96a4180b89cd5e01e7e3, type: 2}
   meleeAttacks: []
-  lootTable: []
+  lootTable: {fileID: 11400000, guid: 6978e64b39e677f41baf920b0d84c2f7, type: 2}
   stats:
   - type: 0
     value: 0

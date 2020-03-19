@@ -68,8 +68,6 @@ public class Hedgehog : Enemy
                             Body.mPS.tmpIgnoresOneWay = true;
                         }
 
-
-                        Debug.Log("Its Active");
                     } else
                     {
                         Renderer.SetAnimState("Attack1");

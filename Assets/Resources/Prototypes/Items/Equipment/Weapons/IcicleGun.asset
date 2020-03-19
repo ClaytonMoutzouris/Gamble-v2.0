@@ -21,6 +21,5 @@ MonoBehaviour:
   baseBonuses: []
   abilities: 
   isEquipped: 0
-  damage: 12
-  weaponAbilities: 
+  damage: 15
   attack: {fileID: 11400000, guid: 304fadbd38999f442ad6fadb9b817e75, type: 2}

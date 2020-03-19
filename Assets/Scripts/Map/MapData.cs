@@ -19,4 +19,5 @@ public class MapData : ScriptableObject {
     public List<EnemyType> largeEnemies;
 
     public List<Sprite> tileSprites;
+    public LootTable chestLoot;
 }

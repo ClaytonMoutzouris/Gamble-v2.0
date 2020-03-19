@@ -59,11 +59,15 @@ public class BossEnemy : Enemy
 
     public override void DropLoot()
     {
-        foreach(Item item in prototype.lootTable)
+        for(int i = 0; i < LevelManager.instance.NumCompletedWorlds(); i++)
         {
-            ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-            temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
+            foreach (Item item in prototype.lootTable.GetLoot())
+            {
+                ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+                temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
+            }
         }
+
 
     }
 

@@ -13,26 +13,40 @@ MonoBehaviour:
   m_Name: TentacleBoss
   m_EditorClassIdentifier: 
   entityType: 6
+  hostility: 2
   mName: TentacleBoss
   bodySize: {x: 28, y: 28}
   CollidesWith: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: 5a7a72c8f6ee23b4a868e2e4d74e9b98, type: 2}
+  effects: []
   enemyType: 13
   movementSpeed: 18
   jumpHeight: 120
   sightRange: 300
-  hostility: 2
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: 44a325137f8678841a5737cb238ccdce, type: 2}
   meleeAttacks: []
-  lootTable:
-  - {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
-  - {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
+  lootTable: {fileID: 11400000, guid: 25851b09a6c8d104db3e17366ff69a02, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
   bossType: 4
   phaseTimers: 000000000000000000000000

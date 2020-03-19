@@ -56,9 +56,17 @@ public class Chest : Entity, IInteractable {
         {
             mOpen = true;
             Renderer.SetAnimState("ChestOpen");
+            Debug.Log("World Type " + MapManager.instance.mCurrentMap.worldType);
+            MapData data = MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType);
+            Debug.Log("MapData " + data.name);
+            Debug.Log("Data " + data.chestLoot.name);
 
-            ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-            temp.Spawn(Position);
+            foreach (Item item in MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType).chestLoot.GetLoot())
+            {
+                ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+                temp.Spawn(Position);
+            }
+
         }
 
 

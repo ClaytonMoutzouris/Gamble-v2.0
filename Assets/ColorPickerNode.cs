@@ -12,7 +12,6 @@ public class ColorPickerNode : ScrollListButton
     void Start()
     {
         scrollParent = scrollList.GetComponent<ScrollRect>();
-        Debug.Log("Scroll parent null? " + scrollParent == null);
         image = GetComponent<Image>();
     }
 

@@ -26,6 +26,11 @@ public static class MapDatabase
 
     public static MapData GetMap(WorldType worldType)
     {
+        if(worldType == WorldType.Hub)
+        {
+            return hubMap;
+        }
+
         List<MapData> maplist = new List<MapData>();
         foreach (MapData data in mMapDatabase)
         {

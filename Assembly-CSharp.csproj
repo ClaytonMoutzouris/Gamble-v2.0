@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\GameData.cs" />
     <Compile Include="Assets\Scripts\Database\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\Database\LootTableDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\MapDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\NPCDatabase.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
@@ -216,6 +217,8 @@
     <Compile Include="Assets\Scripts\Items\Consumables\Food.cs" />
     <Compile Include="Assets\Scripts\Items\Consumables\Medkit.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Items\LootTables\LootTable.cs" />
+    <Compile Include="Assets\Scripts\Items\LootTables\LootTableNode.cs" />
     <Compile Include="Assets\Scripts\Items\Quest Items\Key.cs" />
     <Compile Include="Assets\Scripts\Items\QuestItem.cs" />
     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
