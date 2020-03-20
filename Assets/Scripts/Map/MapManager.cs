@@ -372,6 +372,10 @@ public class MapManager : MonoBehaviour
                 Spikes temp9 = new Spikes(Resources.Load("Prototypes/Entity/Objects/Spikes") as EntityPrototype);
                 temp9.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case ObjectType.Iceblock:
+                Iceblock temp10 = new Iceblock(Resources.Load("Prototypes/Entity/Objects/Iceblock") as EntityPrototype);
+                temp10.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
         

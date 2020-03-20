@@ -10,9 +10,8 @@ public class SharkBoss : BossEnemy
     public int numShots = 100;
     #endregion
 
-    public Vector2 shotLocation = new Vector2(320, 160);
-
-
+    public List<Vector2i> shotLocations = new List<Vector2i>() { new Vector2i(7, 10), new Vector2i(13, 10), new Vector2i(19, 10) };
+    Vector2 shotLocation;
 
     public SharkBoss(BossPrototype proto) : base(proto)
     {
@@ -50,6 +49,7 @@ public class SharkBoss : BossEnemy
                     } else
                     {
                         mBossState = BossState.Attack2;
+                        shotLocation = Map.GetMapTilePosition(shotLocations[Random.Range(0, shotLocations.Count)]);
                     }
 
 
@@ -83,7 +83,7 @@ public class SharkBoss : BossEnemy
         //Replace this with pathfinding to the target
         Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center + attackAnchor)).normalized;
 
-        if (EnemyBehaviour.TargetInRange(this, Target, 64))
+        if (EnemyBehaviour.TargetInRange(this, Target, 128))
         {
             if (!mAttackManager.rangedAttacks[0].onCooldown)
             {

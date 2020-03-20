@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ public class CatBoss : BossEnemy
     bool jumped = false;
 
     bool attacked = false;
-
+    
 
     public CatBoss(BossPrototype proto) :base(proto)
     {
@@ -43,6 +42,9 @@ public class CatBoss : BossEnemy
             case BossState.Attack2:
                 CatScratch();
                 break;
+            case BossState.Attack3:
+                SpawnIceblock();
+                break;
         }
 
         base.EntityUpdate();
@@ -54,6 +56,15 @@ public class CatBoss : BossEnemy
         //make sure the hitbox follows the object
     }
 
+    void SpawnIceblock()
+    {
+        Iceblock iceblock = new Iceblock(Resources.Load<EntityPrototype>("Prototypes/Entity/Objects/Iceblock"));
+        Vector2i spawnPoint = MapManager.instance.GetRoofTile(new Vector2i(Random.Range(4, Map.mCurrentMap.getMapSize().x - 4), 5));
+        iceblock.Spawn(MapManager.instance.GetMapTilePosition(spawnPoint));
+
+    }
+
+
     void Aggrivated()
     {
         CheckForTargets();
@@ -64,6 +75,11 @@ public class CatBoss : BossEnemy
             if (!mAttackManager.meleeAttacks[0].OnCooldown() && !mAttackManager.meleeAttacks[0].mIsActive)
             {
                 mBossState = BossState.Attack2;
+                SpawnIceblock();
+                SpawnIceblock();
+
+                SpawnIceblock();
+
             }
             else
             {

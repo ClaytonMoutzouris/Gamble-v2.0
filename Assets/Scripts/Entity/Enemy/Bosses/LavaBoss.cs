@@ -154,7 +154,7 @@ public class LavaBoss : BossEnemy
             EruptTimer += Time.deltaTime;
         }
 
-        mAttackManager.rangedAttacks[0].Activate(Vector2.up, Position);
+        mAttackManager.rangedAttacks[0].Activate(Vector2.up + new Vector2(Random.Range(-1.0f, 1.0f), 0), Position);
 
     }
 

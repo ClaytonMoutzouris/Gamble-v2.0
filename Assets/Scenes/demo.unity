@@ -9042,6 +9042,7 @@ GameObject:
   - component: {fileID: 1012882233}
   - component: {fileID: 1012882234}
   - component: {fileID: 1012882235}
+  - component: {fileID: 1012882236}
   m_Layer: 5
   m_Name: PlayerPanels
   m_TagString: Untagged
@@ -9118,6 +9119,25 @@ MonoBehaviour:
   - {fileID: 0}
   placeholderPrefab: {fileID: 2203027078102372407, guid: f7464b9812c80d14c9113b93a6cac850,
     type: 3}
+--- !u!95 &1012882236
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012882232}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b34b90d8f5e031146829db718e9e752b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1014738334
 GameObject:
   m_ObjectHideFlags: 0
