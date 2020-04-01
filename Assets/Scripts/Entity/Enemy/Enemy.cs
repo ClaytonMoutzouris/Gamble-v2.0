@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 public enum Hostility { Friendly, Neutral, Hostile };
-public enum TargetRange { Close, Near, Far, OutOfRange };
+
 public class Enemy : Entity, IHurtable
 {
     public EnemyState mEnemyState = EnemyState.Moving;
@@ -11,7 +11,9 @@ public class Enemy : Entity, IHurtable
     //Behaviour
     [SerializeField]
     private Hostility hostility = Hostility.Neutral;
-
+    public float closeRange;
+    public float midRange;
+    public float longRange;
     //End of Behaviour
 
     private Hurtbox hurtBox;

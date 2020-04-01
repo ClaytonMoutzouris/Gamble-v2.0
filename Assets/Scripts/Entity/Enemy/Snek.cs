@@ -26,6 +26,16 @@ public class Snek : Enemy
                 break;
         }
 
+        switch (mEnemyState)
+        {
+            case EnemyState.Idle:
+                break;
+            case EnemyState.Moving:
+                NoHostUpdate();
+                EnemyBehaviour.MoveHostile(this);
+                break;
+        }
+
 
 
         base.EntityUpdate();
@@ -48,20 +58,21 @@ public class Snek : Enemy
             if (col.other.mEntity is Player)
             {
                 host = col.other.mEntity;
-                hostOffset = (col.pos1-col.pos2)*0.5f;
+                hostOffset = (col.pos1 - col.pos2) * 0.5f;
                 ignoreTilemap = true;
                 Body.mState = ColliderState.Closed;
             }
         }
-
+    }
+    /*
         if (Hostility == Hostility.Hostile)
         {
             EnemyBehaviour.CheckForTargets(this);
         }
-
+    
         if (Target != null && !Target.IsDead)
         {
-
+        
             if (Target.Position.x > Position.x)
             {
                 //If they can't proceed horizontally, try jumping.
@@ -80,6 +91,7 @@ public class Snek : Enemy
                 }
                 mDirection = EntityDirection.Left;
             }
+            
 
             EnemyBehaviour.MoveHorizontal(this);
 
@@ -98,7 +110,5 @@ public class Snek : Enemy
                 mDirection = EntityDirection.Left;
             }
         }
-    }
-
-
+        */
 }

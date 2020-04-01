@@ -19,6 +19,7 @@ public static class EnemyBehaviour
                     if (!((Player)entity).IsDead)
                     {
                         enemy.Target = (Player)entity;
+                        enemy.Hostility = Hostility.Hostile;
                         break;
                     }
                 }
@@ -49,15 +50,89 @@ public static class EnemyBehaviour
 
     public static void Jump(Enemy enemy, float jumpSpeed)
     {
+        //If they can't proceed horizontally, try jumping.
+        if (enemy.Body.mPS.pushesRightTile && enemy.Body.mPS.pushesBottom)
+        {
+            enemy.Body.mSpeed.y = jumpSpeed;
+            enemy.mDirection = EntityDirection.Right;
+            enemy.mEnemyState = EnemyState.Jumping;
+        }
+        else
+        {
+            enemy.Body.mSpeed.y = jumpSpeed;
+            enemy.mDirection = EntityDirection.Right;
+            enemy.mEnemyState = EnemyState.Jumping;
+        }
+    }
 
-        enemy.Body.mSpeed.y = jumpSpeed;
-        enemy.mEnemyState = EnemyState.Jumping;
+    public static void MoveHostile(Enemy enemy)
+    {
+        CheckForTargets(enemy);
+        if (enemy.Target != null && !enemy.Target.IsDead)
+        {
+            //Replace this with pathfinding to the target
 
+            if (EnemyBehaviour.TargetInRange(enemy, enemy.Target, enemy.closeRange))
+            {
+                if (!enemy.mAttackManager.meleeAttacks[0].onCooldown)
+                {
+                    //Renderer.SetAnimState("Slime_Attack");
+                    EnemyBehaviour.MeleeAttack(enemy, 0);
+                    EnemyBehaviour.Wait(enemy, 2, EnemyState.Idle);
+                }
+                //StartCoroutine(EnemyBehaviour.Wait(this, mAttackManager.AttackList[0].duration + 2, EnemyState.Moving));
+            }
+            else
+            {
+                if (enemy.Target.Position.x > enemy.Position.x)
+                {
+                    //If they can't proceed horizontally, try jumping.
+                    if (enemy.Body.mPS.pushesRightTile && enemy.Body.mPS.pushesBottom)
+                    {
+                        EnemyBehaviour.Jump(enemy, enemy.jumpHeight);
+                    }
+                    //body.mSpeed.x = mMovingSpeed;
+                    enemy.mDirection = EntityDirection.Right;
+                }
+                else
+                {
+                    if (enemy.Body.mPS.pushesLeftTile && enemy.Body.mPS.pushesBottom)
+                    {
+                        EnemyBehaviour.Jump(enemy, enemy.jumpHeight);
+                    }
+                    enemy.mDirection = EntityDirection.Left;
+                }
+
+                if (!EnemyBehaviour.TargetInRange(enemy, enemy.Target, enemy.midRange))
+                {   
+                    EnemyBehaviour.MoveHorizontal(enemy);
+                }
+            }
+
+        }
+        else
+        {
+            if (enemy.Body.mPS.pushedLeftTile)
+            {
+                //Renderer.Sprite.flipX = true;
+                enemy.mDirection = EntityDirection.Right;
+
+            }
+            else if (enemy.Body.mPS.pushedRightTile)
+            {
+                //Renderer.Sprite.flipX = true;
+                enemy.mDirection = EntityDirection.Left;
+            }
+
+            enemy.Body.mSpeed.x = enemy.mMovingSpeed;
+            EnemyBehaviour.MoveHorizontal(enemy);
+
+        }
     }
 
     public static void Move(Enemy enemy)
     {
-
+        
 
     }
 
@@ -85,12 +160,10 @@ public static class EnemyBehaviour
         if(enemy.Position.x > target.Position.x)
         {
             enemy.Body.mSpeed.x = Mathf.Abs(enemy.mMovingSpeed);
-            //enemy.Body.mAABB.ScaleX = 1;
         }
         else
         {
             enemy.Body.mSpeed.x = enemy.mMovingSpeed * -1;
-            //enemy.Body.mAABB.ScaleX = -1;
         }
     }
 
