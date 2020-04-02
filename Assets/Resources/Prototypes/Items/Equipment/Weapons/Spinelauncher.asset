@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spinelauncher
   m_EditorClassIdentifier: 
   mName: Spinelauncher
-  mRarity: 3
+  mRarity: 4
   mValue: 
   sprite: {fileID: -51968960129813083, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   baseBonuses:
   - type: 4
     bonusValue: 2
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   damage: 5
   attack: {fileID: 11400000, guid: 2072f47ccda2a3c48916f5bcf199e3f3, type: 2}

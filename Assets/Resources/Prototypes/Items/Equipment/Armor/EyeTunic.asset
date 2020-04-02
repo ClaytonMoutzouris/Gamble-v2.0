@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EyeTunic
   m_EditorClassIdentifier: 
   mName: Eye Tunic
-  mRarity: 3
+  mRarity: 4
   mValue: 
   sprite: {fileID: 6871572660717643039, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   baseBonuses:
   - type: 4
     bonusValue: 1
-  abilities: 00000000
+  baseEffects: 01000000
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 0

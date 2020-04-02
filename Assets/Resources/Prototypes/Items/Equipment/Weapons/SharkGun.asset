@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SharkGun
   m_EditorClassIdentifier: 
   mName: Shark Gun
-  mRarity: 3
+  mRarity: 4
   mValue: 1000
   sprite: {fileID: 21300000, guid: 895ca76941f87124181638a8ccc1db42, type: 3}
   isStackable: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
     bonusValue: 2
   - type: 3
     bonusValue: 1
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   damage: 10
   attack: {fileID: 11400000, guid: ec757765b785189409b670580d1f4aed, type: 2}

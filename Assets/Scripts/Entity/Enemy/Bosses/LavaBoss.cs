@@ -24,7 +24,7 @@ public class LavaBoss : BossEnemy
 
     private float ChargeTimer = 0;
     public float ChargeDuration = 2;
-    public float ChargeSpeed = 1200;
+    public float ChargeSpeed = 800;
     private int ChargeDirection = 1;
 
 

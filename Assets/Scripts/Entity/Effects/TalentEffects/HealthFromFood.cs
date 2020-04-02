@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthFromFood : Effect
+public class StatsFromFood : Effect
 {
 
 
-    public HealthFromFood()
+    public StatsFromFood()
     {
-        effectName = "HealthFromFood";
-        type = EffectType.HealthFromFood;
+        effectName = "Stats From Food";
+        type = EffectType.StatsFromFood;
     }
 
     public override void OnConsumeItem(Player player, ConsumableItem item)

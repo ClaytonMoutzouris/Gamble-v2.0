@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SharkfinHelm
   m_EditorClassIdentifier: 
   mName: Sharkfin Helm
-  mRarity: 3
+  mRarity: 4
   mValue: 
   sprite: {fileID: -2101561059080248862, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
     bonusValue: 1
   - type: 2
     bonusValue: 1
-  abilities: 
+  baseEffects: 08000000
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 0

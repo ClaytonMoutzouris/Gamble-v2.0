@@ -18,7 +18,6 @@ MonoBehaviour:
   offset: {x: 0, y: 16}
   animationController: {fileID: 0}
   damage: 6
-  abilities: 
   sfx: {fileID: 0}
   projectilePrototype: {fileID: 11400000, guid: 2375d32a6296b2d4b807924d04d404e2,
     type: 2}

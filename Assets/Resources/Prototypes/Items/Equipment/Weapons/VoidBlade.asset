@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VoidBlade
   m_EditorClassIdentifier: 
   mName: Void Blade
-  mRarity: 3
+  mRarity: 4
   mValue: 10000
   sprite: {fileID: -2498838823653085445, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
     bonusValue: 2
   - type: 3
     bonusValue: 2
-  abilities: 
+  baseEffects: 02000000
   isEquipped: 0
   damage: 25
   attack: {fileID: 11400000, guid: ab99a4bc7a247004c95cda834cc383f9, type: 2}

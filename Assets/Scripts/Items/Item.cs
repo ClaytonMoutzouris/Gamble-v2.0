@@ -54,6 +54,9 @@ public abstract class Item : ScriptableObject
             case Rarity.Legendary:
                 rarity = "orange";
                 break;
+            case Rarity.Artifact:
+                rarity = "red";
+                break;
         }
 
         return rarity;
@@ -67,8 +70,9 @@ public abstract class Equipment : Item
     public EquipmentSlot mSlot;
     public List<StatBonus> baseBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
-    public List<PlayerAbility> abilities;
+    //public List<PlayerAbility> abilities;
     private List<EffectType> possibleEffects = new List<EffectType>();
+    public List<EffectType> baseEffects;
     List<Effect> effects = new List<Effect>();
     //public Trait trait;
     public bool isEquipped;
@@ -78,23 +82,33 @@ public abstract class Equipment : Item
 
     public virtual void Randomize()
     {
-        int rarityRoll = Random.Range(0, 100);
 
-        if(rarityRoll < 50)
+        if(mRarity != Rarity.Artifact)
         {
-            mRarity = Rarity.Common;
-        } else if(rarityRoll >= 50 && rarityRoll < 75)
-        {
-            mRarity = Rarity.Uncommon;
-        }
-        else if (rarityRoll >= 75 && rarityRoll < 90)
-        {
-            mRarity = Rarity.Rare;
+            int rarityRoll = Random.Range(0, 100);
 
+            if (rarityRoll < 50)
+            {
+                mRarity = Rarity.Common;
+            }
+            else if (rarityRoll >= 50 && rarityRoll < 75)
+            {
+                mRarity = Rarity.Uncommon;
+            }
+            else if (rarityRoll >= 75 && rarityRoll < 90)
+            {
+                mRarity = Rarity.Rare;
+
+            }
+            else if (rarityRoll >= 90)
+            {
+                mRarity = Rarity.Legendary;
+            }
         }
-        else if (rarityRoll >= 90)
+        
+        foreach(EffectType type in baseEffects)
         {
-            mRarity = Rarity.Legendary;
+            Effects.Add(Effect.GetEffectFromType(type));
         }
 
 
@@ -118,21 +132,12 @@ public abstract class Equipment : Item
             statBonuses.Add(new StatBonus(statType, Random.Range(minBonus, maxBonus + (int)mRarity)));
         }
 
-        if(mRarity == Rarity.Legendary || mRarity == Rarity.Rare)
+        if(mRarity == Rarity.Legendary || mRarity == Rarity.Rare || mRarity == Rarity.Artifact)
         {
-            foreach (EffectType type in System.Enum.GetValues(typeof(EffectType)))
-            {
-                possibleEffects.Add(type);
-            }
-            Debug.Log("Randomizing Item, possible effects: " + PossibleEffects.Count);
-            Effects.Add(Effect.GetEffectFromType(possibleEffects[Random.Range(0, possibleEffects.Count)]));
+            Effects.Add(Effect.GetEffectFromType((EffectType)Random.Range(0, (int)EffectType.Heavy)));
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
         }
         
-        foreach(Effect effect in Effects)
-        {
-            Debug.Log(effect.type);
-        }
     }
 
     public virtual void OnEquip(Player player)
@@ -141,10 +146,6 @@ public abstract class Equipment : Item
         player.mStats.AddBonuses(statBonuses);
         player.mStats.AddBonuses(baseBonuses);
         player.Health.UpdateHealth();
-        foreach(PlayerAbility ability in abilities)
-        {
-            player.activeAbilities.Add(ability);
-        }
 
         foreach(Effect effect in Effects)
         {
@@ -158,10 +159,6 @@ public abstract class Equipment : Item
         player.mStats.RemoveBonuses(baseBonuses);
 
         player.Health.UpdateHealth();
-        foreach (PlayerAbility ability in abilities)
-        {
-            player.activeAbilities.Remove(ability);
-        }
 
         foreach (Effect effect in Effects)
         {

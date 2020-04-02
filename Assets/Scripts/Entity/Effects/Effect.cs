@@ -95,8 +95,8 @@ public abstract class Effect
             case EffectType.ChestFinder:
                 effect = new ChestFinder();
                 break;
-            case EffectType.HealthFromFood:
-                effect = new HealthFromFood();
+            case EffectType.StatsFromFood:
+                effect = new StatsFromFood();
                 break;
             case EffectType.ReusableMedkits:
                 effect = new ReusableMedkits();
