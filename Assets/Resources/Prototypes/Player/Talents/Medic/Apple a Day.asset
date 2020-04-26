@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Eating food grants stats
   level: 
   type: 1
-  effectTypes: 0f000000
+  effectTypes: 10000000
   statBonuses: []
   bonusItems:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}

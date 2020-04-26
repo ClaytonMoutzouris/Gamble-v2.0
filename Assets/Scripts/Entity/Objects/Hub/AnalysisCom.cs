@@ -38,7 +38,11 @@ public class AnalysisCom : Entity, IInteractable
         {
             if(slot.item is Biosample sample && !sample.identified)
             {
-                sample.Identify();
+                if (sample.Identify())
+                {
+                    ShowFloatingText("Analyzed " + sample.getTooltip(), Color.green);
+                    return true;
+                }
             }
         }
 

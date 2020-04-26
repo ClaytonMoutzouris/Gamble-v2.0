@@ -6,7 +6,6 @@ using TMPro;
 public class ButtonTooltip : MonoBehaviour
 {
     public TextMeshPro text;
-    public SpriteRenderer buttonIcon;
 
     private void Start()
     {

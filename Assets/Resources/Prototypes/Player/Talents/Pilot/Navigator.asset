@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Reveal chests on the minimap
   level: 
   type: 0
-  effectTypes: 0e000000
+  effectTypes: 0f000000
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}

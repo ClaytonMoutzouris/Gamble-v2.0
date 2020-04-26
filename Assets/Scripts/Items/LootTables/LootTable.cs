@@ -8,7 +8,7 @@ public class LootTable : ScriptableObject
     public List<Item> guaranteedDrops;
 
 
-    public List<Item> GetLoot()
+    public List<Item> GetLoot(int numRandomItems = 1)
     {
         List<Item> items = new List<Item>();
 
@@ -21,19 +21,25 @@ public class LootTable : ScriptableObject
             ranges.Add(weightTotal);
         }
 
-        int random = Random.Range(0, weightTotal);
-
-        for(int i = 0; i < ranges.Count; i++)
+        int random;
+        
+        for(int r = 0; r < numRandomItems; r++)
         {
-            if (random < ranges[i])
+            random = Random.Range(0, weightTotal);
+
+            for (int i = 0; i < ranges.Count; i++)
             {
-                if (nodes[i].item != null)
+                if (random < ranges[i])
                 {
-                    items.Add(nodes[i].item);
+                    if (nodes[i].item != null)
+                    {
+                        items.Add(nodes[i].item);
+                    }
+                    break;
                 }
-                break;
             }
         }
+
 
         foreach(Item node in guaranteedDrops)
         {

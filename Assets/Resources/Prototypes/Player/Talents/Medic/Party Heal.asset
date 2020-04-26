@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Healing also heals allies
   level: 3
   type: 1
-  effectTypes: 11000000
+  effectTypes: 12000000
   statBonuses: []
   bonusItems: []
   icon: {fileID: 0}

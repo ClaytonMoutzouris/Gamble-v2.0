@@ -101,13 +101,13 @@ public class PlayerInventoryUI : MonoBehaviour
         optionsList.OpenOptions(slot);
     }
 
-    public void SlotSelected(InventorySlotUI slot)
+    public void SlotSelected(InventorySlotUI selectedSlot)
     {
         if(selectionMode)
         {
-            if(moving.slotID != slot.slotID)
+            if(moving.slotID != selectedSlot.slotID)
             {
-                player.Inventory.MoveItem(moving.slotID, slot.slotID);
+                player.Inventory.MoveItem(moving.slot, selectedSlot.slot);
             }
 
             moving = null;
@@ -115,7 +115,7 @@ public class PlayerInventoryUI : MonoBehaviour
         }
         else
         {
-            OpenOptionsList(slot);
+            OpenOptionsList(selectedSlot);
         }
     }
     

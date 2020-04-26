@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class InventorySlot
 {
+    [HideInInspector]
     public PlayerInventory inventory;
     public Item item = null;
     public int amount = 0;
@@ -75,7 +77,9 @@ public class InventorySlot
     }
 
     public void DropItem()
-    { 
+    {
+        if (item == null)
+            return;
         ItemObject temp = new ItemObject(item, Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
         temp.Spawn(inventory.mPlayer.Position + new Vector2(0, MapManager.cTileSize / 2));
         if (item is Equipment equip && equip.isEquipped)

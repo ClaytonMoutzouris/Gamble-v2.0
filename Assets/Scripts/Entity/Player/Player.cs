@@ -299,9 +299,10 @@ public class Player : Entity, IHurtable
         }
     }
 
-    public void HandleInventoryInput()
+    public void HandlePlayerPanelInput()
     {
-        if(Input.playerButtonInput[(int)ButtonInput.Teleport] & !input.previousButtonInput[(int)ButtonInput.Teleport])
+        //Swap between panel tabs
+        if (Input.playerButtonInput[(int)ButtonInput.Teleport] & !input.previousButtonInput[(int)ButtonInput.Teleport])
         {
             playerPanel.NextTabLeft();
         }
@@ -311,20 +312,24 @@ public class Player : Entity, IHurtable
             playerPanel.NextTabRight();
         }
 
-        if(Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
+        //Inventory specific
+        if (playerPanel.selectedTabIndex == PlayerPanelTab.Inventory)
         {
-            Inventory.slots[Inventory.inventoryUI.currentSlot.slotID].DropItem();
-        }
+            if (Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
+            {
+                Inventory.slots[Inventory.inventoryUI.currentSlot.slotID].DropItem();
+            }
 
-        if (Input.playerButtonInput[(int)ButtonInput.InventoryMove])
-        {
-            Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
-        }
+            if (Input.playerButtonInput[(int)ButtonInput.InventoryMove])
+            {
+                Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
+            }
 
 
-        if (Input.playerButtonInput[(int)ButtonInput.InventorySort])
-        {
-            Inventory.SortInventory();
+            if (Input.playerButtonInput[(int)ButtonInput.InventorySort])
+            {
+                Inventory.SortInventory();
+            }
         }
         
     }
@@ -382,7 +387,7 @@ public class Player : Entity, IHurtable
 
         if(Input.inputState == PlayerInputState.Inventory)
         {
-            HandleInventoryInput();
+            HandlePlayerPanelInput();
         }
 
         //
@@ -1410,6 +1415,8 @@ public class Player : Entity, IHurtable
         {
             effect.OnPlayerDeath(this);
         }
+
+        Renderer.SetAnimState("Dead");
     }
 
     public void Ressurect()

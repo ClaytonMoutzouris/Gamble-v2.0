@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum PlayerPanelTab { Inventory, Stats, Ship, Level };
+
 public class PlayerPanel : MonoBehaviour
 {
     public int playerIndex;
@@ -11,7 +13,7 @@ public class PlayerPanel : MonoBehaviour
     public PlayerInventoryUI inventoryUI;
     public UIPlayerTab uiPlayerTab;
     public TalentTreeUI talentTree;
-    public int selectedTabIndex = 0;
+    public PlayerPanelTab selectedTabIndex = PlayerPanelTab.Inventory;
     public List<GameObject> tabs;
     public GameObject inputAnchor;
     public GameObject menuObject;
@@ -27,7 +29,7 @@ public class PlayerPanel : MonoBehaviour
             tab.SetActive(false);
         }
 
-        tabs[selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].SetActive(true);
         inventoryUI.Initialize();
     }
 
@@ -39,41 +41,41 @@ public class PlayerPanel : MonoBehaviour
 
     public void SetTab(int index)
     {
-        if(selectedTabIndex == index)
+        if((int)selectedTabIndex == index)
         {
             return;
         }
 
-        tabs[selectedTabIndex].SetActive(false);
+        tabs[(int)selectedTabIndex].SetActive(false);
         tabs[index].SetActive(true);
-        selectedTabIndex = index;
+        selectedTabIndex = (PlayerPanelTab)index;
     }
 
     public void NextTabRight()
     {
-        tabs[selectedTabIndex].SetActive(false);
+        tabs[(int)selectedTabIndex].SetActive(false);
 
         selectedTabIndex++;
-        if(selectedTabIndex >= tabs.Count)
+        if((int)selectedTabIndex >= tabs.Count)
         {
             selectedTabIndex = 0;
         }
 
-        tabs[selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].SetActive(true);
 
     }
 
     public void NextTabLeft()
     {
-        tabs[selectedTabIndex].SetActive(false);
+        tabs[(int)selectedTabIndex].SetActive(false);
 
         selectedTabIndex--;
         if (selectedTabIndex < 0)
         {
-            selectedTabIndex = tabs.Count-1;
+            selectedTabIndex = (PlayerPanelTab)tabs.Count-1;
         }
 
-        tabs[selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].SetActive(true);
     }
 
     public void PositionTab()

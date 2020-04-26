@@ -62,30 +62,31 @@ public class PlayerInventory
     public void SortInventory()
     {
         int sortIndex = 0;
-        List<InventorySlotUI> indexes = new List<InventorySlotUI>();
 
         for(int i = 0; i < slots.Length; i++)
         {
-            if(slots[i] != null) {
+            if(!slots[i].IsEmpty()) {
                 if (slots[i].item is Equipment equippable && equippable.isEquipped)
                 {
-                    MoveItem(i, sortIndex);
+                    MoveItem(slots[i], slots[sortIndex]);
                     sortIndex++;
                 } 
             }
         }
 
+        
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i] != null)
+            if (!slots[i].IsEmpty())
             {
                 if (!(slots[i].item is Equipment equippable) || !equippable.isEquipped)
                 {
-                    MoveItem(i, sortIndex);
+                    MoveItem(slots[i], slots[sortIndex]);
                     sortIndex++;
                 }
             }
         }
+        
     }
 
     public InventorySlot FindKeySlot()
@@ -102,37 +103,43 @@ public class PlayerInventory
         return null;
     }
 
-    public void MoveItem(int prev, int dest)
+    public void MoveItem(InventorySlot toMove, InventorySlot destination)
     {
-        if(dest > size)
+        if(toMove == destination)
         {
-            //This shouldnt happen
             return;
         }
 
-        if(slots[dest].IsEmpty())
+        if(destination.IsEmpty())
         {
 
-            Item temp = slots[prev].item;
-            int numTemps = slots[prev].amount;
-            slots[prev].ClearSlot();
+            Item temp = toMove.item;
+            int numTemps = toMove.amount;
+            toMove.ClearSlot();
 
-            slots[dest].AddItemToSlot(temp, numTemps);
+            destination.AddItemToSlot(temp, numTemps);
 
         }
-        else
+        else if(destination.item.isStackable && destination.item.mName.Equals(toMove))
         {
-            Item prevItem = slots[prev].item;
-            int numPrevs = slots[prev].amount;
+            Item prevItem = toMove.item;
+            int numPrevs = toMove.amount;
+            toMove.ClearSlot();
 
-            Item destItem = slots[dest].item;
-            int numDests = slots[dest].amount;
+            destination.AddItemToSlot(prevItem, numPrevs);
+        } else
+        {
+            Item prevItem = toMove.item;
+            int numPrevs = toMove.amount;
 
-            slots[prev].ClearSlot();
-            slots[dest].ClearSlot();
+            Item destItem = destination.item;
+            int numDests = destination.amount;
 
-            slots[dest].AddItemToSlot(prevItem, numPrevs);
-            slots[prev].AddItemToSlot(destItem, numDests);
+            toMove.ClearSlot();
+            destination.ClearSlot();
+
+            destination.AddItemToSlot(prevItem, numPrevs);
+            toMove.AddItemToSlot(destItem, numDests);
 
         }
     }
@@ -142,7 +149,7 @@ public class PlayerInventory
     {
         foreach(InventorySlot slot in slots)
         {
-            if(slot.item.Equals(item))
+            if(!slot.IsEmpty() && slot.item.Equals(item))
             {
                 return slot;
             }

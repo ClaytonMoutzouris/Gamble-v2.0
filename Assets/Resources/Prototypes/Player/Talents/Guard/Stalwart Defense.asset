@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Enemies cannot push you back
   level: 
   type: 2
-  effectTypes: 0a000000
+  effectTypes: 0b000000
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
