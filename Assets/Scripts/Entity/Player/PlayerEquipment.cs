@@ -32,6 +32,7 @@ public class PlayerEquipment
 
             Equipment[item.mSlot] = item;
             item.OnEquip(mPlayer);
+            mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]).GetInventorySlot().UpdateSlotUI();
 
             return true;
         }

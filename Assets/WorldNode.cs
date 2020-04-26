@@ -9,6 +9,7 @@ public class WorldNode : MonoBehaviour
     public Image image;
     public int worldID;
     public Button button;
+    public bool completed = false;
     // Start is called before the first frame update
     void Awake()
     {

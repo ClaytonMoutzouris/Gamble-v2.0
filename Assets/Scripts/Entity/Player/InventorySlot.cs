@@ -98,12 +98,8 @@ public class InventorySlot
                 return;
             }
 
-            if (inventory.mPlayer.Equipment.EquipItem(equippable))
-            {
+            inventory.mPlayer.Equipment.EquipItem(equippable);
 
-                slotUI.UpdateSlotUI();
-
-            }
 
 
         }

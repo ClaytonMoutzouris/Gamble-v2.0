@@ -138,7 +138,7 @@ public class NavigationMenu : MonoBehaviour
 
         defaultObject = temp.gameObject;
 
-
+        LevelManager.instance.completedWorlds.Add(false);
     }
 
     public void SetDefaultNode()

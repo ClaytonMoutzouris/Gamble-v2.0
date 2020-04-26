@@ -74,10 +74,9 @@ public class BossEnemy : Enemy
     public override void Die()
     {
         SoundManager.instance.PlayLevelMusic((int)LevelManager.instance.mMap.mCurrentMap.worldType);
-        if(LevelManager.instance.currentWorldIndex < 5)
-        {
-            LevelManager.instance.WorldCleared(LevelManager.instance.currentWorldIndex);
-        }
+
+        LevelManager.instance.WorldCleared(LevelManager.instance.currentWorldIndex);
+        
         base.Die();
     }
 }
