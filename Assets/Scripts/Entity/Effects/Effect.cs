@@ -7,19 +7,23 @@ public abstract class Effect
     public string effectName;
     public string description;
     public EffectType type;
-    Player owner;
+    protected Player owner;
     //AbilityTrigger trigger;
 
     public virtual void OnEquipTrigger(Player player) {
         player.itemEffects.Add(this);
+        owner = player;
     }
     public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
     public virtual void OnUnequipTrigger(Player player) {
         player.itemEffects.Remove(this);
+        owner = null;
+
     }
-    public virtual void OnUpdateTrigger(Player player) { }
+    public virtual void OnUpdate() { }
+    public virtual void OnSecondUpdate() { }
 
     public virtual void OnWalkTrigger(Player player)
     {
@@ -39,7 +43,9 @@ public abstract class Effect
     public virtual void OnEnemyDeath(Enemy enemy) { }
 
 
-    public virtual void OnLearned(Player player) { }
+    public virtual void OnLearned(Player player) {
+        owner = player;
+    }
 
     public static Effect GetEffectFromType(EffectType type)
     {
@@ -95,14 +101,17 @@ public abstract class Effect
             case EffectType.ChestFinder:
                 effect = new ChestFinder();
                 break;
-            case EffectType.StatsFromFood:
-                effect = new StatsFromFood();
+            case EffectType.MaxHPFromFood:
+                effect = new MaxHPFromFood();
                 break;
             case EffectType.ReusableMedkits:
                 effect = new ReusableMedkits();
                 break;
             case EffectType.PartyHeal:
                 effect = new PartyHeal();
+                break;
+            case EffectType.Aura:
+                effect = new Aura();
                 break;
             default:
                 Debug.LogError("Failed to find effect of type : " + type);

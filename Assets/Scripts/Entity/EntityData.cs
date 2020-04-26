@@ -58,6 +58,15 @@ public class ObjectData : EntityData
     }
 }
 
+public class ItemObjectData : ObjectData
+{
+    public string itemType;
+    public ItemObjectData(int x, int y, ObjectType t, string itemType) : base(x, y, t)
+    {
+        this.itemType = itemType;
+    }
+}
+
 public class NPCData : EntityData
 {
     public NPCType type;

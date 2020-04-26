@@ -12,12 +12,27 @@ public static class ItemDatabase {
         return true;
     }
 
+    public static Item GetItem(string name)
+    {
+
+        foreach(Item item in mItemDatabase)
+        {
+            if(item.mName.Equals(name))
+            {
+                return NewItem(item);
+
+            }
+        }
+
+        return null;
+    }
+
     public static Item GetRandomItem()
     {
         Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
         if(item is Equipment equipment)
         {
-            equipment.Randomize();
+            equipment.RandomizeStats();
             item = equipment;
         }
         return item;
@@ -28,9 +43,10 @@ public static class ItemDatabase {
         Item nItem = ScriptableObject.Instantiate(item);
         if (nItem is Equipment equipment)
         {
-            equipment.Randomize();
+            equipment.RandomizeStats();
             nItem = equipment;
         }
+
         return nItem;
     }
 

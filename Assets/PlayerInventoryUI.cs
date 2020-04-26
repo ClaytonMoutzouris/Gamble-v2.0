@@ -8,38 +8,39 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     public Player player;
     public PlayerPanel panel;
-    public int numStartingSlots;
-    public List<InventorySlot> slots;
-    public InventorySlot slotPrefab;
+    public int numStartingSlots = 50;
+    public List<InventorySlotUI> slots;
+    public InventorySlotUI slotPrefab;
     public int columns;
     public InventoryOptionList optionsList;
 
     public Selectable interactableUp;
     public bool selectionMode = false;
-    public InventorySlot moving;
-    public InventorySlot currentSlot;
+    public InventorySlotUI moving;
+    public InventorySlotUI currentSlot;
 
     public void Initialize()
     {
         Debug.Log("Starting Player Inventory UI");
         Debug.Log("Starting Slots " + numStartingSlots);
 
-        slots = new List<InventorySlot>();
+        slots = new List<InventorySlotUI>();
 
         for(int i = 0; i < numStartingSlots; i++)
         {
             AddSlot();
         }
+
     }
 
-    InventorySlot getSlot(int x, int y)
+    InventorySlotUI getSlot(int x, int y)
     {
         return slots[y * columns + x];
     }
 
-    InventorySlot AddSlot()
+    InventorySlotUI AddSlot()
     {
-        InventorySlot slot = Instantiate(slotPrefab, transform);
+        InventorySlotUI slot = Instantiate(slotPrefab, transform);
         Navigation customNav = slot.GetComponent<Button>().navigation;
         Navigation leftNav, upNav;
         int index = slots.Count;
@@ -81,44 +82,9 @@ public class PlayerInventoryUI : MonoBehaviour
         return slot;
     }
 
-    public InventorySlot getFirstEmpty()
-    {
-        foreach (InventorySlot slot in slots)
-        {
-            if(slot.GetItem() == null)
-            {
-                return slot;
-            }
-        }
-
-        return AddSlot();
-    }
-
-    public void AddItem(Item item, int index)
-    {
-        Debug.Log("Size of slots array " + slots.Count);
-        slots[index].SetItem(item);
-
-    }
-
-    public void RemoveItem(int index)
-    {
-        slots[index].ClearItem();
-    }
-
-    public void EquipItem(int index)
-    {
-        slots[index].SetEquipped(true);
-    }
-
-    public void UnequipItem(int index)
-    {
-        slots[index].SetEquipped(false);
-    }
-
     public void MoveItem(int index)
     {
-        if(slots[index].item == null)
+        if(slots[index].slot.item == null)
         {
             return;
         }
@@ -126,16 +92,16 @@ public class PlayerInventoryUI : MonoBehaviour
         selectionMode = true;
     }
 
-    public void OpenOptionsList(InventorySlot slot)
+    public void OpenOptionsList(InventorySlotUI slot)
     {
-        if (slot.IsEmpty())
+        if (slot.slot.IsEmpty())
         {
             return;
         }
         optionsList.OpenOptions(slot);
     }
 
-    public void SlotSelected(InventorySlot slot)
+    public void SlotSelected(InventorySlotUI slot)
     {
         if(selectionMode)
         {

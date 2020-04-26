@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-
+    public Animator animator;
     public SpriteRenderer spriteRenderer;
 
     public void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     public void SetSprite(Sprite sprite)

@@ -6,11 +6,11 @@ public class Food : ConsumableItem
 {
     public int value = 20;
 
-    public override void Use(Player player, int index)
+    public override bool Use(Player player)
     {
         player.GainLife(value);
 
-        base.Use(player, index);
+        return base.Use(player);
     }
 
     public override string getTooltip()

@@ -43,11 +43,11 @@ public class TileMapRenderer : MonoBehaviour
                 if (x < mapData.sizeX * mapData.roomSizeX && y < mapData.sizeY * mapData.roomSizeY)
                 {
                     spriteMap[x, y].SetSprite(mapData.tileSprites[(int)tiles[x, y]]);
+                    
                 }
                 else
                 {
                     spriteMap[x, y].ClearSprite();
-
                 }
 
             }

@@ -10,7 +10,7 @@ public class InventoryOptionList : MonoBehaviour
     public PlayerInventoryUI playerInventory;
     public List<InventoryOptionButton> options;
     public InventoryOptionButton optionPrefab;
-    public InventorySlot focusedSlot;
+    public InventorySlotUI focusedSlot;
 
     // Start is called before the first frame update
     void Start()
@@ -46,9 +46,9 @@ public class InventoryOptionList : MonoBehaviour
             return;
         }
 
-        List<InventoryOption> validOptions = focusedSlot.item.GetInventoryOptions();
+        List<InventoryOption> validOptions = focusedSlot.slot.item.GetInventoryOptions();
 
-        if(validOptions.Contains(InventoryOption.Equip) && focusedSlot.isEquipped)
+        if(validOptions.Contains(InventoryOption.Equip) && focusedSlot.slot.item is Equipment equippable && equippable.isEquipped)
         {
             validOptions.Remove(InventoryOption.Equip);
             validOptions.Insert(0, InventoryOption.Unequip);
@@ -88,7 +88,7 @@ public class InventoryOptionList : MonoBehaviour
 
     }
 
-    public void OpenOptions(InventorySlot slot)
+    public void OpenOptions(InventorySlotUI slot)
     {
         focusedSlot = slot;
         SetOptions();
@@ -106,18 +106,18 @@ public class InventoryOptionList : MonoBehaviour
         switch (option)
         {
             case InventoryOption.Drop:
-                playerInventory.player.Inventory.DropItem(focusedSlot.slotID);
+                focusedSlot.slot.DropItem();
                 break;
             case InventoryOption.Use:
-                playerInventory.player.Inventory.UseItem(focusedSlot.slotID);
+                focusedSlot.slot.UseItem();
 
                 break;
             case InventoryOption.Equip:
-                playerInventory.player.Inventory.EquipItem(focusedSlot.slotID);
+                focusedSlot.slot.EquipItem();
 
                 break;
             case InventoryOption.Unequip:
-                playerInventory.player.Inventory.UnequipItem(focusedSlot.slotID);
+                focusedSlot.slot.UnequipItem();
 
                 break;
             case InventoryOption.Move:

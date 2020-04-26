@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatsFromFood : Effect
+public class MaxHPFromFood : Effect
 {
 
 
-    public StatsFromFood()
+    public MaxHPFromFood()
     {
-        effectName = "Stats From Food";
-        type = EffectType.StatsFromFood;
+        effectName = "Max HP From Food";
+        type = EffectType.MaxHPFromFood;
     }
 
     public override void OnConsumeItem(Player player, ConsumableItem item)
@@ -18,7 +18,9 @@ public class StatsFromFood : Effect
 
         if(item is Food)
         {
-            player.mStats.AddBonus(new StatBonus((StatType)Random.Range(0, (int)StatType.Luck + 1), 1));
+            player.Health.baseHP += 1;
+            player.Health.UpdateHealth();
+            player.GainLife(1);
         }
 
     }

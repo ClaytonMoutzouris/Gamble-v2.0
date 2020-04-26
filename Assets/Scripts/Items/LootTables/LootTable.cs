@@ -5,6 +5,7 @@ using UnityEngine;
 public class LootTable : ScriptableObject
 {
     public List<LootTableNode> nodes;
+    public List<Item> guaranteedDrops;
 
 
     public List<Item> GetLoot()
@@ -26,9 +27,17 @@ public class LootTable : ScriptableObject
         {
             if (random < ranges[i])
             {
-                items.Add(nodes[i].item);
+                if (nodes[i].item != null)
+                {
+                    items.Add(nodes[i].item);
+                }
                 break;
             }
+        }
+
+        foreach(Item node in guaranteedDrops)
+        {
+            items.Add(node);
         }
 
         return items;

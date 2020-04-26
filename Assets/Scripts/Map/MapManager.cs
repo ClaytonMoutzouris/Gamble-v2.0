@@ -328,6 +328,7 @@ public class MapManager : MonoBehaviour
         return temp;
     }
 
+    //TODO: I really hate this, I don't want to have to make a class based on an enum
     public void AddObjectEntity(ObjectData data)
     {
         switch (data.type)
@@ -375,6 +376,17 @@ public class MapManager : MonoBehaviour
             case ObjectType.Iceblock:
                 Iceblock temp10 = new Iceblock(Resources.Load("Prototypes/Entity/Objects/Iceblock") as EntityPrototype);
                 temp10.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.AnalysisCom:
+                AnalysisCom temp11 = new AnalysisCom(Resources.Load("Prototypes/Entity/Objects/AnalysisCom") as EntityPrototype);
+                temp11.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.Item:
+                if(data is ItemObjectData itemData)
+                {
+                    ItemObject temp12 = new ItemObject(ItemDatabase.GetItem(itemData.itemType), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+                    temp12.Spawn(GetMapTilePosition(data.TilePosition));
+                }
                 break;
         }
     }

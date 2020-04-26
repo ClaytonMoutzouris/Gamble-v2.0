@@ -36,8 +36,7 @@ public class LevelManager : MonoBehaviour
     public MapType changeToType;
 
     public bool warpToHubFlag = false;
-    public int numMaps = 5;
-    public bool[] completedWorlds;
+    public List<bool> completedWorlds;
     public int currentWorldIndex = 0;
 
     private void Awake()
@@ -94,15 +93,10 @@ public class LevelManager : MonoBehaviour
         NewGameMap(MapType.Hub);
         if(mGameMode != GameMode.Start)
         {
-            NavigationMenu.instance.SetMaps();
+            NavigationMenu.instance.ClearMaps();
         }
 
-        completedWorlds = new bool[numMaps];
-
-        for (int i = 0; i < completedWorlds.Length; i++)
-        {
-            completedWorlds[i] = false;
-        }
+        completedWorlds = new List<bool>();
 
         mGameMode = GameMode.Game;
     }
@@ -303,24 +297,11 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    public bool AllWorldsCleared()
-    {
-        for(int i = 0; i < completedWorlds.Length; i++)
-        {
-            if(!completedWorlds[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public int NumCompletedWorlds()
     {
         int completed = 0;
 
-        for (int i = 0; i < completedWorlds.Length; i++)
+        for (int i = 0; i < completedWorlds.Count; i++)
         {
             if (completedWorlds[i])
             {

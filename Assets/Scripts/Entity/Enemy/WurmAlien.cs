@@ -77,7 +77,6 @@ public class WurmAlien : Enemy
                         }
 
 
-                        Debug.Log("Its Active");
                     }
 
                 }

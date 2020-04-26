@@ -23,8 +23,8 @@ public class PlayerClass : ScriptableObject
         {
             Equipment temp = (Equipment)ItemDatabase.NewItem(equipment);
             
-            int index = player.Inventory.AddItemToInventory(temp);
-            player.Inventory.EquipItem(index);
+            player.Inventory.AddItemToInventory(temp);
+            player.Equipment.EquipItem(temp);
             //player.Equipment.EquipItem(temp);
         }
 

@@ -16,5 +16,5 @@ MonoBehaviour:
   mRarity: 1
   mValue: 0
   sprite: {fileID: 21300000, guid: 75e8f78fb38413d4b8ac19931e75fa51, type: 3}
-  isStackable: 0
+  isStackable: 1
   lockID: 1

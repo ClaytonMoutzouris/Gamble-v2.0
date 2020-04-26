@@ -8,7 +8,7 @@ public class PlayerInventory
 {
     public PlayerInventoryUI inventoryUI;
     public Player mPlayer;
-    public Item[] items;
+    public InventorySlot[] slots;
     public int size = 50;
      
     public PlayerInventory(Player player)
@@ -17,53 +17,57 @@ public class PlayerInventory
 
         inventoryUI = PlayerUIPanels.instance.playerPanels[mPlayer.mPlayerIndex].inventoryUI;
         inventoryUI.player = mPlayer;
-        items = new Item[size];
-    }
-
-
-    public int AddItemToInventory(Item item)
-    {
+        slots = new InventorySlot[size];
 
         for (int i = 0; i < size; i++)
         {
-            if (items[i] == null)
+            slots[i] = new InventorySlot(this);
+            slots[i].SetInventorySlot(inventoryUI.slots[i]);
+        }
+    }
+
+
+    public bool AddItemToInventory(Item item)
+    {
+        //check to see if the item stacks and if there already exists a stack
+        if (item.isStackable)
+        {
+            foreach (InventorySlot slot in slots)
             {
-                Debug.Log("Item at " + i);
-                items[i] = item;
-                inventoryUI.AddItem(item, i);
-                return i;
+                if (!slot.IsEmpty())
+                {
+                    if (slot.item.mName == item.mName)
+                    {
+                        slot.AddItemToSlot(item);
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        //Get the first open space
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.IsEmpty())
+            {
+                slot.AddItemToSlot(item);
+                return true;
             }
         }
 
-        /*
-        items.Add(item);
-        inventoryUI.AddItem(item, items.Count - 1);
-        */
-
-        return -1;
+        return false;
 
     }
-    /*
-    public void AddItemsToInventory(List<Item> items)
-    {
-        this.items.AddRange(items);
-        foreach(Item item in items)
-        {
-            inventoryUI.AddItem(item);
-        }
-
-    }
-    */
 
     public void SortInventory()
     {
         int sortIndex = 0;
-        List<InventorySlot> indexes = new List<InventorySlot>();
+        List<InventorySlotUI> indexes = new List<InventorySlotUI>();
 
-        for(int i = 0; i < items.Length; i++)
+        for(int i = 0; i < slots.Length; i++)
         {
-            if(items[i] != null) {
-                if (items[i].GetInventorySlot().isEquipped)
+            if(slots[i] != null) {
+                if (slots[i].item is Equipment equippable && equippable.isEquipped)
                 {
                     MoveItem(i, sortIndex);
                     sortIndex++;
@@ -71,129 +75,31 @@ public class PlayerInventory
             }
         }
 
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            if (items[i] != null)
+            if (slots[i] != null)
             {
-                if (!items[i].GetInventorySlot().isEquipped)
+                if (!(slots[i].item is Equipment equippable) || !equippable.isEquipped)
                 {
                     MoveItem(i, sortIndex);
                     sortIndex++;
                 }
             }
         }
-
-        /*
-        foreach(int i in indexes)
-        {
-            MoveItem(i, sortIndex);
-            sortIndex++;
-        }
-        */
-
     }
 
-    public Item GetItemAtIndex(int index)
-    {
-        return items[index];
-    }
-
-    public Key GetKeyItem()
+    public InventorySlot FindKeySlot()
     {
 
-        foreach(Item item in items)
+        foreach(InventorySlot slot in slots)
         {
-            if(item is Key)
+            if(slot.item is Key)
             {
-                return (Key)item;
+                return slot;
             }
         }
 
         return null;
-    }
-
-    public bool UseItem(int index)
-    {
-        Debug.Log("User Item:" + index);
-        if (items[index] is ConsumableItem)
-        {
-            ((ConsumableItem)items[index]).Use(mPlayer, index);
-            
-
-            return true;
-        }
-
-        return false;
-    }
-    
-    public void AddItem(Item item, int index)
-    {
-        items[index] = item;
-        inventoryUI.AddItem(item, index);
-    }
-
-    public void RemoveItem(int index)
-    {
-        items[index] = null;
-        inventoryUI.RemoveItem(index);
-    }
-
-    public void RemoveItem(Item item)
-    {
-        for (int i = 0; i < size; i++)
-        {
-            if (items[i] != null && items[i] == item)
-            {
-                items[i] = null;
-                inventoryUI.RemoveItem(i);
-                return;
-            }
-        }
-    }
-
-    public void DropItem(int index)
-    {
-        if(items[index] == null)
-        {
-            return;
-        }
-        ItemObject temp = new ItemObject(items[index], Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-        temp.Spawn(mPlayer.Position + new Vector2(0, MapManager.cTileSize / 2));
-        if(items[index] is Equipment equip && items[index].GetInventorySlot().isEquipped)
-        {
-            mPlayer.Equipment.Unequip(equip.mSlot);
-        }
-        items[index] = null;
-        inventoryUI.RemoveItem(index);
-        //temp.Body.mPosition = mPlayer.Position + new Vector3(0, MapManager.cTileSize / 2);
-    }
-
-    public void EquipItem(int index)
-    {
-        if (items[index].GetInventorySlot().isEquipped)
-        {
-            return;
-        }
-
-        if(items[index] is Equipment)
-        {
-            Equipment equippable = (Equipment)items[index];
-            if (mPlayer.Equipment.EquipItem(equippable))
-            {
-                inventoryUI.EquipItem(index);
-            }
-            
-
-        }
-    }
-
-    public void UnequipItem(int index)
-    {
-        if (items[index] is Equipment)
-        {
-            Equipment equippable = (Equipment)items[index];
-            mPlayer.Equipment.Unequip(equippable.mSlot);
-        }
     }
 
     public void MoveItem(int prev, int dest)
@@ -204,37 +110,45 @@ public class PlayerInventory
             return;
         }
 
-        if(items[dest] != null)
+        if(slots[dest].IsEmpty())
         {
-            Item prevItem = items[prev];
-            Item destItem = items[dest];
-            bool prevEquipped = items[prev].GetInventorySlot().isEquipped;
-            bool destEquipped = items[dest].GetInventorySlot().isEquipped;
 
-            RemoveItem(prev);
-            RemoveItem(dest);
+            Item temp = slots[prev].item;
+            int numTemps = slots[prev].amount;
+            slots[prev].ClearSlot();
 
-            AddItem(destItem, prev);
-            items[prev].GetInventorySlot().SetEquipped(destEquipped);
-
-            AddItem(prevItem, dest);
-            items[dest].GetInventorySlot().SetEquipped(prevEquipped);
-
+            slots[dest].AddItemToSlot(temp, numTemps);
 
         }
         else
         {
-            Item temp = items[prev];
-            InventorySlot slot = items[prev].GetInventorySlot();
-            bool equipped = inventoryUI.slots[prev].isEquipped;
+            Item prevItem = slots[prev].item;
+            int numPrevs = slots[prev].amount;
 
-            RemoveItem(prev);
+            Item destItem = slots[dest].item;
+            int numDests = slots[dest].amount;
 
-            AddItem(temp, dest);
-            inventoryUI.slots[dest].SetEquipped(equipped);
+            slots[prev].ClearSlot();
+            slots[dest].ClearSlot();
+
+            slots[dest].AddItemToSlot(prevItem, numPrevs);
+            slots[prev].AddItemToSlot(destItem, numDests);
 
         }
     }
     
+
+    public InventorySlot FindSlotForItem(Item item)
+    {
+        foreach(InventorySlot slot in slots)
+        {
+            if(slot.item.Equals(item))
+            {
+                return slot;
+            }
+        }
+
+        return null;
+    }
 
 }

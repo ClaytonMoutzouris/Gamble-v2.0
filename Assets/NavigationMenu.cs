@@ -44,22 +44,18 @@ public class NavigationMenu : MonoBehaviour
         */
 
 
-        SetMaps();
+        //SetMaps();
         //RollMaps();
 
 
         //LevelManager.instance.completedWorlds = new bool[worldNodes.Count];
+        defaultObject = backButton.gameObject;
 
 
     }
 
     public void Open(int playerIndex)
     {
-        if (LevelManager.instance.AllWorldsCleared())
-        {
-            Debug.Log("This was true");
-            SetVoidMap();
-        } 
 
         pausedIndex = playerIndex;
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
@@ -78,141 +74,6 @@ public class NavigationMenu : MonoBehaviour
         }
 
         worldNodes.Clear();
-    }
-
-    public void SetMaps()
-    {
-        ClearMaps();
-
-        WorldNode temp;
-        for (int i = 0; i < LevelManager.instance.numMaps; i++)
-        {
-            temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-            temp.SetUp((WorldType)i);
-            worldNodes.Add(temp);
-        }
-
-        defaultObject = worldNodes[0].gameObject;
-
-
-        Navigation nav = backButton.navigation;
-        nav.selectOnUp = worldNodes[0].button;
-        backButton.navigation = nav;
-
-        for (int i = 0; i < worldNodes.Count; i++)
-        {
-            nav = worldNodes[i].button.navigation;
-            if (i == 0)
-            {
-                nav.selectOnLeft = worldNodes[worldNodes.Count - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            else if (i == worldNodes.Count - 1)
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[0].button;
-
-            }
-            else
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            nav.selectOnDown = backButton;
-            worldNodes[i].button.navigation = nav;
-        }
-    }
-
-    public void RollMaps()
-    {
-        ClearMaps();
-
-        WorldNode temp;
-        for (int i = 0; i < LevelManager.instance.numMaps; i++)
-        {
-            temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-            temp.SetUp((WorldType)Random.Range(0, LevelManager.instance.numMaps));
-            worldNodes.Add(temp);
-        }
-
-        defaultObject = worldNodes[0].gameObject;
-
-
-        Navigation nav = backButton.navigation;
-        nav.selectOnUp = worldNodes[0].button;
-        backButton.navigation = nav;
-
-        for (int i = 0; i < worldNodes.Count; i++)
-        {
-            nav = worldNodes[i].button.navigation;
-            if (i == 0)
-            {
-                nav.selectOnLeft = worldNodes[worldNodes.Count - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            else if (i == worldNodes.Count - 1)
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[0].button;
-
-            }
-            else
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            nav.selectOnDown = backButton;
-            worldNodes[i].button.navigation = nav;
-        }
-    }
-
-
-    public void RollMaps(int numMaps)
-    {
-
-        ClearMaps();
-
-        WorldNode temp;
-        for (int i = 0; i < numMaps; i++)
-        {
-            temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-            temp.SetUp((WorldType)Random.Range(0, (int)WorldType.Void));
-            defaultObject = temp.gameObject;
-            worldNodes.Add(temp);
-        }
-
-        Navigation nav = backButton.navigation;
-        nav.selectOnUp = worldNodes[0].button;
-        backButton.navigation = nav;
-
-        for (int i = 0; i < worldNodes.Count; i++)
-        {
-            nav = worldNodes[i].button.navigation;
-            if (i == 0)
-            {
-                nav.selectOnLeft = worldNodes[worldNodes.Count - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            else if (i == worldNodes.Count - 1)
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[0].button;
-
-            }
-            else
-            {
-                nav.selectOnLeft = worldNodes[i - 1].button;
-                nav.selectOnRight = worldNodes[i + 1].button;
-
-            }
-            nav.selectOnDown = backButton;
-            worldNodes[i].button.navigation = nav;
-        }
     }
 
     public void SetVoidMap()
@@ -234,6 +95,55 @@ public class NavigationMenu : MonoBehaviour
 
         worldNodes.Add(temp);
 
+    }
+
+    public void AddMap(WorldType worldtype)
+    {
+
+        WorldNode temp;
+
+        temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
+        temp.SetUp(worldtype);
+        worldNodes.Add(temp);
+        Navigation nav;
+
+        if (worldNodes.Count == 1)
+        {
+
+
+            nav = backButton.navigation;
+            nav.selectOnUp = worldNodes[0].button;
+            backButton.navigation = nav;
+            nav = temp.button.navigation;
+            nav.selectOnDown = backButton;
+            temp.button.navigation = nav;
+
+        } else
+        {
+            nav = temp.button.navigation;
+
+            nav.selectOnLeft = worldNodes[worldNodes.Count - 2].button;
+            nav.selectOnRight = worldNodes[0].button;
+            nav.selectOnDown = backButton;
+            temp.button.navigation = nav;
+
+            Navigation nav2 = worldNodes[worldNodes.Count - 2].button.navigation;
+            nav2.selectOnRight = temp.button;
+            worldNodes[worldNodes.Count - 2].button.navigation = nav2;
+
+            Navigation nav3 = worldNodes[0].button.navigation;
+            nav3.selectOnLeft = temp.button;
+            worldNodes[0].button.navigation = nav3;
+        }
+
+        defaultObject = temp.gameObject;
+
+
+    }
+
+    public void SetDefaultNode()
+    {
+        
     }
 
     public void Close()

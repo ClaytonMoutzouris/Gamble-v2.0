@@ -10,22 +10,24 @@ public abstract class Item : ScriptableObject
     public Rarity mRarity;
     public string mValue;
     public Sprite sprite;
-    private InventorySlot inventorySlot = null;
     public bool isStackable = false;
+    public bool identified = true;
 
     public virtual List<InventoryOption> GetInventoryOptions()
     {
         return new List<InventoryOption>();
     }
 
-    public InventorySlot GetInventorySlot()
+    public virtual bool Identify()
     {
-        return inventorySlot;
-    }
+        if (!identified)
+        {
+            identified = true;
+            return true;
+        }
 
-    public void SetInventorySlot(InventorySlot value)
-    {
-        inventorySlot = value;
+        return false;
+
     }
 
     public virtual string getTooltip()
@@ -80,27 +82,27 @@ public abstract class Equipment : Item
     public List<Effect> Effects { get => effects; set => effects = value; }
     public List<EffectType> PossibleEffects { get => possibleEffects; set => possibleEffects = value; }
 
-    public virtual void Randomize()
+    public virtual void RandomizeStats()
     {
 
         if(mRarity != Rarity.Artifact)
         {
-            int rarityRoll = Random.Range(0, 100);
+            int rarityRoll = Random.Range(0, 100) + 10*LevelManager.instance.NumCompletedWorlds();
 
             if (rarityRoll < 50)
             {
                 mRarity = Rarity.Common;
             }
-            else if (rarityRoll >= 50 && rarityRoll < 75)
+            else if (rarityRoll >= 50 && rarityRoll < 80)
             {
                 mRarity = Rarity.Uncommon;
             }
-            else if (rarityRoll >= 75 && rarityRoll < 90)
+            else if (rarityRoll >= 80 && rarityRoll < 100)
             {
                 mRarity = Rarity.Rare;
 
             }
-            else if (rarityRoll >= 90)
+            else if (rarityRoll >= 100)
             {
                 mRarity = Rarity.Legendary;
             }
@@ -142,6 +144,8 @@ public abstract class Equipment : Item
 
     public virtual void OnEquip(Player player)
     {
+        isEquipped = true;
+
 
         player.mStats.AddBonuses(statBonuses);
         player.mStats.AddBonuses(baseBonuses);
@@ -155,6 +159,8 @@ public abstract class Equipment : Item
 
     public virtual void OnUnequip(Player player)
     {
+        isEquipped = false;
+
         player.mStats.RemoveBonuses(statBonuses);
         player.mStats.RemoveBonuses(baseBonuses);
 

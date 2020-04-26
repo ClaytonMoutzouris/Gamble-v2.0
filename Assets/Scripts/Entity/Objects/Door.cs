@@ -36,10 +36,10 @@ public class Door : Entity, IInteractable
     {
         if(locked)
         {
-            Item temp = actor.Inventory.GetKeyItem();
+            InventorySlot temp = actor.Inventory.FindKeySlot();
             if (temp != null)
             {
-                actor.Inventory.RemoveItem(temp);
+                temp.GetOneItem();
                 locked = false;
                 ShowFloatingText("Unlocked!", Color.green);
                 return true;

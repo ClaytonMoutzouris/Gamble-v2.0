@@ -54,5 +54,10 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<Key>();
     }
 
+    [MenuItem("Assets/Create/Items/Biosample")]
+    public static void CreateBaseBiosampleAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Biosample>();
+    }
 
 }

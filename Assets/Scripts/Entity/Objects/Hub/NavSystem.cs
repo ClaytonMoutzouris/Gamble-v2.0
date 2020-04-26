@@ -9,8 +9,6 @@ public class NavSystem : Entity, IInteractable
     /// Draws the aabb and ceiling, ground and wall sensors .
     /// </summary>
     /// 
-    [HideInInspector]
-    public bool mOpen = false;
 
     public NavSystem(EntityPrototype proto) : base(proto)
     {
@@ -33,11 +31,14 @@ public class NavSystem : Entity, IInteractable
 
     public bool Interact(Player actor)
     {
-        if(mOpen)
+        foreach(InventorySlot slot in actor.Inventory.slots)
         {
-            return false;
+            if(slot.item is Biosample sample && sample.identified)
+            {
+                NavigationMenu.instance.AddMap(sample.sampleWorldType);
+                slot.GetOneItem();
+            }
         }
-
         NavigationMenu.instance.Open(actor.mPlayerIndex);
         return true;
     }

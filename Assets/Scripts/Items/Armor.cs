@@ -21,9 +21,9 @@ public class Armor : Equipment
 
     }
 
-    public override void Randomize()
+    public override void RandomizeStats()
     {
-        base.Randomize();
+        base.RandomizeStats();
         color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
 }

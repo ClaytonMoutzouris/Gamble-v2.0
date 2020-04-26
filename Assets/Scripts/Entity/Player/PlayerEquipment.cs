@@ -27,8 +27,7 @@ public class PlayerEquipment
         {
             if (Equipment[item.mSlot] != null)
             {
-                Equipment[item.mSlot].OnUnequip(mPlayer);
-                Equipment[item.mSlot].GetInventorySlot().SetEquipped(false);
+                mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]).UnequipItem();
             }
 
             Equipment[item.mSlot] = item;
@@ -47,7 +46,7 @@ public class PlayerEquipment
             if (Equipment[slot] != null)
             {
                 Equipment[slot].OnUnequip(mPlayer);
-                Equipment[slot].GetInventorySlot().SetEquipped(false);
+
             }
         }
     }

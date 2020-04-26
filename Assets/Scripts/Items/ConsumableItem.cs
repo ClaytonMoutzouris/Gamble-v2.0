@@ -5,13 +5,15 @@ using UnityEngine;
 public class ConsumableItem : Item
 {
 
-    public virtual void Use(Player player, int index)
+    public virtual bool Use(Player player)
     {
         foreach(Effect effect in player.itemEffects)
         {
             effect.OnConsumeItem(player, this);
         }
-        player.Inventory.RemoveItem(index);
+
+        return true;
+        //player.Inventory.RemoveItem(index);
     }
 
     public override List<InventoryOption> GetInventoryOptions()

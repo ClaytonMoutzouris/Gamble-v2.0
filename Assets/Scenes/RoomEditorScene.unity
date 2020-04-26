@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -914,6 +915,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1030,6 +1032,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3809,7 +3812,7 @@ MonoBehaviour:
   smoothSpeed: 1
   mZoomSpeed: 10
   mMinOrthographicSize: 120
-  mBoundingBoxPadding: 68
+  mBoundingBoxPadding: 48
 --- !u!1 &962780277
 GameObject:
   m_ObjectHideFlags: 0
@@ -4146,6 +4149,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4570,6 +4574,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4654,8 +4659,8 @@ MonoBehaviour:
   mTileMap: {fileID: 2110669197}
   instance: {fileID: 0}
   mPosition: {x: 0, y: 0, z: 0}
-  mWidth: 25
-  mHeight: 25
+  mWidth: 10
+  mHeight: 10
   sprites:
   - {fileID: 0}
   - {fileID: 21300014, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
@@ -4671,10 +4676,10 @@ MonoBehaviour:
   - {fileID: 21300008, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
   - {fileID: 21300010, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
   - {fileID: 21300012, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
-  - {fileID: 21300014, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
+  - {fileID: -1485077722505556859, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: 21300000, guid: c08588314902c624ba12a2c45e0f1050, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -5278,6 +5283,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7132,10 +7138,60 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1156935485}
     m_Modifications:
-    - target: {fileID: 8156402455349420129, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
         type: 3}
-      propertyPath: m_Name
-      value: TileMapRenderer
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.21038467
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3482116456818356980, guid: a4d767cd1b38153418b9a0b9f8dd2498,
         type: 3}
@@ -7246,60 +7302,10 @@ PrefabInstance:
       propertyPath: CurrentMapType
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
+    - target: {fileID: 8156402455349420129, guid: a4d767cd1b38153418b9a0b9f8dd2498,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.21038467
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281732764235131917, guid: a4d767cd1b38153418b9a0b9f8dd2498,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      propertyPath: m_Name
+      value: TileMapRenderer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4d767cd1b38153418b9a0b9f8dd2498, type: 3}
@@ -7804,6 +7810,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -8685,6 +8692,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

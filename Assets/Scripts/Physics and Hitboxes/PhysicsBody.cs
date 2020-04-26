@@ -160,6 +160,20 @@ public class PhysicsBody : CustomCollider2D
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
                     return true;
+                case TileType.Water:
+                    mPS.inWater = true;
+                    break;
+                case TileType.Lava:
+                    Vector2 tileCenter;
+                    float topTileEdge;
+                    tileCenter = mEntity.Map.GetMapTilePosition(bottomLeftTile.x, y);
+                    topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
+                    if (bottomLeft.y > topTileEdge - 8)
+                    {
+                        break;
+                    }
+                    mEntity.Spiked();
+                    break;
 
             }
         }
@@ -215,6 +229,20 @@ public class PhysicsBody : CustomCollider2D
                     state.pushesLeftTile = true;
                     state.leftTile = new Vector2i(bottomLeftTile.x, y);
                     return true;
+                case TileType.Water:
+                    mPS.inWater = true;
+                    break;
+                case TileType.Lava:
+                    Vector2 tileCenter;
+                    float topTileEdge;
+                    tileCenter = mEntity.Map.GetMapTilePosition(bottomLeftTile.x, y);
+                    topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
+                    if (bottomLeft.y > topTileEdge - 8)
+                    {
+                        break;
+                    }
+                    mEntity.Spiked();
+                    break;
             }
         }
 
@@ -256,6 +284,20 @@ public class PhysicsBody : CustomCollider2D
                     state.pushesTopTile = true;
                     state.topTile = new Vector2i(x, topRightTile.y);
                     return true;
+                case TileType.Water:
+                    mPS.inWater = true;
+                    break;
+                case TileType.Lava:
+                    Vector2 tileCenter;
+                    float topTileEdge;
+                    tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
+                    topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
+                    if (bottomLeft.y > topTileEdge - 8)
+                    {
+                        break;
+                    }
+                    mEntity.Spiked();
+                    break;
             }
         }
 
@@ -329,6 +371,15 @@ public class PhysicsBody : CustomCollider2D
                         spiked = true;
                     }
                     break;
+                case TileType.Lava:
+                    tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
+                    topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
+                    if (bottomLeft.y > topTileEdge-8)
+                    {
+                        break;
+                    }
+                    mEntity.Spiked();
+                    break;
                 case TileType.Bounce:
                     tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);
                     topTileEdge = tileCenter.y + MapManager.cTileSize / 2;
@@ -358,6 +409,9 @@ public class PhysicsBody : CustomCollider2D
                     state.pushesBottomTile = true;
                     state.bottomTile = new Vector2i(x, bottomleftTile.y);
                     return true;
+                case TileType.Water:
+                    mPS.inWater = true;
+                    break;
             }
         }
 
@@ -511,6 +565,7 @@ public class PhysicsBody : CustomCollider2D
 
         mPS.onLadder = false;
         mPS.onDoor = false;
+        mPS.inWater = false;
 
         if(mSpeed.y < 0)
         {
@@ -596,9 +651,20 @@ public class PhysicsBody : CustomCollider2D
 
     public void ApplyGravity()
     {
-        mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+        if(mPS.inWater)
+        {
+            mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed/10);
 
-        mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+        }
+        else
+        {
+            mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+
+        }
+
+
     }
 
     public void TryAutoMount(Entity platform)

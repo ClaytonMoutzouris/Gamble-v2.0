@@ -325,18 +325,7 @@ public static class MapGenerator
 
         if(data.mapType == MapType.Hub)
         {
-            map.AddEntity(new EnemyData(6, 5, EnemyType.Snek));
 
-            map.AddEntity(new EnemyData(5, 5, EnemyType.Slime));
-            map.AddEntity(new ObjectData(3, 1, ObjectType.Medbay));
-            map.AddEntity(new ObjectData(8, 1, ObjectType.NavSystem));
-            map.AddEntity(new NPCData(10, 1, NPCType.Shopkeeper));
-            map.AddEntity(new ObjectData(12, 1, ObjectType.BouncePad));
-
-            map.AddEntity(new ObjectData(14, 1, ObjectType.Spikes));
-
-            //map.AddEntity(new EnemyData(6, 6, EnemyType.Roller));
-            //map.AddEntity(new BossData(5, 5, BossType.TentacleBoss));
 
         }
         else
@@ -449,8 +438,13 @@ public static class MapGenerator
 
         map.AddEntity(new ObjectData(12, 5, ObjectType.Medbay));
         map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
+        map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
+        if (LevelManager.instance.NumCompletedWorlds() == 0)
+        {
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Biosample"));
 
+        }
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map, data);
 

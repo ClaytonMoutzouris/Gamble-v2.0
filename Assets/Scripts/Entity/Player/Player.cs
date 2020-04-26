@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using LocalCoop;
 
 public enum PlayerState { Idle, Attacking, Blocking, Dead };
-public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting };
+public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming };
 
 public class Player : Entity, IHurtable
 {
@@ -274,7 +274,13 @@ public class Player : Entity, IHurtable
     //Function for deriving the speed value from the speed stat
     public float GetSpeed()
     {
-        return mWalkSpeed + 10*mStats.getStat(StatType.Speed).GetValue();
+        float waterReduction = 1;
+
+        if(Body.mPS.inWater)
+        {
+            waterReduction = 0.8f;
+        }
+        return (mWalkSpeed + 10*mStats.getStat(StatType.Speed).GetValue())*waterReduction;
     }
 
     public void UpdateShield()
@@ -307,7 +313,7 @@ public class Player : Entity, IHurtable
 
         if(Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
         {
-            Inventory.DropItem(Inventory.inventoryUI.currentSlot.slotID);
+            Inventory.slots[Inventory.inventoryUI.currentSlot.slotID].DropItem();
         }
 
         if (Input.playerButtonInput[(int)ButtonInput.InventoryMove])
@@ -623,7 +629,10 @@ public class Player : Entity, IHurtable
 
                 break;
             case MovementState.Jump:
-
+                if(Body.mPS.inWater)
+                {
+                    movementState = MovementState.Swimming;
+                }
                 //we do not ignore gravity while in the air
                 Body.mIgnoresGravity = false;
                 ++mFramesFromJumpStart;
@@ -909,6 +918,125 @@ public class Player : Entity, IHurtable
 
 
                 break;
+                case MovementState.Swimming:
+
+                if (!Body.mPS.inWater)
+                {
+                    movementState = MovementState.Jump;
+                    Body.mSpeed.y *= 2;
+                    return;
+                }
+                //we do not ignore gravity while in the air
+                Body.mIgnoresGravity = false;
+                ++mFramesFromJumpStart;
+
+                if (mFramesFromJumpStart <= Constants.cJumpFramesThreshold)
+                {
+                    if (Body.mPS.pushesTop || Body.mSpeed.y > 0.0f)
+                        mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
+                    else if (Input.playerButtonInput[(int)ButtonInput.Jump])
+                        Body.mSpeed.y = mJumpSpeed/1.5f;
+
+
+                }
+
+
+                // we can climb ladders while swimming
+                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
+                {
+                    movementState = MovementState.Climb;
+                    break;
+                }
+
+
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
+                {
+                    Jump();
+                    //break;
+                }
+
+
+
+                mWalkSfxTimer = cWalkSfxTime;
+
+                /*
+                mSpeed.y += Constants.cGravity * Time.deltaTime;
+
+                mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+                */
+                if (!Input.playerButtonInput[(int)ButtonInput.Jump] && Body.mSpeed.y > 0.0f && !Body.mPS.isBounce)
+                {
+                    Body.mSpeed.y = Mathf.Min(Body.mSpeed.y, 150.0f);
+                }
+
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                {
+                    Body.mSpeed.x = 0.0f;
+                }
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+                {
+                    if (Body.mPS.pushesRightTile)
+                        Body.mSpeed.x = 0.0f;
+                    else
+                        Body.mSpeed.x = GetSpeed();
+                    mDirection = EntityDirection.Right;
+                    //Body.mAABB.ScaleX = Mathf.Abs(Body.mAABB.ScaleX);
+                }
+                else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
+                {
+                    if (Body.mPS.pushesLeftTile)
+                        Body.mSpeed.x = 0.0f;
+                    else
+                        Body.mSpeed.x = -GetSpeed();
+                    mDirection = EntityDirection.Left;
+                    //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
+                }
+
+                //if we hit the ground
+                if (Body.mPS.pushesBottom)
+                {
+                    //if there's no movement change state to standing
+                    if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
+                    {
+                        movementState = MovementState.Stand;
+                        //mSpeed = Vector2.zero;
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
+                    }
+                    else	//either go right or go left are pressed so we change the state to walk
+                    {
+                        movementState = MovementState.Walk;
+                        Body.mSpeed.y = 0.0f;
+                        SoundManager.instance.PlaySingle(mHitWallSfx);
+                    }
+                }
+
+                if (mCannotGoLeftFrames > 0)
+                {
+                    --mCannotGoLeftFrames;
+                    Body.mSpeed.x = Mathf.Max(Body.mSpeed.x, 0);
+                }
+                if (mCannotGoRightFrames > 0)
+                {
+                    --mCannotGoRightFrames;
+                    Body.mSpeed.x = Mathf.Min(Body.mSpeed.x, 0);
+                }
+
+                if (Body.mSpeed.y <= 0.0f && !Body.mPS.pushesTop
+                    && ((Body.mPS.pushesRight && Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0) || (Body.mPS.pushesLeft && Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)))
+                {
+                    TryGrabLedge();
+                }
+
+
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                {
+                    Body.mPS.tmpIgnoresOneWay = true;
+                }
+
+
+
+
+                break;
         }
 
         /*
@@ -1003,6 +1131,10 @@ public class Player : Entity, IHurtable
     public void Jump()
     {
         Debug.Log("Jumping while in air - " + mJumpCount + " ~ " + mNumJumps);
+        if(Body.mPS.inWater)
+        {
+            mJumpCount = 0;
+        }
 
         if (movementState == MovementState.Jump) {
 
@@ -1019,9 +1151,18 @@ public class Player : Entity, IHurtable
 
         mJumpCount++;
 
-        Body.mSpeed.y = mJumpSpeed;
-        SoundManager.instance.PlaySingle(mJumpSfx);
-        movementState = MovementState.Jump;
+
+        if (Body.mPS.inWater)
+        {
+            movementState = MovementState.Swimming;
+            Body.mSpeed.y = mJumpSpeed/1.5f;
+            SoundManager.instance.PlaySingle(mJumpSfx);
+        } else
+        {
+            movementState = MovementState.Jump;
+            Body.mSpeed.y = mJumpSpeed;
+            SoundManager.instance.PlaySingle(mJumpSfx);
+        }
 
     }
 
@@ -1106,7 +1247,7 @@ public class Player : Entity, IHurtable
         //mAllCollidingObjects.Remove(item);
 
         //Should be something like itemObject.pickup(Inventory inventory);
-        if (Inventory.AddItemToInventory(itemObject.mItemData) != -1)
+        if (Inventory.AddItemToInventory(itemObject.mItemData))
         {
             itemObject.Destroy();
         }
@@ -1340,16 +1481,15 @@ public class Player : Entity, IHurtable
 
         return null;
     }
-
-
+    //TODO: put this in the invetory
     public bool UseFirstHealingItem()
     {
         //ItemObject item = null;
-        for(int i = 0; i < inventory.items.Length; i++)
+        for (int i = 0; i < inventory.slots.Length; i++)
         {
-            if (inventory.items[i] is ConsumableItem temp)
+            if (inventory.slots[i].item is ConsumableItem temp)
             {
-                temp.Use(this, i);
+                temp.Use(this);
                 return true;
             }
         }

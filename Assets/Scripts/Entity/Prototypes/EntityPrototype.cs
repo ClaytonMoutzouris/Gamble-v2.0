@@ -17,4 +17,5 @@ public class EntityPrototype : ScriptableObject
     public RuntimeAnimatorController animationController;
 
     public List<EntityEffects> effects;
+    public ParticleSystem particleEffects;
 }
