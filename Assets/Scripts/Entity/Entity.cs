@@ -285,6 +285,17 @@ public class Entity {
         }
     }
 
+    public virtual void Lava()
+    {
+        //everything dies to lava
+        if (this is IHurtable hurtable)
+        {
+
+            hurtable.GetHurt(Attack.CrushAttack());
+            
+        }
+    }
+
     public virtual void ShowFloatingText(String text, Color color)
     {
         FloatingText floatingText = GameObject.Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, Position, Quaternion.identity);

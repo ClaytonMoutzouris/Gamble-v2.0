@@ -177,6 +177,27 @@ public class EntityRenderer : MonoBehaviour
         Destroy(effect);
     }
 
+    public void RemoveVisualEffect(string effect)
+    {
+        List<GameObject> toRemove = new List<GameObject>();
+        //effects.Remove(instan)
+        foreach(GameObject obj in effects)
+        {
+            if(obj.name.Equals(effect))
+            {
+                toRemove.Add(obj);
+
+            }
+        }
+
+        foreach(GameObject obj in toRemove)
+        {
+            effects.Remove(obj);
+            Destroy(obj);
+        }
+
+    }
+
     public void ClearVisualEffects()
     {
         foreach(GameObject effect in effects)

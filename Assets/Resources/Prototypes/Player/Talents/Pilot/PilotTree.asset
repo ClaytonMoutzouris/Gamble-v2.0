@@ -16,6 +16,7 @@ MonoBehaviour:
   talents:
   - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
   - {fileID: 11400000, guid: fb846c9cd9bc3fd40896b5ad71c1a81e, type: 2}
+  - {fileID: 11400000, guid: db1832f336d3b0640ac0600a66c8dab6, type: 2}
   - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
   - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
-  - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
+  skillPoints: 0

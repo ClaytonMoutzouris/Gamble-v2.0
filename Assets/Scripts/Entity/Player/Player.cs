@@ -371,7 +371,7 @@ public class Player : Entity, IHurtable
 
         if (Input.playerButtonInput[(int)ButtonInput.Teleport])
         {
-            Position = Position + GetAim()*150;
+            Position = Position + GetAimLeft()*150;
             //Game.mMapChangeFlag = true;
         }
 
@@ -453,6 +453,10 @@ public class Player : Entity, IHurtable
             mJumpCount = 0;
         }
 
+        foreach (Effect effect in itemEffects)
+        {
+            effect.OnUpdate();
+        }
 
         //Handle each of the players states
         switch (movementState)
@@ -854,6 +858,11 @@ public class Player : Entity, IHurtable
                 
                 break;
             case MovementState.Jetting:
+                if(Body.mPS.inWater)
+                {
+                    movementState = MovementState.Swimming;
+                    return;
+                }
                 Body.mPS.isJetting = true;
                 Body.mSpeed = Vector2.zero;
                 Body.mIgnoresGravity = true;
@@ -1065,7 +1074,7 @@ public class Player : Entity, IHurtable
         Vector2 aim;
         if (Input.playerAxisInput[(int)AxisInput.RightStickX] != 0 || Input.playerAxisInput[(int)AxisInput.RightStickY] != 0)
         {
-            aim = GetAim();
+            aim = GetAimRight();
             ((PlayerRenderer)Renderer).ShowWeapon(true);
 
             ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
@@ -1299,8 +1308,12 @@ public class Player : Entity, IHurtable
 
     }
 
-    public Vector2 GetAim(bool freeAxis = true)
+    public Vector2 GetAimRight(bool freeAxis = true)
     {
+        if (Input.playerAxisInput[(int)AxisInput.RightStickY] == 0 && Input.playerAxisInput[(int)AxisInput.RightStickX] == 0)
+        {
+            return Vector2.right * (int)mDirection;
+        }
 
         if (freeAxis)
         {
@@ -1331,6 +1344,50 @@ public class Player : Entity, IHurtable
 
         }
 
+
+        return aim;
+    }
+
+    public Vector2 GetAimLeft(bool freeAxis = true)
+    {
+
+        if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0 && Input.playerAxisInput[(int)AxisInput.LeftStickY] == 0)
+        {
+            return Vector2.right * (int)mDirection;
+        }
+
+        if (freeAxis)
+        {
+            return new Vector2(Input.playerAxisInput[(int)AxisInput.LeftStickX], Input.playerAxisInput[(int)AxisInput.LeftStickY]).normalized;
+        }
+
+        Vector2 aim = Vector2.zero;
+
+        if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+        {
+            aim += Vector2.down;
+
+        }
+        else if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
+        {
+            aim += Vector2.up;
+
+        }
+
+        if (Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)
+        {
+            aim += Vector2.left;
+
+        }
+        else if (Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0)
+        {
+            aim += Vector2.right;
+
+        }
+
+
+
+
         return aim;
     }
 
@@ -1346,6 +1403,10 @@ public class Player : Entity, IHurtable
         HurtBox.UpdatePosition();
         blockbox.UpdatePosition();
 
+        foreach (Effect effect in itemEffects)
+        {
+            effect.OnSecondUpdate();
+        }
 
         if (MiniMapIcon != null)
         {

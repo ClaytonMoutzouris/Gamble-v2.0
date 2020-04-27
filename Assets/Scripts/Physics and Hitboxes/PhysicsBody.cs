@@ -172,7 +172,7 @@ public class PhysicsBody : CustomCollider2D
                     {
                         break;
                     }
-                    mEntity.Spiked();
+                    mEntity.Lava();
                     break;
 
             }
@@ -241,7 +241,7 @@ public class PhysicsBody : CustomCollider2D
                     {
                         break;
                     }
-                    mEntity.Spiked();
+                    mEntity.Lava();
                     break;
             }
         }
@@ -296,7 +296,7 @@ public class PhysicsBody : CustomCollider2D
                     {
                         break;
                     }
-                    mEntity.Spiked();
+                    mEntity.Lava();
                     break;
             }
         }
@@ -378,7 +378,7 @@ public class PhysicsBody : CustomCollider2D
                     {
                         break;
                     }
-                    mEntity.Spiked();
+                    mEntity.Lava();
                     break;
                 case TileType.Bounce:
                     tileCenter = mEntity.Map.GetMapTilePosition(x, bottomleftTile.y);

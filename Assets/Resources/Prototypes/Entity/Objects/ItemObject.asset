@@ -16,10 +16,11 @@ MonoBehaviour:
   hostility: 0
   mName: ItemObject
   bodySize: {x: 5, y: 5}
-  CollidesWith: 
+  CollidesWith: 02000000
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 7
   animationController: {fileID: 0}
   effects: []
+  particleEffects: {fileID: 0}

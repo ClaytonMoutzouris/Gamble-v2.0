@@ -38,14 +38,10 @@ public abstract class Effect
     public virtual void OnConsumeItem(Player player, ConsumableItem item) { }
     public virtual void OnMapChanged(){ }
 
-    public virtual void OnPlayerDeath(Player player) { }
+    public virtual void OnPlayerDeath(Player player) {
+    }
 
     public virtual void OnEnemyDeath(Enemy enemy) { }
-
-
-    public virtual void OnLearned(Player player) {
-        owner = player;
-    }
 
     public static Effect GetEffectFromType(EffectType type)
     {

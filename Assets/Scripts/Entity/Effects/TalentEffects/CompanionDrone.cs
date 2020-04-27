@@ -12,7 +12,7 @@ public class CompanionDrone : Effect
         type = EffectType.CompanionDrone;
     }
 
-    public override void OnLearned(Player player)
+    public override void OnEquipTrigger(Player player)
     {
         Drone drone;
 

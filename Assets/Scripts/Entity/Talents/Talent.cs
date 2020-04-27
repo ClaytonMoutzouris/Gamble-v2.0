@@ -34,7 +34,6 @@ public class Talent : ScriptableObject
         {
             Effect e = Effect.GetEffectFromType(effect);
             e.OnEquipTrigger(player);
-            e.OnLearned(player);
         }
 
 

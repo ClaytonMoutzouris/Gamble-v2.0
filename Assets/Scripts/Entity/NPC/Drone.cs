@@ -35,7 +35,7 @@ public class Drone : Entity
             Debug.Log("Player attacking");
             if (droneAttack is RangedAttack ranged)
             {
-                ranged.Activate(owner.GetAim(), Position);
+                ranged.Activate(owner.GetAimRight(), Position);
 
             }
         }

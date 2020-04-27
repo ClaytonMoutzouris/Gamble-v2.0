@@ -78,7 +78,7 @@ public class GameCamera : MonoBehaviour
 
         foreach (Player player in LevelManager.instance.players)
         {
-            if (player == null || (player.IsDead && player.mPlayerIndex != 0))
+            if (player == null || player.IsDead)
                 continue;
 
             Vector3 position = player.Position;

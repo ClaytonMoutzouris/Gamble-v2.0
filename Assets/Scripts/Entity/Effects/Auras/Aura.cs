@@ -7,53 +7,103 @@ public class Aura : Effect
     Sightbox sightbox;
     float tickFrequency = 32;
     public List<Entity> effectedEntities;
-    public int auraRange = 320;
+    public int auraRadius = 160;
+    StatBonus bonus;
+    ParticleSystem visuals;
 
     public Aura()
     {
         effectName = "Aura";
         type = EffectType.Aura;
         //currentPosition = 
-
+        bonus = new StatBonus(StatType.Speed, 10);
+        effectedEntities = new List<Entity>();
+        visuals = Resources.Load<ParticleSystem>("ParticleEffects/Aura");
     }
 
+    public void Apply(Entity entity)
+    {
+        if(entity is Player player)
+        {
+            player.mStats.AddBonus(bonus);
+            player.Renderer.AddVisualEffect(visuals, Vector2.up*player.Body.mAABB.HalfSize);
+        }
+    }
+
+    public void Unapply(Entity entity)
+    {
+        if (entity is Player player)
+        {
+            player.mStats.RemoveBonus(bonus);
+            player.Renderer.RemoveVisualEffect("Aura(Clone)");
+        }
+    }
 
     public override void OnEquipTrigger(Player player)
     {
         base.OnEquipTrigger(player);
-        sightbox = new Sightbox(owner, new CustomAABB(owner.Position, Vector2.one * auraRange / 2, Vector2.zero));
+        sightbox = new Sightbox(owner, new CustomAABB(owner.Position, Vector2.one * auraRadius, Vector2.zero));
         sightbox.UpdatePosition();
+        Apply(player);
+
     }
 
     public override void OnUnequipTrigger(Player player)
     {
         base.OnUnequipTrigger(player);
         CollisionManager.RemoveObjectFromAreas(sightbox);
+        Unapply(player);
+
+    }
+
+    public override void OnPlayerDeath(Player player)
+    {
+        Unapply(player);
+
+        base.OnPlayerDeath(player);
+        CollisionManager.RemoveObjectFromAreas(sightbox);
+
+        foreach (Entity entity in effectedEntities)
+        {
+            Unapply(entity);
+        }
     }
     public override void OnUpdate() {
         base.OnUpdate();
 
-        List<Entity> previousEffected = effectedEntities;
-        
-        foreach(Entity entity in previousEffected)
+        List<Entity> entitiesToRemove = new List<Entity>();
+
+        foreach(Entity entity in effectedEntities)
         {
             if(!sightbox.mEntitiesInSight.Contains(entity))
             {
-                //unapply aura
-                effectedEntities.Remove(entity);
+                entitiesToRemove.Add(entity);
+                Debug.LogWarning(entity.Name + " no longer in range");
+
             }
+        }
+
+        foreach(Entity entity in entitiesToRemove)
+        {
+            //unapply aura
+            Unapply(entity);
+            effectedEntities.Remove(entity);
         }
 
         foreach(Entity entity in sightbox.mEntitiesInSight)
         {
-            if(effectedEntities.Contains(entity))
+            if(entity is Player player && !effectedEntities.Contains(player))
             {
+                //apply aura
+                Apply(player);
 
+                effectedEntities.Add(player);
             }
         }
 
 
         CollisionManager.UpdateAreas(sightbox);
+        sightbox.mEntitiesInSight.Clear();
 
 
     }

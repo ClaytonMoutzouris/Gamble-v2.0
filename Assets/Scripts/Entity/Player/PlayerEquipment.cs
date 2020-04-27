@@ -23,11 +23,19 @@ public class PlayerEquipment
 
     public bool EquipItem(Equipment item)
     {
+        if (mPlayer == null || mPlayer.Inventory == null)
+            return false;
+
         if (Equipment.ContainsKey(item.mSlot))
         {
             if (Equipment[item.mSlot] != null)
             {
-                mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]).UnequipItem();
+                InventorySlot slot = mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]);
+                if (slot != null)
+                {
+                    slot.UnequipItem();
+
+                }
             }
 
             Equipment[item.mSlot] = item;

@@ -88,6 +88,7 @@ public class LevelManager : MonoBehaviour
         }
         partyLevel = 1;
         partyEXP = 0;
+        completedWorlds = new List<bool>();
 
         levelIndex = 0;
         NewGameMap(MapType.Hub);
@@ -96,7 +97,6 @@ public class LevelManager : MonoBehaviour
             NavigationMenu.instance.ClearMaps();
         }
 
-        completedWorlds = new List<bool>();
 
         mGameMode = GameMode.Game;
     }
