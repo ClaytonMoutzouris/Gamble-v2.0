@@ -16,12 +16,15 @@ public class Map
     public int roomSizeX;
     public int roomSizeY;
 
+    MapData data;
     TileType[,] tiles;
 
     public float gravity = -800.0f;
     //public Audio
 
     public List<EntityData> objects;
+
+    public MapData Data { get => data; set => data = value; }
 
     public Map(MapType mapType = MapType.Hub, WorldType type = WorldType.Forest, int sizex = 10, int sizey = 10)
     {
@@ -38,6 +41,7 @@ public class Map
 
     public Map(MapData data)
     {
+        this.Data = data;
         mapType = data.mapType;
         worldType = data.type;
 

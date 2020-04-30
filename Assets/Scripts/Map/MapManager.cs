@@ -232,6 +232,25 @@ public class MapManager : MonoBehaviour
 
     }
 
+    public void HardenLava()
+    {
+        TileType[,] tileTypes = mTileData;
+        
+        for(int x = 0; x < mWidth; x++)
+        {
+            for (int y = 0; y < mHeight; y++)
+            {
+                if(tileTypes[x,y] == TileType.Lava)
+                {
+                    tileTypes[x, y] = TileType.Block;
+                }
+            }
+        }
+
+        mTileData = tileTypes;
+        mTileMap.DrawMap(mTileData, mCurrentMap.Data);
+    }
+
     public void NewBossMap(MapData data, WorldType type)
     {
 

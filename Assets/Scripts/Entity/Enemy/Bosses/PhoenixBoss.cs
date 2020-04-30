@@ -116,7 +116,7 @@ public class PhoenixBoss : BossEnemy
     {
         if (Vector2.Distance(Position, shotLocation) > 10)
         {
-            Body.mSpeed = (shotLocation - Position).normalized * (GetMovementSpeed()+50);
+            Body.mSpeed = (shotLocation - Position).normalized * (GetMovementSpeed() + 50);
             Debug.Log("Shark working his way there " + Vector2.Distance(Position, shotLocation));
 
 
@@ -141,5 +141,12 @@ public class PhoenixBoss : BossEnemy
             shotcount = 0;
 
         }
+    }
+
+    public override void Die()
+    {
+        MapManager.instance.HardenLava();
+
+        base.Die();
     }
 }
