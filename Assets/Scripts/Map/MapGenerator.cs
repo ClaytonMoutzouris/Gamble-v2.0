@@ -445,6 +445,12 @@ public static class MapGenerator
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Biosample"));
 
         }
+
+        if (LevelManager.instance.NumCompletedWorlds() == 0)
+        {
+            map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
+
+        }
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map, data);
 

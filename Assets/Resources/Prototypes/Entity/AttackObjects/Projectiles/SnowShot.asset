@@ -18,16 +18,17 @@ MonoBehaviour:
   bodySize: {x: 4, y: 4}
   CollidesWith: 
   ignoreTilemap: 0
-  ignoreGravity: 1
+  ignoreGravity: 0
   sprite: {fileID: 8169476871974982021, guid: 00e4d0bc2c4327e459278e5946a317b2, type: 3}
   sortingLayer: 8
   animationController: {fileID: 9100000, guid: dd933822e935a4f4691633651c669257, type: 2}
   effects: []
+  particleEffects: {fileID: 0}
   hitboxSize: {x: 4, y: 4}
   angled: 1
-  maxTime: 15
+  maxTime: 5
   sfx: {fileID: 0}
   particleSystem: {fileID: 0}
   pierce: 0
-  collidesWithTiles: 1
-  speed: 100
+  collidesWithTiles: 0
+  speed: 360

@@ -296,6 +296,12 @@ public class Entity {
         }
     }
 
+    //Function for deriving the speed value from the speed stat
+    public virtual float GetSpeed()
+    {
+        return 0;
+    }
+
     public virtual void ShowFloatingText(String text, Color color)
     {
         FloatingText floatingText = GameObject.Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, Position, Quaternion.identity);

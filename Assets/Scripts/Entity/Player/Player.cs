@@ -272,7 +272,7 @@ public class Player : Entity, IHurtable
     }
 
     //Function for deriving the speed value from the speed stat
-    public float GetSpeed()
+    public override float GetSpeed()
     {
         float waterReduction = 1;
 

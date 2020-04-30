@@ -12,7 +12,7 @@ public class Projectile : AttackObject {
 
     public Projectile(ProjectilePrototype proto, RangedAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
-        Debug.Log("On Walk Trigger");
+
         this.collidesWithTiles = proto.collidesWithTiles;
         this.attack = attack;
         //Body.mState = ColliderState.Closed;

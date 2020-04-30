@@ -47,7 +47,7 @@ public class Snowdrift : Enemy
 
                         if (EnemyBehaviour.TargetInRange(this, Target, 256))
                         {
-                            mAttackManager.rangedAttacks[0].Activate((positionVector).normalized, Position);
+                            mAttackManager.rangedAttacks[0].Activate((positionVector).normalized+new Vector2(1*(int)mDirection,1), Position);
                         }
 
                         if (Body.mPS.pushesLeft || Body.mPS.pushesRight && Body.mPS.pushesBottom)

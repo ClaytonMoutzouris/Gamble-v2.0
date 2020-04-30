@@ -18,7 +18,7 @@ MonoBehaviour:
   sizeY: 1
   roomSizeX: 25
   roomSizeY: 25
-  gravity: -1030
+  gravity: -950
   baseDepth: 0
   depthVariance: 0
   smallEnemies: 

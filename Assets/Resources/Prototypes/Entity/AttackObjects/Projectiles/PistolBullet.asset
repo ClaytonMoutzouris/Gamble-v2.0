@@ -23,6 +23,7 @@ MonoBehaviour:
   sortingLayer: 8
   animationController: {fileID: 0}
   effects: []
+  particleEffects: {fileID: 0}
   hitboxSize: {x: 3, y: 3}
   angled: 1
   maxTime: 10
@@ -30,4 +31,4 @@ MonoBehaviour:
   particleSystem: {fileID: 0}
   pierce: 0
   collidesWithTiles: 1
-  speed: 160
+  speed: 200

@@ -465,7 +465,7 @@ public class MapManager : MonoBehaviour
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case BossType.LavaBoss:
-                temp = new LavaBoss(proto);
+                temp = new PhoenixBoss(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case BossType.SharkBoss:
