@@ -18,8 +18,17 @@ public class Tile : MonoBehaviour
         spriteRenderer.sprite = sprite;
     }
 
-    public void ClearSprite()
+    public void SetAnimator(RuntimeAnimatorController animation)
+    {
+
+        animator.runtimeAnimatorController = animation;
+    }
+
+    public void Clear()
     {
         spriteRenderer.sprite = null;
+        animator.runtimeAnimatorController = null;
+
     }
+
 }

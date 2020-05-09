@@ -9,7 +9,7 @@ public class TileMapRenderer : MonoBehaviour
     public float tileSize = 1.0f;
     private Vector3 tileOffset;
     public Vector2 MapSize;
-
+    Dictionary<TileType, TilePrototype> tilePrototypes;
     MapManager map;
     public WorldType CurrentMapType;
     Tile[,] spriteMap;
@@ -17,10 +17,20 @@ public class TileMapRenderer : MonoBehaviour
 
     public void Awake()
     {
+        tilePrototypes = new Dictionary<TileType, TilePrototype>();
+        TilePrototype[] prototypes = Resources.LoadAll<TilePrototype>("Tiles");
+        
+        foreach(TilePrototype proto in prototypes)
+        {
+            Debug.Log("Adding tile prototype for " + proto.name);
+            tilePrototypes.Add(proto.type, proto);
+        }
+
+
         spriteMap = new Tile[(int)MapSize.x, (int)MapSize.y];
 
         Debug.Log(MapSize.x + ", " + MapSize.y);
-
+        
 
         for (int x = 0; x < MapSize.x; x++) {
             for (int y = 0; y < MapSize.y; y++)
@@ -33,6 +43,16 @@ public class TileMapRenderer : MonoBehaviour
 
     }
 
+    public Sprite GetSprite(TileType tileType, WorldType world)
+    {
+        if(tilePrototypes.ContainsKey(tileType))
+        {
+            return tilePrototypes[tileType].sprites[(int)world];
+        }
+
+        return null;
+    }
+
     public void DrawMap(TileType[,] tiles, MapData mapData)
     {
         //MapSize = new Vector2(MAXSIZEY, MAXSIZEY);
@@ -42,12 +62,21 @@ public class TileMapRenderer : MonoBehaviour
             {
                 if (x < mapData.sizeX * mapData.roomSizeX && y < mapData.sizeY * mapData.roomSizeY)
                 {
-                    spriteMap[x, y].SetSprite(mapData.tileSprites[(int)tiles[x, y]]);
+                    if (tilePrototypes.ContainsKey(tiles[x, y]))
+                    {
+                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x,y]].sprites[(int)mapData.type]);
+                        spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
+
+                    }
+                    else
+                    {
+                        spriteMap[x, y].Clear();
+                    }
                     
                 }
                 else
                 {
-                    spriteMap[x, y].ClearSprite();
+                    spriteMap[x, y].Clear();
                 }
 
             }
@@ -64,12 +93,20 @@ public class TileMapRenderer : MonoBehaviour
             {
                 if (x < sizeX && y < sizeY)
                 {
+                    if (tilePrototypes.ContainsKey(tiles[x, y]))
+                    {
+                        spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
+                        spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
 
-                    spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
+                    }
+                    else
+                    {
+                        spriteMap[x, y].Clear();
+                    }
                 }
                 else
                 {
-                    spriteMap[x, y].ClearSprite();
+                    spriteMap[x, y].Clear();
 
                 }
 
@@ -81,6 +118,11 @@ public class TileMapRenderer : MonoBehaviour
     public void DrawTile(int x, int y, TileType tile, Sprite sprite)
     {
         spriteMap[x, y].SetSprite(sprite);
+        if (tilePrototypes.ContainsKey(tile))
+        {
+
+            spriteMap[x, y].SetAnimator(tilePrototypes[tile].animationController);
+        }
     }
 
 

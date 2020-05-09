@@ -21,7 +21,7 @@ public class ChestFinder : Effect
 
         if (MiniMap.instance != null)
         {
-            foreach(Chest chest in LevelManager.instance.GetChests())
+            foreach(Chest chest in GameManager.instance.GetChests())
             {
                 icons.Add(MiniMap.instance.AddStaticIcon(MinimapIconType.Chest, MapManager.instance.GetMapTileAtPoint(chest.Position)));
             }
@@ -45,7 +45,7 @@ public class ChestFinder : Effect
 
         if (MiniMap.instance != null)
         {
-            foreach (Chest chest in LevelManager.instance.GetChests())
+            foreach (Chest chest in GameManager.instance.GetChests())
             {
                 icons.Add(MiniMap.instance.AddStaticIcon(MinimapIconType.Chest, MapManager.instance.GetMapTileAtPoint(chest.Position)));
             }
@@ -54,7 +54,7 @@ public class ChestFinder : Effect
 
     public override void OnPlayerDeath(Player player)
     {
-        foreach(Player p in LevelManager.instance.players)
+        foreach(Player p in GameManager.instance.players)
         {
             foreach(Effect effect in p.itemEffects)
             {

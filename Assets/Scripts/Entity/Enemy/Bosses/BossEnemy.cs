@@ -60,7 +60,7 @@ public class BossEnemy : Enemy
     public override void DropLoot()
     {
  
-        foreach (Item item in prototype.lootTable.GetLoot(LevelManager.instance.NumCompletedWorlds()))
+        foreach (Item item in prototype.lootTable.GetLoot(WorldManager.instance.NumCompletedWorlds()))
         {
             ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
             temp.Spawn(Position + new Vector2(0, MapManager.cTileSize / 2));
@@ -72,9 +72,9 @@ public class BossEnemy : Enemy
 
     public override void Die()
     {
-        SoundManager.instance.PlayLevelMusic((int)LevelManager.instance.mMap.mCurrentMap.worldType);
+        SoundManager.instance.PlayLevelMusic((int)MapManager.instance.mCurrentMap.worldType);
 
-        LevelManager.instance.WorldCleared(LevelManager.instance.currentWorldIndex);
+        WorldManager.instance.WorldCleared(WorldManager.instance.currentWorldIndex);
         
         base.Die();
     }

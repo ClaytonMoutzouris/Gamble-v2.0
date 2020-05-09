@@ -21,8 +21,8 @@ MonoBehaviour:
   gravity: -900
   baseDepth: 3
   depthVariance: 1
-  smallEnemies: 00000000010000000300000004000000
-  largeEnemies: 07000000080000000a0000000b000000
+  smallEnemies: 0000000001000000
+  largeEnemies: 0b00000008000000
   tileSprites:
   - {fileID: 0}
   - {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
@@ -42,6 +42,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class WorldNode : MonoBehaviour
 {
 
-    public WorldType worldType;
+    public World world;
     public Image image;
     public int worldID;
     public Button button;
@@ -16,10 +16,10 @@ public class WorldNode : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void SetUp(WorldType type)
+    public void SetUp(World world)
     {
-
-        worldType = type;
+        world.WorldNode = this;
+        this.world = world;
         SetColor();
     }
 
@@ -30,7 +30,7 @@ public class WorldNode : MonoBehaviour
 
     public void SetColor()
     {
-        switch (worldType)
+        switch (world.WorldType)
         {
             case WorldType.Forest:
                 image.color = Color.green;

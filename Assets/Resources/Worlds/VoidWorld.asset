@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc12008e9e607a4bb691d1c8b2e1a75, type: 3}
+  m_Name: VoidWorld
+  m_EditorClassIdentifier: 
+  worldName: VoidWorld
+  type: 5
+  worldDescription: 
+  maps:
+  - {fileID: 11400000, guid: 7e596cdae7d600d4dabdbbcbe599f235, type: 2}
+  - {fileID: 11400000, guid: da676da71f3d7af4fad0a0e168c899ac, type: 2}
+  - {fileID: 11400000, guid: 71973b55e2d9a03498e5b831cb82083c, type: 2}
+  gravity: -650
+  tileSprites:
+  - {fileID: 0}
+  - {fileID: 903878290859343405, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 5281448323043955551, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 6573307383709079187, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: -6121731901965943174, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: -7040644259043057201, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: -349467962968843635, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 2405002405213778385, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

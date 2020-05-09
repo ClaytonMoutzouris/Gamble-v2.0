@@ -13,7 +13,7 @@ using System;
     //Potentially we could split these
 public class PhysicsBody : CustomCollider2D
 {
-    public LevelManager mGame;
+    public GameManager mGame;
     //public Entity mEntity;
 
 
@@ -72,7 +72,7 @@ public class PhysicsBody : CustomCollider2D
     public PhysicsBody(Entity entity, CustomAABB aABB) : base(entity, aABB)
     {
         mCollisions = new List<CollisionData>();
-        mGame = LevelManager.instance;
+        mGame = GameManager.instance;
         mEntity = entity;
         mAABB = aABB;
 
@@ -412,6 +412,9 @@ public class PhysicsBody : CustomCollider2D
                 case TileType.Water:
                     mPS.inWater = true;
                     break;
+                case TileType.Updraft:
+                    mPS.inUpdraft = true;
+                    break;
             }
         }
 
@@ -566,6 +569,7 @@ public class PhysicsBody : CustomCollider2D
         mPS.onLadder = false;
         mPS.onDoor = false;
         mPS.inWater = false;
+        mPS.inUpdraft = false;
 
         if(mSpeed.y < 0)
         {
@@ -656,6 +660,11 @@ public class PhysicsBody : CustomCollider2D
             mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
             mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed/10);
 
+        } else if (mPS.inUpdraft)
+        {
+            mSpeed.y += -1*mEntity.Map.GetGravity() * Time.deltaTime;
+            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+            //mPS.pushesBottomTile = mPS.pushesTopTile;
         }
         else
         {

@@ -20,11 +20,11 @@ public class Biosample : Item
         //This is bad practice, but works for now
         if (base.Identify())
         {
-            if(LevelManager.instance.NumCompletedWorlds() < 5)
+            if(WorldManager.instance.NumCompletedWorlds() < 5)
             {
                 sampleWorldType = (WorldType)Random.Range(0, (int)WorldType.Void);
             }
-             else if(LevelManager.instance.NumCompletedWorlds() > 5)
+             else if(WorldManager.instance.NumCompletedWorlds() > 5)
             {
                 sampleWorldType = (WorldType)Random.Range(0, (int)WorldType.Count);
             }

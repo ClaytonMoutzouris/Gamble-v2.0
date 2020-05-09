@@ -87,7 +87,7 @@ public abstract class Equipment : Item
 
         if(mRarity != Rarity.Artifact)
         {
-            int rarityRoll = Random.Range(0, 100) + 10*LevelManager.instance.NumCompletedWorlds();
+            int rarityRoll = Random.Range(0, 100) + 10* WorldManager.instance.NumCompletedWorlds();
 
             if (rarityRoll < 50)
             {

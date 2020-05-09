@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f825a6bba209d408232100bb6698a8, type: 3}
+  m_Name: Spikes
+  m_EditorClassIdentifier: 
+  type: 3
+  sprites:
+  - {fileID: 7130472341855191249, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 21300004, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300004, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300004, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
+  - {fileID: 21300004, guid: fa772b6751bcc284a96c948523e90e39, type: 3}
+  - {fileID: 6573307383709079187, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300004, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}
+  animators: []

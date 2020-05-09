@@ -40,7 +40,7 @@ public class CharacterCreationPanel : MonoBehaviour
 
         newPlayer.SetInput(input);
         newPlayer.playerPanel = PlayerUIPanels.instance.playerPanels[playerIndex];
-        LevelManager.instance.AddPlayer(playerIndex, newPlayer);
+        GameManager.instance.AddPlayer(playerIndex, newPlayer);
         Close();
     }
 

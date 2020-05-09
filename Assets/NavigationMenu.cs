@@ -61,7 +61,7 @@ public class NavigationMenu : MonoBehaviour
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
         defaultObject.GetComponent<Button>().OnSelect(null);
         gameObject.SetActive(true);
-        LevelManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
+        GameManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
 
 
     }
@@ -76,34 +76,13 @@ public class NavigationMenu : MonoBehaviour
         worldNodes.Clear();
     }
 
-    public void SetVoidMap()
-    {
-        ClearMaps();
-        WorldNode temp;
-
-        temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(WorldType.Void);
-        defaultObject = temp.gameObject;
-        
-
-        Navigation nav = backButton.navigation;
-        nav.selectOnUp = temp.button;
-        backButton.navigation = nav;
-
-        nav.selectOnDown = backButton;
-        temp.button.navigation = nav;
-
-        worldNodes.Add(temp);
-
-    }
-
-    public void AddMap(WorldType worldtype)
+    public void AddWorldNode(World world)
     {
 
         WorldNode temp;
 
         temp = Instantiate<WorldNode>(prefab, worldContainer.transform);
-        temp.SetUp(worldtype);
+        temp.SetUp(world);
         worldNodes.Add(temp);
         Navigation nav;
 
@@ -138,7 +117,6 @@ public class NavigationMenu : MonoBehaviour
 
         defaultObject = temp.gameObject;
 
-        LevelManager.instance.completedWorlds.Add(false);
     }
 
     public void SetDefaultNode()
@@ -150,17 +128,16 @@ public class NavigationMenu : MonoBehaviour
     {
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
         gameObject.SetActive(false);
-        LevelManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
+        GameManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
         pausedIndex = -1;
 
     }
 
     public void SelectWorld(WorldNode node)
     {
-        Debug.Log(node.worldType + " was selected");
-        LevelManager.instance.levelIndex = (int)node.worldType;
-        LevelManager.instance.currentWorldIndex = (int)worldNodes.IndexOf(node);
-        LevelManager.instance.mMapChangeFlag = true;
+        Debug.Log(node + " was selected");
+
+        WorldManager.instance.SelectWorld(worldNodes.IndexOf(node));
         Close();
     }
 

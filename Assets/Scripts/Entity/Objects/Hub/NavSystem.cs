@@ -35,7 +35,8 @@ public class NavSystem : Entity, IInteractable
         {
             if(slot.item is Biosample sample && sample.identified)
             {
-                NavigationMenu.instance.AddMap(sample.sampleWorldType);
+                Debug.Log("Adding world with type " + sample.sampleWorldType);
+                WorldManager.instance.AddWorld(sample.sampleWorldType);
                 slot.GetOneItem();
             }
         }

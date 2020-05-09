@@ -65,19 +65,19 @@ public class TileMapEditor : MonoBehaviour
         if (wheel > 0.05f)
         {
 
-            if ((int)mPlacedTileType < (int)TileType.Count - 1)
+            if ((int)mPlacedTileType < (int)TileType.Count)
                 mPlacedTileType += 1;
             else
-                mPlacedTileType = TileType.Block;
+                mPlacedTileType = TileType.Empty;
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }
         else if (wheel < -0.05f)
         {
-            if ((int)mPlacedTileType > (int)TileType.Empty + 1)
+            if ((int)mPlacedTileType > (int)TileType.Empty)
                 mPlacedTileType -= 1;
             else
-                mPlacedTileType = TileType.Count - 1;
+                mPlacedTileType = TileType.Count;
 
             tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
         }

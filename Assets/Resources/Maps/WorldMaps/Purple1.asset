@@ -18,10 +18,10 @@ MonoBehaviour:
   sizeY: 8
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -750
+  gravity: -900
   baseDepth: 5
   depthVariance: 1
-  smallEnemies: 0000000001000000020000000600000005000000
+  smallEnemies: 010000000500000006000000
   largeEnemies: 0a00000009000000
   tileSprites:
   - {fileID: 0}
@@ -32,7 +32,7 @@ MonoBehaviour:
   - {fileID: 21300008, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
   - {fileID: 21300010, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
   - {fileID: 21300012, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
-  - {fileID: 21300014, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -42,6 +42,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

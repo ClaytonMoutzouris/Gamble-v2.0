@@ -22,7 +22,7 @@ public class Entity {
     protected EntityPrototype prototype;
     private EntityRenderer renderer;
     private PhysicsBody body;
-    private LevelManager game;
+    private GameManager game;
     private MapManager map;
     [HideInInspector]
     public bool mToRemove = false;
@@ -74,7 +74,7 @@ public class Entity {
         }
     }
 
-    public LevelManager Game
+    public GameManager Game
     {
         get
         {
@@ -127,8 +127,8 @@ public class Entity {
             entityEffects.Add(e);
             e.Apply(this);
         }
-        Game = LevelManager.instance;
-        Map = Game.mMap;
+        Game = GameManager.instance;
+        Map = MapManager.instance;
         ignoreTilemap = proto.ignoreTilemap;
         hostility = prototype.hostility;
 

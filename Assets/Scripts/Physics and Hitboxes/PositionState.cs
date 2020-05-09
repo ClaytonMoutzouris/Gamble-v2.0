@@ -49,6 +49,7 @@ public struct PositionState
     public bool onDoor;
     public bool isJetting;
     public bool inWater;
+    public bool inUpdraft;
 
     public Vector2i leftTile;
     public Vector2i rightTile;

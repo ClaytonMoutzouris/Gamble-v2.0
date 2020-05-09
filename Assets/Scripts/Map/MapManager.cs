@@ -14,8 +14,8 @@ public class MapManager : MonoBehaviour
     public TileMapRenderer mTileMap;
     public static MapManager instance;
     public Vector3 mPosition;
-    public int mWidth;
-    public int mHeight;
+    public int mWidth = 100;
+    public int mHeight = 100;
 
     [SerializeField]
     public const int cTileSize = 32;
@@ -201,25 +201,13 @@ public class MapManager : MonoBehaviour
 
     }
 
-    public void NewMap(MapData data)
+
+    public void LoadMap(Map map)
     {
-
-
-        //set the position
-
         mUpdatedAreas = new HashSet<Vector2i>();
 
-        if(data.mapType == MapType.Hub)
-        {
-            mCurrentMap = MapGenerator.GenerateHubMap(data);
 
-        }
-        else
-        {
-            mCurrentMap = MapGenerator.GenerateMap(data);
-
-        }
-
+        mCurrentMap = map;
 
         mWidth = mCurrentMap.getMapSize().x;
         mHeight = mCurrentMap.getMapSize().y;
@@ -227,9 +215,7 @@ public class MapManager : MonoBehaviour
         mTileData = mCurrentMap.GetMap();
         AddEntities(mCurrentMap);
 
-        mTileMap.DrawMap(mTileData, data);
-
-
+        mTileMap.DrawMap(mTileData, map.Data);
     }
 
     public void HardenLava()
@@ -250,53 +236,6 @@ public class MapManager : MonoBehaviour
         mTileData = tileTypes;
         mTileMap.DrawMap(mTileData, mCurrentMap.Data);
     }
-
-    public void NewBossMap(MapData data, WorldType type)
-    {
-
-        //set the position
-
-        mUpdatedAreas = new HashSet<Vector2i>();
-
-
-        mCurrentMap = MapGenerator.GenerateBossMap(data, type);
-        mCurrentMap.worldType = type;
-
-        mWidth = mCurrentMap.getMapSize().x;
-        mHeight = mCurrentMap.getMapSize().y;
-
-        mTileData = mCurrentMap.GetMap();
-        AddEntities(mCurrentMap);
-
-        mTileMap.DrawMap(mTileData, data);
-
-
-    }
-    /*
-    public void CreationMap()
-    {
-        mWidth = Constants.cDefaultMapWidth;
-        mHeight = Constants.cDefaultMapHeight;
-
-
-        //set the position
-
-        mUpdatedAreas = new HashSet<Vector2i>();
-
-
-        mCurrentMap = MapGenerator.CreationMap();
-
-
-        mWidth = mCurrentMap.sizeX;
-        mHeight = mCurrentMap.sizeY;
-
-        mTileData = mCurrentMap.GetMap();
-
-        mTileMap.DrawMap(mTileData, mCurrentMap.sizeX, mCurrentMap.sizeY, mCurrentMap.type);
-
-    }
-    */
-
 
     public virtual void Init()
     {

@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Door
   m_EditorClassIdentifier: 
   entityType: 4
+  hostility: 0
   mName: Door
   bodySize: {x: 16, y: 16}
   CollidesWith: 
   ignoreTilemap: 0
-  sprite: {fileID: 21300000, guid: f13d689d46d31464f9c564fd96a6f163, type: 3}
+  ignoreGravity: 0
+  sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 0}
+  effects: []
+  particleEffects: {fileID: 0}

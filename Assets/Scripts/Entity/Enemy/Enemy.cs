@@ -133,10 +133,10 @@ public class Enemy : Entity, IHurtable
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
             
-            mStats.getStat(type).value += LevelManager.instance.NumCompletedWorlds();
+            mStats.getStat(type).value += WorldManager.instance.NumCompletedWorlds();
         }
 
-        Debug.Log("Enemy Scaled to level " + LevelManager.instance.NumCompletedWorlds());
+        Debug.Log("Enemy Scaled to level " + WorldManager.instance.NumCompletedWorlds());
     }
 
     public override void Spawn(Vector2 spawnPoint)
@@ -189,7 +189,7 @@ public class Enemy : Entity, IHurtable
             return;
         }
 
-        LevelManager.instance.GainPartyEXP(ExpValue);
+        GameManager.instance.GainPartyEXP(ExpValue);
         base.Die();
         foreach(Attack attack in mAttackManager.meleeAttacks)
         {

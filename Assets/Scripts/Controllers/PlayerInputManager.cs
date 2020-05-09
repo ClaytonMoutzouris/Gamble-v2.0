@@ -13,7 +13,7 @@ public class PlayerInputManager : MonoBehaviour {
     PlayerIndex[] controllerIDs = new PlayerIndex[4];
     public PlayerGamepadInput[] playerInputs = new PlayerGamepadInput[4];
 
-    public LevelManager levelManager;
+    public GameManager levelManager;
     public bool use_X_Input = true;
     public int connectedControllers = 0;   //if this variable changes, we need to call an update on the gamepads
 

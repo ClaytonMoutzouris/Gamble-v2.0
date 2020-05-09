@@ -46,6 +46,7 @@ public enum TileType
     DestructibleBlock,
     Water,
     Lava,
+    Updraft,
     Count,
 }
 

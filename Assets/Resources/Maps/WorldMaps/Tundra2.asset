@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4858b67e4cf262e4a9bf2f2abebe7ba0, type: 3}
+  m_Name: Tundra2
+  m_EditorClassIdentifier: 
+  mapType: 1
+  type: 1
+  sizeX: 5
+  sizeY: 3
+  roomSizeX: 10
+  roomSizeY: 10
+  gravity: -900
+  baseDepth: 3
+  depthVariance: 0
+  smallEnemies: 0500000001000000
+  largeEnemies: 0800000009000000
+  tileSprites:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300002, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300004, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300006, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300008, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300010, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300012, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chestLoot: {fileID: 11400000, guid: 865c3b7c25f82004fb377b586b8314ca, type: 2}

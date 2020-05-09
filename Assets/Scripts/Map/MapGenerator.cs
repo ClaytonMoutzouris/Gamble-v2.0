@@ -120,7 +120,7 @@ public static class MapGenerator
     */
    
 
-    public static RoomData[,] RoomMap(int sizeX, int sizeY, Vector2i startRoom, out Vector2i endRoom, int depth)
+    public static RoomData[,] RoomMap(int sizeX, int sizeY, Vector2i startRoom, out Vector2i endRoom)
     {
         RoomData[,] map = new RoomData[sizeX, sizeY];
         List<RoomData> mainPath = new List<RoomData>();
@@ -251,17 +251,34 @@ public static class MapGenerator
 
         Vector2i startRoom;
         Vector2i endRoom;
+        int randomX = Random.Range(0, map.sizeX);
 
         int[] depths = new int[map.sizeX];
-        for(int i = 0; i < depths.Length; i++)
-        {
-            depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
-        }
-        int randomX = Random.Range(0, map.sizeX);
-        Debug.Log("Random X: " + randomX);
-        startRoom = new Vector2i(randomX, depths[randomX]);
 
-        RoomData[,] roomPath = RoomMap(map.sizeX, map.sizeY, startRoom, out endRoom, data.baseDepth);
+
+        if (data.baseDepth < data.sizeY)
+        {
+            for (int i = 0; i < depths.Length; i++)
+            {
+                depths[i] = data.baseDepth + (Random.Range(-data.depthVariance, data.depthVariance));
+            }
+            Debug.Log("Random X: " + randomX);
+            startRoom = new Vector2i(randomX, depths[randomX]);
+        }
+        else
+        {
+            for (int i = 0; i < depths.Length; i++)
+            {
+                depths[i] = data.sizeY;
+            }
+            int randomY = Random.Range(0, map.sizeY);
+
+            startRoom = new Vector2i(randomX, randomY);
+        }
+
+        RoomData[,] roomPath = RoomMap(map.sizeX, map.sizeY, startRoom, out endRoom);
+
+
         SurfaceLayer temp;
 
         for (int x = 0; x < map.sizeX; x++)
@@ -380,21 +397,13 @@ public static class MapGenerator
         return tileMap;
     }
 
-    public static Map GenerateBossMap(MapData data, WorldType worldType)
+    public static Map GenerateBossMap(MapData data)
     {
-        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
-        Debug.Log("Map Data: " + data.name + ", " + worldType);
 
-        RoomData roomData = RoomDatabase.GetBossRoom(worldType);
+        RoomData roomData = RoomDatabase.GetBossRoom(data.type);
         data.roomSizeX = roomData.mWidth;
         data.roomSizeY = roomData.mHeight;
-
-        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
         Map map = new Map(data);
-
-
-
-        map.worldType = worldType;
         map.SetTileMap(roomData.tiles);
         Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
 
@@ -440,13 +449,13 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
         map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
-        if (LevelManager.instance.NumCompletedWorlds() == 0)
+        if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Biosample"));
 
         }
 
-        if (LevelManager.instance.NumCompletedWorlds() == 0)
+        if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
             map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
 
@@ -561,7 +570,7 @@ public static class MapGenerator
                         break;
                     case TileType.Door:
                         map.AddEntity(new ObjectData(x, y, ObjectType.Door));
-                        map.SetTile(x, y, TileType.Empty);
+                        //map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.Bounce:
                         //map.AddEntity(new ObjectData(x, y, ObjectType.BouncePad));

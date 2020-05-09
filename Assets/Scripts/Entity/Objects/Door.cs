@@ -10,7 +10,8 @@ public class Door : Entity, IInteractable
     /// </summary>
     /// 
     [HideInInspector]
-    public bool locked = true;
+    public bool locked = false;
+    
 
 
     public Door(EntityPrototype proto) : base(proto)

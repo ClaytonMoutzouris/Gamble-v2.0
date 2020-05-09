@@ -18,7 +18,7 @@ MonoBehaviour:
   sizeY: 10
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -900
+  gravity: -650
   baseDepth: 4
   depthVariance: 1
   smallEnemies: 06000000
@@ -42,7 +42,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
-  - {fileID: 0}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

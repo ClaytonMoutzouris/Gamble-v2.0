@@ -71,6 +71,8 @@
     <Compile Include="Assets\Editor\ProjectilePrototypeEditor.cs" />
     <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Editor\TalentEditor.cs" />
+    <Compile Include="Assets\Editor\TilePrototypeEditor.cs" />
+    <Compile Include="Assets\Editor\WorldEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/Documents/GitHub/Gamble-v2.0/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

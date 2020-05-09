@@ -16,6 +16,11 @@ public class Gadget : Equipment
         base.OnUnequip(player);
     }
 
+    public void Activate(Player player)
+    {
+        
+    }
+
     public override string getTooltip()
     {
         string tooltip = base.getTooltip();

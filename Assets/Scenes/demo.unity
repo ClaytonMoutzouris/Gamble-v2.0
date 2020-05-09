@@ -3539,6 +3539,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &325383101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 325383103}
+  - component: {fileID: 325383102}
+  m_Layer: 0
+  m_Name: WorldManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &325383102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325383101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf20e56dbb4dac84996abc474dbd27a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hubData: {fileID: 11400000, guid: cf8ad0df55c67e7429a6c3c83d6275d1, type: 2}
+  worldDatas:
+  - {fileID: 11400000, guid: 155fea0b1e40c924daab1cfeb55bd52b, type: 2}
+  - {fileID: 11400000, guid: a43f7cd6f86385b459be32be171511e9, type: 2}
+  - {fileID: 11400000, guid: 0cb9bb1ba26917d439338ce231296f66, type: 2}
+  - {fileID: 11400000, guid: 0f3ae24fe0dc3f44380ce83920fced8f, type: 2}
+  - {fileID: 11400000, guid: ab24684c5635ffe4fbc4d5d5b3de810d, type: 2}
+  - {fileID: 11400000, guid: f1291732d8a7236458712248e089d24b, type: 2}
+  currentWorldIndex: -1
+--- !u!4 &325383103
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325383101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 394.93558, y: 159.08682, z: -765.58545}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &325946857
 GameObject:
   m_ObjectHideFlags: 0
@@ -11846,18 +11898,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameMode: 0
   gameCamera: {fileID: 1799959646}
-  levelIndex: 0
   expBar: {fileID: 553585104}
-  mMap: {fileID: 2106156355}
   mEntities: []
   partyEXP: 0
   partyLevel: 1
   mMouseSprite: {fileID: 0}
   mMapChangeFlag: 0
-  changeToType: 0
   warpToHubFlag: 0
-  completedWorlds: 
-  currentWorldIndex: 0
 --- !u!4 &1053302361
 Transform:
   m_ObjectHideFlags: 0
@@ -16613,7 +16660,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4d86af8f0225e344bbe9003e82600525, type: 3}
   - {fileID: 8300000, guid: 64e91033d28465b4ab61b92f7df3819e, type: 3}
   - {fileID: 8300000, guid: 6ef0b2c2bf3281247b82ac6687dc0a94, type: 3}
-  - {fileID: 8300000, guid: 200a330aa1bdccf4ca44f6ea0bcdecb6, type: 3}
+  - {fileID: 8300000, guid: 5b502352d1e11b240be2228b1e82ed60, type: 3}
   - {fileID: 8300000, guid: 200a330aa1bdccf4ca44f6ea0bcdecb6, type: 3}
   - {fileID: 8300000, guid: 200a330aa1bdccf4ca44f6ea0bcdecb6, type: 3}
   bossMusic:
