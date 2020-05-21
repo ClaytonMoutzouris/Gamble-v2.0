@@ -13,28 +13,32 @@ MonoBehaviour:
   m_Name: CatBoss Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 5
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 25
+    item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 40
+  - dropChance: 100
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 20
     item: {fileID: 11400000, guid: a127ec71cf356ad4eac906415e604df1, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 50
     item: {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 100
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 100
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: a275604440e5ff346a568930942a0588, type: 2}
     minDropNum: 1
     maxDropNum: 1
   guaranteedDrops:

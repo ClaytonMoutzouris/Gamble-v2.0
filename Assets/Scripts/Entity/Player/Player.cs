@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using LocalCoop;
 
 public enum PlayerState { Idle, Attacking, Blocking, Dead };
-public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming };
+public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking };
 
 public class Player : Entity, IHurtable
 {
@@ -302,7 +302,7 @@ public class Player : Entity, IHurtable
     public void HandlePlayerPanelInput()
     {
         //Swap between panel tabs
-        if (Input.playerButtonInput[(int)ButtonInput.Teleport] & !input.previousButtonInput[(int)ButtonInput.Teleport])
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget] & !input.previousButtonInput[(int)ButtonInput.Gadget])
         {
             playerPanel.NextTabLeft();
         }
@@ -369,9 +369,11 @@ public class Player : Entity, IHurtable
         }
 
 
-        if (Input.playerButtonInput[(int)ButtonInput.Teleport])
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget])
         {
-            Position = Position + GetAimLeft()*150;
+            if(Equipment.GetSlotContents(EquipmentSlot.Gadget) != null) {
+                ((Gadget)Equipment.GetSlotContents(EquipmentSlot.Gadget)).Activate(this);
+            }
             //Game.mMapChangeFlag = true;
         }
 
@@ -406,6 +408,10 @@ public class Player : Entity, IHurtable
 
 
         AttackManager.UpdateAttacks();
+        if(Equipment.GetGadget() != null)
+        {
+            Equipment.GetGadget().GadgetUpdate(this);
+        }
         UpdateShield();
         
 
@@ -466,14 +472,14 @@ public class Player : Entity, IHurtable
 
                 mWalkSfxTimer = cWalkSfxTime;
 
-                if (!Body.mPS.pushesBottom)
+                if (!Body.mPS.pushesBottom || Body.mPS.inUpdraft)
                 {
                     movementState = MovementState.Jump;
                     break;
                 }
 
 
-                Body.mSpeed = Vector2.zero;
+                Body.mSpeed.x = 0;
 
                 //Check to see if the player is trying to pass through a one way
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && Input.playerButtonInput[(int)ButtonInput.Jump])
@@ -544,7 +550,7 @@ public class Player : Entity, IHurtable
                     SoundManager.instance.PlaySingle(mWalkSfx);
                 }
 
-                if (!Body.mPS.pushesBottom)
+                if (!Body.mPS.pushesBottom || Body.mPS.inUpdraft)
                 {
                     movementState = MovementState.Jump;
                     break;
@@ -638,6 +644,9 @@ public class Player : Entity, IHurtable
 
                 break;
             case MovementState.Jump:
+
+
+
                 if(Body.mPS.inWater)
                 {
                     movementState = MovementState.Swimming;
@@ -651,7 +660,7 @@ public class Player : Entity, IHurtable
                     if (Body.mPS.pushesTop || Body.mSpeed.y > 0.0f)
                         mFramesFromJumpStart = Constants.cJumpFramesThreshold + 1;
                     else if (Input.playerButtonInput[(int)ButtonInput.Jump])
-                        Body.mSpeed.y = mJumpSpeed;
+                        Body.mSpeed.y = Mathf.Min(mJumpSpeed, -Constants.cMaxFallingSpeed);
 
 
                 }
@@ -709,7 +718,7 @@ public class Player : Entity, IHurtable
                 }
 
                 //if we hit the ground
-                if (Body.mPS.pushesBottom)
+                if (Body.mPS.pushesBottom && !Body.mPS.inUpdraft)
                 {
                     //if there's no movement change state to standing
                     if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
@@ -721,7 +730,6 @@ public class Player : Entity, IHurtable
                     else	//either go right or go left are pressed so we change the state to walk
                     {
                         movementState = MovementState.Walk;
-                        Body.mSpeed.y = 0.0f;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                 }
@@ -837,7 +845,6 @@ public class Player : Entity, IHurtable
                     {
                         Body.mPS.isClimbing = false;
                         movementState = MovementState.Stand;
-                        Body.mSpeed.y = 0.0f;
                     }
                     else
                     {
@@ -919,7 +926,6 @@ public class Player : Entity, IHurtable
                     else	//either go right or go left are pressed so we change the state to walk
                     {
                         movementState = MovementState.Walk;
-                        Body.mSpeed.y = 0.0f;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                 }
@@ -1019,7 +1025,6 @@ public class Player : Entity, IHurtable
                     else	//either go right or go left are pressed so we change the state to walk
                     {
                         movementState = MovementState.Walk;
-                        Body.mSpeed.y = 0.0f;
                         SoundManager.instance.PlaySingle(mHitWallSfx);
                     }
                 }
@@ -1048,6 +1053,12 @@ public class Player : Entity, IHurtable
                 }
 
 
+
+
+                break;
+            case MovementState.Hooking:
+
+                Body.mIgnoresGravity = true;
 
 
                 break;
@@ -1144,8 +1155,8 @@ public class Player : Entity, IHurtable
 
     public void Jump()
     {
-        Debug.Log("Jumping while in air - " + mJumpCount + " ~ " + mNumJumps);
-        if(Body.mPS.inWater)
+
+        if (Body.mPS.inWater)
         {
             mJumpCount = 0;
         }
@@ -1297,6 +1308,9 @@ public class Player : Entity, IHurtable
                 Renderer.SetAnimState("Climb");
             else
                 Renderer.SetAnimState("LadderIdle");
+        } else if(movementState == MovementState.Hooking)
+        {
+            Renderer.SetAnimState("Jump");
         }
         else
         {
@@ -1557,8 +1571,16 @@ public class Player : Entity, IHurtable
         {
             if (inventory.slots[i].item is ConsumableItem temp)
             {
-                temp.Use(this);
-                return true;
+                if(temp.Use(this))
+                {
+                    inventory.slots[i].GetOneItem();
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
             }
         }
 

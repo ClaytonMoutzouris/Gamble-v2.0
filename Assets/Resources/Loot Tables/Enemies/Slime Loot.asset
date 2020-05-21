@@ -13,27 +13,24 @@ MonoBehaviour:
   m_Name: Slime Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 10
+  - dropChance: 15
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 50
+  - dropChance: 25
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
+  - dropChance: 15
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 10
     item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 5
     item: {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 100
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

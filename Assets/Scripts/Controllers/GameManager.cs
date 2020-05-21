@@ -82,9 +82,9 @@ public class GameManager : MonoBehaviour
         }
         partyLevel = 1;
         partyEXP = 0;
+        WorldManager.instance.NewUniverse();
 
         LoadMap(WorldManager.instance.GetHubWorld().GetFirstMap());
-
         mGameMode = GameMode.Game;
     }
 

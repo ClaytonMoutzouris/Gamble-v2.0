@@ -69,7 +69,6 @@ public class MiniMap : MonoBehaviour
         ClearMinimap();
 
         icons.Add(AddStaticIcon(MinimapIconType.Door, map.exitTile));
-        icons.Add(AddStaticIcon(MinimapIconType.Boss, map.bossTile));
 
         foreach(Player player in players)
         {

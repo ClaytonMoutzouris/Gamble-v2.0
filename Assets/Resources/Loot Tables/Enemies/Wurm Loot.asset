@@ -13,23 +13,20 @@ MonoBehaviour:
   m_Name: Wurm Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 25
+  - dropChance: 10
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 5
     item: {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 50
+  - dropChance: 20
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 2
     item: {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 100
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

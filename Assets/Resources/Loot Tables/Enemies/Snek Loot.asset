@@ -13,19 +13,16 @@ MonoBehaviour:
   m_Name: Snek Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 35
+  - dropChance: 20
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 10
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 50
+  - dropChance: 25
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 120
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

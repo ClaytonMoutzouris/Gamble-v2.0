@@ -278,7 +278,11 @@ public static class MapGenerator
 
         RoomData[,] roomPath = RoomMap(map.sizeX, map.sizeY, startRoom, out endRoom);
 
-
+        if(data.hasMiniboss)
+        {
+            Debug.Log("Has miniboss");
+            roomPath[endRoom.x, endRoom.y].roomType = RoomType.MinibossRoom;
+        }
         SurfaceLayer temp;
 
         for (int x = 0; x < map.sizeX; x++)
@@ -310,10 +314,18 @@ public static class MapGenerator
                     temp = SurfaceLayer.Surface;
                 }
 
-                
+
+
                 if (roomPath[x, y] != null)
                 {
-                    rooms[x, y] = RoomDatabase.GetRoom(roomPath[x, y].roomType, temp);
+                    if (roomPath[x, y].roomType == RoomType.MinibossRoom)
+                    {
+                        rooms[x, y] = RoomDatabase.GetRoom(RoomType.MinibossRoom);
+
+                    } else
+                    {
+                        rooms[x, y] = RoomDatabase.GetRoom(roomPath[x, y].roomType, temp);
+                    }
                 }
                 else
                 {
@@ -334,21 +346,10 @@ public static class MapGenerator
 
         Debug.Log("Start room: " + startRoom.x + ", " + startRoom.y);
         Vector2i door = AddDoorTile(map, endRoom.x, endRoom.y);
+        map.SetTile(door.x, door.y, TileType.Door);
         map.exitTile = door;
         //Debug.Log("Door tile " + door);
         map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
-
-
-
-        if(data.mapType == MapType.Hub)
-        {
-
-
-        }
-        else
-        {
-            map.AddEntity(new ObjectData(door.x, door.y, ObjectType.Door));
-        }
 
 
         if (data.mapType != MapType.Hub && data.mapType != MapType.BossMap)
@@ -449,6 +450,7 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
         map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
+
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Biosample"));
@@ -579,6 +581,10 @@ public static class MapGenerator
                     case TileType.Spikes:
                         //map.AddEntity(new ObjectData(x, y, ObjectType.Spikes));
                         //map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.MinibossSpawn:
+                        map.AddEntity(new MinibossData(x, y, MinibossType.BogBeast));
+                        map.SetTile(x, y, TileType.Empty);
                         break;
                 }
 

@@ -7,18 +7,23 @@ public class Projectile : AttackObject {
     public RangedAttack attack;
     public bool pierce;
     public bool collidesWithTiles = true;
+    public int frameDelay = 0;
+    public int framesAlive = 0;
+    public bool isAngled = false;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 
     public Projectile(ProjectilePrototype proto, RangedAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
-
+        frameDelay = proto.frameDelay;
         this.collidesWithTiles = proto.collidesWithTiles;
         this.attack = attack;
+        isAngled = proto.angled;
         //Body.mState = ColliderState.Closed;
         SetOwner(attack.mEntity);
         hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, 0)));
+        hitbox.mState = ColliderState.Closed;
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, 0)));
 
         Body.mIsKinematic = true;
         //mMovingSpeed = 100;
@@ -40,7 +45,7 @@ public class Projectile : AttackObject {
     {
         Body.mSpeed = mMovingSpeed*direction.normalized;
 
-        if (attack.attackPrototype)
+        if (isAngled)
         {
 
             if(direction.y > 0)
@@ -64,6 +69,16 @@ public class Projectile : AttackObject {
 
     public override void EntityUpdate()
     {
+        if(framesAlive >= frameDelay)
+        {
+            hitbox.mState = ColliderState.Open;
+
+        }
+
+        framesAlive++;
+
+
+
         if (hitbox.mState != ColliderState.Closed)
         {
             foreach (IHurtable hit in hitbox.mCollisions)
@@ -131,10 +146,10 @@ public class Projectile : AttackObject {
 
     }
 
-    public void GetReflected()
+    public void GetReflected(Entity entity)
     {
         direction = direction.Rotate(180);
-
+        SetOwner(entity);
         SetInitialDirection();
     }
 

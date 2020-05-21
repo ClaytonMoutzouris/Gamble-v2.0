@@ -56,10 +56,8 @@ public class Chest : Entity, IInteractable {
         {
             mOpen = true;
             Renderer.SetAnimState("ChestOpen");
-            Debug.Log("World Type " + MapManager.instance.mCurrentMap.worldType);
             MapData data = MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType);
-            Debug.Log("MapData " + data.name);
-            Debug.Log("Data " + data.chestLoot.name);
+
 
             foreach (Item item in MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType).chestLoot.GetLoot())
             {

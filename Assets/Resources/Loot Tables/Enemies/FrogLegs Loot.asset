@@ -13,31 +13,28 @@ MonoBehaviour:
   m_Name: FrogLegs Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 5
+  - dropChance: 15
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 40
+  - dropChance: 10
     item: {fileID: 11400000, guid: 1e35be309b7fb7c4995ce7c0ff37a3a7, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 25
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 35
+    item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 15
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 25
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 80
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

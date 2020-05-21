@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapType: 1
   type: 3
-  sizeX: 2
+  sizeX: 3
   sizeY: 4
+  hasMiniboss: 1
   roomSizeX: 10
   roomSizeY: 10
   gravity: -900

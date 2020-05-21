@@ -6,7 +6,6 @@ public static class BossDatabase
 {
 
     static List<BossPrototype> mBossDatabase;
-
     static private bool isDatabaseLoaded = false;
 
     static public void LoadDatabase()

@@ -47,6 +47,16 @@ public class BossData : EntityData
     }
 }
 
+public class MinibossData : EntityData
+{
+    public MinibossType type;
+    public MinibossData(int x, int y, MinibossType t) : base(x, y)
+    {
+        type = t;
+        EntityType = EntityType.Miniboss;
+    }
+}
+
 public class ObjectData : EntityData
 {
     public ObjectType type;

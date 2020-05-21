@@ -60,4 +60,27 @@ public class PlayerEquipment
         }
     }
 
+    public Equipment GetSlotContents(EquipmentSlot slot)
+    {
+        if (Equipment.ContainsKey(slot))
+        {
+                return Equipment[slot];
+        }
+
+        return null;
+    }
+
+    public Gadget GetGadget()
+    {
+        if(Equipment.ContainsKey(EquipmentSlot.Gadget))
+        {
+            if(Equipment[EquipmentSlot.Gadget] is Gadget gadget)
+            {
+                return gadget;
+            }
+            
+        }
+
+        return null;
+    }
 }

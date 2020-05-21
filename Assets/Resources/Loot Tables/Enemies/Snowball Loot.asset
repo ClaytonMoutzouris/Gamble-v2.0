@@ -13,27 +13,24 @@ MonoBehaviour:
   m_Name: Snowball Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 35
+  - dropChance: 10
     item: {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 5
     item: {fileID: 11400000, guid: 299c574687e970740a68841f43cf5287, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 30
+  - dropChance: 10
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 25
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 45
     item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
-    maxDropNum: 1
-  - weight: 120
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+    maxDropNum: 2
+  guaranteedDrops: []

@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 4
   sizeX: 4
   sizeY: 4
+  hasMiniboss: 1
   roomSizeX: 10
   roomSizeY: 10
   gravity: -450

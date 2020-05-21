@@ -258,6 +258,8 @@ public class RangedAttack : Attack
 
         for (int i = 0; i < numberOfProjectiles; i++)
         {
+            Debug.Log("Activate " + projProto);
+
             Vector2 tempDir = direction;
             if(numberOfProjectiles > 1)
             {
@@ -267,7 +269,8 @@ public class RangedAttack : Attack
             tempDir.Normalize();
 
             Projectile shot = new Projectile(projProto, this, tempDir);
-            shot.Spawn(spawnPoint + new Vector2(0, attackOffset.y) + (attackOffset * tempDir));
+            shot.Spawn(spawnPoint + new Vector2(0, attackOffset.y) + (attackOffset * tempDir.normalized));
+
         }
 
         return true;

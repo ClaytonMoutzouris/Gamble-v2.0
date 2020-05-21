@@ -73,7 +73,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.SelectDown();
                 playerButtonInput[(int)ButtonInput.SkipLevel] = mGamepadInput.RightBumperDown() && mGamepadInput.LeftBumperDown();
-                playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.Gadget] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.rightTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
@@ -112,7 +112,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Teleport] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.Gadget] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.Fire] = false;
                 playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.ButtonBDown();
@@ -148,7 +148,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = false;
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Gadget] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
                 playerButtonInput[(int)ButtonInput.Block] = false;
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
@@ -184,7 +184,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Teleport] = false;
+                playerButtonInput[(int)ButtonInput.Gadget] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
                 playerButtonInput[(int)ButtonInput.Block] = false;
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;

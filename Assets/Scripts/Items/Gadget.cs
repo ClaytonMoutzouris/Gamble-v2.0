@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Gadget : Equipment
 {
-
+    public float cooldown = 3;
+    float cooldownTimer = 0;
 
     public override void OnEquip(Player player)
     {
@@ -16,9 +17,25 @@ public class Gadget : Equipment
         base.OnUnequip(player);
     }
 
-    public void Activate(Player player)
+    public virtual bool Activate(Player player)
     {
-        
+        if(cooldownTimer > 0)
+        {
+            return false;
+        }
+
+        cooldownTimer = cooldown;
+
+        return true;
+    }
+
+    public virtual void GadgetUpdate(Player player)
+    {
+
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
     }
 
     public override string getTooltip()
@@ -27,4 +44,6 @@ public class Gadget : Equipment
 
         return tooltip;
     }
+
+
 }

@@ -13,47 +13,44 @@ MonoBehaviour:
   m_Name: Treedude Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 10
+  - dropChance: 10
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 5
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 15
     item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 5
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 2
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 25
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 20
+    item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 15
     item: {fileID: 11400000, guid: ecc5c4652cbe99445b33f8cb2ccfb713, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 5
     item: {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 100
     item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
-    maxDropNum: 1
-  - weight: 80
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+    maxDropNum: 2
+  guaranteedDrops: []

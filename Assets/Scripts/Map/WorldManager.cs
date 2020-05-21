@@ -41,7 +41,12 @@ public class WorldManager : MonoBehaviour
 
     public void NewUniverse()
     {
-        NavigationMenu.instance.ClearMaps();
+        if(NavigationMenu.instance != null)
+        {
+            NavigationMenu.instance.ClearMaps();
+
+        }
+
         worlds.Clear();
         currentWorldIndex = -1;
     }

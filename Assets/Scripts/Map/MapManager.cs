@@ -185,6 +185,20 @@ public class MapManager : MonoBehaviour
         return currTile;
 
     }
+
+    public Vector2i GetFloorTile(Vector2i start)
+    {
+        int x = start.x;
+        int y = start.y;
+
+        while(y > 0 && GetTile(x,y) != TileType.Block)
+        {
+            y -= 1;
+        }
+
+        return new Vector2i(x, y);
+    }
+
     public float GetGravity()
     {
         return mCurrentMap.gravity;
@@ -264,6 +278,10 @@ public class MapManager : MonoBehaviour
                 case EntityType.NPC:
                     AddNPCEntity((NPCData)eD);
                     break;
+                case EntityType.Miniboss:
+                    AddMinibossEntity((MinibossData)eD);
+
+                    break;
 
             }
             
@@ -313,9 +331,9 @@ public class MapManager : MonoBehaviour
                 break;
             case ObjectType.Door:
                 Door temp6 = new Door(Resources.Load("Prototypes/Entity/Objects/Door") as EntityPrototype);
-                if(mCurrentMap.mapType == MapType.Hub || mCurrentMap.mapType == MapType.BossMap)
+                if(mCurrentMap.Data.hasMiniboss)
                 {
-                    temp6.locked = false;
+                    temp6.locked = true;
                 }
                 temp6.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
@@ -442,6 +460,23 @@ public class MapManager : MonoBehaviour
                 temp = new VoidBoss(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+        }
+
+        return temp;
+    }
+
+    public Miniboss AddMinibossEntity(MinibossData data)
+    {
+        MinibossPrototype proto = MinibossDatabase.GetMinibossPrototype(data.type);
+        Miniboss temp = null;
+
+        switch (proto.minibossType)
+        {
+            case MinibossType.BogBeast:
+                temp = new BogBeast(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+
         }
 
         return temp;

@@ -8,5 +8,5 @@ public class ProjectilePrototype : AttackObjectPrototype
     public bool collidesWithTiles = true;
 
     public int speed = 100;
-
+    public int frameDelay = 0;
 }

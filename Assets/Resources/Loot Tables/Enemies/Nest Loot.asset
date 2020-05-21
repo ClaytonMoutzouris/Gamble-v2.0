@@ -13,31 +13,28 @@ MonoBehaviour:
   m_Name: Nest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 15
+  - dropChance: 15
     item: {fileID: 11400000, guid: ecc5c4652cbe99445b33f8cb2ccfb713, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 15
+    item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
+  - dropChance: 20
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 10
     item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 5
     item: {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
+  - dropChance: 0
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 80
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

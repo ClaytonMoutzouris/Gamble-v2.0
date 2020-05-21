@@ -26,8 +26,8 @@ public class Tile : MonoBehaviour
 
     public void Clear()
     {
-        spriteRenderer.sprite = null;
         animator.runtimeAnimatorController = null;
+        spriteRenderer.sprite = null;
 
     }
 

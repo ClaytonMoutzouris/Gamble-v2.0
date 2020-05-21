@@ -13,32 +13,36 @@ MonoBehaviour:
   m_Name: HedgehogBoss Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 10
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 100
+    item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
+  - dropChance: 10
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 0
     item: {fileID: 11400000, guid: 360b26fa137f19442bafdceecf6b2f64, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 25
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
+  - dropChance: 50
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 100
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 15
     item: {fileID: 11400000, guid: 512d59c7364f07c47af5d30e28f3bb89, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: a275604440e5ff346a568930942a0588, type: 2}
     minDropNum: 1
     maxDropNum: 1
   guaranteedDrops:

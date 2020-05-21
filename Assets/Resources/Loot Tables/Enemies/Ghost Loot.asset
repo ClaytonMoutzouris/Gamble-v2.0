@@ -13,23 +13,20 @@ MonoBehaviour:
   m_Name: Ghost Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 25
+  - dropChance: 10
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 40
+  - dropChance: 15
     item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 25
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 5
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 100
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

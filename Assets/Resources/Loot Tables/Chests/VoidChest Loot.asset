@@ -13,27 +13,24 @@ MonoBehaviour:
   m_Name: VoidChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 5
+  - dropChance: 50
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 40
+  - dropChance: 100
     item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
-    maxDropNum: 1
-  - weight: 15
+    maxDropNum: 2
+  - dropChance: 50
     item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 50
     item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 5
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
-    minDropNum: 1
-    maxDropNum: 1
-  - weight: 15
+  - dropChance: 100
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
     maxDropNum: 1
+  guaranteedDrops: []

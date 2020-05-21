@@ -60,4 +60,33 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<Biosample>();
     }
 
+    [MenuItem("Assets/Create/Items/Gadget")]
+    public static void CreateBaseGadgetAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Gadget>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/Teleporter")]
+    public static void CreateBaseTeleporterAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Teleporter>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/NovaGadget")]
+    public static void CreateBaseNovaGadgetAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<NovaGadget>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/PortalGadget")]
+    public static void CreateBasePortalGadgetAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<PortalGadget>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/HookShot")]
+    public static void CreateBaseHookShotAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<HookShot>();
+    }
 }

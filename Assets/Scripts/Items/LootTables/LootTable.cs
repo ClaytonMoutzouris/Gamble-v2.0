@@ -7,8 +7,8 @@ public class LootTable : ScriptableObject
     public List<LootTableNode> nodes;
     public List<Item> guaranteedDrops;
 
-
-    public List<Item> GetLoot(int numRandomItems = 1)
+    //Old method using weights
+    public List<Item> GetLootOld(int numRandomItems = 1)
     {
         List<Item> items = new List<Item>();
 
@@ -17,7 +17,7 @@ public class LootTable : ScriptableObject
 
         foreach(LootTableNode node in nodes)
         {
-            weightTotal += node.weight;
+            weightTotal += node.dropChance;
             ranges.Add(weightTotal);
         }
 
@@ -48,4 +48,25 @@ public class LootTable : ScriptableObject
 
         return items;
     }
+
+    public List<Item> GetLoot()
+    {
+        List<Item> items = new List<Item>();
+        
+        foreach(LootTableNode node in nodes)
+        {
+            if (node.dropChance >= Random.Range(0, 100) + 1)
+            {
+                for(int i = 0; i < Random.Range(node.minDropNum, node.maxDropNum+1); i++)
+                {
+                    items.Add(node.item);
+                }
+            }
+        }
+
+        
+
+        return items;
+    }
+
 }

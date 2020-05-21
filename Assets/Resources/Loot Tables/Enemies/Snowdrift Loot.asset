@@ -13,23 +13,20 @@ MonoBehaviour:
   m_Name: Snowdrift Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 35
+  - dropChance: 20
     item: {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 5
     item: {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 30
+  - dropChance: 10
     item: {fileID: 11400000, guid: 299c574687e970740a68841f43cf5287, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 80
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

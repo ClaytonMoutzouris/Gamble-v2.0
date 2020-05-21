@@ -64,8 +64,8 @@ public class TileMapRenderer : MonoBehaviour
                 {
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
-                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x,y]].sprites[(int)mapData.type]);
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
+                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x,y]].sprites[(int)mapData.type]);
 
                     }
                     else
@@ -95,8 +95,8 @@ public class TileMapRenderer : MonoBehaviour
                 {
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
-                        spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
+                        spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
 
                     }
                     else
@@ -122,6 +122,10 @@ public class TileMapRenderer : MonoBehaviour
         {
 
             spriteMap[x, y].SetAnimator(tilePrototypes[tile].animationController);
+        } else
+        {
+            spriteMap[x, y].animator.runtimeAnimatorController = null;
+
         }
     }
 

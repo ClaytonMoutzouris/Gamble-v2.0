@@ -121,6 +121,7 @@ public class Entity {
         prototype = proto;
         mEntityType = prototype.entityType;
         entityEffects = new List<EntityEffects>();
+        
         foreach (EntityEffects entityEffect in proto.effects)
         {
             EntityEffects e = ScriptableObject.Instantiate(entityEffect);
@@ -131,7 +132,7 @@ public class Entity {
         Map = MapManager.instance;
         ignoreTilemap = proto.ignoreTilemap;
         hostility = prototype.hostility;
-
+        
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
         mCollidesWith = proto.CollidesWith;
         statusEffects = new List<StatusEffect>();
@@ -156,6 +157,11 @@ public class Entity {
         Position = spawnPoint + body.mOffset;
         Renderer.Sprite.sortingLayerName = prototype.sortingLayer.ToString();
         Renderer.Draw();
+        if(prototype.particleEffects != null)
+        {
+            Renderer.AddVisualEffect(prototype.particleEffects, Vector2.zero);
+        }
+
         Body.UpdatePosition();
         isSpawned = true;
     }

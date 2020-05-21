@@ -13,32 +13,36 @@ MonoBehaviour:
   m_Name: SharkBoss Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 5
-    item: {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - dropChance: 100
+    item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 15
+  - dropChance: 25
     item: {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 25
     item: {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 15
     item: {fileID: 11400000, guid: 2ed03979e80feab41aad7a9131ec3f2a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 20
+  - dropChance: 100
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 30
+  - dropChance: 10
     item: {fileID: 11400000, guid: cb950ca580347d94bb78d708909e9810, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 10
+  - dropChance: 20
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: a275604440e5ff346a568930942a0588, type: 2}
     minDropNum: 1
     maxDropNum: 1
   guaranteedDrops:

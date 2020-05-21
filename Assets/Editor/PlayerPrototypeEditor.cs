@@ -21,6 +21,12 @@ public class EntityPrototypeEditor
         ScriptableObjectUtility.CreateAsset<BossPrototype>();
     }
 
+    [MenuItem("Assets/Create/Entity/Miniboss")]
+    public static void CreateMinibossPrototypeAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<MinibossPrototype>();
+    }
+
     [MenuItem("Assets/Create/Entity/Entity")]
     public static void CreateEntityPrototypeAsset()
     {

@@ -425,6 +425,12 @@ public class PhysicsBody : CustomCollider2D
             mEntity.Spiked();
         }
 
+        if(mPS.inUpdraft)
+        {
+            state.pushesBottomTile = false;
+            state.pushesBottom = false;
+        }
+
         return false;
     }
 
@@ -571,7 +577,7 @@ public class PhysicsBody : CustomCollider2D
         mPS.inWater = false;
         mPS.inUpdraft = false;
 
-        if(mSpeed.y < 0)
+        if(mSpeed.y <= 0)
         {
             mPS.isBounce = false;
         }
@@ -588,8 +594,7 @@ public class PhysicsBody : CustomCollider2D
 
         //This is the cutoff of updating
         //Lets try applying gravity here
-        if (!mIgnoresGravity && !mPS.pushesBottom)
-            ApplyGravity();
+        ApplyGravity();
 
         if (mPS.pushesBottomTile)
         {
@@ -655,23 +660,29 @@ public class PhysicsBody : CustomCollider2D
 
     public void ApplyGravity()
     {
-        if(mPS.inWater)
-        {
-            mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
-            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed/10);
 
-        } else if (mPS.inUpdraft)
+        if (mPS.inUpdraft)
         {
-            mSpeed.y += -1*mEntity.Map.GetGravity() * Time.deltaTime;
-            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+            mSpeed.y += -1 * mEntity.Map.GetGravity() * Time.deltaTime;
+            mSpeed.y = Mathf.Min(mSpeed.y, -Constants.cMaxFallingSpeed/2);
             //mPS.pushesBottomTile = mPS.pushesTopTile;
         }
-        else
+        else if (!mIgnoresGravity && !mPS.pushesBottom)
         {
-            mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
-            mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
 
+            if (mPS.inWater)
+            {
+                mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+                mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed / 10);
+
+            }
+            else
+            {
+                mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+                mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
+            }
         }
+
 
 
     }

@@ -13,19 +13,16 @@ MonoBehaviour:
   m_Name: Stag Loot
   m_EditorClassIdentifier: 
   nodes:
-  - weight: 35
+  - dropChance: 10
     item: {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 25
+  - dropChance: 50
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 40
+  - dropChance: 15
     item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - weight: 80
-    item: {fileID: 0}
-    minDropNum: 1
-    maxDropNum: 1
+  guaranteedDrops: []

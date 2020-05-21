@@ -125,6 +125,7 @@ public class InventorySlot
         {
             if(consumable.Use(inventory.mPlayer))
             {
+                Debug.Log("Getting one item");
                 GetOneItem();
             }
              

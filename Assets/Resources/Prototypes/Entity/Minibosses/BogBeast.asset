@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fbf5c5093034d4d9deed5ecc29231e, type: 3}
+  m_Name: BogBeast
+  m_EditorClassIdentifier: 
+  entityType: 8
+  hostility: 2
+  mName: BogBeast
+  bodySize: {x: 32, y: 32}
+  CollidesWith: 000000000200000007000000
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: -4114711218757776134, guid: 19b6bc4e6c744354e87dac7f6d243562, type: 3}
+  sortingLayer: 3
+  animationController: {fileID: 9100000, guid: bb1b7ef77634e894dbd8fb348aed5d28, type: 2}
+  effects: []
+  particleEffects: {fileID: 0}
+  enemyType: 14
+  movementSpeed: 20
+  jumpHeight: 0
+  sightRange: 320
+  health: 250
+  rangedAttacks:
+  - {fileID: 11400000, guid: 2ed0ef0f3bdd2694b82450d76c9071e0, type: 2}
+  meleeAttacks: []
+  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  minibossType: 0

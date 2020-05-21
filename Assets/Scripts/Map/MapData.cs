@@ -9,6 +9,7 @@ public class MapData : ScriptableObject {
     public WorldType type;
     public int sizeX = 10;
     public int sizeY = 10;
+    public bool hasMiniboss = false;
     //Only matters for non boss
     public int roomSizeX = 10;
     public int roomSizeY = 10;

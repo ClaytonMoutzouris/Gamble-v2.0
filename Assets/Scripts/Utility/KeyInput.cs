@@ -22,7 +22,7 @@ public enum ButtonInput
     Pause,
     Select,
     SkipLevel,
-    Teleport,
+    Gadget,
     BeamUp,
     Fire,
     Block,
