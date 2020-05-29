@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: HubChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - dropChance: 25
+  - dropChance: 10
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 100
+  - dropChance: 50
     item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
     minDropNum: 1
-    maxDropNum: 1
-  - dropChance: 50
-    item: {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
-    minDropNum: 1
-    maxDropNum: 1
+    maxDropNum: 2
   guaranteedDrops: []

@@ -18,7 +18,7 @@ public class Enemy : Entity, IHurtable
     public AttackManager mAttackManager;
 
     [SerializeField]
-    private Player target = null;
+    private Entity target = null;
 
     [HideInInspector]
     public Stats mStats;
@@ -36,7 +36,7 @@ public class Enemy : Entity, IHurtable
         }
     }
 
-    public Player Target
+    public Entity Target
     {
         get
         {
@@ -235,6 +235,11 @@ public class Enemy : Entity, IHurtable
         if (Hostility == Hostility.Neutral)
         {
             Hostility = Hostility.Hostile;
+        }
+
+        if(attack.mEntity != null && attack.mEntity is IHurtable)
+        {
+            Target = attack.mEntity;
         }
 
         int damage = attack.GetDamage();

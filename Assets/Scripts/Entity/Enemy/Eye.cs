@@ -20,10 +20,9 @@ public class Eye : Enemy
     public override void EntityUpdate()
     {
         //This is just a test, probably dont need to do it this way
-        if (Hostility == Hostility.Hostile)
-        {
-            EnemyBehaviour.CheckForTargets(this);
-        }
+
+        EnemyBehaviour.CheckForTargets(this);
+        
 
         switch (mEnemyState)
         {

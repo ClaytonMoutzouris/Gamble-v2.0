@@ -54,12 +54,9 @@ public class Snek : Enemy
             }
         }
 
-        if (Hostility == Hostility.Hostile)
-        {
-            EnemyBehaviour.CheckForTargets(this);
-        }
+        EnemyBehaviour.CheckForTargets(this);
 
-        if (Target != null && !Target.IsDead)
+        if (Target != null)
         {
 
             if (Target.Position.x > Position.x)

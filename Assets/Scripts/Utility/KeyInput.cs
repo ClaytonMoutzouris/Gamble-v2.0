@@ -22,15 +22,17 @@ public enum ButtonInput
     Pause,
     Select,
     SkipLevel,
-    Gadget,
+    Gadget1,
     BeamUp,
     Fire,
-    Block,
+    Gadget2,
     InventoryDrop,
     InventoryMove,
     InventorySort,
     ZoomIn,
     ZoomOut,
+    ChangeTabLeft,
+    ChangeTabRight,
 	Count
 }
 

@@ -19,7 +19,7 @@ public class Ghost : Enemy, IContactTrigger
 
     public void Contact(Entity entity)
     {
-        if(entity is Player player)
+        if(entity.hostility != hostility)
         {
             mAttackManager.meleeAttacks[0].Activate();
         }
@@ -27,11 +27,9 @@ public class Ghost : Enemy, IContactTrigger
 
     public override void EntityUpdate()
     {
-        //This is just a test, probably dont need to do it this way
-        if (Hostility == Hostility.Hostile)
-        {
-            EnemyBehaviour.CheckForTargets(this);
-        }
+
+        EnemyBehaviour.CheckForTargets(this);
+
 
         switch (mEnemyState)
         {

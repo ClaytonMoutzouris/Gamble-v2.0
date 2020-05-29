@@ -14,7 +14,7 @@ public class RangedWeapon : Weapon
     public override void OnEquip(Player player)
     {
         base.OnEquip(player);
-        if(mSlot == EquipmentSlot.Mainhand)
+        if(mSlot == EquipmentSlotType.Mainhand)
         {
             player.AttackManager.rangedAttacks[0] = new RangedAttack(player, this);
             ((PlayerRenderer)player.Renderer).rangedWeapon.sprite = sprite;

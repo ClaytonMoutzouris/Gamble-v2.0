@@ -212,6 +212,7 @@ public class RangedAttack : Attack
     /*
      * Constructor used for player attacks... fuck me I should just seperate these into different classes
      */
+     //Lol i feel your pain
 
     public RangedAttack(Entity entity, RangedAttackPrototype prototype) : base(entity, prototype)
     {

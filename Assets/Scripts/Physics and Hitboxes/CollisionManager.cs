@@ -265,14 +265,14 @@ public static class CollisionManager {
 
     public static void HitCollision(Hitbox obj1, Hurtbox obj2)
     {
-        if (obj1.mEntity.mEntityType == obj2.mEntity.mEntityType || obj1.mEntity.hostility == obj2.mEntity.hostility)
+        if (obj1.mEntity.hostility == obj2.mEntity.hostility)
         {
             return;
         }
 
         if (obj1.mEntity is AttackObject proj)
         {
-            if (proj.owner.mEntityType == obj2.mEntity.mEntityType)
+            if (proj.owner.hostility == obj2.mEntity.hostility)
                 return;
         }
 

@@ -22,10 +22,7 @@ public class Slime : Enemy {
     public override void EntityUpdate()
     {
 
-        if (Hostility == Hostility.Hostile)
-        {
-            EnemyBehaviour.CheckForTargets(this);
-        }
+        EnemyBehaviour.CheckForTargets(this);
 
         switch (mEnemyState)
         {

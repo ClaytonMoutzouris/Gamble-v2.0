@@ -264,18 +264,22 @@ public class NPC : Entity, IHurtable, IInteractable
                 ShowFloatingText("Hello Friend", Color.white);
                 break;
             case 1:
-                ShowFloatingText("I Have Some Goods", Color.white);
+                ShowFloatingText("I Will Trade Gadgets For Crystals", Color.white);
 
                 break;
             case 2:
                 ShowFloatingText("Want To Browse My Wares?", Color.white);
 
                 break;
+            case 3:
+                //ShowFloatingText("Want To Browse My Wares?", Color.white);
+                ShopScreenUI.instance.Open(actor.mPlayerIndex);
+                break;
         }
 
         dialogueProgress++;
 
-        if (dialogueProgress >= 3)
+        if (dialogueProgress >= 4)
         {
             dialogueProgress = 0;
 

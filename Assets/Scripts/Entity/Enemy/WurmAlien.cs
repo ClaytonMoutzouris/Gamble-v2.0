@@ -26,10 +26,7 @@ public class WurmAlien : Enemy
     {
 
 
-        if (Hostility == Hostility.Hostile)
-        {
             EnemyBehaviour.CheckForTargets(this);
-        }
 
         switch (mEnemyState)
         {

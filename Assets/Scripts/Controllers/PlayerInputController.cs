@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LocalCoop;
 
-public enum PlayerInputState { Game, Inventory, Paused, NavigationMenu, GameOver };
+public enum PlayerInputState { Game, Inventory, Paused, NavigationMenu, GameOver, Shop };
 
 
 public class PlayerInputController
@@ -73,15 +73,17 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.SelectDown();
                 playerButtonInput[(int)ButtonInput.SkipLevel] = mGamepadInput.RightBumperDown() && mGamepadInput.LeftBumperDown();
-                playerButtonInput[(int)ButtonInput.Gadget] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.Gadget1] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.rightTrigger > 0 && mGamepadInput.leftTrigger > 0;
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.rightTrigger > 0;
-                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
+                playerButtonInput[(int)ButtonInput.Gadget2] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
                 playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
                 playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
+                playerButtonInput[(int)ButtonInput.ChangeTabLeft] = false;
+                playerButtonInput[(int)ButtonInput.ChangeTabRight] = false;
 
 
                 break;
@@ -112,14 +114,16 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Gadget] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.Gadget1] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Block] = mGamepadInput.RightBumperPressed();
+                playerButtonInput[(int)ButtonInput.Gadget2] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.ButtonBDown();
                 playerButtonInput[(int)ButtonInput.InventoryMove] = mGamepadInput.ButtonXDown();
                 playerButtonInput[(int)ButtonInput.InventorySort] = mGamepadInput.SelectDown();
                 playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
                 playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
+                playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 break;
 
             case PlayerInputState.NavigationMenu:
@@ -148,14 +152,53 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = false;
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Gadget] = false;
+                playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Block] = false;
+                playerButtonInput[(int)ButtonInput.Gadget2] = false;
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
                 playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
                 playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
+                playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
+                break;
+            case PlayerInputState.Shop:
+                //Update the axis inputs
+                playerAxisInput[(int)AxisInput.LeftStickX] = 0;
+                playerAxisInput[(int)AxisInput.LeftStickY] = 0;
+                playerAxisInput[(int)AxisInput.RightStickX] = 0;
+                playerAxisInput[(int)AxisInput.RightStickY] = 0;
+
+                //Update the button inputs
+                //These are for reading in "taps" of the stick buttons
+                playerButtonInput[(int)ButtonInput.LeftStick_Left] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Right] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Down] = false;
+                playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Left] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Right] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.DPad_Up] = false;
+
+                playerButtonInput[(int)ButtonInput.Jump] = false;
+                playerButtonInput[(int)ButtonInput.Attack] = mGamepadInput.ButtonBPressed();
+                playerButtonInput[(int)ButtonInput.Item] = false;
+                playerButtonInput[(int)ButtonInput.Inventory] = false;
+                playerButtonInput[(int)ButtonInput.Swap] = false;
+                playerButtonInput[(int)ButtonInput.Pause] = false;
+                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.SkipLevel] = false;
+                playerButtonInput[(int)ButtonInput.Gadget1] = false;
+                playerButtonInput[(int)ButtonInput.Fire] = false;
+                playerButtonInput[(int)ButtonInput.Gadget2] = false;
+                playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
+                playerButtonInput[(int)ButtonInput.InventoryMove] = false;
+                playerButtonInput[(int)ButtonInput.InventorySort] = false;
+                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
+                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
+                playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 break;
 
             case PlayerInputState.Paused:
@@ -184,14 +227,16 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.StartDown();
                 playerButtonInput[(int)ButtonInput.Select] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
-                playerButtonInput[(int)ButtonInput.Gadget] = false;
+                playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
-                playerButtonInput[(int)ButtonInput.Block] = false;
+                playerButtonInput[(int)ButtonInput.Gadget2] = false;
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
                 playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.D_Pad_Left_Pressed();
                 playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.D_Pad_Right_Pressed();
+                playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
+                playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 break;
         }
         

@@ -113,7 +113,7 @@ public class InventorySlot
     {
         if (item is Equipment equippable && equippable.isEquipped)
         {
-            inventory.mPlayer.Equipment.Unequip(equippable.mSlot);
+            inventory.mPlayer.Equipment.Unequip(equippable);
             slotUI.UpdateSlotUI();
 
         }

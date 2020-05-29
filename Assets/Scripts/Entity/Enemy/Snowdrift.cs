@@ -13,10 +13,7 @@ public class Snowdrift : Enemy
     public override void EntityUpdate()
     {
 
-        if (Hostility == Hostility.Hostile)
-        {
             EnemyBehaviour.CheckForTargets(this);
-        }
 
         switch (mEnemyState)
         {

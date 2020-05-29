@@ -6,8 +6,6 @@ public class PlayerRenderer : EntityRenderer
 {
 
     public SpriteRenderer rangedWeapon;
-    public SpriteRenderer shield;
-    public SpriteRenderer meleeWeapon;
     public ButtonTooltip buttonTooltip;
     public Player player;
     public Vector2 weaponOffset;
@@ -34,18 +32,6 @@ public class PlayerRenderer : EntityRenderer
     {
         weaponOffset = offset;
 
-    }
-
-    public void SetShieldActive(bool active)
-    {
-        shield.gameObject.SetActive(active);
-        
-    }
-
-    public void SetWeaponBlock(bool active)
-    {
-        meleeWeapon.gameObject.SetActive(active);
-        meleeWeapon.flipX = (player.mDirection == EntityDirection.Left);
     }
 
     public void ShowWeapon(bool show)
@@ -79,23 +65,6 @@ public class PlayerRenderer : EntityRenderer
             rangedWeapon.transform.localPosition = weaponOffset;
         }
         
-        //weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
-    }
-
-    public void SetShieldRotation(Vector2 direction)
-    {
-        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg - 90;
-        //print("Angle: " + angle);
-
-
-        //Rotate Player when aiming behind
-        //print("THIS HAPPENED! Player should be facing left.");
-        //Rotate the animation for the gun on the Z-axis
-
-            //weapon.transform.localScale = new Vector3(1, 1, 1);
-        shield.transform.SetPositionAndRotation(shield.transform.position, Quaternion.Euler(0, 0, -angle));
-        shield.transform.localPosition = weaponOffset;
-
         //weapon.transform.SetPositionAndRotation(weapon.transform.position, Quaternion.Euler(0, 0, -angle));
     }
 

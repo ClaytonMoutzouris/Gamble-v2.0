@@ -34,7 +34,6 @@ public class Player : Entity, IHurtable
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
-    public Blockbox blockbox;
 
     public TalentTree talentTree;
 
@@ -213,10 +212,6 @@ public class Player : Entity, IHurtable
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         HurtBox.UpdatePosition();
-
-        blockbox = new Blockbox(this, new CustomAABB(Position, new Vector2(8, 12), new Vector2(proto.bodySize.x, proto.bodySize.y)));
-        blockbox.UpdatePosition();
-        blockbox.mState = ColliderState.Closed;
         /*
         mJumpSpeed = Constants.cJumpSpeed;
         mWalkSpeed = Constants.cWalkSpeed;
@@ -283,31 +278,15 @@ public class Player : Entity, IHurtable
         return (mWalkSpeed + 10*mStats.getStat(StatType.Speed).GetValue())*waterReduction;
     }
 
-    public void UpdateShield()
-    {
-
-        foreach (Hitbox hit in blockbox.mCollisions)
-        {
-            //Debug.Log("Something in the collisions");
-            if (!blockbox.mDealtWith.Contains(hit))
-            {
-                hit.mState = ColliderState.Closed;
-                hit.mCollisions.Clear();
-                blockbox.mDealtWith.Add(hit);
-
-            }
-        }
-    }
-
     public void HandlePlayerPanelInput()
     {
         //Swap between panel tabs
-        if (Input.playerButtonInput[(int)ButtonInput.Gadget] & !input.previousButtonInput[(int)ButtonInput.Gadget])
+        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabLeft])
         {
             playerPanel.NextTabLeft();
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Block] & !input.previousButtonInput[(int)ButtonInput.Block])
+        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabRight])
         {
             playerPanel.NextTabRight();
         }
@@ -336,6 +315,8 @@ public class Player : Entity, IHurtable
 
     public override void EntityUpdate()
     {
+        Debug.Log("Player Movement State: " +movementState);
+
         if (Input == null)
         {
             Debug.Log("Input is null");
@@ -350,32 +331,20 @@ public class Player : Entity, IHurtable
             }
         }
 
+        if (Input.inputState == PlayerInputState.Shop)
+        {
+            if (Input.playerButtonInput[(int)ButtonInput.Attack])
+            {
+                ShopScreenUI.instance.Close();
+            }
+        }
+
         if (Input.playerButtonInput[(int)ButtonInput.Pause])
         {
             GameManager.instance.PauseGame(mPlayerIndex);
             //PauseMenu.instance.defaultObject;
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.BeamUp] & !input.previousButtonInput[(int)ButtonInput.BeamUp])
-        {
-            Game.warpToHubFlag = true;
-            return;
-        }
-
-
-        if (Input.playerButtonInput[(int)ButtonInput.SkipLevel])
-        {
-            Game.mMapChangeFlag = true;
-        }
-
-
-        if (Input.playerButtonInput[(int)ButtonInput.Gadget])
-        {
-            if(Equipment.GetSlotContents(EquipmentSlot.Gadget) != null) {
-                ((Gadget)Equipment.GetSlotContents(EquipmentSlot.Gadget)).Activate(this);
-            }
-            //Game.mMapChangeFlag = true;
-        }
 
         if (mCurrentState == PlayerState.Dead)
         {
@@ -408,11 +377,15 @@ public class Player : Entity, IHurtable
 
 
         AttackManager.UpdateAttacks();
-        if(Equipment.GetGadget() != null)
+        if(Equipment.GetGadget1() != null)
         {
-            Equipment.GetGadget().GadgetUpdate(this);
+            ((Gadget)Equipment.GetGadget1()).GadgetUpdate(this);
         }
-        UpdateShield();
+
+        if (Equipment.GetGadget2() != null)
+        {
+            ((Gadget)Equipment.GetGadget2()).GadgetUpdate(this);
+        }
         
 
         if (mCannotClimb && !Body.mPS.onLadder && !Input.playerButtonInput[(int)ButtonInput.Jump])
@@ -1059,6 +1032,7 @@ public class Player : Entity, IHurtable
             case MovementState.Hooking:
 
                 Body.mIgnoresGravity = true;
+                Body.mPS.isClimbing = false;
 
 
                 break;
@@ -1109,22 +1083,23 @@ public class Player : Entity, IHurtable
             ((PlayerRenderer)Renderer).ShowWeapon(false);
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Block])
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget1])
         {
-            //blockbox.mAABB.SetAngle(Vector2.Angle(Vector2.right, aim));
-            blockbox.UpdatePosition();
-            blockbox.mState = ColliderState.Open;
-
-            ((PlayerRenderer)Renderer).SetWeaponBlock(true);
-
-        }
-        else
-        {
-            ((PlayerRenderer)Renderer).SetWeaponBlock(false);
-            blockbox.mState = ColliderState.Closed;
-
+            if (Equipment.GetGadget1() != null)
+            {
+                ((Gadget)Equipment.GetGadget1()).Activate(this, 1);
+            }
+            //Game.mMapChangeFlag = true;
         }
 
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget2])
+        {
+            if (Equipment.GetGadget2() != null)
+            {
+                ((Gadget)Equipment.GetGadget2()).Activate(this, 2);
+            }
+            //Game.mMapChangeFlag = true;
+        }
         //Shield
 
 
@@ -1134,7 +1109,6 @@ public class Player : Entity, IHurtable
 
 
         CollisionManager.UpdateAreas(HurtBox);
-        CollisionManager.UpdateAreas(blockbox);
 
         //HurtBox.mCollisions.Clear();
 
@@ -1415,7 +1389,6 @@ public class Player : Entity, IHurtable
         base.SecondUpdate();
         AttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
-        blockbox.UpdatePosition();
 
         foreach (Effect effect in itemEffects)
         {

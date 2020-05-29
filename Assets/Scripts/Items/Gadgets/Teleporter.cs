@@ -8,15 +8,26 @@ public class Teleporter : Gadget
     //Range of the teleporter in tiles
     public int range;
 
-    public override bool Activate(Player player)
+    public override bool Activate(Player player, int index)
     {
         Debug.Log("Attempting to active teleporter");
-        if (!base.Activate(player))
+        if (!base.Activate(player, index))
         {
             return false;
         }
 
-        player.Position = player.Position + player.GetAimLeft().normalized * range*Constants.cTileResolution;
+        Vector2 aim;
+
+        if (index == 1)
+        {
+            aim = player.GetAimLeft();
+        }
+        else
+        {
+            aim = player.GetAimRight();
+        }
+
+        player.Position = player.Position + aim.normalized * range*Constants.cTileResolution;
 
         return true;
     }

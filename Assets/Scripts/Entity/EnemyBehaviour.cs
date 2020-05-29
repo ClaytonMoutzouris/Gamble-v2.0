@@ -9,20 +9,44 @@ public static class EnemyBehaviour
 
     public static void CheckForTargets(Enemy enemy)
     {
-        enemy.Target = null;
+
+
         if (enemy.Sight.mEntitiesInSight != null)
         {
+            if (enemy.Target != null)
+            {
+                if (enemy.Target.hostility == enemy.hostility)
+                {
+                    enemy.Target = null;
+                }
+
+                if (enemy.Sight.mEntitiesInSight.Contains(enemy.Target))
+                {
+                    return;
+                }
+
+            }
+
             foreach (Entity entity in enemy.Sight.mEntitiesInSight)
             {
-                if (entity is Player)
+                if (entity is IHurtable && entity.hostility != enemy.hostility)
                 {
-                    if (!((Player)entity).IsDead)
+                    if (entity is Player player)
                     {
-                        enemy.Target = (Player)entity;
-                        break;
+                        if(player.IsDead)
+                        {
+                            continue;
+                        }
                     }
+
+
+                    enemy.Target = entity;
                 }
+                
             }
+        } else
+        {
+            enemy.Target = null;
         }
     }
 

@@ -449,6 +449,10 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(12, 5, ObjectType.Medbay));
         map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
         map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
+        map.AddEntity(new ObjectData(10, 5, ObjectType.SmallGatherable));
+
+        map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
+
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
@@ -459,7 +463,21 @@ public static class MapGenerator
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
-            map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
+            //map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
+
+        }
+
+        if (WorldManager.instance.NumCompletedWorlds() == 0)
+        {
+            /*
+            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "ForceFieldGadget"));
+            map.AddEntity(new ItemObjectData(9, 1, ObjectType.Item, "NovaGadget"));
+            map.AddEntity(new ItemObjectData(10, 1, ObjectType.Item, "HookShot"));
+            map.AddEntity(new ItemObjectData(10, 1, ObjectType.Item, "HookShot"));
+            map.AddEntity(new ItemObjectData(11, 1, ObjectType.Item, "PortalGadget"));
+            map.AddEntity(new ItemObjectData(12, 1, ObjectType.Item, "Teleporter"));
+            map.AddEntity(new ItemObjectData(13, 1, ObjectType.Item, "CaptureGadget"));
+            */
 
         }
         //Post process the map based on probabilistic tiles and such

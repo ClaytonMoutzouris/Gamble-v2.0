@@ -11,19 +11,29 @@ public class HookShot : Gadget
     public Vector2 offset;
     public GrapplingHook hook;
 
-    public override bool Activate(Player player)
+    public override bool Activate(Player player, int index)
     {
-        if (!base.Activate(player))
+        if (!base.Activate(player, index))
         {
             return false;
         }
 
         if(hook != null)
         {
-            hook.Die();
+                hook.Die();
         }
 
-        hook = new GrapplingHook(hookProto, player, player.GetAimLeft(), offset, this);
+        Vector2 aim;
+
+        if(index == 1)
+        {
+            aim = player.GetAimLeft();
+        } else
+        {
+            aim = player.GetAimRight();
+        }
+
+        hook = new GrapplingHook(hookProto, player, aim, offset, this);
 
 
         hook.Spawn(player.Position + offset);

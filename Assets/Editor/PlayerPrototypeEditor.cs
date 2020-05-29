@@ -39,6 +39,12 @@ public class EntityPrototypeEditor
         ScriptableObjectUtility.CreateAsset<ChestPrototype>();
     }
 
+    [MenuItem("Assets/Create/Entity/Gatherable")]
+    public static void CreateGatherablePrototypeAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<GatherablePrototype>();
+    }
+
     [MenuItem("Assets/Create/Entity/NPC")]
     public static void CreateNPCPrototypeAsset()
     {

@@ -159,7 +159,7 @@ public class Entity {
         Renderer.Draw();
         if(prototype.particleEffects != null)
         {
-            Renderer.AddVisualEffect(prototype.particleEffects, Vector2.zero);
+            Renderer.AddVisualEffect(prototype.particleEffects, prototype.bodySize*Vector2.up);
         }
 
         Body.UpdatePosition();

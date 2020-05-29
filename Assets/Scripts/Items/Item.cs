@@ -69,7 +69,7 @@ public abstract class Item : ScriptableObject
 public abstract class Equipment : Item
 {
 
-    public EquipmentSlot mSlot;
+    public EquipmentSlotType mSlot;
     public List<StatBonus> baseBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
     //public List<PlayerAbility> abilities;

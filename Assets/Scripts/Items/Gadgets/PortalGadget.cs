@@ -10,10 +10,10 @@ public class PortalGadget : Gadget
     Portal portalB = null;
     public EntityPrototype portalProto;
 
-    public override bool Activate(Player player)
+    public override bool Activate(Player player, int index)
     {
         Debug.Log("Attempting to active teleporter");
-        if (!base.Activate(player))
+        if (!base.Activate(player, index))
         {
             return false;
         }

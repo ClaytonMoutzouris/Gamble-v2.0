@@ -36,8 +36,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
   startingInventory:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
-  - {fileID: 11400000, guid: 242bcda7931177042b31bcf87ae6bcaa, type: 2}
-  - {fileID: 11400000, guid: a5c32f2d0e9fe584da1d6f91a8766064, type: 2}
-  - {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
   talentTree: {fileID: 11400000, guid: a1336260eeedff94aaa23885ceaa6b31, type: 2}

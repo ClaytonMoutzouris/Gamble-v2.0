@@ -92,7 +92,7 @@ public class CatBoss : BossEnemy
 
     void CatScratch()
     {
-        if (Target != null && !Target.IsDead)
+        if (Target != null)
         {          
         
             
@@ -159,7 +159,7 @@ public class CatBoss : BossEnemy
     void IcicleMove()
     {
 
-        if (Target != null && !Target.IsDead)
+        if (Target != null)
         {
 
             if (Target.Position.x > Position.x)

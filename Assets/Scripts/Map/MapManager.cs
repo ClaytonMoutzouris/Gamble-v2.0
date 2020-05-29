@@ -364,6 +364,14 @@ public class MapManager : MonoBehaviour
                     temp12.Spawn(GetMapTilePosition(data.TilePosition));
                 }
                 break;
+            case ObjectType.SmallGatherable:
+                Gatherable temp13 = new Gatherable(Resources.Load("Prototypes/Entity/Objects/Gatherables/Small Blue Vein") as GatherablePrototype);
+                temp13.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.LargeGatherable:
+                Gatherable temp14 = new Gatherable(Resources.Load("Prototypes/Entity/Objects/Gatherables/Large Blue Vein") as GatherablePrototype);
+                temp14.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
         

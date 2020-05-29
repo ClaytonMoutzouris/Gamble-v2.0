@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6785bdb8add9f428bb87ae43ddb235, type: 3}
+  m_Name: Large Blue Vein
+  m_EditorClassIdentifier: 
+  entityType: 4
+  hostility: 0
+  mName: 
+  bodySize: {x: 28, y: 28}
+  CollidesWith: 
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 21300000, guid: aa05b851c9f57214fbac1a636f0bdb65, type: 3}
+  sortingLayer: 2
+  animationController: {fileID: 0}
+  effects: []
+  particleEffects: {fileID: 0}
+  lootable: {fileID: 11400000, guid: 64c6a9b336b180d48b38cf09c9c76ec8, type: 2}
+  usesMin: 3
+  usesMax: 6

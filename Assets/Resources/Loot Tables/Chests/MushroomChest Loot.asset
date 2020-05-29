@@ -13,24 +13,12 @@ MonoBehaviour:
   m_Name: MushroomChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - dropChance: 25
+  - dropChance: 10
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 100
+  - dropChance: 50
     item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
     minDropNum: 1
-    maxDropNum: 1
-  - dropChance: 50
-    item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
-    minDropNum: 1
-    maxDropNum: 1
-  - dropChance: 50
-    item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
-    minDropNum: 1
-    maxDropNum: 1
-  - dropChance: 100
-    item: {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
-    minDropNum: 1
-    maxDropNum: 1
+    maxDropNum: 2
   guaranteedDrops: []

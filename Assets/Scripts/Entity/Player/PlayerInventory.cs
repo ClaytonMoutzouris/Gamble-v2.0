@@ -158,4 +158,20 @@ public class PlayerInventory
         return null;
     }
 
+    public InventorySlot GetSlotWithItemType(Item item)
+    {
+        foreach (InventorySlot slot in slots)
+        {
+            if (!slot.IsEmpty())
+            {
+                if (slot.item.mName == item.mName)
+                {
+                    return slot;
+                }
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -60,6 +60,12 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<Biosample>();
     }
 
+    [MenuItem("Assets/Create/Items/Element")]
+    public static void CreateBaseElementAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Element>();
+    }
+
     [MenuItem("Assets/Create/Items/Gadget")]
     public static void CreateBaseGadgetAsset()
     {
@@ -88,5 +94,17 @@ public class ItemEditor
     public static void CreateBaseHookShotAsset()
     {
         ScriptableObjectUtility.CreateAsset<HookShot>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/ForceFieldGadget")]
+    public static void CreateBaseForceFieldGadgetAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<ForceFieldGadget>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/CaptureGadget")]
+    public static void CreateBaseCaptureGadgetAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<CaptureGadget>();
     }
 }

@@ -92,13 +92,6 @@ public class EntityRenderer : MonoBehaviour
                 
             }
 
-            if(P.blockbox.mState == ColliderState.Open)
-            {
-                Gizmos.color = Color.blue;
-
-                Gizmos.DrawCube(P.blockbox.mAABB.Center, P.blockbox.mAABB.HalfSize * 2);
-            }
-
         }
 
         if (Entity is AttackObject)
@@ -127,6 +120,16 @@ public class EntityRenderer : MonoBehaviour
             }
 
 
+        }
+
+        if(Entity is ForceField forcefield)
+        {
+            if (forcefield.shieldBox.mState == ColliderState.Open)
+            {
+                Gizmos.color = Color.blue;
+
+                Gizmos.DrawCube(forcefield.shieldBox.mAABB.Center, forcefield.shieldBox.mAABB.HalfSize * 2);
+            }
         }
 
         Gizmos.color = Color.green;

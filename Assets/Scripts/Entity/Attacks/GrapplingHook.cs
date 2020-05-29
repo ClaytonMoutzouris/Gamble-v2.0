@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrapplingHook : Entity
+public class GrapplingHook : Entity, IContactTrigger
 {
     Player owner;
     public float mTimeAlive = 0;
@@ -19,7 +19,7 @@ public class GrapplingHook : Entity
         this.owner = owner;
         this.gadget = gadget;
         ownerOffset = offset;
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, 0)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
         Body.mIgnoresOneWay = true;
         mMovingSpeed = 750;
         Body.mIgnoresGravity = proto.ignoreGravity;
@@ -42,25 +42,29 @@ public class GrapplingHook : Entity
 
     public void PullOwner()
     {
-        if(Vector2.Distance(Position, owner.Position + ownerOffset) >= 16)
-        {
-            owner.Body.mSpeed = mMovingSpeed * (Position - (owner.Position + ownerOffset)).normalized;
-        } else
-        {
-            Die();
+        owner.movementState = MovementState.Hooking;
+        Vector2 pullDirection = (Position - (owner.Position)).normalized;
+        Debug.Log("PULLING OWNER IN DIRECTION " + pullDirection);
+        owner.Body.mSpeed = mMovingSpeed * pullDirection;
 
-        }
-
-        if(owner.Body.mSpeed == Vector2.zero)
-        {
-            Die();
-        }
     }
 
     public override void EntityUpdate()
     {
+        if(mToRemove)
+        {
+            return;
+        }
 
-        if(trigger)
+        mTimeAlive += Time.deltaTime;
+
+        if (mTimeAlive >= maxDuration)
+        {
+
+            Die();
+        }
+
+        if (trigger)
         {
             PullOwner();
         } else
@@ -74,14 +78,7 @@ public class GrapplingHook : Entity
             }
         }
 
-        mTimeAlive += Time.deltaTime;
 
-        if (mTimeAlive >= maxDuration)
-        {
-            
-            Die();
-            return;
-        }
 
         //Body.mSpeed = mMovingSpeed * direction;
 
@@ -104,8 +101,22 @@ public class GrapplingHook : Entity
 
     public override void Die()
     {
-        base.Die();
         owner.movementState = MovementState.Jump;
+        owner.Body.mIgnoresGravity = false;
+        owner.Body.mSpeed = Vector2.zero;
         gadget.hook = null;
+        base.Die();
+
+    }
+
+    public void Contact(Entity entity)
+    {
+        if(trigger && entity is Player player)
+        {
+            if(player == owner)
+            {
+                Die();
+            }
+        }
     }
 }

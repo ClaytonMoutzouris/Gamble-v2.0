@@ -7,9 +7,9 @@ public class NovaGadget : Gadget
 
     public RangedAttackPrototype attackProto;
 
-    public override bool Activate(Player player)
+    public override bool Activate(Player player, int index)
     {
-        if(!base.Activate(player)) {
+        if(!base.Activate(player, index)) {
             return false;
         }
 

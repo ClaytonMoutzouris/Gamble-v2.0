@@ -19,9 +19,9 @@ MonoBehaviour:
   CollidesWith: 
   ignoreTilemap: 0
   ignoreGravity: 1
-  sprite: {fileID: 21300000, guid: 43deffa58c199e24f89592aae8f0cc54, type: 3}
+  sprite: {fileID: 4530086169547826981, guid: 43deffa58c199e24f89592aae8f0cc54, type: 3}
   sortingLayer: 8
-  animationController: {fileID: 0}
+  animationController: {fileID: 9100000, guid: 9a8213ae91015bb499077cc30d95c59a, type: 2}
   effects: []
   particleEffects: {fileID: 0}
   hitboxSize: {x: 3, y: 3}
@@ -32,3 +32,4 @@ MonoBehaviour:
   pierce: 0
   collidesWithTiles: 1
   speed: 150
+  frameDelay: 0

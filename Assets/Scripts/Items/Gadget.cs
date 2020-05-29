@@ -17,7 +17,7 @@ public class Gadget : Equipment
         base.OnUnequip(player);
     }
 
-    public virtual bool Activate(Player player)
+    public virtual bool Activate(Player player, int index)
     {
         if(cooldownTimer > 0)
         {

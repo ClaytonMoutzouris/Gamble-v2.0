@@ -15,7 +15,7 @@ MonoBehaviour:
   entityType: 4
   hostility: 0
   mName: GrapplingHook
-  bodySize: {x: 8, y: 8}
+  bodySize: {x: 6, y: 6}
   CollidesWith: 
   ignoreTilemap: 0
   ignoreGravity: 1

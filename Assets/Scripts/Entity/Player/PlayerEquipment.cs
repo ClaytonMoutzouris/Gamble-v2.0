@@ -7,18 +7,77 @@ public class PlayerEquipment
     //Do it with dictionary, or with slots
     //We will start with slots so we can see it in inspector
 
-    Dictionary<EquipmentSlot, Equipment> Equipment;
+    List<EquipmentSlot> EquipmentSlots;
+    EquipmentSlot gadgetSlot1;
+    EquipmentSlot gadgetSlot2;
     Player mPlayer;
 
     public PlayerEquipment(Player player)
     {
         mPlayer = player;
-        Equipment = new Dictionary<EquipmentSlot, Equipment>();
+        EquipmentSlots = new List<EquipmentSlot>();
 
-        foreach(EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot)))
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Head));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Body));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Gloves));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Boots));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Belt));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Mainhand));
+        EquipmentSlots.Add(new EquipmentSlot(EquipmentSlotType.Offhand));
+
+        gadgetSlot1 = new EquipmentSlot(EquipmentSlotType.Gadget);
+        gadgetSlot2 = new EquipmentSlot(EquipmentSlotType.Gadget);
+
+        //Equipment.Add(new EquipmentSlot(EquipmentSlotType.Gadget));
+
+    }
+
+    public EquipmentSlot GetSlot(EquipmentSlotType type)
+    {
+
+        foreach(EquipmentSlot slot in EquipmentSlots)
         {
-            Equipment.Add(slot, null);
+            if(slot.GetSlotType() == type)
+            {
+                return slot;
+            }
         }
+
+        return null;
+    }
+
+    public EquipmentSlot GetGadgetSlot(Equipment equip, bool unequip = false)
+    {
+        if(unequip)
+        {
+            if (gadgetSlot1.GetContents() == equip)
+            {
+                return gadgetSlot1;
+            } else if(gadgetSlot2.GetContents() == equip)
+            {
+                return gadgetSlot2;
+            }
+
+            return null;
+        } else
+        {
+            Equipment slot1 = gadgetSlot1.GetContents();
+            Equipment slot2 = gadgetSlot2.GetContents();
+
+            if(slot1 == null)
+            {
+                return gadgetSlot1;
+            }
+
+            if(slot2 == null)
+            {
+                return gadgetSlot2;
+            }
+
+            return gadgetSlot1;
+        }
+
+        return null;
     }
 
     public bool EquipItem(Equipment item)
@@ -26,21 +85,30 @@ public class PlayerEquipment
         if (mPlayer == null || mPlayer.Inventory == null)
             return false;
 
-        if (Equipment.ContainsKey(item.mSlot))
-        {
-            if (Equipment[item.mSlot] != null)
-            {
-                InventorySlot slot = mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]);
-                if (slot != null)
-                {
-                    slot.UnequipItem();
 
-                }
+        EquipmentSlot equipSlot;
+
+        if (item is Gadget gadget)
+        {
+            equipSlot = GetGadgetSlot(item);
+        }
+        else
+        {
+            equipSlot = GetSlot(item.mSlot);
+        }
+
+        if (equipSlot != null)
+        {
+            Equipment contents = equipSlot.GetContents();
+            if (contents != null)
+            {
+                Unequip(contents);
+
             }
 
-            Equipment[item.mSlot] = item;
+            equipSlot.SetContents(item);
             item.OnEquip(mPlayer);
-            mPlayer.Inventory.FindSlotForItem(Equipment[item.mSlot]).GetInventorySlot().UpdateSlotUI();
+            mPlayer.Inventory.FindSlotForItem(item).GetInventorySlot().UpdateSlotUI();
 
             return true;
         }
@@ -48,39 +116,70 @@ public class PlayerEquipment
         return false;
     }
 
-    public void Unequip(EquipmentSlot slot)
+    public void Unequip(Equipment equipment)
     {
-        if (Equipment.ContainsKey(slot))
-        {
-            if (Equipment[slot] != null)
-            {
-                Equipment[slot].OnUnequip(mPlayer);
+        EquipmentSlot equipSlot;
 
+        if (equipment is Gadget gadget)
+        {
+            equipSlot = GetGadgetSlot(equipment, true);
+        }
+        else
+        {
+            equipSlot = GetSlot(equipment.mSlot);
+        }
+
+        if (equipSlot != null)
+        {
+            Equipment contents = equipSlot.GetContents();
+            if (contents != null)
+            {
+                contents.OnUnequip(mPlayer);
+                mPlayer.Inventory.FindSlotForItem(contents).GetInventorySlot().UpdateSlotUI();
+                equipSlot.ClearSlot();
             }
         }
     }
 
-    public Equipment GetSlotContents(EquipmentSlot slot)
+    public Equipment GetGadget1()
     {
-        if (Equipment.ContainsKey(slot))
-        {
-                return Equipment[slot];
-        }
-
-        return null;
+        return gadgetSlot1.GetContents();
     }
 
-    public Gadget GetGadget()
+    public Equipment GetGadget2()
     {
-        if(Equipment.ContainsKey(EquipmentSlot.Gadget))
-        {
-            if(Equipment[EquipmentSlot.Gadget] is Gadget gadget)
-            {
-                return gadget;
-            }
-            
-        }
+        return gadgetSlot2.GetContents();
+    }
+}
 
-        return null;
+public class EquipmentSlot
+{
+    EquipmentSlotType slotType;
+    Equipment contents;
+
+    public EquipmentSlot(EquipmentSlotType type)
+    {
+        slotType = type;
+        contents = null;
+    }
+
+    public EquipmentSlotType GetSlotType()
+    {
+        return slotType;
+    }
+
+    public void SetContents(Equipment equip)
+    {
+        contents = equip;
+    } 
+
+    public Equipment GetContents()
+    {
+        return contents;
+    }
+
+    public void ClearSlot()
+    {
+        contents = null;
     }
 }
