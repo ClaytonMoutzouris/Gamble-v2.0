@@ -101,7 +101,7 @@ public class PlayerInputManager : MonoBehaviour {
                     controllerStates[i] = GamePad.GetState(controllerIDs[i]);
                     if (controllerStates[i].Buttons.Start == ButtonState.Pressed)
                     {
-                        if (levelManager.players[i] == null)
+                        if (CrewManager.instance.players[i] == null)
                         {
                             playerInputs[i].controllerID = (int)controllerIDs[i];
                             CreationPanelsUI.instance.creationPanels[i].NewCharacter(playerInputs[i]);
@@ -109,6 +109,10 @@ public class PlayerInputManager : MonoBehaviour {
                             //you can call a function here to instantiate a player and then assign this ID to the player input's script to connect the player to the controller that pressed start for example
                             //you then also need to assign that player input script to one of the X input modules to connect it with unity's input system
                         }
+                    } else if(controllerStates[i].Buttons.B == ButtonState.Pressed)
+                    {
+                        CreationPanelsUI.instance.creationPanels[i].Close();
+
                     }
                 }
             }

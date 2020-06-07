@@ -31,7 +31,7 @@ public class CharacterPreviewPortait : MonoBehaviour
     {
         List<Color> palette = new List<Color>();
 
-        foreach(Color c in colorSwapper.mCurrentColors)
+        foreach(Color c in colorSwapper.mBaseColors)
         {
             palette.Add(c);
         }

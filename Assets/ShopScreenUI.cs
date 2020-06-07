@@ -44,8 +44,9 @@ public class ShopScreenUI : MonoBehaviour
 
         pausedIndex = playerIndex;
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+        defaultObject.GetComponent<Button>().OnSelect(null);
         gameObject.SetActive(true);
-        GameManager.instance.players[playerIndex].Input.inputState = PlayerInputState.Shop;
+        CrewManager.instance.players[playerIndex].Input.inputState = PlayerInputState.Shop;
         defaultObject.GetComponent<Button>().OnSelect(null);
 
 
@@ -55,7 +56,7 @@ public class ShopScreenUI : MonoBehaviour
     {
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
         gameObject.SetActive(false);
-        GameManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
+        CrewManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
         pausedIndex = -1;
 
     }
@@ -63,7 +64,7 @@ public class ShopScreenUI : MonoBehaviour
     public void SelectNode(ShopTradeNode node)
     {
         Debug.Log(node.offerNode.text.text + " was selected");
-        InventorySlot slot = GameManager.instance.players[pausedIndex].Inventory.GetSlotWithItemType(node.costNode.item);
+        InventorySlot slot = CrewManager.instance.players[pausedIndex].Inventory.GetSlotWithItemType(node.costNode.item);
         if (slot != null)
         {
             if(slot.amount >= node.costNode.cost)
@@ -75,7 +76,7 @@ public class ShopScreenUI : MonoBehaviour
                 Debug.Log("Adding " + node.offerNode.item.mName + " To inventory");
                 Debug.Log("Adding " + node.offerNode.text.text + " To inventory");
 
-                GameManager.instance.players[pausedIndex].Inventory.AddItemToInventory(ItemDatabase.NewItem(node.offerNode.item));
+                CrewManager.instance.players[pausedIndex].Inventory.AddItemToInventory(ItemDatabase.NewItem(node.offerNode.item));
 
             }
         }

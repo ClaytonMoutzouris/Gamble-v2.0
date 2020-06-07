@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerClass : ScriptableObject
 {
     public string className;
@@ -15,26 +16,29 @@ public class PlayerClass : ScriptableObject
 
     public TalentTree talentTree;
 
-    public void LoadClass(Player player)
+    public void LoadClass(Player player, bool fromSave = false)
     {
         player.mStats.SetStats(baseStats);
 
-        foreach(Equipment equipment in startingEquipment)
+        if (!fromSave)
         {
-            Equipment temp = (Equipment)ItemDatabase.NewItem(equipment);
-            temp = Instantiate<Equipment>(temp);
+            foreach (Equipment equipment in startingEquipment)
+            {
+                Equipment temp = (Equipment)ItemDatabase.NewItem(equipment);
+                temp = Instantiate<Equipment>(temp);
 
-            player.Inventory.AddItemToInventory(temp);
-            player.Equipment.EquipItem(temp);
-            //player.Equipment.EquipItem(temp);
-        }
+                player.Inventory.AddItemToInventory(temp);
+                player.Equipment.EquipItem(temp);
+                //player.Equipment.EquipItem(temp);
+            }
 
-        foreach (Item item in startingInventory)
-        {
-            Item temp = ItemDatabase.NewItem(item);
-            temp = Instantiate(temp);
+            foreach (Item item in startingInventory)
+            {
+                Item temp = ItemDatabase.NewItem(item);
+                temp = Instantiate(temp);
 
-            player.Inventory.AddItemToInventory(temp);
+                player.Inventory.AddItemToInventory(temp);
+            }
         }
 
         talentTree = Instantiate<TalentTree>(talentTree);

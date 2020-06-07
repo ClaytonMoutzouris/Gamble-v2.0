@@ -99,6 +99,8 @@ public class InventoryOptionList : MonoBehaviour
         gameObject.SetActive(true);
         transform.position = slot.transform.position;
         EventSystemManager.instance.GetEventSystem(playerInventory.player.mPlayerIndex).SetSelectedGameObject(options[0].gameObject);
+        options[0].gameObject.GetComponent<Button>().OnSelect(null);
+
     }
 
     public void OptionSelected(InventoryOption option)

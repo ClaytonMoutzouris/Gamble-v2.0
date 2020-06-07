@@ -76,7 +76,7 @@ public class GameCamera : MonoBehaviour
         float minY = mMap.mHeight * MapManager.cTileSize;
         float maxY = 0;
 
-        foreach (Player player in GameManager.instance.players)
+        foreach (Player player in CrewManager.instance.players)
         {
             if (player == null || player.IsDead)
                 continue;

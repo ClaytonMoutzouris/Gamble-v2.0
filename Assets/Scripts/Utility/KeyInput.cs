@@ -33,6 +33,7 @@ public enum ButtonInput
     ZoomOut,
     ChangeTabLeft,
     ChangeTabRight,
+    Menu_Back,
 	Count
 }
 

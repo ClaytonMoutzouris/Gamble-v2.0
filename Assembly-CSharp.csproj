@@ -66,11 +66,16 @@
     <Compile Include="Assets\Character Stats\CharacterStat.cs" />
     <Compile Include="Assets\Character Stats\StatModifier.cs" />
     <Compile Include="Assets\CharacterCreationPanel.cs" />
+    <Compile Include="Assets\CharacterLoadNode.cs" />
     <Compile Include="Assets\CharacterPreviewPortait.cs" />
     <Compile Include="Assets\ClassOptionObject.cs" />
+    <Compile Include="Assets\ClassOptionSelector.cs" />
+    <Compile Include="Assets\ClothingOptionSelector.cs" />
+    <Compile Include="Assets\ColorOptionSelector.cs" />
     <Compile Include="Assets\ColorPicker.cs" />
     <Compile Include="Assets\ColorPickerNode.cs" />
     <Compile Include="Assets\ColorSwapOption.cs" />
+    <Compile Include="Assets\CreationMenuTab.cs" />
     <Compile Include="Assets\CreationPanelsUI.cs" />
     <Compile Include="Assets\CrewManager.cs" />
     <Compile Include="Assets\DialogueManager.cs" />
@@ -82,15 +87,18 @@
     <Compile Include="Assets\InventoryOptionButton.cs" />
     <Compile Include="Assets\InventoryOptionList.cs" />
     <Compile Include="Assets\InventorySlotUI.cs" />
+    <Compile Include="Assets\LoadCharacterMenu.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
     <Compile Include="Assets\NavigationMenu.cs" />
     <Compile Include="Assets\OptionObject.cs" />
+    <Compile Include="Assets\OptionSelector.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\Parallaxing.cs" />
     <Compile Include="Assets\PlayerInventoryUI.cs" />
     <Compile Include="Assets\PlayerLevelScreen.cs" />
     <Compile Include="Assets\PlayerPanelTooltip.cs" />
     <Compile Include="Assets\Roller.cs" />
+    <Compile Include="Assets\SaveLoadManager.cs" />
     <Compile Include="Assets\Scripts\Attacks\Attack.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackManager.cs" />
     <Compile Include="Assets\Scripts\Attacks\FrameData.cs" />
@@ -192,6 +200,7 @@
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\AnalysisCom.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\MedicalBay.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\NavSystem.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Hub\SaveMachine.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Portal.cs" />
@@ -204,6 +213,7 @@
     <Compile Include="Assets\Scripts\Entity\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerInventory.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\PlayerSaveData.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\SkillNode.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\SkillTree.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Stats.cs" />
@@ -292,6 +302,7 @@
     <Compile Include="Assets\Scripts\UI\NewCharacterField.cs" />
     <Compile Include="Assets\Scripts\UI\NewCharacterPanel.cs" />
     <Compile Include="Assets\Scripts\UI\NewMapMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\Options\Option.cs" />
     <Compile Include="Assets\Scripts\UI\OtisUIPanel.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
@@ -309,6 +320,7 @@
     <Compile Include="Assets\Scripts\Utility\Constants.cs" />
     <Compile Include="Assets\Scripts\Utility\Enums.cs" />
     <Compile Include="Assets\Scripts\Utility\KeyInput.cs" />
+    <Compile Include="Assets\Scripts\Utility\SerializableColor.cs" />
     <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\Utility\UIExtensions.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />

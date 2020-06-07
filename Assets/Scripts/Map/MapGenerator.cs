@@ -449,6 +449,8 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(12, 5, ObjectType.Medbay));
         map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
         map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
+        map.AddEntity(new ObjectData(8, 1, ObjectType.SaveMachine));
+
         map.AddEntity(new ObjectData(10, 5, ObjectType.SmallGatherable));
 
         map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
@@ -457,7 +459,8 @@ public static class MapGenerator
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Biosample"));
+            map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Biosample"));
+
 
         }
 

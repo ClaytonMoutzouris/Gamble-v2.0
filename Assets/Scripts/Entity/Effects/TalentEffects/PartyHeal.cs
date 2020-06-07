@@ -14,7 +14,7 @@ public class PartyHeal : Effect
     public override void OnHealTrigger(Player player, int heals)
     {
         base.OnHealTrigger(player, heals);
-        foreach(Player ally in GameManager.instance.players)
+        foreach(Player ally in CrewManager.instance.players)
         {
             if(ally == null)
             {
@@ -22,7 +22,7 @@ public class PartyHeal : Effect
             }
             if(ally != player)
             {
-                ally.GainLife(heals);
+                ally.GainLife(heals, true);
             }
         }
 

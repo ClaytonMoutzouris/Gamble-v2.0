@@ -17,7 +17,7 @@ public class GameInfo : MonoBehaviour
     public void Update()
     {
         string info = "";
-        foreach(Player player in GameManager.instance.players)
+        foreach(Player player in CrewManager.instance.players)
         {
             if(player != null)
             {

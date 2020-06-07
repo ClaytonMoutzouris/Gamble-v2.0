@@ -189,7 +189,7 @@ public class Enemy : Entity, IHurtable
             return;
         }
 
-        GameManager.instance.GainPartyEXP(ExpValue);
+        CrewManager.instance.GainPartyEXP(ExpValue + ExpValue* WorldManager.instance.NumCompletedWorlds());
         base.Die();
         foreach(Attack attack in mAttackManager.meleeAttacks)
         {

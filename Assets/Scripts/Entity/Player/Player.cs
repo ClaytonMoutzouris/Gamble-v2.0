@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LocalCoop;
+using System.IO;
+
 
 public enum PlayerState { Idle, Attacking, Blocking, Dead };
 public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking };
@@ -19,13 +21,13 @@ public class Player : Entity, IHurtable
     public int mNumJumps = 1;
     public int mJumpCount = 0;
 
+
     public float mTimeToExit = 1;
     public HealthBar mHealthBar;
     public bool mCannotClimb = false;
     private PlayerInventory inventory;
     private PlayerEquipment equipment;
     private PlayerInputController input;
-    public int activeBullet;
     public PlayerState mCurrentState = PlayerState.Idle;
     public MovementState movementState = MovementState.Stand;
     public int mPlayerIndex;
@@ -35,11 +37,12 @@ public class Player : Entity, IHurtable
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
 
+    //Level up stuff
+    public int playerLevel = 1;
+    public int playerExperience = 0;
     public TalentTree talentTree;
 
     public List<Effect> itemEffects;
-
-    public List<PlayerAbility> activeAbilities;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -188,7 +191,6 @@ public class Player : Entity, IHurtable
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
-        activeAbilities = new List<PlayerAbility>();
         itemEffects = new List<Effect>();
         mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
 
@@ -315,7 +317,6 @@ public class Player : Entity, IHurtable
 
     public override void EntityUpdate()
     {
-        Debug.Log("Player Movement State: " +movementState);
 
         if (Input == null)
         {
@@ -1255,16 +1256,6 @@ public class Player : Entity, IHurtable
 
     public void UpdateAnimator()
     {
-        if (activeAbilities.Contains(PlayerAbility.Invisible))
-        {
-            Renderer.Sprite.color = Color.clear;
-            return;
-        }
-        else
-        {
-            Renderer.Sprite.color = Color.white;
-
-        }
 
         foreach (Attack attack in AttackManager.meleeAttacks)
         {
@@ -1438,14 +1429,20 @@ public class Player : Entity, IHurtable
 
     }
 
-    public void GainLife(int health)
+    public void GainLife(int health, bool fromTrigger = false)
     {
         int life = (int)this.Health.GainHP(health);
         ShowFloatingText(life.ToString(), Color.green);
-        foreach(Effect effect in itemEffects)
+
+        //heals from triggers shouldnt also trigger
+        if(!fromTrigger)
         {
-            effect.OnHealTrigger(this, life);
+            foreach (Effect effect in itemEffects)
+            {
+                effect.OnHealTrigger(this, life);
+            }
         }
+
 
 
     }

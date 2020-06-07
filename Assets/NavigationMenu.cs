@@ -59,9 +59,17 @@ public class NavigationMenu : MonoBehaviour
 
         pausedIndex = playerIndex;
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
-        defaultObject.GetComponent<Button>().OnSelect(null);
+        if (defaultObject != null)
+        {
+            Button button = defaultObject.GetComponent<Button>();
+            if(button != null)
+            {
+                button.OnSelect(null);
+
+            }
+        }
         gameObject.SetActive(true);
-        GameManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
+        CrewManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
 
 
     }
@@ -128,7 +136,7 @@ public class NavigationMenu : MonoBehaviour
     {
         EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
         gameObject.SetActive(false);
-        GameManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
+        CrewManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
         pausedIndex = -1;
 
     }

@@ -54,7 +54,7 @@ public class ChestFinder : Effect
 
     public override void OnPlayerDeath(Player player)
     {
-        foreach(Player p in GameManager.instance.players)
+        foreach(Player p in CrewManager.instance.players)
         {
             foreach(Effect effect in p.itemEffects)
             {

@@ -42,7 +42,7 @@ public class PauseMenu : MonoBehaviour {
         if (pausedIndex == -1)
             return;
 
-        GameManager.instance.DropPlayer(pausedIndex);
+        CrewManager.instance.DropPlayer(pausedIndex);
         //Close();
     }
 

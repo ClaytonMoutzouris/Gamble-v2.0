@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum PlayerPanelTab { Inventory, Stats, Ship, Level };
 
@@ -85,7 +86,9 @@ public class PlayerPanel : MonoBehaviour
 
     public void OpenPlayerPanel()
     {
+        SetTab(0);
         EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(inputAnchor);
+        inputAnchor.GetComponent<Button>().OnSelect(null);
         isOpen = true;
         transform.localPosition = transform.localPosition + new Vector3(0, panelHeight, 0);
 

@@ -8,6 +8,7 @@ public class ScrollList : MonoBehaviour
 {
     public GameObject content;
     public CharacterCreationPanel parentPanel;
+    public IInteractable currentSelection;
 
     public void AddOption(Button button)
     {

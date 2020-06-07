@@ -5,14 +5,20 @@ using LocalCoop;
 
 public class CrewManager : MonoBehaviour
 {
-
+    public static CrewManager instance;
     List<Player> crewMembers;
-    public int partyEXP = 0;
-    public int partyLevel = 1;
     public Player[] players = new Player[4];
-    public GameObject expBar;
+    public int weird;
+    //public GameObject expBar;
 
-    public void ResetParty()
+    public void Start()
+    {
+        instance = this;
+        players = new Player[4];
+
+    }
+
+    public void ResetCrew()
     {
         foreach (Player player in players)
         {
@@ -21,11 +27,7 @@ public class CrewManager : MonoBehaviour
                 DropPlayer(player.mPlayerIndex);
             }
         }
-        partyLevel = 1;
-        partyEXP = 0;
-
     }
-
 
     public void AddPlayer(int index, PlayerGamepadInput input)
     {
@@ -39,12 +41,12 @@ public class CrewManager : MonoBehaviour
         //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
     }
 
-    public void AddPlayer(int index, Player newPlayer)
+    public void AddPlayer(int index, Player newPlayer, bool fromSave = false)
     {
         players[index] = newPlayer;
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
-        newPlayer.playerClass.LoadClass(newPlayer);
-        newPlayer.talentTree.skillPoints = partyLevel;
+        newPlayer.playerClass.LoadClass(newPlayer, fromSave);
+        newPlayer.talentTree.skillPoints = newPlayer.playerLevel;
     }
 
     public void DropPlayer(int index)
@@ -57,31 +59,39 @@ public class CrewManager : MonoBehaviour
 
     }
 
-    public void PartyLevelUp()
+    public void LevelUp(Player player)
     {
-        partyLevel++;
+        player.playerLevel++;
+        player.talentTree.skillPoints++;
 
-        foreach (Player player in players)
+    }
+
+    public void GainEXP(Player player, int xp)
+    {
+        int levelThreshold = player.playerLevel * player.playerLevel * 10 + 50;
+
+        player.playerExperience += xp;
+
+        if (player.playerExperience >= levelThreshold)
         {
-            if (player != null)
-            {
-                player.talentTree.skillPoints++;
-            }
+            player.playerExperience = player.playerExperience - levelThreshold;
+            LevelUp(player);
         }
     }
 
     public void GainPartyEXP(int xp)
     {
-        int levelThreshold = partyLevel * partyLevel * 10 + 50;
-        partyEXP += xp;
-
-        if (partyEXP >= levelThreshold)
+        int count = 0;
+        foreach(Player player in players)
         {
-            partyEXP = partyEXP - levelThreshold;
-            PartyLevelUp();
+            count++;
+            if (player != null)
+            {
+                Debug.Log(player.entityName + " gains " + xp + " experience.");
+                GainEXP(player, xp);
+            }
         }
-
-        expBar.transform.localScale = new Vector3((float)partyEXP / (float)(partyLevel * partyLevel * 10 + 50), 1, 1);
+        //expBar.transform.localScale = new Vector3((float)partyEXP / (float)(partyLevel * partyLevel * 10 + 50), 1, 1);
     }
 
 }

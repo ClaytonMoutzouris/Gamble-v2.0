@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b268eb29ef7e00c44bcb13c4855543c0, type: 3}
   m_Name: Guardian
   m_EditorClassIdentifier: 
-  className: 
+  className: Guardian
   classDescription: 
-  classType: 0
+  classType: 1
   baseStats:
   - type: 0
     value: 1

@@ -9,7 +9,7 @@ public enum Alignment { Player, Neutral, Enemy };
 [System.Serializable]
 public class Entity {
 
-    public string Name;
+    public string entityName;
     public EntityType mEntityType;
     public Hostility hostility = Hostility.Neutral;
     public List<EntityType> mCollidesWith;

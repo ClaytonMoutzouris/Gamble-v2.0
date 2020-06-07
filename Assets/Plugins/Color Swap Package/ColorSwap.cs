@@ -9,7 +9,7 @@ public class ColorSwap {
     public Texture2D mColorSwapTex;
     public Material material;
     public Color[] mBaseColors;
-    public Color[] mCurrentColors;
+    public List<Color> mCurrentColors;
 
     public ColorSwap(Material mat)
     {
@@ -142,6 +142,8 @@ public class ColorSwap {
             mColorSwapTex.SetPixel((int)indexes[i], 0, colors[i]);
         }
         mColorSwapTex.Apply();
+
+        mCurrentColors = colors;
     }
 
     public void ClearColor(SwapIndex index)

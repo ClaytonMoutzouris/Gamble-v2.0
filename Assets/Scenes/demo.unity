@@ -3538,9 +3538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc56ca0728ac5f49b319074b31205bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyEXP: 0
-  partyLevel: 1
-  expBar: {fileID: 0}
+  weird: 0
 --- !u!4 &323304507
 Transform:
   m_ObjectHideFlags: 0
@@ -6238,6 +6236,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621182333}
   m_CullTransparentMesh: 0
+--- !u!1 &627009136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627009138}
+  - component: {fileID: 627009137}
+  m_Layer: 0
+  m_Name: SaveLoadManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &627009137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132198a590a21924e8b14647eca0986a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+--- !u!4 &627009138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 624.3972, y: 187.84872, z: -401.43927}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &634685737
 GameObject:
   m_ObjectHideFlags: 0
@@ -12122,10 +12164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameMode: 0
   gameCamera: {fileID: 1799959646}
-  expBar: {fileID: 553585104}
   mEntities: []
-  partyEXP: 0
-  partyLevel: 1
   mMouseSprite: {fileID: 0}
   mMapChangeFlag: 0
   warpToHubFlag: 0

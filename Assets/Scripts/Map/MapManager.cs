@@ -372,6 +372,10 @@ public class MapManager : MonoBehaviour
                 Gatherable temp14 = new Gatherable(Resources.Load("Prototypes/Entity/Objects/Gatherables/Large Blue Vein") as GatherablePrototype);
                 temp14.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case ObjectType.SaveMachine:
+                SaveMachine temp15 = new SaveMachine(Resources.Load("Prototypes/Entity/Objects/SaveMachine") as EntityPrototype);
+                temp15.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
         

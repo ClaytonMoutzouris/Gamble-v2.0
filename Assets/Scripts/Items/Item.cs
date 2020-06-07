@@ -65,7 +65,6 @@ public abstract class Item : ScriptableObject
     }
 }
 
-
 public abstract class Equipment : Item
 {
 

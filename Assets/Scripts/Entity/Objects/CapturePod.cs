@@ -21,7 +21,7 @@ public class CapturePod : Entity, IContactTrigger
 
     public void Contact(Entity entity)
     {
-        if(entity is Enemy enemy)
+        if(entity is Enemy enemy && !(entity is Miniboss) && !(entity is BossEnemy))
         {
             enemy.hostility = Hostility.Friendly;
             enemy.Target = null;

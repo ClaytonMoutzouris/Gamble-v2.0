@@ -58,7 +58,6 @@ public class Snowball : Enemy
                         }
 
 
-                        Debug.Log("Its Active");
                     }
 
                 }

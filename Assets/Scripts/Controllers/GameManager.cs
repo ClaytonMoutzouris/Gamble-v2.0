@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using LocalCoop;
 
 public enum GameMode
 {
@@ -16,18 +14,11 @@ public class GameManager : MonoBehaviour
     public GameMode mGameMode = GameMode.Start;
     public static GameManager instance;
     public Camera gameCamera;
-    public Player[] players = new Player[4];
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
 
-    public GameObject expBar;
-
     [SerializeField]
     protected List<Entity> mEntities = new List<Entity>();
-
-    public int partyEXP = 0;
-    public int partyLevel = 1;
-
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
 
@@ -62,7 +53,6 @@ public class GameManager : MonoBehaviour
         }
         */
 
-        players = new Player[4];
 
 
 
@@ -73,76 +63,12 @@ public class GameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        foreach (Player player in players)
-        {
-            if (player != null)
-            {
-                DropPlayer(player.mPlayerIndex);
-            }
-        }
-        partyLevel = 1;
-        partyEXP = 0;
+        CrewManager.instance.ResetCrew();
+
         WorldManager.instance.NewUniverse();
 
         LoadMap(WorldManager.instance.GetHubWorld().GetFirstMap());
         mGameMode = GameMode.Game;
-    }
-
-    public void AddPlayer(int index, PlayerGamepadInput input)
-    {
-        PlayerUIPanels.instance.AddPlayer(index);
-
-        PlayerClassType classType = (PlayerClassType)Random.Range(0, (int)PlayerClassType.Medic + 1);
-
-        Player newPlayer = new Player(Instantiate(Resources.Load("Prototypes/Entity/Player/PlayerPrototype") as PlayerPrototype), Resources.Load<PlayerClass>("Prototypes/Player/Classes/"+classType.ToString()), index);
-
-
-        //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
-    }
-
-    public void AddPlayer(int index, Player newPlayer)
-    {
-        players[index] = newPlayer;
-        newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
-        newPlayer.playerClass.LoadClass(newPlayer);
-        newPlayer.talentTree.skillPoints = partyLevel;
-    }
-
-    public void DropPlayer(int index)
-    {
-        //players[index].mToRemove = true;
-        PlayerUIPanels.instance.RemovePlayer(index);
-        players[index].ActuallyDie();
-        players[index] = null;
-
-
-    }
-
-    public void PartyLevelUp()
-    {
-        partyLevel++;
-
-        foreach (Player player in players)
-        {
-            if(player != null)
-            {
-                player.talentTree.skillPoints++;
-            }
-        }
-    }
-
-    public void GainPartyEXP(int xp)
-    {
-        int levelThreshold = partyLevel * partyLevel * 10 + 50;
-        partyEXP += xp;
-
-        if (partyEXP >= levelThreshold)
-        {
-            partyEXP = partyEXP - levelThreshold;
-            PartyLevelUp();
-        }
-
-        expBar.transform.localScale = new Vector3((float)partyEXP/(float)(partyLevel * partyLevel * 10 + 50), 1, 1);
     }
 
     public List<Chest> GetChests()
@@ -186,7 +112,7 @@ public class GameManager : MonoBehaviour
         MapManager.instance.LoadMap(map);
 
         
-        foreach (Player player in players)
+        foreach (Player player in CrewManager.instance.players)
         {
             if(player != null)
             {
@@ -196,11 +122,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        MiniMap.instance.SetMap(MapManager.instance.mCurrentMap, players);
+        MiniMap.instance.SetMap(MapManager.instance.mCurrentMap, CrewManager.instance.players);
 
         SoundManager.instance.PlayLevelMusic((int)MapManager.instance.mCurrentMap.worldType);
 
-        foreach(Player player in players)
+        foreach(Player player in CrewManager.instance.players)
         {
             if (player == null)
                 continue;
@@ -229,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        foreach(Player player in players)
+        foreach(Player player in CrewManager.instance.players)
         {
             if(player != null)
             {
@@ -284,7 +210,7 @@ public class GameManager : MonoBehaviour
 
         if(mGameMode == GameMode.GameOver)
         {
-            foreach (Player p in players)
+            foreach (Player p in CrewManager.instance.players)
             {
                 if (p != null)
                 {
@@ -354,7 +280,7 @@ public class GameManager : MonoBehaviour
         //Check for game over
         bool allPlayersDead = true;
         bool playersExist = false;
-        foreach (Player player in players)
+        foreach (Player player in CrewManager.instance.players)
         {
             if (player == null)
                 continue;

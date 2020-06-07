@@ -78,7 +78,7 @@ public class Aura : Effect
             if(!sightbox.mEntitiesInSight.Contains(entity))
             {
                 entitiesToRemove.Add(entity);
-                Debug.LogWarning(entity.Name + " no longer in range");
+                Debug.LogWarning(entity.entityName + " no longer in range");
 
             }
         }

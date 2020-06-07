@@ -10,7 +10,6 @@ public class TalentTreeNodeUI : MonoBehaviour
     public Image background;
     public Image branchIcon;
     public Text branchTitle;
-    public bool learned = false;
 
     public void Start()
     {
@@ -26,14 +25,21 @@ public class TalentTreeNodeUI : MonoBehaviour
 
     public void OnLearned()
     {
-        learned = true;
-        background.color = Color.yellow;
+        if(talent.repeatable)
+        {
+            background.color = Color.green;
+        }
+        else
+        {
+            background.color = Color.yellow;
+        }
     }
 
     public void OnSelected()
     {
-        if (learned)
+        if (talent.isLearned && !talent.repeatable)
             return;
+
         talentTree.LearnNodeAtIndex(transform.GetSiblingIndex());
     }
 
