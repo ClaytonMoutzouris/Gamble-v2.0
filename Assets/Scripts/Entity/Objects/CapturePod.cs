@@ -25,6 +25,7 @@ public class CapturePod : Entity, IContactTrigger
         {
             enemy.hostility = Hostility.Friendly;
             enemy.Target = null;
+            enemy.mHealth.UpdateHealth();
         }
     }
 

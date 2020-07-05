@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a894c6c7cc319704f9454bb5eaf66c5f, type: 3}
+  m_Name: BeamPillar
+  m_EditorClassIdentifier: 
+  entityType: 0
+  hostility: 0
+  mName: 
+  bodySize: {x: 16, y: 160}
+  CollidesWith: 
+  ignoreTilemap: 1
+  ignoreGravity: 1
+  sprite: {fileID: -6201791889445349234, guid: c18b3ef4e72b21f4684d69144015a97c, type: 3}
+  sortingLayer: 8
+  animationController: {fileID: 9100000, guid: 8520d47fc6ef43545a85c135fe8ab314, type: 2}
+  particleEffects: {fileID: 0}
+  hitboxSize: {x: 16, y: 160}
+  angled: 0
+  maxTime: 2
+  sfx: {fileID: 0}
+  particleSystem: {fileID: 0}
+  pierce: 1
+  collidesWithTiles: 0
+  speed: 0
+  frameDelay: 60

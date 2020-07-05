@@ -15,7 +15,12 @@ public class TileMapRenderer : MonoBehaviour
     Tile[,] spriteMap;
     public Tile tilePrefab;
 
-    public void Awake()
+    public void Start()
+    {
+        Init();
+    }
+
+    public void Init()
     {
         tilePrototypes = new Dictionary<TileType, TilePrototype>();
         TilePrototype[] prototypes = Resources.LoadAll<TilePrototype>("Tiles");
@@ -62,6 +67,7 @@ public class TileMapRenderer : MonoBehaviour
             {
                 if (x < mapData.sizeX * mapData.roomSizeX && y < mapData.sizeY * mapData.roomSizeY)
                 {
+                    Debug.Log("We failed on " + tiles[x, y]);
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
@@ -93,15 +99,17 @@ public class TileMapRenderer : MonoBehaviour
             {
                 if (x < sizeX && y < sizeY)
                 {
+                    Debug.Log("Failing on type " + tiles[x,y]);
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
-                        spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
-
+                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x, y]].sprites[(int)WorldType.Hub]);
                     }
                     else
                     {
                         spriteMap[x, y].Clear();
+                        spriteMap[x, y].SetSprite(sprites[(int)tiles[x, y]]);
+
                     }
                 }
                 else

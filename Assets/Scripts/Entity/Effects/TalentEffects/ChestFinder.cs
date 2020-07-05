@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChestFinder : Effect
+public class ChestFinder : Ability
 {
 
     List<MiniMapIcon> icons;
 
     public ChestFinder()
     {
-        effectName = "ChestFinder";
-        type = EffectType.ChestFinder;
+        abilityName = "ChestFinder";
+        type = AbilityType.ChestFinder;
         icons = new List<MiniMapIcon>();
     }
 
@@ -52,11 +52,11 @@ public class ChestFinder : Effect
         }
     }
 
-    public override void OnPlayerDeath(Player player)
+    public override void OnOwnerDeath(Entity entity)
     {
         foreach(Player p in CrewManager.instance.players)
         {
-            foreach(Effect effect in p.itemEffects)
+            foreach(Ability effect in p.abilities)
             {
                 if (effect is ChestFinder)
                 {

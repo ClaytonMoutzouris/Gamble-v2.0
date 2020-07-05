@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
   m_Name: SharkGun
   m_EditorClassIdentifier: 
-  mName: Shark Gun
-  mRarity: 4
-  mValue: 1000
+  itemName: SharkGun
+  rarity: 4
+  baseValue: 25
   sprite: {fileID: 21300000, guid: 895ca76941f87124181638a8ccc1db42, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 5
   baseBonuses:
   - type: 2

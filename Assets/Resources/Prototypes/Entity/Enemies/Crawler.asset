@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Name: Crawler
+  m_EditorClassIdentifier: 
+  entityType: 1
+  hostility: 2
+  mName: Crawler
+  bodySize: {x: 10, y: 10}
+  CollidesWith: 
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 3264062528958437611, guid: adbc46577899e2d4cab00b68d1828cb0, type: 3}
+  sortingLayer: 4
+  animationController: {fileID: 9100000, guid: 13e8fd32a95d1e547a79eba5d2f51d05, type: 2}
+  particleEffects: {fileID: 0}
+  enemyType: 12
+  movementSpeed: 70
+  jumpHeight: 120
+  sightRange: 320
+  health: 25
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 8b589f67c78dd4f46a9b52a7120e1604, type: 2}
+  lootTable: {fileID: 11400000, guid: d705d67dc07f80048874a67ebe21a26d, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []

@@ -15,6 +15,6 @@ public class NPCPrototype : EntityPrototype
     public List<RangedAttackPrototype> rangedAttacks;
     public List<MeleeAttackPrototype> meleeAttacks;
 
-    public List<Item> lootTable;
+    public List<Item> wares;
     //Attack attack;
 }

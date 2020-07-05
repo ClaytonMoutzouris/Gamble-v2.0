@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : Effect
+public class Knockback : Ability
 {
     public Knockback()
     {
-        effectName = "Knockback";
-        type = EffectType.Knockback;
+        abilityName = "Knockback";
+        type = AbilityType.Knockback;
     }
 
     public override void OnHitTrigger(Attack attack, IHurtable entity)

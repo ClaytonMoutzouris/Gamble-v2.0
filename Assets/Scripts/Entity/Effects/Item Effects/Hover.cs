@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hover : Effect
+public class Hover : Ability
 {
 
     public Hover()
     {
-        effectName = "Hover";
-        type = EffectType.Hover;
+        abilityName = "Hover";
+        type = AbilityType.Hover;
     }
 
     public override bool Equals(object other)
@@ -35,7 +35,7 @@ public class Hover : Effect
     public override void OnUnequipTrigger(Player player)
     {
         base.OnUnequipTrigger(player);
-        foreach(Effect effect in player.itemEffects)
+        foreach(Ability effect in player.abilities)
         {
             if(effect is Hover)
             {

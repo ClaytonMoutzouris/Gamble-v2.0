@@ -20,7 +20,6 @@ public class ItemObject : Entity, ILootable {
         base.Spawn(spawnPoint);
         Debug.Log("Renderer: " + Renderer == null);
         Debug.Log("mItemData: " + mItemData == null);
-        Debug.Log("sprite: " + mItemData.sprite == null);
 
         Renderer.SetSprite(mItemData.sprite);
         //temp.mOldSpeed.y = Constants.cJumpSpeed;

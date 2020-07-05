@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heavy : Effect
+public class Heavy : Ability
 {
     public Heavy()
     {
-        effectName = "Heavy";
-        type = EffectType.Heavy;
+        abilityName = "Heavy";
+        type = AbilityType.Heavy;
     }
 
     public override void OnEquipTrigger(Player player)

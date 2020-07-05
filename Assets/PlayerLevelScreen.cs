@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerLevelScreen : MonoBehaviour
 {
-    TalentTreeUI talentTree;
+    PlayerLevelTabUI talentTree;
 
 
 }

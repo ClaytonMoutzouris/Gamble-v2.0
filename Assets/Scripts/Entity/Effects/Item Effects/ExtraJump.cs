@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExtraJump : Effect
+public class ExtraJump : Ability
 {
 
     public ExtraJump()
     {
-        effectName = "Extra Jump";
-        type = EffectType.ExtraJump;
+        abilityName = "Extra Jump";
+        type = AbilityType.ExtraJump;
     }
 
     public override void OnEquipTrigger(Player player)

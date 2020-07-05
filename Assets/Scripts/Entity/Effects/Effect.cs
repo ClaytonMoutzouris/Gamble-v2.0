@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Effect
+public abstract class Ability
 {
-    public string effectName;
+    public string abilityName;
     public string description;
-    public EffectType type;
-    protected Player owner;
+    public AbilityType type;
+    protected Entity owner;
     //AbilityTrigger trigger;
 
     public virtual void OnEquipTrigger(Player player) {
-        player.itemEffects.Add(this);
+        player.abilities.Add(this);
         owner = player;
     }
     public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
     public virtual void OnUnequipTrigger(Player player) {
-        player.itemEffects.Remove(this);
+        player.abilities.Remove(this);
         owner = null;
 
     }
@@ -38,75 +38,75 @@ public abstract class Effect
     public virtual void OnConsumeItem(Player player, ConsumableItem item) { }
     public virtual void OnMapChanged(){ }
 
-    public virtual void OnPlayerDeath(Player player) {
+    public virtual void OnOwnerDeath(Entity entity) {
     }
 
     public virtual void OnEnemyDeath(Enemy enemy) { }
 
-    public static Effect GetEffectFromType(EffectType type)
+    public static Ability GetEffectFromType(AbilityType type)
     {
-        Effect effect = null;
+        Ability effect = null;
 
         //Use this for testing specific effects
         //return new Flamewalker();
 
         switch (type)
         {
-            case EffectType.ExtraJump:
+            case AbilityType.ExtraJump:
                 effect = new ExtraJump();
                 break;
-            case EffectType.Hover:
+            case AbilityType.Hover:
                 effect = new Hover();
                 break;
-            case EffectType.Lifesteal:
+            case AbilityType.Lifesteal:
                 effect = new Lifesteal();
                 break;
-            case EffectType.DamageReflect:
+            case AbilityType.DamageReflect:
                 effect = new DamageReflect();
                 break;
-            case EffectType.PoisonAttack:
+            case AbilityType.PoisonAttack:
                 effect = new PoisonAttack();
                 break;
-            case EffectType.StunAttack:
+            case AbilityType.StunAttack:
                 effect = new StunAttack();
                 break;
-            case EffectType.SuperSpeed:
+            case AbilityType.SuperSpeed:
                 effect = new SuperSpeed();
                 break;
-            case EffectType.SpikeProtection:
+            case AbilityType.SpikeProtection:
                 effect = new SpikeProtection();
                 break;
-            case EffectType.CrushProtection:
+            case AbilityType.CrushProtection:
                 effect = new CrushProtection();
                 break;
-            case EffectType.Flamewalker:
+            case AbilityType.Flamewalker:
                 effect = new Flamewalker();
                 break;
-            case EffectType.Heavy:
+            case AbilityType.Heavy:
                 effect = new Heavy();
                 break;
-            case EffectType.Knockback:
+            case AbilityType.Knockback:
                 effect = new Knockback();
                 break;
-            case EffectType.ExtraDamage:
+            case AbilityType.ExtraDamage:
                 effect = new ExtraDamage();
                 break;
-            case EffectType.CompanionDrone:
+            case AbilityType.CompanionDrone:
                 effect = new CompanionDrone();
                 break;
-            case EffectType.ChestFinder:
+            case AbilityType.ChestFinder:
                 effect = new ChestFinder();
                 break;
-            case EffectType.MaxHPFromFood:
+            case AbilityType.MaxHPFromFood:
                 effect = new MaxHPFromFood();
                 break;
-            case EffectType.ReusableMedkits:
+            case AbilityType.ReusableMedkits:
                 effect = new ReusableMedkits();
                 break;
-            case EffectType.PartyHeal:
+            case AbilityType.PartyHeal:
                 effect = new PartyHeal();
                 break;
-            case EffectType.Aura:
+            case AbilityType.Aura:
                 effect = new Aura();
                 break;
             default:

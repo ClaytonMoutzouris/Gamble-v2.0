@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
   m_Name: Leather Gloves
   m_EditorClassIdentifier: 
-  mName: Leather Gloves
-  mRarity: 0
-  mValue: 
+  itemName: Leather Gloves
+  rarity: 0
+  baseValue: 10
   sprite: {fileID: -8837690844528022405, guid: b522e207807d4b24a9e5813752ec2835, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 2
   baseBonuses:
   - type: 0
     bonusValue: 1
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 56

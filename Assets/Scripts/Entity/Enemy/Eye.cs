@@ -38,7 +38,7 @@ public class Eye : Enemy
                     //Replace this with pathfinding to the target
                     Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center)).normalized;
 
-                    if (!mAttackManager.rangedAttacks[0].onCooldown)
+                    if (!mAttackManager.rangedAttacks[0].OnCooldown())
                     {
                         RangedAttack attack = mAttackManager.rangedAttacks[0];
                         attack.Activate(dir, Position);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aura : Effect
+public class Aura : Ability
 {
     Sightbox sightbox;
     float tickFrequency = 32;
@@ -13,8 +13,8 @@ public class Aura : Effect
 
     public Aura()
     {
-        effectName = "Aura";
-        type = EffectType.Aura;
+        abilityName = "Aura";
+        type = AbilityType.Aura;
         //currentPosition = 
         bonus = new StatBonus(StatType.Speed, 10);
         effectedEntities = new List<Entity>();
@@ -56,16 +56,16 @@ public class Aura : Effect
 
     }
 
-    public override void OnPlayerDeath(Player player)
+    public override void OnOwnerDeath(Entity entity)
     {
-        Unapply(player);
+        Unapply(entity);
 
-        base.OnPlayerDeath(player);
+        base.OnOwnerDeath(entity);
         CollisionManager.RemoveObjectFromAreas(sightbox);
 
-        foreach (Entity entity in effectedEntities)
+        foreach (Entity effected in effectedEntities)
         {
-            Unapply(entity);
+            Unapply(effected);
         }
     }
     public override void OnUpdate() {

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82102480c650cd04fbed1ec2b128cd15, type: 3}
   m_Name: VoidBlade
   m_EditorClassIdentifier: 
-  mName: Void Blade
-  mRarity: 4
-  mValue: 10000
+  itemName: VoidBlade
+  rarity: 4
+  baseValue: 50
   sprite: {fileID: -2498838823653085445, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 6
   baseBonuses:
   - type: 0

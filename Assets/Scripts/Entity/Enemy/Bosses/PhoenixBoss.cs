@@ -8,9 +8,11 @@ public class PhoenixBoss : BossEnemy
     public Vector3 attackAnchor;
     public int shotcount = 0;
     public int numShots = 5;
+    public int flamethrowerShots = 10;
+    int randomXoffset = 0;
     #endregion
 
-    public List<Vector2i> shotLocations = new List<Vector2i>() { new Vector2i(7, 5), new Vector2i(13, 5), new Vector2i(19, 5) };
+    public List<Vector2i> shotLocations = new List<Vector2i>() { new Vector2i(7, 6), new Vector2i(13, 7), new Vector2i(19, 6) };
     Vector2 shotLocation;
 
     public PhoenixBoss(BossPrototype proto) : base(proto)
@@ -40,18 +42,24 @@ public class PhoenixBoss : BossEnemy
                 if (Target != null)
                 {
 
-                    int random = Random.Range(0, 2);
-
-                    if (random == 0)
+                    int random = Random.Range(0, 100);
+                    switch (random)
                     {
-                        mBossState = BossState.Attack1;
+                        case int n when (n <= 10):
+                            mBossState = BossState.Attack1;
+                            shotLocation = Map.GetMapTilePosition(shotLocations[Random.Range(0, shotLocations.Count)]);
 
+                            break;
+                        case int n when (n > 10 && n <= 50):
+                            mBossState = BossState.Attack2;
+                            break;
+                        case int n when (n > 50):
+                            mBossState = BossState.Attack3;
+                            randomXoffset = Random.Range(-64, 64);
+                            shotLocation = Target.Position + new Vector2(randomXoffset, 64);
+                            break;
                     }
-                    else
-                    {
-                        mBossState = BossState.Attack2;
-                        shotLocation = Map.GetMapTilePosition(shotLocations[Random.Range(0, shotLocations.Count)]);
-                    }
+
 
 
                 }
@@ -63,11 +71,15 @@ public class PhoenixBoss : BossEnemy
                 }
                 break;
             case BossState.Attack1:
-                ChaseAndBurstAttack();
+                SuperAttack();
 
                 break;
             case BossState.Attack2:
-                SuperAttack();
+                ChaseAndBurstAttack();
+
+                break;
+            case BossState.Attack3:
+                Flamethrower();
                 break;
         }
 
@@ -84,9 +96,9 @@ public class PhoenixBoss : BossEnemy
         //Replace this with pathfinding to the target
         Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center + attackAnchor)).normalized;
 
-        if (EnemyBehaviour.TargetInRange(this, Target, 64))
+        if (EnemyBehaviour.TargetInRange(this, Target, 124))
         {
-            if (!mAttackManager.rangedAttacks[0].onCooldown)
+            if (!mAttackManager.rangedAttacks[0].OnCooldown())
             {
                 RangedAttack attack = mAttackManager.rangedAttacks[0];
                 attack.Activate(dir, Position);
@@ -112,12 +124,55 @@ public class PhoenixBoss : BossEnemy
         }
     }
 
+    public void Flamethrower()
+    {
+        Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center + attackAnchor)).normalized;
+
+
+        if (Vector2.Distance(Position, shotLocation) < 10)
+        {
+            shotLocation = Position;
+            Body.mSpeed = Vector2.zero;
+
+            if (mAttackManager.rangedAttacks[2].Activate(dir, Position))
+            {
+                shotcount++;
+            
+            }
+        }
+        else
+        {
+            shotLocation = Target.Position + new Vector2(randomXoffset, 64);
+            Body.mSpeed = (shotLocation - Position).normalized * GetMovementSpeed();
+
+        }
+
+        if (shotcount > flamethrowerShots)
+        {
+            mBossState = BossState.Aggrivated;
+            shotcount = 0;
+
+        }
+
+        if (dir.x < 0)
+        {
+            mDirection = EntityDirection.Right;
+            //Body.mAABB.ScaleX = 1;
+        }
+        else
+        {
+            mDirection = EntityDirection.Left;
+            //Body.mAABB.ScaleX = -1;
+
+        }
+    }
+
     public void SuperAttack()
     {
         if (Vector2.Distance(Position, shotLocation) > 10)
         {
             Body.mSpeed = (shotLocation - Position).normalized * (GetMovementSpeed() + 50);
-            Debug.Log("Shark working his way there " + Vector2.Distance(Position, shotLocation));
+            Debug.Log("Shark working his way there " + shotLocation);
 
 
         }
@@ -146,7 +201,8 @@ public class PhoenixBoss : BossEnemy
     public override void Die()
     {
         MapManager.instance.HardenLava();
-
+        PhoenixEgg boss = new PhoenixEgg(Resources.Load("Prototypes/Entity/Enemies/PhoenixEgg") as EnemyPrototype);
+        boss.Spawn(Position);
         base.Die();
     }
 }

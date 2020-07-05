@@ -17,9 +17,7 @@ MonoBehaviour:
   worldDescription: 
   maps:
   - {fileID: 11400000, guid: 5c8e7befd90c8c148a2205a1de1b660d, type: 2}
-  gravity: -850
-  smallEnemies: 00000000010000000200000003000000040000000500000006000000
-  largeEnemies: 08000000090000000a0000000b000000
+  gravity: 850
   tileSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lifesteal : Effect
+public class Lifesteal : Ability
 {
     int procChance = 10;
     int healPercent = 10;
 
     public Lifesteal()
     {
-        effectName = "Lifesteal";
-        type = EffectType.Lifesteal;
+        abilityName = "Lifesteal";
+        type = AbilityType.Lifesteal;
     }
 
     public override bool Equals(object other)

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReflectProjectiles : Effect
+public class ReflectProjectiles : Ability
 {
 
     public ReflectProjectiles()
     {
-        effectName = "Reflect Projectiles";
+        abilityName = "Reflect Projectiles";
         //type = EffectType.ReflectProjectiles;
     }
 

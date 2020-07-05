@@ -16,7 +16,7 @@ public class Pilot1 : Talent
     {
         base.OnLearned(player);
 
-        player.itemEffects.Add(Effect.GetEffectFromType(EffectType.ExtraJump));
+        player.abilities.Add(Ability.GetEffectFromType(AbilityType.ExtraJump));
 
     }
 }

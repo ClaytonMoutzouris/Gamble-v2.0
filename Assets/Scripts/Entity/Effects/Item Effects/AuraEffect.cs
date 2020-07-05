@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AuraEffect : Effect
+public class AuraEffect : Ability
 {
     MeleeAttack attack;
 

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeProtection : Effect
+public class SpikeProtection : Ability
 {
     public SpikeProtection()
     {
-        effectName = "Spike Protection";
-        type = EffectType.SpikeProtection;
+        abilityName = "Spike Protection";
+        type = AbilityType.SpikeProtection;
     }
 
     public override void OnEquipTrigger(Player player)

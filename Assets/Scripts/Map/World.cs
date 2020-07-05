@@ -10,28 +10,38 @@ public class World
     //Reference to this worlds node
     WorldNode worldNode;
     public bool worldCleared = false;
-
+    public string worldName = "";
 
     public World(WorldData data)
     {
         WorldType = data.type;
         maps = new List<Map>();
+        if(worldType == WorldType.Hub)
+        {
+            worldName = "Hub";
 
+        } else
+        {
+            worldName = WorldNameGenerator.GetNameForWorld(worldType);
+
+        }
+        Debug.LogWarning("New World: " + worldName);
         foreach(MapData mapData in data.maps)
         {
-            mapData.tileSprites = data.tileSprites;
-            mapData.gravity = data.gravity;
+            MapData map = ScriptableObject.Instantiate(mapData);
+            map.tileSprites = data.tileSprites;
+            map.gravity = data.gravity;
 
             switch(mapData.mapType)
             {
                 case MapType.World:
-                    maps.Add(MapGenerator.GenerateMap(mapData));
+                    maps.Add(MapGenerator.GenerateMap(map));
                     break;
                 case MapType.BossMap:
-                    maps.Add(MapGenerator.GenerateBossMap(mapData));
+                    maps.Add(MapGenerator.GenerateBossMap(map));
                     break;
                 case MapType.Hub:
-                    maps.Add(MapGenerator.GenerateHubMap(mapData));
+                    maps.Add(MapGenerator.GenerateHubMap(map));
                     break;
             }
         }

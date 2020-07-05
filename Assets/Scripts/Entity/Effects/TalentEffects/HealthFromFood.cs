@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaxHPFromFood : Effect
+public class MaxHPFromFood : Ability
 {
 
 
     public MaxHPFromFood()
     {
-        effectName = "Max HP From Food";
-        type = EffectType.MaxHPFromFood;
+        abilityName = "Max HP From Food";
+        type = AbilityType.MaxHPFromFood;
     }
 
     public override void OnConsumeItem(Player player, ConsumableItem item)

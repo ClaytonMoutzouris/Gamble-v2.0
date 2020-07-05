@@ -11,8 +11,8 @@ public class BreakableTile : Entity, IHurtable
     {
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
-        HurtBox = new Hurtbox(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, Vector2.zero));
+        HurtBox = new Hurtbox(this, new CustomAABB(Position, proto.bodySize, Vector2.zero));
         HurtBox.UpdatePosition();
 
         Body.mIsKinematic = false;

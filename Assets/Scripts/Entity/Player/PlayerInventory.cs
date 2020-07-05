@@ -29,6 +29,10 @@ public class PlayerInventory
 
     public bool AddItemToInventory(Item item)
     {
+        if(item == null)
+        {
+            return false;
+        }
         //check to see if the item stacks and if there already exists a stack
         if (item.isStackable)
         {
@@ -36,7 +40,7 @@ public class PlayerInventory
             {
                 if (!slot.IsEmpty())
                 {
-                    if (slot.item.mName == item.mName)
+                    if (slot.item.itemName == item.itemName)
                     {
                         slot.AddItemToSlot(item);
                         return true;
@@ -120,7 +124,7 @@ public class PlayerInventory
             destination.AddItemToSlot(temp, numTemps);
 
         }
-        else if(destination.item.isStackable && destination.item.mName.Equals(toMove))
+        else if(destination.item.isStackable && destination.item.itemName.Equals(toMove))
         {
             Item prevItem = toMove.item;
             int numPrevs = toMove.amount;
@@ -164,7 +168,7 @@ public class PlayerInventory
         {
             if (!slot.IsEmpty())
             {
-                if (slot.item.mName == item.mName)
+                if (slot.item.itemName == item.itemName)
                 {
                     return slot;
                 }

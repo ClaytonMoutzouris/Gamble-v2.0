@@ -20,9 +20,9 @@ public class ShopOfferNode : MonoBehaviour
 
     public void SetShopOfferNode(Item item)
     {
-        Debug.Log("Setting shop offer node with " + item.mName);
+        Debug.Log("Setting shop offer node with " + item.itemName);
         this.item = item;
-        text.text = item.mName;
+        text.text = item.itemName;
         image.sprite = item.sprite;
     }
 

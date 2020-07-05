@@ -304,6 +304,14 @@ public class MapManager : MonoBehaviour
         return temp;
     }
 
+    public void SpawnDoor()
+    {
+        Door door = new Door(Resources.Load("Prototypes/Entity/Objects/Door") as DoorPrototype);
+        door.Spawn(GetMapTilePosition(mCurrentMap.exitTile));
+        Debug.LogWarning("Spawning door at " + door.Position);
+
+    }
+
     //TODO: I really hate this, I don't want to have to make a class based on an enum
     public void AddObjectEntity(ObjectData data)
     {
@@ -330,12 +338,15 @@ public class MapManager : MonoBehaviour
                 temp5.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case ObjectType.Door:
-                Door temp6 = new Door(Resources.Load("Prototypes/Entity/Objects/Door") as EntityPrototype);
-                if(mCurrentMap.Data.hasMiniboss)
+                if(mCurrentMap.mapType != MapType.BossMap)
                 {
-                    temp6.locked = true;
+                    Door temp6 = new Door(Resources.Load("Prototypes/Entity/Objects/Door") as DoorPrototype);
+                    if (mCurrentMap.Data.hasMiniboss)
+                    {
+                        temp6.locked = true;
+                    }
+                    temp6.Spawn(GetMapTilePosition(data.TilePosition));
                 }
-                temp6.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case ObjectType.NavSystem:
                 NavSystem temp7 = new NavSystem(Resources.Load("Prototypes/Entity/Objects/NavSystem") as EntityPrototype);
@@ -375,6 +386,10 @@ public class MapManager : MonoBehaviour
             case ObjectType.SaveMachine:
                 SaveMachine temp15 = new SaveMachine(Resources.Load("Prototypes/Entity/Objects/SaveMachine") as EntityPrototype);
                 temp15.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.BreakableTile:
+                BreakableTile temp16 = new BreakableTile(Resources.Load("Prototypes/Entity/Objects/BreakableTile") as EntityPrototype);
+                temp16.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }
     }
@@ -434,6 +449,18 @@ public class MapManager : MonoBehaviour
                 break;
             case EnemyType.Nest:
                 temp = new Nest(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Crawler:
+                temp = new Crawler(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Nipper:
+                temp = new Nipper(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.PhoenixEgg:
+                temp = new PhoenixEgg(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }

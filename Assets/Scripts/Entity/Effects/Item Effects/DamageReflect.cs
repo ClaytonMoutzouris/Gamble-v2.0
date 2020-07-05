@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageReflect : Effect
+public class DamageReflect : Ability
 {
     int procChance = 10;
     public DamageReflect()
     {
-        effectName = "Damage Reflect";
-        type = EffectType.DamageReflect;
+        abilityName = "Damage Reflect";
+        type = AbilityType.DamageReflect;
     }
 
     public override bool Equals(object other)

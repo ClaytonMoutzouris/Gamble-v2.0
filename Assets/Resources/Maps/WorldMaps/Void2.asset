@@ -19,7 +19,7 @@ MonoBehaviour:
   hasMiniboss: 1
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -650
+  gravity: 650
   baseDepth: 5
   depthVariance: 0
   smallEnemies: 06000000

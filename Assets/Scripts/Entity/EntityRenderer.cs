@@ -148,6 +148,15 @@ public class EntityRenderer : MonoBehaviour
 
     public virtual void Draw()
     {
+        /*
+        if(Entity.gravityVector == Vector2.up)
+        {
+            sprite.flipY = true;
+        } else
+        {
+            sprite.flipY = false;
+        }
+        */
         sprite.flipX = (Entity.mDirection == EntityDirection.Left);
         transform.position = entity.Position;
         

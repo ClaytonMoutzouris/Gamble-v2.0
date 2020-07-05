@@ -18,6 +18,7 @@ public class NPC : Entity, IHurtable, IInteractable
     private Sightbox sight;
     public AttackManager mAttackManager;
     private Entity target = null;
+    public List<Item> npcWares;
 
     public Stats mStats;
 
@@ -90,6 +91,11 @@ public class NPC : Entity, IHurtable, IInteractable
         sight = new Sightbox(this, new CustomAABB(Position, new Vector2(prototype.sightRange, prototype.sightRange), new Vector2(0, prototype.bodySize.y)));
         sight.UpdatePosition();
 
+        npcWares = new List<Item>();
+        foreach(Item item in prototype.wares)
+        {
+            npcWares.Add(ItemDatabase.NewItem(item));
+        }
 
 
         //Stats
@@ -273,7 +279,7 @@ public class NPC : Entity, IHurtable, IInteractable
                 break;
             case 3:
                 //ShowFloatingText("Want To Browse My Wares?", Color.white);
-                ShopScreenUI.instance.Open(actor.mPlayerIndex);
+                ShopScreenUI.instance.Open(actor, this);
                 break;
         }
 

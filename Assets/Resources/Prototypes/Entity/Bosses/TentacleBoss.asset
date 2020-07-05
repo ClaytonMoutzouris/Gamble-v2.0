@@ -22,7 +22,7 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: 5a7a72c8f6ee23b4a868e2e4d74e9b98, type: 2}
-  effects: []
+  particleEffects: {fileID: 0}
   enemyType: 13
   movementSpeed: 18
   jumpHeight: 120
@@ -30,6 +30,7 @@ MonoBehaviour:
   health: 500
   rangedAttacks:
   - {fileID: 11400000, guid: 44a325137f8678841a5737cb238ccdce, type: 2}
+  - {fileID: 11400000, guid: eef0bb17eae0c5348b252552b64fcc3e, type: 2}
   meleeAttacks: []
   lootTable: {fileID: 11400000, guid: 25851b09a6c8d104db3e17366ff69a02, type: 2}
   stats:
@@ -49,4 +50,3 @@ MonoBehaviour:
     value: 0
     bonuses: []
   bossType: 4
-  phaseTimers: 000000000000000000000000

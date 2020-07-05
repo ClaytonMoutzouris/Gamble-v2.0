@@ -174,6 +174,9 @@ public class PhysicsBody : CustomCollider2D
                     }
                     mEntity.Lava();
                     break;
+                case TileType.Updraft:
+                    mPS.inUpdraft = true;
+                    break;
 
             }
         }
@@ -243,6 +246,9 @@ public class PhysicsBody : CustomCollider2D
                     }
                     mEntity.Lava();
                     break;
+                case TileType.Updraft:
+                    mPS.inUpdraft = true;
+                    break;
             }
         }
 
@@ -297,6 +303,9 @@ public class PhysicsBody : CustomCollider2D
                         break;
                     }
                     mEntity.Lava();
+                    break;
+                case TileType.Updraft:
+                    mPS.inUpdraft = true;
                     break;
             }
         }
@@ -663,22 +672,27 @@ public class PhysicsBody : CustomCollider2D
 
         if (mPS.inUpdraft)
         {
-            mSpeed.y += -1 * mEntity.Map.GetGravity() * Time.deltaTime;
-            mSpeed.y = Mathf.Min(mSpeed.y, -Constants.cMaxFallingSpeed/2);
+
+            mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime) + Vector2.up * (mEntity.Map.GetGravity() * 2 * Time.deltaTime);
+            mSpeed.y = Mathf.Min(mSpeed.y, -Constants.cMaxFallingSpeed / 2);
+            
+
+
+
             //mPS.pushesBottomTile = mPS.pushesTopTile;
         }
-        else if (!mIgnoresGravity && !mPS.pushesBottom)
+        else if (!mIgnoresGravity)
         {
 
             if (mPS.inWater)
             {
-                mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+                mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime);
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed / 10);
 
             }
             else
             {
-                mSpeed.y += mEntity.Map.GetGravity() * Time.deltaTime;
+                mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime);
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
             }
         }

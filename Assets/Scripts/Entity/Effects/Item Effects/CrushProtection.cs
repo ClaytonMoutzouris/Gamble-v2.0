@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrushProtection : Effect
+public class CrushProtection : Ability
 {
     public CrushProtection()
     {
-        effectName = "Crush Protection";
-        type = EffectType.CrushProtection;
+        abilityName = "Crush Protection";
+        type = AbilityType.CrushProtection;
     }
 
     public override void OnEquipTrigger(Player player)

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReusableMedkits : Effect
+public class ReusableMedkits : Ability
 {
 
 
     public ReusableMedkits()
     {
-        effectName = "ReusableMedkits";
-        type = EffectType.ReusableMedkits;
+        abilityName = "ReusableMedkits";
+        type = AbilityType.ReusableMedkits;
     }
 
     public override void OnConsumeItem(Player player, ConsumableItem item)

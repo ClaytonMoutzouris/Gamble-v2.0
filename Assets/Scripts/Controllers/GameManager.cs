@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         CrewManager.instance.ResetCrew();
 
         WorldManager.instance.NewUniverse();
+        BossUIManager.instance.ClearBoss();
 
         LoadMap(WorldManager.instance.GetHubWorld().GetFirstMap());
         mGameMode = GameMode.Game;
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
         {
             if (player == null)
                 continue;
-            foreach (Effect effect in player.itemEffects)
+            foreach (Ability effect in player.abilities)
             {
                 effect.OnMapChanged();
             }
@@ -148,6 +149,7 @@ public class GameManager : MonoBehaviour
 
     public void UnpauseGame()
     {
+
         PauseMenu.instance.Close();
         mGameMode = GameMode.Game;
 
@@ -205,10 +207,33 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void GlobalPlayerInputs()
+    {
+        foreach (Player p in CrewManager.instance.players)
+        {
+            if (p != null)
+            {
+
+                if (p.Input.playerButtonInput[(int)ButtonInput.ZoomIn])
+                {
+                    GameCamera.instance.mMinOrthographicSize -= 5;
+                }
+
+                if (p.Input.playerButtonInput[(int)ButtonInput.ZoomOut])
+                {
+                    GameCamera.instance.mMinOrthographicSize += 5;
+
+                }
+            }
+        }
+
+    }
+
     void FixedUpdate()
     {
+        GlobalPlayerInputs();
 
-        if(mGameMode == GameMode.GameOver)
+        if (mGameMode == GameMode.GameOver)
         {
             foreach (Player p in CrewManager.instance.players)
             {
@@ -220,23 +245,28 @@ public class GameManager : MonoBehaviour
                         GameOverScreen.instance.DisplayScreen(false);
                     }
 
-                    if (p.Input.playerButtonInput[(int)ButtonInput.ZoomIn])
-                    {
-                        GameCamera.instance.mMinOrthographicSize -= 10;
-                    }
-
-                    if (p.Input.playerButtonInput[(int)ButtonInput.ZoomOut])
-                    {
-                        GameCamera.instance.mMinOrthographicSize += 10;
-
-                    }
                 }
             }
             return;
         }
         //The game doesnt run in editor mode
         if (mGameMode == GameMode.Paused)
+        {
+
+            foreach (Player p in CrewManager.instance.players)
+            {
+                if (p != null)
+                {
+                    if (p.Input.playerButtonInput[(int)ButtonInput.Pause] || p.Input.playerButtonInput[(int)ButtonInput.Menu_Back])
+                    {
+                        UnpauseGame();
+                    }
+
+                }
+            }
             return;
+
+        }
 
         /*
         if (players != null && players[0] != null && players[0].Input.playerButtonInput[(int)ButtonInput.Pause])

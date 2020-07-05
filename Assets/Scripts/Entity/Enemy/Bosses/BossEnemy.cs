@@ -50,6 +50,7 @@ public class BossEnemy : Enemy
         mBossState = BossState.Aggrivated;
         bossTrigger = true;
         SoundManager.instance.PlayBossMusic((int)bossType);
+        BossUIManager.instance.SetBoss(this);
     }
 
     protected virtual void Idle()
@@ -75,7 +76,8 @@ public class BossEnemy : Enemy
         SoundManager.instance.PlayLevelMusic((int)MapManager.instance.mCurrentMap.worldType);
 
         WorldManager.instance.WorldCleared(WorldManager.instance.currentWorldIndex);
-        
+        BossUIManager.instance.ClearBoss();
+        MapManager.instance.SpawnDoor();
         base.Die();
     }
 }

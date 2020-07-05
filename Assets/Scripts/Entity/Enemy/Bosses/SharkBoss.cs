@@ -8,9 +8,13 @@ public class SharkBoss : BossEnemy
     public Vector3 attackAnchor;
     public int shotcount = 0;
     public int numShots = 100;
+    public int waterSpeed;
+    public int baseSpeed;
     #endregion
 
-    public List<Vector2i> shotLocations = new List<Vector2i>() { new Vector2i(7, 10), new Vector2i(13, 10), new Vector2i(19, 10) };
+    public List<Vector2i> shotLocationsAbove = new List<Vector2i>() { new Vector2i(7, 10), new Vector2i(13, 10), new Vector2i(19, 10) };
+    public List<Vector2i> shotLocationsWater = new List<Vector2i>() { new Vector2i(7, 3), new Vector2i(13, 3), new Vector2i(19, 3) };
+
     Vector2 shotLocation;
 
     public SharkBoss(BossPrototype proto) : base(proto)
@@ -18,13 +22,23 @@ public class SharkBoss : BossEnemy
 
         Body.mIsKinematic = true;
         Body.mIsHeavy = true;
+        Body.mOffset = Vector2.zero;
+        baseSpeed = proto.movementSpeed;
+        waterSpeed = baseSpeed * 2;
 
     }
 
     public override void EntityUpdate()
     {
 
+        if(Body.mPS.inWater)
+        {
+            mMovingSpeed = waterSpeed;
+        } else
+        {
+            mMovingSpeed = baseSpeed;
 
+        }
 
 
         switch (mBossState)
@@ -37,21 +51,31 @@ public class SharkBoss : BossEnemy
             case BossState.Aggrivated:
                 CheckForTargets();
                 //Debug.Log("Got here 1");
+
+
                 if (Target != null)
                 {
 
-                    int random = Random.Range(0, 2);
+                    int random = Random.Range(0, 100);
 
-                    if(random == 0)
+                    switch(random)
                     {
-                        mBossState = BossState.Attack1;
+                        case int n when (n <= 10):
+                            mBossState = BossState.Attack2;
+                            if(Target.Body.mPS.inWater)
+                            {
+                                shotLocation = Map.GetMapTilePosition(shotLocationsWater[Random.Range(0, shotLocationsWater.Count)]);
 
-                    } else
-                    {
-                        mBossState = BossState.Attack2;
-                        shotLocation = Map.GetMapTilePosition(shotLocations[Random.Range(0, shotLocations.Count)]);
+                            } else
+                            {
+                                shotLocation = Map.GetMapTilePosition(shotLocationsAbove[Random.Range(0, shotLocationsAbove.Count)]);
+
+                            }
+                            break;
+                        case int n when (n > 10):
+                            mBossState = BossState.Attack1;
+                            break;
                     }
-
 
                 }
                 else
@@ -85,7 +109,7 @@ public class SharkBoss : BossEnemy
 
         if (EnemyBehaviour.TargetInRange(this, Target, 128))
         {
-            if (!mAttackManager.rangedAttacks[0].onCooldown)
+            if (!mAttackManager.rangedAttacks[0].OnCooldown() && !mAttackManager.rangedAttacks[0].mIsActive)
             {
                 RangedAttack attack = mAttackManager.rangedAttacks[0];
                 attack.Activate(dir, Position);

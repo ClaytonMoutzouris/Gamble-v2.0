@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TalentTreeNodeUI : MonoBehaviour
 {
-    TalentTreeUI talentTree;
+    PlayerLevelTabUI talentTree;
     Talent talent;
     public Image background;
     public Image branchIcon;
@@ -13,7 +13,7 @@ public class TalentTreeNodeUI : MonoBehaviour
 
     public void Start()
     {
-        talentTree = GetComponentInParent<TalentTreeUI>();
+        talentTree = GetComponentInParent<PlayerLevelTabUI>();
     }
 
     public void SetTalent(Talent t)

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bae108242f88244f872ebabe32754c9, type: 3}
   m_Name: Blueium
   m_EditorClassIdentifier: 
-  mName: Blueiem
-  mRarity: 0
-  mValue: 
+  itemName: Blueium
+  rarity: 0
+  baseValue: 0
   sprite: {fileID: 21300000, guid: fbb52a371b335234a8a1341b71659a68, type: 3}
   isStackable: 1
   identified: 1

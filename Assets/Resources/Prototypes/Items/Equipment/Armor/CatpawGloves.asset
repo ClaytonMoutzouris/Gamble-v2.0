@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
   m_Name: CatpawGloves
   m_EditorClassIdentifier: 
-  mName: Catpaw Gloves
-  mRarity: 4
-  mValue: 
+  itemName: CatpawGloves
+  rarity: 4
+  baseValue: 20
   sprite: {fileID: 2604324659472130756, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 2
   baseBonuses:
   - type: 0

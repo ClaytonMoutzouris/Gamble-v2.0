@@ -11,6 +11,7 @@ public class Chest : Entity, IInteractable {
     [HideInInspector]
     public bool mOpen = false;
     public bool locked = false;
+    public List<Item> possibleLoot;
 
     public Chest(ChestPrototype proto) : base(proto)
     {
@@ -21,6 +22,7 @@ public class Chest : Entity, IInteractable {
         Body.mIsKinematic = false;
 
         locked = false;
+        possibleLoot = proto.possibleItems;
     }
 
 
@@ -58,15 +60,17 @@ public class Chest : Entity, IInteractable {
             Renderer.SetAnimState("ChestOpen");
             MapData data = MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType);
 
-            ItemObject temp = new ItemObject(ItemDatabase.GetRandomItem(), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+            int randomIndex = Random.Range(0, possibleLoot.Count);
+            ItemObject temp = new ItemObject(ItemDatabase.NewItem(possibleLoot[randomIndex]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
             temp.Spawn(Position);
 
+            /*
             foreach (Item item in MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType).chestLoot.GetLoot())
             {
                 temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
                 temp.Spawn(Position);
             }
-
+            */
 
 
         }

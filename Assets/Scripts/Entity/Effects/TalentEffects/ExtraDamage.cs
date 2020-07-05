@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Maybe sets the new standard for effects being generic
-public class ExtraDamage : Effect
+public class ExtraDamage : Ability
 {
     StatBonus statBonus;
     public ExtraDamage()
     {
-        effectName = "Extra Damage";
-        type = EffectType.ExtraDamage;
+        abilityName = "Extra Damage";
+        type = AbilityType.ExtraDamage;
         statBonus = new StatBonus(StatType.Attack, 5);
     }
 

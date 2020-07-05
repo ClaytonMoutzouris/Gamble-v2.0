@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flamewalker : Effect
+public class Flamewalker : Ability
 {
     Vector2i prevTile;
     RangedAttackPrototype attackPrototype;
@@ -12,8 +12,8 @@ public class Flamewalker : Effect
 
     public Flamewalker()
     {
-        effectName = "Flamewalker";
-        type = EffectType.Flamewalker;
+        abilityName = "Flamewalker";
+        type = AbilityType.Flamewalker;
         attackPrototype = Resources.Load<RangedAttackPrototype>("Prototypes/Attacks/Effects/GroundFlame");
         //currentPosition = 
     }

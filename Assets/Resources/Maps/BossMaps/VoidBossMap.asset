@@ -16,9 +16,10 @@ MonoBehaviour:
   type: 5
   sizeX: 1
   sizeY: 1
+  hasMiniboss: 0
   roomSizeX: 25
   roomSizeY: 25
-  gravity: -650
+  gravity: 650
   baseDepth: 0
   depthVariance: 0
   smallEnemies: 

@@ -16,9 +16,10 @@ MonoBehaviour:
   type: 4
   sizeX: 1
   sizeY: 1
+  hasMiniboss: 0
   roomSizeX: 25
   roomSizeY: 25
-  gravity: -450
+  gravity: 450
   baseDepth: 0
   depthVariance: 0
   smallEnemies: 
@@ -43,6 +44,16 @@ MonoBehaviour:
   - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

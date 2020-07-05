@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonAttack : Effect
+public class PoisonAttack : Ability
 {
 
     public PoisonAttack()
     {
-        effectName = "Poison Attack";
-        type = EffectType.PoisonAttack;
+        abilityName = "Poison Attack";
+        type = AbilityType.PoisonAttack;
     }
 
     public override void OnHitTrigger(Attack attack, IHurtable entity)

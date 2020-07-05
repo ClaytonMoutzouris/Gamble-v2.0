@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum PlayerPanelTab { Inventory, Stats, Ship, Level };
+public enum PlayerPanelTabType { Inventory, Stats, Ship, Level };
 
 public class PlayerPanel : MonoBehaviour
 {
@@ -12,10 +12,10 @@ public class PlayerPanel : MonoBehaviour
     public PlayerPanelTooltip tooltip;
     public HealthBar healthBar;
     public PlayerInventoryUI inventoryUI;
-    public UIPlayerTab uiPlayerTab;
-    public TalentTreeUI talentTree;
-    public PlayerPanelTab selectedTabIndex = PlayerPanelTab.Inventory;
-    public List<GameObject> tabs;
+    public PlayerInfoUI uiPlayerTab;
+    public PlayerLevelTabUI talentTree;
+    public PlayerPanelTabType selectedTabIndex = PlayerPanelTabType.Inventory;
+    public List<PlayerPanelTab> tabs;
     public GameObject inputAnchor;
     public GameObject menuObject;
     public bool isOpen = false;
@@ -25,13 +25,18 @@ public class PlayerPanel : MonoBehaviour
     public void Initialize()
     {
         //transform.localPosition -= new Vector3(0, panelHeight, 0);
-        foreach (GameObject tab in tabs)
+        foreach (PlayerPanelTab tab in tabs)
         {
-            tab.SetActive(false);
+            if(tab != null)
+            {
+                tab.Close();
+            }
         }
 
-        tabs[(int)selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].Open();
         inventoryUI.Initialize();
+        menuObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -42,19 +47,15 @@ public class PlayerPanel : MonoBehaviour
 
     public void SetTab(int index)
     {
-        if((int)selectedTabIndex == index)
-        {
-            return;
-        }
 
-        tabs[(int)selectedTabIndex].SetActive(false);
-        tabs[index].SetActive(true);
-        selectedTabIndex = (PlayerPanelTab)index;
+        tabs[(int)selectedTabIndex].Close();
+        tabs[index].Open();
+        selectedTabIndex = (PlayerPanelTabType)index;
     }
 
     public void NextTabRight()
     {
-        tabs[(int)selectedTabIndex].SetActive(false);
+        tabs[(int)selectedTabIndex].Close();
 
         selectedTabIndex++;
         if((int)selectedTabIndex >= tabs.Count)
@@ -62,21 +63,21 @@ public class PlayerPanel : MonoBehaviour
             selectedTabIndex = 0;
         }
 
-        tabs[(int)selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].Open();
 
     }
 
     public void NextTabLeft()
     {
-        tabs[(int)selectedTabIndex].SetActive(false);
+        tabs[(int)selectedTabIndex].Close();
 
         selectedTabIndex--;
         if (selectedTabIndex < 0)
         {
-            selectedTabIndex = (PlayerPanelTab)tabs.Count-1;
+            selectedTabIndex = (PlayerPanelTabType)tabs.Count-1;
         }
 
-        tabs[(int)selectedTabIndex].SetActive(true);
+        tabs[(int)selectedTabIndex].Open();
     }
 
     public void PositionTab()
@@ -91,6 +92,7 @@ public class PlayerPanel : MonoBehaviour
         inputAnchor.GetComponent<Button>().OnSelect(null);
         isOpen = true;
         transform.localPosition = transform.localPosition + new Vector3(0, panelHeight, 0);
+        tooltip.gameObject.SetActive(true);
 
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
         GameObject tabsUI = GameObject.Find("Tabs");
@@ -100,10 +102,19 @@ public class PlayerPanel : MonoBehaviour
 
     public void ClosePlayerPanel()
     {
+        foreach (PlayerPanelTab tab in tabs)
+        {
+            if (tab != null)
+            {
+                tab.Close();
+            }
+        }
         EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(null);
         transform.localPosition = transform.localPosition - new Vector3(0, panelHeight, 0);
         isOpen = false;
         menuObject.SetActive(false);
+        tooltip.SetTooptip("");
+        tooltip.gameObject.SetActive(false);
     }
 
     #region deprecated

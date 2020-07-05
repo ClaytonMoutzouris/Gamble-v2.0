@@ -11,17 +11,17 @@ public class Door : Entity, IInteractable
     /// 
     [HideInInspector]
     public bool locked = false;
-    
+    public bool isVisible = true;
+    List<Sprite> spritesForWorld;
 
-
-    public Door(EntityPrototype proto) : base(proto)
+    public Door(DoorPrototype proto) : base(proto)
     {
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, Vector2.zero));
 
         Body.mIsKinematic = false;
-
+        spritesForWorld = proto.spritesForWorlds;
     }
 
 
@@ -31,6 +31,16 @@ public class Door : Entity, IInteractable
         base.EntityUpdate();
         //UpdatePhysics();
 
+    }
+
+    public void SetVisiblity(bool visible)
+    {
+        isVisible = visible;
+
+        if(isVisible)
+        {
+            
+        }
     }
 
     public bool Interact(Player actor)
@@ -61,6 +71,7 @@ public class Door : Entity, IInteractable
     {
         base.Spawn(spawnPoint);
 
+        Renderer.SetSprite(spritesForWorld[(int)MapManager.instance.mCurrentMap.worldType]);
         //Change the door sprite accordingly
     }
     

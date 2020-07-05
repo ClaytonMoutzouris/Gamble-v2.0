@@ -38,7 +38,7 @@ public class PlayerSaveData
             if(slot.item != null)
             {
                 for(int i = 0; i < slot.amount; i++) {
-                    items.Add(slot.item.mName);
+                    items.Add(slot.item.itemName);
                 }
             }
         }

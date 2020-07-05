@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Name: PhoenixEgg
+  m_EditorClassIdentifier: 
+  entityType: 1
+  hostility: 1
+  mName: PhoenixEgg
+  bodySize: {x: 10, y: 14}
+  CollidesWith: 000000000200000003000000000000000200000003000000000000000200000003000000
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 5826315001661807775, guid: 55fe1722352471d4a963e88a1728c330, type: 3}
+  sortingLayer: 4
+  animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  enemyType: 14
+  movementSpeed: 0
+  jumpHeight: 0
+  sightRange: 0
+  health: 50
+  rangedAttacks: []
+  meleeAttacks: []
+  lootTable: {fileID: 0}
+  stats:
+  - type: 0
+    value: 1
+    bonuses: []
+  - type: 1
+    value: 2
+    bonuses: []
+  - type: 2
+    value: 1
+    bonuses: []
+  - type: 3
+    value: 1
+    bonuses: []
+  - type: 4
+    value: 1
+    bonuses: []

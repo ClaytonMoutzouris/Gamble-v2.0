@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
   m_Name: PoisonGun
   m_EditorClassIdentifier: 
-  mName: Poisongun
-  mRarity: 0
-  mValue: 10
+  itemName: PoisonGun
+  rarity: 0
+  baseValue: 10
   sprite: {fileID: 21300006, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 5
-  statBonuses: []
-  abilities: 
-  possibleEffects: 0000000001000000
+  baseBonuses: []
+  baseEffects: 
   isEquipped: 0
   damage: 5
-  weaponAbilities: 
   attack: {fileID: 11400000, guid: b4b7f31884cacfc4b901b2d5636464e0, type: 2}

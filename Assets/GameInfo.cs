@@ -30,7 +30,7 @@ public class GameInfo : MonoBehaviour
                 info += "Push Top: " + player.Body.mPS.pushesTop + "\n";
                 info += "Push Top Tile: " + player.Body.mPS.pushesTopTile + "\n";
                 info += "Push Top Object: " + player.Body.mPS.pushesTopObject + "\n";
-
+                info += "Pushes Bottom Tile: " + player.Body.mPS.pushesBottomTile + "\n";
                 info += "\n";
 
 

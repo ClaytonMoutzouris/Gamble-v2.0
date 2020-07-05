@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d38c92894172d34daa07d1dbef0707f, type: 3}
   m_Name: ForceFieldGadget
   m_EditorClassIdentifier: 
-  mName: ForceFieldGadget
-  mRarity: 0
-  mValue: 
+  itemName: ForceFieldGadget
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 21300000, guid: c3827048d86a36b49a145de254980a79, type: 3}
   isStackable: 0
   identified: 1

@@ -15,9 +15,9 @@ MonoBehaviour:
   name: Weapons Expert
   description: Deal +5 Damage with all weapons
   level: 
-  type: 2
   effectTypes: 0c000000
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
+  repeatable: 0
   isLearned: 0

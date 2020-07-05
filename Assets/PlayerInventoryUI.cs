@@ -4,10 +4,9 @@ using UnityEngine.UI;
 using UnityEngine;
 
 
-public class PlayerInventoryUI : MonoBehaviour
+public class PlayerInventoryUI : PlayerPanelTab
 {
-    public Player player;
-    public PlayerPanel panel;
+
     public int numStartingSlots = 50;
     public List<InventorySlotUI> slots;
     public InventorySlotUI slotPrefab;
@@ -30,7 +29,21 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             AddSlot();
         }
+        defaultSelection = slots[0].gameObject;
+    }
 
+    public override void Open()
+    {
+        base.Open();
+
+
+    }
+
+    public override void Close()
+    {
+
+        optionsList.Close();
+        base.Close();
     }
 
     InventorySlotUI getSlot(int x, int y)

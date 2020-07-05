@@ -151,10 +151,14 @@ public class Enemy : Entity, IHurtable
         sight.UpdatePosition();
 
         //Renderer.SetSprite(prototype.)
-        EnemyHealthBar temp = GameObject.Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), Renderer.transform) as EnemyHealthBar;
-        temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
-        temp.InitHealthbar(this);
-        mHealth.healthbar = temp;
+        if(!(this is BossEnemy))
+        {
+            EnemyHealthBar temp = GameObject.Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), Renderer.transform) as EnemyHealthBar;
+            temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
+            temp.InitHealthbar(this);
+            mHealth.healthbar = temp;
+        }
+
     }
 
 
@@ -207,6 +211,11 @@ public class Enemy : Entity, IHurtable
 
     public virtual void DropLoot()
     {
+        if(prototype.lootTable == null)
+        {
+            return;
+        }
+
         foreach (Item item in prototype.lootTable.GetLoot())
         {
             ItemObject temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);

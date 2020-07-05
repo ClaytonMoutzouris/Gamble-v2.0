@@ -33,6 +33,12 @@ public class EntityPrototypeEditor
         ScriptableObjectUtility.CreateAsset<EntityPrototype>();
     }
 
+    [MenuItem("Assets/Create/Entity/Door")]
+    public static void CreateDoorPrototypeAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<DoorPrototype>();
+    }
+
     [MenuItem("Assets/Create/Entity/Chest")]
     public static void CreateChestPrototypeAsset()
     {

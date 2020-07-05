@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 816bf689be57580408423b70e22b4f0f, type: 2}
   - {fileID: 11400000, guid: ff2e9dc76f74f66459fb5303fd2c7dae, type: 2}
   - {fileID: 11400000, guid: 535350e4bcecad44cb29988efeb1265b, type: 2}
-  gravity: -1000
+  gravity: 1000
   tileSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}

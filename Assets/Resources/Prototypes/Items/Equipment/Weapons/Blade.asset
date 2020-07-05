@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82102480c650cd04fbed1ec2b128cd15, type: 3}
   m_Name: Blade
   m_EditorClassIdentifier: 
-  mName: Blade
-  mRarity: 0
-  mValue: 100
+  itemName: Blade
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 6
   baseBonuses: []
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   damage: 15
-  weaponAbilities: 
   attack: {fileID: 11400000, guid: 2e0367cf1137d0845b04a1fdb63153ef, type: 2}

@@ -40,9 +40,8 @@ public class PlayerClass : ScriptableObject
                 player.Inventory.AddItemToInventory(temp);
             }
         }
-
-        talentTree = Instantiate<TalentTree>(talentTree);
-        player.talentTree = talentTree;
+        player.talentTree = Instantiate(talentTree);
+        player.talentTree.GetNewTree();
         PlayerUIPanels.instance.playerPanels[player.mPlayerIndex].talentTree.SetTalentTree(player);
     }
 }

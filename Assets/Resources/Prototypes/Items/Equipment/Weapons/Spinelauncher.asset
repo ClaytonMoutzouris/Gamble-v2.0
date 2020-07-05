@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
   m_Name: Spinelauncher
   m_EditorClassIdentifier: 
-  mName: Spinelauncher
-  mRarity: 4
-  mValue: 
+  itemName: Spinelauncher
+  rarity: 4
+  baseValue: 25
   sprite: {fileID: -51968960129813083, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 5
   baseBonuses:
   - type: 4

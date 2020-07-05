@@ -57,7 +57,7 @@ public class InventorySlot
             return true;
         } else
         {
-            if(item.isStackable && item.mName == newItem.mName)
+            if(item.isStackable && item.itemName == newItem.itemName)
             {
                 amount+= numItems;
                 slotUI.UpdateSlotUI();

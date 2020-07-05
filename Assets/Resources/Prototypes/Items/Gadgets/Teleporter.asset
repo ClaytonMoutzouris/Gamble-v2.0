@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c2c25810a17f446abf486e4ef4f535, type: 3}
   m_Name: Teleporter
   m_EditorClassIdentifier: 
-  mName: Teleporter
-  mRarity: 0
-  mValue: 
+  itemName: Teleporter
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 21300000, guid: c3827048d86a36b49a145de254980a79, type: 3}
   isStackable: 0
   identified: 1

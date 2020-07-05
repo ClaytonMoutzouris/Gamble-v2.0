@@ -12,22 +12,6 @@ public class InventoryOptionList : MonoBehaviour
     public InventoryOptionButton optionPrefab;
     public InventorySlotUI focusedSlot;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        options = new List<InventoryOptionButton>();
-
-        SetOptions();
-
-        gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ClearOptions()
     {
         for(int i = options.Count-1; i >= 0; i--)
@@ -92,7 +76,8 @@ public class InventoryOptionList : MonoBehaviour
     {
         focusedSlot = slot;
         SetOptions();
-        if(options.Count == 0)
+
+        if (options.Count == 0)
         {
             return;
         }
@@ -127,12 +112,18 @@ public class InventoryOptionList : MonoBehaviour
                 break;
         }
 
-        Close();
+        Confirm();
     }
 
     public void Close()
     {
+        gameObject.SetActive(false);
+    }
+
+    public void Confirm()
+    {
         EventSystemManager.instance.GetEventSystem(playerInventory.player.mPlayerIndex).SetSelectedGameObject(focusedSlot.button.gameObject);
         gameObject.SetActive(false);
     }
+
 }

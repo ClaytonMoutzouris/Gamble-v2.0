@@ -22,13 +22,21 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 4c798a9a58ae99f4e9927b5fc5939cf4, type: 3}
   sortingLayer: 4
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
   npcType: 1
   movementSpeed: 60
   jumpHeight: 120
   sightRange: 50
-  hostility: 0
   health: 25
   rangedAttacks: []
   meleeAttacks: []
-  lootTable:
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  wares:
+  - {fileID: 11400000, guid: 9bf2c2e97b0d85f478292980162ab2da, type: 2}
+  - {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
+  - {fileID: 11400000, guid: 27ac88c0766ba7745b3f7cb98fa9876b, type: 2}
+  - {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+  - {fileID: 11400000, guid: 242bcda7931177042b31bcf87ae6bcaa, type: 2}
+  - {fileID: 11400000, guid: a5c32f2d0e9fe584da1d6f91a8766064, type: 2}
+  - {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
+  - {fileID: 11400000, guid: a4d39e165042231479157fcce7732d34, type: 2}
+  - {fileID: 11400000, guid: eb31a7d29732e3a478494a0beb601201, type: 2}

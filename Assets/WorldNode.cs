@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
-public class WorldNode : MonoBehaviour
+public class WorldNode : MonoBehaviour, ISelectHandler
 {
 
     public World world;
@@ -25,7 +26,7 @@ public class WorldNode : MonoBehaviour
 
     public void SetCleared()
     {
-        button.interactable = false;
+        completed = true;
     }
 
     public void SetColor()
@@ -56,6 +57,17 @@ public class WorldNode : MonoBehaviour
 
     public void SelectWorld()
     {
+        if(completed)
+        {
+            return;
+        }
+
         NavigationMenu.instance.SelectWorld(this);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        NavigationMenu.instance.currentNode = this;
+        NavigationMenu.instance.SetWorldInfo();
     }
 }

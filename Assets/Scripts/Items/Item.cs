@@ -6,9 +6,9 @@ using UnityEngine;
 public abstract class Item : ScriptableObject
 {
     
-    public string mName;
-    public Rarity mRarity;
-    public string mValue;
+    public string itemName;
+    public Rarity rarity;
+    public int baseValue;
     public Sprite sprite;
     public bool isStackable = false;
     public bool identified = true;
@@ -34,7 +34,7 @@ public abstract class Item : ScriptableObject
     {
         string tooltip = "";
 
-        tooltip += "<color=" + getColorFromRarity() + ">" + mName+"</color>";
+        tooltip += "<color=" + getColorFromRarity() + ">" + itemName+"</color>";
 
         return tooltip;
     }
@@ -42,7 +42,7 @@ public abstract class Item : ScriptableObject
     public string getColorFromRarity()
     {
         string rarity = "grey";
-        switch(mRarity)
+        switch(this.rarity)
         {
             case Rarity.Common:
                 rarity = "white";
@@ -63,6 +63,24 @@ public abstract class Item : ScriptableObject
 
         return rarity;
     }
+
+    public virtual int GetValue()
+    {
+        int value = 0;
+
+        value += baseValue + baseValue * (int)rarity;
+
+        return value;
+    }
+
+    public virtual int GetSellValue()
+    {
+        int sellValue = 0;
+
+        sellValue = GetValue() / 2;
+
+        return sellValue;
+    }
 }
 
 public abstract class Equipment : Item
@@ -72,44 +90,44 @@ public abstract class Equipment : Item
     public List<StatBonus> baseBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
     //public List<PlayerAbility> abilities;
-    private List<EffectType> possibleEffects = new List<EffectType>();
-    public List<EffectType> baseEffects;
-    List<Effect> effects = new List<Effect>();
+    private List<AbilityType> possibleEffects = new List<AbilityType>();
+    public List<AbilityType> baseEffects;
+    List<Ability> effects = new List<Ability>();
     //public Trait trait;
     public bool isEquipped;
 
-    public List<Effect> Effects { get => effects; set => effects = value; }
-    public List<EffectType> PossibleEffects { get => possibleEffects; set => possibleEffects = value; }
+    public List<Ability> Effects { get => effects; set => effects = value; }
+    public List<AbilityType> PossibleEffects { get => possibleEffects; set => possibleEffects = value; }
 
     public virtual void RandomizeStats()
     {
 
-        if(mRarity != Rarity.Artifact)
+        if(rarity != Rarity.Artifact)
         {
             int rarityRoll = Random.Range(0, 100) + 10* WorldManager.instance.NumCompletedWorlds();
 
             if (rarityRoll < 50)
             {
-                mRarity = Rarity.Common;
+                rarity = Rarity.Common;
             }
             else if (rarityRoll >= 50 && rarityRoll < 80)
             {
-                mRarity = Rarity.Uncommon;
+                rarity = Rarity.Uncommon;
             }
             else if (rarityRoll >= 80 && rarityRoll < 100)
             {
-                mRarity = Rarity.Rare;
+                rarity = Rarity.Rare;
 
             }
             else if (rarityRoll >= 100)
             {
-                mRarity = Rarity.Legendary;
+                rarity = Rarity.Legendary;
             }
         }
         
-        foreach(EffectType type in baseEffects)
+        foreach(AbilityType type in baseEffects)
         {
-            Effects.Add(Effect.GetEffectFromType(type));
+            Effects.Add(Ability.GetEffectFromType(type));
         }
 
 
@@ -118,7 +136,7 @@ public abstract class Equipment : Item
 
         int minBonus = 1;
         int maxBonus = 2;
-        int numBonuses = (int)mRarity;
+        int numBonuses = (int)rarity;
         StatType statType;
 
         List<StatType> remainingTypes = new List<StatType> ();
@@ -130,12 +148,12 @@ public abstract class Equipment : Item
             int r = Random.Range(0, remainingTypes.Count);
             statType = remainingTypes[r];
             remainingTypes.RemoveAt(r);
-            statBonuses.Add(new StatBonus(statType, Random.Range(minBonus, maxBonus + (int)mRarity)));
+            statBonuses.Add(new StatBonus(statType, Random.Range(minBonus, maxBonus + (int)rarity)));
         }
 
-        if(mRarity == Rarity.Legendary || mRarity == Rarity.Rare || mRarity == Rarity.Artifact)
+        if(rarity == Rarity.Legendary || rarity == Rarity.Rare || rarity == Rarity.Artifact)
         {
-            Effects.Add(Effect.GetEffectFromType((EffectType)Random.Range(0, (int)EffectType.Heavy)));
+            Effects.Add(Ability.GetEffectFromType((AbilityType)Random.Range(0, (int)AbilityType.Heavy)));
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
         }
         
@@ -150,7 +168,7 @@ public abstract class Equipment : Item
         player.mStats.AddBonuses(baseBonuses);
         player.Health.UpdateHealth();
 
-        foreach(Effect effect in Effects)
+        foreach(Ability effect in Effects)
         {
             effect.OnEquipTrigger(player);
         }
@@ -165,7 +183,7 @@ public abstract class Equipment : Item
 
         player.Health.UpdateHealth();
 
-        foreach (Effect effect in Effects)
+        foreach (Ability effect in Effects)
         {
             effect.OnUnequipTrigger(player);
         }
@@ -185,7 +203,7 @@ public abstract class Equipment : Item
         string tooltip = base.getTooltip();
 
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
-        foreach (Effect effect in Effects)
+        foreach (Ability effect in Effects)
         {
             tooltip += "\n<color=magenta>" + effect.ToString() + "</color>";
         }

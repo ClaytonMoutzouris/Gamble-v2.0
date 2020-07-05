@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompanionDrone : Effect
+public class CompanionDrone : Ability
 {
 
     Vector2 offset = new Vector2(4, 10);
     public CompanionDrone()
     {
-        effectName = "Companion Drone";
-        type = EffectType.CompanionDrone;
+        abilityName = "Companion Drone";
+        type = AbilityType.CompanionDrone;
     }
 
     public override void OnEquipTrigger(Player player)

@@ -10,6 +10,10 @@ public class EnemyHealthBar : HealthBar
     public void InitHealthbar(Enemy e)
     {
         enemy = e;
+        if(enemy.mHealth != null)
+        {
+            enemy.mHealth.SetHealthBar(this);
+        }
     }
 
     public override void SetHealth(Health health)

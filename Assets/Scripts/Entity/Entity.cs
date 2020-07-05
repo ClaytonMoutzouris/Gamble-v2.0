@@ -14,7 +14,6 @@ public class Entity {
     public Hostility hostility = Hostility.Neutral;
     public List<EntityType> mCollidesWith;
     public List<StatusEffect> statusEffects;
-    public List<EntityEffects> entityEffects;
     public float mMovingSpeed;
     public Vector2 Position;
     public EntityDirection mDirection = EntityDirection.Right;
@@ -34,7 +33,9 @@ public class Entity {
 
     public bool spikeProtection = false;
     public bool crushProtection = false;
+    public List<Ability> abilities;
 
+    public Vector2 gravityVector = Vector2.down;
 
 
 
@@ -120,18 +121,12 @@ public class Entity {
     {
         prototype = proto;
         mEntityType = prototype.entityType;
-        entityEffects = new List<EntityEffects>();
-        
-        foreach (EntityEffects entityEffect in proto.effects)
-        {
-            EntityEffects e = ScriptableObject.Instantiate(entityEffect);
-            entityEffects.Add(e);
-            e.Apply(this);
-        }
+        entityName = proto.mName;
         Game = GameManager.instance;
         Map = MapManager.instance;
         ignoreTilemap = proto.ignoreTilemap;
         hostility = prototype.hostility;
+        abilities = new List<Ability>();
         
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
         mCollidesWith = proto.CollidesWith;
@@ -228,9 +223,10 @@ public class Entity {
     public virtual void Die()
     {
         mToRemove = true;
-        foreach(EntityEffects effect in entityEffects)
+
+        foreach (Ability effect in abilities)
         {
-            effect.OnDeath(this);
+            effect.OnOwnerDeath(this);
         }
         Body.mState = ColliderState.Closed;
     }

@@ -16,6 +16,5 @@ public class EntityPrototype : ScriptableObject
     public SortingLayerEnum sortingLayer;
     public RuntimeAnimatorController animationController;
 
-    public List<EntityEffects> effects;
     public ParticleSystem particleEffects;
 }

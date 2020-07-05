@@ -81,7 +81,7 @@ public class ItemEditor
     [MenuItem("Assets/Create/Items/Gadget/NovaGadget")]
     public static void CreateBaseNovaGadgetAsset()
     {
-        ScriptableObjectUtility.CreateAsset<NovaGadget>();
+        ScriptableObjectUtility.CreateAsset<AttackGadget>();
     }
 
     [MenuItem("Assets/Create/Items/Gadget/PortalGadget")]
@@ -106,5 +106,11 @@ public class ItemEditor
     public static void CreateBaseCaptureGadgetAsset()
     {
         ScriptableObjectUtility.CreateAsset<CaptureGadget>();
+    }
+
+    [MenuItem("Assets/Create/Items/Gadget/GravityRemote")]
+    public static void CreateBaseGravityRemoteAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<GravityRemote>();
     }
 }

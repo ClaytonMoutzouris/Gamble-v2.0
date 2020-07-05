@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
   m_Name: SharkfinHelm
   m_EditorClassIdentifier: 
-  mName: Sharkfin Helm
-  mRarity: 4
-  mValue: 
+  itemName: SharkfinHelm
+  rarity: 4
+  baseValue: 25
   sprite: {fileID: -2101561059080248862, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 0
   baseBonuses:
   - type: 1

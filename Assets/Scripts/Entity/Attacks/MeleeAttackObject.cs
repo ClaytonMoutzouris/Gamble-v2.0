@@ -38,7 +38,7 @@ public class MeleeAttackObject : AttackObject
                     hit.GetHurt(attack);
                     if(owner is Player player)
                     {
-                        foreach(Effect effect in player.itemEffects)
+                        foreach(Ability effect in player.abilities)
                         {
                             effect.OnHitTrigger(attack, hit);
                         }

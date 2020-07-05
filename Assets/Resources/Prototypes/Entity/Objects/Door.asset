@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6689046b771725147a36325d1fb9b798, type: 3}
+  m_Script: {fileID: 11500000, guid: 59dac0a74da450e4ca314f7e04525e3f, type: 3}
   m_Name: Door
   m_EditorClassIdentifier: 
   entityType: 4
-  hostility: 0
+  hostility: 1
   mName: Door
   bodySize: {x: 16, y: 16}
   CollidesWith: 
@@ -22,5 +22,13 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 0}
-  effects: []
   particleEffects: {fileID: 0}
+  spritesForWorlds:
+  - {fileID: 2867020483019585006, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 21300012, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}
+  - {fileID: 21300012, guid: 86f10164c36ea7f48a1d6bea80db4635, type: 3}
+  - {fileID: 21300012, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
+  - {fileID: 21300012, guid: fa772b6751bcc284a96c948523e90e39, type: 3}
+  - {fileID: 2405002405213778385, guid: 329b0dd387453c346a64a6211242750f, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300012, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}

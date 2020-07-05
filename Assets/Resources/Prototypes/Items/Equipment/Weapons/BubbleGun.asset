@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
   m_Name: BubbleGun
   m_EditorClassIdentifier: 
-  mName: Bubble Gun
-  mRarity: 2
-  mValue: 200
+  itemName: BubbleGun
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 2758798103841807425, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 5
   baseBonuses: []
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   damage: 3
   attack: {fileID: 11400000, guid: 35140d87514995d45b4fd39a8cebca59, type: 2}

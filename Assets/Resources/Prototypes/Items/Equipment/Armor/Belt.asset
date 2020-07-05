@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9e77d947f27ce479291f5f8e3941d7, type: 3}
   m_Name: Belt
   m_EditorClassIdentifier: 
-  mName: Leather Belt
-  mRarity: 0
-  mValue: 
+  itemName: Belt
+  rarity: 0
+  baseValue: 10
   sprite: {fileID: 21300000, guid: 0ed1a27affb7bdd40a1178cd06bb17f1, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 4
   baseBonuses:
   - type: 4
     bonusValue: 1
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 107

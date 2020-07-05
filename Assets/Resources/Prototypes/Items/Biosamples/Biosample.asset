@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570653c578d7c464e9a1ec5126901992, type: 3}
   m_Name: Biosample
   m_EditorClassIdentifier: 
-  mName: Biosample
-  mRarity: 2
-  mValue: 
+  itemName: Biosample
+  rarity: 0
+  baseValue: 0
   sprite: {fileID: -8537096001911599930, guid: cad10265bf20afa4a8a684396bd08d19, type: 3}
   isStackable: 0
   identified: 0

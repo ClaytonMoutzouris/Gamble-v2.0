@@ -10,6 +10,7 @@ public class Projectile : AttackObject {
     public int frameDelay = 0;
     public int framesAlive = 0;
     public bool isAngled = false;
+    public bool isBouncy = false;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 
@@ -29,8 +30,9 @@ public class Projectile : AttackObject {
         //mMovingSpeed = 100;
         Body.mIgnoresOneWay = true;
         pierce = proto.pierce;
-        Body.mIgnoresGravity = proto.ignoreGravity;
+        isBouncy = proto.bouncy;
 
+        Body.mIgnoresGravity = proto.ignoreGravity;
 
         mMovingSpeed = proto.speed;
 
@@ -69,7 +71,14 @@ public class Projectile : AttackObject {
 
     public override void EntityUpdate()
     {
-        if(framesAlive >= frameDelay)
+        if (mTimeAlive >= mMaxTime)
+        {
+            mToRemove = true;
+            return;
+        }
+
+
+        if (framesAlive >= frameDelay)
         {
             hitbox.mState = ColliderState.Open;
 
@@ -89,7 +98,7 @@ public class Projectile : AttackObject {
                     hit.GetHurt(attack);
                     if(owner is Player player)
                     {
-                        foreach(Effect effect in player.itemEffects)
+                        foreach(Ability effect in player.abilities)
                         {
                             effect.OnHitTrigger(attack, hit);
                         }
@@ -114,11 +123,27 @@ public class Projectile : AttackObject {
         //Debug.Log("Pushes Top: " + Body.mPS.pushesTopTile);
         //Debug.Log("Pushes Left: " + Body.mPS.pushesLeftTile);
         //Debug.Log("Pushes Right: " + Body.mPS.pushesRightTile);
+        if(isBouncy)
+        {
+            if(Body.mPS.pushesBottom || Body.mPS.pushesTop)
+            {
+                direction = new Vector2(direction.x, -direction.y);
+                SetInitialDirection();
 
-        if (mTimeAlive >= mMaxTime || (collidesWithTiles && (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)))
+            }
+
+
+            if (Body.mPS.pushesLeft || Body.mPS.pushesRight)
+            {
+                direction = new Vector2(-direction.x, direction.y);
+                SetInitialDirection();
+
+            }
+        }
+
+        if ((collidesWithTiles && !isBouncy && (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)))
         {
             mToRemove = true;
-            return;
         }
 
         //Body.mSpeed = mMovingSpeed * direction;

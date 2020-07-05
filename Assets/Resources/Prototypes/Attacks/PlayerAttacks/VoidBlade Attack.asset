@@ -19,5 +19,5 @@ MonoBehaviour:
   animationController: {fileID: 0}
   damage: 25
   sfx: {fileID: 8300000, guid: 7989b1b217a36e14e852f26f21562927, type: 3}
-  meleeObjectPrototype: {fileID: 11400000, guid: fdc20514e4fdb4a46a74a42db1e16638,
+  meleeObjectPrototype: {fileID: 11400000, guid: 02dfed9398c025e42a62f340690ebac5,
     type: 2}

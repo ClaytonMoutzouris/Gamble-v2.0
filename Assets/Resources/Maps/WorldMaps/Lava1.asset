@@ -16,12 +16,13 @@ MonoBehaviour:
   type: 2
   sizeX: 5
   sizeY: 5
+  hasMiniboss: 0
   roomSizeX: 10
   roomSizeY: 10
-  gravity: -1000
+  gravity: 1000
   baseDepth: 2
   depthVariance: 1
-  smallEnemies: 0000000002000000
+  smallEnemies: 000000000c000000
   largeEnemies: 0b00000002000000
   tileSprites:
   - {fileID: 0}

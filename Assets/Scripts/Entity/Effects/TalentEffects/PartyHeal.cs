@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyHeal : Effect
+public class PartyHeal : Ability
 {
 
     public PartyHeal()
     {
-        effectName = "Party Heal";
-        type = EffectType.PartyHeal;
+        abilityName = "Party Heal";
+        type = AbilityType.PartyHeal;
     }
 
     public override void OnHealTrigger(Player player, int heals)

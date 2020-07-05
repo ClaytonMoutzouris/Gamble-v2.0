@@ -23,7 +23,7 @@ public class ShopCostNode : MonoBehaviour
     {
         this.cost = cost;
         this.item = item;
-        text.text = cost + "X " + item.mName;
+        text.text = cost + " " + item.itemName;
         image.sprite = item.sprite;
     }
 

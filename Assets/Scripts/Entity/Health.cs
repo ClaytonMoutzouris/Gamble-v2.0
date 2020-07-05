@@ -50,6 +50,7 @@ public class Health
     public void SetHealthBar(HealthBar bar)
     {
         this.healthbar = bar;
+        bar.SetHealth(this);
     }
 
     public float LoseHP(float damage)

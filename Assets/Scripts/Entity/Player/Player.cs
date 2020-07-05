@@ -42,7 +42,6 @@ public class Player : Entity, IHurtable
     public int playerExperience = 0;
     public TalentTree talentTree;
 
-    public List<Effect> itemEffects;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -191,7 +190,7 @@ public class Player : Entity, IHurtable
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
-        itemEffects = new List<Effect>();
+        abilities = new List<Ability>();
         mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
 
         mWalkSpeed = prototype.walkSpeed;
@@ -294,7 +293,7 @@ public class Player : Entity, IHurtable
         }
 
         //Inventory specific
-        if (playerPanel.selectedTabIndex == PlayerPanelTab.Inventory)
+        if (playerPanel.isOpen && playerPanel.selectedTabIndex == PlayerPanelTabType.Inventory)
         {
             if (Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
             {
@@ -314,6 +313,40 @@ public class Player : Entity, IHurtable
         }
         
     }
+
+    public bool GetCurrency(Item currencyType, int amount)
+    {
+        InventorySlot slot = Inventory.GetSlotWithItemType(currencyType);
+        if (slot != null)
+        {
+            if (slot.amount >= amount)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    slot.GetOneItem();
+
+                }
+
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    public int GetCurrencyCount(Item currencyType)
+    {
+        int count = 0;
+        InventorySlot slot = Inventory.GetSlotWithItemType(currencyType);
+        if (slot != null)
+        {
+            count += slot.amount;
+        }
+
+        return count;
+    }
+
 
     public override void EntityUpdate()
     {
@@ -363,7 +396,7 @@ public class Player : Entity, IHurtable
         }
 
         //
-        if (Input.playerButtonInput[(int)ButtonInput.Inventory] && !Input.previousButtonInput[(int)ButtonInput.Inventory])
+        if (Input.playerButtonInput[(int)ButtonInput.OpenCloseInventory] && !Input.previousButtonInput[(int)ButtonInput.OpenCloseInventory])
         {
             PlayerUIPanels.instance.OpenClosePanel(mPlayerIndex);
             if (Input.inputState == PlayerInputState.Inventory)
@@ -395,7 +428,7 @@ public class Player : Entity, IHurtable
         }
 
 
-        if (Input.playerButtonInput[(int)ButtonInput.Item] && !Input.previousButtonInput[(int)ButtonInput.Item])
+        if (Input.playerButtonInput[(int)ButtonInput.QuickHeal] && !Input.previousButtonInput[(int)ButtonInput.QuickHeal])
         {
             UseFirstHealingItem();
         }
@@ -433,7 +466,7 @@ public class Player : Entity, IHurtable
             mJumpCount = 0;
         }
 
-        foreach (Effect effect in itemEffects)
+        foreach (Ability effect in abilities)
         {
             effect.OnUpdate();
         }
@@ -446,11 +479,13 @@ public class Player : Entity, IHurtable
 
                 mWalkSfxTimer = cWalkSfxTime;
 
-                if (!Body.mPS.pushesBottom || Body.mPS.inUpdraft)
+                if (!Body.mPS.pushesBottom)
                 {
                     movementState = MovementState.Jump;
                     break;
                 }
+
+
 
 
                 Body.mSpeed.x = 0;
@@ -516,6 +551,19 @@ public class Player : Entity, IHurtable
                 break;
             case MovementState.Walk:
 
+
+                if (Body.mPS.inUpdraft)
+                {
+                    Jump();
+                    break;
+                }
+
+                if (!Body.mPS.pushesBottom)
+                {
+                    movementState = MovementState.Jump;
+                    break;
+                }
+
                 mWalkSfxTimer += Time.deltaTime;
 
                 if (mWalkSfxTimer > cWalkSfxTime)
@@ -524,14 +572,8 @@ public class Player : Entity, IHurtable
                     SoundManager.instance.PlaySingle(mWalkSfx);
                 }
 
-                if (!Body.mPS.pushesBottom || Body.mPS.inUpdraft)
-                {
-                    movementState = MovementState.Jump;
-                    break;
-                }
-
                 //Trigger on walk effects
-                foreach (Effect effect in itemEffects)
+                foreach (Ability effect in abilities)
                 {
                     effect.OnWalkTrigger(this);
                 }
@@ -1381,7 +1423,7 @@ public class Player : Entity, IHurtable
         AttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
 
-        foreach (Effect effect in itemEffects)
+        foreach (Ability effect in abilities)
         {
             effect.OnSecondUpdate();
         }
@@ -1415,7 +1457,7 @@ public class Player : Entity, IHurtable
         Health.LoseHP(damage);
         ShowFloatingText(damage.ToString(), Color.red);
 
-        foreach(Effect effect in itemEffects)
+        foreach(Ability effect in abilities)
         {
             effect.OnDamagedTrigger(attack);
         }
@@ -1437,7 +1479,7 @@ public class Player : Entity, IHurtable
         //heals from triggers shouldnt also trigger
         if(!fromTrigger)
         {
-            foreach (Effect effect in itemEffects)
+            foreach (Ability effect in abilities)
             {
                 effect.OnHealTrigger(this, life);
             }
@@ -1456,10 +1498,7 @@ public class Player : Entity, IHurtable
         mCurrentState = PlayerState.Dead;
         HurtBox.mState = ColliderState.Closed;
 
-        foreach(Effect effect in itemEffects)
-        {
-            effect.OnPlayerDeath(this);
-        }
+
 
         Renderer.SetAnimState("Dead");
     }

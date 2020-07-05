@@ -6,7 +6,7 @@ using System.IO;
 using AccidentalNoise;
 
 
-public enum Direction { Invalid, Up, Left, Down, Right };
+public enum Direction { Up, Left, Down, Right, Count };
 
 
 public static class MapGenerator
@@ -105,21 +105,6 @@ public static class MapGenerator
         }
     }
 
-
-    /*
-    public static Node<Room>[,] NodeMap(int sizeX, int sizeY, out Vector2i startRoom, out Vector2i endRoom, int depth)
-    {
-        startRoom = new Vector2i(Random.Range(0, sizeX), depth);
-        endRoom = new Vector2i(0, 0);
-        Node<Room>[,] map = new Node<Room>[sizeX, sizeY];
-
-
-        
-
-    }
-    */
-   
-
     public static RoomData[,] RoomMap(int sizeX, int sizeY, Vector2i startRoom, out Vector2i endRoom)
     {
         RoomData[,] map = new RoomData[sizeX, sizeY];
@@ -135,7 +120,7 @@ public static class MapGenerator
         mainPath.Add(map[currentX, currentY]);
         int r = 0;
         bool done = false;
-        Direction lastDirection = Direction.Invalid;
+        Direction lastDirection = Direction.Left;
 
         while (!done)
         {
@@ -410,13 +395,31 @@ public static class MapGenerator
 
         AddBounds(map);
 
+        bool hasDoor = false;
 
-        //map.startTile = GetStartTile(map, 0, 0);
-        Vector2i door = AddDoorTile(map, 0, 0);
-        map.exitTile = door;
-        //Debug.Log("Door tile " + door);
+        for (int x = 0; x < map.getMapSize().x; x++)
+        {
+            for (int y = 0; y < map.getMapSize().y; y++)
+            {
+              if(map.GetTile(x,y) == TileType.Door)
+                {
+                    hasDoor = true;
+                    map.exitTile = new Vector2i(x,y);
 
-        map.SetTile(door.x, door.y, TileType.Door);
+                }
+            }
+        } 
+
+        if(!hasDoor)
+        {
+            //map.startTile = GetStartTile(map, 0, 0);
+            Vector2i door = AddDoorTile(map, 0, 0);
+            map.exitTile = door;
+            //Debug.Log("Door tile " + door);
+
+            map.SetTile(door.x, door.y, TileType.Door);
+        }
+
 
         map.bossTile = new Vector2i(8, 2);
 
@@ -456,6 +459,8 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
 
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
+        map.AddEntity(new EnemyData(9, 1, EnemyType.Crawler));
+        map.AddEntity(new EnemyData(3, 2, EnemyType.Nipper));
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
@@ -593,7 +598,7 @@ public static class MapGenerator
                         break;
                     case TileType.Door:
                         map.AddEntity(new ObjectData(x, y, ObjectType.Door));
-                        //map.SetTile(x, y, TileType.Empty);
+                        map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.Bounce:
                         //map.AddEntity(new ObjectData(x, y, ObjectType.BouncePad));
@@ -606,6 +611,21 @@ public static class MapGenerator
                     case TileType.MinibossSpawn:
                         map.AddEntity(new MinibossData(x, y, MinibossType.BogBeast));
                         map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.SmallOre:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.SmallGatherable));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.LargeOre:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.LargeGatherable));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
+                    case TileType.Water:
+                        int random = Random.Range(0, 100);
+                        if(random >= 90)
+                        {
+                            map.AddEntity(new EnemyData(x, y, EnemyType.Nipper));
+                        }
                         break;
                 }
 
@@ -692,30 +712,6 @@ public static class MapGenerator
                 {
                     if (y != (map.sizeY - 1) && map.GetTile(x, y + 1) == TileType.Block)
                         map.AddEntity(new ObjectData(x, y, ObjectType.FallingRock));
-                }
-            }
-        }
-    }
-
-    static void AddEnemies(Map map)
-    {
-        int r;
-
-        for (int x = 0; x < map.getMapSize().x; x++)
-        {
-            for (int y = 0; y < map.getMapSize().y; y++)
-            {
-                r = Random.Range(0, 100);
-                if (r < 98)
-                    continue;
-
-                if (map.GetTile(x, y) == TileType.Empty)
-                {
-                    if (y != 0 && map.GetTile(x, y - 1) == TileType.Block)
-                    {
-                        int enemyRandom = Random.Range(0, (int)EnemyType.Count);
-                        map.AddEntity(new EnemyData(x, y, (EnemyType)enemyRandom));
-                    }
                 }
             }
         }

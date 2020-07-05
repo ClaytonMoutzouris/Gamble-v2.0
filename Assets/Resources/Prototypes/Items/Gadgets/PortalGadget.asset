@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd9d04f7488e8d4fb2482a5dcac0092, type: 3}
   m_Name: PortalGadget
   m_EditorClassIdentifier: 
-  mName: PortalGadget
-  mRarity: 0
-  mValue: 
+  itemName: PortalGadget
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 21300000, guid: c3827048d86a36b49a145de254980a79, type: 3}
   isStackable: 0
   identified: 1

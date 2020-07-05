@@ -17,7 +17,6 @@ public class Attack {
     public float duration;
     public float elapsedFrames;
     public float coolDown;
-    public bool onCooldown;
     public float coolDownTimer = 0;
     public int startUpFrames = 0;
     public Vector2 attackOffset;

@@ -31,7 +31,7 @@ public class EditorMap : MonoBehaviour
 
         room = new RoomData(RoomType.Hub, mWidth, mHeight);
         //room.roomType = RoomType.Hub;
-
+        mTileMap.Init();
         mTileMap.DrawMap(room.tiles, mWidth, mHeight, sprites);
     }
 

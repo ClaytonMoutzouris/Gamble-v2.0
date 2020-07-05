@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Name: Nipper
+  m_EditorClassIdentifier: 
+  entityType: 1
+  hostility: 2
+  mName: Nipper
+  bodySize: {x: 10, y: 10}
+  CollidesWith: 
+  ignoreTilemap: 0
+  ignoreGravity: 1
+  sprite: {fileID: -7727872075991994438, guid: cf8fd46c573a93b4cbf734a5b3a6343d, type: 3}
+  sortingLayer: 4
+  animationController: {fileID: 9100000, guid: 257f14dccda6475488acd81db0d9b08a, type: 2}
+  effects: []
+  particleEffects: {fileID: 0}
+  enemyType: 13
+  movementSpeed: 65
+  jumpHeight: 260
+  sightRange: 160
+  health: 25
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: f015d8b2048b51c40a1fbdc921c31e2e, type: 2}
+  lootTable: {fileID: 11400000, guid: fd6b2ae2aff5fd044b7e15e38e6d328c, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []

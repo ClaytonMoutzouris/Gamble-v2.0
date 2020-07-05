@@ -19,7 +19,7 @@ public class Map
     MapData data;
     TileType[,] tiles;
 
-    public float gravity = -800.0f;
+    public float gravity = 800.0f;
     //public Audio
 
     public List<EntityData> objects;

@@ -9,11 +9,15 @@ public class NavigationMenu : MonoBehaviour
     public static NavigationMenu instance;
     public GameObject defaultObject;
     public int pausedIndex = -1;
+    public ScrollRect scrollRect;
     public GameObject worldContainer;
     public WorldNode prefab;
     public List<WorldNode> worldNodes = new List<WorldNode>();
     public Button backButton;
+    public Text worldName;
+    public Text worldInfo;
 
+    public WorldNode currentNode;
 
     // Start is called before the first frame update
     void Start()
@@ -54,11 +58,32 @@ public class NavigationMenu : MonoBehaviour
 
     }
 
+
+    private void Update()
+    {
+        if (currentNode != null)
+        {
+            scrollRect.ScrollRepositionX(currentNode.GetComponent<RectTransform>());
+            Navigation nav = backButton.navigation;
+            nav.selectOnUp = currentNode.button;
+            backButton.navigation = nav;
+        }
+
+    }
+
     public void Open(int playerIndex)
     {
 
         pausedIndex = playerIndex;
-        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+
+        if (worldNodes.Count > 0)
+        {
+            currentNode = worldNodes[0];
+            SetWorldInfo();
+            defaultObject = currentNode.gameObject;
+        }
+
+
         if (defaultObject != null)
         {
             Button button = defaultObject.GetComponent<Button>();
@@ -68,6 +93,9 @@ public class NavigationMenu : MonoBehaviour
 
             }
         }
+
+        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+
         gameObject.SetActive(true);
         CrewManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
 
@@ -82,6 +110,23 @@ public class NavigationMenu : MonoBehaviour
         }
 
         worldNodes.Clear();
+    }
+
+
+    public void SetWorldInfo()
+    {
+        worldName.text = currentNode.world.worldName;
+        if(currentNode.completed)
+        {
+            worldName.color = Color.green;
+        }
+        else
+        {
+            worldName.color = Color.white;
+        }
+
+        worldInfo.text = "Type: " + currentNode.world.WorldType;
+        
     }
 
     public void AddWorldNode(World world)
@@ -123,13 +168,7 @@ public class NavigationMenu : MonoBehaviour
             worldNodes[0].button.navigation = nav3;
         }
 
-        defaultObject = temp.gameObject;
 
-    }
-
-    public void SetDefaultNode()
-    {
-        
     }
 
     public void Close()
@@ -149,9 +188,4 @@ public class NavigationMenu : MonoBehaviour
         Close();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

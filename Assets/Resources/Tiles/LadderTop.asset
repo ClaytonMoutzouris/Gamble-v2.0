@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 21300010, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}
   - {fileID: 21300010, guid: fa772b6751bcc284a96c948523e90e39, type: 3}
   - {fileID: -349467962968843635, guid: 329b0dd387453c346a64a6211242750f, type: 3}
-  - {fileID: 0}
+  - {fileID: 4159139795584394890, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
   - {fileID: 21300010, guid: ac1beddef55f17445b956d8f551fcbb4, type: 3}
-  animators: []
+  animationController: {fileID: 0}

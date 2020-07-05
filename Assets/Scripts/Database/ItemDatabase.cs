@@ -17,7 +17,7 @@ public static class ItemDatabase {
 
         foreach(Item item in mItemDatabase)
         {
-            if(item.mName.Equals(name))
+            if(item.itemName.Equals(name))
             {
                 return NewItem(item);
 

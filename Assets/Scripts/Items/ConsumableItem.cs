@@ -7,7 +7,7 @@ public class ConsumableItem : Item
 
     public virtual bool Use(Player player)
     {
-        foreach(Effect effect in player.itemEffects)
+        foreach(Ability effect in player.abilities)
         {
             effect.OnConsumeItem(player, this);
         }

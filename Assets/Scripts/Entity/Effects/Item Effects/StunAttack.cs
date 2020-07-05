@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StunAttack : Effect
+public class StunAttack : Ability
 {
 
     public StunAttack()
     {
-        effectName = "Stun Attack";
-        type = EffectType.StunAttack;
+        abilityName = "Stun Attack";
+        type = AbilityType.StunAttack;
     }
 
     public override void OnDamagedTrigger(Attack attack)
@@ -30,12 +30,12 @@ public class StunAttack : Effect
     public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
         base.OnHitTrigger(attack, entity);
+        if(entity is BossEnemy || entity is Miniboss)
+        {
+            return;
+        }
         new Stunned(entity.GetEntity());
 
     }
 
-    public override void OnJumpTrigger(Player player)
-    {
-        base.OnJumpTrigger(player);
-    }
 }

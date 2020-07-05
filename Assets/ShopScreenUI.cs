@@ -1,52 +1,150 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum ShopScreenMode { Buy, Sell }
 
 public class ShopScreenUI : MonoBehaviour
 {
     public static ShopScreenUI instance;
     public GameObject defaultObject;
-    public int pausedIndex = -1;
-    public ShopTradeNode prefab;
-    public List<Item> items;
-    public List<ShopTradeNode> shopTradeNodes;
-    public GameObject nodeContainer;
+    public Player currentPlayer;
+    public ShopBuyNode buyPrefab;
+    public ShopSellNode sellPrefab;
+    public List<ShopBuyNode> shopBuyNodes;
+    public List<ShopSellNode> shopSellNodes;
+    public GameObject buyNodeContainer;
+    public GameObject sellNodeContainer;
+    public ScrollRect buyRect;
+    public ScrollRect sellRect;
+    public ShopTradeNode currentNode;
+    public ResourceCounterUI crystalCounter;
+    public NPC currentNPC;
+    public ShopScreenMode buysellMode;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         gameObject.SetActive(false);
+        shopBuyNodes = new List<ShopBuyNode>();
 
-        SetShopTradeNodes();
 
-        defaultObject = shopTradeNodes[0].gameObject;
+        buysellMode = ShopScreenMode.Buy;
+    }
+
+    private void Update()
+    {
+        if(currentNode != null)
+        {
+            switch (buysellMode)
+            {
+                case ShopScreenMode.Buy:
+                    buyRect.ScrollRepositionY(currentNode.GetComponent<RectTransform>());
+
+                    break;
+
+                case ShopScreenMode.Sell:
+                    sellRect.ScrollRepositionY(currentNode.GetComponent<RectTransform>());
+
+                    break;
+            }
+        }
+
 
 
     }
 
-    public void SetShopTradeNodes()
+    public void LoadInventories()
     {
-        shopTradeNodes = new List<ShopTradeNode>();
-
-        foreach(Item item in items)
+        foreach (ShopBuyNode node in shopBuyNodes)
         {
-            ShopTradeNode temp = Instantiate(prefab, nodeContainer.transform);
-            temp.SetTradeNode(item, Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, 5);
-            shopTradeNodes.Add(temp);
+            Destroy(node.gameObject);
+        }
+
+        shopBuyNodes.Clear();
+
+        if (currentNPC != null)
+        {
+            foreach (Item item in currentNPC.npcWares)
+            {
+                ShopBuyNode temp = Instantiate(buyPrefab, buyNodeContainer.transform);
+                temp.SetTradeNode(item, Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, item.GetValue());
+                shopBuyNodes.Add(temp);
+            }
+        }
+
+        foreach (ShopSellNode node in shopSellNodes)
+        {
+            Destroy(node.gameObject);
+        }
+
+        shopSellNodes.Clear();
+
+        if (currentPlayer != null)
+        {
+            foreach(InventorySlot slot in currentPlayer.Inventory.slots)
+            {
+                if(!slot.IsEmpty() && slot.item.GetValue() > 0)
+                {
+                    ShopSellNode temp = Instantiate(sellPrefab, sellNodeContainer.transform);
+                    temp.SetSellNode(slot.item, Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, slot.item.GetSellValue());
+                    shopSellNodes.Add(temp);
+                }
+            }
         }
 
     }
 
-    public void Open(int playerIndex)
+    public void SetBuyMode()
     {
+        buysellMode = ShopScreenMode.Buy;
+        sellRect.gameObject.SetActive(false);
+        buyRect.gameObject.SetActive(true);
 
-        pausedIndex = playerIndex;
-        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+        defaultObject = shopBuyNodes[0].gameObject;
+        currentNode = shopBuyNodes[0];
+        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(defaultObject);
+
+    }
+
+    public void SetSellMode()
+    {
+        buysellMode = ShopScreenMode.Sell;
+
+        sellRect.gameObject.SetActive(true);
+        buyRect.gameObject.SetActive(false);
+
+        defaultObject = shopSellNodes[0].gameObject;
+        currentNode = shopSellNodes[0];
+        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(defaultObject);
+    }
+
+    public void SetCurrentNode(ShopTradeNode node)
+    {
+        currentNode = node;
+    }
+
+    public void Open(Player player, NPC shopkeeper)
+    {
+        currentNPC = shopkeeper;
+        currentPlayer = player;
+
+        LoadInventories();
+        SetBuyMode();
+
+        int counter = 0;
+        foreach(InventorySlot slot in player.Inventory.slots)
+        {
+            if(slot.item is Element)
+            {
+                counter += slot.amount;
+            }
+        }
+        crystalCounter.SetCounter(counter);
         defaultObject.GetComponent<Button>().OnSelect(null);
         gameObject.SetActive(true);
-        CrewManager.instance.players[playerIndex].Input.inputState = PlayerInputState.Shop;
+        currentPlayer.Input.inputState = PlayerInputState.Shop;
         defaultObject.GetComponent<Button>().OnSelect(null);
 
 
@@ -54,31 +152,41 @@ public class ShopScreenUI : MonoBehaviour
 
     public void Close()
     {
-        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
+        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(null);
         gameObject.SetActive(false);
-        CrewManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
-        pausedIndex = -1;
-
+        currentPlayer.Input.inputState = PlayerInputState.Game;
+        currentPlayer = null;
+        crystalCounter.SetCounter(0);
+        currentNPC = null;
     }
 
     public void SelectNode(ShopTradeNode node)
     {
-        Debug.Log(node.offerNode.text.text + " was selected");
-        InventorySlot slot = CrewManager.instance.players[pausedIndex].Inventory.GetSlotWithItemType(node.costNode.item);
-        if (slot != null)
+        switch(buysellMode)
         {
-            if(slot.amount >= node.costNode.cost)
-            {
-                for(int i = 0; i < node.costNode.cost; i++)
-                {
-                    slot.GetOneItem();
+            case ShopScreenMode.Buy:
+                ShopBuyNode buyNode = (ShopBuyNode)node;
+                if(currentPlayer.GetCurrency(buyNode.GetCurrency(), buyNode.GetCost())) {
+                    currentPlayer.Inventory.AddItemToInventory(ItemDatabase.NewItem(buyNode.GetOffer()));
+                    crystalCounter.SetCounter(currentPlayer.GetCurrencyCount(buyNode.GetCurrency()));
                 }
-                Debug.Log("Adding " + node.offerNode.item.mName + " To inventory");
-                Debug.Log("Adding " + node.offerNode.text.text + " To inventory");
 
-                CrewManager.instance.players[pausedIndex].Inventory.AddItemToInventory(ItemDatabase.NewItem(node.offerNode.item));
+                break;
 
-            }
+            case ShopScreenMode.Sell:
+                ShopSellNode sellNode = (ShopSellNode)node;
+                if (currentPlayer.GetCurrency(sellNode.GetItemForSale(), 1))
+                {
+                    for(int i = sellNode.GetValue(); i > 0; i--)
+                    {
+                        currentPlayer.Inventory.AddItemToInventory(ItemDatabase.NewItem(sellNode.GetCurrency()));
+                    }
+                    crystalCounter.SetCounter(currentPlayer.GetCurrencyCount(sellNode.GetCurrency()));
+                }
+
+                break;
         }
+
+
     }
 }

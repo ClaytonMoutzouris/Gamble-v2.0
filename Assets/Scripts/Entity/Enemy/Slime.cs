@@ -37,7 +37,7 @@ public class Slime : Enemy {
 
                     if (EnemyBehaviour.TargetInRange(this, Target, closeRange))
                     {
-                        if (!mAttackManager.meleeAttacks[0].onCooldown)
+                        if (!mAttackManager.meleeAttacks[0].OnCooldown())
                         {
                             Renderer.SetAnimState("Slime_Attack");
                             EnemyBehaviour.MeleeAttack(this, 0);

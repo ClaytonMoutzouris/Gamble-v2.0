@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
   m_Name: Snowzooka
   m_EditorClassIdentifier: 
-  mName: Snowzooka
-  mRarity: 2
-  mValue: 500
+  itemName: Snowzooka
+  rarity: 0
+  baseValue: 15
   sprite: {fileID: 798360227008517706, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
+  identified: 1
   mSlot: 5
   baseBonuses: []
-  abilities: 
+  baseEffects: 
   isEquipped: 0
   damage: 20
   attack: {fileID: 11400000, guid: e3263a01f5cd0334dac91e97f069795a, type: 2}
