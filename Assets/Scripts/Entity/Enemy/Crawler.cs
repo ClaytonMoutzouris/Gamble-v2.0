@@ -11,7 +11,7 @@ public class Crawler : Enemy, IContactTrigger
         mEnemyState = EnemyState.Moving;
         
         direction = Direction.Left;
-        spikeProtection = true;
+        abilityFlags.SetFlag(AbilityFlag.SpikeProtection, true);
     }
 
     public void Contact(Entity entity)

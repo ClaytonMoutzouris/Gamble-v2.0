@@ -38,9 +38,9 @@ public class Gadget : Equipment
         }
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
-        string tooltip = base.getTooltip();
+        string tooltip = base.GetTooltip();
 
         return tooltip;
     }

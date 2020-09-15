@@ -17,7 +17,7 @@ public class CatBoss : BossEnemy
     public CatBoss(BossPrototype proto) :base(proto)
     {
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
     }
     
     public override void EntityUpdate()

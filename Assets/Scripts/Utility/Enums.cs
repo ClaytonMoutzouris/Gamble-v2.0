@@ -10,9 +10,10 @@ public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss,
 public enum MinibossType { BogBeast }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Artifact, Count }
-public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned };
+public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned, KnockedBack };
 public enum EquipmentSlotType { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand, Gadget };
-public enum AbilityType { ExtraJump, Hover, Lifesteal, DamageReflect, PoisonAttack, StunAttack, SuperSpeed, SpikeProtection, CrushProtection, Flamewalker, Aura, Heavy, ExtraDamage, Knockback, CompanionDrone, ChestFinder, MaxHPFromFood, ReusableMedkits, PartyHeal, Count };
+public enum CompanionType { Drone, Eyebat };
+public enum TalentAbilityType { }
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
 public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
 public enum MapType {  Hub, World, BossMap };

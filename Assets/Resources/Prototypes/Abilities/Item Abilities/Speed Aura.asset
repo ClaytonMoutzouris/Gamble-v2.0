@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da262c3802f49a4bb969c71945fd3e2, type: 3}
+  m_Name: Speed Aura
+  m_EditorClassIdentifier: 
+  abilityName: Speed Aura
+  description: 
+  auraRadius: 160
+  auraAbility: {fileID: 11400000, guid: 8cb0ab2b35819044495b0a5a620c7c6f, type: 2}
+  visuals: {fileID: 5039633751995712514, guid: 052e4f7845b721e4d9163598714ea8d4, type: 3}

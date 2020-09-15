@@ -70,7 +70,7 @@ public class InventorySlotUI : MonoBehaviour, ISelectHandler, IDeselectHandler
         //Show tooltip in playerpanel
         if (slot.item != null)
         {
-            playerPanel.tooltip.SetTooptip(slot.item.getTooltip());
+            playerPanel.tooltip.SetTooptip(slot.item.GetTooltip());
         }
 
         playerPanel.inventoryUI.currentSlot = this;

@@ -9,7 +9,7 @@ public class Talent : ScriptableObject
     public string name;
     public string description;
     public string level;
-    public List<AbilityType> effectTypes;
+    public List<Ability> abilities;
     public List<StatBonus> statBonuses;
     public List<Item> bonusItems;
     public Sprite icon;
@@ -29,13 +29,12 @@ public class Talent : ScriptableObject
     #region TriggerEffects
     public virtual void OnLearned(Player player)
     {
-        Debug.Log("ON LEARNED " + name);
         isLearned = true;
 
-        foreach (AbilityType effect in effectTypes)
+        foreach (Ability ability in abilities)
         {
-            Ability e = Ability.GetEffectFromType(effect);
-            e.OnEquipTrigger(player);
+            Ability abilityTemp = Instantiate(ability);
+            abilityTemp.OnEquipTrigger(player);
         }
 
 

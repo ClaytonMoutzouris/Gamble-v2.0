@@ -21,7 +21,7 @@ public class VoidBoss : BossEnemy
     {
 
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
 
     }
 

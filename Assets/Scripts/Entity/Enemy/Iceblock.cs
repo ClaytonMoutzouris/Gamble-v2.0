@@ -13,7 +13,7 @@ public class Iceblock : Entity, IHurtable
     {
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
         Body.mIsKinematic = false;
-        Body.mIsHeavy = false;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, false);
 
         mEntityType = EntityType.Obstacle;
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));

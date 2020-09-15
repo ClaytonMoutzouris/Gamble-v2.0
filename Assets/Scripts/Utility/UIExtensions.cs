@@ -15,7 +15,7 @@ public static class ScrollRectExtensions
         return result;
     }
 
-    public static void ScrollRepositionY(this ScrollRect instance, RectTransform obj)
+    public static void ScrollRepositionY(this ScrollRect instance, RectTransform obj, int sensitivity = 10)
     {
         Canvas.ForceUpdateCanvases();
 
@@ -23,16 +23,16 @@ public static class ScrollRectExtensions
         var scrollHeight = instance.GetComponent<RectTransform>().rect.height;
         var objHeight = obj.rect.height;
 
-        if (objPosition.y > scrollHeight / 2 - 5)
+        if (objPosition.y > scrollHeight / 2 - sensitivity/2)
         {
             instance.content.localPosition = new Vector2(instance.content.localPosition.x,
-                instance.content.localPosition.y - objHeight - 10);
+                instance.content.localPosition.y - objHeight - sensitivity);
         }
 
-        if (objPosition.y < -scrollHeight / 2 + 5)
+        if (objPosition.y < -scrollHeight / 2 + sensitivity/2)
         {
             instance.content.localPosition = new Vector2(instance.content.localPosition.x,
-            instance.content.localPosition.y + objHeight + 10);
+            instance.content.localPosition.y + objHeight + sensitivity);
         }
     }
 

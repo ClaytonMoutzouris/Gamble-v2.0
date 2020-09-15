@@ -17,7 +17,6 @@ public class Player : Entity, IHurtable
     public float mJumpSpeed;
     public float mWalkSpeed;
     public float mClimbSpeed;
-    public bool mCanHover = false;
     public int mNumJumps = 1;
     public int mJumpCount = 0;
 
@@ -41,7 +40,7 @@ public class Player : Entity, IHurtable
     public int playerLevel = 1;
     public int playerExperience = 0;
     public TalentTree talentTree;
-
+    public Companion companion;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -886,7 +885,6 @@ public class Player : Entity, IHurtable
                     movementState = MovementState.Swimming;
                     return;
                 }
-                Body.mPS.isJetting = true;
                 Body.mSpeed = Vector2.zero;
                 Body.mIgnoresGravity = true;
                 mCannotClimb = true;
@@ -1180,7 +1178,7 @@ public class Player : Entity, IHurtable
 
         if (movementState == MovementState.Jump) {
 
-            if (mCanHover)
+            if (abilityFlags.GetFlag(AbilityFlag.Hover))
             {
                 JetMode();
                 return;

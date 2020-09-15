@@ -44,7 +44,6 @@ public class GrapplingHook : Entity, IContactTrigger
     {
         owner.movementState = MovementState.Hooking;
         Vector2 pullDirection = (Position - (owner.Position)).normalized;
-        Debug.Log("PULLING OWNER IN DIRECTION " + pullDirection);
         owner.Body.mSpeed = mMovingSpeed * pullDirection;
 
     }

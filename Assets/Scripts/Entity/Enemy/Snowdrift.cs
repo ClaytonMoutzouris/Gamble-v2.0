@@ -58,7 +58,6 @@ public class Snowdrift : Enemy
                         }
 
 
-                        Debug.Log("Its Active");
                     }
 
                 }

@@ -67,7 +67,6 @@ public class TileMapRenderer : MonoBehaviour
             {
                 if (x < mapData.sizeX * mapData.roomSizeX && y < mapData.sizeY * mapData.roomSizeY)
                 {
-                    Debug.Log("We failed on " + tiles[x, y]);
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);

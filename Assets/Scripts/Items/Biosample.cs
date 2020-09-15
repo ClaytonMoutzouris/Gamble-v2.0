@@ -38,7 +38,7 @@ public class Biosample : Item
         return false;
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
         string tooltip = "";
 

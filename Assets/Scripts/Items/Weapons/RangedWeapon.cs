@@ -36,9 +36,9 @@ public class RangedWeapon : Weapon
 
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
-        string tooltip = base.getTooltip();
+        string tooltip = base.GetTooltip();
         tooltip += attack.GetToolTip();
 
         return tooltip;

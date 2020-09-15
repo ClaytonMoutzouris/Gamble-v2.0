@@ -60,6 +60,6 @@ public class EntityPrototypeEditor
     [MenuItem("Assets/Create/Entity/Drone")]
     public static void CreateDronePrototypeAsset()
     {
-        ScriptableObjectUtility.CreateAsset<DronePrototype>();
+        ScriptableObjectUtility.CreateAsset<CompanionPrototype>();
     }
 }

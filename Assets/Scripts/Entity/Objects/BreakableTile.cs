@@ -9,13 +9,13 @@ public class BreakableTile : Entity, IHurtable
 
     public BreakableTile(EntityPrototype proto) : base(proto)
     {
-        mEntityType = EntityType.Object;
 
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, Vector2.zero));
         HurtBox = new Hurtbox(this, new CustomAABB(Position, proto.bodySize, Vector2.zero));
         HurtBox.UpdatePosition();
-
-        Body.mIsKinematic = false;
+        Body.mIgnoresGravity = proto.ignoreGravity;
+        mCollidesWith = proto.CollidesWith;
+        Body.mIsKinematic = true;
 
         health = new Health(this, 15);
     }
@@ -45,7 +45,33 @@ public class BreakableTile : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        health.LoseHP(attack.GetDamage());
+        int damage = attack.GetDamage();
+
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        health.LoseHP(damage);
+        ShowFloatingText(damage.ToString(), Color.white);
+
+        if (health.currentHealth == 0)
+        {
+            Die();
+        }
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+        HurtBox.mState = ColliderState.Closed;
+    }
+
+    public override void ActuallyDie()
+    {
+
+        CollisionManager.RemoveObjectFromAreas(HurtBox);
+
+        //Do other stuff first because the base destroys the object
+        base.ActuallyDie();
+    }
 }

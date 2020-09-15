@@ -15,11 +15,11 @@ MonoBehaviour:
   name: Always Prepared
   description: Gain 2 medipacks
   level: 
-  type: 1
-  effectTypes: 
+  abilities: []
   statBonuses: []
   bonusItems:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
+  repeatable: 1
   isLearned: 0

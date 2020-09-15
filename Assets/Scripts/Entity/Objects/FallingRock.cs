@@ -18,12 +18,8 @@ public class FallingRock : Entity
 
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         Body.mIgnoresGravity = true;
-
-        /*
-        
-        */
 
 
 

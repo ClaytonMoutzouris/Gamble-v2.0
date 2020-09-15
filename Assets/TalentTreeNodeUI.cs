@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class TalentTreeNodeUI : MonoBehaviour
+public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
 {
     PlayerLevelTabUI talentTree;
     Talent talent;
@@ -13,11 +14,12 @@ public class TalentTreeNodeUI : MonoBehaviour
 
     public void Start()
     {
-        talentTree = GetComponentInParent<PlayerLevelTabUI>();
+        //talentTree = GetComponentInParent<PlayerLevelTabUI>();
     }
 
-    public void SetTalent(Talent t)
+    public void SetTalent(Talent t, PlayerLevelTabUI tree)
     {
+        talentTree = tree;
         talent = t;
         branchTitle.text = talent.name + "\n" + talent.description;
         branchIcon.sprite = talent.icon;
@@ -48,5 +50,8 @@ public class TalentTreeNodeUI : MonoBehaviour
         return talent.description;
     }
 
-
+    public void OnSelect(BaseEventData eventData)
+    {
+        talentTree.SetCurrentNode(this);
+    }
 }

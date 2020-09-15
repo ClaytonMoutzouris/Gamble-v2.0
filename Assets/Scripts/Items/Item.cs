@@ -30,16 +30,16 @@ public abstract class Item : ScriptableObject
 
     }
 
-    public virtual string getTooltip()
+    public virtual string GetTooltip()
     {
         string tooltip = "";
 
-        tooltip += "<color=" + getColorFromRarity() + ">" + itemName+"</color>";
+        tooltip += "<color=" + GetColorFromRarity() + ">" + itemName+"</color>";
 
         return tooltip;
     }
     
-    public string getColorFromRarity()
+    public string GetColorFromRarity()
     {
         string rarity = "grey";
         switch(this.rarity)
@@ -90,14 +90,12 @@ public abstract class Equipment : Item
     public List<StatBonus> baseBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
     //public List<PlayerAbility> abilities;
-    private List<AbilityType> possibleEffects = new List<AbilityType>();
-    public List<AbilityType> baseEffects;
+    public List<Ability> baseEffects;
     List<Ability> effects = new List<Ability>();
     //public Trait trait;
     public bool isEquipped;
 
     public List<Ability> Effects { get => effects; set => effects = value; }
-    public List<AbilityType> PossibleEffects { get => possibleEffects; set => possibleEffects = value; }
 
     public virtual void RandomizeStats()
     {
@@ -125,9 +123,9 @@ public abstract class Equipment : Item
             }
         }
         
-        foreach(AbilityType type in baseEffects)
+        foreach(Ability ability in baseEffects)
         {
-            Effects.Add(Ability.GetEffectFromType(type));
+            Effects.Add(AbilityDatabase.NewAbility(ability));
         }
 
 
@@ -153,7 +151,7 @@ public abstract class Equipment : Item
 
         if(rarity == Rarity.Legendary || rarity == Rarity.Rare || rarity == Rarity.Artifact)
         {
-            Effects.Add(Ability.GetEffectFromType((AbilityType)Random.Range(0, (int)AbilityType.Heavy)));
+            Effects.Add(AbilityDatabase.GetRandomAbility());
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
         }
         
@@ -198,9 +196,9 @@ public abstract class Equipment : Item
             InventoryOption.Cancel };
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
-        string tooltip = base.getTooltip();
+        string tooltip = base.GetTooltip();
 
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
         foreach (Ability effect in Effects)

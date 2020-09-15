@@ -15,9 +15,10 @@ MonoBehaviour:
   name: Flight Training
   description: Gain an extra jump
   level: 
-  type: 0
-  effectTypes: 00000000
+  abilities:
+  - {fileID: 11400000, guid: 7a3c2293b9eba6b4f900372b6a6f21e1, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
+  repeatable: 0
   isLearned: 0

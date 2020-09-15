@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemObject : Entity, ILootable {
+public class ItemObject : Entity, ILootable, IContactTrigger {
 
     public Item mItemData;
+    public bool showName = false;
 
     public ItemObject(Item iData, EntityPrototype proto) : base(proto)
     {
@@ -17,9 +18,26 @@ public class ItemObject : Entity, ILootable {
     }
     public override void Spawn(Vector2 spawnPoint)
     {
-        base.Spawn(spawnPoint);
-        Debug.Log("Renderer: " + Renderer == null);
-        Debug.Log("mItemData: " + mItemData == null);
+        GameObject gameObject = GameObject.Instantiate(Resources.Load("Prefabs/ItemObjectRenderer")) as GameObject;
+        Renderer = gameObject.GetComponent<ItemObjectRenderer>();
+        Renderer.SetEntity(this);
+        ((ItemObjectRenderer)Renderer).SetItem(mItemData);
+
+        if (prototype.animationController != null)
+        {
+            Renderer.Animator.runtimeAnimatorController = prototype.animationController;
+        }
+
+        Position = spawnPoint + Body.mOffset;
+        Renderer.Sprite.sortingLayerName = prototype.sortingLayer.ToString();
+        Renderer.Draw();
+        if (prototype.particleEffects != null)
+        {
+            Renderer.AddVisualEffect(prototype.particleEffects, prototype.bodySize * Vector2.up);
+        }
+
+        Body.UpdatePosition();
+        isSpawned = true;
 
         Renderer.SetSprite(mItemData.sprite);
         //temp.mOldSpeed.y = Constants.cJumpSpeed;
@@ -32,6 +50,16 @@ public class ItemObject : Entity, ILootable {
 
         base.EntityUpdate();
 
+        if(showName)
+        {
+            ((ItemObjectRenderer)Renderer).ShowText();
+        } else
+        {
+            ((ItemObjectRenderer)Renderer).HideText();
+
+        }
+
+        showName = false;
         if(Body.mPS.pushesBottom)
         {
             Body.mSpeed.x = 0;
@@ -44,5 +72,14 @@ public class ItemObject : Entity, ILootable {
     {
 
         return actor.PickUp(this);
+    }
+
+    public void Contact(Entity entity)
+    {
+        if(!(entity is Player))
+        {
+            return;
+        }
+        showName = true;
     }
 }

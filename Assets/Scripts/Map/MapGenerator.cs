@@ -627,6 +627,10 @@ public static class MapGenerator
                             map.AddEntity(new EnemyData(x, y, EnemyType.Nipper));
                         }
                         break;
+                    case TileType.BreakableTile:
+                        map.AddEntity(new ObjectData(x, y, ObjectType.BreakableTile));
+                        map.SetTile(x, y, TileType.Empty);
+                        break;
                 }
 
             }

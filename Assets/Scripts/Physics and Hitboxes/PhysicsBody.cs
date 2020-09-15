@@ -53,7 +53,6 @@ public class PhysicsBody : CustomCollider2D
     public bool mIgnoresOneWay = false;
     public bool mOnOneWayPlatform = false;
     public bool mIsKinematic = false;
-    public bool mIsHeavy = false;
     public bool mIgnoresGravity = false;
 
 
@@ -399,7 +398,7 @@ public class PhysicsBody : CustomCollider2D
 
 
                     //flag this to be dealt with after we've checked other tiles we're colliding with
-                    if(!(mEntity is Projectile) && !mEntity.Body.mIsHeavy)
+                    if(!(mEntity is Projectile) && !mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy))
                     {
                         mPS.isBounce = true;
                         mSpeed.y = Constants.cBounceSpeed;
@@ -708,7 +707,7 @@ public class PhysicsBody : CustomCollider2D
             return;
         }
         
-        if (mMountParent == null && !mIsHeavy)
+        if (mMountParent == null && !mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy))
         {
             mMountParent = platform;
             if (platform.mUpdateId > mEntity.mUpdateId)
@@ -760,11 +759,15 @@ public class PhysicsBody : CustomCollider2D
             {
                 if (other.mAABB.Center.x > mAABB.Center.x)
                 {
+                    TryAutoMount(other.mEntity);
+
                     mPS.pushesRightObject = true;
                     //mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
                 }
                 else
                 {
+                    TryAutoMount(other.mEntity);
+
                     mPS.pushesLeftObject = true;
                     //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
                 }
@@ -845,7 +848,7 @@ public class PhysicsBody : CustomCollider2D
                     mOffset.x += offsetX;
                     offsetSum.x += offsetX;
 
-                    if (other.mEntity.Body.mIsHeavy && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy) && mPS.pushesLeftTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         mEntity.Crush();
 
                     mPS.pushesRightObject = true;
@@ -866,7 +869,7 @@ public class PhysicsBody : CustomCollider2D
 
                     mOffset.x += offsetX;
                     offsetSum.x += offsetX;
-                    if (other.mEntity.Body.mIsHeavy && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy) && mPS.pushesRightTile && Mathf.Abs(overlap.y) > Constants.cCrushCorrectThreshold)
                         mEntity.Crush();
 
                     mPS.pushesLeftObject = true;
@@ -896,7 +899,7 @@ public class PhysicsBody : CustomCollider2D
                 if (overlap.y < 0.0f)
                 {
                     //We should set an error for overlap, here is the basic implementation
-                    if (other.mEntity.Body.mIsHeavy && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy) && mPS.pushesBottomTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                     {
 
                         mEntity.Crush();
@@ -906,7 +909,7 @@ public class PhysicsBody : CustomCollider2D
                 }
                 else
                 {
-                    if (other.mEntity.Body.mIsHeavy && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
+                    if (other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy) && mPS.pushesTopTile && Mathf.Abs(overlap.x) > Constants.cCrushCorrectThreshold)
                         mEntity.Crush();
 
                     TryAutoMount(other.mEntity);

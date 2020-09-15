@@ -29,7 +29,7 @@ public static class EnemyBehaviour
 
             foreach (Entity entity in enemy.Sight.mEntitiesInSight)
             {
-                if (entity is IHurtable && entity.hostility != enemy.hostility)
+                if (entity is IHurtable && entity.hostility != enemy.hostility && entity.mEntityType != EntityType.Obstacle && entity.mEntityType != EntityType.Object)
                 {
                     if (entity is Player player)
                     {

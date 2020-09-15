@@ -22,12 +22,12 @@ MonoBehaviour:
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: d302a90472ce9be4db2299f7580d9829, type: 2}
-  effects: []
+  particleEffects: {fileID: 0}
   enemyType: 7
   movementSpeed: 20
   jumpHeight: 160
   sightRange: 320
-  health: 150
+  health: 100
   rangedAttacks: []
   meleeAttacks:
   - {fileID: 11400000, guid: 873f8750c10b2a04b97bb03ecdea1fbe, type: 2}

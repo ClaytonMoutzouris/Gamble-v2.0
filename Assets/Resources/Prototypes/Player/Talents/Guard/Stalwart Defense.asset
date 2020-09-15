@@ -15,7 +15,8 @@ MonoBehaviour:
   name: Stalwart Defense
   description: Enemies cannot push you back
   level: 
-  effectTypes: 0b000000
+  abilities:
+  - {fileID: 11400000, guid: eddd72388356307409d3d3f645582268, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}

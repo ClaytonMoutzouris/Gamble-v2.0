@@ -40,7 +40,7 @@ public class AnalysisCom : Entity, IInteractable
             {
                 if (sample.Identify())
                 {
-                    ShowFloatingText("Analyzed " + sample.getTooltip(), Color.green);
+                    ShowFloatingText("Analyzed " + sample.GetTooltip(), Color.green);
                     return true;
                 }
             }

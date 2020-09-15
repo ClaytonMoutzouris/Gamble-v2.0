@@ -15,7 +15,8 @@ MonoBehaviour:
   name: Drone Companion
   description: Summons a drone to fight for you
   level: 
-  effectTypes: 0e000000
+  abilities:
+  - {fileID: 11400000, guid: 9986cee160a299345a82976eb2daae38, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}

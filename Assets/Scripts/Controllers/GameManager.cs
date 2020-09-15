@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         CollisionManager.InitializeCollisionManager();
         ItemDatabase.InitializeDatabase();
+        AbilityDatabase.InitializeDatabase();
         EnemyDatabase.LoadDatabase();
         MapDatabase.InitializeDatabase();
         RoomDatabase.InitializeDatabase();
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
         //Flag each object for removal before we switch to the new map
         foreach(Entity entity in mEntities)
         {
-            if(!(entity is Player) && !(entity is Drone))
+            if(!(entity is Player) && !(entity is Companion))
             entity.mToRemove = true;
 
         }

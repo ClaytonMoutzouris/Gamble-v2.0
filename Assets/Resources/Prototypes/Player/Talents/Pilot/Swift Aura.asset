@@ -15,9 +15,10 @@ MonoBehaviour:
   name: Swift Aura
   description: Aura that speeds up self and allies
   level: 
-  type: 0
-  effectTypes: 0a000000
+  abilities:
+  - {fileID: 11400000, guid: 02aca61afc389c84f92810d54e150d42, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
+  repeatable: 0
   isLearned: 0

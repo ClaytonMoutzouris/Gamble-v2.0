@@ -23,6 +23,7 @@ public class Nipper : Enemy
 
         EnemyBehaviour.CheckForTargets(this);
 
+
         if(Body.mPS.inWater)
         {
             Body.mIgnoresGravity = true;
@@ -109,7 +110,7 @@ public class Nipper : Enemy
 
             case EnemyState.Jumping:
 
-                if(Body.mSpeed.y < 0 && Body.mPS.inWater)
+                if(Body.mSpeed.y <= 0 && Body.mPS.inWater)
                 {
                     mEnemyState = EnemyState.Moving;
                     break;
@@ -120,7 +121,8 @@ public class Nipper : Enemy
                     mEnemyState = EnemyState.Moving;
                 }
 
-                if(Target != null)
+
+                if (Target != null)
                 {
                     Renderer.SetAnimState("Attack");
                     if (!mAttackManager.meleeAttacks[0].OnCooldown())

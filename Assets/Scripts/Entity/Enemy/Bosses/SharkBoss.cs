@@ -21,7 +21,7 @@ public class SharkBoss : BossEnemy
     {
 
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         Body.mOffset = Vector2.zero;
         baseSpeed = proto.movementSpeed;
         waterSpeed = baseSpeed * 2;

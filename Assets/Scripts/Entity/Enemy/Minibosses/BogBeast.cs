@@ -25,9 +25,6 @@ public class BogBeast : Miniboss
 
         EnemyBehaviour.CheckForTargets(this);
 
-        Debug.Log("BogBeast " + mEnemyState);
-        Debug.Log("BogBeast Target " + Target);
-
 
         switch (mEnemyState)
         {

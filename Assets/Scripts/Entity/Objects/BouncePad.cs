@@ -18,7 +18,7 @@ public class BouncePad : Entity, IContactTrigger
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
 
     }
 

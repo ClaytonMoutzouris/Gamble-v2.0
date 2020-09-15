@@ -92,11 +92,11 @@ public class NPC : Entity, IHurtable, IInteractable
         sight.UpdatePosition();
 
         npcWares = new List<Item>();
-        foreach(Item item in prototype.wares)
+        for (int i = 0; i < 10; i++)
         {
-            npcWares.Add(ItemDatabase.NewItem(item));
-        }
+            npcWares.Add(ItemDatabase.GetRandomItem());
 
+        }
 
         //Stats
         mStats = new Stats(this);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum EntityDirection { Left = -1, Right = 1 };
 public enum Alignment { Player, Neutral, Enemy };
-
+public enum AbilityFlag { CrushProtection, SpikeProtection, Hover, Heavy }
 [System.Serializable]
 public class Entity {
 
@@ -30,13 +30,37 @@ public class Entity {
     #endregion
     protected bool isSpawned = false;
     public bool ignoreTilemap = false;
-
-    public bool spikeProtection = false;
-    public bool crushProtection = false;
+    public AbilityFlags abilityFlags;
     public List<Ability> abilities;
 
     public Vector2 gravityVector = Vector2.down;
 
+    public struct AbilityFlags
+    {
+
+        Dictionary<AbilityFlag, bool> abilityFlags;
+
+
+        public void Initialize()
+        {
+            abilityFlags = new Dictionary<AbilityFlag, bool>();
+
+            foreach(AbilityFlag ability in System.Enum.GetValues(typeof(AbilityFlag)))
+            {
+                abilityFlags.Add(ability, false);
+            }
+        }
+
+        public bool GetFlag(AbilityFlag ability)
+        {
+            return abilityFlags[ability];
+        }
+
+        public void SetFlag(AbilityFlag ability, bool value)
+        {
+            abilityFlags[ability] = value;
+        }
+    }
 
 
     #region Accesors
@@ -131,6 +155,8 @@ public class Entity {
         //mRenderer = GameObject.Instantiate<EntityRenderer>();
         mCollidesWith = proto.CollidesWith;
         statusEffects = new List<StatusEffect>();
+        abilityFlags = new AbilityFlags();
+        abilityFlags.Initialize();
         //if (colorPallete != null && colorPallete.Count > 0)
         //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
 
@@ -252,12 +278,12 @@ public class Entity {
     public virtual void Crush()
     {
         //Kinematic things cant be spiked or crushed
-        if (Body.mIsKinematic || Body.mIsHeavy)
+        if (Body.mIsKinematic || abilityFlags.GetFlag(AbilityFlag.Heavy))
             return;
 
         if (this is IHurtable hurtable)
         {
-            if(crushProtection)
+            if(abilityFlags.GetFlag(AbilityFlag.CrushProtection))
             {
                 hurtable.GetHurt(Attack.ProtectedCrushAttack());
             }
@@ -271,12 +297,12 @@ public class Entity {
     public virtual void Spiked()
     {
         //Kinematic things cant be spiked or crushed
-        if (Body.mIsKinematic || Body.mIsHeavy)
+        if (Body.mIsKinematic || abilityFlags.GetFlag(AbilityFlag.Heavy))
             return;
 
         if (this is IHurtable hurtable)
         {
-            if(spikeProtection)
+            if (abilityFlags.GetFlag(AbilityFlag.SpikeProtection))
             {
                 hurtable.GetHurt(Attack.ProtectedCrushAttack());
             }

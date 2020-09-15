@@ -13,9 +13,9 @@ public class Food : ConsumableItem
         return base.Use(player);
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
-        string tooltip = base.getTooltip();
+        string tooltip = base.GetTooltip();
         tooltip += "\nRestores " + value.ToString() + " health when eaten.";
 
         return tooltip;

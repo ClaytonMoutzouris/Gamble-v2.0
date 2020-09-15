@@ -15,7 +15,7 @@ public class HedgehogBoss : BossEnemy
     public HedgehogBoss(BossPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         AttackCooldown = 0f;
         AttackTimer = 1f;
         //RangedAttack ranged = new RangedAttack(this, 0.05f, 10, 0.1f, VolcanicBombPrefab);

@@ -17,8 +17,20 @@ TextureImporter:
   - first:
       213: 21300008
     second: Rogue_walk_4
+  - first:
+      213: -9057139305348445276
+    second: Rogue_walk_0
+  - first:
+      213: 3895788364881918720
+    second: Rogue_walk_1
+  - first:
+      213: 3718702503507013360
+    second: Rogue_walk_2
+  - first:
+      213: -8951404434798578257
+    second: Rogue_walk_3
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -38,6 +50,7 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -72,6 +85,8 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -115,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8739a260df4402b4ba901ef94e59c666
-      internalID: 21300000
+      spriteID: 4ab4a7fd9c39e4280800000000000000
+      internalID: -9057139305348445276
       vertices: []
       indices: 
       edges: []
@@ -136,8 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73e15dc46cbd12c45a2a38783f241786
-      internalID: 21300002
+      spriteID: 00bf2e880ee901630800000000000000
+      internalID: 3895788364881918720
       vertices: []
       indices: 
       edges: []
@@ -157,8 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2eca5e4e8400d6e4d844888e57c4f9cf
-      internalID: 21300004
+      spriteID: 0fe24e2793c7b9330800000000000000
+      internalID: 3718702503507013360
       vertices: []
       indices: 
       edges: []
@@ -178,29 +193,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed509d255e3b03b47ada61379dca0645
-      internalID: 21300006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rogue_walk_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 233acb28a468961449e7be4e7d22e2d2
-      internalID: 21300008
+      spriteID: fa579f6d71936c380800000000000000
+      internalID: -8951404434798578257
       vertices: []
       indices: 
       edges: []

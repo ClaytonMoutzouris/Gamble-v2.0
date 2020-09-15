@@ -9,7 +9,7 @@ public class Treedude : Enemy
 
         Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
 
 
     }
@@ -17,7 +17,7 @@ public class Treedude : Enemy
     public override void EntityUpdate()
     {
 
-            EnemyBehaviour.CheckForTargets(this);
+        EnemyBehaviour.CheckForTargets(this);
 
         switch (mEnemyState)
         {

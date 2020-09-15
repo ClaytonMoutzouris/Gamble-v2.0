@@ -12,6 +12,16 @@ public class PlayerLevelTabUI : PlayerPanelTab
     public GameObject talentContainer;
     public TalentTree tree;
     int learned = 0;
+    public TalentTreeNodeUI currentNode;
+    public ScrollRect talentRect;
+
+    private void Update()
+    {
+        if (currentNode != null)
+        {
+            talentRect.ScrollRepositionY(currentNode.GetComponent<RectTransform>(), 25);
+        }
+    }
 
     public void SetTalentTree(Player p)
     {
@@ -51,7 +61,7 @@ public class PlayerLevelTabUI : PlayerPanelTab
 
             temp.GetComponent<Button>().navigation = customNav;
 
-            temp.SetTalent(talent);
+            temp.SetTalent(talent, this);
 
             talentNodes.Add(temp);
             if(talent.isLearned)
@@ -78,5 +88,11 @@ public class PlayerLevelTabUI : PlayerPanelTab
             talentNodes[index].OnLearned();
             player.talentTree.skillPoints--;
         }
+    }
+
+    public void SetCurrentNode(TalentTreeNodeUI node)
+    {
+        currentNode = node;
+        //Debug.Log("Current node is " + node.branchTitle.text);
     }
 }

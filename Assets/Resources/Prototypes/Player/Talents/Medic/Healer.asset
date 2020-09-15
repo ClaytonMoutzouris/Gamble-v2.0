@@ -15,11 +15,10 @@ MonoBehaviour:
   name: Healer
   description: Chance to not consume medkits
   level: 
-  type: 1
-  effectTypes: 11000000
+  abilities:
+  - {fileID: 11400000, guid: 7b89cf39960ebdd4db3ab7262a61dc77, type: 2}
   statBonuses: []
-  bonusItems:
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
+  repeatable: 0
   isLearned: 0

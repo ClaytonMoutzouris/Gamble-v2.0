@@ -15,9 +15,10 @@ MonoBehaviour:
   name: Party Heal
   description: Healing also heals allies
   level: 3
-  type: 1
-  effectTypes: 12000000
+  abilities:
+  - {fileID: 11400000, guid: 99d0ff6860c3261499d42cc0950cddf9, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 0}
+  repeatable: 0
   isLearned: 0

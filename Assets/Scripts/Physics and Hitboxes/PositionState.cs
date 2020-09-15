@@ -47,7 +47,6 @@ public struct PositionState
     public bool isClimbing;
     public bool isBounce;
     public bool onDoor;
-    public bool isJetting;
     public bool inWater;
     public bool inUpdraft;
 

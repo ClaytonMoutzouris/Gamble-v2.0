@@ -258,7 +258,6 @@ public class RangedAttack : Attack
 
         for (int i = 0; i < numberOfProjectiles; i++)
         {
-            Debug.Log("Activate " + projProto);
 
             Vector2 tempDir = direction;
             if(numberOfProjectiles > 1)

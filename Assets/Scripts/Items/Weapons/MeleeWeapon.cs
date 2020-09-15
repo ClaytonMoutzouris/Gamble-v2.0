@@ -24,9 +24,9 @@ public class MeleeWeapon : Weapon
         player.AttackManager.meleeAttacks[0] = player.defaultMelee;
     }
 
-    public override string getTooltip()
+    public override string GetTooltip()
     {
-        string tooltip = base.getTooltip();
+        string tooltip = base.GetTooltip();
         tooltip += attack.GetToolTip();
 
         return tooltip;

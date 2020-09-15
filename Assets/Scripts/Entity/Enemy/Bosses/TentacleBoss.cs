@@ -19,7 +19,7 @@ public class TentacleBoss : BossEnemy
     public TentacleBoss(BossPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
-        Body.mIsHeavy = true;
+        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         Body.mIgnoresGravity = true;
 
     }

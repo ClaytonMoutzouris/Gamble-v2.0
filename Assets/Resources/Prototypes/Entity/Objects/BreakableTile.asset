@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6689046b771725147a36325d1fb9b798, type: 3}
   m_Name: BreakableTile
   m_EditorClassIdentifier: 
-  entityType: 4
+  entityType: 2
   hostility: 1
   mName: BreakableTile
   bodySize: {x: 16, y: 16}
   CollidesWith: 0000000001000000060000000700000008000000
-  ignoreTilemap: 1
+  ignoreTilemap: 0
   ignoreGravity: 1
   sprite: {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
   sortingLayer: 1
