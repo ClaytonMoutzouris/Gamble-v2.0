@@ -12,7 +12,7 @@ public class PlayerSaveData
     public float currentHealth;
     public float baseHP;
     //public List<Item> items;
-    public List<string> items = new List<string>();
+    public List<ItemSaveData> items = new List<ItemSaveData>();
     //public PlayerClass playerClass;
     public PlayerClassType classType;
     public int playerLevel;
@@ -31,14 +31,15 @@ public class PlayerSaveData
         playerLevel = player.playerLevel;
         playerExperience = player.playerExperience;
 
-        items = new List<string>();
+        items = new List<ItemSaveData>();
 
         foreach(InventorySlot slot in player.Inventory.slots)
         {
             if(slot.item != null)
             {
                 for(int i = 0; i < slot.amount; i++) {
-                    items.Add(slot.item.itemName);
+                    ItemSaveData data = slot.item.GetSaveData();
+                    items.Add(data);
                 }
             }
         }
@@ -59,14 +60,16 @@ public class PlayerSaveData
 
         if(items != null)
         {
-            foreach (string itemName in items)
+            foreach (ItemSaveData itemData in items)
             {
-                player.Inventory.AddItemToInventory(ItemDatabase.GetItem(itemName));
+                Item item = ItemDatabase.GetItem(itemData.itemName);
+                item.LoadItemData(itemData);
+                player.Inventory.AddItemToInventory(item);
             }
         }
         else
         {
-            items = new List<string>();
+            items = new List<ItemSaveData>();
         }
 
         player.playerLevel = playerLevel;

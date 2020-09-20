@@ -29,14 +29,20 @@ public class BossEnemy : Enemy
         {
             foreach (Entity entity in Sight.mEntitiesInSight)
             {
-                if (entity is Player)
+                if (entity.hostility != Hostility)
                 {
-                    if(!((Player)entity).IsDead)
+                    if(entity is Player player)
                     {
-                        this.Target = (Player)entity;
-                        TriggerBoss();
-                        break;
+                        if(player.IsDead)
+                        {
+                            continue;
+                        }
                     }
+
+                    this.Target = entity;
+                    TriggerBoss();
+                    break;
+                    
                 }
             }
         }

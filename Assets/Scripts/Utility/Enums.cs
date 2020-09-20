@@ -10,7 +10,7 @@ public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss,
 public enum MinibossType { BogBeast }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Artifact, Count }
-public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned, KnockedBack };
+public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned, KnockedBack, Bleeding };
 public enum EquipmentSlotType { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand, Gadget };
 public enum CompanionType { Drone, Eyebat };
 public enum TalentAbilityType { }

@@ -38,6 +38,7 @@ public class PhoenixEgg : Enemy
     {
         hatched = true;
         PhoenixBoss boss = new PhoenixBoss(Resources.Load("Prototypes/Entity/Bosses/PhoenixBoss") as BossPrototype);
+        boss.Hostility = Hostility;
         boss.Spawn(Position);
         Die();
     }

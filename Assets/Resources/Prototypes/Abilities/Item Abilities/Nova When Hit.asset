@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc46cf47a7e0b004e9743b87e041c91a, type: 3}
+  m_Name: Nova When Hit
+  m_EditorClassIdentifier: 
+  abilityName: Nova When Hit
+  description: 
+  procChance: 50
+  attackPrototype: {fileID: 11400000, guid: dd399224faa7c524692f3ed518e27b5c, type: 2}

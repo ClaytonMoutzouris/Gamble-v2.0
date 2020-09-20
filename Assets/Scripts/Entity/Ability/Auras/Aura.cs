@@ -24,7 +24,7 @@ public class Aura : Ability
         if (entity is Player player)
         {
             auraAbility.OnUnequipTrigger(player);
-            player.Renderer.RemoveVisualEffect("Aura(Clone)");
+            player.Renderer.RemoveVisualEffect(abilityName+"(Clone)");
         }
     }
 

@@ -87,4 +87,10 @@ public class AbilityEditor
     {
         ScriptableObjectUtility.CreateAsset<SummonCompanion>();
     }
+
+        [MenuItem("Assets/Create/Ability/AttackWhenHit")]
+    public static void CreateBaseAttackWhenHitAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<AttackWhenHit>();
+    }
 }

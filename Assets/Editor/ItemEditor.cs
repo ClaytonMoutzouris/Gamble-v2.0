@@ -42,6 +42,19 @@ public class ItemEditor
     {
         ScriptableObjectUtility.CreateAsset<Food>();
     }
+
+    [MenuItem("Assets/Create/Items/Consumable/SummonItem/SummonEnemyItem")]
+    public static void CreateSummonEnemyItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<SummonEnemyItem>();
+    }
+
+    [MenuItem("Assets/Create/Items/Consumable/SummonItem/SummonBossItem")]
+    public static void CreateSummonBossItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<SummonBossItem>();
+    }
+
     [MenuItem("Assets/Create/Items/QuestItem")]
     public static void CreateBaseQuestItemAsset()
     {

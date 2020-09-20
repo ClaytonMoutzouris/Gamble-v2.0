@@ -9,6 +9,7 @@ public class SpawnAttackOnWalk : Ability
     public float tickFrequency = 32;
     Vector2 previousPosition;
     float distanceTravelled = 0;
+    public Vector2 offset = new Vector2(0, 0);
 
     public override void OnWalkTrigger(Player player)
     {
@@ -20,7 +21,7 @@ public class SpawnAttackOnWalk : Ability
         if (distanceTravelled > tickFrequency)
         {
             Projectile shot = new Projectile(attackPrototype.projectilePrototype, new RangedAttack(player, attackPrototype), Vector2.up);
-            shot.Spawn(player.Position);
+            shot.Spawn(player.Position + offset);
             distanceTravelled = 0;
         }
         /*

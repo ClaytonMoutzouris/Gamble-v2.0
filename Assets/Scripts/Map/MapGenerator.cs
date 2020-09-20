@@ -465,6 +465,13 @@ public static class MapGenerator
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
             map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Biosample"));
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Slime Egg"));
+            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "HedghehogBoss Egg"));
+            map.AddEntity(new ItemObjectData(9, 1, ObjectType.Item, "CatBoss Egg"));
+            map.AddEntity(new ItemObjectData(10, 1, ObjectType.Item, "PhoenixBoss Egg"));
+            map.AddEntity(new ItemObjectData(11, 1, ObjectType.Item, "SharkBoss Egg"));
+            map.AddEntity(new ItemObjectData(12, 1, ObjectType.Item, "TentacleBoss Egg"));
+            map.AddEntity(new ItemObjectData(13, 1, ObjectType.Item, "VoidBoss Egg"));
 
 
         }

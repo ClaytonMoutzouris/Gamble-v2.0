@@ -69,7 +69,7 @@ public class ShopScreenUI : MonoBehaviour
             foreach (Item item in currentNPC.npcWares)
             {
                 ShopBuyNode temp = Instantiate(buyPrefab, buyNodeContainer.transform);
-                temp.SetTradeNode(item, Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, item.GetValue());
+                temp.SetTradeNode(ItemDatabase.NewItem(item), Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, item.GetValue());
                 shopBuyNodes.Add(temp);
             }
         }

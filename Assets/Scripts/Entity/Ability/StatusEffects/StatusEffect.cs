@@ -80,6 +80,9 @@ public abstract class StatusEffect : ScriptableObject
             case StatusEffectType.Burned:
                 statusEffect = new Poisoned();
                 break;
+            case StatusEffectType.Bleeding:
+                statusEffect = new Bleeding();
+                break;
         }
 
         return statusEffect;
@@ -248,3 +251,65 @@ public class KnockedBack : StatusEffect
     }
 }
 */
+
+public class Bleeding : StatusEffect
+{
+
+    float tickFrequency = 2;
+    float tickTimer = 0;
+    int tickDamage = 2;
+    Attack attack;
+
+    public Bleeding(int damage = 2) : base()
+    {
+        type = StatusEffectType.Bleeding;
+        tickDamage = damage;
+        attack = new Attack(tickDamage);
+        effectPrefab = Resources.Load<ParticleSystem>("ParticleEffects/BleedEffect");
+        
+    }
+
+    public override void OnApplyEffect(Entity effected, float duration = 10)
+    {
+        //If the effect isnt stackable and the entity is already effected by the same effect
+        //we refresh the timer and do not add a new one
+        foreach(StatusEffect sEffect in effected.statusEffects)
+        {
+            if(sEffect is Bleeding)
+            {
+                sEffect.Elapsed = 0;
+                return;
+            }
+        }
+        effectOffset = effected.Body.mAABB.HalfSizeY * Vector2.up;
+
+        base.OnApplyEffect(effected, duration);
+
+    }
+
+    public override void UpdateEffect()
+    {
+        tickTimer += Time.deltaTime;
+
+        if(tickTimer >= tickFrequency)
+        {
+            OnTickTrigger();
+        }
+        base.UpdateEffect();
+    }
+
+    public void OnTickTrigger()
+    {
+        tickTimer = 0;
+        
+        if(effectedEntity is IHurtable hurtable)
+        {
+            hurtable.GetHurt(attack);
+        }
+    }
+
+    public override void OnEffectEnd()
+    {
+        base.OnEffectEnd();
+    }
+}

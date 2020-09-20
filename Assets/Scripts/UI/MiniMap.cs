@@ -56,7 +56,7 @@ public class MiniMap : MonoBehaviour
 
     public void RemoveIcon(MiniMapIcon icon)
     {
-        if(icon.gameObject == null)
+        if(icon == null || icon.gameObject == null)
         {
             return;
         }

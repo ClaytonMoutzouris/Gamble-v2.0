@@ -60,6 +60,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\NewMapMenu.cs" />
+    <Compile Include="Assets\Scripts\Database\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\Map\TileMapRenderer.cs" />
     <Compile Include="Assets\ButtonTooltip.cs" />
     <Compile Include="Assets\Scripts\Items\Consumables\Medkit.cs" />
@@ -112,7 +113,9 @@
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
     <Compile Include="Assets\CharacterPreviewPortait.cs" />
     <Compile Include="Assets\Scripts\Utility\Vector2Extension.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\SetAbilityFlag.cs" />
     <Compile Include="Assets\Scripts\UI\NewCharacterPanel.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\CompanionManager.cs" />
     <Compile Include="Assets\MiniMapIcon.cs" />
     <Compile Include="Assets\Scripts\Items\Gadgets\HookShot.cs" />
     <Compile Include="Assets\UiEffectElement.cs" />
@@ -124,8 +127,10 @@
     <Compile Include="Assets\Scripts\Entity\Ability\Auras\Aura.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\RangedWeapon.cs" />
     <Compile Include="Assets\BossHealthBar.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\SpawnAttackOnWalk.cs" />
     <Compile Include="Assets\DropdownOptionObject.cs" />
     <Compile Include="Assets\Scripts\Items\Gadgets\CaptureGadget.cs" />
+    <Compile Include="Assets\Scripts\Items\Consumables\SummonEnemyItem.cs" />
     <Compile Include="Assets\Scripts\Entity\NPC\NPCPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\MaxHPFromConsumable.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadItem.cs" />
@@ -135,7 +140,7 @@
     <Compile Include="Assets\Scripts\Items\Gadgets\GravityRemote.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\TentacleBoss.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\PlayerSaveData.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\PlayerSaveData.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\HedgehogBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\SkillNode.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="Assets\Scripts\Entity\PlayerRenderer.cs" />
     <Compile Include="Assets\NavigationMenu.cs" />
     <Compile Include="Assets\EventSystemManager.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\AttackWhenHit.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityRenderer.cs" />
     <Compile Include="Assets\ItemObjectRenderer.cs" />
     <Compile Include="Assets\Scripts\Entity\Talents\TalentTreeBranch.cs" />
@@ -266,6 +272,7 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\SharkBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\Lifesteal.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PhysicsBody.cs" />
+    <Compile Include="Assets\Scripts\Entity\Effects\OnHitEffect.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\HealSharing.cs" />
     <Compile Include="Assets\ColorSwapOption.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype\AttackPrototype.cs" />
@@ -282,6 +289,7 @@
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerEquipment.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\StatBuff.cs" />
     <Compile Include="Assets\PlayerInfoUI.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossActions\BossActions.cs" />
     <Compile Include="Assets\Scripts\Map\WorldManager.cs" />
@@ -333,21 +341,17 @@
     <Compile Include="Assets\Scripts\Items\Gadgets\PortalGadget.cs" />
     <Compile Include="Assets\PlayerInventoryUI.cs" />
     <Compile Include="Assets\Scripts\Map\World.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\StatusOnHit.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\MeleeAttackObject.cs" />
+    <Compile Include="Assets\Scripts\Items\Consumables\SummonBossItem.cs" />
     <Compile Include="Assets\Scripts\UI\GameCamera.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\CapturePod.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\EffectOnHit.cs" />
-    <Compile Include="Assets\Scripts\Entity\Effects\OnHitEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\StatusOnHit.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\StatBuff.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\SetAbilityFlag.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\SpawnAttackOnWalk.cs" />
-    <Compile Include="Assets\Scripts\Database\AbilityDatabase.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\ItemSaveData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Rooms\InnerLR4.txt" />

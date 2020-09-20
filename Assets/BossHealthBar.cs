@@ -20,11 +20,6 @@ public class BossHealthBar : HealthBar
     public override void SetHealth(Health health)
     {
         healthbar.transform.localScale = new Vector3(health.currentHealth / health.maxHealth, 1);
-        switch (enemy.Hostility)
-        {
-            case Hostility.Hostile:
-                healthbar.GetComponent<Image>().color = Color.red;
-                break;
-        }
+
     }
 }

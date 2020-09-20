@@ -81,6 +81,24 @@ public abstract class Item : ScriptableObject
 
         return sellValue;
     }
+
+    public virtual ItemSaveData GetSaveData()
+    {
+        ItemSaveData data = new ItemSaveData
+        {
+            itemName = itemName,
+            identified = identified,
+            rarity = rarity
+        };
+
+        return data;
+    }
+
+    public virtual void LoadItemData(ItemSaveData data)
+    {
+        identified = data.identified;
+        rarity = data.rarity;
+    }
 }
 
 public abstract class Equipment : Item
@@ -216,6 +234,44 @@ public abstract class Equipment : Item
 
         return tooltip;
 
+    }
+
+    public override ItemSaveData GetSaveData()
+    {
+        EquipmentSaveData data = new EquipmentSaveData
+        {
+            itemName = itemName,
+            identified = identified,
+            rarity = rarity,
+            statBonuses = statBonuses
+        };
+
+        foreach(Ability ability in effects)
+        {
+            data.abilityNames.Add(ability.abilityName);
+        }
+
+        return data;
+    }
+
+    public override void LoadItemData(ItemSaveData data)
+    {
+        base.LoadItemData(data);
+
+        if(data is EquipmentSaveData equipmentData)
+        {
+            statBonuses = equipmentData.statBonuses;
+
+            foreach (Ability ability in baseEffects)
+            {
+                Effects.Add(AbilityDatabase.NewAbility(ability));
+            }
+
+            foreach (string abilityName in equipmentData.abilityNames)
+            {
+                Effects.Add(AbilityDatabase.GetAbility(abilityName));
+            }
+        }
     }
 }
 

@@ -97,6 +97,7 @@ public class Stats
 }
 
 public enum StatType { Attack, Defense, Constitution, Speed, Luck };
+public enum AdvancedStat { MoveSpeed, BaseHealth, JumpHeight };
 
 public static class StatTypeMethods
 {

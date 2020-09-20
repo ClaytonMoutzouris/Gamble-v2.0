@@ -5,7 +5,6 @@ using UnityEngine;
 public class SummonCompanion : Ability
 {
 
-    public Vector2 offset = new Vector2(4, 10);
     public CompanionPrototype companionProto;
     public Companion companion;
 
@@ -14,15 +13,14 @@ public class SummonCompanion : Ability
         base.OnEquipTrigger(player);
 
         companion = new Companion(companionProto);
-        companion.owner = player;
-        companion.Spawn(player.Position + offset);
-        player.companion = companion;
+        companion.SetOwner(player);
+        companion.Spawn(player.Position);
     }
 
     public override void OnUnequipTrigger(Player player)
     {
         base.OnUnequipTrigger(player);
-        player.companion = null;
+        player.companionManager.RemoveCompanion(companion);
         companion.Die();
     }
 

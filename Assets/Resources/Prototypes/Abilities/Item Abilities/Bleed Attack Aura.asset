@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da262c3802f49a4bb969c71945fd3e2, type: 3}
+  m_Name: Bleed Attack Aura
+  m_EditorClassIdentifier: 
+  abilityName: Bleed Attack Aura
+  description: 
+  auraRadius: 160
+  auraAbility: {fileID: 11400000, guid: 6895c70f670d8e5449bc079f7eb0abf8, type: 2}
+  visuals: {fileID: 5039633751995712514, guid: cc86072a87db725418d12f1c371fa1a8, type: 3}

@@ -107,7 +107,7 @@ public class Enemy : Entity, IHurtable
         mStats.SetStats(prototype.stats);
         ScaleStatsToLevel();
         mHealth = new Health(this, prototype.health);
-
+        
 
 
         mAttackManager = new AttackManager(this);
@@ -232,6 +232,12 @@ public class Enemy : Entity, IHurtable
         base.ActuallyDie();
     }
 
+    public virtual void SetHostility(Hostility value)
+    {
+        Hostility = value;
+
+    }
+
     public virtual void GetHurt(Attack attack)
     {
         if (Random.Range(0, 100) < 5 + mStats.getStat(StatType.Luck).value)
@@ -243,7 +249,7 @@ public class Enemy : Entity, IHurtable
         //Debug.Log("Dude is getting hurt");
         if (Hostility == Hostility.Neutral)
         {
-            Hostility = Hostility.Hostile;
+            SetHostility(Hostility.Hostile);
         }
 
         if(attack.mEntity != null && attack.mEntity is IHurtable)

@@ -19,7 +19,7 @@ public static class ItemDatabase {
         {
             if(item.itemName.Equals(name))
             {
-                return NewItem(item);
+                return ScriptableObject.Instantiate(item);
 
             }
         }

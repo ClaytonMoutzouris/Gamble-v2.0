@@ -73,6 +73,10 @@ public class NavigationMenu : MonoBehaviour
 
     public void Open(int playerIndex)
     {
+        if(pausedIndex != -1)
+        {
+            return;
+        }
 
         pausedIndex = playerIndex;
 

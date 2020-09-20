@@ -62,15 +62,15 @@
     <Compile Include="Assets\Editor\TilePrototypeEditor.cs" />
     <Compile Include="Assets\Editor\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Editor\ProjectilePrototypeEditor.cs" />
+    <Compile Include="Assets\Editor\EffectEditor.cs" />
     <Compile Include="Assets\Editor\TalentEditor.cs" />
     <Compile Include="Assets\Editor\WorldEditor.cs" />
     <Compile Include="Assets\Editor\MapEditor.cs" />
     <Compile Include="Assets\Editor\PlayerPrototypeEditor.cs" />
     <Compile Include="Assets\Editor\ItemEditor.cs" />
     <Compile Include="Assets\Editor\PlayerEditor.cs" />
-    <Compile Include="Assets\Editor\AttackPrototypeEditor.cs" />
-    <Compile Include="Assets\Editor\EffectEditor.cs" />
     <Compile Include="Assets\Editor\AbilityEditor.cs" />
+    <Compile Include="Assets\Editor\AttackPrototypeEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

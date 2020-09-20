@@ -41,6 +41,7 @@ public class Player : Entity, IHurtable
     public int playerExperience = 0;
     public TalentTree talentTree;
     public Companion companion;
+    public CompanionManager companionManager;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -240,6 +241,8 @@ public class Player : Entity, IHurtable
         {
             MiniMapIcon = MiniMap.instance.AddStaticIcon(MinimapIconType.Player, Map.GetMapTileAtPoint(Position));
         }
+
+        companionManager = new CompanionManager();
 
     }
 
@@ -1452,13 +1455,14 @@ public class Player : Entity, IHurtable
         {
             damage = 0;
         }
-        Health.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.red);
 
-        foreach(Ability effect in abilities)
+        foreach (Ability effect in abilities)
         {
             effect.OnDamagedTrigger(attack);
         }
+
+        Health.LoseHP(damage);
+        ShowFloatingText(damage.ToString(), Color.red);
 
         if (Health.currentHealth == 0)
         {

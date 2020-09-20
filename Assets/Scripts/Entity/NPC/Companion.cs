@@ -8,6 +8,7 @@ public class Companion : Entity
 
     public AttackManager mAttackManager;
     public Player owner;
+    public Vector2 offset = new Vector2(32, 32);
 
     public Companion(CompanionPrototype proto) : base(proto)
     {
@@ -21,9 +22,15 @@ public class Companion : Entity
         mAttackManager.rangedAttacks.Add(new RangedAttack(this, (RangedAttackPrototype)proto.attack));
     }
 
+    public void SetOwner(Player player)
+    {
+        owner = player;
+        player.companionManager.AddCompanion(this);
+    }
+
     public override void EntityUpdate()
     {
-        Position = Vector2.Lerp(Position, owner.Position + new Vector2(32, 32), mMovingSpeed / 10);
+        Position = Vector2.Lerp(Position, owner.Position + offset, mMovingSpeed / 10);
 
         if (owner.AttackManager.rangedAttacks[0].mIsActive)
         {
@@ -67,7 +74,7 @@ public class Companion : Entity
 
     public override void Spawn(Vector2 spawnPoint)
     {
-        base.Spawn(spawnPoint);
+        base.Spawn(spawnPoint + offset);
         Renderer.SetSprite(prototype.sprite);
         if (prototype.animationController != null)
         {
