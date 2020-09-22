@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
   m_Name: Always Prepared
   m_EditorClassIdentifier: 
-  name: Always Prepared
+  talentName: Always Prepared
   description: Gain 2 medipacks
-  level: 
   abilities: []
   statBonuses: []
   bonusItems:
@@ -22,4 +21,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 1
+  level: 0
   isLearned: 0

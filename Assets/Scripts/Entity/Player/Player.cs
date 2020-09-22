@@ -35,7 +35,7 @@ public class Player : Entity, IHurtable
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
     public RangedAttack defaultRanged;
-
+    public bool freeAxis = true;
     //Level up stuff
     public int playerLevel = 1;
     public int playerExperience = 0;
@@ -180,6 +180,11 @@ public class Player : Entity, IHurtable
     public void SetColorPalette(List<Color> palette)
     {
         prototype.colorPallete = palette;
+        if (Renderer != null)
+        {
+            Renderer.colorSwapper.SetBaseColors(palette);
+        }
+
     }
 
     public Player(PlayerPrototype proto, PlayerClass playerClass, int index) : base(proto)
@@ -191,7 +196,9 @@ public class Player : Entity, IHurtable
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
         abilities = new List<Ability>();
-        mStats = new Stats(this, PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.statContainer);
+        PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.player = this;
+
+        mStats = new Stats(this);
 
         mWalkSpeed = prototype.walkSpeed;
         mJumpSpeed = prototype.jumpSpeed;
@@ -278,7 +285,7 @@ public class Player : Entity, IHurtable
         {
             waterReduction = 0.8f;
         }
-        return (mWalkSpeed + 10*mStats.getStat(StatType.Speed).GetValue())*waterReduction;
+        return (mWalkSpeed + 10*mStats.GetStat(StatType.Speed).GetValue())*waterReduction;
     }
 
     public void HandlePlayerPanelInput()
@@ -395,6 +402,11 @@ public class Player : Entity, IHurtable
         if(Input.inputState == PlayerInputState.Inventory)
         {
             HandlePlayerPanelInput();
+        }
+
+        if (Input.playerButtonInput[(int)ButtonInput.FireMode])
+        {
+            freeAxis = !freeAxis;
         }
 
         //
@@ -1330,7 +1342,7 @@ public class Player : Entity, IHurtable
 
     }
 
-    public Vector2 GetAimRight(bool freeAxis = true)
+    public Vector2 GetAimRight()
     {
         if (Input.playerAxisInput[(int)AxisInput.RightStickY] == 0 && Input.playerAxisInput[(int)AxisInput.RightStickX] == 0)
         {
@@ -1442,7 +1454,7 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        if(Random.Range(0, 100) < 5 + mStats.getStat(StatType.Luck).value)
+        if(Random.Range(0, 100) < 5 + mStats.GetStat(StatType.Luck).value)
         {
             ShowFloatingText("Missed", Color.blue);
             return;
@@ -1450,7 +1462,7 @@ public class Player : Entity, IHurtable
 
         int damage = attack.GetDamage();
         //Take 1 less damage for each point of defense
-        damage -= mStats.getStat(StatType.Defense).GetValue();
+        damage -= mStats.GetStat(StatType.Defense).GetValue();
         if (damage < 0)
         {
             damage = 0;

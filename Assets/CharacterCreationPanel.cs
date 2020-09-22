@@ -74,11 +74,9 @@ public class CharacterCreationPanel : MonoBehaviour
         PlayerUIPanels.instance.AddPlayer(playerIndex);
 
         Player newPlayer = new Player(Instantiate(Resources.Load("Prototypes/Entity/Player/PlayerPrototype") as PlayerPrototype), Resources.Load<PlayerClass>("Prototypes/Player/Classes/" + saveData.classType), playerIndex);
-        saveData.SetPlayersData(newPlayer);
-
-        newPlayer.SetInput(input);
         newPlayer.playerPanel = PlayerUIPanels.instance.playerPanels[playerIndex];
-        CrewManager.instance.AddPlayer(playerIndex, newPlayer, true);
+        newPlayer.SetInput(input);
+        CrewManager.instance.AddPlayer(playerIndex, newPlayer, saveData);
         Close();
     }
 

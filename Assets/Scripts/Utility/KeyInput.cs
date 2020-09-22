@@ -33,6 +33,7 @@ public enum ButtonInput
     ChangeTabLeft,
     ChangeTabRight,
     Menu_Back,
+    FireMode,
 	Count
 }
 

@@ -343,6 +343,7 @@
     <Compile Include="Assets\Scripts\Map\World.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\StatusOnHit.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Treedude.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\ItemSaveData.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\MeleeAttackObject.cs" />
     <Compile Include="Assets\Scripts\Items\Consumables\SummonBossItem.cs" />
     <Compile Include="Assets\Scripts\UI\GameCamera.cs" />
@@ -351,7 +352,7 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\ItemSaveData.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\TalentSaveData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Rooms\InnerLR4.txt" />

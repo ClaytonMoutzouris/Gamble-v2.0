@@ -243,7 +243,8 @@ public abstract class Equipment : Item
             itemName = itemName,
             identified = identified,
             rarity = rarity,
-            statBonuses = statBonuses
+            statBonuses = statBonuses,
+            equipped = isEquipped
         };
 
         foreach(Ability ability in effects)

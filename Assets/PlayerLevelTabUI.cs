@@ -64,20 +64,9 @@ public class PlayerLevelTabUI : PlayerPanelTab
             temp.SetTalent(talent, this);
 
             talentNodes.Add(temp);
-            if(talent.isLearned)
-            {
-                temp.OnLearned();
-            }
         }
 
         defaultSelection = talentNodes[0].gameObject;
-    }
-
-    public void LearnNextNode()
-    {
-
-        tree.talents[learned].OnLearned(player);
-        learned++;
     }
 
     public void LearnNodeAtIndex(int index)
@@ -85,9 +74,27 @@ public class PlayerLevelTabUI : PlayerPanelTab
         if (player.talentTree.skillPoints > 0)
         {
             tree.talents[index].OnLearned(player);
-            talentNodes[index].OnLearned();
             player.talentTree.skillPoints--;
         }
+    }
+
+    public void LearnTalent(string talentName, bool fromLoad = false)
+    {
+        if(player.talentTree.skillPoints > 0)
+        {
+            foreach (TalentTreeNodeUI talentNode in talentNodes)
+            {
+                if (talentNode.talent.talentName.Equals(talentName) && (!talentNode.talent.isLearned || talentNode.talent.repeatable))
+                {
+                    Debug.Log("Found Talent " + talentName);
+                    talentNode.talent.OnLearned(player, fromLoad);
+                    player.talentTree.skillPoints--;
+                    talentNode.SetColor();
+                    return;
+                }
+            }
+        }
+
     }
 
     public void SetCurrentNode(TalentTreeNodeUI node)

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
   m_Name: Party Heal
   m_EditorClassIdentifier: 
-  name: Party Heal
+  talentName: Party Heal
   description: Healing also heals allies
-  level: 3
   abilities:
   - {fileID: 11400000, guid: 99d0ff6860c3261499d42cc0950cddf9, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 0}
   repeatable: 0
+  level: 3
   isLearned: 0

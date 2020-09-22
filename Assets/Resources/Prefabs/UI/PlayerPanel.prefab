@@ -2038,6 +2038,7 @@ MonoBehaviour:
   effectList: []
   prefab: {fileID: -2022181016670360256, guid: 99c1b9f26fc120e4dbde25d3266c4517, type: 3}
   container: {fileID: 4002511312077778752}
+  currentNode: {fileID: 0}
 --- !u!1 &6852935666352631606
 GameObject:
   m_ObjectHideFlags: 0

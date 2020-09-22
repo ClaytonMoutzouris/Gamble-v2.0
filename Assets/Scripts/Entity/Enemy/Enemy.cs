@@ -133,7 +133,7 @@ public class Enemy : Entity, IHurtable
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
             
-            mStats.getStat(type).value += WorldManager.instance.NumCompletedWorlds();
+            mStats.GetStat(type).value += WorldManager.instance.NumCompletedWorlds();
         }
 
         Debug.Log("Enemy Scaled to level " + WorldManager.instance.NumCompletedWorlds());
@@ -240,7 +240,7 @@ public class Enemy : Entity, IHurtable
 
     public virtual void GetHurt(Attack attack)
     {
-        if (Random.Range(0, 100) < 5 + mStats.getStat(StatType.Luck).value)
+        if (Random.Range(0, 100) < 5 + mStats.GetStat(StatType.Luck).value)
         {
             ShowFloatingText("Missed", Color.blue);
             return;
@@ -259,7 +259,7 @@ public class Enemy : Entity, IHurtable
 
         int damage = attack.GetDamage();
         //Take 1 less damage for each point of defense
-        damage -= mStats.getStat(StatType.Defense).GetValue();
+        damage -= mStats.GetStat(StatType.Defense).GetValue();
         if (damage < 0)
         {
             damage = 0;
@@ -276,7 +276,7 @@ public class Enemy : Entity, IHurtable
 
     public float GetMovementSpeed()
     {
-        return mMovingSpeed + 10 * mStats.getStat(StatType.Speed).GetValue();
+        return mMovingSpeed + 10 * mStats.GetStat(StatType.Speed).GetValue();
     }
 
     public Entity GetEntity()

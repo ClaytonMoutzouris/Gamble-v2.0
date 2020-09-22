@@ -41,12 +41,21 @@ public class CrewManager : MonoBehaviour
         //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
     }
 
-    public void AddPlayer(int index, Player newPlayer, bool fromSave = false)
+    public void AddPlayer(int index, Player newPlayer)
     {
         players[index] = newPlayer;
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
-        newPlayer.playerClass.LoadClass(newPlayer, fromSave);
+        newPlayer.playerClass.LoadClass(newPlayer, false);
         newPlayer.talentTree.skillPoints = newPlayer.playerLevel;
+    }
+
+    public void AddPlayer(int index, Player loadPlayer, PlayerSaveData saveData)
+    {
+
+        players[index] = loadPlayer;
+        loadPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
+        loadPlayer.playerClass.LoadClass(loadPlayer, true);
+        saveData.SetPlayersData(loadPlayer);
     }
 
     public void DropPlayer(int index)

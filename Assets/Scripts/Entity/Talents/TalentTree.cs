@@ -22,4 +22,5 @@ public class TalentTree : ScriptableObject
 
         talents = temp;
     }
+
 }

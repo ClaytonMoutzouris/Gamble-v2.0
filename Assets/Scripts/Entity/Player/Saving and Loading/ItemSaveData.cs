@@ -19,6 +19,6 @@ public class EquipmentSaveData : ItemSaveData
 {
     public List<StatBonus> statBonuses = new List<StatBonus>();
     public List<string> abilityNames = new List<string>();
-
+    public bool equipped = false;
 
 }

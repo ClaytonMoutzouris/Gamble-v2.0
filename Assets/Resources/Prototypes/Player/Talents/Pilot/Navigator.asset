@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
   m_Name: Navigator
   m_EditorClassIdentifier: 
-  name: Navigator
+  talentName: Navigator
   description: Reveal chests on the minimap
-  level: 
   abilities:
   - {fileID: 11400000, guid: edd8c9c5a29a4694a8f094c822fc1c08, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 0
+  level: 0
   isLearned: 0

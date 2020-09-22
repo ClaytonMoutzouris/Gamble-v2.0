@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIEffectContainer : MonoBehaviour
 {
-    public List<UiEffectElement> effectList;
+    public List<UiEffectElement> effectList = new List<UiEffectElement>();
     public UiEffectElement prefab;
     public GameObject container;
     public UiEffectElement currentNode;
@@ -14,7 +14,6 @@ public class UIEffectContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        effectList = new List<UiEffectElement>();
         scrollRect = GetComponent<ScrollRect>();
     }
 
@@ -46,6 +45,17 @@ public class UIEffectContainer : MonoBehaviour
             }
         }
 
+    }
+
+    public void ClearEffects()
+    {
+        Debug.Log("Clear Effects");
+        foreach (UiEffectElement element in effectList)
+        {
+            Destroy(element.gameObject);
+        }
+
+        effectList.Clear();
     }
 
     public void SetCurrentNode(UiEffectElement node)

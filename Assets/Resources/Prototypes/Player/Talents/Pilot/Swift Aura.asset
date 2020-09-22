@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
   m_Name: Swift Aura
   m_EditorClassIdentifier: 
-  name: Swift Aura
+  talentName: Swift Aura
   description: Aura that speeds up self and allies
-  level: 
   abilities:
   - {fileID: 11400000, guid: 02aca61afc389c84f92810d54e150d42, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 0
+  level: 0
   isLearned: 0

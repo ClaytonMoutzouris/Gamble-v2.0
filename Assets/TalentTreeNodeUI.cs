@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
 {
     PlayerLevelTabUI talentTree;
-    Talent talent;
+    public Talent talent;
     public Image background;
     public Image branchIcon;
     public Text branchTitle;
@@ -21,11 +21,11 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
     {
         talentTree = tree;
         talent = t;
-        branchTitle.text = talent.name + "\n" + talent.description;
+        branchTitle.text = talent.talentName + "\n" + talent.description;
         branchIcon.sprite = talent.icon;
     }
 
-    public void OnLearned()
+    public void SetColor()
     {
         if(talent.repeatable)
         {
@@ -39,10 +39,11 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
 
     public void OnSelected()
     {
-        if (talent.isLearned && !talent.repeatable)
-            return;
-
-        talentTree.LearnNodeAtIndex(transform.GetSiblingIndex());
+        talentTree.LearnTalent(talent.talentName);
+        if(talent.isLearned)
+        {
+            SetColor();
+        }
     }
 
     public string GetTooltip()

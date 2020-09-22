@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
   m_Name: Weapons Expert
   m_EditorClassIdentifier: 
-  name: Weapons Expert
+  talentName: Weapons Expert
   description: Deal +5 Damage with all weapons
-  level: 
   abilities:
   - {fileID: 11400000, guid: 5c2866c0b91021e4292d8b34fd5220c8, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 0
+  level: 0
   isLearned: 0

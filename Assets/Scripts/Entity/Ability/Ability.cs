@@ -11,14 +11,14 @@ public abstract class Ability : ScriptableObject
 
     public virtual void OnEquipTrigger(Player player) {
         player.abilities.Add(this);
-        player.playerPanel.uiPlayerTab.effectContainer.AddEffect(this);
+        //player.playerPanel.uiPlayerTab.effectContainer.AddEffect(this);
         owner = player;
     }
     public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
     public virtual void OnUnequipTrigger(Player player) {
-        player.playerPanel.uiPlayerTab.effectContainer.RemoveEffect(this);
+        //player.playerPanel.uiPlayerTab.effectContainer.RemoveEffect(this);
         player.abilities.Remove(this);
         owner = null;
 

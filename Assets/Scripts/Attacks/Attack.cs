@@ -105,11 +105,11 @@ public class Attack {
         
         if (mEntity is Player player)
         {
-            damage += player.mStats.getStat(StatType.Attack).GetValue();
+            damage += player.mStats.GetStat(StatType.Attack).GetValue();
         }
         else if (mEntity is Enemy enemy)
         {
-            damage += enemy.mStats.getStat(StatType.Attack).GetValue();
+            damage += enemy.mStats.GetStat(StatType.Attack).GetValue();
         }
 
         return damage;

@@ -86,6 +86,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = false;
                 playerButtonInput[(int)ButtonInput.Menu_Back] = false;
+                playerButtonInput[(int)ButtonInput.FireMode] = mGamepadInput.RightStickDown();
+
 
 
                 break;
@@ -126,6 +128,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.Menu_Back] = false;
+                playerButtonInput[(int)ButtonInput.FireMode] = false;
 
                 break;
 
@@ -165,6 +168,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.ButtonBPressed();
+                playerButtonInput[(int)ButtonInput.FireMode] = false;
 
                 break;
             case PlayerInputState.Shop:
@@ -203,6 +207,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.ButtonBPressed();
+                playerButtonInput[(int)ButtonInput.FireMode] = false;
 
                 break;
 
@@ -242,6 +247,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.LeftBumperDown();
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.RightBumperDown();
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.ButtonBPressed();
+                playerButtonInput[(int)ButtonInput.FireMode] = false;
 
                 break;
         }

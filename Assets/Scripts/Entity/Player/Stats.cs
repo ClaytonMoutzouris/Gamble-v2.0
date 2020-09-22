@@ -6,13 +6,11 @@ using UnityEngine;
 public class Stats
 {
     public Dictionary<StatType, Stat> stats;
-    public UIStatContainer uiStats;
     private Entity entity;
 
-    public Stats(Entity e, UIStatContainer ui = null)
+    public Stats(Entity e)
     {
         entity = e;
-        uiStats = ui;
 
         stats = new Dictionary<StatType, Stat>();
 
@@ -20,12 +18,6 @@ public class Stats
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
             stats.Add(type, new Stat(type));
-        }
-
-        //Update the UI
-        if(uiStats != null)
-        {
-            RefreshUI();
         }
 
     }
@@ -39,26 +31,9 @@ public class Stats
             this.stats.Add(stat.type, stat);
         }
 
-        //Update the UI
-        if (uiStats != null)
-        {
-            RefreshUI();
-        }
     }
 
-    public void RefreshUI()
-    {
-        //Update the UI
-        if (uiStats != null)
-        {
-            foreach (Stat stat in stats.Values)
-            {
-                uiStats.SetStat(stat);
-            }
-        }
-    }
-
-    public Stat getStat(StatType type)
+    public Stat GetStat(StatType type)
     {
         return stats[type];
     }
@@ -66,13 +41,11 @@ public class Stats
     public void AddBonus(StatBonus bonus)
     {
         stats[bonus.type].AddBonus(bonus);
-        RefreshUI();
     }
 
     public void RemoveBonus(StatBonus bonus)
     {
         stats[bonus.type].RemoveBonus(bonus);
-        RefreshUI();
     }
 
     public void AddBonuses(List<StatBonus> bonuses)
@@ -82,7 +55,6 @@ public class Stats
             stats[bonus.type].AddBonus(bonus);
         }
 
-        RefreshUI();
     }
 
     public void RemoveBonuses(List<StatBonus> bonuses)
@@ -92,7 +64,6 @@ public class Stats
             stats[bonus.type].RemoveBonus(bonus);
         }
 
-        RefreshUI();
     }
 }
 
