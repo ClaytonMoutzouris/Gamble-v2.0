@@ -31,6 +31,10 @@ public class PlayerEquipment
         //Equipment.Add(new EquipmentSlot(EquipmentSlotType.Gadget));
 
     }
+    public List<EquipmentSlot> GetSlots()
+    {
+        return EquipmentSlots;
+    }
 
     public EquipmentSlot GetSlot(EquipmentSlotType type)
     {

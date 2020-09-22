@@ -27,14 +27,11 @@ public class TileMapRenderer : MonoBehaviour
         
         foreach(TilePrototype proto in prototypes)
         {
-            Debug.Log("Adding tile prototype for " + proto.name);
             tilePrototypes.Add(proto.type, proto);
         }
 
 
         spriteMap = new Tile[(int)MapSize.x, (int)MapSize.y];
-
-        Debug.Log(MapSize.x + ", " + MapSize.y);
         
 
         for (int x = 0; x < MapSize.x; x++) {

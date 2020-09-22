@@ -8,7 +8,6 @@ public class CrewManager : MonoBehaviour
     public static CrewManager instance;
     List<Player> crewMembers;
     public Player[] players = new Player[4];
-    public int weird;
     //public GameObject expBar;
 
     public void Start()

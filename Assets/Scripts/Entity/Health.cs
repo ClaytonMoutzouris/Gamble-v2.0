@@ -11,12 +11,14 @@ public class Health
     public HealthBar healthbar;
     public Entity entity;
 
-    public Health(Entity entity, int hp, HealthBar bar = null)
+    public Health(Entity entity, int baseHP, HealthBar bar = null)
     {
         this.entity = entity;
-        baseHP = hp;
-        currentHealth = hp;
-        maxHealth = hp;
+        this.baseHP = baseHP;
+        UpdateHealth();
+
+        currentHealth = baseHP;
+        maxHealth = baseHP;
         healthbar = bar;
         if(healthbar != null)
         {
@@ -24,7 +26,6 @@ public class Health
             healthbar.SetHealth(this);
         }
 
-        UpdateHealth();
 
     }
 

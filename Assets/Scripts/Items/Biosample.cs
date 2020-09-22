@@ -54,4 +54,27 @@ public class Biosample : Item
 
         return tooltip;
     }
+
+    public override ItemSaveData GetSaveData()
+    {
+        BiosampleSaveData data = new BiosampleSaveData
+        {
+            itemName = itemName,
+            identified = identified,
+            rarity = rarity,
+            sampleWorldType = sampleWorldType
+        };
+
+        return data;
+    }
+
+    public override void LoadItemData(ItemSaveData data)
+    {
+        base.LoadItemData(data);
+
+        if(data is BiosampleSaveData biosampleData)
+        {
+            sampleWorldType = biosampleData.sampleWorldType;
+        }
+    }
 }

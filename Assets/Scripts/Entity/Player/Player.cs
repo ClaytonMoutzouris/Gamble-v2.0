@@ -1512,7 +1512,24 @@ public class Player : Entity, IHurtable
         mCurrentState = PlayerState.Dead;
         HurtBox.mState = ColliderState.Closed;
 
+        List<Ability> tempAbilities = new List<Ability>();
+        tempAbilities.AddRange(abilities);
+ 
+        foreach (Ability effect in tempAbilities)
+        {
+            effect.OnOwnerDeath(this);
+        }
 
+        foreach(Talent talent in talentTree.talents)
+        {
+            if(talent.isLearned)
+            {
+                foreach(Ability ability in talent.abilities)
+                {
+                    ability.OnUnequipTrigger(this);
+                }
+            }
+        }
 
         Renderer.SetAnimState("Dead");
     }
@@ -1524,12 +1541,38 @@ public class Player : Entity, IHurtable
         movementState = MovementState.Stand;
         HurtBox.mState = ColliderState.Open;
         health.currentHealth = health.maxHealth/2;
+        health.UpdateHealth();
+
+        foreach (EquipmentSlot slot in Equipment.GetSlots())
+        {
+            if(slot.GetContents() != null)
+            {
+                foreach(Ability ability in slot.GetContents().Effects)
+                {
+                    ability.OnEquipTrigger(this);
+                }
+            }
+        }
+
+        foreach (Talent talent in talentTree.talents)
+        {
+            if (talent.isLearned)
+            {
+                foreach (Ability ability in talent.abilities)
+                {
+                    ability.OnEquipTrigger(this);
+                }
+            }
+        }
     }
 
     public override void Destroy()
     {
         base.Destroy();
         HurtBox.mState = ColliderState.Closed;
+
+ 
+
     }
 
     public override void ActuallyDie()
@@ -1537,7 +1580,23 @@ public class Player : Entity, IHurtable
 
         CollisionManager.RemoveObjectFromAreas(HurtBox);
         //CollisionManager.RemoveObjectFromAreas(sight);
+        List<Ability> tempAbilities = new List<Ability>();
+        tempAbilities.AddRange(abilities);
+        foreach (Ability effect in tempAbilities)
+        {
+            effect.OnOwnerDeath(this);
+        }
 
+        foreach(Talent talent in talentTree.talents)
+        {
+            if(talent.isLearned)
+            {
+                foreach(Ability ability in talent.abilities)
+                {
+                    ability.OnUnequipTrigger(this);
+                }
+            }
+        }
         //Do other stuff first because the base destroys the object
         base.ActuallyDie();
     }

@@ -22,3 +22,10 @@ public class EquipmentSaveData : ItemSaveData
     public bool equipped = false;
 
 }
+
+[System.Serializable]
+public class BiosampleSaveData : ItemSaveData
+{
+    public WorldType sampleWorldType;
+
+}

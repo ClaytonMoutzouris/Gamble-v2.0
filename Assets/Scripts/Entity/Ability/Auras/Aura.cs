@@ -21,11 +21,9 @@ public class Aura : Ability
 
     public void Unapply(Entity entity)
     {
-        if (entity is Player player)
-        {
-            auraAbility.OnUnequipTrigger(player);
-            player.Renderer.RemoveVisualEffect(abilityName+"(Clone)");
-        }
+        auraAbility.OnUnequipTrigger(entity);
+        entity.Renderer.RemoveVisualEffect(abilityName+"(Clone)");
+        
     }
 
     public override void OnEquipTrigger(Player player)
@@ -37,26 +35,25 @@ public class Aura : Ability
 
     }
 
-    public override void OnUnequipTrigger(Player player)
-    {
-        base.OnUnequipTrigger(player);
-        CollisionManager.RemoveObjectFromAreas(sightbox);
-        Unapply(player);
-
-    }
-
-    public override void OnOwnerDeath(Entity entity)
+    public override void OnUnequipTrigger(Entity entity)
     {
         Unapply(entity);
 
-        base.OnOwnerDeath(entity);
-        CollisionManager.RemoveObjectFromAreas(sightbox);
+        base.OnUnequipTrigger(entity);
+
+        if (sightbox != null)
+        {
+            CollisionManager.RemoveObjectFromAreas(sightbox);
+        }
+        
+
 
         foreach (Entity effected in effectedEntities)
         {
             Unapply(effected);
         }
     }
+
     public override void OnUpdate() {
         base.OnUpdate();
 

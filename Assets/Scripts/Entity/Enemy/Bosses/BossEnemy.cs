@@ -86,4 +86,14 @@ public class BossEnemy : Enemy
         MapManager.instance.SpawnDoor();
         base.Die();
     }
+
+    public override void ScaleStatsToLevel()
+    {
+        foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
+        {
+
+            mStats.GetStat(type).value += WorldManager.instance.NumCompletedWorlds() * 3;
+        }
+
+    }
 }

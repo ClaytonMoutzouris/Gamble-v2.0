@@ -64,6 +64,7 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\NoiseGen.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Sphere.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\AutoCorrect.cs" />
+    <Compile Include="Assets\Plugins\DebugStuff\ConsoleToGUI.cs" />
     <Compile Include="Assets\Plugins\Coop UI\Scripts\Characters\Player\PlayerGamepadInput.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Combiner.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\TranslatedDomain.cs" />

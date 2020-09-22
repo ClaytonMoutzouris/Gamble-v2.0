@@ -6,6 +6,7 @@ public class StatusOnHit : Ability
 {
     public StatusEffectType statusType;
     public int duration;
+    public int procChance = 5;
 
     public override void OnHitTrigger(Attack attack, IHurtable entity)
     {
@@ -15,9 +16,12 @@ public class StatusOnHit : Ability
             return;
         }
 
-        StatusEffect effect = StatusEffect.GetEffectFromType(statusType);
-        effect.OnApplyEffect(entity.GetEntity(), duration);
-        
+        int random = Random.Range(0, 100);
+        if (random < procChance)
+        {
+            StatusEffect effect = StatusEffect.GetEffectFromType(statusType);
+            effect.OnApplyEffect(entity.GetEntity(), duration);
+        }
 
     }
 }

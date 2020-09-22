@@ -15,10 +15,16 @@ public class StatBuff : Ability
 
     }
 
-    public override void OnUnequipTrigger(Player player)
+    public override void OnUnequipTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(player);
-        player.mStats.RemoveBonuses(statBonuses);
+        base.OnUnequipTrigger(entity);
+        if(entity is Player player)
+        {
+            player.mStats.RemoveBonuses(statBonuses);
+        } else if(entity is Enemy enemy)
+        {
+            enemy.mStats.RemoveBonuses(statBonuses);
+        }
 
     }
 }

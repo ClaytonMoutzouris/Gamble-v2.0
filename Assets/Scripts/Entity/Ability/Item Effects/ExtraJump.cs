@@ -13,10 +13,14 @@ public class ExtraJump : Ability
         player.mNumJumps += numExtraJumps;
     }
 
-    public override void OnUnequipTrigger(Player player)
+    public override void OnUnequipTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(player);
-        player.mNumJumps -= numExtraJumps;
+        base.OnUnequipTrigger(entity);
+        if(entity is Player player)
+        {
+            player.mNumJumps -= numExtraJumps;
+
+        }
 
     }
 

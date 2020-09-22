@@ -128,12 +128,12 @@ public class Enemy : Entity, IHurtable
         
     }
 
-    public void ScaleStatsToLevel()
+    public virtual void ScaleStatsToLevel()
     {
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
             
-            mStats.GetStat(type).value += WorldManager.instance.NumCompletedWorlds();
+            mStats.GetStat(type).value += WorldManager.instance.NumCompletedWorlds()*2;
         }
 
         Debug.Log("Enemy Scaled to level " + WorldManager.instance.NumCompletedWorlds());

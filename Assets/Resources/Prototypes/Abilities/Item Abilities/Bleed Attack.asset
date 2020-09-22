@@ -16,3 +16,4 @@ MonoBehaviour:
   description: 
   statusType: 5
   duration: 10
+  procChance: 25

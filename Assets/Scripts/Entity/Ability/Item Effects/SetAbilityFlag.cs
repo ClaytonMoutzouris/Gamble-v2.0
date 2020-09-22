@@ -12,11 +12,11 @@ public class SetAbilityFlag : Ability
         player.abilityFlags.SetFlag(flag, true);
     }
 
-    public override void OnUnequipTrigger(Player player)
+    public override void OnUnequipTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(player);
+        base.OnUnequipTrigger(entity);
 
-        foreach (Ability ability in player.abilities)
+        foreach (Ability ability in entity.abilities)
         {
             if (ability.abilityName.Equals(this.abilityName))
             {
@@ -24,7 +24,7 @@ public class SetAbilityFlag : Ability
             }
         }
 
-        player.abilityFlags.SetFlag(flag, false);
+        entity.abilityFlags.SetFlag(flag, false);
 
 
     }

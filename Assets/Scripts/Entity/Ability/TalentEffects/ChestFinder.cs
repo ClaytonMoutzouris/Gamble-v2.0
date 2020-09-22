@@ -20,9 +20,22 @@ public class ChestFinder : Ability
         }
     }
 
-    public override void OnUnequipTrigger(Player player)
+    public override void OnUnequipTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(player);
+        base.OnUnequipTrigger(entity);
+
+        foreach (Player p in CrewManager.instance.players)
+        {
+            if (p == null)
+                continue;
+            foreach (Ability effect in p.abilities)
+            {
+                if (effect is ChestFinder)
+                {
+                    return;
+                }
+            }
+        }
 
         foreach (MiniMapIcon icon in icons)
         {
@@ -44,22 +57,4 @@ public class ChestFinder : Ability
         }
     }
 
-    public override void OnOwnerDeath(Entity entity)
-    {
-        foreach(Player p in CrewManager.instance.players)
-        {
-            foreach(Ability effect in p.abilities)
-            {
-                if (effect is ChestFinder)
-                {
-                    return;
-                }
-            }
-        }
-        
-        foreach (MiniMapIcon icon in icons)
-        {
-            GameObject.Destroy(icon);
-        }
-    }
 }

@@ -250,7 +250,10 @@ public class Entity {
     {
         mToRemove = true;
 
-        foreach (Ability effect in abilities)
+        List<Ability> tempAbilities = new List<Ability>();
+        tempAbilities.AddRange(abilities);
+ 
+        foreach (Ability effect in tempAbilities)
         {
             effect.OnOwnerDeath(this);
         }
@@ -260,6 +263,7 @@ public class Entity {
     public virtual void Destroy()
     {
         mToRemove = true;
+
         Body.mState = ColliderState.Closed;
     }
 

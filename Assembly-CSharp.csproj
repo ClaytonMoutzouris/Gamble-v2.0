@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype\MeleeAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackManager.cs" />
     <Compile Include="Assets\Scripts\Items\LootTables\LootTable.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\TalentSaveData.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CollisionData.cs" />
     <Compile Include="Assets\Scripts\Items\Weapon.cs" />
     <Compile Include="Assets\ClassOptionObject.cs" />
@@ -201,7 +202,7 @@
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackObject\ProjectilePrototype.cs" />
     <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlayerInputManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerGamepadManager.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerBackground.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
@@ -352,7 +353,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\TalentSaveData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Rooms\InnerLR4.txt" />

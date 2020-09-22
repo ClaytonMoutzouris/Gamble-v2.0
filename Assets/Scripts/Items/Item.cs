@@ -108,7 +108,7 @@ public abstract class Equipment : Item
     public List<StatBonus> baseBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
     //public List<PlayerAbility> abilities;
-    public List<Ability> baseEffects;
+    public List<Ability> baseEffects = new List<Ability>();
     List<Ability> effects = new List<Ability>();
     //public Trait trait;
     public bool isEquipped;
@@ -262,12 +262,7 @@ public abstract class Equipment : Item
         if(data is EquipmentSaveData equipmentData)
         {
             statBonuses = equipmentData.statBonuses;
-
-            foreach (Ability ability in baseEffects)
-            {
-                Effects.Add(AbilityDatabase.NewAbility(ability));
-            }
-
+           
             foreach (string abilityName in equipmentData.abilityNames)
             {
                 Effects.Add(AbilityDatabase.GetAbility(abilityName));

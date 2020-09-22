@@ -17,9 +17,9 @@ public abstract class Ability : ScriptableObject
     public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
-    public virtual void OnUnequipTrigger(Player player) {
+    public virtual void OnUnequipTrigger(Entity entity) {
         //player.playerPanel.uiPlayerTab.effectContainer.RemoveEffect(this);
-        player.abilities.Remove(this);
+        entity.abilities.Remove(this);
         owner = null;
 
     }
@@ -40,6 +40,7 @@ public abstract class Ability : ScriptableObject
     public virtual void OnMapChanged(){ }
 
     public virtual void OnOwnerDeath(Entity entity) {
+        OnUnequipTrigger(entity);
     }
 
     public virtual void OnEnemyDeath(Enemy enemy) { }

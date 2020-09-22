@@ -17,11 +17,16 @@ public class SummonCompanion : Ability
         companion.Spawn(player.Position);
     }
 
-    public override void OnUnequipTrigger(Player player)
+    public override void OnUnequipTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(player);
-        player.companionManager.RemoveCompanion(companion);
-        companion.Die();
+        base.OnUnequipTrigger(entity);
+
+        if(entity is Player player)
+        {
+            player.companionManager.RemoveCompanion(companion);
+            companion.Die();
+        }
+
     }
 
 }
