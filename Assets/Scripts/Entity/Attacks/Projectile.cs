@@ -11,6 +11,7 @@ public class Projectile : AttackObject {
     public int framesAlive = 0;
     public bool isAngled = false;
     public bool isBouncy = false;
+    public bool split = false;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 

@@ -9,7 +9,6 @@ public class Treedude : Enemy
 
         Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
 
 
     }

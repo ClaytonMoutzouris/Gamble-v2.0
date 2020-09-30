@@ -13,37 +13,19 @@ MonoBehaviour:
   m_Name: PlayerPrototype
   m_EditorClassIdentifier: 
   entityType: 0
+  hostility: 0
   mName: Player
   bodySize: {x: 6, y: 12}
   CollidesWith: 010000000200000003000000
+  abilityFlags: 
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 5
   animationController: {fileID: 9100000, guid: 7b088691a18fcef41bc65e57bd2418b1, type: 2}
-  baseHealth: 100
-  jumpSpeed: 380
-  walkSpeed: 90
-  climbSpeed: 90
-  rangedAttacks:
-  - {fileID: 11400000, guid: b4b7f31884cacfc4b901b2d5636464e0, type: 2}
-  meleeAttacks:
-  - {fileID: 11400000, guid: ae6d6c7b85ff41043b4cbc390cf47384, type: 2}
-  baseStats:
-  - type: 0
-    value: 0
-    bonuses: []
-  - type: 1
-    value: 0
-    bonuses: []
-  - type: 2
-    value: 0
-    bonuses: []
-  - type: 3
-    value: 0
-    bonuses: []
-  - type: 4
-    value: 0
-    bonuses: []
+  particleEffects: {fileID: 0}
+  crushDamage: 35
+  kinematic: 0
   colorPallete:
   - {r: 0.0050417185, g: 0.78203666, b: 0.21051228, a: 1}
   - {r: 0.320548, g: 0.6617124, b: 0.3684997, a: 1}
@@ -52,3 +34,11 @@ MonoBehaviour:
   - {r: 0.9442775, g: 0.20270157, b: 0.14639688, a: 1}
   - {r: 0.4671405, g: 0.12281048, b: 0.9792602, a: 1}
   - {r: 0.4383338, g: 0.34874672, b: 0.08845806, a: 1}
+  baseHealth: 100
+  jumpSpeed: 380
+  walkSpeed: 90
+  climbSpeed: 90
+  rangedAttacks:
+  - {fileID: 11400000, guid: b4b7f31884cacfc4b901b2d5636464e0, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: ae6d6c7b85ff41043b4cbc390cf47384, type: 2}

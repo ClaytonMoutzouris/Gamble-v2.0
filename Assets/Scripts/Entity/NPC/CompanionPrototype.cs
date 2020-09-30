@@ -7,5 +7,6 @@ public class CompanionPrototype : EntityPrototype
     public int movementSpeed;
 
     public AttackPrototype attack;
+    public bool copyAttack = false;
 
 }

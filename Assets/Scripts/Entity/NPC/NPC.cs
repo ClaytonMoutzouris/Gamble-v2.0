@@ -10,7 +10,7 @@ public class NPC : Entity, IHurtable, IInteractable
     protected NPCPrototype prototype;
     private Hostility hostility = Hostility.Neutral;
     public NPCState mNPCState = NPCState.Stand;
-
+    public List<string> dialogueLines;
     public int jumpHeight = 0;
     int dialogueProgress = 0;
 
@@ -81,7 +81,6 @@ public class NPC : Entity, IHurtable, IInteractable
 
         mMovingSpeed = proto.movementSpeed;
         mCollidesWith = proto.CollidesWith;
-        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
 
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
@@ -94,8 +93,12 @@ public class NPC : Entity, IHurtable, IInteractable
         npcWares = new List<Item>();
         for (int i = 0; i < 10; i++)
         {
-            npcWares.Add(ItemDatabase.GetRandomItem());
+            Item item = ItemDatabase.GetRandomItem();
 
+            if(item.GetValue() > 0)
+            {
+                npcWares.Add(item);
+            }
         }
 
         //Stats
@@ -116,6 +119,16 @@ public class NPC : Entity, IHurtable, IInteractable
         {
             mAttackManager.rangedAttacks.Add(new RangedAttack(this, rangedAttack));
         }
+
+        dialogueLines = proto.dialogueLines;
+
+        List<Color> pallete = new List<Color>();
+        foreach (SwapIndex index in System.Enum.GetValues(typeof(SwapIndex)))
+        {
+            pallete.Add(new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f)));
+        }
+
+        SetColorPalette(pallete);
     }
 
     public override void ActuallyDie()
@@ -123,11 +136,6 @@ public class NPC : Entity, IHurtable, IInteractable
         CollisionManager.RemoveObjectFromAreas(HurtBox);
         CollisionManager.RemoveObjectFromAreas(sight);
         base.ActuallyDie();
-    }
-
-    public override void Crush()
-    {
-        base.Crush();
     }
 
     public override void Destroy()
@@ -250,9 +258,9 @@ public class NPC : Entity, IHurtable, IInteractable
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
         }
+        SetColorPalette();
         HurtBox.UpdatePosition();
         sight.UpdatePosition();
-
         //Renderer.SetSprite(prototype.)
 
     }
@@ -264,32 +272,19 @@ public class NPC : Entity, IHurtable, IInteractable
 
     public bool Interact(Player actor)
     {
-        switch(dialogueProgress)
-        {
-            case 0:
-                ShowFloatingText("Hello Friend", Color.white);
-                break;
-            case 1:
-                ShowFloatingText("I Will Trade Gadgets For Crystals", Color.white);
 
-                break;
-            case 2:
-                ShowFloatingText("Want To Browse My Wares?", Color.white);
-
-                break;
-            case 3:
-                //ShowFloatingText("Want To Browse My Wares?", Color.white);
-                ShopScreenUI.instance.Open(actor, this);
-                break;
-        }
-
+        ShowFloatingText(dialogueLines[dialogueProgress], Color.white);
         dialogueProgress++;
 
-        if (dialogueProgress >= 4)
+        if (dialogueProgress > dialogueLines.Count-1)
         {
+            ShopScreenUI.instance.Open(actor, this);
+
             dialogueProgress = 0;
 
         }
+
+
         return true;
     }
 

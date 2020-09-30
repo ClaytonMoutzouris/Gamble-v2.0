@@ -145,7 +145,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player index " + index + " pressed pause.");
         PauseMenu.instance.Open(index);
-        mGameMode = GameMode.Paused;
     }
 
     public void UnpauseGame()
@@ -240,7 +239,7 @@ public class GameManager : MonoBehaviour
             {
                 if (p != null)
                 {
-                    if (p.Input.playerButtonInput[(int)ButtonInput.Pause])
+                    if (p.Input.playerButtonInput[(int)ButtonInput.Pause] && !p.Input.previousButtonInput[(int)ButtonInput.Pause])
                     {
                         StartNewGame();
                         GameOverScreen.instance.DisplayScreen(false);
@@ -258,7 +257,7 @@ public class GameManager : MonoBehaviour
             {
                 if (p != null)
                 {
-                    if (p.Input.playerButtonInput[(int)ButtonInput.Pause] || p.Input.playerButtonInput[(int)ButtonInput.Menu_Back])
+                    if ((p.Input.playerButtonInput[(int)ButtonInput.Pause] && !p.Input.previousButtonInput[(int)ButtonInput.Pause]) || p.Input.playerButtonInput[(int)ButtonInput.Menu_Back])
                     {
                         UnpauseGame();
                     }

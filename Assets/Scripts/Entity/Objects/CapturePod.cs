@@ -13,7 +13,6 @@ public class CapturePod : Entity, IContactTrigger
         this.gadget = gadget;
         mEntityType = EntityType.Object;
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
         Body.mIsKinematic = true;
 

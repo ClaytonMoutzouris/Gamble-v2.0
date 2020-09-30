@@ -17,12 +17,15 @@ MonoBehaviour:
   mName: Treedude
   bodySize: {x: 32, y: 64}
   CollidesWith: 
+  abilityFlags: 
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: d302a90472ce9be4db2299f7580d9829, type: 2}
   particleEffects: {fileID: 0}
+  crushDamage: 999
+  kinematic: 0
   enemyType: 7
   movementSpeed: 20
   jumpHeight: 160

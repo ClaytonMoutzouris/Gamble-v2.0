@@ -87,6 +87,10 @@ public class ShopScreenUI : MonoBehaviour
             {
                 if(!slot.IsEmpty() && slot.item.GetValue() > 0)
                 {
+                    if(slot.item is Equipment equipment && equipment.isEquipped)
+                    {
+                            continue;
+                    }
                     ShopSellNode temp = Instantiate(sellPrefab, sellNodeContainer.transform);
                     temp.SetSellNode(slot.item, Resources.Load<Item>("Prototypes/Items/Elements/Blueium") as Item, slot.item.GetSellValue());
                     shopSellNodes.Add(temp);
@@ -104,7 +108,7 @@ public class ShopScreenUI : MonoBehaviour
 
         defaultObject = shopBuyNodes[0].gameObject;
         currentNode = shopBuyNodes[0];
-        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(defaultObject);
+        GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
 
     }
 
@@ -117,7 +121,7 @@ public class ShopScreenUI : MonoBehaviour
 
         defaultObject = shopSellNodes[0].gameObject;
         currentNode = shopSellNodes[0];
-        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(defaultObject);
+        GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
     }
 
     public void SetCurrentNode(ShopTradeNode node)
@@ -152,7 +156,7 @@ public class ShopScreenUI : MonoBehaviour
 
     public void Close()
     {
-        EventSystemManager.instance.GetEventSystem(currentPlayer.mPlayerIndex).SetSelectedGameObject(null);
+        GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(null);
         gameObject.SetActive(false);
         currentPlayer.Input.inputState = PlayerInputState.Game;
         currentPlayer = null;

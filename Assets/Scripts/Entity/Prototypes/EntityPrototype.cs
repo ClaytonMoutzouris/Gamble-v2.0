@@ -9,6 +9,7 @@ public class EntityPrototype : ScriptableObject
     public string mName;
     public Vector2 bodySize;
     public List<EntityType> CollidesWith;
+    public List<AbilityFlag> abilityFlags;
     public bool ignoreTilemap = false;
     public bool ignoreGravity = false;
 
@@ -17,4 +18,9 @@ public class EntityPrototype : ScriptableObject
     public RuntimeAnimatorController animationController;
 
     public ParticleSystem particleEffects;
+    public int crushDamage = 0;
+    public bool kinematic = false;
+
+    public List<Color> colorPallete;
+
 }

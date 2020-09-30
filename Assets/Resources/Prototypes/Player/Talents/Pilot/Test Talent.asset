@@ -15,7 +15,7 @@ MonoBehaviour:
   talentName: Test Talent
   description: Whatever Talent Im testing is here
   abilities:
-  - {fileID: 11400000, guid: edd8c9c5a29a4694a8f094c822fc1c08, type: 2}
+  - {fileID: 11400000, guid: f0a10275b3e740140822d3f68cdebc92, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}

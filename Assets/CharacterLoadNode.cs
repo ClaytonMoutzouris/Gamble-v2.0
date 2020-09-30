@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class CharacterLoadNode : MonoBehaviour
+public class CharacterLoadNode : MonoBehaviour, ISelectHandler
 {
     public Text characterInfo;
     // Start is called before the first frame update
@@ -21,6 +22,11 @@ public class CharacterLoadNode : MonoBehaviour
     public void SelectNode()
     {
         mainPanel.LoadCharacter(playerData);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        mainPanel.loadMenu.SetCurrentNode(this);
     }
 
 }

@@ -19,7 +19,6 @@ public class PhoenixBoss : BossEnemy
     {
 
         Body.mIsKinematic = true;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
 
     }
 

@@ -172,19 +172,9 @@ public class Player : Entity, IHurtable
 
     }
 
-    public void SetInput(PlayerGamepadInput input)
+    public void SetInput(NewGamepadInput input)
     {
         this.Input = new PlayerInputController(this, input);
-    }
-
-    public void SetColorPalette(List<Color> palette)
-    {
-        prototype.colorPallete = palette;
-        if (Renderer != null)
-        {
-            Renderer.colorSwapper.SetBaseColors(palette);
-        }
-
     }
 
     public Player(PlayerPrototype proto, PlayerClass playerClass, int index) : base(proto)
@@ -192,7 +182,6 @@ public class Player : Entity, IHurtable
         prototype = ScriptableObject.Instantiate<PlayerPrototype>(proto);
         this.playerClass = ScriptableObject.Instantiate<PlayerClass>(playerClass);
         mPlayerIndex = index;
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
         abilities = new List<Ability>();
@@ -265,8 +254,8 @@ public class Player : Entity, IHurtable
         {
             Renderer.Animator.runtimeAnimatorController = prototype.animationController;
             //ColorSwap.SwapSpritesTexture(Renderer.GetComponent<SpriteRenderer>(), prototype.colorPallete);
-            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
         }
+        SetColorPalette();
 
         Position = spawnPoint;
         Renderer.Draw();
@@ -291,12 +280,12 @@ public class Player : Entity, IHurtable
     public void HandlePlayerPanelInput()
     {
         //Swap between panel tabs
-        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabLeft])
+        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabLeft] && !Input.previousButtonInput[(int)ButtonInput.ChangeTabLeft])
         {
             playerPanel.NextTabLeft();
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabRight])
+        if (Input.playerButtonInput[(int)ButtonInput.ChangeTabRight] && !Input.previousButtonInput[(int)ButtonInput.ChangeTabRight])
         {
             playerPanel.NextTabRight();
         }
@@ -304,18 +293,18 @@ public class Player : Entity, IHurtable
         //Inventory specific
         if (playerPanel.isOpen && playerPanel.selectedTabIndex == PlayerPanelTabType.Inventory)
         {
-            if (Input.playerButtonInput[(int)ButtonInput.InventoryDrop])
+            if (Input.playerButtonInput[(int)ButtonInput.InventoryDrop] && !Input.previousButtonInput[(int)ButtonInput.InventoryDrop])
             {
                 Inventory.slots[Inventory.inventoryUI.currentSlot.slotID].DropItem();
             }
 
-            if (Input.playerButtonInput[(int)ButtonInput.InventoryMove])
+            if (Input.playerButtonInput[(int)ButtonInput.InventoryMove] && !Input.previousButtonInput[(int)ButtonInput.InventoryMove])
             {
                 Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
             }
 
 
-            if (Input.playerButtonInput[(int)ButtonInput.InventorySort])
+            if (Input.playerButtonInput[(int)ButtonInput.InventorySort] && !Input.previousButtonInput[(int)ButtonInput.InventorySort])
             {
                 Inventory.SortInventory();
             }
@@ -368,7 +357,7 @@ public class Player : Entity, IHurtable
 
         if(Input.inputState == PlayerInputState.NavigationMenu)
         {
-            if (Input.playerButtonInput[(int)ButtonInput.Attack])
+            if (Input.playerButtonInput[(int)ButtonInput.Menu_Back])
             {
                 NavigationMenu.instance.Close();
             }
@@ -376,13 +365,13 @@ public class Player : Entity, IHurtable
 
         if (Input.inputState == PlayerInputState.Shop)
         {
-            if (Input.playerButtonInput[(int)ButtonInput.Attack])
+            if (Input.playerButtonInput[(int)ButtonInput.Menu_Back])
             {
                 ShopScreenUI.instance.Close();
             }
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Pause])
+        if (Input.playerButtonInput[(int)ButtonInput.Pause] && !Input.previousButtonInput[(int)ButtonInput.Pause])
         {
             GameManager.instance.PauseGame(mPlayerIndex);
             //PauseMenu.instance.defaultObject;
@@ -394,7 +383,7 @@ public class Player : Entity, IHurtable
             return;
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Select])
+        if (Input.playerButtonInput[(int)ButtonInput.Select] && !Input.previousButtonInput[(int)ButtonInput.Select])
         {
             MiniMap.instance.Toggle();
         }
@@ -404,7 +393,7 @@ public class Player : Entity, IHurtable
             HandlePlayerPanelInput();
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.FireMode])
+        if (Input.playerButtonInput[(int)ButtonInput.FireMode] && !Input.previousButtonInput[(int)ButtonInput.FireMode])
         {
             freeAxis = !freeAxis;
         }
@@ -448,7 +437,7 @@ public class Player : Entity, IHurtable
         }
 
         //Check to see if a player is trying to pick up an item
-        if (Input.playerButtonInput[(int)ButtonInput.LeftStick_Down])
+        if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1 && Input.previousAxisInput[(int)AxisInput.LeftStickY] != -1)
         {
             ILootable loot = CheckForItems();
 
@@ -1139,7 +1128,7 @@ public class Player : Entity, IHurtable
             ((PlayerRenderer)Renderer).ShowWeapon(false);
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Gadget1])
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget1] && !Input.previousButtonInput[(int)ButtonInput.Gadget1])
         {
             if (Equipment.GetGadget1() != null)
             {
@@ -1148,7 +1137,7 @@ public class Player : Entity, IHurtable
             //Game.mMapChangeFlag = true;
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Gadget2])
+        if (Input.playerButtonInput[(int)ButtonInput.Gadget2] && !Input.previousButtonInput[(int)ButtonInput.Gadget2])
         {
             if (Equipment.GetGadget2() != null)
             {
@@ -1651,7 +1640,7 @@ public class Player : Entity, IHurtable
         //ItemObject item = null;
         for (int i = 0; i < inventory.slots.Length; i++)
         {
-            if (inventory.slots[i].item is ConsumableItem temp)
+            if (inventory.slots[i].item is ConsumableItem temp && temp.isHealingItem)
             {
                 if(temp.Use(this))
                 {

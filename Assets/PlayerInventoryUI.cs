@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerInventoryUI : PlayerPanelTab
 {
 
-    public int numStartingSlots = 50;
+    public int numStartingSlots = 42;
     public List<InventorySlotUI> slots;
     public InventorySlotUI slotPrefab;
     public int columns;

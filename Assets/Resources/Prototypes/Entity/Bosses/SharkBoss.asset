@@ -17,14 +17,17 @@ MonoBehaviour:
   mName: SharkBoss
   bodySize: {x: 64, y: 32}
   CollidesWith: 
+  abilityFlags: 03000000
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 21300000, guid: d26c8087f9223504daa28041905b5223, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
-  effects: []
   particleEffects: {fileID: 0}
-  enemyType: 13
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  enemyType: -1
   movementSpeed: 60
   jumpHeight: 300
   sightRange: 300

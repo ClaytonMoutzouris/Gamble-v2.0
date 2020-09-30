@@ -14,11 +14,9 @@ public class FallingRock : Entity
 
     public FallingRock(EntityPrototype proto) :base(proto)
     {
-        Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(proto.bodySize.x, proto.bodySize.y), new Vector2(0, proto.bodySize.y)));
 
         Body.mSpeed = Vector2.zero;
         Body.mIsKinematic = true;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         Body.mIgnoresGravity = true;
 
 
@@ -86,6 +84,7 @@ public class FallingRock : Entity
     public void DropTrigger()
     {
         Body.mIgnoresGravity = false;
+        Body.mIsKinematic = false;
         CollisionManager.RemoveObjectFromAreas(trigger);
         trigger = null;
     }

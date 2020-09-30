@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadCharacterMenu : CreationMenuTab
 {
@@ -9,6 +10,17 @@ public class LoadCharacterMenu : CreationMenuTab
     public CharacterLoadNode loadNodePrefab;
     public List<CharacterLoadNode> loadNodes;
     public GameObject nodeContainer;
+    public CharacterLoadNode currentNode;
+    public ScrollRect maskRect;
+
+    private void Update()
+    {
+        if(currentNode != null)
+        {
+            maskRect.ScrollRepositionY(currentNode.GetComponent<RectTransform>());
+        }
+
+    }
 
     public override void Open()
     {
@@ -26,6 +38,7 @@ public class LoadCharacterMenu : CreationMenuTab
         if (loadNodes.Count > 0)
         {
             inputAnchor = loadNodes[0].gameObject;
+            currentNode = loadNodes[0];
         }
     }
 
@@ -41,6 +54,11 @@ public class LoadCharacterMenu : CreationMenuTab
 
     public override void Close()
     {
+        base.Close();
+    }
 
+    public void SetCurrentNode(CharacterLoadNode node)
+    {
+        currentNode = node;
     }
 }

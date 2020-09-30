@@ -17,10 +17,12 @@ MonoBehaviour:
   mName: FallingRock
   bodySize: {x: 15, y: 16}
   CollidesWith: 0000000001000000020000000600000004000000
+  abilityFlags: 03000000
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 0}
-  effects: []
   particleEffects: {fileID: 0}
+  crushDamage: 999
+  kinematic: 0

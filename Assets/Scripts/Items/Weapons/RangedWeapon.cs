@@ -17,6 +17,13 @@ public class RangedWeapon : Weapon
         if(mSlot == EquipmentSlotType.Mainhand)
         {
             player.AttackManager.rangedAttacks[0] = new RangedAttack(player, this);
+            foreach(Companion companion in player.companionManager.Companions)
+            {
+                if(companion.copyAttack)
+                {
+                    companion.mAttackManager.rangedAttacks[0] = new RangedAttack(companion, this);
+                }
+            }
             ((PlayerRenderer)player.Renderer).rangedWeapon.sprite = sprite;
 
 

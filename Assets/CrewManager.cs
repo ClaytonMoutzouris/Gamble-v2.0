@@ -60,10 +60,10 @@ public class CrewManager : MonoBehaviour
     public void DropPlayer(int index)
     {
         //players[index].mToRemove = true;
+        GamepadInputManager.instance.RemovePlayerAtIndex(index);
         PlayerUIPanels.instance.RemovePlayer(index);
         players[index].ActuallyDie();
         players[index] = null;
-
 
     }
 

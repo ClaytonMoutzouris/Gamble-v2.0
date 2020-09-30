@@ -17,12 +17,15 @@ MonoBehaviour:
   mName: BogBeast
   bodySize: {x: 32, y: 32}
   CollidesWith: 000000000200000007000000
+  abilityFlags: 
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: -4114711218757776134, guid: 19b6bc4e6c744354e87dac7f6d243562, type: 3}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: bb1b7ef77634e894dbd8fb348aed5d28, type: 2}
   particleEffects: {fileID: 0}
+  crushDamage: 40
+  kinematic: 0
   enemyType: 14
   movementSpeed: 20
   jumpHeight: 0

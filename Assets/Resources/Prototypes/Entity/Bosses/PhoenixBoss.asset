@@ -17,13 +17,17 @@ MonoBehaviour:
   mName: PhoenixBoss
   bodySize: {x: 40, y: 55}
   CollidesWith: 
+  abilityFlags: 03000000
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: 7a0786f82e9c19e4a867a6688b9a1927, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 13
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  enemyType: -1
   movementSpeed: 60
   jumpHeight: 0
   sightRange: 300

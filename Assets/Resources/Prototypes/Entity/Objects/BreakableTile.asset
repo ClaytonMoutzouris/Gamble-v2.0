@@ -17,9 +17,13 @@ MonoBehaviour:
   mName: BreakableTile
   bodySize: {x: 16, y: 16}
   CollidesWith: 0000000001000000060000000700000008000000
+  abilityFlags: 
   ignoreTilemap: 0
   ignoreGravity: 1
   sprite: {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
   sortingLayer: 1
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 1
+  colorPallete: []

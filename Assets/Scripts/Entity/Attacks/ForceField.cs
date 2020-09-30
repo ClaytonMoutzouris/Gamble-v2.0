@@ -14,7 +14,6 @@ public class ForceField : Entity
         this.owner = owner;
         this.gadget = gadget;
         ownerOffset = offset;
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
         mMovingSpeed = 0;
         Body.mIgnoresGravity = true;
         shieldBox = new Blockbox(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));

@@ -11,9 +11,7 @@ public class Iceblock : Entity, IHurtable
 
     public Iceblock(EntityPrototype proto) : base(proto)
     {
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
         Body.mIsKinematic = false;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, false);
 
         mEntityType = EntityType.Obstacle;
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
@@ -29,11 +27,6 @@ public class Iceblock : Entity, IHurtable
         CollisionManager.RemoveObjectFromAreas(HurtBox);
 
         base.ActuallyDie();
-    }
-
-    public override void Crush()
-    {
-        base.Crush();
     }
 
     public override void Destroy()

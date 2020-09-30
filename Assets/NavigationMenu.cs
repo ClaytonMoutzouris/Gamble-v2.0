@@ -98,7 +98,7 @@ public class NavigationMenu : MonoBehaviour
             }
         }
 
-        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(defaultObject);
+        GamepadInputManager.instance.gamepadInputs[pausedIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
 
         gameObject.SetActive(true);
         CrewManager.instance.players[playerIndex].Input.inputState = PlayerInputState.NavigationMenu;
@@ -177,7 +177,7 @@ public class NavigationMenu : MonoBehaviour
 
     public void Close()
     {
-        EventSystemManager.instance.GetEventSystem(pausedIndex).SetSelectedGameObject(null);
+        GamepadInputManager.instance.gamepadInputs[pausedIndex].GetEventSystem().SetSelectedGameObject(null);
         gameObject.SetActive(false);
         CrewManager.instance.players[pausedIndex].Input.inputState = PlayerInputState.Game;
         pausedIndex = -1;

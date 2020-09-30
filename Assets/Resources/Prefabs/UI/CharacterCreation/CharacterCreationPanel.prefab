@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -140,6 +142,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1309333115668408234
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +205,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -259,6 +264,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeTab
         m_Mode: 3
         m_Arguments:
@@ -282,7 +288,7 @@ GameObject:
   - component: {fileID: 5591913992326183404}
   - component: {fileID: 8216450157955275565}
   m_Layer: 0
-  m_Name: InputField
+  m_Name: NameInputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,6 +338,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -399,6 +407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetName
         m_Mode: 0
         m_Arguments:
@@ -413,6 +422,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetName
         m_Mode: 0
         m_Arguments:
@@ -510,6 +520,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &3676644753299021594
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +583,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -629,6 +642,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: CreateCharacter
         m_Mode: 1
         m_Arguments:
@@ -700,6 +714,8 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 5245fd008ee4b0a4eb91ae9c364520d5, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -796,6 +812,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -853,6 +871,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeTab
         m_Mode: 3
         m_Arguments:
@@ -927,6 +946,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -962,9 +983,11 @@ MonoBehaviour:
   - {fileID: 2213711187945588521}
   - {fileID: 5067195650640719245}
   - {fileID: 2372430355580099056}
+  loadMenu: {fileID: 2372430355580099056}
   activeTabIndex: 0
   isOpen: 0
   characterName: Gamble
+  characterNameField: {fileID: 8216450157955275565}
 --- !u!1 &3992250978170261228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1048,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1098,6 +1123,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1175,6 +1202,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1254,6 +1283,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1311,7 +1342,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
-        m_MethodName: Close
+        m_TargetAssemblyTypeName: CharacterCreationPanel, Assembly-CSharp
+        m_MethodName: CancelCreation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1419,6 +1451,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1496,6 +1530,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1575,6 +1611,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1707,6 +1745,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &2089548011466517448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1781,6 +1820,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1860,6 +1901,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1917,6 +1960,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeTab
         m_Mode: 3
         m_Arguments:
@@ -1937,6 +1981,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3213672014722831765}
   - component: {fileID: 2372430355580099056}
+  - component: {fileID: 5253398813680110089}
+  - component: {fileID: 7142662683684432915}
+  - component: {fileID: 1897774266069687812}
   m_Layer: 0
   m_Name: LoadTab
   m_TagString: Untagged
@@ -1982,6 +2029,60 @@ MonoBehaviour:
     type: 3}
   loadNodes: []
   nodeContainer: {fileID: 6677703604384762705}
+  currentNode: {fileID: 0}
+  maskRect: {fileID: 1897774266069687812}
+--- !u!222 &5253398813680110089
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904984782283823543}
+  m_CullTransparentMesh: 0
+--- !u!114 &7142662683684432915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904984782283823543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
+--- !u!114 &1897774266069687812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904984782283823543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Content: {fileID: 3448253550222590308}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 2
+  m_Elasticity: 0.1
+  m_Inertia: 0
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 3213672014722831765}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9037264196008985424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2045,6 +2146,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2102,6 +2205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3992250977400396672}
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeTab
         m_Mode: 3
         m_Arguments:
@@ -2192,6 +2296,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2388,6 +2494,12 @@ PrefabInstance:
       objectReference: {fileID: 3992250977400396672}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 238b62c6f3d89514db8cf5a0f6c2c361, type: 3}
+--- !u!224 &7514855947644467050 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7100822287345587319, guid: 238b62c6f3d89514db8cf5a0f6c2c361,
+    type: 3}
+  m_PrefabInstance: {fileID: 774919942062301981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6713705718536920111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6335102683272953650, guid: 238b62c6f3d89514db8cf5a0f6c2c361,
@@ -2418,12 +2530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7514855947644467050 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7100822287345587319, guid: 238b62c6f3d89514db8cf5a0f6c2c361,
-    type: 3}
-  m_PrefabInstance: {fileID: 774919942062301981}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1218448301162456252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2643,18 +2749,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0fc5a95ba864e646af9bdec0c25661b, type: 3}
---- !u!114 &44392707945895719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1185988942953771931, guid: a0fc5a95ba864e646af9bdec0c25661b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1218448301162456252}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3018018115983621897 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4110356247341095861, guid: a0fc5a95ba864e646af9bdec0c25661b,
@@ -2685,6 +2779,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1218448301162456252}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &44392707945895719 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1185988942953771931, guid: a0fc5a95ba864e646af9bdec0c25661b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1218448301162456252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7318397638633824942
 PrefabInstance:
   m_ObjectHideFlags: 0

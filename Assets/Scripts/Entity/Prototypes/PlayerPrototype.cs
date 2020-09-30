@@ -13,5 +13,4 @@ public class PlayerPrototype : EntityPrototype
     public List<MeleeAttackPrototype> meleeAttacks;
 
 
-    public List<Color> colorPallete;
 }

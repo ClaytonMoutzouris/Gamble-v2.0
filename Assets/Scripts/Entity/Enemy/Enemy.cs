@@ -91,7 +91,6 @@ public class Enemy : Entity, IHurtable
         mCollidesWith.Add(EntityType.Obstacle);
         mCollidesWith.Add(EntityType.Platform);
 
-        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         Body.mIgnoresGravity = proto.ignoreGravity;
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));

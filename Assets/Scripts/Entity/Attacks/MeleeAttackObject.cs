@@ -10,7 +10,6 @@ public class MeleeAttackObject : AttackObject
     public MeleeAttackObject(MeleeAttackObjectPrototype proto, MeleeAttack attack, Vector2 direction) : base(proto, attack, direction)
     {
         hitbox = new Hitbox(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.hitboxSize, new Vector2(0, proto.hitboxSize.y)));
 
         this.attack = attack;
         mMaxTime = attack.duration;
@@ -77,11 +76,6 @@ public class MeleeAttackObject : AttackObject
     public override void ActuallyDie()
     {
         base.ActuallyDie();
-    }
-
-    public override void Crush()
-    {
-        base.Crush();
     }
 
     public override void Destroy()

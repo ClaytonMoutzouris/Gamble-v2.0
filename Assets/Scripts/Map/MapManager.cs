@@ -388,7 +388,6 @@ public class MapManager : MonoBehaviour
                 temp15.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case ObjectType.BreakableTile:
-                Debug.Log("Spawning BreakableTile");
                 BreakableTile temp16 = new BreakableTile(Resources.Load("Prototypes/Entity/Objects/BreakableTile") as EntityPrototype);
                 temp16.Spawn(GetMapTilePosition(data.TilePosition));
                 break;

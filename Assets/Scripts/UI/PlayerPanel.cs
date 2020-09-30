@@ -88,10 +88,10 @@ public class PlayerPanel : MonoBehaviour
     public void OpenPlayerPanel()
     {
         SetTab(0);
-        EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(inputAnchor);
+        GamepadInputManager.instance.gamepadInputs[playerIndex].GetEventSystem().SetSelectedGameObject(inputAnchor);
         inputAnchor.GetComponent<Button>().OnSelect(null);
         isOpen = true;
-        transform.localPosition = transform.localPosition + new Vector3(0, panelHeight, 0);
+        transform.localPosition = transform.localPosition + new Vector3(0, panelHeight-20, 0);
         tooltip.gameObject.SetActive(true);
 
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
@@ -109,8 +109,8 @@ public class PlayerPanel : MonoBehaviour
                 tab.Close();
             }
         }
-        EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(null);
-        transform.localPosition = transform.localPosition - new Vector3(0, panelHeight, 0);
+        GamepadInputManager.instance.gamepadInputs[playerIndex].GetEventSystem().SetSelectedGameObject(null);
+        transform.localPosition = transform.localPosition - new Vector3(0, panelHeight-20, 0);
         isOpen = false;
         menuObject.SetActive(false);
         tooltip.SetTooptip("");

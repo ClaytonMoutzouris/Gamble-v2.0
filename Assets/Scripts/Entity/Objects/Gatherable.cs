@@ -11,7 +11,6 @@ public class Gatherable : Entity, IInteractable
     public Gatherable(GatherablePrototype proto) : base(proto)
     {
         mEntityType = EntityType.Object;
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.x)));
 
         Body.mIsKinematic = false;
 

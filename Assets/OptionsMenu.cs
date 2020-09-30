@@ -30,7 +30,7 @@ public class OptionsMenu : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
-        EventSystemManager.instance.GetEventSystem(PauseMenu.instance.pausedIndex).SetSelectedGameObject(defaultObject);
+        GamepadInputManager.instance.gamepadInputs[PauseMenu.instance.pausedIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
         //defaultObject.GetComponent<Button>().OnSelect(null);
 
     }

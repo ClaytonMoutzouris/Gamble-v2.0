@@ -16,5 +16,8 @@ public class NPCPrototype : EntityPrototype
     public List<MeleeAttackPrototype> meleeAttacks;
 
     public List<Item> wares;
+    public List<string> dialogueLines;
+
+
     //Attack attack;
 }

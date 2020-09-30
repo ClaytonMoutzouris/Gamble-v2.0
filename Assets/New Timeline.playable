@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 222b786b105a8d0498436b3ccee90419, type: 3}
-  m_Name: Summon Drone
+  m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+  m_Name: New Timeline
   m_EditorClassIdentifier: 
-  abilityName: Summon Drone
-  description: 
-  offset: {x: 4, y: 10}
-  companionProto: {fileID: 11400000, guid: 20aa70781cbefea468ab8504242befd9, type: 2}
+  m_Version: 0
+  m_Tracks: []
+  m_FixedDuration: 0
+  m_EditorSettings:
+    m_Framerate: 60
+  m_DurationMode: 0
+  m_MarkerTrack: {fileID: 0}

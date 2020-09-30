@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum EntityDirection { Left = -1, Right = 1 };
 public enum Alignment { Player, Neutral, Enemy };
-public enum AbilityFlag { CrushProtection, SpikeProtection, Hover, Heavy }
+public enum AbilityFlag { CrushProtection, SpikeProtection, Hover, Heavy, Sturdy }
 [System.Serializable]
 public class Entity {
 
@@ -15,6 +14,7 @@ public class Entity {
     public List<EntityType> mCollidesWith;
     public List<StatusEffect> statusEffects;
     public float mMovingSpeed;
+    public int crushDamage = 999;
     public Vector2 Position;
     public EntityDirection mDirection = EntityDirection.Right;
     #region HiddenInInspector
@@ -157,10 +157,21 @@ public class Entity {
         statusEffects = new List<StatusEffect>();
         abilityFlags = new AbilityFlags();
         abilityFlags.Initialize();
+
+        crushDamage = proto.crushDamage;
         //if (colorPallete != null && colorPallete.Count > 0)
         //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
+        foreach(AbilityFlag flag in proto.abilityFlags)
+        {
+            abilityFlags.SetFlag(flag, true);
+
+        }
 
         mUpdateId = Game.AddToUpdateList(this);
+
+        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
+
+        List<Color> palette = proto.colorPallete;
     }
 
     public virtual void Spawn(Vector2 spawnPoint)
@@ -279,7 +290,7 @@ public class Entity {
         }
     }
 
-    public virtual void Crush()
+    public virtual void Crush(Entity crusher = null)
     {
         //Kinematic things cant be spiked or crushed
         if (Body.mIsKinematic || abilityFlags.GetFlag(AbilityFlag.Heavy))
@@ -287,13 +298,20 @@ public class Entity {
 
         if (this is IHurtable hurtable)
         {
-            if(abilityFlags.GetFlag(AbilityFlag.CrushProtection))
+            if (abilityFlags.GetFlag(AbilityFlag.CrushProtection))
             {
                 hurtable.GetHurt(Attack.ProtectedCrushAttack());
             }
             else
             {
-                hurtable.GetHurt(Attack.CrushAttack());
+                if (crusher != null)
+                {
+                    hurtable.GetHurt(new Attack(crusher.crushDamage));
+                }
+                else
+                {
+                    hurtable.GetHurt(Attack.CrushAttack());
+                }
             }
         }
     }
@@ -328,13 +346,32 @@ public class Entity {
         }
     }
 
+    public void SetColorPalette(List<Color> palette)
+    {
+        prototype.colorPallete = palette;
+        if (Renderer != null)
+        {
+            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
+        }
+
+    }
+
+    public void SetColorPalette()
+    {
+        if (Renderer != null)
+        {
+            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
+        }
+
+    }
+
     //Function for deriving the speed value from the speed stat
     public virtual float GetSpeed()
     {
         return 0;
     }
 
-    public virtual void ShowFloatingText(String text, Color color)
+    public virtual void ShowFloatingText(string text, Color color)
     {
         FloatingText floatingText = GameObject.Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, Position, Quaternion.identity);
         floatingText.SetOffset(Vector3.up * (Body.mAABB.HalfSize.y * 2 + 7));

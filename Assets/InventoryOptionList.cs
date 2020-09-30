@@ -83,7 +83,7 @@ public class InventoryOptionList : MonoBehaviour
         }
         gameObject.SetActive(true);
         transform.position = slot.transform.position;
-        EventSystemManager.instance.GetEventSystem(playerInventory.player.mPlayerIndex).SetSelectedGameObject(options[0].gameObject);
+        GamepadInputManager.instance.gamepadInputs[playerInventory.player.mPlayerIndex].GetEventSystem().SetSelectedGameObject(options[0].gameObject);
         options[0].gameObject.GetComponent<Button>().OnSelect(null);
 
     }
@@ -122,7 +122,7 @@ public class InventoryOptionList : MonoBehaviour
 
     public void Confirm()
     {
-        EventSystemManager.instance.GetEventSystem(playerInventory.player.mPlayerIndex).SetSelectedGameObject(focusedSlot.button.gameObject);
+        GamepadInputManager.instance.gamepadInputs[playerInventory.player.mPlayerIndex].GetEventSystem().SetSelectedGameObject(focusedSlot.button.gameObject);
         gameObject.SetActive(false);
     }
 

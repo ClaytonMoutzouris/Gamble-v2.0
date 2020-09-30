@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConsumableItem : Item
 {
-
+    public bool isHealingItem;
     public virtual bool Use(Player player)
     {
         foreach(Ability effect in player.abilities)

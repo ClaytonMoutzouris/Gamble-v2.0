@@ -48,7 +48,7 @@ public class BossEnemy : Enemy
         }
     }
 
-    public void TriggerBoss()
+    public virtual void TriggerBoss()
     {
         if (bossTrigger)
             return;

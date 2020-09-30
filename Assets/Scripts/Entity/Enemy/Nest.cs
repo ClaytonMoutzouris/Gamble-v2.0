@@ -13,17 +13,11 @@ public class Nest : Enemy
     public Nest(EnemyPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
     }
 
     public override void ActuallyDie()
     {
         base.ActuallyDie();
-    }
-
-    public override void Crush()
-    {
-        base.Crush();
     }
 
     public override void Destroy()

@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CharacterCreationPanel : MonoBehaviour
@@ -12,11 +14,13 @@ public class CharacterCreationPanel : MonoBehaviour
     public int playerIndex = 0;
     public GameObject inputAnchor;
     public Image background;
-    PlayerGamepadInput input;
+    NewGamepadInput gamepadInput;
     public List<CreationMenuTab> tabs;
+    public LoadCharacterMenu loadMenu;
     public int activeTabIndex = 0;
     public bool isOpen = false;
     public string characterName;
+    public InputField characterNameField;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,13 @@ public class CharacterCreationPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isOpen && characterNameField.isFocused
+            && (GamepadInputManager.instance.gamepadInputs[playerIndex].buttonInputs[(int)GamepadButtons.EastButton]
+            || GamepadInputManager.instance.gamepadInputs[playerIndex].buttonInputs[(int)GamepadButtons.SouthButton]))
+        {
+            characterNameField.DeactivateInputField();
+        }
+
     }
 
     public void ChangeTab(int index)
@@ -42,15 +52,21 @@ public class CharacterCreationPanel : MonoBehaviour
         tabs[activeTabIndex].gameObject.SetActive(true);
         tabs[activeTabIndex].Open();
 
-        EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(tabs[activeTabIndex].inputAnchor);
-        tabs[activeTabIndex].inputAnchor.GetComponent<Button>().OnSelect(null);
+        //EventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(tabs[activeTabIndex].inputAnchor);
+        //NewEventSystemManager.instance.GetEventSystem(playerIndex).SetSelectedGameObject(tabs[activeTabIndex].inputAnchor);
+        if (gamepadInput != null)
+        {
+            gamepadInput.GetComponent<EventSystem>().SetSelectedGameObject(tabs[activeTabIndex].inputAnchor);
+            Debug.Log("Selected object " + gamepadInput.GetComponent<EventSystem>().currentSelectedGameObject);
+        }
+            tabs[activeTabIndex].inputAnchor.GetComponent<Button>().OnSelect(null);
 
     }
 
-    public void NewCharacter(PlayerGamepadInput i)
+    public void NewCharacter(NewGamepadInput i)
     {
 
-        input = i;
+        gamepadInput = i;
         OpenCreationPanel();
     }
 
@@ -63,7 +79,7 @@ public class CharacterCreationPanel : MonoBehaviour
         newPlayer.SetColorPalette(preview.characterColors);
 
 
-        newPlayer.SetInput(input);
+        newPlayer.SetInput(gamepadInput);
         newPlayer.playerPanel = PlayerUIPanels.instance.playerPanels[playerIndex];
         CrewManager.instance.AddPlayer(playerIndex, newPlayer);
         Close();
@@ -75,7 +91,7 @@ public class CharacterCreationPanel : MonoBehaviour
 
         Player newPlayer = new Player(Instantiate(Resources.Load("Prototypes/Entity/Player/PlayerPrototype") as PlayerPrototype), Resources.Load<PlayerClass>("Prototypes/Player/Classes/" + saveData.classType), playerIndex);
         newPlayer.playerPanel = PlayerUIPanels.instance.playerPanels[playerIndex];
-        newPlayer.SetInput(input);
+        newPlayer.SetInput(gamepadInput);
         CrewManager.instance.AddPlayer(playerIndex, newPlayer, saveData);
         Close();
     }
@@ -95,6 +111,13 @@ public class CharacterCreationPanel : MonoBehaviour
         CreationPanelsUI.instance.placeholders[playerIndex].SetActive(true);
         isOpen = false;
 
+
+    }
+
+    public void CancelCreation()
+    {
+        Close();
+        GamepadInputManager.instance.RemovePlayerAtIndex(playerIndex);
     }
 
     public void SwapColor(Color color)

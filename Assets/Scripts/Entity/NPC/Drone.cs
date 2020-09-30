@@ -35,4 +35,11 @@ public class Drone : Companion
 
     }
 
+    public override void SetOwner(Player player)
+    {
+        base.SetOwner(player);
+        Debug.Log("Setting drones proto");
+        mAttackManager.rangedAttacks[0] = new RangedAttack(this, (RangedAttackPrototype)owner.AttackManager.rangedAttacks[0].attackPrototype);
+    }
+
 }

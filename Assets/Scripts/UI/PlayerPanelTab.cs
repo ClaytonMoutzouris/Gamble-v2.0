@@ -16,7 +16,7 @@ public class PlayerPanelTab : MonoBehaviour
         gameObject.SetActive(true);
         if(player != null)
         {
-            EventSystemManager.instance.GetEventSystem(player.mPlayerIndex).SetSelectedGameObject(defaultSelection);
+            GamepadInputManager.instance.gamepadInputs[player.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultSelection);
         }
 
     }

@@ -17,13 +17,17 @@ MonoBehaviour:
   mName: VoidBoss
   bodySize: {x: 48, y: 48}
   CollidesWith: 
+  abilityFlags: 
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: -7503184454586476669, guid: 58e91305a2463014bb4794abb38a15b5, type: 3}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: 216abc2d65e21d24cb2733ea49e60141, type: 2}
-  effects: []
-  enemyType: 13
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  enemyType: -1
   movementSpeed: 50
   jumpHeight: 160
   sightRange: 320
@@ -31,7 +35,8 @@ MonoBehaviour:
   rangedAttacks:
   - {fileID: 11400000, guid: 85a98066e88c5424d8a865acb7c0feae, type: 2}
   - {fileID: 11400000, guid: 4cb045e0c43b96a4180b89cd5e01e7e3, type: 2}
-  meleeAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 4ea547ca756a3f34a883dd062c18e21d, type: 2}
   lootTable: {fileID: 11400000, guid: 6978e64b39e677f41baf920b0d84c2f7, type: 2}
   stats:
   - type: 0
@@ -50,4 +55,3 @@ MonoBehaviour:
     value: 0
     bonuses: []
   bossType: 5
-  phaseTimers: 

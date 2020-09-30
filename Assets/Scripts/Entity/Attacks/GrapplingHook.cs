@@ -19,7 +19,6 @@ public class GrapplingHook : Entity, IContactTrigger
         this.owner = owner;
         this.gadget = gadget;
         ownerOffset = offset;
-        Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
         Body.mIgnoresOneWay = true;
         mMovingSpeed = 750;
         Body.mIgnoresGravity = proto.ignoreGravity;

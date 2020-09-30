@@ -17,13 +17,17 @@ MonoBehaviour:
   mName: CatBoss
   bodySize: {x: 30, y: 20}
   CollidesWith: 
+  abilityFlags: 03000000
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 2eb28b65716df224dbdd6ad0ecbb4fed, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
-  effects: []
-  enemyType: 13
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  enemyType: -1
   movementSpeed: 160
   jumpHeight: 460
   sightRange: 300
@@ -50,4 +54,3 @@ MonoBehaviour:
     value: 0
     bonuses: []
   bossType: 1
-  phaseTimers: 

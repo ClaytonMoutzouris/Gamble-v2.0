@@ -9,7 +9,7 @@ public class PlayerInventory
     public PlayerInventoryUI inventoryUI;
     public Player mPlayer;
     public InventorySlot[] slots;
-    public int size = 50;
+    public int size = 42;
      
     public PlayerInventory(Player player)
     {

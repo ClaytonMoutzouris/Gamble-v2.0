@@ -9,6 +9,7 @@ public class Companion : Entity
     public AttackManager mAttackManager;
     public Player owner;
     public Vector2 offset = new Vector2(32, 32);
+    public bool copyAttack = false;
 
     public Companion(CompanionPrototype proto) : base(proto)
     {
@@ -16,16 +17,21 @@ public class Companion : Entity
 
         mMovingSpeed = proto.movementSpeed;
         mCollidesWith = proto.CollidesWith;
-        Body = new PhysicsBody(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         Body.mIgnoresGravity = proto.ignoreGravity;
         mAttackManager = new AttackManager(this);
         mAttackManager.rangedAttacks.Add(new RangedAttack(this, (RangedAttackPrototype)proto.attack));
+        copyAttack = proto.copyAttack;
     }
 
-    public void SetOwner(Player player)
+    public virtual void SetOwner(Player player)
     {
         owner = player;
         player.companionManager.AddCompanion(this);
+        if(copyAttack)
+        {
+            mAttackManager.rangedAttacks[0] = new RangedAttack(this, (RangedAttackPrototype)owner.AttackManager.rangedAttacks[0].attackPrototype);
+        }
+
     }
 
     public override void EntityUpdate()

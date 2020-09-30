@@ -17,14 +17,18 @@ MonoBehaviour:
   mName: TentacleBoss
   bodySize: {x: 28, y: 28}
   CollidesWith: 
+  abilityFlags: 03000000
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 3
   animationController: {fileID: 9100000, guid: 5a7a72c8f6ee23b4a868e2e4d74e9b98, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 13
-  movementSpeed: 18
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  enemyType: -1
+  movementSpeed: 25
   jumpHeight: 120
   sightRange: 300
   health: 500

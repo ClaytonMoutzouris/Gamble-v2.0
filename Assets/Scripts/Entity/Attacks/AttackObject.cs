@@ -60,11 +60,6 @@ public class AttackObject : Entity
         base.ActuallyDie();
     }
 
-    public override void Crush()
-    {
-        base.Crush();
-    }
-
     public override void Destroy()
     {
         base.Destroy();
