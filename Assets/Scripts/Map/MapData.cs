@@ -18,6 +18,7 @@ public class MapData : ScriptableObject {
     public int depthVariance = 3;
     public List<EnemyType> smallEnemies;
     public List<EnemyType> largeEnemies;
+    public MinibossType minibossType;
 
     public List<Sprite> tileSprites;
     public LootTable chestLoot;

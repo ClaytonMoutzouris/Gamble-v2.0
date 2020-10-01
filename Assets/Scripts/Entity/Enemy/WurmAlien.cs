@@ -14,7 +14,7 @@ public class WurmAlien : Enemy
 
         Body.mSpeed.x = GetMovementSpeed();
         Body.mIsKinematic = false;
-        abilityFlags.SetFlag(AbilityFlag.Heavy, true);
+        //abilityFlags.SetFlag(AbilityFlag.Heavy, true);
         //Body.mAABB.Scale = new Vector3(.5f, .5f, .5f);
 
 

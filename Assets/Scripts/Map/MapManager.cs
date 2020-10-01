@@ -515,6 +515,14 @@ public class MapManager : MonoBehaviour
                 temp = new BogBeast(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case MinibossType.Salamander:
+                temp = new Salamander(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case MinibossType.IceShard:
+                temp = new IceShard(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
 
         }
 

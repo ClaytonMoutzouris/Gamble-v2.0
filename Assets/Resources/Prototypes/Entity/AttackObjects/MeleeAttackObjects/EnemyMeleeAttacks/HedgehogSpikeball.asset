@@ -13,14 +13,22 @@ MonoBehaviour:
   m_Name: HedgehogSpikeball
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: HedgehogSpikeball
   bodySize: {x: 0, y: 0}
   CollidesWith: 
+  abilityFlags: 
   ignoreTilemap: 1
+  ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
   hitboxSize: {x: 28, y: 28}
   angled: 0
   maxTime: 10
   sfx: {fileID: 0}
+  particleSystem: {fileID: 0}

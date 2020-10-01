@@ -186,6 +186,8 @@ public class MeleeAttack : Attack
                 attack = new MeleeAttackObject(meleeObject, this, Vector2.right);
                 attack.Spawn(mEntity.Position);
             }
+            //Position = owner.Position + attack.attackOffset * (Vector2.right * (int)owner.mDirection);
+
         }
 
         base.UpdateAttack();

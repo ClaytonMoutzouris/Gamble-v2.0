@@ -60,14 +60,15 @@ public class MeleeAttackObject : AttackObject
         base.EntityUpdate();
 
 
+        Position = owner.Position + Vector2.up*attack.attackOffset.y + Vector2.right*attack.attackOffset.x*(int)owner.mDirection;
+
         CollisionManager.UpdateAreas(hitbox);
-        Position = owner.Position + attack.attackOffset*(Vector2.right*(int)owner.mDirection);
     }
 
     public override void SecondUpdate()
     {
         base.SecondUpdate();
-        Position = owner.Position;
+        //Position = owner.Position + attack.attackOffset * (Vector2.right * (int)owner.mDirection);
         Renderer.Sprite.flipX = (owner.mDirection == EntityDirection.Left);
 
     }
@@ -92,6 +93,8 @@ public class MeleeAttackObject : AttackObject
     {
         base.Spawn(spawnPoint + attack.attackOffset);
         Renderer.SetAnimState("Attack");
+        Debug.Log("Spawn point " + spawnPoint);
+        Debug.Log("Offset " + attack.attackOffset);
     }
 
 }

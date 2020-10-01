@@ -459,8 +459,7 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
 
         map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
-        map.AddEntity(new EnemyData(9, 1, EnemyType.Crawler));
-        map.AddEntity(new EnemyData(3, 2, EnemyType.Nipper));
+
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
@@ -473,6 +472,7 @@ public static class MapGenerator
             //map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
 
         }
+        //map.AddEntity(new MinibossData(15, 10, map.Data.minibossType));
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
@@ -608,7 +608,7 @@ public static class MapGenerator
                         //map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.MinibossSpawn:
-                        map.AddEntity(new MinibossData(x, y, MinibossType.BogBeast));
+                        map.AddEntity(new MinibossData(x, y, map.Data.minibossType));
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.SmallOre:
@@ -620,6 +620,10 @@ public static class MapGenerator
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.Water:
+                        if(data.mapType == MapType.Hub)
+                        {
+                            break;
+                        }
                         int random = Random.Range(0, 100);
                         if(random >= 90)
                         {

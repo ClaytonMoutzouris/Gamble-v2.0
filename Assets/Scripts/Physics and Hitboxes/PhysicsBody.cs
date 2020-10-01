@@ -786,11 +786,8 @@ public class PhysicsBody : CustomCollider2D
                 continue;
             }
 
-            //The absolute speed of object 1
-            Vector2 absSpeed1 = new Vector2(Mathf.Abs(data.speed1.x), Mathf.Abs(data.speed1.y));
-
-            //The absolute speed of object 2
-            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.speed2.x), Mathf.Abs(data.speed2.y));
+            Vector2 absSpeed1 = new Vector2(Mathf.Abs(data.pos1.x - data.oldPos1.x), Mathf.Abs(data.pos1.y - data.oldPos1.y));
+            Vector2 absSpeed2 = new Vector2(Mathf.Abs(data.pos2.x - data.oldPos2.x), Mathf.Abs(data.pos2.y - data.oldPos2.y));
             Vector2 speedSum = absSpeed1 + absSpeed2;
 
 

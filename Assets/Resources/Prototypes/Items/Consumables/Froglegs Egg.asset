@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd42ef3b66daf245bd544d1e3cdf131, type: 3}
   m_Name: Froglegs Egg
   m_EditorClassIdentifier: 
-  itemName: Slime Egg
+  itemName: Froglegs Egg
   rarity: 2
   baseValue: 10
   sprite: {fileID: -8537096001911599930, guid: cad10265bf20afa4a8a684396bd08d19, type: 3}
   isStackable: 1
   identified: 1
+  isHealingItem: 0
   enemyType: 10

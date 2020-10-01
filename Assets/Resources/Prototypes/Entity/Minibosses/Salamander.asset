@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fbf5c5093034d4d9deed5ecc29231e, type: 3}
+  m_Name: Salamander
+  m_EditorClassIdentifier: 
+  entityType: 8
+  hostility: 2
+  mName: Salamander
+  bodySize: {x: 48, y: 48}
+  CollidesWith: 000000000200000007000000
+  abilityFlags: 
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 7010366787391676052, guid: 24d81f671fb02f341a4ac3d5e8b5b716, type: 3}
+  sortingLayer: 3
+  animationController: {fileID: 9100000, guid: 43fd3fa9d1690394c91104f526e28f55, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 40
+  kinematic: 0
+  colorPallete: []
+  enemyType: -2
+  movementSpeed: 250
+  jumpHeight: 250
+  sightRange: 320
+  health: 200
+  rangedAttacks:
+  - {fileID: 11400000, guid: a2fe7935d9ef2a54595c62810be229e3, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: 94b54668efbb21545af3f4099afbbb58, type: 2}
+  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  minibossType: 1

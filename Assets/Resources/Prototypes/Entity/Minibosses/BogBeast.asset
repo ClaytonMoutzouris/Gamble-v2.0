@@ -26,7 +26,8 @@ MonoBehaviour:
   particleEffects: {fileID: 0}
   crushDamage: 40
   kinematic: 0
-  enemyType: 14
+  colorPallete: []
+  enemyType: -2
   movementSpeed: 20
   jumpHeight: 0
   sightRange: 320

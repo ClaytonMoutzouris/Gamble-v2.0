@@ -56,6 +56,12 @@ public class PauseMenu : MonoBehaviour {
         mainPanel.SetActive(false);
     }
 
+    public void OpenControlsMenu()
+    {
+        ControlsMenu.instance.Open();
+        mainPanel.SetActive(false);
+    }
+
     public void OpenMainMenu()
     {
         mainPanel.SetActive(true);
