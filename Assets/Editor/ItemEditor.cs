@@ -55,6 +55,12 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<SummonBossItem>();
     }
 
+    [MenuItem("Assets/Create/Items/Consumable/SummonItem/SummonMinibossItem")]
+    public static void CreateSummonMinibossItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<SummonMinibossItem>();
+    }
+
     [MenuItem("Assets/Create/Items/QuestItem")]
     public static void CreateBaseQuestItemAsset()
     {

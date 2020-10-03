@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MeleeAttackObject : AttackObject
 {
-    public MeleeAttack attack;
 
 
     public MeleeAttackObject(MeleeAttackObjectPrototype proto, MeleeAttack attack, Vector2 direction) : base(proto, attack, direction)
@@ -35,11 +34,11 @@ public class MeleeAttackObject : AttackObject
                 if (!hitbox.mDealtWith.Contains(hit))
                 {
                     hit.GetHurt(attack);
-                    if(owner is Player player)
+                    if(owner is Entity entity)
                     {
-                        foreach(Ability effect in player.abilities)
+                        foreach(Ability effect in entity.abilities)
                         {
-                            effect.OnHitTrigger(attack, hit);
+                            effect.OnHitTrigger(this, hit);
                         }
                     }
                     hitbox.mDealtWith.Add(hit);

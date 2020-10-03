@@ -10,6 +10,7 @@ public class EntityPrototype : ScriptableObject
     public Vector2 bodySize;
     public List<EntityType> CollidesWith;
     public List<AbilityFlag> abilityFlags;
+    public List<Ability> baseAbilities;
     public bool ignoreTilemap = false;
     public bool ignoreGravity = false;
 
@@ -22,5 +23,4 @@ public class EntityPrototype : ScriptableObject
     public bool kinematic = false;
 
     public List<Color> colorPallete;
-
 }

@@ -17,8 +17,7 @@ MonoBehaviour:
   startUpFrames: 10
   offset: {x: 52, y: 20}
   animationController: {fileID: 0}
-  damage: 25
-  abilities: 
+  damage: 35
   sfx: {fileID: 0}
   meleeObjectPrototype: {fileID: 11400000, guid: 7da70e475bfb1044ea5b2f4e71a8f41c,
     type: 2}

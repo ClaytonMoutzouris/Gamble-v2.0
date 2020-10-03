@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fbf5c5093034d4d9deed5ecc29231e, type: 3}
+  m_Name: Shroombo
+  m_EditorClassIdentifier: 
+  entityType: 8
+  hostility: 2
+  mName: Shroombo
+  bodySize: {x: 39, y: 44}
+  CollidesWith: 000000000200000007000000
+  abilityFlags: 03000000
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 5374977512973301148, guid: a046d0893c1b15a46aa6f47b104ab441, type: 3}
+  sortingLayer: 3
+  animationController: {fileID: 9100000, guid: 531bc30a862768d4480ebba7d5b7715b, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 40
+  kinematic: 0
+  colorPallete: []
+  enemyType: -2
+  movementSpeed: 200
+  jumpHeight: 350
+  sightRange: 320
+  health: 200
+  rangedAttacks:
+  - {fileID: 11400000, guid: c5421dd583fbb3949a25f6150ba13c0c, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: 3d9a3f1edbce6eb4ea73405500499a63, type: 2}
+  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  minibossType: 3

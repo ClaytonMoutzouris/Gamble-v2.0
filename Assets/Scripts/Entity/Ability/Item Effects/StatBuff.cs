@@ -7,11 +7,20 @@ public class StatBuff : Ability
 {
     public List<StatBonus> statBonuses;
 
-    public override void OnEquipTrigger(Player player)
+    public override void OnEquipTrigger(Entity entity)
     {
-        base.OnEquipTrigger(player);
+        base.OnEquipTrigger(entity);
+        //TODO: Add stats to all entities
+        if(entity is Player player)
+        {
+            player.mStats.AddBonuses(statBonuses);
+        }
 
-        player.mStats.AddBonuses(statBonuses);
+        if(entity is Enemy enemy)
+        {
+            enemy.mStats.AddBonuses(statBonuses);
+
+        }
 
     }
 

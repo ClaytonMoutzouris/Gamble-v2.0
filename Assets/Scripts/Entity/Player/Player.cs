@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using LocalCoop;
 using System.IO;
 
 
 public enum PlayerState { Idle, Attacking, Blocking, Dead };
-public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking };
+public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking, Knockback };
 
 public class Player : Entity, IHurtable
 {
@@ -469,10 +468,6 @@ public class Player : Entity, IHurtable
             mJumpCount = 0;
         }
 
-        foreach (Ability effect in abilities)
-        {
-            effect.OnUpdate();
-        }
 
         //Handle each of the players states
         switch (movementState)
@@ -737,7 +732,7 @@ public class Player : Entity, IHurtable
                 }
 
                 //if we hit the ground
-                if (Body.mPS.pushesBottom && !Body.mPS.inUpdraft)
+                if (Body.mPS.pushesBottom && !Body.mPS.pushedBottom && !Body.mPS.inUpdraft)
                 {
                     //if there's no movement change state to standing
                     if (Input.playerAxisInput[(int)AxisInput.LeftStickX] == 0)
@@ -1079,6 +1074,23 @@ public class Player : Entity, IHurtable
                 Body.mIgnoresGravity = true;
                 Body.mPS.isClimbing = false;
 
+
+                break;
+            case MovementState.Knockback:
+                if(Body.mPS.pushesBottomTile && !Body.mPS.pushedBottomTile)
+                {
+                    movementState = MovementState.Stand;
+                }
+
+                if(Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)
+                {
+                    movementState = MovementState.Jump;
+                }
+
+                if(Body.mSpeed == Vector2.zero)
+                {
+                    movementState = MovementState.Stand;
+                }
 
                 break;
         }
@@ -1425,10 +1437,7 @@ public class Player : Entity, IHurtable
         AttackManager.SecondUpdate();
         HurtBox.UpdatePosition();
 
-        foreach (Ability effect in abilities)
-        {
-            effect.OnSecondUpdate();
-        }
+
 
         if (MiniMapIcon != null)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using LocalCoop;
+
 using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
@@ -77,5 +77,10 @@ public class PauseMenu : MonoBehaviour {
         }
 
         menuPanels[index].SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

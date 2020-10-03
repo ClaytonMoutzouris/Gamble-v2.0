@@ -167,6 +167,12 @@ public class Entity {
 
         }
 
+        foreach(Ability ability in proto.baseAbilities)
+        {
+            Ability temp = ScriptableObject.Instantiate(ability);
+            temp.OnEquipTrigger(this);
+        }
+
         mUpdateId = Game.AddToUpdateList(this);
 
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
@@ -208,6 +214,10 @@ public class Entity {
         //Any way to do this earlier?
         UpdateStatusEffects();
 
+        foreach (Ability effect in abilities)
+        {
+            effect.OnUpdate();
+        }
 
         Body.UpdatePhysics();
         //Renderer.Draw();
@@ -231,7 +241,10 @@ public class Entity {
     public virtual void SecondUpdate()
     {
         Body.UpdatePhysicsP2();
-        
+        foreach (Ability effect in abilities)
+        {
+            effect.OnSecondUpdate();
+        }
         Renderer.Draw();
         
     }
@@ -268,6 +281,7 @@ public class Entity {
         {
             effect.OnOwnerDeath(this);
         }
+
         Body.mState = ColliderState.Closed;
     }
 

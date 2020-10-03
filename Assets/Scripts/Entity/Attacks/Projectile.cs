@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Projectile : AttackObject {
 
-    public RangedAttack attack;
     public bool pierce;
     public bool collidesWithTiles = true;
     public int frameDelay = 0;
     public int framesAlive = 0;
-    public bool isAngled = false;
     public bool isBouncy = false;
     public bool split = false;
     //Does a bullet have a reference to an attack?
@@ -97,11 +95,11 @@ public class Projectile : AttackObject {
                 if (!hitbox.mDealtWith.Contains(hit))
                 {
                     hit.GetHurt(attack);
-                    if(owner is Player player)
+                    if(owner is Entity entity)
                     {
-                        foreach(Ability effect in player.abilities)
+                        foreach(Ability effect in entity.abilities)
                         {
-                            effect.OnHitTrigger(attack, hit);
+                            effect.OnHitTrigger(this, hit);
                         }
                     }
 

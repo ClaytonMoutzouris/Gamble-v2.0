@@ -8,9 +8,9 @@ public class StatusOnHit : Ability
     public int duration;
     public int procChance = 5;
 
-    public override void OnHitTrigger(Attack attack, IHurtable entity)
+    public override void OnHitTrigger(AttackObject attackObject, IHurtable entity)
     {
-        base.OnHitTrigger(attack, entity);
+        base.OnHitTrigger(attackObject, entity);
         if (entity is BossEnemy || entity is Miniboss)
         {
             return;

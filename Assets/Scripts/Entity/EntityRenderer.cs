@@ -195,7 +195,7 @@ public class EntityRenderer : MonoBehaviour
         //effects.Remove(instan)
         foreach(GameObject obj in effects)
         {
-            if(obj.name.Equals(effect))
+            if(obj && obj.name.Equals(effect))
             {
                 toRemove = obj;
                 break;

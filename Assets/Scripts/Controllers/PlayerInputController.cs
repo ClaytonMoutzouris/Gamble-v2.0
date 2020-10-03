@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LocalCoop;
+
 
 public enum PlayerInputState { Game, Inventory, Paused, NavigationMenu, GameOver, Shop };
 

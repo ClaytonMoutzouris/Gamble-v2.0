@@ -15,7 +15,7 @@ MonoBehaviour:
   entityType: 7
   hostility: 0
   mName: Eyebat
-  bodySize: {x: 0, y: 0}
+  bodySize: {x: 1, y: 1}
   CollidesWith: 
   abilityFlags: 
   ignoreTilemap: 1
@@ -26,6 +26,7 @@ MonoBehaviour:
   particleEffects: {fileID: 0}
   crushDamage: 0
   kinematic: 0
+  colorPallete: []
   movementSpeed: 2
   attack: {fileID: 11400000, guid: 26797e4765618824e9e77d84092c7e24, type: 2}
   copyAttack: 0

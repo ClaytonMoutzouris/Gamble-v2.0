@@ -523,6 +523,14 @@ public class MapManager : MonoBehaviour
                 temp = new IceShard(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case MinibossType.Shroombo:
+                temp = new Shroombo(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case MinibossType.GiantCrab:
+                temp = new GiantCrab(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
 
         }
 

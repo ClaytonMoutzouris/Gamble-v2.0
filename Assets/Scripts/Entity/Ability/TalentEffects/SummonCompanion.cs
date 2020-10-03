@@ -8,13 +8,16 @@ public class SummonCompanion : Ability
     public CompanionPrototype companionProto;
     public Companion companion;
 
-    public override void OnEquipTrigger(Player player)
+    public override void OnEquipTrigger(Entity entity)
     {
-        base.OnEquipTrigger(player);
+        base.OnEquipTrigger(entity);
         Debug.Log("On Equip Trigger");
         companion = new Companion(companionProto);
-        companion.SetOwner(player);
-        companion.Spawn(player.Position);
+        if (entity is Player player)
+        {
+            companion.SetOwner(player);
+            companion.Spawn(player.Position);
+        }
     }
 
     public override void OnUnequipTrigger(Entity entity)

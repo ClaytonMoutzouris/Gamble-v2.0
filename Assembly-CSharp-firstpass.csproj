@@ -65,19 +65,15 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\Sphere.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\AutoCorrect.cs" />
     <Compile Include="Assets\Plugins\DebugStuff\ConsoleToGUI.cs" />
-    <Compile Include="Assets\Plugins\Coop UI\Scripts\Characters\Player\PlayerGamepadInput.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Combiner.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\TranslatedDomain.cs" />
-    <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\CustomEventSystem.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\ScaleOffset.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Fractal.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\BasisFunction.cs" />
-    <Compile Include="Assets\Plugins\Coop UI\Scripts\GUI\Core\X_InputModule.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\TerrainPresets.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\IModuleBase.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\RGBACompositeChannels.cs" />
-    <Compile Include="Assets\Plugins\XInputDotNet\Examples\XInputTestCS.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Random_Gen.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\ScaleDomain.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Cache.cs" />
@@ -86,13 +82,8 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\Gradient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\XInputDotNet\Docs.txt" />
-    <None Include="Assets\Plugins\XInputDotNet\Plugins\XInputDotNetPure.dll" />
     <None Include="Assets\Plugins\Color Swap Package\ColorSwap.shader" />
     <None Include="Assets\Plugins\Pixel Font - Tripfive\_README.txt" />
-    <None Include="Assets\Plugins\XInputDotNet\Plugins\x86_64\XInputInterface.dll" />
-    <None Include="Assets\Plugins\XInputDotNet\Plugins\x86\XInputInterface.dll" />
-    <None Include="Assets\Plugins\XInputDotNet\MITLicense.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -281,9 +272,6 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="XInputDotNetPure">
-      <HintPath>Assets\Plugins\XInputDotNet\Plugins\XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

@@ -17,6 +17,14 @@ public class Aura : Ability
             auraAbility.OnEquipTrigger(player);
             player.Renderer.AddVisualEffect(visuals, Vector2.up*player.Body.mAABB.HalfSize);
         }
+
+        if (entity is Companion companion)
+        {
+            Debug.LogWarning("Applying auro to companion");
+
+            auraAbility.OnEquipTrigger(companion);
+            companion.Renderer.AddVisualEffect(visuals, Vector2.up * companion.Body.mAABB.HalfSize);
+        }
     }
 
     public void Unapply(Entity entity)
@@ -26,7 +34,7 @@ public class Aura : Ability
         
     }
 
-    public override void OnEquipTrigger(Player player)
+    public override void OnEquipTrigger(Entity player)
     {
         base.OnEquipTrigger(player);
         sightbox = new Sightbox(owner, new CustomAABB(owner.Position, Vector2.one * auraRadius, Vector2.zero));
@@ -64,7 +72,6 @@ public class Aura : Ability
             if(!sightbox.mEntitiesInSight.Contains(entity))
             {
                 entitiesToRemove.Add(entity);
-                Debug.LogWarning(entity.entityName + " no longer in range");
 
             }
         }
@@ -85,6 +92,16 @@ public class Aura : Ability
 
                 effectedEntities.Add(player);
             }
+
+            if (entity is Companion companion && !effectedEntities.Contains(companion))
+            {
+                //apply aura
+                Apply(companion);
+                Debug.LogWarning("There is a companion in range");
+
+                effectedEntities.Add(companion);
+            }
+
         }
 
 

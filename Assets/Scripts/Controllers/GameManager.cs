@@ -216,12 +216,12 @@ public class GameManager : MonoBehaviour
 
                 if (p.Input.playerButtonInput[(int)ButtonInput.ZoomIn])
                 {
-                    GameCamera.instance.mMinOrthographicSize -= 5;
+                    GameCamera.instance.ZoomIn();
                 }
 
                 if (p.Input.playerButtonInput[(int)ButtonInput.ZoomOut])
                 {
-                    GameCamera.instance.mMinOrthographicSize += 5;
+                    GameCamera.instance.ZoomOut();
 
                 }
             }

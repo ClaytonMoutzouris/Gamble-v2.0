@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c776b07e6f5e042b51c03246ea2dd7, type: 3}
+  m_Name: ShroomboImpact
+  m_EditorClassIdentifier: 
+  entityType: 5
+  hostility: 0
+  mName: ShroomboImpact
+  bodySize: {x: 0, y: 0}
+  CollidesWith: 
+  abilityFlags: 
+  ignoreTilemap: 1
+  ignoreGravity: 1
+  sprite: {fileID: 7271780829008321723, guid: b8aa635c1c83b9b41b173dc9246bc8bf, type: 3}
+  sortingLayer: 8
+  animationController: {fileID: 9100000, guid: d3e6b61c317e08d4cbea48dd8e58fc51, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  hitboxSize: {x: 48, y: 16}
+  angled: 0
+  maxTime: 1
+  sfx: {fileID: 8300000, guid: 626547f26b49ab3489bc4de634699b89, type: 3}
+  particleSystem: {fileID: 0}

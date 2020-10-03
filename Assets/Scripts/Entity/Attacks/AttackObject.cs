@@ -10,6 +10,7 @@ public class AttackObject : Entity
     public bool isAngled = false;
     public float mMaxTime = 10;
     public float mTimeAlive = 0;
+    public Attack attack = null;
 
     public AttackObject(AttackObjectPrototype proto, Attack attack, Vector2 direction) : base(proto)
     {
@@ -17,7 +18,7 @@ public class AttackObject : Entity
         mMaxTime = proto.maxTime;
         isAngled = proto.angled;
         this.direction = direction;
-
+        this.attack = attack;
 
 
 

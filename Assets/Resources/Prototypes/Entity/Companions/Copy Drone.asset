@@ -15,7 +15,7 @@ MonoBehaviour:
   entityType: 7
   hostility: 0
   mName: Copy Drone
-  bodySize: {x: 0, y: 0}
+  bodySize: {x: 1, y: 1}
   CollidesWith: 
   abilityFlags: 
   ignoreTilemap: 1

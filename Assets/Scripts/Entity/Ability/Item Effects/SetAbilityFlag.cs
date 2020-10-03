@@ -6,10 +6,10 @@ public class SetAbilityFlag : Ability
 {
     public AbilityFlag flag;
 
-    public override void OnEquipTrigger(Player player)
+    public override void OnEquipTrigger(Entity entity)
     {
-        base.OnEquipTrigger(player);
-        player.abilityFlags.SetFlag(flag, true);
+        base.OnEquipTrigger(entity);
+        entity.abilityFlags.SetFlag(flag, true);
     }
 
     public override void OnUnequipTrigger(Entity entity)

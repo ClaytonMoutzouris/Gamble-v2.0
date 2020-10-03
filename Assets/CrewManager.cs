@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LocalCoop;
+
 
 public class CrewManager : MonoBehaviour
 {
@@ -26,18 +26,6 @@ public class CrewManager : MonoBehaviour
                 DropPlayer(player.mPlayerIndex);
             }
         }
-    }
-
-    public void AddPlayer(int index, PlayerGamepadInput input)
-    {
-        PlayerUIPanels.instance.AddPlayer(index);
-
-        PlayerClassType classType = (PlayerClassType)Random.Range(0, (int)PlayerClassType.Medic + 1);
-
-        Player newPlayer = new Player(Instantiate(Resources.Load("Prototypes/Entity/Player/PlayerPrototype") as PlayerPrototype), Resources.Load<PlayerClass>("Prototypes/Player/Classes/" + classType.ToString()), index);
-
-
-        //newPlayer.SetInputs(newPlayer.GetComponent<InputManager>().playerInputs, newPlayer.GetComponent<InputManager>().playerPrevInputs);
     }
 
     public void AddPlayer(int index, Player newPlayer)

@@ -7,7 +7,7 @@ public class ChestFinder : Ability
 {
     List<MiniMapIcon> icons = new List<MiniMapIcon>();
 
-    public override void OnEquipTrigger(Player player)
+    public override void OnEquipTrigger(Entity player)
     {
         base.OnEquipTrigger(player);
 

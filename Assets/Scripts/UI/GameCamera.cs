@@ -18,6 +18,8 @@ public class GameCamera : MonoBehaviour
     /// </summary>
     public MapManager mMap;
 
+
+
     public float mZoomSpeed = 10f;
     public float mMinOrthographicSize = 120;
     public float mBoundingBoxPadding = 32;
@@ -112,6 +114,19 @@ public class GameCamera : MonoBehaviour
         Vector2 boundingBoxCenter = boundingBox.center;
 
         return new Vector3(boundingBoxCenter.x, boundingBoxCenter.y, mCamera.transform.position.z);
+    }
+
+    public void ZoomIn()
+    {
+        mMinOrthographicSize -= mZoomSpeed;
+        mMinOrthographicSize = Mathf.Clamp(mMinOrthographicSize, 65.0f, 150.0f); 
+    }
+
+    public void ZoomOut()
+    {
+        mMinOrthographicSize += mZoomSpeed;
+        mMinOrthographicSize = Mathf.Clamp(mMinOrthographicSize, 65.0f, 150.0f);
+
     }
 
     /* Old Code

@@ -9,12 +9,12 @@ public abstract class Ability : ScriptableObject
     protected Entity owner;
     //AbilityTrigger trigger;
 
-    public virtual void OnEquipTrigger(Player player) {
-        player.abilities.Add(this);
+    public virtual void OnEquipTrigger(Entity entity) {
+        entity.abilities.Add(this);
         //player.playerPanel.uiPlayerTab.effectContainer.AddEffect(this);
-        owner = player;
+        owner = entity;
     }
-    public virtual void OnHitTrigger(Attack attack, IHurtable entity) { }
+    public virtual void OnHitTrigger(AttackObject attack, IHurtable entity) { }
     public virtual void OnDamagedTrigger(Attack attack) { }
     public virtual void OnJumpTrigger(Player player) { }
     public virtual void OnUnequipTrigger(Entity entity) {

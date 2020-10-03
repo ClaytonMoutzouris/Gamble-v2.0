@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\UI\PlayerUIPanels.cs" />
     <Compile Include="Assets\Scripts\Items\Matter\Element.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
+    <Compile Include="Assets\ControlsMenu.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Snowball.cs" />
     <Compile Include="Assets\Scripts\Database\LootTableDatabase.cs" />
     <Compile Include="Assets\Character Stats\CharacterStat.cs" />
@@ -196,7 +197,6 @@
     <Compile Include="Assets\GameInfo.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerRenderer.cs" />
     <Compile Include="Assets\NavigationMenu.cs" />
-    <Compile Include="Assets\EventSystemManager.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\AttackWhenHit.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityRenderer.cs" />
     <Compile Include="Assets\ItemObjectRenderer.cs" />
@@ -208,7 +208,6 @@
     <Compile Include="Assets\Scripts\Utility\Timer.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHealthBar.cs" />
     <Compile Include="Assets\NewPlayerInputController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlayerGamepadManager.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerBackground.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\RollingBoulder.cs" />
@@ -362,7 +361,9 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\ControlsMenu.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\Shroombo.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\GiantCrab.cs" />
+    <Compile Include="Assets\Scripts\Items\Consumables\SummonMinibossItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -687,9 +688,6 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="XInputDotNetPure">
-      <HintPath>Assets\Plugins\XInputDotNet\Plugins\XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.0f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

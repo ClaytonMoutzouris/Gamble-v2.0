@@ -24,7 +24,7 @@ public class PlayerClass : ScriptableObject
         {
             foreach (Equipment equipment in startingEquipment)
             {
-                Equipment temp = (Equipment)ItemDatabase.NewItem(equipment);
+                Equipment temp = Instantiate(equipment);
 
                 player.Inventory.AddItemToInventory(temp);
                 player.Equipment.EquipItem(temp);
@@ -32,8 +32,7 @@ public class PlayerClass : ScriptableObject
 
             foreach (Item item in startingInventory)
             {
-                Item temp = ItemDatabase.NewItem(item);
-                temp = Instantiate(temp);
+                Item temp = Instantiate(item);
 
                 player.Inventory.AddItemToInventory(temp);
             }

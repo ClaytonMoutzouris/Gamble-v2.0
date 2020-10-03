@@ -35,7 +35,7 @@ public class SaveLoadManager : MonoBehaviour
         {
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream stream = new FileStream(savePath + name + ".sav", FileMode.Open);
+            FileStream stream = new FileStream(savePath + name + ".sav", FileMode.OpenOrCreate);
 
             PlayerSaveData data = bf.Deserialize(stream) as PlayerSaveData;
             
@@ -55,7 +55,7 @@ public class SaveLoadManager : MonoBehaviour
         foreach (string file in Directory.GetFiles(savePath))
         {
             Debug.Log("File found - " + file);
-            FileStream stream = new FileStream(file, FileMode.Open);
+            FileStream stream = new FileStream(file, FileMode.OpenOrCreate);
 
             if (File.Exists(file) && stream.Length > 0)
             {

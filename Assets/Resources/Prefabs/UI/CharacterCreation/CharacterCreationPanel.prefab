@@ -2023,7 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902d3a6b2994ffb44ab1bf8d82d2768f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputAnchor: {fileID: 0}
+  inputAnchor: {fileID: 9037264196008985424}
   mainPanel: {fileID: 3992250977400396672}
   loadNodePrefab: {fileID: 7697109571398906301, guid: a6113b15d83a55947a9ca865de908181,
     type: 3}
