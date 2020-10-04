@@ -18,6 +18,7 @@ MonoBehaviour:
   bodySize: {x: 39, y: 44}
   CollidesWith: 000000000200000007000000
   abilityFlags: 03000000
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 5374977512973301148, guid: a046d0893c1b15a46aa6f47b104ab441, type: 3}
@@ -36,7 +37,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5421dd583fbb3949a25f6150ba13c0c, type: 2}
   meleeAttacks:
   - {fileID: 11400000, guid: 3d9a3f1edbce6eb4ea73405500499a63, type: 2}
-  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
+  lootTable: {fileID: 11400000, guid: f839763ac60f2e54e992059bad468f4d, type: 2}
   stats:
   - type: 0
     value: 0

@@ -50,4 +50,19 @@ public static class MinibossDatabase
 
     }
 
+    public static MinibossPrototype GetMinibossPrototype(string name)
+    {
+        ValidateDatabase();
+
+        foreach (MinibossPrototype miniboss in mMinibossDatabase)
+        {
+            if (miniboss.mName.Equals(name))
+            {
+                return ScriptableObject.Instantiate(miniboss) as MinibossPrototype;
+            }
+        }
+        return null;
+
+    }
+
 }

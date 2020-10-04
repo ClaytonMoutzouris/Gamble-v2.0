@@ -886,6 +886,8 @@ public class Player : Entity, IHurtable
                 }
                 Body.mSpeed = Vector2.zero;
                 Body.mIgnoresGravity = true;
+                Body.mPS.tmpIgnoresOneWay = true;
+
                 mCannotClimb = true;
 
 

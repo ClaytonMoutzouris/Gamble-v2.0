@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71fbf5c5093034d4d9deed5ecc29231e, type: 3}
+  m_Name: Voidbeast
+  m_EditorClassIdentifier: 
+  entityType: 8
+  hostility: 2
+  mName: Voidbeast
+  bodySize: {x: 42, y: 38}
+  CollidesWith: 000000000200000007000000
+  abilityFlags: 03000000
+  baseAbilities: []
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: -3771580738058872296, guid: 72d17e574a4b79149b925bed4df1ea38, type: 3}
+  sortingLayer: 3
+  animationController: {fileID: 9100000, guid: f610794ea4565074e8419b2f3438f6d4, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 40
+  kinematic: 0
+  colorPallete: []
+  enemyType: -2
+  movementSpeed: 0
+  jumpHeight: 0
+  sightRange: 320
+  health: 300
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: d0bf5e1ca79baa745b60b467d537edcf, type: 2}
+  lootTable: {fileID: 11400000, guid: f95550c4967f9dc4dbcf4b6705fb3461, type: 2}
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  minibossType: 5

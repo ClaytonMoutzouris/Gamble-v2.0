@@ -7,7 +7,7 @@ public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, 
 public enum NPCType { Standard, Shopkeeper };
 
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, VoidBoss, Count };
-public enum MinibossType { BogBeast, Salamander, IceShard, Shroombo, GiantCrab }
+public enum MinibossType { BogBeast, Salamander, IceShard, Shroombo, GiantCrab, Voidbeast }
 public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Artifact, Count }
 public enum StatusEffectType {  Poisoned, Burned, Frozen, Stunned, KnockedBack, Bleeding };

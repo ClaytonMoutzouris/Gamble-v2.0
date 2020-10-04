@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
   m_Name: CrabSpray
   m_EditorClassIdentifier: 
-  duration: 5
-  cooldown: 1
-  startUpFrames: 0
-  offset: {x: 24, y: 24}
+  duration: 15
+  cooldown: 1.5
+  startUpFrames: 5
+  offset: {x: 36, y: 24}
   animationController: {fileID: 0}
-  damage: 10
+  damage: 15
   sfx: {fileID: 0}
-  projectilePrototype: {fileID: 11400000, guid: d73806d248a8f2c43835e63b4e59058f,
+  projectilePrototype: {fileID: 11400000, guid: 0f3807790058f714a9bfc812a7c0c654,
     type: 2}
   numberOfProjectiles: 1
   spreadAngle: 0

@@ -21,7 +21,8 @@ public class ShopScreenUI : MonoBehaviour
     public ResourceCounterUI crystalCounter;
     public NPC currentNPC;
     public ShopScreenMode buysellMode;
-
+    public GameObject sellButton;
+    public GameObject buyButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -106,9 +107,16 @@ public class ShopScreenUI : MonoBehaviour
         sellRect.gameObject.SetActive(false);
         buyRect.gameObject.SetActive(true);
 
-        defaultObject = shopBuyNodes[0].gameObject;
-        currentNode = shopBuyNodes[0];
-        GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
+        if (shopBuyNodes.Count == 0)
+        {
+            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(buyButton);
+        }
+        else
+        {
+            defaultObject = shopBuyNodes[0].gameObject;
+            currentNode = shopBuyNodes[0];
+            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
+        }
 
     }
 
@@ -119,9 +127,17 @@ public class ShopScreenUI : MonoBehaviour
         sellRect.gameObject.SetActive(true);
         buyRect.gameObject.SetActive(false);
 
-        defaultObject = shopSellNodes[0].gameObject;
-        currentNode = shopSellNodes[0];
-        GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
+        if (shopSellNodes.Count == 0)
+        {
+            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(sellButton);
+        }
+        else
+        {
+            defaultObject = shopSellNodes[0].gameObject;
+            currentNode = shopSellNodes[0];
+            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(defaultObject);
+        }
+    
     }
 
     public void SetCurrentNode(ShopTradeNode node)
@@ -179,13 +195,35 @@ public class ShopScreenUI : MonoBehaviour
 
             case ShopScreenMode.Sell:
                 ShopSellNode sellNode = (ShopSellNode)node;
-                if (currentPlayer.GetCurrency(sellNode.GetItemForSale(), 1))
+                int index = shopSellNodes.IndexOf(sellNode);
+
+                InventorySlot slot = currentPlayer.Inventory.FindSlotForItem(sellNode.GetItemForSale());
+                if (slot != null)
                 {
-                    for(int i = sellNode.GetValue(); i > 0; i--)
+                    Item sold = slot.GetOneItem();
+                    if(sold != null)
                     {
-                        currentPlayer.Inventory.AddItemToInventory(ItemDatabase.NewItem(sellNode.GetCurrency()));
+                        for (int i = sellNode.GetValue(); i > 0; i--)
+                        {
+                            currentPlayer.Inventory.AddItemToInventory(ItemDatabase.NewItem(sellNode.GetCurrency()));
+                        }
+                        crystalCounter.SetCounter(currentPlayer.GetCurrencyCount(sellNode.GetCurrency()));
+                        currentNPC.npcWares.Add(sold);
+                        LoadInventories();
+                        if(index == 0)
+                        {
+                            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(sellButton);
+                        }
+                        else if(index == shopSellNodes.Count)
+                        {
+                            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(shopSellNodes[index-1].button.gameObject);
+                        }
+                        else
+                        {
+                            GamepadInputManager.instance.gamepadInputs[currentPlayer.mPlayerIndex].GetEventSystem().SetSelectedGameObject(shopSellNodes[index].button.gameObject);
+                        }
+
                     }
-                    crystalCounter.SetCounter(currentPlayer.GetCurrencyCount(sellNode.GetCurrency()));
                 }
 
                 break;

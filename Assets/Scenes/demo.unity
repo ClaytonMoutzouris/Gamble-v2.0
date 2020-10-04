@@ -17883,6 +17883,8 @@ MonoBehaviour:
   currentNode: {fileID: 0}
   crystalCounter: {fileID: 5723738271198288864}
   buysellMode: 0
+  sellButton: {fileID: 573246520}
+  buyButton: {fileID: 1423613563}
 --- !u!114 &1978176752
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState { Idle, Moving, Jumping, Attacking, Aggrivated, Attack1, Attack2, Attack3 };
+public enum EnemyState { Idle, Moving, Jumping, Attacking, Knockback, Aggrivated, Attack1, Attack2, Attack3 };
 
 public static class EnemyBehaviour
 {

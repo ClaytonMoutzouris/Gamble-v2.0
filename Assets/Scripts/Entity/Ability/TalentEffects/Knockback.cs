@@ -11,7 +11,7 @@ public class Knockback : Ability
     {
         base.OnHitTrigger(attackObject, entity);
 
-        if (entity.GetEntity().abilityFlags.GetFlag(AbilityFlag.Heavy))
+        if (entity.GetEntity().Body.mIsKinematic || entity.GetEntity().abilityFlags.GetFlag(AbilityFlag.Heavy))
         {
             return;
         }
@@ -31,7 +31,7 @@ public class Knockback : Ability
             player.movementState = MovementState.Knockback;
 
         }
-
-        entity.GetEntity().Body.mSpeed = (attackObject.direction).normalized*500;
+        Vector2 knockbackVector = Vector2.right * attackObject.direction.x + Vector2.up * 0.5f;
+        entity.GetEntity().Body.mSpeed = knockbackVector.normalized*500;
     }
 }

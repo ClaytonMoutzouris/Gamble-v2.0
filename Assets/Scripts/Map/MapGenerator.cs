@@ -472,7 +472,7 @@ public static class MapGenerator
             //map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Snowzooka"));
 
         }
-        //map.AddEntity(new MinibossData(15, 10, map.Data.minibossType));
+        map.AddEntity(new MinibossData(15, 10, map.Data.minibossType));
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {

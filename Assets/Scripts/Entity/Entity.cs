@@ -310,25 +310,34 @@ public class Entity {
         if (Body.mIsKinematic || abilityFlags.GetFlag(AbilityFlag.Heavy))
             return;
 
+
         if (this is IHurtable hurtable)
         {
-            if (abilityFlags.GetFlag(AbilityFlag.CrushProtection))
+            if (crusher != null)
             {
-                hurtable.GetHurt(Attack.ProtectedCrushAttack());
-            }
-            else
-            {
-                if (crusher != null)
+                if (abilityFlags.GetFlag(AbilityFlag.CrushProtection))
+                {
+                    hurtable.GetHurt(Attack.ProtectedCrushAttack());
+                }
+                else
                 {
                     hurtable.GetHurt(new Attack(crusher.crushDamage));
                 }
-                else
+
+            }
+            else
+            {
+                if (abilityFlags.GetFlag(AbilityFlag.CrushProtection))
+                {
+                    hurtable.GetHurt(Attack.ProtectedCrushAttack());
+                } else
                 {
                     hurtable.GetHurt(Attack.CrushAttack());
                 }
             }
         }
     }
+    
 
     public virtual void Spiked()
     {

@@ -580,6 +580,7 @@ public class PhysicsBody : CustomCollider2D
         mPS.pushesBottomTile = mPS.pushesLeftTile = mPS.pushesRightTile = mPS.pushesTopTile =
         mPS.pushesBottomObject = mPS.pushesLeftObject = mPS.pushesRightObject = mPS.pushesTopObject = false;
 
+
         mPS.onLadder = false;
         mPS.onDoor = false;
         mPS.inWater = false;
@@ -620,6 +621,7 @@ public class PhysicsBody : CustomCollider2D
         {
             mSpeed.x = Mathf.Min(0.0f, mSpeed.x);
         }
+
 
         /* Here is where we should update tile physics changes */
 
@@ -765,6 +767,7 @@ public class PhysicsBody : CustomCollider2D
                 }
                 else
                 {
+
                     mPS.pushesLeftObject = true;
                     //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
                 }
@@ -774,11 +777,15 @@ public class PhysicsBody : CustomCollider2D
             {
                 if (other.mAABB.Center.y > mAABB.Center.y)
                 {
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesBottomTile && other.mEntity.hostility != mEntity.hostility)
+                        mEntity.Crush();
                     mPS.pushesTopObject = true;
                     //mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
                 else
                 {
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesTopTile && other.mEntity.hostility != mEntity.hostility)
+                        mEntity.Crush();
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
                     mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
@@ -815,32 +822,33 @@ public class PhysicsBody : CustomCollider2D
             if (smallestOverlap == Mathf.Abs(overlap.x))
             {
                 float offsetX = overlap.x * speedRatioX;
-
                 mOffset.x += offsetX;
                 offsetSum.x += offsetX;
 
                 if (overlap.x < 0.0f)
                 {
-                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesLeftTile)
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesLeftTile && other.mEntity.hostility != mEntity.hostility)
                         mEntity.Crush();
 
                     mPS.pushesRightObject = true;
                     //mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
-                    if(other.mEntity.Body.mPS.pushesRight)
+                    if(other.mEntity.Body.mPS.pushesRightTile)
                     {
                         mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
+                        mPS.pushesRightTile = true;
                     }
                 }
                 else
                 {
-                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesRightTile)
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesRightTile && other.mEntity.hostility != mEntity.hostility)
                         mEntity.Crush();
 
                     mPS.pushesLeftObject = true;
                     //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
-                    if(other.mEntity.Body.mPS.pushesLeft)
+                    if(other.mEntity.Body.mPS.pushesLeftTile)
                     {
                         mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
+                        mPS.pushesLeftTile = true;
                     }
                 }
             }
@@ -853,12 +861,14 @@ public class PhysicsBody : CustomCollider2D
 
                 if (overlap.y < 0.0f)
                 {
-                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesBottomTile)
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesBottomTile && other.mEntity.hostility != mEntity.hostility)
                         mEntity.Crush();
 
-                    if(other.mEntity.Body.mPS.pushesTop)
+                    if(other.mEntity.Body.mPS.pushesTopTile)
                     {
                         mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
+                        mPS.pushesTopTile = true;
+
                     }
 
                     mPS.pushesTopObject = true;
@@ -866,16 +876,21 @@ public class PhysicsBody : CustomCollider2D
                 }
                 else
                 {
-                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesTopTile)
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesTopTile && other.mEntity.hostility != mEntity.hostility)
                         mEntity.Crush();
 
-                    if(other.mEntity.Body.mPS.pushesBottom)
+                    if(other.mEntity.Body.mPS.pushesBottomTile)
                     {
                         mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                        mPS.pushesBottomTile = true;
                     }
                     TryAutoMount(other.mEntity);
                     mPS.pushesBottomObject = true;
-                    mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                    /*
+                    if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) {
+                        mSpeed.y = Mathf.Max(mSpeed.y, 0.0f);
+                    }
+                    */
                 }
             }
         }
