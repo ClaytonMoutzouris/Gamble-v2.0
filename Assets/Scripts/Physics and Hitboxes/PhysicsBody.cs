@@ -679,11 +679,8 @@ public class PhysicsBody : CustomCollider2D
         if (mPS.inUpdraft)
         {
 
-            mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime) + Vector2.up * (mEntity.Map.GetGravity() * 2 * Time.deltaTime);
+            mSpeed += mEntity.gravityVector*mEntity.gravityMultiplier * (mEntity.Map.GetGravity() * Time.deltaTime) + Vector2.up * (mEntity.Map.GetGravity() * 2 * Time.deltaTime);
             mSpeed.y = Mathf.Min(mSpeed.y, -Constants.cMaxFallingSpeed / 2);
-            
-
-
 
             //mPS.pushesBottomTile = mPS.pushesTopTile;
         }
@@ -692,13 +689,13 @@ public class PhysicsBody : CustomCollider2D
 
             if (mPS.inWater)
             {
-                mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime);
+                mSpeed += mEntity.gravityVector * mEntity.gravityMultiplier * (mEntity.Map.GetGravity() * Time.deltaTime);
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed / 10);
 
             }
             else
             {
-                mSpeed += mEntity.gravityVector * (mEntity.Map.GetGravity() * Time.deltaTime);
+                mSpeed += mEntity.gravityVector * mEntity.gravityMultiplier * (mEntity.Map.GetGravity() * Time.deltaTime);
                 mSpeed.y = Mathf.Max(mSpeed.y, Constants.cMaxFallingSpeed);
             }
         }

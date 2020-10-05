@@ -74,4 +74,9 @@ public class BreakableTile : Entity, IHurtable
         //Do other stuff first because the base destroys the object
         base.ActuallyDie();
     }
+
+    public void GainLife(int health, bool fromTrigger)
+    {
+        //throw new System.NotImplementedException();
+    }
 }

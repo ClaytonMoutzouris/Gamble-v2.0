@@ -465,6 +465,10 @@ public static class MapGenerator
         {
             map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Biosample"));
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Slime Egg"));
+            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Low Gravity Potion"));
+            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Damage Buff Potion"));
+
+
         }
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)

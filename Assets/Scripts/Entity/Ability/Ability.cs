@@ -31,7 +31,7 @@ public abstract class Ability : ScriptableObject
 
     }
 
-    public virtual void OnHealTrigger(Player player, int heals)
+    public virtual void OnHealTrigger(IHurtable player, int heals)
     {
 
     }

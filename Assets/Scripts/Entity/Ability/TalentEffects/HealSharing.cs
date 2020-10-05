@@ -8,7 +8,7 @@ public class HealSharing : Ability
     //Perhaps add a range aspect to this
     public int sharePercent = 10;
 
-    public override void OnHealTrigger(Player player, int heals)
+    public override void OnHealTrigger(IHurtable player, int heals)
     {
         base.OnHealTrigger(player, heals);
         foreach(Player ally in CrewManager.instance.players)

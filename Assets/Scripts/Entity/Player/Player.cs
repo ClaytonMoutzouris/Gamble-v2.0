@@ -1498,9 +1498,6 @@ public class Player : Entity, IHurtable
                 effect.OnHealTrigger(this, life);
             }
         }
-
-
-
     }
 
 

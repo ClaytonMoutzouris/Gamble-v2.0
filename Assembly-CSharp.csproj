@@ -105,7 +105,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\WurmAlien.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Laser.cs" />
-    <Compile Include="Assets\Scripts\Entity\Effects\AuraEffect.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerUIPanels.cs" />
     <Compile Include="Assets\Scripts\Items\Matter\Element.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
@@ -232,7 +231,6 @@
     <Compile Include="Assets\ClassOptionSelector.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\IceShard.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
-    <Compile Include="Assets\Scripts\Entity\Effects\GainStats.cs" />
     <Compile Include="Assets\Scripts\UI\OtisUIPanel.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Iceblock.cs" />
@@ -264,8 +262,8 @@
     <Compile Include="Assets\ResourceCounterUI.cs" />
     <Compile Include="Assets\ColorPicker.cs" />
     <Compile Include="Assets\Scripts\Database\GameData.cs" />
-    <Compile Include="Assets\Scripts\Entity\Effects\Effect.cs" />
     <Compile Include="Assets\Scripts\Entity\Talents\TalentTree.cs" />
+    <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\Voidbeast.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\MedicalBay.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Snowdrift.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\GiantCrab.cs" />
@@ -282,7 +280,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\SharkBoss.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\Lifesteal.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\PhysicsBody.cs" />
-    <Compile Include="Assets\Scripts\Entity\Effects\OnHitEffect.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\HealSharing.cs" />
     <Compile Include="Assets\ColorSwapOption.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype\AttackPrototype.cs" />
@@ -364,7 +361,14 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\Voidbeast.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\LifeRegeneration.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\DamageOverTimeEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StunEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\AbilityEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\GravityShiftEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\HealOverTimeEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\BuffOnHit.cs" />
+    <Compile Include="Assets\Scripts\Items\Consumables\EffectItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

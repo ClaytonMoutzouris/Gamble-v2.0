@@ -117,4 +117,9 @@ public class Iceblock : Entity, IHurtable
     {
         return base.ToString();
     }
+
+    public void GainLife(int health, bool fromTrigger)
+    {
+        //throw new System.NotImplementedException();
+    }
 }

@@ -43,6 +43,12 @@ public class ItemEditor
         ScriptableObjectUtility.CreateAsset<Food>();
     }
 
+    [MenuItem("Assets/Create/Items/Consumable/EffectItem")]
+    public static void CreateEffectItemAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<EffectItem>();
+    }
+
     [MenuItem("Assets/Create/Items/Consumable/SummonItem/SummonEnemyItem")]
     public static void CreateSummonEnemyItemAsset()
     {

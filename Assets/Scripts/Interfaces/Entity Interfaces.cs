@@ -15,6 +15,7 @@ public interface IHurtable
 {
     Hurtbox HurtBox { get; set; }
     void GetHurt(Attack attack);
+    void GainLife(int health, bool fromTrigger);
     Entity GetEntity();
 }
 

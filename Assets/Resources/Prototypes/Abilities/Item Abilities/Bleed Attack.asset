@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Bleed Attack
   description: 
-  statusType: 5
+  statusEffect: {fileID: 11400000, guid: 893c8d19b61497e4dbc303b73f7f816b, type: 2}
   duration: 10
   procChance: 25

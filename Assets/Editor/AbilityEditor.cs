@@ -10,6 +10,12 @@ public class AbilityEditor
         ScriptableObjectUtility.CreateAsset<StatusOnHit>();
     }
 
+    [MenuItem("Assets/Create/Ability/BuffOnHit")]
+    public static void CreateBaseBuffOnHitAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<BuffOnHit>();
+    }
+
     [MenuItem("Assets/Create/Ability/Aura")]
     public static void CreateBaseAuraAsset()
     {

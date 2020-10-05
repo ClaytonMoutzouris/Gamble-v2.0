@@ -13,6 +13,7 @@ public class Entity {
     public Hostility hostility = Hostility.Neutral;
     public List<EntityType> mCollidesWith;
     public List<StatusEffect> statusEffects;
+
     public float mMovingSpeed;
     public int crushDamage = 999;
     public Vector2 Position;
@@ -34,6 +35,7 @@ public class Entity {
     public List<Ability> abilities;
 
     public Vector2 gravityVector = Vector2.down;
+    public float gravityMultiplier = 1;
 
     public struct AbilityFlags
     {
@@ -255,7 +257,7 @@ public class Entity {
         foreach (StatusEffect effect in statusEffects)
         {
             effect.UpdateEffect();
-            if (effect.expired)
+            if (effect.Expired)
             {
                 //Debug.Log(effect + " is ready to end.");
                 toRemove.Add(effect);

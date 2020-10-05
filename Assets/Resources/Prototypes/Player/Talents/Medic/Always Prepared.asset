@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Always Prepared
   m_EditorClassIdentifier: 
   talentName: Always Prepared
-  description: Gain 2 medipacks
+  description: Gain some healing items
   abilities: []
   statBonuses: []
   bonusItems:
   - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  - {fileID: 11400000, guid: 51d131fd03bc93d408e89117be43330d, type: 2}
+  - {fileID: 11400000, guid: e6b103c992312cc44a6d6218916895f7, type: 2}
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 1
   level: 0

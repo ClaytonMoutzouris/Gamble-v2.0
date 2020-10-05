@@ -18,7 +18,8 @@ MonoBehaviour:
   bodySize: {x: 42, y: 38}
   CollidesWith: 000000000200000007000000
   abilityFlags: 03000000
-  baseAbilities: []
+  baseAbilities:
+  - {fileID: 11400000, guid: 287860f56f930a24fb7307dbc76dcaf5, type: 2}
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: -3771580738058872296, guid: 72d17e574a4b79149b925bed4df1ea38, type: 3}

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Stun Attack
   description: 
-  statusType: 3
+  statusEffect: {fileID: 11400000, guid: bf6df565246959546b388debacc90364, type: 2}
   duration: 5
+  procChance: 5

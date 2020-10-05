@@ -282,4 +282,19 @@ public class Enemy : Entity, IHurtable
     {
         return this;
     }
+
+    public void GainLife(int health, bool fromTrigger)
+    {
+        int life = (int)this.mHealth.GainHP(health);
+        ShowFloatingText(life.ToString(), Color.green);
+
+        //heals from triggers shouldnt also trigger
+        if (!fromTrigger)
+        {
+            foreach (Ability effect in abilities)
+            {
+                effect.OnHealTrigger(this, life);
+            }
+        }
+    }
 }
