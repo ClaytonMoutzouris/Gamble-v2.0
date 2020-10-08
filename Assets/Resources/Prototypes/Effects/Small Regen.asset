@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411aa6305d4fa5249ad2385998c1b982, type: 3}
   m_Name: Small Regen
   m_EditorClassIdentifier: 
-  effectedTypes: 0000000001000000060000000700000008000000
+  uneffectedTypes: 
   effectClass: 0
   effectDuration: 5
   stackable: 1
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 7207362474879901351, guid: 4a6a6d1077a54c44d98b96f5dbd86d47,
+    type: 3}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 1
+  icon: {fileID: 3134837692911850131, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   tickFrequency: 1
   tickHeal: 2

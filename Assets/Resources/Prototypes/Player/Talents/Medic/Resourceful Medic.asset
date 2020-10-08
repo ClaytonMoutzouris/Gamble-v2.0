@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 267a01580f308fe40bdaf85693797e35, type: 3}
-  m_Name: Test Talent
+  m_Name: Resourceful Medic
   m_EditorClassIdentifier: 
-  talentName: Test Talent
-  description: Whatever Talent Im testing is here
+  talentName: Resourceful Medic
+  description: Chance to not consume medkits when used
   abilities:
-  - {fileID: 11400000, guid: ed08cf53ad0144b46ad1aebf2fe6043b, type: 2}
+  - {fileID: 11400000, guid: 7b89cf39960ebdd4db3ab7262a61dc77, type: 2}
   statBonuses: []
   bonusItems: []
   icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}

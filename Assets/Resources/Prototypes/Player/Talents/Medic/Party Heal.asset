@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Party Heal
   m_EditorClassIdentifier: 
   talentName: Party Heal
-  description: Healing also heals allies
+  description: Healing yourself also heals nearby allies
   abilities:
   - {fileID: 11400000, guid: 99d0ff6860c3261499d42cc0950cddf9, type: 2}
   statBonuses: []

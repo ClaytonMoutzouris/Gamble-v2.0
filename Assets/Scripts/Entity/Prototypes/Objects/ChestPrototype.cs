@@ -6,6 +6,6 @@ public class ChestPrototype : EntityPrototype
 {
     public bool locked;
     public List<Item> possibleItems;
-    
+    public LootTable lootTable;
 
 }

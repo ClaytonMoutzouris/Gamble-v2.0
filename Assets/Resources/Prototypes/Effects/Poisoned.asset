@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70ad1e6cf042ef4f88f417b00f58afc, type: 3}
   m_Name: Poisoned
   m_EditorClassIdentifier: 
-  effectedTypes: 0000000001000000060000000800000007000000
+  uneffectedTypes: 
   effectClass: 1
-  type: 0
   effectDuration: 10
   stackable: 0
   effectPrefab: {fileID: 1849710206421333146, guid: f6260657c78dd7f4a826b21e94a20c57,
     type: 3}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 0
+  icon: {fileID: 1096095417583519949, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   tickFrequency: 1
   tickDamage: 1

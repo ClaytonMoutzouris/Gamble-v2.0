@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Low Gravity Potion
   rarity: 1
-  baseValue: 5
+  baseValue: 10
   sprite: {fileID: -7400546075032755039, guid: cd7efdf1143dcb84d9dfcf49b411c644, type: 3}
   isStackable: 1
   identified: 1

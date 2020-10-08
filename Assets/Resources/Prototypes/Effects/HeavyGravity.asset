@@ -16,8 +16,11 @@ MonoBehaviour:
   effectClass: 1
   effectDuration: 5
   stackable: 0
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 6807538516601789440, guid: 20f86225444fca54b97da4b4428ecaae,
+    type: 3}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 1
+  icon: {fileID: 7493382081934561379, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   changeVector: 0
   changeMultiplier: 1
   gravityVector: {x: 0, y: -1}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple a Day
   m_EditorClassIdentifier: 
   talentName: Apple a Day
-  description: Eating food grants stats
+  description: Eating food gives gives +2 Max HP
   abilities:
   - {fileID: 11400000, guid: f7d00df4b53bb714591cfad7c8a397f3, type: 2}
   statBonuses: []

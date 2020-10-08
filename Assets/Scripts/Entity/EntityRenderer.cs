@@ -177,7 +177,7 @@ public class EntityRenderer : MonoBehaviour
     {
         //gameObject.AddComponent<ParticleSystem>().;
         GameObject effectObject = Instantiate(particleEffect, transform).gameObject;
-        effectObject.transform.localPosition = Entity.Body.mOffset + offset;
+        effectObject.transform.localPosition = offset;
         effects.Add(effectObject);
         return effectObject;
     }

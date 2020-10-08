@@ -12,6 +12,7 @@ public class Chest : Entity, IInteractable {
     public bool mOpen = false;
     public bool locked = false;
     public List<Item> possibleLoot;
+    public LootTable lootTable;
 
     public Chest(ChestPrototype proto) : base(proto)
     {
@@ -22,6 +23,7 @@ public class Chest : Entity, IInteractable {
 
         locked = false;
         possibleLoot = proto.possibleItems;
+        this.lootTable = proto.lootTable;
     }
 
 
@@ -57,19 +59,23 @@ public class Chest : Entity, IInteractable {
         {
             mOpen = true;
             Renderer.SetAnimState("ChestOpen");
-            MapData data = MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType);
+            ItemObject temp;
 
             int randomIndex = Random.Range(0, possibleLoot.Count);
-            ItemObject temp = new ItemObject(ItemDatabase.NewItem(possibleLoot[randomIndex]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+            temp = new ItemObject(ItemDatabase.NewItem(possibleLoot[randomIndex]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
             temp.Spawn(Position);
-
-            /*
-            foreach (Item item in MapDatabase.GetMap(MapManager.instance.mCurrentMap.worldType).chestLoot.GetLoot())
+            //lootTable.GetLoot();
+            if(lootTable != null)
             {
-                temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-                temp.Spawn(Position);
+                foreach (Item item in lootTable.GetLoot())
+                {
+
+                    temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
+                    temp.Spawn(Position);
+                }
             }
-            */
+
+            
 
 
         }

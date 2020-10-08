@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Map\TileMapRenderer.cs" />
     <Compile Include="Assets\ButtonTooltip.cs" />
     <Compile Include="Assets\Scripts\Items\Consumables\Medkit.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\HealOverTimeEffect.cs" />
     <Compile Include="Assets\Scripts\UI\Options\Option.cs" />
     <Compile Include="Assets\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\Items\Weapons\MeleeWeapon.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Scripts\Entity\Actions\EntityAction.cs" />
     <Compile Include="Assets\InventorySlotUI.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\SaveMachine.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StunEffect.cs" />
     <Compile Include="Assets\ShopOfferNode.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Enemy.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Ghost.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Assets\Scripts\Items\Matter\Element.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuController.cs" />
     <Compile Include="Assets\ControlsMenu.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\BuffOnHit.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Snowball.cs" />
     <Compile Include="Assets\Scripts\Database\LootTableDatabase.cs" />
     <Compile Include="Assets\Character Stats\CharacterStat.cs" />
@@ -139,12 +142,14 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\Salamander.cs" />
     <Compile Include="Assets\Scripts\Entity\NPC\NPCPrototype.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\MaxHPFromConsumable.cs" />
+    <Compile Include="Assets\StatusEffectUIIcon.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadItem.cs" />
     <Compile Include="Assets\ColorOptionSelector.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\Miniboss.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\BossPrototype.cs" />
     <Compile Include="Assets\Scripts\Items\Gadgets\GravityRemote.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\TentacleBoss.cs" />
+    <Compile Include="Assets\PlayerStatusEffectUI.cs" />
     <Compile Include="Assets\Scripts\UI\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Saving and Loading\PlayerSaveData.cs" />
     <Compile Include="Assets\Scripts\Database\EnemyDatabase.cs" />
@@ -157,12 +162,14 @@
     <Compile Include="Assets\ScrollList.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Crawler.cs" />
     <Compile Include="Assets\Scripts\Utility\BinaryConverter.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\LifeRegeneration.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Tree.cs" />
     <Compile Include="Assets\ShopCostNode.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\Knockback.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\FlowerBed.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Projectile.cs" />
     <Compile Include="Assets\NewEventSystemManager.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\AbilityEffect.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CollisionManager.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Gatherable.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EnemyPrototype.cs" />
@@ -190,10 +197,12 @@
     <Compile Include="Assets\Scripts\Map\TilePrototype.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Database\MinibossDatabase.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\DamageOverTimeEffect.cs" />
     <Compile Include="Assets\Scripts\Items\Gadget.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype\RangedAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Database\BossDatabase.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Snek.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\GravityShiftEffect.cs" />
     <Compile Include="Assets\BossUIManager.cs" />
     <Compile Include="Assets\GameInfo.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerRenderer.cs" />
@@ -288,6 +297,7 @@
     <Compile Include="Assets\Scripts\Utility\Constants.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\BouncePad.cs" />
     <Compile Include="Assets\Scripts\Controllers\TimerManager.cs" />
+    <Compile Include="Assets\Scripts\Items\Consumables\EffectItem.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadMenu.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\BogBeast.cs" />
     <Compile Include="Assets\Scripts\Map\Node.cs" />
@@ -361,14 +371,7 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\LifeRegeneration.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\DamageOverTimeEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StunEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\AbilityEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\GravityShiftEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\HealOverTimeEffect.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\BuffOnHit.cs" />
-    <Compile Include="Assets\Scripts\Items\Consumables\EffectItem.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StatChangeEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

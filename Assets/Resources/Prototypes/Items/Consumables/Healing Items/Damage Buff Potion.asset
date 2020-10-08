@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Damage Buff Potion
   rarity: 1
-  baseValue: 5
+  baseValue: 10
   sprite: {fileID: -3811207439911701464, guid: cd7efdf1143dcb84d9dfcf49b411c644, type: 3}
   isStackable: 1
   identified: 1

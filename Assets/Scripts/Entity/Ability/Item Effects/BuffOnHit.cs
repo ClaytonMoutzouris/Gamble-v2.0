@@ -5,6 +5,7 @@ using UnityEngine;
 public class BuffOnHit : Ability
 {
     public StatusEffect statusEffect;
+
     public int duration;
     public int procChance = 5;
 

@@ -20,6 +20,7 @@ public class PlayerPanel : MonoBehaviour
     public GameObject menuObject;
     public bool isOpen = false;
     public int panelHeight;
+    public PlayerStatusEffectUI effectUI;
 
     // Start is called before the first frame update
     public void Initialize()

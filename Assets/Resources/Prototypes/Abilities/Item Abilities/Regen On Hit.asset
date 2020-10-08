@@ -16,4 +16,4 @@ MonoBehaviour:
   description: 
   statusEffect: {fileID: 11400000, guid: 26ce0dc95445b2f4592a82aad36bba58, type: 2}
   duration: 5
-  procChance: 50
+  procChance: 10

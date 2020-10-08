@@ -19,5 +19,7 @@ MonoBehaviour:
   effectPrefab: {fileID: 2599237149722477472, guid: 40fa48081035f144aa452713f6f530cd,
     type: 3}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 0
+  icon: {fileID: 1125526494193087711, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   tickFrequency: 5
   tickDamage: 5

@@ -9,13 +9,14 @@ public class Aura : Ability
     public int auraRadius = 160;
     public Ability auraAbility;
     public ParticleSystem visuals;
+    public GameObject auraObject;
 
     public void Apply(Entity entity)
     {
         if(entity is Player player)
         {
             auraAbility.OnEquipTrigger(player);
-            player.Renderer.AddVisualEffect(visuals, Vector2.up*player.Body.mAABB.HalfSize);
+            auraObject = player.Renderer.AddVisualEffect(visuals, Vector2.up*player.Body.mAABB.HalfSize);
         }
 
         if (entity is Companion companion)
@@ -23,14 +24,14 @@ public class Aura : Ability
             Debug.LogWarning("Applying auro to companion");
 
             auraAbility.OnEquipTrigger(companion);
-            companion.Renderer.AddVisualEffect(visuals, Vector2.up * companion.Body.mAABB.HalfSize);
+            auraObject = companion.Renderer.AddVisualEffect(visuals, Vector2.up * companion.Body.mAABB.HalfSize);
         }
     }
 
     public void Unapply(Entity entity)
     {
         auraAbility.OnUnequipTrigger(entity);
-        entity.Renderer.RemoveVisualEffect(abilityName+"(Clone)");
+        entity.Renderer.RemoveVisualEffect(auraObject);
         
     }
 

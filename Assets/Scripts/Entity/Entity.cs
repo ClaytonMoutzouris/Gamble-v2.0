@@ -36,6 +36,8 @@ public class Entity {
 
     public Vector2 gravityVector = Vector2.down;
     public float gravityMultiplier = 1;
+    public float baseGravityMultiplier = 1;
+
 
     public struct AbilityFlags
     {

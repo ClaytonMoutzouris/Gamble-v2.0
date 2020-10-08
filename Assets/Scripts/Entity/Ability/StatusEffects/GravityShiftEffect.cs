@@ -14,7 +14,6 @@ public class GravityShiftEffect : StatusEffect
 
     public override bool OnApplyEffect(Entity effected)
     {
-        Debug.Log("APPLY HEAVY GRAVITY TO " + effected.entityName);
 
         if (!base.OnApplyEffect(effected))
         {
@@ -53,7 +52,7 @@ public class GravityShiftEffect : StatusEffect
 
         if (changeMultiplier)
         {
-            EffectedEntity.gravityMultiplier = previousMultiplier;
+            EffectedEntity.gravityMultiplier = EffectedEntity.baseGravityMultiplier;
         }
         base.OnEffectEnd();
 

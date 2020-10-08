@@ -36,9 +36,11 @@ public class MeleeAttackObject : AttackObject
                     hit.GetHurt(attack);
                     if(owner is Entity entity)
                     {
-                        foreach(Ability effect in entity.abilities)
+                        int count = entity.abilities.Count;
+
+                        for (int i = 0; i < count; i++)
                         {
-                            effect.OnHitTrigger(this, hit);
+                            entity.abilities[i].OnHitTrigger(this, hit);
                         }
                     }
                     hitbox.mDealtWith.Add(hit);

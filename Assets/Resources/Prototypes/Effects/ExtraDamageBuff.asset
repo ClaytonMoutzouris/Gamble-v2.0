@@ -16,6 +16,9 @@ MonoBehaviour:
   effectClass: 0
   effectDuration: 10
   stackable: 0
-  effectPrefab: {fileID: 0}
+  effectPrefab: {fileID: 1161482085238976431, guid: 42a478111f0c44840a4d4c645d104337,
+    type: 3}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 0
+  icon: {fileID: -8290258247621887946, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   abilityProto: {fileID: 11400000, guid: 5c2866c0b91021e4292d8b34fd5220c8, type: 2}

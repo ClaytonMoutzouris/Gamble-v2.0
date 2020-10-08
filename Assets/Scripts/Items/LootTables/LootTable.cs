@@ -49,7 +49,7 @@ public class LootTable : ScriptableObject
         return items;
     }
 
-    public List<Item> GetLoot()
+    public virtual List<Item> GetLoot()
     {
         List<Item> items = new List<Item>();
         

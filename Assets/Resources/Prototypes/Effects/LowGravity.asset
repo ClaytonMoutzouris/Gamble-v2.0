@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: LowGravity
   m_EditorClassIdentifier: 
   uneffectedTypes: 0600000008000000
-  effectClass: 1
+  effectClass: 0
   effectDuration: 10
   stackable: 0
   effectPrefab: {fileID: 0}
   effectOffset: {x: 0, y: 0}
+  effectLocation: 0
+  icon: {fileID: -4313868077129992449, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
   changeVector: 0
   changeMultiplier: 1
   gravityVector: {x: 0, y: -1}

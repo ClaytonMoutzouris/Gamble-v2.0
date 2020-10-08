@@ -17,12 +17,17 @@ MonoBehaviour:
   mName: Chest
   bodySize: {x: 5, y: 5}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 9100000, guid: 9beede1bba294ab4582856b81534da07, type: 2}
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
   locked: 0
   possibleItems:
   - {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
@@ -31,12 +36,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
   - {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
   - {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
-  - {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  - {fileID: 11400000, guid: dffb25861df4eca4d85e66bc949b80ea, type: 2}
   - {fileID: 11400000, guid: 9bf2c2e97b0d85f478292980162ab2da, type: 2}
   - {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
   - {fileID: 11400000, guid: ecc5c4652cbe99445b33f8cb2ccfb713, type: 2}
   - {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
   - {fileID: 11400000, guid: a1681dd8d301e9742bb09be112f197b3, type: 2}
-  - {fileID: 11400000, guid: 4345ddebd01e9f94686b652495d1b664, type: 2}
+  - {fileID: 11400000, guid: e6b103c992312cc44a6d6218916895f7, type: 2}
   - {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
+  - {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
+  - {fileID: 11400000, guid: 242bcda7931177042b31bcf87ae6bcaa, type: 2}
+  - {fileID: 11400000, guid: a5c32f2d0e9fe584da1d6f91a8766064, type: 2}
+  - {fileID: 11400000, guid: a4d39e165042231479157fcce7732d34, type: 2}
+  - {fileID: 11400000, guid: 27ac88c0766ba7745b3f7cb98fa9876b, type: 2}
   - {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
+  lootTable: {fileID: 0}

@@ -13,12 +13,44 @@ MonoBehaviour:
   m_Name: ForestChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - dropChance: 10
+  - dropChance: 5
     item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 50
+  - dropChance: 25
     item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 10
+    item: {fileID: 11400000, guid: e6b103c992312cc44a6d6218916895f7, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 25
+    item: {fileID: 11400000, guid: 51b65ac38ff992b4585b6a21c88643a4, type: 2}
+    minDropNum: 2
+    maxDropNum: 5
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 42e3f8dfe5f40bc4b87be63452a3aea2, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 5
+    item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 10
+    item: {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+    minDropNum: 1
+    maxDropNum: 2
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
     minDropNum: 1
     maxDropNum: 2
   guaranteedDrops: []

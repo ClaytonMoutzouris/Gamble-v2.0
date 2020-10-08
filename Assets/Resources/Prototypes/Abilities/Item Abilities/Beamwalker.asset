@@ -15,5 +15,5 @@ MonoBehaviour:
   abilityName: Beamwalker
   description: 
   attackPrototype: {fileID: 11400000, guid: eef0bb17eae0c5348b252552b64fcc3e, type: 2}
-  tickFrequency: 64
+  tickFrequency: 128
   offset: {x: 0, y: 0}

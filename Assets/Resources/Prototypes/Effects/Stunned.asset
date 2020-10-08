@@ -18,4 +18,6 @@ MonoBehaviour:
   stackable: 0
   effectPrefab: {fileID: 5039083600278791580, guid: 88ca6e4501549ed49a3f0b6048d9f740,
     type: 3}
-  effectOffset: {x: 0, y: 0}
+  effectOffset: {x: 0, y: 6}
+  effectLocation: 1
+  icon: {fileID: 5135959072732428323, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
