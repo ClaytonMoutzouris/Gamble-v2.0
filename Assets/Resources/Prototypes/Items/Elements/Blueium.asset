@@ -18,3 +18,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: fbb52a371b335234a8a1341b71659a68, type: 3}
   isStackable: 1
   identified: 1
+  autoPickup: 1

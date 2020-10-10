@@ -15,12 +15,13 @@ MonoBehaviour:
   entityType: 6
   hostility: 2
   mName: CatBoss
-  bodySize: {x: 30, y: 20}
+  bodySize: {x: 60, y: 45}
   CollidesWith: 
   abilityFlags: 03000000
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
-  sprite: {fileID: 21300000, guid: 2eb28b65716df224dbdd6ad0ecbb4fed, type: 3}
+  sprite: {fileID: 21300000, guid: 542b946ede6adee4d85221e258325fa3, type: 3}
   sortingLayer: 3
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}

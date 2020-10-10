@@ -13,44 +13,44 @@ MonoBehaviour:
   m_Name: ForestChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - dropChance: 5
-    item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  - dropChance: 2
+    item: {fileID: 11400000, guid: ab935addcfb6d984fa07de953c4c7cc2, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 25
-    item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
-    minDropNum: 1
-    maxDropNum: 2
-  - dropChance: 10
-    item: {fileID: 11400000, guid: e6b103c992312cc44a6d6218916895f7, type: 2}
+  - dropChance: 1
+    item: {fileID: 11400000, guid: 580a1f64b5faa23438f328b5693c25b4, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 25
-    item: {fileID: 11400000, guid: 51b65ac38ff992b4585b6a21c88643a4, type: 2}
-    minDropNum: 2
-    maxDropNum: 5
-  - dropChance: 10
-    item: {fileID: 11400000, guid: 42e3f8dfe5f40bc4b87be63452a3aea2, type: 2}
+  - dropChance: 20
+    item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
     minDropNum: 1
-    maxDropNum: 2
-  - dropChance: 10
+    maxDropNum: 1
+  - dropChance: 20
     item: {fileID: 11400000, guid: 37164aaa27dae344e8626e7d0428ec53, type: 2}
     minDropNum: 1
-    maxDropNum: 2
-  - dropChance: 5
-    item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: e2b69e09717708a42999b5cd8aa1788b, type: 2}
     minDropNum: 1
-    maxDropNum: 2
-  - dropChance: 10
-    item: {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
-    minDropNum: 1
-    maxDropNum: 2
-  - dropChance: 10
-    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
-    minDropNum: 1
-    maxDropNum: 2
+    maxDropNum: 1
   - dropChance: 10
     item: {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
     minDropNum: 1
-    maxDropNum: 2
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: a5c32f2d0e9fe584da1d6f91a8766064, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 5
+    item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 2
+    item: {fileID: 11400000, guid: 146f2fda39de2914d817f8b8ca4861ac, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
   guaranteedDrops: []

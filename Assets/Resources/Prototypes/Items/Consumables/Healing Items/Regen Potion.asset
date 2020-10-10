@@ -18,5 +18,6 @@ MonoBehaviour:
   sprite: {fileID: -3811207439911701464, guid: cd7efdf1143dcb84d9dfcf49b411c644, type: 3}
   isStackable: 1
   identified: 1
+  autoPickup: 1
   isHealingItem: 1
   effect: {fileID: 11400000, guid: 26ce0dc95445b2f4592a82aad36bba58, type: 2}

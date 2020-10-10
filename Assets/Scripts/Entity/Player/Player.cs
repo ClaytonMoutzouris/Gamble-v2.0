@@ -435,6 +435,7 @@ public class Player : Entity, IHurtable
             UseFirstHealingItem();
         }
 
+        
         //Check to see if a player is trying to pick up an item
         if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1 && Input.previousAxisInput[(int)AxisInput.LeftStickY] != -1)
         {
@@ -446,7 +447,7 @@ public class Player : Entity, IHurtable
             }
 
         }
-
+        
         IInteractable interactable = CheckForInteractables();
         if (interactable != null)
         {
@@ -1308,8 +1309,9 @@ public class Player : Entity, IHurtable
         if (Inventory.AddItemToInventory(itemObject.mItemData))
         {
             itemObject.Destroy();
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void UpdateAnimator()
@@ -1461,8 +1463,9 @@ public class Player : Entity, IHurtable
         }
 
         int damage = attack.GetDamage();
-        //Take 1 less damage for each point of defense
-        damage -= mStats.GetStat(StatType.Defense).GetValue();
+        //Take 5% less damage for each point of defense
+        //Limit defense to 80% reduction
+        damage -= (int)(damage * Mathf.Min(0.8f, (0.05f * mStats.GetStat(StatType.Defense).GetValue())));
         if (damage < 0)
         {
             damage = 0;

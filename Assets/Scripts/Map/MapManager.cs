@@ -318,7 +318,7 @@ public class MapManager : MonoBehaviour
         switch (data.type)
         {
             case ObjectType.Chest:
-                Chest temp = new Chest(Resources.Load("Prototypes/Entity/Objects/Chest") as ChestPrototype);
+                Chest temp = new Chest(ScriptableObject.Instantiate(mCurrentMap.Data.chestType));
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case ObjectType.FallingRock:

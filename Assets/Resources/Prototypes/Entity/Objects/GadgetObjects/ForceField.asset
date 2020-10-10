@@ -17,11 +17,15 @@ MonoBehaviour:
   mName: ForceField
   bodySize: {x: 24, y: 24}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
-  effects: []
   particleEffects: {fileID: 1428537779988011778, guid: b6282d88ce821cb408b9afaa8562a528,
     type: 3}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []

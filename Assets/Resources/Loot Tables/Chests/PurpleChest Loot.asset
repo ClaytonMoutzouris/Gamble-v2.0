@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36c4d0294221346896bb825155d613, type: 3}
+  m_Name: PurpleChest Loot
+  m_EditorClassIdentifier: 
+  nodes:
+  - dropChance: 2
+    item: {fileID: 11400000, guid: c36ca7ea4c99c6641a70fe2c02bc86ec, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 1
+    item: {fileID: 11400000, guid: ab0a66b59ba8b3e4c8eb08e4fdd2b7fe, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: ecc5c4652cbe99445b33f8cb2ccfb713, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9bf2c2e97b0d85f478292980162ab2da, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 5
+    item: {fileID: 11400000, guid: 1e35be309b7fb7c4995ce7c0ff37a3a7, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 2
+    item: {fileID: 11400000, guid: 1740ef77a3c03c14cb6e135fa829206a, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  guaranteedDrops: []

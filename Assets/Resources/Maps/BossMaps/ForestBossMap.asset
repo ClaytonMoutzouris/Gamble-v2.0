@@ -24,6 +24,7 @@ MonoBehaviour:
   depthVariance: 0
   smallEnemies: 
   largeEnemies: 
+  minibossType: 0
   tileSprites:
   - {fileID: 0}
   - {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
@@ -50,4 +51,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  chestLoot: {fileID: 11400000, guid: 2bd329cf4954d8f4e83658352517dec4, type: 2}
+  chestType: {fileID: 11400000, guid: 940ad77e6ff225b4682c9f579cf60d04, type: 2}

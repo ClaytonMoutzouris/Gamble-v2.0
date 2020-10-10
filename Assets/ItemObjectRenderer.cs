@@ -24,7 +24,7 @@ public class ItemObjectRenderer : EntityRenderer
     public void ShowText()
     {
         
-        nameDisplay.text = "<color=" + item.GetColorFromRarity() + ">" + item.itemName + "</color>";
+        nameDisplay.text = "<color=" + item.GetColorStringFromRarity() + ">" + item.itemName + "</color>";
         nameDisplay.gameObject.SetActive(true);
 
     }

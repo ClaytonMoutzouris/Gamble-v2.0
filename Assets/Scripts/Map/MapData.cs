@@ -21,5 +21,5 @@ public class MapData : ScriptableObject {
     public MinibossType minibossType;
 
     public List<Sprite> tileSprites;
-    public LootTable chestLoot;
+    public ChestPrototype chestType;
 }

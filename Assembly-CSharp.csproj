@@ -319,6 +319,7 @@
     <Compile Include="Assets\Scripts\Controllers\EditorSceneController.cs" />
     <Compile Include="Assets\CustomInputFieldSubmit.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Objects\GatherablePrototype.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StatChangeEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\FrameData.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Portal.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\HitboxManager.cs" />
@@ -371,7 +372,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StatChangeEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

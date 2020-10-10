@@ -18,4 +18,5 @@ MonoBehaviour:
   sprite: {fileID: -8537096001911599930, guid: cad10265bf20afa4a8a684396bd08d19, type: 3}
   isStackable: 0
   identified: 0
+  autoPickup: 1
   sampleWorldType: 0

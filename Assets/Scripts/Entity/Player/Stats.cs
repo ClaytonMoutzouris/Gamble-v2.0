@@ -68,7 +68,7 @@ public class Stats
 }
 
 public enum StatType { Attack, Defense, Constitution, Speed, Luck };
-public enum AdvancedStat { MoveSpeed, BaseHealth, JumpHeight };
+public enum SecondaryStatType { MoveSpeed, BaseHealth, JumpHeight, GravityModifier, CritChance, CritDamage, AttackSpeed, DodgeChance, ExtraJumps };
 
 public static class StatTypeMethods
 {

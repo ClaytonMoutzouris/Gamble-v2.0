@@ -6,6 +6,9 @@ public class ItemObject : Entity, ILootable, IContactTrigger {
 
     public Item mItemData;
     public bool showName = false;
+    public float pickupCooldown = 0;
+    public float pickupWaitTime = 0.5f;
+    public bool canPickup = false;
 
     public ItemObject(Item iData, EntityPrototype proto) : base(proto)
     {
@@ -14,7 +17,7 @@ public class ItemObject : Entity, ILootable, IContactTrigger {
 
         Body = new PhysicsBody(this, new CustomAABB(Position, new Vector2(5,5),new Vector2(0,5)));
         Body.mIsKinematic = false;
-
+        //Body.mState = ColliderState.Closed;
     }
     public override void Spawn(Vector2 spawnPoint)
     {
@@ -59,6 +62,14 @@ public class ItemObject : Entity, ILootable, IContactTrigger {
 
         }
 
+        if(pickupCooldown < pickupWaitTime)
+        {
+            pickupCooldown += Time.deltaTime;
+        } else
+        {
+            canPickup = true;
+        }
+
         showName = false;
         if(Body.mPS.pushesBottom)
         {
@@ -70,16 +81,30 @@ public class ItemObject : Entity, ILootable, IContactTrigger {
 
     public bool Loot(Player actor)
     {
+        if(canPickup)
+        {
+            if (actor.PickUp(this))
+            {
+                actor.ShowFloatingText(mItemData.itemName, mItemData.GetColorFromRarity());
+            }
 
-        return actor.PickUp(this);
+        }
+
+        return false;
     }
 
     public void Contact(Entity entity)
     {
-        if(!(entity is Player))
+        if (entity is Player player)
         {
-            return;
+            if (mItemData.autoPickup)
+            {
+                Loot(player);
+            } else
+            {
+                showName = true;
+            }
         }
-        showName = true;
+
     }
 }

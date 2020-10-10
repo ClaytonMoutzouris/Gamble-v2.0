@@ -13,12 +13,44 @@ MonoBehaviour:
   m_Name: VoidChest Loot
   m_EditorClassIdentifier: 
   nodes:
-  - dropChance: 10
-    item: {fileID: 11400000, guid: f2774276c37a6dc4dba9c87830a27ec3, type: 2}
+  - dropChance: 2
+    item: {fileID: 11400000, guid: 1740ef77a3c03c14cb6e135fa829206a, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 50
-    item: {fileID: 11400000, guid: e75f39c535aaee84f90e725dd6fc902a, type: 2}
+  - dropChance: 1
+    item: {fileID: 11400000, guid: d0a5cae0a64d1bf41910871d44ae535d, type: 2}
     minDropNum: 1
-    maxDropNum: 2
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 9c1f36ec3a1e1c3489b10d23f3a7d190, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: e66c90776f4161b498b8ac8d19eff08a, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 364756ca13a58f544974e6f039e39c29, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9bf2c2e97b0d85f478292980162ab2da, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 27ac88c0766ba7745b3f7cb98fa9876b, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 5
+    item: {fileID: 11400000, guid: 6f2e6746e7126a549aecfa9186eb6b9e, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 2
+    item: {fileID: 11400000, guid: f47e6e3a8e0d849439fe1367d20a557a, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
   guaranteedDrops: []

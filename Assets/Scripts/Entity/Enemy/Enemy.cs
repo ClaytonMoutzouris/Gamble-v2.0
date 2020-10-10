@@ -257,8 +257,9 @@ public class Enemy : Entity, IHurtable
         }
 
         int damage = attack.GetDamage();
-        //Take 1 less damage for each point of defense
-        damage -= mStats.GetStat(StatType.Defense).GetValue();
+        //Take 5% less damage for each point of defense
+        //Limit defense to 80% reduction
+        damage -= (int)(damage * Mathf.Min(0.8f, (0.05f*mStats.GetStat(StatType.Defense).GetValue())));
         if (damage < 0)
         {
             damage = 0;

@@ -12,6 +12,7 @@ public abstract class Item : ScriptableObject
     public Sprite sprite;
     public bool isStackable = false;
     public bool identified = true;
+    public bool autoPickup = false;
 
     public virtual List<InventoryOption> GetInventoryOptions()
     {
@@ -34,12 +35,12 @@ public abstract class Item : ScriptableObject
     {
         string tooltip = "";
 
-        tooltip += "<color=" + GetColorFromRarity() + ">" + itemName+"</color>";
+        tooltip += "<color=" + GetColorStringFromRarity() + ">" + itemName+"</color>";
 
         return tooltip;
     }
     
-    public string GetColorFromRarity()
+    public string GetColorStringFromRarity()
     {
         string rarity = "grey";
         switch(this.rarity)
@@ -58,6 +59,31 @@ public abstract class Item : ScriptableObject
                 break;
             case Rarity.Artifact:
                 rarity = "red";
+                break;
+        }
+
+        return rarity;
+    }
+
+    public Color GetColorFromRarity()
+    {
+        Color rarity = Color.grey;
+        switch (this.rarity)
+        {
+            case Rarity.Common:
+                rarity = Color.white;
+                break;
+            case Rarity.Uncommon:
+                rarity = Color.green;
+                break;
+            case Rarity.Rare:
+                rarity = Color.blue;
+                break;
+            case Rarity.Legendary:
+                rarity = Color.yellow;
+                break;
+            case Rarity.Artifact:
+                rarity = Color.red;
                 break;
         }
 

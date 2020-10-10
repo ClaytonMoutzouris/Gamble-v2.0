@@ -11,7 +11,6 @@ public class Chest : Entity, IInteractable {
     [HideInInspector]
     public bool mOpen = false;
     public bool locked = false;
-    public List<Item> possibleLoot;
     public LootTable lootTable;
 
     public Chest(ChestPrototype proto) : base(proto)
@@ -22,8 +21,7 @@ public class Chest : Entity, IInteractable {
         Body.mIsKinematic = false;
 
         locked = false;
-        possibleLoot = proto.possibleItems;
-        this.lootTable = proto.lootTable;
+        this.lootTable = ScriptableObject.Instantiate(proto.lootTable);
     }
 
 
@@ -59,15 +57,12 @@ public class Chest : Entity, IInteractable {
         {
             mOpen = true;
             Renderer.SetAnimState("ChestOpen");
+
             ItemObject temp;
 
-            int randomIndex = Random.Range(0, possibleLoot.Count);
-            temp = new ItemObject(ItemDatabase.NewItem(possibleLoot[randomIndex]), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);
-            temp.Spawn(Position);
-            //lootTable.GetLoot();
-            if(lootTable != null)
+            if (lootTable != null)
             {
-                foreach (Item item in lootTable.GetLoot())
+                foreach (Item item in lootTable.GetLootOld())
                 {
 
                     temp = new ItemObject(ItemDatabase.NewItem(item), Resources.Load("Prototypes/Entity/Objects/ItemObject") as EntityPrototype);

@@ -19,7 +19,7 @@ MonoBehaviour:
   hasMiniboss: 1
   roomSizeX: 10
   roomSizeY: 10
-  gravity: 1000
+  gravity: 950
   baseDepth: 5
   depthVariance: 0
   smallEnemies: 0c0000000100000004000000
@@ -61,4 +61,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  chestLoot: {fileID: 0}
+  chestType: {fileID: 11400000, guid: 99a95da4897cd57438d63cfdab3fe9a1, type: 2}

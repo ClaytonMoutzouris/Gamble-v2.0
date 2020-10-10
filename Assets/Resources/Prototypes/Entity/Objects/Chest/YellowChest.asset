@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782aec89e2a76454186743a782ed1079, type: 3}
+  m_Name: YellowChest
+  m_EditorClassIdentifier: 
+  entityType: 4
+  hostility: 0
+  mName: Chest
+  bodySize: {x: 5, y: 5}
+  CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
+  ignoreTilemap: 0
+  ignoreGravity: 0
+  sprite: {fileID: 0}
+  sortingLayer: 2
+  animationController: {fileID: 9100000, guid: d707f6d44166e7e4bb6a3c16590e59d5, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  locked: 0
+  possibleItems: []
+  lootTable: {fileID: 11400000, guid: e9a2821410fe2f64db163f3663b504be, type: 2}
