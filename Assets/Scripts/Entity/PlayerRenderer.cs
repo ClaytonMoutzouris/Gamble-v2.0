@@ -9,6 +9,7 @@ public class PlayerRenderer : EntityRenderer
     public ButtonTooltip buttonTooltip;
     public Player player;
     public Vector2 weaponOffset;
+    public PlayerAmmoDisplay ammoDisplay;
 
     protected override void Awake()
     {
@@ -37,6 +38,11 @@ public class PlayerRenderer : EntityRenderer
     public void ShowWeapon(bool show)
     {
         rangedWeapon.gameObject.SetActive(show);
+    }
+    
+    public void UpdateAmmo(RangedWeapon weapon)
+    {
+        ammoDisplay.UpdateAmmo(weapon);
     }
 
     public void SetWeaponRotation(Vector2 direction)

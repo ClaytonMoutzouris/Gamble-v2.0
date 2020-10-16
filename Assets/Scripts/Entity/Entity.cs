@@ -161,7 +161,8 @@ public class Entity {
         statusEffects = new List<StatusEffect>();
         abilityFlags = new AbilityFlags();
         abilityFlags.Initialize();
-
+        baseGravityMultiplier = proto.baseGravityMultiplier;
+        gravityMultiplier = baseGravityMultiplier;
         crushDamage = proto.crushDamage;
         //if (colorPallete != null && colorPallete.Count > 0)
         //ColorSwap.SwapSpritesTexture(GetComponent<SpriteRenderer>(), colorPallete);
@@ -174,7 +175,7 @@ public class Entity {
         foreach(Ability ability in proto.baseAbilities)
         {
             Ability temp = ScriptableObject.Instantiate(ability);
-            temp.OnEquipTrigger(this);
+            temp.OnGainTrigger(this);
         }
 
         mUpdateId = Game.AddToUpdateList(this);

@@ -485,12 +485,13 @@ public class Player : Entity, IHurtable
                 }
 
 
+                Body.mPS.tmpIgnoresOneWay = false;
 
 
                 Body.mSpeed.x = 0;
 
                 //Check to see if the player is trying to pass through a one way
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && Input.playerButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1 && Input.playerButtonInput[(int)ButtonInput.Jump])
                 {
                     if (Body.mPS.onOneWay)
                     {
@@ -563,6 +564,9 @@ public class Player : Entity, IHurtable
                     break;
                 }
 
+                Body.mPS.tmpIgnoresOneWay = false;
+
+
                 mWalkSfxTimer += Time.deltaTime;
 
                 if (mWalkSfxTimer > cWalkSfxTime)
@@ -578,7 +582,7 @@ public class Player : Entity, IHurtable
                 }
 
                 //Check to see if the player is trying to pass through a one way
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0 && Input.playerButtonInput[(int)ButtonInput.Jump])
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1 && Input.playerButtonInput[(int)ButtonInput.Jump])
                 {
                     if (Body.mPS.onOneWay)
                     {
@@ -632,7 +636,7 @@ public class Player : Entity, IHurtable
                     //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1)
                 {
                     if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                     {
@@ -767,7 +771,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < -0.5f)
                 {
                     Body.mPS.tmpIgnoresOneWay = true;
                 }
@@ -1063,7 +1067,7 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] < -0.5f)
                 {
                     Body.mPS.tmpIgnoresOneWay = true;
                 }
@@ -1131,16 +1135,25 @@ public class Player : Entity, IHurtable
 
         if (Input.playerButtonInput[(int)ButtonInput.Fire])
         {
-            ((PlayerRenderer)Renderer).ShowWeapon(true);
+
+            if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon weapon)
+            {
+                weapon.Fire(this);
+                ((PlayerRenderer)Renderer).UpdateAmmo(weapon);
+
+            }
+
+             ((PlayerRenderer)Renderer).ShowWeapon(true);
 
             ((PlayerRenderer)Renderer).SetWeaponRotation(aim);
 
             //Debug.Log("Pressed Fire");
-            AttackManager.rangedAttacks[0].Activate(aim, Position);
+            //AttackManager.rangedAttacks[0].Activate(aim, Position);
         }
         else
         {
             ((PlayerRenderer)Renderer).ShowWeapon(false);
+
         }
 
         if (Input.playerButtonInput[(int)ButtonInput.Gadget1] && !Input.previousButtonInput[(int)ButtonInput.Gadget1])
@@ -1520,13 +1533,13 @@ public class Player : Entity, IHurtable
             effect.OnOwnerDeath(this);
         }
 
-        foreach(Talent talent in talentTree.talents)
+        foreach(Talent talent in talentTree.GetAllTalents())
         {
             if(talent.isLearned)
             {
                 foreach(Ability ability in talent.abilities)
                 {
-                    ability.OnUnequipTrigger(this);
+                    ability.OnRemoveTrigger(this);
                 }
             }
         }
@@ -1549,18 +1562,18 @@ public class Player : Entity, IHurtable
             {
                 foreach(Ability ability in slot.GetContents().Effects)
                 {
-                    ability.OnEquipTrigger(this);
+                    ability.OnGainTrigger(this);
                 }
             }
         }
 
-        foreach (Talent talent in talentTree.talents)
+        foreach (Talent talent in talentTree.GetAllTalents())
         {
             if (talent.isLearned)
             {
                 foreach (Ability ability in talent.abilities)
                 {
-                    ability.OnEquipTrigger(this);
+                    ability.OnGainTrigger(this);
                 }
             }
         }
@@ -1587,13 +1600,13 @@ public class Player : Entity, IHurtable
             effect.OnOwnerDeath(this);
         }
 
-        foreach(Talent talent in talentTree.talents)
+        foreach(Talent talent in talentTree.GetAllTalents())
         {
             if(talent.isLearned)
             {
                 foreach(Ability ability in talent.abilities)
                 {
-                    ability.OnUnequipTrigger(this);
+                    ability.OnRemoveTrigger(this);
                 }
             }
         }

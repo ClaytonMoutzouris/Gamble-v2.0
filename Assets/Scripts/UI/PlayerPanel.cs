@@ -86,6 +86,14 @@ public class PlayerPanel : MonoBehaviour
 
     }
 
+    public void UpdateTabs()
+    {
+        foreach(PlayerPanelTab tab in tabs)
+        {
+            tab.UpdateTab();
+        }
+    }
+
     public void OpenPlayerPanel()
     {
         SetTab(0);
@@ -98,6 +106,7 @@ public class PlayerPanel : MonoBehaviour
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
         GameObject tabsUI = GameObject.Find("Tabs");
         menuObject.SetActive(true);
+        UpdateTabs();
     }
 
 

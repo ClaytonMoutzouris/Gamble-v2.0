@@ -101,7 +101,7 @@ public class Attack {
 
     public int GetDamage()
     {
-        int damage = baseDamage; ;
+        int damage = baseDamage;
         
         if (mEntity is Player player)
         {
@@ -115,15 +115,6 @@ public class Attack {
         return damage;
 
     }
-
-}
-
-public struct AttackData
-{
-    public int damage;
-
-    //damage type
-    //
 
 }
 
@@ -210,11 +201,6 @@ public class RangedAttack : Attack
     public float spreadAngle;
     public ProjectilePrototype projProto;
 
-    /*
-     * Constructor used for player attacks... fuck me I should just seperate these into different classes
-     */
-     //Lol i feel your pain
-
     public RangedAttack(Entity entity, RangedAttackPrototype prototype) : base(entity, prototype)
     {
 
@@ -222,18 +208,6 @@ public class RangedAttack : Attack
         spreadAngle = prototype.spreadAngle;
         projProto = prototype.projectilePrototype;
     }
-
-    public RangedAttack(Entity entity, RangedWeapon rangedWeapon) : base(entity, rangedWeapon.attack)
-    {
-
-        numberOfProjectiles = rangedWeapon.attack.numberOfProjectiles;
-        spreadAngle = rangedWeapon.attack.spreadAngle;
-        projProto = rangedWeapon.attack.projectilePrototype;
-
-        //Override these values with the weapons values
-        baseDamage = rangedWeapon.damage;
-    }
-
 
     //These only cover the shooting animation really
     public override void Activate()

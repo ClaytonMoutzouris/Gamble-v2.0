@@ -5,54 +5,54 @@ using UnityEngine;
 [System.Serializable]
 public class Stats
 {
-    public Dictionary<StatType, Stat> stats;
+    public Dictionary<StatType, Stat> primaryStats;
     private Entity entity;
 
     public Stats(Entity e)
     {
         entity = e;
 
-        stats = new Dictionary<StatType, Stat>();
+        primaryStats = new Dictionary<StatType, Stat>();
 
         //Create starting stats
         foreach (StatType type in System.Enum.GetValues(typeof(StatType)))
         {
-            stats.Add(type, new Stat(type));
+            primaryStats.Add(type, new Stat(type));
         }
 
     }
 
     public void SetStats(List<Stat> stats)
     {
-        this.stats.Clear();
+        this.primaryStats.Clear();
 
         foreach (Stat stat in stats)
         {
-            this.stats.Add(stat.type, stat);
+            this.primaryStats.Add(stat.type, stat);
         }
 
     }
 
     public Stat GetStat(StatType type)
     {
-        return stats[type];
+        return primaryStats[type];
     }
 
     public void AddBonus(StatBonus bonus)
     {
-        stats[bonus.type].AddBonus(bonus);
+        primaryStats[bonus.type].AddBonus(bonus);
     }
 
     public void RemoveBonus(StatBonus bonus)
     {
-        stats[bonus.type].RemoveBonus(bonus);
+        primaryStats[bonus.type].RemoveBonus(bonus);
     }
 
     public void AddBonuses(List<StatBonus> bonuses)
     {
         foreach(StatBonus bonus in bonuses)
         {
-            stats[bonus.type].AddBonus(bonus);
+            primaryStats[bonus.type].AddBonus(bonus);
         }
 
     }
@@ -61,7 +61,7 @@ public class Stats
     {
         foreach (StatBonus bonus in bonuses)
         {
-            stats[bonus.type].RemoveBonus(bonus);
+            primaryStats[bonus.type].RemoveBonus(bonus);
         }
 
     }

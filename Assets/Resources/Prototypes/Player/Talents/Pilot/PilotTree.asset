@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: PilotTree
   m_EditorClassIdentifier: 
   name: Pilot
-  talents:
-  - {fileID: 11400000, guid: 89ec81c868d990a4b8701d0583fc3ddb, type: 2}
-  - {fileID: 11400000, guid: fb846c9cd9bc3fd40896b5ad71c1a81e, type: 2}
-  - {fileID: 11400000, guid: db1832f336d3b0640ac0600a66c8dab6, type: 2}
-  - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
-  - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
+  branches:
+  - talents:
+    - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
+    - {fileID: 11400000, guid: 89ec81c868d990a4b8701d0583fc3ddb, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: fb846c9cd9bc3fd40896b5ad71c1a81e, type: 2}
+    - {fileID: 11400000, guid: db1832f336d3b0640ac0600a66c8dab6, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: 9d87f1726abb53244b4270da0fac7894, type: 2}
   skillPoints: 0

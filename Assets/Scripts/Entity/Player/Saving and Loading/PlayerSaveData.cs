@@ -34,7 +34,7 @@ public class PlayerSaveData
 
         talents = new List<TalentSaveData>();
 
-        foreach(Talent talent in player.talentTree.talents)
+        foreach(Talent talent in player.talentTree.GetAllTalents())
         {
             if(talent.isLearned) {
                 Debug.Log("Saving Talent " + talent.talentName);

@@ -6,21 +6,32 @@ using UnityEngine;
 public class TalentTree : ScriptableObject
 {
     public string name;
-    //public List<TalentTreeBranch> branches;
+    public List<TalentTreeBranch> branches;
 
-    public List<Talent> talents;
     public int skillPoints = 0;
+    public Player player;
 
-    public void GetNewTree()
+    public void GetNewTree(Player player)
     {
-        List<Talent> temp = new List<Talent>();
-
-        foreach(Talent talent in talents)
+        this.player = player;
+        foreach(TalentTreeBranch branch in branches)
         {
-            temp.Add(Instantiate(talent));
+            branch.GetNewBranch(this);
         }
 
-        talents = temp;
+    }
+
+    public List<Talent> GetAllTalents()
+    {
+        List<Talent> fullList = new List<Talent>();
+
+        foreach (TalentTreeBranch branch in branches)
+        {
+            fullList.AddRange(branch.talents);
+        }
+
+        return fullList;
+
     }
 
 }

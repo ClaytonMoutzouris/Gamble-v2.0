@@ -427,6 +427,10 @@ public class MapManager : MonoBehaviour
                 temp = new Snowball(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case EnemyType.Sporby:
+                temp = new Sporby(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
             case EnemyType.Ghost:
                 temp = new Ghost(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));

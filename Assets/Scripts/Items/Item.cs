@@ -210,9 +210,16 @@ public abstract class Equipment : Item
         player.mStats.AddBonuses(baseBonuses);
         player.Health.UpdateHealth();
 
+        //This adds the abilities of the equipped item to the player
         foreach(Ability effect in Effects)
         {
-            effect.OnEquipTrigger(player);
+            effect.OnGainTrigger(player);
+        }
+
+        //This calls the updatetrigger for all effects on the player
+        foreach (Ability ability in player.abilities)
+        {
+            ability.OnEquippedTrigger(player, this);
         }
     }
 
@@ -225,9 +232,15 @@ public abstract class Equipment : Item
 
         player.Health.UpdateHealth();
 
+        //This calls the updatetrigger for all effects on the player
+        foreach (Ability ability in player.abilities)
+        {
+            ability.OnUnequipTrigger(player, this);
+        }
+
         foreach (Ability effect in Effects)
         {
-            effect.OnUnequipTrigger(player);
+            effect.OnRemoveTrigger(player);
         }
     }
 

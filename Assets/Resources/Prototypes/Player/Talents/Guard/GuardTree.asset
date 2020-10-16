@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: GuardTree
   m_EditorClassIdentifier: 
   name: Guard
-  talents:
-  - {fileID: 11400000, guid: b154dd960260703449566e32afb63473, type: 2}
-  - {fileID: 11400000, guid: 77ddccff839149547bbf2c6bd3cf32d3, type: 2}
-  - {fileID: 11400000, guid: 77ca173f9bd9a7148b164fa8269a9409, type: 2}
-  - {fileID: 11400000, guid: a9cebd9d8e6c9bc4b9308884725ec6dc, type: 2}
-  - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
+  branches:
+  - talents:
+    - {fileID: 11400000, guid: 77ca173f9bd9a7148b164fa8269a9409, type: 2}
+    - {fileID: 11400000, guid: 77ddccff839149547bbf2c6bd3cf32d3, type: 2}
+    - {fileID: 11400000, guid: b154dd960260703449566e32afb63473, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
+    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
+    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
   skillPoints: 0

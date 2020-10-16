@@ -14,6 +14,16 @@ public class OptionsMenu : MonoBehaviour
         GameCamera.instance.mMinOrthographicSize = value;
     }
 
+    public void UpdateMusicVolume(float value)
+    {
+        SoundManager.instance.SetMusicVolume(value);
+    }
+
+    public void UpdateSFXVolume(float value)
+    {
+        SoundManager.instance.SetSFXVolume(value);
+    }
+
     public void Start()
     {
         instance = this;

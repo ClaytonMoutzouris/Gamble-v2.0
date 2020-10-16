@@ -7,19 +7,47 @@ public class PlayerLevelTabUI : PlayerPanelTab
 {
     
     public TalentTreeNodeUI prefab;
-    public List<TalentTreeNodeUI> talentNodes;
     public Selectable interactableUp;
     public GameObject talentContainer;
     public TalentTree tree;
     int learned = 0;
     public TalentTreeNodeUI currentNode;
     public ScrollRect talentRect;
+    public List<TalentTreeBranchUI> treeBranches;
+    public TalentTreeBranchUI branchPrefab;
+    public TalentTreeBranchUI currentBranch;
 
     private void Update()
     {
-        if (currentNode != null)
+        if (currentBranch != null)
         {
-            talentRect.ScrollRepositionY(currentNode.GetComponent<RectTransform>(), 25);
+            talentRect.ScrollRepositionY(currentBranch.GetComponent<RectTransform>(), 25);
+        }
+        if(player != null && player.talentTree.skillPoints > 0)
+        {
+                Text text = tabButton.GetComponentInChildren<Text>();
+                text.color = Color.yellow;
+        } else
+        {
+            Text text = tabButton.GetComponentInChildren<Text>();
+            text.color = Color.black;
+        }
+
+    }
+
+    public override void UpdateTab()
+    {
+        base.UpdateTab();
+
+        if (player != null && player.talentTree.skillPoints > 0)
+        {
+            Text text = tabButton.GetComponentInChildren<Text>();
+            text.color = Color.yellow;
+        }
+        else
+        {
+            Text text = tabButton.GetComponentInChildren<Text>();
+            text.color = Color.black;
         }
     }
 
@@ -27,16 +55,26 @@ public class PlayerLevelTabUI : PlayerPanelTab
     {
         player = p;
         tree = player.talentTree;
-        foreach(TalentTreeNodeUI node in talentNodes)
+        foreach(TalentTreeBranchUI branch in treeBranches)
         {
-            Destroy(node.gameObject);
+            Destroy(branch.gameObject);
         }
-        talentNodes.Clear();
+        treeBranches.Clear();
 
+
+
+        foreach(TalentTreeBranch branch in tree.branches)
+        {
+            TalentTreeBranchUI temp;
+            temp = Instantiate<TalentTreeBranchUI>(branchPrefab, talentContainer.transform);
+            temp.SetBranch(branch, this);
+            treeBranches.Add(temp);
+
+        }
+
+        /*
         foreach (Talent talent in tree.talents)
         {
-
-
 
             TalentTreeNodeUI temp;
             temp = Instantiate<TalentTreeNodeUI>(prefab, talentContainer.transform);
@@ -66,40 +104,36 @@ public class PlayerLevelTabUI : PlayerPanelTab
             talentNodes.Add(temp);
         }
 
-        defaultSelection = talentNodes[0].gameObject;
-    }
+        */
+        defaultSelection = treeBranches[0].gameObject;
 
-    public void LearnNodeAtIndex(int index)
-    {
-        if (player.talentTree.skillPoints > 0)
-        {
-            tree.talents[index].OnLearned(player);
-            player.talentTree.skillPoints--;
-        }
     }
 
     public void LearnTalent(string talentName, bool fromLoad = false)
     {
         if(player.talentTree.skillPoints > 0)
         {
-            foreach (TalentTreeNodeUI talentNode in talentNodes)
+            foreach(TalentTreeBranchUI branch in treeBranches)
             {
-                if (talentNode.talent.talentName.Equals(talentName) && (!talentNode.talent.isLearned || talentNode.talent.repeatable))
+                foreach (TalentTreeNodeUI talentNode in branch.talentNodes)
                 {
-                    Debug.Log("Found Talent " + talentName);
-                    talentNode.talent.OnLearned(player, fromLoad);
-                    player.talentTree.skillPoints--;
-                    talentNode.SetColor();
-                    return;
+                    if (talentNode.talent.talentName.Equals(talentName))
+                    {
+                        talentNode.OnSelected();
+                        return;
+                    }
                 }
             }
+
         }
 
     }
 
-    public void SetCurrentNode(TalentTreeNodeUI node)
+
+    public void SetCurrentNode(TalentTreeBranchUI branch)
     {
-        currentNode = node;
+        currentBranch = branch;
         //Debug.Log("Current node is " + node.branchTitle.text);
     }
+
 }

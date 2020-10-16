@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
     public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
     public List<AudioClip> levelMusic;
     public List<AudioClip> bossMusic;
+    public float musicVolumeLevel = 0.5f;
+    public float sfxVolumeLevel = 0.5f;
 
     void Awake()
     {
@@ -24,6 +26,21 @@ public class SoundManager : MonoBehaviour
 
         //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
         DontDestroyOnLoad(gameObject);
+        musicSource.volume = musicVolumeLevel;
+        efxSource.volume = sfxVolumeLevel;
+
+    }
+
+    public void SetMusicVolume(float volumeLevel)
+    {
+        musicVolumeLevel = volumeLevel;
+        musicSource.volume = volumeLevel;
+    }
+
+    public void SetSFXVolume(float volumeLevel)
+    {
+        sfxVolumeLevel = volumeLevel;
+        efxSource.volume = volumeLevel;
     }
 
 

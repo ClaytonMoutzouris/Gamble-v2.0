@@ -20,7 +20,7 @@ public class MeleeAttackObject : AttackObject
 
         if (SoundManager.instance != null)
         {
-            SoundManager.instance.PlaySingle(attack.attackPrototype.sfx);
+            SoundManager.instance.PlaySingle(proto.sfx);
         }
     }
 
@@ -94,8 +94,7 @@ public class MeleeAttackObject : AttackObject
     {
         base.Spawn(spawnPoint + attack.attackOffset);
         Renderer.SetAnimState("Attack");
-        Debug.Log("Spawn point " + spawnPoint);
-        Debug.Log("Offset " + attack.attackOffset);
+
     }
 
 }

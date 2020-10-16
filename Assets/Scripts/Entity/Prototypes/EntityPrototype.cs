@@ -23,4 +23,5 @@ public class EntityPrototype : ScriptableObject
     public bool kinematic = false;
 
     public List<Color> colorPallete;
+    public float baseGravityMultiplier = 1;
 }

@@ -6,18 +6,18 @@ public class ExtraJump : Ability
 {
     public int numExtraJumps = 1;
 
-    public override void OnEquipTrigger(Entity entity)
+    public override void OnGainTrigger(Entity entity)
     {
-        base.OnEquipTrigger(entity);
+        base.OnGainTrigger(entity);
         if(entity is Player player)
         {
             player.mNumJumps += numExtraJumps;
         }
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
         if(entity is Player player)
         {
             player.mNumJumps -= numExtraJumps;

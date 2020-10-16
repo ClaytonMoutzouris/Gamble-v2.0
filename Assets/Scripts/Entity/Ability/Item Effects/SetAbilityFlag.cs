@@ -6,15 +6,15 @@ public class SetAbilityFlag : Ability
 {
     public AbilityFlag flag;
 
-    public override void OnEquipTrigger(Entity entity)
+    public override void OnGainTrigger(Entity entity)
     {
-        base.OnEquipTrigger(entity);
+        base.OnGainTrigger(entity);
         entity.abilityFlags.SetFlag(flag, true);
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
 
         foreach (Ability ability in entity.abilities)
         {

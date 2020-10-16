@@ -18,9 +18,20 @@ MonoBehaviour:
   sprite: {fileID: 2758798103841807425, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
   isStackable: 0
   identified: 1
+  autoPickup: 0
   mSlot: 5
   baseBonuses: []
-  baseEffects: 
+  baseEffects: []
   isEquipped: 0
-  damage: 3
+  damage: 2
+  ammoType: 2
   attack: {fileID: 11400000, guid: 35140d87514995d45b4fd39a8cebca59, type: 2}
+  ammunitionCapacity: 15
+  ammunitionCount: 15
+  reloadTime: 4
+  reloadCooldown: 0
+  reloading: 0
+  fireRate: 5
+  projProto: {fileID: 11400000, guid: 32217ca586aa26d4a8e3a2a26e6f61f9, type: 2}
+  numberOfProjectiles: 1
+  spreadAngle: 0

@@ -7,9 +7,9 @@ public class StatBuff : Ability
 {
     public List<StatBonus> statBonuses;
 
-    public override void OnEquipTrigger(Entity entity)
+    public override void OnGainTrigger(Entity entity)
     {
-        base.OnEquipTrigger(entity);
+        base.OnGainTrigger(entity);
         //TODO: Add stats to all entities
         if(entity is Player player)
         {
@@ -24,9 +24,9 @@ public class StatBuff : Ability
 
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
         if(entity is Player player)
         {
             player.mStats.RemoveBonuses(statBonuses);

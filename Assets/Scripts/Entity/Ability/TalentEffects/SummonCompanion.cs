@@ -8,9 +8,9 @@ public class SummonCompanion : Ability
     public CompanionPrototype companionProto;
     public Companion companion;
 
-    public override void OnEquipTrigger(Entity entity)
+    public override void OnGainTrigger(Entity entity)
     {
-        base.OnEquipTrigger(entity);
+        base.OnGainTrigger(entity);
         Debug.Log("On Equip Trigger");
         companion = new Companion(companionProto);
         if (entity is Player player)
@@ -20,9 +20,9 @@ public class SummonCompanion : Ability
         }
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
 
         if(entity is Player player)
         {

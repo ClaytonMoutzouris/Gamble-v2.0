@@ -85,7 +85,7 @@ public class MiniMap : MonoBehaviour
 
     public static Vector2 TileToMinimap(Vector2i tilePos)
     {
-        return ((Vector2)tilePos) * 2 - (Vector2.up * mapSizeX) * 2;
+        return ((Vector2)tilePos) - (Vector2.up * mapSizeX);
     }
     public void ClearMinimap()
     {

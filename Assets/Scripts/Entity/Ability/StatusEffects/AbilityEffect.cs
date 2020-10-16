@@ -15,7 +15,7 @@ public class AbilityEffect : StatusEffect
         }
 
         ability = ScriptableObject.Instantiate(abilityProto);
-        ability.OnEquipTrigger(effected);
+        ability.OnGainTrigger(effected);
         return true;
     }
 
@@ -28,7 +28,7 @@ public class AbilityEffect : StatusEffect
 
     public override void OnEffectEnd()
     {
-        ability.OnUnequipTrigger(EffectedEntity);
+        ability.OnRemoveTrigger(EffectedEntity);
 
         base.OnEffectEnd();
 

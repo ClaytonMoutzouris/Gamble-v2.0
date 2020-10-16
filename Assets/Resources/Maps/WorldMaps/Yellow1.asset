@@ -22,8 +22,8 @@ MonoBehaviour:
   gravity: 450
   baseDepth: 3
   depthVariance: 1
-  smallEnemies: 00000000010000000200000003000000040000000500000006000000
-  largeEnemies: 08000000090000000a0000000b000000
+  smallEnemies: 0000000001000000040000000f000000
+  largeEnemies: 08000000020000000a000000
   minibossType: 0
   tileSprites:
   - {fileID: 0}

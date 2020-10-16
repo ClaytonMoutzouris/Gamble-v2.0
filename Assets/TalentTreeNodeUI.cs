@@ -4,24 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
+public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    PlayerLevelTabUI talentTree;
     public Talent talent;
-    public Image background;
     public Image branchIcon;
-    public Text branchTitle;
+    public TalentTreeBranchUI branchParent;
 
     public void Start()
     {
         //talentTree = GetComponentInParent<PlayerLevelTabUI>();
     }
 
-    public void SetTalent(Talent t, PlayerLevelTabUI tree)
+    public void SetTalent(Talent t, TalentTreeBranchUI parent)
     {
-        talentTree = tree;
+        branchParent = parent;
         talent = t;
-        branchTitle.text = talent.talentName + "\n" + talent.description;
+        //branchTitle.text = talent.talentName + "\n" + talent.description;
         branchIcon.sprite = talent.icon;
     }
 
@@ -29,18 +27,17 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
     {
         if(talent.repeatable)
         {
-            background.color = Color.green;
+            branchIcon.color = Color.green;
         }
         else
         {
-            background.color = Color.yellow;
+            branchIcon.color = Color.yellow;
         }
     }
 
     public void OnSelected()
     {
-        talentTree.LearnTalent(talent.talentName);
-        if(talent.isLearned)
+        if(branchParent.LearnTalent(transform.GetSiblingIndex()))
         {
             SetColor();
         }
@@ -53,6 +50,12 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
-        talentTree.SetCurrentNode(this);
+        branchParent.talentTree.panel.tooltip.SetTooptip(talent.talentName
+            + "\n" + talent.description);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        branchParent.talentTree.panel.tooltip.ClearTooltip();
     }
 }

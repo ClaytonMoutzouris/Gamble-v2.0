@@ -10,6 +10,7 @@ public class PlayerPanelTab : MonoBehaviour
     public Player player;
     public PlayerPanel panel;
     public GameObject defaultSelection;
+    public GameObject tabButton;
 
     public virtual void Open()
     {
@@ -24,6 +25,11 @@ public class PlayerPanelTab : MonoBehaviour
     public virtual void Close()
     {
         gameObject.SetActive(false);
+
+    }
+
+    public virtual void UpdateTab()
+    {
 
     }
 }

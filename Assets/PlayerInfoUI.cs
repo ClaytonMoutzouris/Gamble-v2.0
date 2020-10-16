@@ -25,7 +25,7 @@ public class PlayerInfoUI : PlayerPanelTab
 
             }
 
-            foreach (StatType stat in player.mStats.stats.Keys)
+            foreach (StatType stat in player.mStats.primaryStats.Keys)
             {
                 statContainer.SetStat(player.mStats.GetStat(stat));
             }

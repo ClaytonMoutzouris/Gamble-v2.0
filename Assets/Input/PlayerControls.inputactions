@@ -145,7 +145,7 @@
                     "name": "Navigate",
                     "type": "Value",
                     "id": "8fcf2b4a-f1b7-46c3-a9b9-acb6fdc04200",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 },
@@ -395,7 +395,7 @@
                 {
                     "name": "up",
                     "id": "bd877459-1d1d-46a3-8629-aa8d997dda4d",
-                    "path": "<Gamepad>/rightStick/up",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad;GamepadControlScheme",

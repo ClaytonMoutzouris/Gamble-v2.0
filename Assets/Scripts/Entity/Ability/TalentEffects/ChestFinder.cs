@@ -7,9 +7,9 @@ public class ChestFinder : Ability
 {
     List<MiniMapIcon> icons = new List<MiniMapIcon>();
 
-    public override void OnEquipTrigger(Entity player)
+    public override void OnGainTrigger(Entity player)
     {
-        base.OnEquipTrigger(player);
+        base.OnGainTrigger(player);
 
         if (MiniMap.instance != null)
         {
@@ -20,9 +20,9 @@ public class ChestFinder : Ability
         }
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
 
         foreach (Player p in CrewManager.instance.players)
         {

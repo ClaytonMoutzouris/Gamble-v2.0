@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FallingRock
   m_EditorClassIdentifier: 
   entityType: 2
-  hostility: 0
+  hostility: 1
   mName: FallingRock
   bodySize: {x: 15, y: 16}
   CollidesWith: 000000000100000002000000060000000800000007000000
@@ -28,3 +28,4 @@ MonoBehaviour:
   crushDamage: 999
   kinematic: 0
   colorPallete: []
+  baseGravityMultiplier: 1

@@ -465,8 +465,19 @@ public static class MapGenerator
         {
             map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Biosample"));
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Slime Egg"));
-            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Low Gravity Potion"));
-            map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Damage Buff Potion"));
+            
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "BubbleGun"));
+
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "IcicleGun"));
+
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Snowzooka"));
+
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Flamethrower"));
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "SharkGun"));
+            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Poison Uzi"));
+
+            //map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Low Gravity Potion"));
+            //map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Damage Buff Potion"));
 
 
         }
@@ -477,6 +488,7 @@ public static class MapGenerator
 
         }
         //map.AddEntity(new MinibossData(15, 10, map.Data.minibossType));
+        //map.AddEntity(new EnemyData(15, 10, EnemyType.Sporby));
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {

@@ -15,7 +15,7 @@ public class Aura : Ability
     {
         if(entity is Player player)
         {
-            auraAbility.OnEquipTrigger(player);
+            auraAbility.OnGainTrigger(player);
             auraObject = player.Renderer.AddVisualEffect(visuals, Vector2.up*player.Body.mAABB.HalfSize);
         }
 
@@ -23,32 +23,32 @@ public class Aura : Ability
         {
             Debug.LogWarning("Applying auro to companion");
 
-            auraAbility.OnEquipTrigger(companion);
+            auraAbility.OnGainTrigger(companion);
             auraObject = companion.Renderer.AddVisualEffect(visuals, Vector2.up * companion.Body.mAABB.HalfSize);
         }
     }
 
     public void Unapply(Entity entity)
     {
-        auraAbility.OnUnequipTrigger(entity);
+        auraAbility.OnRemoveTrigger(entity);
         entity.Renderer.RemoveVisualEffect(auraObject);
         
     }
 
-    public override void OnEquipTrigger(Entity player)
+    public override void OnGainTrigger(Entity player)
     {
-        base.OnEquipTrigger(player);
+        base.OnGainTrigger(player);
         sightbox = new Sightbox(owner, new CustomAABB(owner.Position, Vector2.one * auraRadius, Vector2.zero));
         sightbox.UpdatePosition();
         Apply(player);
 
     }
 
-    public override void OnUnequipTrigger(Entity entity)
+    public override void OnRemoveTrigger(Entity entity)
     {
         Unapply(entity);
 
-        base.OnUnequipTrigger(entity);
+        base.OnRemoveTrigger(entity);
 
         if (sightbox != null)
         {

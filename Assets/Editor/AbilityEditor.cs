@@ -99,4 +99,10 @@ public class AbilityEditor
     {
         ScriptableObjectUtility.CreateAsset<AttackWhenHit>();
     }
+
+    [MenuItem("Assets/Create/Ability/RangedWeaponBuff")]
+    public static void CreateBaseRangedWeaponBuffAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<RangedWeaponBuff>();
+    }
 }

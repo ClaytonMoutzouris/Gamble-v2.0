@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b00b47e6846be094fb79b70b91d77b3c, type: 3}
-  m_Name: Rifle
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
   duration: 20
   cooldown: 0.6
   startUpFrames: 10
   offset: {x: 18, y: 12}
   animationController: {fileID: 0}
-  damage: 2
+  damage: 15
   sfx: {fileID: 0}
   projectilePrototype: {fileID: 11400000, guid: fec0e9799791930489de66d62471d671,
     type: 2}
-  numberOfProjectiles: 1
-  spreadAngle: 0
+  numberOfProjectiles: 3
+  spreadAngle: 45

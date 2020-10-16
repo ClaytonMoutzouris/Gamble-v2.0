@@ -35,7 +35,7 @@ public class Talent : ScriptableObject
         foreach (Ability ability in abilities)
         {
             Ability abilityTemp = Instantiate(ability);
-            abilityTemp.OnEquipTrigger(player);
+            abilityTemp.OnGainTrigger(player);
         }
 
 
