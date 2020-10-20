@@ -6,10 +6,8 @@ using UnityEngine;
 public class RangedWeaponBuff : Ability
 {
     public AmmoType weaponClass;
-    public int extraProjectiles = 0;
-    public int extraAmmoCapacity = 0;
-    public float reloadTimeDecrease = 0.0f;
-    public int extraDamage = 0;
+    public List<StatBonus> statBonuses;
+    public List<RangedWeaponAttributeBonus> rangedWeaponBonuses;
 
     public override void OnEquippedTrigger(Entity entity, Equipment equipment)
     {
@@ -17,11 +15,15 @@ public class RangedWeaponBuff : Ability
 
         if(equipment is RangedWeapon ranged && ranged.ammoType == weaponClass)
         {
-            ranged.numberOfProjectiles += extraProjectiles;
-            ranged.ammunitionCapacity += extraAmmoCapacity;
-            ranged.ammunitionCount += extraAmmoCapacity;
-            ranged.reloadTime -= reloadTimeDecrease;
-            ranged.damage += extraDamage;
+
+            ranged.attributes.AddBonuses(rangedWeaponBonuses);
+            
+            if(entity is Player player)
+            {
+                player.mStats.AddBonuses(statBonuses);
+                player.Health.UpdateHealth();
+
+            }
         } 
     }
 
@@ -31,11 +33,14 @@ public class RangedWeaponBuff : Ability
 
         if (equipment is RangedWeapon ranged && ranged.ammoType == weaponClass)
         {
-            ranged.numberOfProjectiles -= extraProjectiles;
-            ranged.ammunitionCapacity -= extraAmmoCapacity;
-            ranged.ammunitionCount -= extraAmmoCapacity;
-            ranged.reloadTime += reloadTimeDecrease;
-            ranged.damage -= extraDamage;
+            ranged.attributes.RemoveBonuses(rangedWeaponBonuses);
+
+            if (entity is Player player)
+            {
+                player.mStats.RemoveBonuses(statBonuses);
+                player.Health.UpdateHealth();
+
+            }
         }
     }
 
@@ -47,11 +52,11 @@ public class RangedWeaponBuff : Ability
         {
             if (player.Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon ranged && ranged.ammoType == weaponClass)
             {
-                ranged.numberOfProjectiles -= extraProjectiles;
-                ranged.ammunitionCapacity -= extraAmmoCapacity;
-                ranged.ammunitionCount -= extraAmmoCapacity;
-                ranged.reloadTime += reloadTimeDecrease;
-                ranged.damage -= extraDamage;
+                ranged.attributes.RemoveBonuses(rangedWeaponBonuses);
+
+                player.mStats.RemoveBonuses(statBonuses);
+                player.Health.UpdateHealth();
+
             }
         }
     }
@@ -65,13 +70,27 @@ public class RangedWeaponBuff : Ability
             //This null checks right?
             if (player.Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon ranged && ranged.ammoType == weaponClass)
             {
-                ranged.numberOfProjectiles += extraProjectiles;
-                ranged.ammunitionCapacity += extraAmmoCapacity;
-                ranged.ammunitionCount += extraAmmoCapacity;
-                ranged.reloadTime -= reloadTimeDecrease;
-                ranged.damage += extraDamage;
+                ranged.attributes.AddBonuses(rangedWeaponBonuses);
+
+                player.mStats.AddBonuses(statBonuses);
+                player.Health.UpdateHealth();
+
             }
         }
     }
+    public override string GetDescription()
+    {
+        string tooltip = "";
 
+        foreach (RangedWeaponAttributeBonus bonus in rangedWeaponBonuses)
+        {
+            tooltip += "\n" + bonus.GetTooltip();
+        }
+        foreach (StatBonus bonus in statBonuses)
+        {
+            tooltip += "\n" + bonus.GetTooltip();
+        }
+        return tooltip;
+    }
+    //public override Too
 }

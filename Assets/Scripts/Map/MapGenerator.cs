@@ -455,6 +455,7 @@ public static class MapGenerator
         map.AddEntity(new ObjectData(8, 1, ObjectType.SaveMachine));
 
         map.AddEntity(new ObjectData(10, 5, ObjectType.SmallGatherable));
+        map.AddEntity(new ObjectData(5, 4, ObjectType.PracticeBot));
 
         map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
 

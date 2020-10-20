@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This should be a scriptable object
 [System.Serializable]
 public class TalentTreeBranch
 {

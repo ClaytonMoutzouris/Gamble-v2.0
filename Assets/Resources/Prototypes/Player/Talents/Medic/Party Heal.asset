@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 99d0ff6860c3261499d42cc0950cddf9, type: 2}
   statBonuses: []
   bonusItems: []
-  icon: {fileID: 0}
+  icon: {fileID: 8495174919548166462, guid: 522fe50988a3fe54589b47925179befe, type: 3}
   repeatable: 0
   level: 3
   isLearned: 0

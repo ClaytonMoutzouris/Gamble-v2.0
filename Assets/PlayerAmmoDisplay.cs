@@ -40,7 +40,7 @@ public class PlayerAmmoDisplay : MonoBehaviour
                 fuelDisplay.gameObject.SetActive(false);
 
                 break;
-            case AmmoType.Fuel:
+            case AmmoType.Thrower:
                 currentIcon = null;
                 fuelDisplay.gameObject.SetActive(true);
 
@@ -73,7 +73,7 @@ public class PlayerAmmoDisplay : MonoBehaviour
 
         ammoObjects.Clear();
 
-        if (ammoType != AmmoType.Fuel)
+        if (ammoType != AmmoType.Thrower)
         {
             for (int i = 0; i < weapon.ammunitionCount; i++)
             {
@@ -81,7 +81,7 @@ public class PlayerAmmoDisplay : MonoBehaviour
                 temp.icon.sprite = currentIcon;
                 ammoObjects.Add(temp);
             }
-        } else if(ammoType == AmmoType.Fuel)
+        } else if(ammoType == AmmoType.Thrower)
         {
             fuelDisplay.SetFuel(weapon);
         }

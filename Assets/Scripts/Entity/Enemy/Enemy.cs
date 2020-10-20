@@ -102,7 +102,7 @@ public class Enemy : Entity, IHurtable
 
 
         //Stats
-        mStats = new Stats(this);
+        mStats = new Stats();
         mStats.SetStats(prototype.stats);
         ScaleStatsToLevel();
         mHealth = new Health(this, prototype.health);
@@ -153,7 +153,7 @@ public class Enemy : Entity, IHurtable
         if(!(this is BossEnemy))
         {
             EnemyHealthBar temp = GameObject.Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), Renderer.transform) as EnemyHealthBar;
-            temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 10);
+            temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 20);
             temp.InitHealthbar(this);
             mHealth.healthbar = temp;
         }

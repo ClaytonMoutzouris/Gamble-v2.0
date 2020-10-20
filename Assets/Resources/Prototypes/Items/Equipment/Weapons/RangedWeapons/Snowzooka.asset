@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
+  m_Name: Snowzooka
+  m_EditorClassIdentifier: 
+  itemName: Snowzooka
+  rarity: 0
+  baseValue: 15
+  sprite: {fileID: 798360227008517706, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  isStackable: 0
+  identified: 1
+  autoPickup: 0
+  mSlot: 5
+  baseBonuses: []
+  baseEffects: []
+  isEquipped: 0
+  damage: 20
+  ammoType: 1
+  attack: {fileID: 11400000, guid: e3263a01f5cd0334dac91e97f069795a, type: 2}
+  ammunitionCount: 1
+  reloading: 0
+  projProto: {fileID: 11400000, guid: 2375d32a6296b2d4b807924d04d404e2, type: 2}
+  baseAttributes:
+  - type: 0
+    value: 1
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 1
+    bonuses: []
+  - type: 3
+    value: 3
+    bonuses: []
+  - type: 4
+    value: 20
+    bonuses: []
+  - type: 5
+    value: 1
+    bonuses: []
+  - type: 6
+    value: 100
+    bonuses: []

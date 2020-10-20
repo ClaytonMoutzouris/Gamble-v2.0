@@ -11,6 +11,7 @@ public static class AbilityDatabase
     public static bool InitializeDatabase()
     {
         mAbilityDatabase = Resources.LoadAll<Ability>("Prototypes/Abilities");
+        mItemAbilityDatabase = Resources.LoadAll<Ability>("Prototypes/Abilities/Item Abilities");
         return true;
     }
 
@@ -32,6 +33,12 @@ public static class AbilityDatabase
     public static Ability GetRandomAbility()
     {
         Ability item = ScriptableObject.Instantiate(mAbilityDatabase[Random.Range(0, mAbilityDatabase.Length)]);
+        return item;
+    }
+
+    public static Ability GetItemAbility()
+    {
+        Ability item = ScriptableObject.Instantiate(mItemAbilityDatabase[Random.Range(0, mItemAbilityDatabase.Length)]);
         return item;
     }
 

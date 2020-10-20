@@ -33,7 +33,7 @@ public class CrewManager : MonoBehaviour
         players[index] = newPlayer;
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
         newPlayer.playerClass.LoadClass(newPlayer, false);
-        newPlayer.talentTree.skillPoints = newPlayer.playerLevel;
+        newPlayer.talentTree.skillPoints = newPlayer.playerLevel+5;
     }
 
     public void AddPlayer(int index, Player loadPlayer, PlayerSaveData saveData)

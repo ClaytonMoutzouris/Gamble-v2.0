@@ -2,27 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AmmoType { Pistol, Launcher, Automatic, Fuel, Charge, Shotgun };
+public enum AmmoType { Pistol, Launcher, Automatic, Thrower, Charge, Shotgun };
 
 public class RangedWeapon : Weapon
 {
     public AmmoType ammoType;
     public RangedAttackPrototype attack;
-    public int ammunitionCapacity = 5;
+    [HideInInspector]
     public int ammunitionCount = 5;
-    public float reloadTime = 3.0f;
-    public float reloadCooldown = 0.0f;
     float reloadTimeStamp;
     public bool reloading = false;
     //Measured in shots per second
-    public float fireRate = 1.0f;
     float fireTimeStamp;
     public ProjectilePrototype projProto;
-    public int numberOfProjectiles = 1;
-    public int spreadAngle = 0;
+    public RangedWeaponAttributes attributes;
+
+    #region baseAttributes
+    public List<RangedWeaponAttribute> baseAttributes = new List<RangedWeaponAttribute>{
+        new RangedWeaponAttribute(RangedWeaponAttributesType.NumProjectiles, 1),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.SpreadAngle, 0),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.AmmoCapacity, 5),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.ReloadTime, 3),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.Damage, 5),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.FireRate, 3),
+        new RangedWeaponAttribute(RangedWeaponAttributesType.ProjectileSpeed, 100),
+
+    };
+    #endregion
+
+    public void SetAttributes()
+    {
+        attributes = new RangedWeaponAttributes();
+        attributes.SetStats(baseAttributes);
+        ammunitionCount = (int)attributes.GetAttribute(RangedWeaponAttributesType.AmmoCapacity).GetValue();
+        attributes.GetAttribute(RangedWeaponAttributesType.ProjectileSpeed).value = projProto.speed;
+    }
 
     public override void OnEquip(Player player)
     {
+        SetAttributes();
         base.OnEquip(player);
         if(mSlot == EquipmentSlotType.Mainhand)
         {
@@ -46,6 +64,7 @@ public class RangedWeapon : Weapon
 
     public virtual void Fire(Player player)
     {
+        /*
         if(reloading && Time.time > reloadTimeStamp+reloadTime)
         {
             reloading = false;
@@ -53,11 +72,11 @@ public class RangedWeapon : Weapon
             Debug.Log("Reloading Complete");
 
         }
-
+        */
         if (!reloading && ammunitionCount > 0)
         {
 
-            if(Time.time > fireTimeStamp+(1/fireRate))
+            if(Time.time > fireTimeStamp+(1/ attributes.GetAttribute(RangedWeaponAttributesType.FireRate).GetValue()))
             {
 
 
@@ -67,22 +86,25 @@ public class RangedWeapon : Weapon
 
                 fireTimeStamp = Time.time;
 
-                float interval = spreadAngle / numberOfProjectiles;
+                float interval = attributes.GetAttribute(RangedWeaponAttributesType.SpreadAngle).GetValue() / attributes.GetAttribute(RangedWeaponAttributesType.NumProjectiles).GetValue();
 
-                for (int i = 0; i < numberOfProjectiles; i++)
+                for (int i = 0; i < attributes.GetAttribute(RangedWeaponAttributesType.NumProjectiles).GetValue(); i++)
                 {
 
                     Vector2 tempDir = player.GetAimRight().normalized;
 
-                    if (numberOfProjectiles > 1)
+                    if (attributes.GetAttribute(RangedWeaponAttributesType.NumProjectiles).GetValue() > 1)
                     {
-                        tempDir = tempDir.Rotate(-spreadAngle / 2 + (interval * i));
+                        tempDir = tempDir.Rotate(-attributes.GetAttribute(RangedWeaponAttributesType.SpreadAngle).GetValue() / 2 + (interval * i));
                     }
 
                     tempDir.Normalize();
-                    attack.damage = damage;
-                    Projectile shot = new Projectile(projProto, new RangedAttack(player, attack), tempDir);
-                    shot.Spawn(player.Position + new Vector2(0, attack.offset.y) + (attack.offset * tempDir.normalized));
+                    RangedAttackPrototype attackProto = Instantiate(attack);
+                    attackProto.damage = (int)attributes.GetAttribute(RangedWeaponAttributesType.Damage).GetValue();
+                    ProjectilePrototype tempProto = Instantiate(projProto);
+                    tempProto.speed = (int)attributes.GetAttribute(RangedWeaponAttributesType.ProjectileSpeed).GetValue();
+                    Projectile shot = new Projectile(tempProto, new RangedAttack(player, attackProto), tempDir);
+                    shot.Spawn(player.Position + new Vector2(0, attackProto.offset.y) + (attackProto.offset * tempDir.normalized));
 
                 }
                 //Actually fire here
@@ -99,6 +121,17 @@ public class RangedWeapon : Weapon
         }
 
 
+    }
+
+    public void OnUpdate()
+    {
+        if (reloading && Time.time > reloadTimeStamp + attributes.GetAttribute(RangedWeaponAttributesType.ReloadTime).GetValue())
+        {
+            reloading = false;
+            ammunitionCount = (int)attributes.GetAttribute(RangedWeaponAttributesType.AmmoCapacity).GetValue();
+            Debug.Log("Reloading Complete");
+
+        }
     }
 
     public void ChargeUp()
@@ -118,6 +151,7 @@ public class RangedWeapon : Weapon
     public override string GetTooltip()
     {
         string tooltip = base.GetTooltip();
+        tooltip += "\n" + ammoType.ToString();
         tooltip += attack.GetToolTip();
 
         return tooltip;

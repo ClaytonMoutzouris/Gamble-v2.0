@@ -16,4 +16,4 @@ MonoBehaviour:
   description: 
   statBonuses:
   - type: 0
-    bonusValue: 5
+    bonusValue: 3

@@ -57,7 +57,12 @@ public abstract class Ability : ScriptableObject
 
     public override string ToString()
     {
-        return abilityName;
+        return abilityName + "\n" + description;
+    }
+
+    public virtual string GetDescription()
+    {
+        return description;
     }
 
 }

@@ -186,7 +186,7 @@ public class Player : Entity, IHurtable
         abilities = new List<Ability>();
         PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.player = this;
 
-        mStats = new Stats(this);
+        mStats = new Stats();
 
         mWalkSpeed = prototype.walkSpeed;
         mJumpSpeed = prototype.jumpSpeed;
@@ -1139,7 +1139,7 @@ public class Player : Entity, IHurtable
             if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon weapon)
             {
                 weapon.Fire(this);
-                ((PlayerRenderer)Renderer).UpdateAmmo(weapon);
+                //((PlayerRenderer)Renderer).UpdateAmmo(weapon);
 
             }
 
@@ -1153,6 +1153,13 @@ public class Player : Entity, IHurtable
         else
         {
             ((PlayerRenderer)Renderer).ShowWeapon(false);
+
+        }
+
+        if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon rangedWeapon)
+        {
+            rangedWeapon.OnUpdate();
+            ((PlayerRenderer)Renderer).UpdateAmmo(rangedWeapon);
 
         }
 

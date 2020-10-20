@@ -19,7 +19,15 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 77ddccff839149547bbf2c6bd3cf32d3, type: 2}
     - {fileID: 11400000, guid: b154dd960260703449566e32afb63473, type: 2}
   - talents:
-    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
-    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
+    - {fileID: 11400000, guid: 9d87f1726abb53244b4270da0fac7894, type: 2}
+    - {fileID: 11400000, guid: 91f0618a27f3f58459a9fe5cce4a3432, type: 2}
+    - {fileID: 11400000, guid: dd2c21c6c4ca6194a9cd4288dcbf5bce, type: 2}
+    - {fileID: 11400000, guid: b596bc7732ab9b249b7cb92159e6b932, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: b3076eab731e7c54bbd1ff4c697629ef, type: 2}
+    - {fileID: 11400000, guid: 4baba99f99fac1a48a7d9c7f7cb5422e, type: 2}
+    - {fileID: 11400000, guid: f48abe1e2a56f8344965988c33185ac1, type: 2}
+    - {fileID: 11400000, guid: 2ad0e53fcfec26f48b30a49abb4cf49f, type: 2}
+  - talents:
     - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
   skillPoints: 0

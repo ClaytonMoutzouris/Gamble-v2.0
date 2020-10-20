@@ -391,6 +391,10 @@ public class MapManager : MonoBehaviour
                 BreakableTile temp16 = new BreakableTile(Resources.Load("Prototypes/Entity/Objects/BreakableTile") as EntityPrototype);
                 temp16.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
+            case ObjectType.PracticeBot:
+                PracticeBot temp17 = new PracticeBot(Resources.Load("Prototypes/Entity/Objects/PracticeBot") as EntityPrototype);
+                temp17.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
         }
     }
         

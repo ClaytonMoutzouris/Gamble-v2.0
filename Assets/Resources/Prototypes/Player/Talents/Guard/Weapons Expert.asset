@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapons Expert
   m_EditorClassIdentifier: 
   talentName: Weapons Expert
-  description: Deal +5 Damage with all weapons
+  description: Deal +3 Damage with all weapons
   abilities:
   - {fileID: 11400000, guid: 5c2866c0b91021e4292d8b34fd5220c8, type: 2}
   statBonuses: []

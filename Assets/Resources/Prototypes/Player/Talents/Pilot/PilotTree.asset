@@ -16,10 +16,19 @@ MonoBehaviour:
   branches:
   - talents:
     - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
-    - {fileID: 11400000, guid: 89ec81c868d990a4b8701d0583fc3ddb, type: 2}
-  - talents:
     - {fileID: 11400000, guid: fb846c9cd9bc3fd40896b5ad71c1a81e, type: 2}
+    - {fileID: 11400000, guid: 89ec81c868d990a4b8701d0583fc3ddb, type: 2}
     - {fileID: 11400000, guid: db1832f336d3b0640ac0600a66c8dab6, type: 2}
   - talents:
-    - {fileID: 11400000, guid: 9d87f1726abb53244b4270da0fac7894, type: 2}
+    - {fileID: 11400000, guid: 879e22e3d3f558a429194a9560847976, type: 2}
+    - {fileID: 11400000, guid: 3d7ff7652412b98488600687c6157450, type: 2}
+    - {fileID: 11400000, guid: 204517bd82298b74292dc1b5558baa02, type: 2}
+    - {fileID: 11400000, guid: 8bb4b18396774c749a6c095e11f6d8df, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: ee60f78f28786d24399a4e0200591e42, type: 2}
+    - {fileID: 11400000, guid: ab55dfca826053f40bd244675aae59f5, type: 2}
+    - {fileID: 11400000, guid: e61c54cefd1a5f743b9f2d764e6334fb, type: 2}
+    - {fileID: 11400000, guid: 86e595f3d135ddf4bb0543e9bc67afc0, type: 2}
+  - talents:
+    - {fileID: 11400000, guid: fc283f529ef6a7e4a8bd0d80a4f3a78a, type: 2}
   skillPoints: 0

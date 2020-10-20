@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faaacc3832a663438c2ba345e00e57a, type: 3}
+  m_Name: SharkGun
+  m_EditorClassIdentifier: 
+  itemName: SharkGun
+  rarity: 4
+  baseValue: 25
+  sprite: {fileID: 21300000, guid: 895ca76941f87124181638a8ccc1db42, type: 3}
+  isStackable: 0
+  identified: 1
+  autoPickup: 0
+  mSlot: 5
+  baseBonuses:
+  - modType: 0
+    type: 2
+    bonusValue: 2
+  - modType: 0
+    type: 3
+    bonusValue: 1
+  baseEffects: []
+  isEquipped: 0
+  damage: 5
+  ammoType: 5
+  attack: {fileID: 11400000, guid: ec757765b785189409b670580d1f4aed, type: 2}
+  ammunitionCount: 2
+  reloading: 0
+  projProto: {fileID: 11400000, guid: 0f3807790058f714a9bfc812a7c0c654, type: 2}
+  baseAttributes:
+  - type: 0
+    value: 8
+    bonuses: []
+  - type: 1
+    value: 60
+    bonuses: []
+  - type: 2
+    value: 2
+    bonuses: []
+  - type: 3
+    value: 3
+    bonuses: []
+  - type: 4
+    value: 5
+    bonuses: []
+  - type: 5
+    value: 1
+    bonuses: []
+  - type: 6
+    value: 100
+    bonuses: []

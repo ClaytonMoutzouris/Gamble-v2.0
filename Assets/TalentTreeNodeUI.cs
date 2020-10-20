@@ -45,13 +45,18 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public string GetTooltip()
     {
-        return talent.description;
+        string tooltip = talent.talentName + "\n" + talent.description;
+
+        foreach(Ability ability in talent.abilities)
+        {
+            tooltip += ability.GetDescription();
+        }
+        return tooltip;
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        branchParent.talentTree.panel.tooltip.SetTooptip(talent.talentName
-            + "\n" + talent.description);
+        branchParent.talentTree.panel.tooltip.SetTooptip(GetTooltip());
     }
 
     public void OnDeselect(BaseEventData eventData)

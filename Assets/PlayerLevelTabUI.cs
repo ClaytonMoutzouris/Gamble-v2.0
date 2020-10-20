@@ -107,6 +107,40 @@ public class PlayerLevelTabUI : PlayerPanelTab
         */
         defaultSelection = treeBranches[0].gameObject;
 
+        SetNavigation();
+    }
+
+    public void SetNavigation()
+    {
+        for (int i = 0; i < treeBranches.Count; i++)
+        {
+
+            Navigation customNav = treeBranches[i].GetComponent<Button>().navigation;
+            Navigation iNav = interactableUp.navigation;
+
+            if (i == 0)
+            {
+                iNav.selectOnDown = treeBranches[i].GetComponent<Button>();
+
+                customNav.selectOnUp = interactableUp;
+                customNav.selectOnDown = treeBranches[i + 1].GetComponent<Button>();
+
+            }
+            else if (i == treeBranches.Count - 1)
+            {
+                customNav.selectOnUp = treeBranches[i - 1].GetComponent<Button>();
+            }
+            else
+            {
+                customNav.selectOnUp = treeBranches[i - 1].GetComponent<Button>();
+                customNav.selectOnDown = treeBranches[i + 1].GetComponent<Button>();
+            }
+
+
+            interactableUp.navigation = iNav;
+            treeBranches[i].GetComponent<Button>().navigation = customNav;
+
+        }
     }
 
     public void LearnTalent(string talentName, bool fromLoad = false)

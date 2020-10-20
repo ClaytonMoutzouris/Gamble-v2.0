@@ -195,7 +195,7 @@ public abstract class Equipment : Item
 
         if(rarity == Rarity.Legendary || rarity == Rarity.Rare || rarity == Rarity.Artifact)
         {
-            Effects.Add(AbilityDatabase.GetRandomAbility());
+            Effects.Add(AbilityDatabase.GetItemAbility());
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
         }
         
@@ -260,15 +260,15 @@ public abstract class Equipment : Item
         tooltip += "\n<color=white>" + mSlot.ToString() + "</color>";
         foreach (Ability effect in Effects)
         {
-            tooltip += "\n<color=magenta>" + effect.ToString() + "</color>";
+            tooltip += "\n<color=magenta>" + effect.abilityName + "</color>";
         }
         foreach (StatBonus stat in baseBonuses)
         {
-            tooltip += "\n<color=white>" + stat.getTooltip() + "</color>";
+            tooltip += "\n<color=white>" + stat.GetTooltip() + "</color>";
         }
         foreach (StatBonus stat in statBonuses)
         {
-            tooltip += "\n<color=green>" + stat.getTooltip() + "</color>";
+            tooltip += "\n<color=green>" + stat.GetTooltip() + "</color>";
         }
 
         return tooltip;

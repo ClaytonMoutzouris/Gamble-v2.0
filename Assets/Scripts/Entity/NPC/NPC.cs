@@ -107,7 +107,7 @@ public class NPC : Entity, IHurtable, IInteractable
 
 
         //Stats
-        mStats = new Stats(this);
+        mStats = new Stats();
         mHealth = new Health(this, prototype.health);
 
         mAttackManager = new AttackManager(this);
