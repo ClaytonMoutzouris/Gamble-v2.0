@@ -178,4 +178,18 @@ public class PlayerInventory
         return null;
     }
 
+    public List<InventorySlot> GetQuickuseSlots()
+    {
+        List<InventorySlot> quickSlots = new List<InventorySlot>();
+        //ItemObject item = null;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item is ConsumableItem)
+            {
+                quickSlots.Add(slots[i]);
+            }
+        }
+
+        return quickSlots;
+    }
 }

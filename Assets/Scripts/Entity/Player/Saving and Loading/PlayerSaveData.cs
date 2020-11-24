@@ -56,7 +56,7 @@ public class PlayerSaveData
         }
 
         colors = new List<SerializableColor>();
-        foreach(Color color in ((PlayerRenderer)player.Renderer).colorSwapper.mBaseColors)
+        foreach(Color color in ((PlayerRenderer)player.Renderer).colorSwap.mBaseColors)
         {
             colors.Add(color);
         }

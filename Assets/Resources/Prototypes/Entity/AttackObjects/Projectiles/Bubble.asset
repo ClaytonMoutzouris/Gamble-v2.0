@@ -16,18 +16,46 @@ MonoBehaviour:
   hostility: 1
   mName: Bubble
   bodySize: {x: 6, y: 6}
-  CollidesWith: 
+  CollidesWith: 02000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 1
   sprite: {fileID: 21300000, guid: 161a517e3ac78c94bb508baf4852db30, type: 3}
   sortingLayer: 0
   animationController: {fileID: 0}
-  effects: []
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 6, y: 6}
   angled: 0
   maxTime: 10
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: eb52b468b93471345acdd0278c5aac40, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}
   pierce: 0
   collidesWithTiles: 1
+  bouncy: 0
   speed: 80
+  frameDelay: 0

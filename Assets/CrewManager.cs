@@ -33,7 +33,7 @@ public class CrewManager : MonoBehaviour
         players[index] = newPlayer;
         newPlayer.Spawn(MapManager.instance.GetMapTilePosition(5, 5));
         newPlayer.playerClass.LoadClass(newPlayer, false);
-        newPlayer.talentTree.skillPoints = newPlayer.playerLevel+5;
+        newPlayer.talentTree.skillPoints = newPlayer.playerLevel;
     }
 
     public void AddPlayer(int index, Player loadPlayer, PlayerSaveData saveData)
@@ -64,7 +64,7 @@ public class CrewManager : MonoBehaviour
 
     public void GainEXP(Player player, int xp)
     {
-        int levelThreshold = player.playerLevel * player.playerLevel * 10 + 50;
+        int levelThreshold = player.playerLevel * 150 + player.playerLevel*75;
 
         player.playerExperience += xp;
 

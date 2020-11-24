@@ -31,7 +31,19 @@ public class Knockback : Ability
             player.movementState = MovementState.Knockback;
 
         }
-        Vector2 knockbackVector = Vector2.right * attackObject.direction.x + Vector2.up * 0.5f;
+
+        Vector2 knockbackVector;
+
+        if (entity.GetEntity().Body.mPS.pushesBottom)
+        {
+            knockbackVector = Vector2.right * attackObject.direction.x + Vector2.up * 0.5f;
+
+        }
+        else
+        {
+            knockbackVector = attackObject.direction;
+        }
+
         entity.GetEntity().Body.mSpeed = knockbackVector.normalized*500;
     }
 }

@@ -29,7 +29,7 @@ public class BossEnemy : Enemy
         {
             foreach (Entity entity in Sight.mEntitiesInSight)
             {
-                if (entity.hostility != Hostility)
+                if (entity.hostility != Hostility && entity is IHurtable)
                 {
                     if(entity is Player player)
                     {

@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EntityType { Player, Enemy, Obstacle, Platform, Object, Projectile, Boss, NPC, Miniboss };
 public enum SortingLayerEnum { Default = 0, Background, Object, Boss, Enemy, Player, PlayerWeapon, ItemObject, Projectile };
-public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, Treedude, Stag, Snowdrift, FrogLegs, Nest, Crawler, Nipper, PhoenixEgg, Sporby, Boss=-1, Miniboss=-2 };
-public enum NPCType { Standard, Shopkeeper };
-
+public enum EnemyType { Slime, Eye, WurmAlien, Hedgehog, Snek, Snowball, Ghost, Treedude, Stag, Snowdrift, FrogLegs, Nest, Crawler, Nipper, PhoenixEgg, Sporby, Voidling, Boss=-1, Miniboss=-2, SubEnemy =-3 };
+public enum NPCType { GeneralTrader, Gadgeteer, EggsDealer, PotionSeller, ArmsDealer, Clothier, Count };
+public enum TraderType { GeneralTrader, Gadgeteer, EggDealer, PotionSeller, ArmsDealer, Clothier }
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, VoidBoss, Count };
 public enum MinibossType { BogBeast, Salamander, IceShard, Shroombo, GiantCrab, Voidbeast }
-public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile, PracticeBot };
+public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile, PracticeBot, Count };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Artifact, Count }
 public enum StatusEffectType {  DamageOverTime, Stun };
 public enum StatusEffectClass { Buff, Debuff };
 public enum EquipmentSlotType { Head, Body, Gloves, Boots, Belt, Mainhand, Offhand, Gadget };
 public enum CompanionType { Drone, Eyebat };
-public enum TalentAbilityType { }
+
 //Hub comes after count, because we dont want to randomly choose the hub (in most cases)
-public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Hub};
-public enum MapType {  Hub, World, BossMap };
+public enum WorldType { Forest, Tundra, Lava, Purple, Yellow, Void, Count, Ship };
+public enum MapType { Ship, World, BossMap, Hub };
 public enum SurfaceLayer { Above, Surface, Inner, Count };
 
 [System.Serializable]
-public enum PlayerClassType { Pilot, Guardian, Medic };
+public enum PlayerClassType { Pilot, Guardian, Medic, Commander, Agent, Engineer, Scientist };
 public enum PlayerBackgroundType { Terran, Shroom, Xorpan };
 //public enum TalentType {  };
 

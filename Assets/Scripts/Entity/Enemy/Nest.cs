@@ -8,11 +8,13 @@ public class Nest : Enemy
     public List<Enemy> spawns;
     float spawnTimer = 0;
     float spawnCooldown = 5;
+    int maxSpawns = 5;
     Vector2 spawnOffset = new Vector2(0, 32);
 
     public Nest(EnemyPrototype proto) : base(proto)
     {
         Body.mIsKinematic = true;
+        spawns = new List<Enemy>();
     }
 
     public override void ActuallyDie()
@@ -43,13 +45,15 @@ public class Nest : Enemy
         {
             spawnTimer += Time.deltaTime;
 
-            if(spawnTimer >= spawnCooldown)
+            if(spawns.Count < maxSpawns && spawnTimer >= spawnCooldown)
             {
                 EnemyPrototype proto = EnemyDatabase.GetEnemyPrototype(spawnType);
                 Slime temp = new Slime(proto);
                 temp.Spawn(Position + spawnOffset);
                 //EnemyBehaviour.Jump(temp, 120);
                 spawnTimer = 0;
+                temp.nestParent = this;
+                spawns.Add(temp);
             }
 
         }
@@ -65,11 +69,6 @@ public class Nest : Enemy
     public override int GetHashCode()
     {
         return base.GetHashCode();
-    }
-
-    public override void GetHurt(Attack attack)
-    {
-        base.GetHurt(attack);
     }
 
     public override void SecondUpdate()

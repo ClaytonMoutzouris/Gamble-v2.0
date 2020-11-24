@@ -10,30 +10,15 @@ public class StatBuff : Ability
     public override void OnGainTrigger(Entity entity)
     {
         base.OnGainTrigger(entity);
-        //TODO: Add stats to all entities
-        if(entity is Player player)
-        {
-            player.mStats.AddBonuses(statBonuses);
-        }
-
-        if(entity is Enemy enemy)
-        {
-            enemy.mStats.AddBonuses(statBonuses);
-
-        }
+        entity.mStats.AddBonuses(statBonuses);
 
     }
 
     public override void OnRemoveTrigger(Entity entity)
     {
         base.OnRemoveTrigger(entity);
-        if(entity is Player player)
-        {
-            player.mStats.RemoveBonuses(statBonuses);
-        } else if(entity is Enemy enemy)
-        {
-            enemy.mStats.RemoveBonuses(statBonuses);
-        }
+
+        entity.mStats.RemoveBonuses(statBonuses);
 
     }
 }

@@ -11,6 +11,8 @@ public class AnalysisCom : Entity, IInteractable
     /// 
     [HideInInspector]
     public bool mOpen = false;
+    private string interactLabel = "<Analyze>";
+
 
     public AnalysisCom(EntityPrototype proto) : base(proto)
     {
@@ -21,6 +23,7 @@ public class AnalysisCom : Entity, IInteractable
 
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public override void EntityUpdate()
     {
@@ -40,6 +43,7 @@ public class AnalysisCom : Entity, IInteractable
                 if (sample.Identify())
                 {
                     ShowFloatingText("Analyzed " + sample.GetTooltip(), Color.green);
+                    SoundManager.instance.PlaySingle(prototype.interactSFX[0]);
                     return true;
                 }
             }

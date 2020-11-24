@@ -32,14 +32,10 @@ public class Health
     public void UpdateHealth()
     {
         maxHealth = baseHP;
-        if (entity is Player player)
-        {
-            maxHealth = baseHP + 10 * player.mStats.GetStat(StatType.Constitution).GetValue();
 
-        } else if (entity is Enemy enemy)
-        {
-            maxHealth = baseHP + 10 * enemy.mStats.GetStat(StatType.Constitution).GetValue();
-        }
+
+        maxHealth = baseHP + 10 * entity.mStats.GetStat(StatType.Constitution).GetValue();
+
         //Debug.Log(entity.Name + " Updating max health: " + maxHealth);
 
         if (healthbar != null)

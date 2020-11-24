@@ -17,15 +17,40 @@ MonoBehaviour:
   mName: SwordAttack
   bodySize: {x: 0, y: 0}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 87163d60de8a5724cb9c64d879ced7b9, type: 3}
   sortingLayer: 8
   animationController: {fileID: 9100000, guid: a75a41f31f6ea4b42bb67e4c92b688c5, type: 2}
-  effects: []
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 24, y: 12}
   angled: 0
   maxTime: 1
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: 7989b1b217a36e14e852f26f21562927, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}

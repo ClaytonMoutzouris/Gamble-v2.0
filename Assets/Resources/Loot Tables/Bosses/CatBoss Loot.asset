@@ -45,5 +45,9 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: 5df38575d62d5d24490f04b6a61a07c7, type: 2}
     minDropNum: 1
     maxDropNum: 1
+  - dropChance: 50
+    item: {fileID: 11400000, guid: 7a8fc3a5ed4e9164da850e8c0ec9e7fc, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
   guaranteedDrops:
   - {fileID: 11400000, guid: a275604440e5ff346a568930942a0588, type: 2}

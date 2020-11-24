@@ -12,6 +12,7 @@ public class Miniboss : Enemy
     public Miniboss(EnemyPrototype proto) : base(proto)
     {
 
+        ExpValue = 50;
     }
 
     public void CheckForTargets()

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36c4d0294221346896bb825155d613, type: 3}
+  m_Name: Gadget Wares
+  m_EditorClassIdentifier: 
+  nodes:
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 9fad5096a05d25f4eafb1b672466ee63, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: a5c32f2d0e9fe584da1d6f91a8766064, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 189f576c9a571b246ba42b9fc2ce6f33, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 27ac88c0766ba7745b3f7cb98fa9876b, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: dee613560d4c2bb4c98dae474c1e07f8, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 9bf2c2e97b0d85f478292980162ab2da, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: a4d39e165042231479157fcce7732d34, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 242bcda7931177042b31bcf87ae6bcaa, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  guaranteedDrops: []

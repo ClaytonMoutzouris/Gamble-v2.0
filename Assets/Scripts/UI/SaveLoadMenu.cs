@@ -5,6 +5,7 @@ using System;
 
 using UnityEngine.UI;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveLoadMenu : MonoBehaviour
 {
@@ -44,6 +45,38 @@ public class SaveLoadMenu : MonoBehaviour
 
     public void Save(string path)
     {
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        bf.Serialize(stream, mMap.room);
+        stream.Close();
+    }
+
+    public void Load(string path)
+    {
+        if (File.Exists(path))
+        {
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.OpenOrCreate);
+
+            RoomData data = bf.Deserialize(stream) as RoomData;
+            //Sdata.entityData = new EntityData[data.mWidth, data.mHeight];
+
+            stream.Close();
+
+            mMap.room = data;
+            
+            mMap.Draw();
+            RoomEditor.UpdateEditorValues();
+
+        }
+
+    }
+
+    public void OldSave(string path)
+    {
         //string path = Path.Combine(Application.persistentDataPath, "test.map");
         //The "using" syntax defines a scope for which the writer is valid, automatically closing it when exiting the scope
         //This is because BinaryWriter implements the IDisposable interface, which have Dispose methods. Exiting our using scope will invoke this method
@@ -61,7 +94,7 @@ public class SaveLoadMenu : MonoBehaviour
 
     }
 
-    public void Load(string path)
+    public void OldLoad(string path)
     {
         if (!File.Exists(path))
         {
@@ -94,19 +127,28 @@ public class SaveLoadMenu : MonoBehaviour
     {
         string path;
 
-        path = Application.dataPath + "/RoomsWorkingDir/" + nameInput.text + ".txt";
-        
 
-        if (path == null)
-        {
-            return;
-        }
+
         if (saveMode)
         {
+            path = Application.dataPath + "/RoomsWorkingDir2/" + nameInput.text + ".txt";
+
+
+            if (path == null)
+            {
+                Directory.CreateDirectory(Application.dataPath + "/RoomsWorkingDir2");
+            }
             Save(path);
         }
         else
         {
+            path = Application.dataPath + "/RoomsWorkingDir2/" + nameInput.text + ".txt";
+
+
+            if (path == null)
+            {
+                Directory.CreateDirectory(Application.dataPath + "/RoomsWorkingDir2");
+            }
             Load(path);
         }
         Close();
@@ -125,7 +167,7 @@ public class SaveLoadMenu : MonoBehaviour
         }
 
         string[] paths =
-            Directory.GetFiles(Application.dataPath + "/RoomsWorkingDir", "*.txt", SearchOption.AllDirectories);
+            Directory.GetFiles(Application.dataPath + "/RoomsWorkingDir2", "*.txt", SearchOption.AllDirectories);
 
         Array.Sort(paths);
 
@@ -136,13 +178,14 @@ public class SaveLoadMenu : MonoBehaviour
             item.Path = paths[i];
             item.MapName = Path.GetFileNameWithoutExtension(paths[i]);
             item.transform.SetParent(listContent, false);
+
         }
     }
 
     public void Delete()
     {
         string path;
-        path = Application.dataPath + "/Rooms/" + nameInput.text + ".room";
+        path = Application.dataPath + "/RoomsWorkingDir2/" + nameInput.text + ".txt";
         if (path == null)
         {
             return;
@@ -154,5 +197,10 @@ public class SaveLoadMenu : MonoBehaviour
 
         nameInput.text = "";
         FillList();
+    }
+
+    public void ConvertSaves()
+    {
+
     }
 }

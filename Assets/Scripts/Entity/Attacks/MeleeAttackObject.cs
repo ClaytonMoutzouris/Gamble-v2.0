@@ -20,7 +20,7 @@ public class MeleeAttackObject : AttackObject
 
         if (SoundManager.instance != null)
         {
-            SoundManager.instance.PlaySingle(proto.sfx);
+            SoundManager.instance.PlaySingle(proto.spawnSFX);
         }
     }
 
@@ -72,22 +72,6 @@ public class MeleeAttackObject : AttackObject
         //Position = owner.Position + attack.attackOffset * (Vector2.right * (int)owner.mDirection);
         Renderer.Sprite.flipX = (owner.mDirection == EntityDirection.Left);
 
-    }
-
-
-    public override void ActuallyDie()
-    {
-        base.ActuallyDie();
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
-
-    public override void Die()
-    {
-        base.Die();
     }
 
     public override void Spawn(Vector2 spawnPoint)

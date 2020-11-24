@@ -10,6 +10,12 @@ public class TalentEditor
         ScriptableObjectUtility.CreateAsset<TalentTree>();
     }
 
+    [MenuItem("Assets/Create/Talents/TalentTreeBranch")]
+    public static void CreateTalentTreeBranchAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<TalentTreeBranch>();
+    }
+
     [MenuItem("Assets/Create/Talents/Talent")]
     public static void CreateTalentAsset()
     {

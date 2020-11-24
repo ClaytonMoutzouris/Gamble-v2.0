@@ -51,14 +51,15 @@ public class EntityRenderer : MonoBehaviour
         }
     }
 
-    public ColorSwap colorSwapper;
+    public ColorSwap colorSwap;
+    public ColorSwapper colorSwapper;
 
     protected virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        colorSwapper = new ColorSwap(sprite.material);
-        //AddVisualEffect();
+        colorSwap = new ColorSwap(sprite.material);
+        colorSwapper = new ColorSwapper(sprite.material);
     }
 
     public void OnDrawGizmos()
@@ -76,17 +77,16 @@ public class EntityRenderer : MonoBehaviour
 
         }
 
-        if (Entity is Player)
+        if (Entity is Player player)
         {
-            Player P = (Player)Entity;
             //Debug.Log("Enemy Hurtbox Center " + E.HurtBox.mAABB.Center + " and Size: " + E.HurtBox.mAABB.HalfSize);
 
-            Gizmos.DrawCube(P.HurtBox.mAABB.Center, P.HurtBox.mAABB.HalfSize * 2);
+            Gizmos.DrawCube(player.HurtBox.mAABB.Center, player.HurtBox.mAABB.HalfSize * 2);
 
 
 
 
-            if (P.AttackManager != null && P.AttackManager.meleeAttacks != null && P.AttackManager.meleeAttacks[0] != null && P.AttackManager.meleeAttacks[0].mIsActive)
+            if (player.AttackManager != null && player.AttackManager.meleeAttacks != null && player.AttackManager.meleeAttacks[0] != null && player.AttackManager.meleeAttacks[0].mIsActive)
             {
                 Gizmos.color = Color.blue;
                 

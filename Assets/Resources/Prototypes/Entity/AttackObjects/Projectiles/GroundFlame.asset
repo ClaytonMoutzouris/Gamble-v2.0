@@ -13,13 +13,22 @@ MonoBehaviour:
   m_Name: GroundFlame
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: GroundFlame
   bodySize: {x: 8, y: 6}
-  CollidesWith: 
+  CollidesWith: 02000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 8, y: 6}
   angled: 0
   maxTime: 4
@@ -27,6 +36,7 @@ MonoBehaviour:
   particleSystem: {fileID: 8454978369600594109, guid: 743bb8bcf931b2d4693dea476eabc1f1,
     type: 3}
   pierce: 1
-  ignoreGravity: 0
   collidesWithTiles: 0
+  bouncy: 0
   speed: 0
+  frameDelay: 0

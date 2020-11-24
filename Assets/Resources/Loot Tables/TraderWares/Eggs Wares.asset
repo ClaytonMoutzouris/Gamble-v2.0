@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36c4d0294221346896bb825155d613, type: 3}
+  m_Name: Eggs Wares
+  m_EditorClassIdentifier: 
+  nodes:
+  - dropChance: 100
+    item: {fileID: 11400000, guid: ab935addcfb6d984fa07de953c4c7cc2, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: c36ca7ea4c99c6641a70fe2c02bc86ec, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 1f8376044c695e347b5a120c8f09945f, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 99036e12de4403b4fb1e83168737fe9f, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 2865df9de1fdec048830a4df1deb6ade, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 100
+    item: {fileID: 11400000, guid: 5e1cee29c3eb8f94b95a3ac916d9eb3d, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: ab0a66b59ba8b3e4c8eb08e4fdd2b7fe, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 580a1f64b5faa23438f328b5693c25b4, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 20
+    item: {fileID: 11400000, guid: 5194df4e075a3834ba80e0d30948cb2e, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9d84200625bb44d4b8ef8bd656730b0c, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: fa6563323bbb1b54cb16a74342563154, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: c757a6741bca35240ae6bd84c02440a3, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 43092573bf6ccc94a80d4c5532ca6dd2, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9e4b7768de6c82043a5e7653fe228487, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 10
+    item: {fileID: 11400000, guid: 9e4b7768de6c82043a5e7653fe228487, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  guaranteedDrops: []

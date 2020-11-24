@@ -775,7 +775,7 @@ public class PhysicsBody : CustomCollider2D
                 if (other.mAABB.Center.y > mAABB.Center.y)
                 {
                     if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesBottomTile && other.mEntity.hostility != mEntity.hostility)
-                        mEntity.Crush();
+                        mEntity.Crush(other.mEntity);
                     mPS.pushesTopObject = true;
                     //mSpeed.y = Mathf.Min(mSpeed.y, 0.0f);
                 }
@@ -825,7 +825,7 @@ public class PhysicsBody : CustomCollider2D
                 if (overlap.x < 0.0f)
                 {
                     if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesLeftTile && other.mEntity.hostility != mEntity.hostility)
-                        mEntity.Crush();
+                        mEntity.Crush(other.mEntity);
 
                     mPS.pushesRightObject = true;
                     //mSpeed.x = Mathf.Min(mSpeed.x, 0.0f);
@@ -838,7 +838,7 @@ public class PhysicsBody : CustomCollider2D
                 else
                 {
                     if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesRightTile && other.mEntity.hostility != mEntity.hostility)
-                        mEntity.Crush();
+                        mEntity.Crush(other.mEntity);
 
                     mPS.pushesLeftObject = true;
                     //mSpeed.x = Mathf.Max(mSpeed.x, 0.0f);
@@ -859,7 +859,7 @@ public class PhysicsBody : CustomCollider2D
                 if (overlap.y < 0.0f)
                 {
                     if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesBottomTile && other.mEntity.hostility != mEntity.hostility)
-                        mEntity.Crush();
+                        mEntity.Crush(other.mEntity);
 
                     if(other.mEntity.Body.mPS.pushesTopTile)
                     {
@@ -874,7 +874,7 @@ public class PhysicsBody : CustomCollider2D
                 else
                 {
                     if ((other.mEntity.Body.mIsKinematic || other.mEntity.abilityFlags.GetFlag(AbilityFlag.Heavy)) && mPS.pushesTopTile && other.mEntity.hostility != mEntity.hostility)
-                        mEntity.Crush();
+                        mEntity.Crush(other.mEntity);
 
                     if(other.mEntity.Body.mPS.pushesBottomTile)
                     {

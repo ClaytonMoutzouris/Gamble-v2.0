@@ -26,7 +26,7 @@ public class Map
 
     public MapData Data { get => data; set => data = value; }
 
-    public Map(MapType mapType = MapType.Hub, WorldType type = WorldType.Forest, int sizex = 10, int sizey = 10)
+    public Map(MapType mapType = MapType.Ship, WorldType type = WorldType.Forest, int sizex = 10, int sizey = 10)
     {
         this.mapType = mapType;
         this.worldType = type;

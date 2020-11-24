@@ -260,8 +260,13 @@ public class MapManager : MonoBehaviour
 
     public void AddEntities(Map data)
     {
+
+
         foreach(EntityData eD in data.objects)
-        { 
+        {
+            if (eD == null)
+                continue;
+            Debug.Log("Adding entity " + eD.ToString());
             switch (eD.EntityType)
             {
                 case EntityType.Object:
@@ -290,17 +295,12 @@ public class MapManager : MonoBehaviour
 
     public NPC AddNPCEntity(NPCData data)
     {
+        //NPCPrototype proto = NPCDatabase.GetNPCPrototype(data.type);
         NPCPrototype proto = NPCDatabase.GetNPCPrototype(data.type);
-        NPC temp = null;
-        switch (data.type)
-        {
-            case NPCType.Shopkeeper:
-                temp = new NPC(proto);
-                temp.Spawn(GetMapTilePosition(data.TilePosition));
-                break;
-        }
-    
 
+        NPC temp = null;
+        temp = new NPC(proto);
+        temp.Spawn(GetMapTilePosition(data.TilePosition));
         return temp;
     }
 
@@ -433,6 +433,10 @@ public class MapManager : MonoBehaviour
                 break;
             case EnemyType.Sporby:
                 temp = new Sporby(proto);
+                temp.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case EnemyType.Voidling:
+                temp = new Voidling(proto);
                 temp.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
             case EnemyType.Ghost:

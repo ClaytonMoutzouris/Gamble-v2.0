@@ -17,21 +17,19 @@ MonoBehaviour:
   mName: FrogLegs
   bodySize: {x: 24, y: 32}
   CollidesWith: 000000000200000003000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 710be0f924ee67b49bee581d58dbeae8, type: 3}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 0b821d2feb32b8245ba5f1f64fd6d327, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 10
-  movementSpeed: 45
-  jumpHeight: 360
-  sightRange: 320
-  health: 50
-  rangedAttacks:
-  - {fileID: 11400000, guid: f78fd121a5323fd448913d80f16df45f, type: 2}
-  meleeAttacks: []
-  lootTable: {fileID: 11400000, guid: 9c3ca92d9d539d746bf0c1041736f11a, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -48,3 +46,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 10
+  expValue: 5
+  movementSpeed: 45
+  jumpHeight: 360
+  sightRange: 80
+  health: 50
+  rangedAttacks:
+  - {fileID: 11400000, guid: f78fd121a5323fd448913d80f16df45f, type: 2}
+  meleeAttacks: []
+  lootTable: {fileID: 11400000, guid: 9c3ca92d9d539d746bf0c1041736f11a, type: 2}

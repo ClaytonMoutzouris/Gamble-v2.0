@@ -6,7 +6,9 @@ public class Portal : Entity, IInteractable
 {
 
     public Portal sibling = null;
+    private string interactLabel = "<Enter>";
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public Portal(EntityPrototype proto) : base(proto)
     {

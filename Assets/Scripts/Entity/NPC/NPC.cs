@@ -10,6 +10,7 @@ public class NPC : Entity, IHurtable, IInteractable
     protected NPCPrototype prototype;
     private Hostility hostility = Hostility.Neutral;
     public NPCState mNPCState = NPCState.Stand;
+    public NPCType npcType;
     public List<string> dialogueLines;
     public int jumpHeight = 0;
     int dialogueProgress = 0;
@@ -19,8 +20,8 @@ public class NPC : Entity, IHurtable, IInteractable
     public AttackManager mAttackManager;
     private Entity target = null;
     public List<Item> npcWares;
+    private string interactLabel = "<Talk>";
 
-    public Stats mStats;
 
     public Hurtbox HurtBox
     {
@@ -75,13 +76,15 @@ public class NPC : Entity, IHurtable, IInteractable
         }
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
+
     public NPC(NPCPrototype proto) : base(proto)
     {
         prototype = proto;
-
+        entityName = proto.possibleNames[Random.Range(0,proto.possibleNames.Count)];
         mMovingSpeed = proto.movementSpeed;
         mCollidesWith = proto.CollidesWith;
-
+        npcType = proto.npcType;
 
         HurtBox = new Hurtbox(this, new CustomAABB(Position, prototype.bodySize, new Vector2(0, prototype.bodySize.y)));
         HurtBox.UpdatePosition();
@@ -91,23 +94,13 @@ public class NPC : Entity, IHurtable, IInteractable
         sight.UpdatePosition();
 
         npcWares = new List<Item>();
-        foreach (Item item in proto.wares)
+        foreach (Item item in proto.wares.GetLoot())
         {
             npcWares.Add(ItemDatabase.NewItem(item));
-        }
-        for (int i = 0; i < 10; i++)
-        {
-            Item item = ItemDatabase.GetRandomItem();
-
-            if(item.GetValue() > 0 && item.rarity != Rarity.Artifact)
-            {
-                npcWares.Add(item);
-            }
         }
 
 
         //Stats
-        mStats = new Stats();
         mHealth = new Health(this, prototype.health);
 
         mAttackManager = new AttackManager(this);
@@ -157,7 +150,12 @@ public class NPC : Entity, IHurtable, IInteractable
         }
 
         int damage = (int)mHealth.LoseHP(attack.GetDamage());
-        ShowFloatingText(damage.ToString(), Color.white);
+        
+        if(damage > 0)
+        {
+            ShowFloatingText(damage.ToString(), Color.white);
+        }
+
 
 
         if (mHealth.currentHealth == 0)
@@ -250,11 +248,6 @@ public class NPC : Entity, IHurtable, IInteractable
         sight.UpdatePosition();
     }
 
-    public override void ShowFloatingText(string text, Color color)
-    {
-        base.ShowFloatingText(text, color);
-    }
-
     public override void Spawn(Vector2 spawnPoint)
     {
         base.Spawn(spawnPoint);
@@ -278,7 +271,7 @@ public class NPC : Entity, IHurtable, IInteractable
     public bool Interact(Player actor)
     {
 
-        ShowFloatingText(dialogueLines[dialogueProgress], Color.white);
+        ShowFloatingText(dialogueLines[dialogueProgress], Color.white, 2.0f, 0, 1.5f);
         dialogueProgress++;
 
         if (dialogueProgress > dialogueLines.Count-1)

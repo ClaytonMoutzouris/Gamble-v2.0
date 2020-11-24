@@ -49,5 +49,5 @@ MonoBehaviour:
     value: 10
     bonuses: []
   - type: 6
-    value: 100
+    value: 250
     bonuses: []

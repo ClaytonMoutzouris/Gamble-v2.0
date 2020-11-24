@@ -17,22 +17,19 @@ MonoBehaviour:
   mName: Wurm
   bodySize: {x: 32, y: 24}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: dc56448cc0c027a44bf463b21b8a0064, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 2
-  movementSpeed: 45
-  jumpHeight: 360
-  sightRange: 320
-  health: 40
-  rangedAttacks:
-  - {fileID: 11400000, guid: daa7bcf50d3b3e24cb32b553e544b28b, type: 2}
-  meleeAttacks:
-  - {fileID: 11400000, guid: feedbda39d4a0ba43a5ffdd1015eb15b, type: 2}
-  lootTable: {fileID: 11400000, guid: c6a54a4598854b44fb53fa28bcb0ebfe, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -49,3 +46,15 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 2
+  expValue: 5
+  movementSpeed: 45
+  jumpHeight: 360
+  sightRange: 96
+  health: 40
+  rangedAttacks:
+  - {fileID: 11400000, guid: daa7bcf50d3b3e24cb32b553e544b28b, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: feedbda39d4a0ba43a5ffdd1015eb15b, type: 2}
+  lootTable: {fileID: 11400000, guid: c6a54a4598854b44fb53fa28bcb0ebfe, type: 2}

@@ -111,6 +111,7 @@ public class PlayerEquipment
             }
 
             equipSlot.SetContents(item);
+            PlayerUIPanels.instance.playerPanels[mPlayer.mPlayerIndex].toolbeltUI.UpdateEquipmentNode(equipSlot);
             item.OnEquip(mPlayer);
             mPlayer.Inventory.FindSlotForItem(item).GetInventorySlot().UpdateSlotUI();
 
@@ -141,6 +142,8 @@ public class PlayerEquipment
                 contents.OnUnequip(mPlayer);
                 mPlayer.Inventory.FindSlotForItem(contents).GetInventorySlot().UpdateSlotUI();
                 equipSlot.ClearSlot();
+                PlayerUIPanels.instance.playerPanels[mPlayer.mPlayerIndex].toolbeltUI.UpdateEquipmentNode(equipSlot);
+
             }
         }
     }
@@ -175,6 +178,7 @@ public class EquipmentSlot
     public void SetContents(Equipment equip)
     {
         contents = equip;
+        
     } 
 
     public Equipment GetContents()

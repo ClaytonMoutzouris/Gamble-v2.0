@@ -33,11 +33,13 @@ public class Entity {
     public bool ignoreTilemap = false;
     public AbilityFlags abilityFlags;
     public List<Ability> abilities;
+    public Stats mStats;
 
     public Vector2 gravityVector = Vector2.down;
     public float gravityMultiplier = 1;
     public float baseGravityMultiplier = 1;
 
+    public AudioClip instadeathSFX;
 
     public struct AbilityFlags
     {
@@ -78,15 +80,6 @@ public class Entity {
         set
         {
             body = value;
-        }
-    }
-
-    public Vector3 Scale
-    {
-        get
-        {
-            //Ok this is pretty nasty, ill try and fix this
-            return body.mAABB.Scale;
         }
     }
 
@@ -147,7 +140,7 @@ public class Entity {
 
     public Entity(EntityPrototype proto)
     {
-        prototype = proto;
+        prototype = ScriptableObject.Instantiate(proto);
         mEntityType = prototype.entityType;
         entityName = proto.mName;
         Game = GameManager.instance;
@@ -181,8 +174,13 @@ public class Entity {
         mUpdateId = Game.AddToUpdateList(this);
 
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
-
+        Body.mIsKinematic = proto.kinematic;
         List<Color> palette = proto.colorPallete;
+        //Stats
+        mStats = new Stats();
+        mStats.SetStats(prototype.stats);
+
+        instadeathSFX = Resources.Load<AudioClip>("Sounds/SFX/splatter");
     }
 
     public virtual void Spawn(Vector2 spawnPoint)
@@ -207,6 +205,12 @@ public class Entity {
 
         Body.UpdatePosition();
         isSpawned = true;
+        foreach (ColorSwapNode node in prototype.colorNodes)
+        {
+            node.trueColour = node.baseColour;
+        }
+        Renderer.colorSwapper.SwapColors(prototype.colorNodes);
+
     }
 
     public virtual void EntityUpdate()
@@ -327,6 +331,7 @@ public class Entity {
                 else
                 {
                     hurtable.GetHurt(new Attack(crusher.crushDamage));
+
                 }
 
             }
@@ -359,6 +364,7 @@ public class Entity {
             else
             {
                 hurtable.GetHurt(Attack.CrushAttack());
+                SoundManager.instance.PlaySingle(instadeathSFX);
             }
         }
     }
@@ -379,7 +385,7 @@ public class Entity {
         prototype.colorPallete = palette;
         if (Renderer != null)
         {
-            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
+            Renderer.colorSwap.SetBaseColors(prototype.colorPallete);
         }
 
     }
@@ -388,7 +394,7 @@ public class Entity {
     {
         if (Renderer != null)
         {
-            Renderer.colorSwapper.SetBaseColors(prototype.colorPallete);
+            Renderer.colorSwap.SetBaseColors(prototype.colorPallete);
         }
 
     }
@@ -399,10 +405,13 @@ public class Entity {
         return 0;
     }
 
-    public virtual void ShowFloatingText(string text, Color color)
+    public virtual void ShowFloatingText(string text, Color color, float dTime = 1, float sSpeed = 15, float sizeMult = 1.0f)
     {
         FloatingText floatingText = GameObject.Instantiate(Resources.Load<FloatingText>("Prefabs/UI/FloatingText") as FloatingText, Position, Quaternion.identity);
-        floatingText.SetOffset(Vector3.up * (Body.mAABB.HalfSize.y * 2 + 7));
+        floatingText.SetOffset(Vector3.up * (Body.mAABB.HalfSize.y * 2 + 10));
+        floatingText.text.characterSize = floatingText.text.characterSize * sizeMult;
+        floatingText.duration = dTime;
+        floatingText.scrollSpeed = sSpeed;
         floatingText.GetComponent<TextMesh>().text = "" + text;
         floatingText.GetComponent<TextMesh>().color = color;
     }

@@ -18,6 +18,7 @@ public class BreakableTile : Entity, IHurtable
         Body.mIsKinematic = true;
 
         health = new Health(this, 15);
+
     }
 
     public Hurtbox HurtBox { get => hurtbox; set => hurtbox = value; }
@@ -27,6 +28,13 @@ public class BreakableTile : Entity, IHurtable
         base.EntityUpdate();
 
         CollisionManager.UpdateAreas(HurtBox);
+
+    }
+
+    public override void Spawn(Vector2 spawnPoint)
+    {
+        base.Spawn(spawnPoint);
+        Renderer.SetSprite(MapManager.instance.mCurrentMap.Data.tileSprites[1]);
 
     }
 
@@ -45,14 +53,22 @@ public class BreakableTile : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
+        if(!(attack.mEntity is Player))
+        {
+            return;
+        }
         int damage = attack.GetDamage();
 
-        if (damage < 0)
+        if (damage <= 0)
         {
             damage = 0;
         }
-        health.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.white);
+        else
+        {
+            health.LoseHP(damage);
+            ShowFloatingText(damage.ToString(), Color.white);
+        }
+
 
         if (health.currentHealth == 0)
         {

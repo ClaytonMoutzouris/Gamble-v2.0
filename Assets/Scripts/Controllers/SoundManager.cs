@@ -47,8 +47,15 @@ public class SoundManager : MonoBehaviour
     //Used to play single sound clips.
     public void PlaySingle(AudioClip clip)
     {
-        efxSource.PlayOneShot(clip);
+        //Choose a random pitch to play back our clip at between our high and low pitch ranges.
+        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+        float randomVolume = Random.Range(lowPitchRange, highPitchRange);
+        //Set the pitch of the audio source to the randomly chosen pitch.
+        efxSource.pitch = randomPitch;
+        //efxSource.volume = randomVolume;
 
+        efxSource.PlayOneShot(clip);
+        //AudioSource.PlayClipAtPoint(clip, position);
 
     }
 

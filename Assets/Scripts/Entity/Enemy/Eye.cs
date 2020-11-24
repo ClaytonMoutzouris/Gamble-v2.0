@@ -10,8 +10,6 @@ public class Eye : Enemy
     public Eye(EnemyPrototype proto) : base(proto)
     { 
 
-        Body.mIsKinematic = false;
-        Body.mIgnoresGravity = true;
         Body.mIgnoresOneWay = true;
 
 
@@ -20,7 +18,7 @@ public class Eye : Enemy
     public override void EntityUpdate()
     {
         //This is just a test, probably dont need to do it this way
-
+        
         EnemyBehaviour.CheckForTargets(this);
         
 

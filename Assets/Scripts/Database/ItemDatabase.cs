@@ -9,6 +9,7 @@ public static class ItemDatabase {
     public static bool InitializeDatabase()
     {
         mItemDatabase = Resources.LoadAll<Item>("Prototypes/Items");
+
         return true;
     }
 
@@ -19,7 +20,10 @@ public static class ItemDatabase {
         {
             if(item.itemName.Equals(name))
             {
-                return ScriptableObject.Instantiate(item);
+                Item temp = ScriptableObject.Instantiate(item);
+                temp.Initialize();
+
+                return temp;
 
             }
         }
@@ -30,7 +34,9 @@ public static class ItemDatabase {
     public static Item GetRandomItem()
     {
         Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
-        if(item is Equipment equipment)
+        item.Initialize();
+
+        if (item is Equipment equipment)
         {
             equipment.RandomizeStats();
             item = equipment;
@@ -41,6 +47,8 @@ public static class ItemDatabase {
     public static Item NewItem(Item item)
     {
         Item nItem = ScriptableObject.Instantiate(item);
+        nItem.Initialize();
+
         if (nItem is Equipment equipment)
         {
             equipment.RandomizeStats();
@@ -53,6 +61,8 @@ public static class ItemDatabase {
     public static Item GetKey()
     {
         Item item = ScriptableObject.Instantiate(mItemDatabase[Random.Range(0, mItemDatabase.Length)]);
+        item.Initialize();
+
         return item;
     }
    

@@ -9,6 +9,8 @@ public class SaveMachine : Entity, IInteractable
     /// Draws the aabb and ceiling, ground and wall sensors .
     /// </summary>
     /// 
+    private string interactLabel = "<Save>";
+
 
     public SaveMachine(EntityPrototype proto) : base(proto)
     {
@@ -19,6 +21,7 @@ public class SaveMachine : Entity, IInteractable
 
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public override void EntityUpdate()
     {
@@ -32,6 +35,7 @@ public class SaveMachine : Entity, IInteractable
     {
         SaveLoadManager.instance.SaveCharacter(actor);
         ShowFloatingText("*Saved*", Color.green);
+        SoundManager.instance.PlaySingle(prototype.interactSFX[0]);
         return true;
     }
 }

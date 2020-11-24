@@ -15,29 +15,22 @@ MonoBehaviour:
   entityType: 6
   hostility: 2
   mName: VoidBoss
-  bodySize: {x: 48, y: 48}
+  bodySize: {x: 96, y: 64}
+  bodyOffset: {x: 0, y: 32}
   CollidesWith: 
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: -7503184454586476669, guid: 58e91305a2463014bb4794abb38a15b5, type: 3}
   sortingLayer: 3
-  animationController: {fileID: 9100000, guid: 216abc2d65e21d24cb2733ea49e60141, type: 2}
+  animationController: {fileID: 9100000, guid: c37899b69d7946f4689c225d08e6fd88, type: 2}
   particleEffects: {fileID: 0}
   crushDamage: 0
   kinematic: 0
   colorPallete: []
-  enemyType: -1
-  movementSpeed: 50
-  jumpHeight: 160
-  sightRange: 320
-  health: 750
-  rangedAttacks:
-  - {fileID: 11400000, guid: 85a98066e88c5424d8a865acb7c0feae, type: 2}
-  - {fileID: 11400000, guid: 4cb045e0c43b96a4180b89cd5e01e7e3, type: 2}
-  meleeAttacks:
-  - {fileID: 11400000, guid: 4ea547ca756a3f34a883dd062c18e21d, type: 2}
-  lootTable: {fileID: 11400000, guid: 6978e64b39e677f41baf920b0d84c2f7, type: 2}
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -54,4 +47,17 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: -1
+  expValue: 5
+  movementSpeed: 100
+  jumpHeight: 160
+  sightRange: 320
+  health: 600
+  rangedAttacks:
+  - {fileID: 11400000, guid: 85a98066e88c5424d8a865acb7c0feae, type: 2}
+  - {fileID: 11400000, guid: 4cb045e0c43b96a4180b89cd5e01e7e3, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: 5460038ac7585c3488c6b92d5f1e7881, type: 2}
+  lootTable: {fileID: 11400000, guid: 6978e64b39e677f41baf920b0d84c2f7, type: 2}
   bossType: 5

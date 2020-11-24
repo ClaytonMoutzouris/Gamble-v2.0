@@ -13,6 +13,9 @@ public class Door : Entity, IInteractable
     public bool locked = false;
     public bool isVisible = true;
     List<Sprite> spritesForWorld;
+    private string interactLabel = "<Enter>";
+
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public Door(DoorPrototype proto) : base(proto)
     {
@@ -53,6 +56,7 @@ public class Door : Entity, IInteractable
                 temp.GetOneItem();
                 locked = false;
                 ShowFloatingText("Unlocked!", Color.green);
+                SoundManager.instance.PlaySingle(prototype.interactSFX[0]);
                 return true;
             } else
             {

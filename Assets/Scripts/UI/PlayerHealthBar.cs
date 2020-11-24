@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealthBar : HealthBar
 {
-    public Text health;
+    public Text healthText;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,7 @@ public class PlayerHealthBar : HealthBar
 
     public override void SetHealth(Health health)
     {
-        this.health.text = health.ToString();
+        this.healthText.text = health.ToString();
         healthbar.transform.localScale = new Vector3(health.currentHealth / health.maxHealth, 1);
     }
 }

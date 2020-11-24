@@ -17,20 +17,19 @@ MonoBehaviour:
   mName: Nest
   bodySize: {x: 32, y: 11}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 9292d0c738526b94ab0cddfcf798f447, type: 3}
   sortingLayer: 4
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
-  enemyType: 11
-  movementSpeed: 0
-  jumpHeight: 0
-  sightRange: 320
-  health: 175
-  rangedAttacks: []
-  meleeAttacks: []
-  lootTable: {fileID: 11400000, guid: 4bc5d4c0ff5af7d47bfa1a03a253726c, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -47,3 +46,13 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 11
+  expValue: 5
+  movementSpeed: 0
+  jumpHeight: 0
+  sightRange: 128
+  health: 80
+  rangedAttacks: []
+  meleeAttacks: []
+  lootTable: {fileID: 11400000, guid: 4bc5d4c0ff5af7d47bfa1a03a253726c, type: 2}

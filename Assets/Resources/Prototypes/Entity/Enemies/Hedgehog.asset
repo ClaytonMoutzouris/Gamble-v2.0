@@ -17,21 +17,19 @@ MonoBehaviour:
   mName: Hedgehog
   bodySize: {x: 14, y: 16}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: b26d5ef37874bfe418fd8d814ef50f22, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 3
-  movementSpeed: 35
-  jumpHeight: 280
-  sightRange: 320
-  health: 35
-  rangedAttacks: []
-  meleeAttacks:
-  - {fileID: 11400000, guid: 5e473795e33b0234eb25beb9433ae964, type: 2}
-  lootTable: {fileID: 11400000, guid: 47cad339d4b56a34fac2fca531ba8c2b, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -48,3 +46,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 3
+  expValue: 5
+  movementSpeed: 35
+  jumpHeight: 280
+  sightRange: 64
+  health: 35
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 5e473795e33b0234eb25beb9433ae964, type: 2}
+  lootTable: {fileID: 11400000, guid: 47cad339d4b56a34fac2fca531ba8c2b, type: 2}

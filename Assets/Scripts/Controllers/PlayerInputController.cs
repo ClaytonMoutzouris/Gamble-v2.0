@@ -60,29 +60,28 @@ public class PlayerInputController
                 //These are for reading in "taps" of the stick buttons
                 playerButtonInput[(int)ButtonInput.DPad_Left] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadLeft];
                 playerButtonInput[(int)ButtonInput.DPad_Right] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadRight];
-                playerButtonInput[(int)ButtonInput.DPad_Down] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadDown];
+                playerButtonInput[(int)ButtonInput.Interact] = mGamepadInput.buttonInputs[(int)GamepadButtons.WestButton];
                 playerButtonInput[(int)ButtonInput.DPad_Up] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadUp];
 
                 playerButtonInput[(int)ButtonInput.Jump] = mGamepadInput.buttonInputs[(int)GamepadButtons.SouthButton];
-                playerButtonInput[(int)ButtonInput.Attack] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
-                playerButtonInput[(int)ButtonInput.QuickHeal] = mGamepadInput.buttonInputs[(int)GamepadButtons.WestButton];
-                playerButtonInput[(int)ButtonInput.OpenCloseInventory] = mGamepadInput.buttonInputs[(int)GamepadButtons.NorthButton];
+                playerButtonInput[(int)ButtonInput.MeleeAttack] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
+                playerButtonInput[(int)ButtonInput.QuickHeal] = mGamepadInput.buttonInputs[(int)GamepadButtons.NorthButton];
+                playerButtonInput[(int)ButtonInput.PlayerMenu] = mGamepadInput.buttonInputs[(int)GamepadButtons.SelectButton];
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.buttonInputs[(int)GamepadButtons.StartButton];
-                playerButtonInput[(int)ButtonInput.Select] = mGamepadInput.buttonInputs[(int)GamepadButtons.SelectButton];
+                playerButtonInput[(int)ButtonInput.Minimap] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadUp];
                 playerButtonInput[(int)ButtonInput.Gadget1] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftBumper];
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightTrigger];
                 playerButtonInput[(int)ButtonInput.Gadget2] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightBumper];
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
-                playerButtonInput[(int)ButtonInput.ZoomIn] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadLeft];
-                playerButtonInput[(int)ButtonInput.ZoomOut] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadRight];
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = false;
                 playerButtonInput[(int)ButtonInput.Menu_Back] = false;
                 playerButtonInput[(int)ButtonInput.FireMode] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightStickPress];
-
-
+                playerButtonInput[(int)ButtonInput.Roll] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftTrigger];
+                playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadLeft];
+                playerButtonInput[(int)ButtonInput.CycleQuickUseRight] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadRight];
 
                 break;
 
@@ -101,15 +100,15 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Left] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
-                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
-                playerButtonInput[(int)ButtonInput.Attack] = false;
+                playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
                 playerButtonInput[(int)ButtonInput.QuickHeal] = false;
-                playerButtonInput[(int)ButtonInput.OpenCloseInventory] = mGamepadInput.buttonInputs[(int)GamepadButtons.NorthButton];
+                playerButtonInput[(int)ButtonInput.PlayerMenu] = mGamepadInput.buttonInputs[(int)GamepadButtons.SelectButton];
                 playerButtonInput[(int)ButtonInput.Pause] = false;
-                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.Minimap] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
@@ -117,12 +116,13 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
                 playerButtonInput[(int)ButtonInput.InventoryMove] = mGamepadInput.buttonInputs[(int)GamepadButtons.WestButton];
                 playerButtonInput[(int)ButtonInput.InventorySort] = mGamepadInput.buttonInputs[(int)GamepadButtons.SelectButton];
-                playerButtonInput[(int)ButtonInput.ZoomIn] = false;
-                playerButtonInput[(int)ButtonInput.ZoomOut] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseRight] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftBumper];
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightBumper];
                 playerButtonInput[(int)ButtonInput.Menu_Back] = false;
                 playerButtonInput[(int)ButtonInput.FireMode] = false;
+                playerButtonInput[(int)ButtonInput.Roll] = false;
 
                 break;
 
@@ -141,15 +141,15 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Left] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
-                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
-                playerButtonInput[(int)ButtonInput.Attack] = false;
+                playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
                 playerButtonInput[(int)ButtonInput.QuickHeal] = false;
-                playerButtonInput[(int)ButtonInput.OpenCloseInventory] = false;
+                playerButtonInput[(int)ButtonInput.PlayerMenu] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = false;
-                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.Minimap] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
@@ -157,12 +157,13 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
-                playerButtonInput[(int)ButtonInput.ZoomIn] = false;
-                playerButtonInput[(int)ButtonInput.ZoomOut] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseRight] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftBumper];
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightBumper];
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
                 playerButtonInput[(int)ButtonInput.FireMode] = false;
+                playerButtonInput[(int)ButtonInput.Roll] = false;
 
                 break;
             case PlayerInputState.Shop:
@@ -180,15 +181,15 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Left] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
-                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
-                playerButtonInput[(int)ButtonInput.Attack] = false;
+                playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
                 playerButtonInput[(int)ButtonInput.QuickHeal] = false;
-                playerButtonInput[(int)ButtonInput.OpenCloseInventory] = false;
+                playerButtonInput[(int)ButtonInput.PlayerMenu] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = false;
-                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.Minimap] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
@@ -196,12 +197,13 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
-                playerButtonInput[(int)ButtonInput.ZoomIn] = false;
-                playerButtonInput[(int)ButtonInput.ZoomOut] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseRight] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftBumper];
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightBumper];
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
                 playerButtonInput[(int)ButtonInput.FireMode] = false;
+                playerButtonInput[(int)ButtonInput.Roll] = false;
 
                 break;
 
@@ -220,15 +222,15 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.LeftStick_Up] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Left] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
-                playerButtonInput[(int)ButtonInput.DPad_Down] = false;
+                playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
-                playerButtonInput[(int)ButtonInput.Attack] = false;
+                playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
                 playerButtonInput[(int)ButtonInput.QuickHeal] = false;
-                playerButtonInput[(int)ButtonInput.OpenCloseInventory] = false;
+                playerButtonInput[(int)ButtonInput.PlayerMenu] = false;
                 playerButtonInput[(int)ButtonInput.Pause] = mGamepadInput.buttonInputs[(int)GamepadButtons.StartButton];
-                playerButtonInput[(int)ButtonInput.Select] = false;
+                playerButtonInput[(int)ButtonInput.Minimap] = false;
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
@@ -236,12 +238,13 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
                 playerButtonInput[(int)ButtonInput.InventorySort] = false;
-                playerButtonInput[(int)ButtonInput.ZoomIn] = false;
-                playerButtonInput[(int)ButtonInput.ZoomOut] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] = false;
+                playerButtonInput[(int)ButtonInput.CycleQuickUseRight] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabLeft] = false;
                 playerButtonInput[(int)ButtonInput.ChangeTabRight] = false;
                 playerButtonInput[(int)ButtonInput.Menu_Back] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
                 playerButtonInput[(int)ButtonInput.FireMode] = false;
+                playerButtonInput[(int)ButtonInput.Roll] = false;
 
                 break;
         }

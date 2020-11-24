@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public abstract class Item : ScriptableObject
 {
     
@@ -52,7 +51,7 @@ public abstract class Item : ScriptableObject
                 rarity = "green";
                 break;
             case Rarity.Rare:
-                rarity = "blue";
+                rarity = "#00ffffff";
                 break;
             case Rarity.Legendary:
                 rarity = "orange";
@@ -77,7 +76,7 @@ public abstract class Item : ScriptableObject
                 rarity = Color.green;
                 break;
             case Rarity.Rare:
-                rarity = Color.blue;
+                rarity = Color.cyan;
                 break;
             case Rarity.Legendary:
                 rarity = Color.yellow;
@@ -124,6 +123,12 @@ public abstract class Item : ScriptableObject
     {
         identified = data.identified;
         rarity = data.rarity;
+    }
+
+    //For anything an item needs to set upon being loaded
+    public virtual void Initialize()
+    {
+
     }
 }
 

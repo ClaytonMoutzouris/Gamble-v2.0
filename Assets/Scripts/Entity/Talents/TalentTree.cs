@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class TalentTree : ScriptableObject
 {
     public string name;
@@ -13,12 +12,17 @@ public class TalentTree : ScriptableObject
 
     public void GetNewTree(Player player)
     {
+        List<TalentTreeBranch> newBranches = new List<TalentTreeBranch>();
         this.player = player;
-        foreach(TalentTreeBranch branch in branches)
+        foreach (TalentTreeBranch branch in branches)
         {
-            branch.GetNewBranch(this);
+            TalentTreeBranch temp = Instantiate(branch);
+            temp.GetNewBranch(this);
+            newBranches.Add(temp);
+
         }
 
+        branches = newBranches;
     }
 
     public List<Talent> GetAllTalents()

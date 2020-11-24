@@ -17,14 +17,40 @@ MonoBehaviour:
   mName: StagHead
   bodySize: {x: 16, y: 32}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
-  effects: []
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 16, y: 32}
   angled: 0
   maxTime: 0.5
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: 7989b1b217a36e14e852f26f21562927, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}

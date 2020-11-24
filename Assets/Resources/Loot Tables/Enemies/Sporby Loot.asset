@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - dropChance: 10
-    item: {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
+    item: {fileID: 11400000, guid: 13c67dee001b9684cb63b3d387c4af38, type: 2}
     minDropNum: 1
     maxDropNum: 1
   - dropChance: 5

@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class FloatingText : MonoBehaviour
 {
-    public float DestroyTime = 3.0f;
     public Vector3 Offset = Vector3.zero;
-    public Vector3 scrollSpeed;
+    public Vector3 scrollDirection = Vector3.up;
+    public float scrollSpeed = 1;
+    public float duration = 1.5f;
+    float spawnTimestamp;
+    public TextMesh text;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<MeshRenderer>().sortingLayerName = "UI";
-        Destroy(gameObject, DestroyTime);
+        spawnTimestamp = Time.time;
         //GetComponent<MeshRenderer>().sortingLayerID = 0;
     }
 
@@ -25,6 +28,11 @@ public class FloatingText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += scrollSpeed*Time.deltaTime;
+        transform.position += scrollDirection * Time.deltaTime * scrollSpeed;
+
+        if(Time.time > spawnTimestamp + duration)
+        {
+            Destroy(gameObject);
+        }
     }
 }

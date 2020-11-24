@@ -52,17 +52,48 @@ public class PracticeBot : Entity, IHurtable
 
         int damage = attack.GetDamage();
 
-        if (damage < 0)
+        if (damage <= 0)
         {
             damage = 0;
         }
-        health.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.white);
+        else
+        {
+            //Crits
+            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            {
+                damage *= 2;
+                ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
+            }
+            else
+            {
+                ShowFloatingText(damage.ToString(), Color.white);
+            }
+
+            health.LoseHP(damage);
+        }
 
         if (health.currentHealth == 0)
         {
             health.GainHP(health.maxHealth);
-            ShowFloatingText((Time.time - firstDamageTimeStamp).ToString(), Color.white);
+            Color timeColor = Color.white;
+            float completionTime = (Time.time - firstDamageTimeStamp);
+            switch (completionTime)
+            {
+                case float n when (n >= 10):
+                    timeColor = Color.red;
+                    break;
+                case float n when (n >= 5):
+                    timeColor = Color.yellow;
+                    break;
+                case float n when (n >= 0):
+                    timeColor = Color.green;
+                    break;
+                default:
+                    break;
+
+            }
+
+            ShowFloatingText(completionTime.ToString(), timeColor);
 
         }
     }

@@ -16,8 +16,9 @@ MonoBehaviour:
   hostility: 1
   mName: SalamanderTongue
   bodySize: {x: 10, y: 10}
-  CollidesWith: 
+  CollidesWith: 02000000
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 1
   sprite: {fileID: 21300000, guid: 57ed0aa92332d714495f5edcc4080259, type: 3}
@@ -27,10 +28,31 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 16, y: 16}
   angled: 1
   maxTime: 10
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 0}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}
   pierce: 0
   collidesWithTiles: 1

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82102480c650cd04fbed1ec2b128cd15, type: 3}
+  m_Name: Brass Knuckles
+  m_EditorClassIdentifier: 
+  itemName: Brass Knuckles
+  rarity: 0
+  baseValue: 15
+  sprite: {fileID: 2149660618710342331, guid: b86f0933ae75358498751c0cd13c6b2e, type: 3}
+  isStackable: 0
+  identified: 1
+  autoPickup: 0
+  mSlot: 6
+  baseBonuses: []
+  baseEffects: []
+  isEquipped: 0
+  damage: 8
+  weaponType: 0
+  attack: {fileID: 11400000, guid: ae6d6c7b85ff41043b4cbc390cf47384, type: 2}

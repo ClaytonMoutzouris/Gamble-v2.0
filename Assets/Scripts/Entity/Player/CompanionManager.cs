@@ -15,10 +15,10 @@ public class CompanionManager
         Companions.Add(companion);
         if(Companions.Count%2 == 0)
         {
-            companion.offset = -1*(Companions.Count/2) * new Vector2(32, 0) + Vector2.up * 32;
+            companion.offset = -1*(Companions.Count/2) * new Vector2(12, 0) + Vector2.up * 32;
         } else
         {
-            companion.offset = (Companions.Count/2) * new Vector2(32, 0) + Vector2.up * 32;
+            companion.offset = (Companions.Count/2) * new Vector2(12, 0) + Vector2.up * 32;
         }
     }
 

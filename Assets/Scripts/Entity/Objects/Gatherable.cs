@@ -7,6 +7,8 @@ public class Gatherable : Entity, IInteractable
 
     int charges;
     LootTable lootTable;
+    private string interactLabel = "<Mine>";
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public Gatherable(GatherablePrototype proto) : base(proto)
     {
@@ -17,7 +19,6 @@ public class Gatherable : Entity, IInteractable
         charges = Random.Range(proto.usesMin, proto.usesMax);
         lootTable = proto.lootable;
     }
-
 
     public override void EntityUpdate()
     {
@@ -46,6 +47,7 @@ public class Gatherable : Entity, IInteractable
         if(charges > 0)
         {
             ShowFloatingText("*Tink*", Color.white);
+
         }
         else
         {
@@ -53,6 +55,7 @@ public class Gatherable : Entity, IInteractable
 
         }
 
+        SoundManager.instance.PlaySingle(prototype.interactSFX[0]);
 
 
 

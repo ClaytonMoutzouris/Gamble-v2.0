@@ -17,19 +17,45 @@ MonoBehaviour:
   mName: ThornSprout
   bodySize: {x: 8, y: 32}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 9126407450948688792, guid: 8a4260d9a73e04c4989f2b9b3c81fe86, type: 3}
   sortingLayer: 0
   animationController: {fileID: 9100000, guid: ec74b96b598f58c4b841d64243bce7dc, type: 2}
-  effects: []
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 8, y: 32}
   angled: 0
   maxTime: 2
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 0}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}
   pierce: 1
   collidesWithTiles: 0
+  bouncy: 0
   speed: 0
   frameDelay: 30

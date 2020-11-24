@@ -16,22 +16,21 @@ MonoBehaviour:
   hostility: 2
   mName: Eyebat
   bodySize: {x: 10, y: 10}
+  bodyOffset: {x: 0, y: 0}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
-  ignoreGravity: 0
+  ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 3f72f09c2c24a8a44bff2d7229d3ab5e, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 1
-  movementSpeed: 35
-  jumpHeight: 120
-  sightRange: 320
-  health: 15
-  rangedAttacks:
-  - {fileID: 11400000, guid: 26797e4765618824e9e77d84092c7e24, type: 2}
-  meleeAttacks: []
-  lootTable: {fileID: 11400000, guid: 97f031c482b9dbc469e029b943438546, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -48,3 +47,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 1
+  expValue: 5
+  movementSpeed: 35
+  jumpHeight: 120
+  sightRange: 80
+  health: 15
+  rangedAttacks:
+  - {fileID: 11400000, guid: 26797e4765618824e9e77d84092c7e24, type: 2}
+  meleeAttacks: []
+  lootTable: {fileID: 11400000, guid: 97f031c482b9dbc469e029b943438546, type: 2}

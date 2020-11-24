@@ -18,6 +18,7 @@ MonoBehaviour:
   bodySize: {x: 64, y: 32}
   CollidesWith: 
   abilityFlags: 03000000
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 21300000, guid: d26c8087f9223504daa28041905b5223, type: 3}
@@ -27,11 +28,12 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  baseGravityMultiplier: 1
   enemyType: -1
   movementSpeed: 60
   jumpHeight: 300
   sightRange: 300
-  health: 500
+  health: 300
   rangedAttacks:
   - {fileID: 11400000, guid: 024f743c7dbfce5488bdf6490e4cd17a, type: 2}
   - {fileID: 11400000, guid: 4c449261170eeaa4bae16cd768467dfd, type: 2}

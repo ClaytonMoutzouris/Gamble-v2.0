@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: DroneAttack
   m_EditorClassIdentifier: 
   duration: 0
-  cooldown: 0.5
+  cooldown: 1
   startUpFrames: 0
   offset: {x: 0, y: 0}
-  animationController: {fileID: 0}
-  damage: 5
-  abilities: 
-  sfx: {fileID: 0}
+  damage: 4
   projectilePrototype: {fileID: 11400000, guid: e4649dd5b1fca734ab057b119cbd46d4,
     type: 2}
   numberOfProjectiles: 1

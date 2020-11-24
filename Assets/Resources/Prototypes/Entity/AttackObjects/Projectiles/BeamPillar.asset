@@ -17,12 +17,18 @@ MonoBehaviour:
   mName: 
   bodySize: {x: 16, y: 160}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: -6201791889445349234, guid: c18b3ef4e72b21f4684d69144015a97c, type: 3}
   sortingLayer: 8
   animationController: {fileID: 9100000, guid: 8520d47fc6ef43545a85c135fe8ab314, type: 2}
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 16, y: 160}
   angled: 0
   maxTime: 2
@@ -30,5 +36,6 @@ MonoBehaviour:
   particleSystem: {fileID: 0}
   pierce: 1
   collidesWithTiles: 0
+  bouncy: 0
   speed: 0
   frameDelay: 60

@@ -99,7 +99,7 @@ public class TileMapRenderer : MonoBehaviour
                     if (tilePrototypes.ContainsKey(tiles[x, y]))
                     {
                         spriteMap[x, y].SetAnimator(tilePrototypes[tiles[x, y]].animationController);
-                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x, y]].sprites[(int)WorldType.Hub]);
+                        spriteMap[x, y].SetSprite(tilePrototypes[tiles[x, y]].sprites[(int)WorldType.Ship]);
                     }
                     else
                     {

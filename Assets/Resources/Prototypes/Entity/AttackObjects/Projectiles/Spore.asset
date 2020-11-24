@@ -16,7 +16,7 @@ MonoBehaviour:
   hostility: 0
   mName: Spore
   bodySize: {x: 3, y: 3}
-  CollidesWith: 
+  CollidesWith: 02000000
   abilityFlags: 
   baseAbilities: []
   ignoreTilemap: 0

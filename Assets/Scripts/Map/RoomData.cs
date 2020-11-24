@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public enum RoomType { Hub, SideRoom, LeftRight, LeftRightBottom, LeftRightBottomTop, BossRoom, MinibossRoom, Count };
+public enum RoomType { Ship, SideRoom, LeftRight, LeftRightBottom, LeftRightBottomTop, BossRoom, MinibossRoom, Hub, Count };
 public enum RoomType2 { Hub, UpDownLeftRight, UpDownLeft, UpDownRight, DownLeftRight,  UpLeftRight, UpDown, UpLeft, UpRight, DownLeft, DownRight, LeftRight, Up, Down, Left, Right }
 
+[System.Serializable]
 public class RoomData
 {
     public TileType[,] tiles;
@@ -15,12 +16,17 @@ public class RoomData
     public int mWidth;
     public int mHeight;
 
+    public EntityData[,] entityData;
+
+
     public RoomData(RoomType type = RoomType.SideRoom, int sizex = Constants.cRoomSizeX, int sizey = Constants.cRoomSizeY)
     {
         mWidth = sizex;
         mHeight = sizey;
         roomType = type;
         tiles = new TileType[mWidth, mHeight];
+        entityData = new EntityData[mWidth, mHeight];
+
     }
 
     public RoomData Copy()
@@ -32,7 +38,7 @@ public class RoomData
         copy.surfaceLayer = surfaceLayer;
         copy.mWidth = mWidth;
         copy.mHeight = mHeight;
-
+        copy.entityData = entityData;
         return copy;
     }
 
@@ -57,6 +63,9 @@ public class RoomData
                 tiles[x, y] = (TileType)reader.ReadByte();
             }
         }
+
+        //int Count = reader.ReadByte();
+
     }
 
     public void Save(BinaryWriter writer)
@@ -81,6 +90,7 @@ public class RoomData
                 writer.Write((byte)tiles[x, y]);
             }
         }
+
 
     }
 }

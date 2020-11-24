@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Orange
   rarity: 0
-  baseValue: 0
+  baseValue: 15
   sprite: {fileID: 21300000, guid: efbe32a998e8e1e448ba4f19ffc1ddf5, type: 3}
   isStackable: 1
   identified: 1
   autoPickup: 1
   isHealingItem: 1
-  value: 8
+  value: 10

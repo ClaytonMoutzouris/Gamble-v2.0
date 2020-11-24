@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983f917a119bbb0418bbaf777ad9f1eb, type: 3}
+  m_Name: GuardTree
+  m_EditorClassIdentifier: 
+  name: Guard
+  branches:
+  - {fileID: 11400000, guid: cda135152cc04f34f846194e3dd34e5e, type: 2}
+  - {fileID: 11400000, guid: 3bcea5213c4764949b3e874b9d04f8ea, type: 2}
+  - {fileID: 11400000, guid: ce779fb041e7a1e409cf47afb5469712, type: 2}
+  skillPoints: 0

@@ -29,16 +29,8 @@ MonoBehaviour:
   crushDamage: 40
   kinematic: 0
   colorPallete: []
-  enemyType: -2
-  movementSpeed: 0
-  jumpHeight: 0
-  sightRange: 320
-  health: 300
-  rangedAttacks:
-  - {fileID: 11400000, guid: 08ac70abd74455a48ac9227ee0f5f782, type: 2}
-  meleeAttacks:
-  - {fileID: 11400000, guid: 6132be70e82cdca4bb87dedc5343f1d8, type: 2}
-  lootTable: {fileID: 11400000, guid: ab28c2ea38c806b4aa3f0c891ed131b4, type: 2}
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -55,4 +47,16 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: -2
+  expValue: 5
+  movementSpeed: 0
+  jumpHeight: 0
+  sightRange: 160
+  health: 300
+  rangedAttacks:
+  - {fileID: 11400000, guid: 08ac70abd74455a48ac9227ee0f5f782, type: 2}
+  meleeAttacks:
+  - {fileID: 11400000, guid: 6132be70e82cdca4bb87dedc5343f1d8, type: 2}
+  lootTable: {fileID: 11400000, guid: ab28c2ea38c806b4aa3f0c891ed131b4, type: 2}
   minibossType: 4

@@ -13,17 +13,29 @@ MonoBehaviour:
   m_Name: VolcanicShot
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: VolcanicShot
   bodySize: {x: 6, y: 6}
-  CollidesWith: 
+  CollidesWith: 02000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
+  ignoreGravity: 0
   sprite: {fileID: 21300000, guid: 23d303a5fbb2f3c4ca9fa07119351a67, type: 3}
   sortingLayer: 8
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 6, y: 6}
   angled: 1
   maxTime: 10
   sfx: {fileID: 0}
+  particleSystem: {fileID: 0}
   pierce: 0
-  ignoreGravity: 0
+  collidesWithTiles: 1
+  bouncy: 0
   speed: 440
+  frameDelay: 0

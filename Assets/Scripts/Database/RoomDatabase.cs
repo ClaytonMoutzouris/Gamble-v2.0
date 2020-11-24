@@ -2,48 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public static class RoomDatabase
 {
 
     static RoomData[] RoomDictionary;
+    public static string path;
 
     public static void InitializeDatabase()
     {
+        path = Application.dataPath + "/RoomsWorkingDir2/";
+        List<RoomData> rooms = FindRooms();
 
-        Object[] objects = Resources.LoadAll("Rooms");
-        List<TextAsset> assets = new List<TextAsset>();
-        foreach (Object o in objects)
+        RoomDictionary = new RoomData[rooms.Count];
+
+        for (int i = 0; i < rooms.Count; i++)
         {
-            assets.Add((TextAsset)o);
+            RoomDictionary[i] = rooms[i].Copy();
         }
+    }
 
-        Debug.Log(assets == null);
-        RoomDictionary = new RoomData[assets.Count];
+    public static List<RoomData> FindRooms()
+    {
+        List<RoomData> list = new List<RoomData>();
 
-        for (int i = 0; i < assets.Count; i++)
+        foreach (string file in Directory.GetFiles(path, "*.txt", SearchOption.AllDirectories))
         {
-            RoomData temp = new RoomData();
+            Debug.Log("File found - " + file);
+            FileStream stream = new FileStream(file, FileMode.OpenOrCreate);
 
-            //string path = Path.Combine(Application.persistentDataPath, "test.map");
-
-            Stream s = new MemoryStream(assets[i].bytes);
-            using (BinaryReader reader = new BinaryReader(s))
+            if (File.Exists(file) && stream.Length > 0)
             {
-                int header = reader.ReadInt32();
-                //Debug.Log("Reading room with header " + header);
-                if (header == 1)
-                {
-                    temp.Load(reader);
-                }
-                else
-                {
-                    Debug.LogWarning("Unknown room format " + header);
-                }
+
+                BinaryFormatter bf = new BinaryFormatter();
+
+                RoomData data = bf.Deserialize(stream) as RoomData;
+
+
+                list.Add(data);
 
             }
-            RoomDictionary[i] = temp.Copy();
+
+            stream.Close();
+
         }
+
+        return list;
     }
     /*
     public static bool InitializeDatabase()
@@ -99,6 +104,20 @@ public static class RoomDatabase
         foreach (RoomData data in RoomDictionary)
         {
             if (data.roomType == RoomType.BossRoom && data.worldType == type)
+            {
+                roomList.Add(data);
+            }
+        }
+
+        return roomList[Random.Range(0, roomList.Count)].Copy();
+    }
+
+    public static RoomData GetWorldHub(WorldType type)
+    {
+        List<RoomData> roomList = new List<RoomData>();
+        foreach (RoomData data in RoomDictionary)
+        {
+            if (data.roomType == RoomType.Hub && data.worldType == type)
             {
                 roomList.Add(data);
             }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba5a377bead1dd46b2558e076619ad5, type: 3}
+  m_Name: Throwers
+  m_EditorClassIdentifier: 
+  branchName: Throwers
+  talents:
+  - {fileID: 11400000, guid: f449dd88e88299842aed60de0f222e0a, type: 2}
+  - {fileID: 11400000, guid: 3d8f6bf913a7d34438eef8dd1c8d0a5c, type: 2}
+  - {fileID: 11400000, guid: abcc0cb6a477aaf49b12a0656da61477, type: 2}
+  - {fileID: 11400000, guid: 63f128eee51cedc479dd11552e9ffb86, type: 2}

@@ -16,22 +16,21 @@ MonoBehaviour:
   hostility: 2
   mName: Ghost
   bodySize: {x: 8, y: 8}
+  bodyOffset: {x: 0, y: 0}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
-  ignoreGravity: 0
+  ignoreGravity: 1
   sprite: {fileID: 21300000, guid: a6a63de4250be18478d3b61080b33532, type: 3}
   sortingLayer: 4
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
-  enemyType: 6
-  movementSpeed: 30
-  jumpHeight: 120
-  sightRange: 320
-  health: 10
-  rangedAttacks: []
-  meleeAttacks:
-  - {fileID: 11400000, guid: 5a53ac9f9d1841445831fb282e7c04ab, type: 2}
-  lootTable: {fileID: 11400000, guid: e69b82a4934dcbf4d8f5eb3a270aa4ec, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -48,3 +47,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 6
+  expValue: 5
+  movementSpeed: 30
+  jumpHeight: 120
+  sightRange: 160
+  health: 10
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 5a53ac9f9d1841445831fb282e7c04ab, type: 2}
+  lootTable: {fileID: 11400000, guid: e69b82a4934dcbf4d8f5eb3a270aa4ec, type: 2}

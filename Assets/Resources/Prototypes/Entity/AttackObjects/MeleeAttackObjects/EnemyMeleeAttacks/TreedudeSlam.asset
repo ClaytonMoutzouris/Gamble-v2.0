@@ -13,14 +13,44 @@ MonoBehaviour:
   m_Name: TreedudeSlam
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: TreedudeSlam
   bodySize: {x: 0, y: 0}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
+  ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 32, y: 48}
   angled: 0
   maxTime: 1
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
+  particleSystem: {fileID: 0}

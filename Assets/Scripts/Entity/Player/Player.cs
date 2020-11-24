@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using System.IO;
 
 
-public enum PlayerState { Idle, Attacking, Blocking, Dead };
-public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking, Knockback };
+public enum PlayerState { Idle, Attacking, Blocking, Dead, Warping };
+public enum MovementState { Stand, Walk, Jump, GrabLedge, Climb, Jetting, Swimming, Hooking, Knockback, Rolling, Crouching, Mounted };
 
 public class Player : Entity, IHurtable
 {
@@ -29,7 +29,6 @@ public class Player : Entity, IHurtable
     public PlayerState mCurrentState = PlayerState.Idle;
     public MovementState movementState = MovementState.Stand;
     public int mPlayerIndex;
-    public Stats mStats;
     public PlayerClass playerClass;
     private AttackManager attackManager;
     public MeleeAttack defaultMelee;
@@ -47,6 +46,15 @@ public class Player : Entity, IHurtable
     public AudioClip mWalkSfx;
     //public AudioSource mAudioSource;
     public MiniMapIcon MiniMapIcon;
+    public bool warpingIn;
+    public bool warpingOut;
+    public float rollDuration = 0.5f;
+    public float rollTimestamp = 0;
+    public float rollCooldown = 0.25f;
+    public float rollCooldownTimestamp = 0;
+    public float rollSpeed = 180;
+
+    public int quickUseIndex = 0;
 
     #region Hidden
     /// <summary>
@@ -186,8 +194,6 @@ public class Player : Entity, IHurtable
         abilities = new List<Ability>();
         PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.player = this;
 
-        mStats = new Stats();
-
         mWalkSpeed = prototype.walkSpeed;
         mJumpSpeed = prototype.jumpSpeed;
         mClimbSpeed = prototype.climbSpeed;
@@ -273,7 +279,7 @@ public class Player : Entity, IHurtable
         {
             waterReduction = 0.8f;
         }
-        return (mWalkSpeed + 10*mStats.GetStat(StatType.Speed).GetValue())*waterReduction;
+        return (mWalkSpeed + 1*mStats.GetStat(StatType.Speed).GetValue())*waterReduction;
     }
 
     public void HandlePlayerPanelInput()
@@ -377,12 +383,17 @@ public class Player : Entity, IHurtable
         }
 
 
+        if (warpingIn)
+        {
+
+        }
+
         if (mCurrentState == PlayerState.Dead)
         {
             return;
         }
 
-        if (Input.playerButtonInput[(int)ButtonInput.Select] && !Input.previousButtonInput[(int)ButtonInput.Select])
+        if (Input.playerButtonInput[(int)ButtonInput.Minimap] && !Input.previousButtonInput[(int)ButtonInput.Minimap])
         {
             MiniMap.instance.Toggle();
         }
@@ -397,8 +408,39 @@ public class Player : Entity, IHurtable
             freeAxis = !freeAxis;
         }
 
+        //Update UI things
+        //Toolbelt
+        if (Input.playerButtonInput[(int)ButtonInput.CycleQuickUseLeft] && !Input.previousButtonInput[(int)ButtonInput.CycleQuickUseLeft])
+        {
+            Debug.Log("Cycle Left");
+
+            quickUseIndex--;
+
+            if (quickUseIndex < 0)
+            {
+                int slotsCount = inventory.GetQuickuseSlots().Count;
+
+                quickUseIndex = slotsCount - 1;
+                Mathf.Clamp(quickUseIndex, 0, slotsCount);
+            }
+        }
+
+        if (Input.playerButtonInput[(int)ButtonInput.CycleQuickUseRight] && !Input.previousButtonInput[(int)ButtonInput.CycleQuickUseRight])
+        {
+            Debug.Log("Cycle Right");
+            quickUseIndex++;
+            int slotsCount = inventory.GetQuickuseSlots().Count;
+
+            if (quickUseIndex >= slotsCount)
+            {
+                quickUseIndex = 0;
+            }
+        }
+
+        UpdateToolbelt();
+
         //
-        if (Input.playerButtonInput[(int)ButtonInput.OpenCloseInventory] && !Input.previousButtonInput[(int)ButtonInput.OpenCloseInventory])
+        if (Input.playerButtonInput[(int)ButtonInput.PlayerMenu] && !Input.previousButtonInput[(int)ButtonInput.PlayerMenu])
         {
             PlayerUIPanels.instance.OpenClosePanel(mPlayerIndex);
             if (Input.inputState == PlayerInputState.Inventory)
@@ -429,10 +471,10 @@ public class Player : Entity, IHurtable
             mCannotClimb = false;
         }
 
-
+        //playerPanel.toolbeltUI.UpdateQuickUseNode();
         if (Input.playerButtonInput[(int)ButtonInput.QuickHeal] && !Input.previousButtonInput[(int)ButtonInput.QuickHeal])
         {
-            UseFirstHealingItem();
+            QuickUse();
         }
 
         
@@ -451,9 +493,9 @@ public class Player : Entity, IHurtable
         IInteractable interactable = CheckForInteractables();
         if (interactable != null)
         {
-            ((PlayerRenderer)Renderer).ShowButtonTooltip(true);
+            ((PlayerRenderer)Renderer).ShowButtonTooltip(true, interactable.InteractLabel);
                     //Check to see if a player is trying to pick up an item
-            if (Input.playerButtonInput[(int)ButtonInput.DPad_Down] && !Input.previousButtonInput[(int)ButtonInput.DPad_Down])
+            if (Input.playerButtonInput[(int)ButtonInput.Interact] && !Input.previousButtonInput[(int)ButtonInput.Interact])
             {
                     interactable.Interact(this);
             } 
@@ -490,21 +532,18 @@ public class Player : Entity, IHurtable
 
                 Body.mSpeed.x = 0;
 
-                //Check to see if the player is trying to pass through a one way
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1 && Input.playerButtonInput[(int)ButtonInput.Jump])
-                {
-                    if (Body.mPS.onOneWay)
-                    {
-                        Body.mPS.tmpIgnoresOneWay = true;
-                        break;
-                    }
 
-                }
 
                 if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
-                    //break;
+                    break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
                 }
 
                 //if left or right key is pressed, but not both
@@ -514,7 +553,13 @@ public class Player : Entity, IHurtable
                     break;
                 }
 
+                //Check to see if the player is trying to pass through a one way
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] <= -0.5)
+                {
+                    movementState = MovementState.Crouching;
+                    break;
 
+                }
 
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
@@ -548,6 +593,95 @@ public class Player : Entity, IHurtable
                     mExitDoorTimer = 0;
                 }
 
+                break;
+            case MovementState.Crouching:
+
+                Body.mAABB.ScaleY = 0.5f;
+                HurtBox.mAABB.ScaleY = 0.5f;
+                //Body.mAABB.HalfSizeY = Body.mAABB.HalfSizeY / 2;
+                if (!Body.mPS.pushesBottom)
+                {
+                    movementState = MovementState.Jump;
+                    Body.mAABB.ScaleY = 1f;
+                    HurtBox.mAABB.ScaleY = 1f;
+
+                    break;
+                }
+
+
+                Body.mPS.tmpIgnoresOneWay = false;
+
+
+                Body.mSpeed.x = 0;
+
+                if(Input.playerAxisInput[(int)AxisInput.LeftStickY] > -0.5)
+                {
+                    movementState = MovementState.Stand;
+                    Body.mAABB.ScaleY = 1f;
+                    HurtBox.mAABB.ScaleY = 1f;
+
+
+                    break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    Body.mAABB.ScaleY = 1f;
+                    HurtBox.mAABB.ScaleY = 1f;
+                    break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
+                {
+                    if (Body.mPS.onOneWay)
+                    {
+                        Body.mPS.tmpIgnoresOneWay = true;
+                        break;
+                    } else
+                    {
+                        Body.mAABB.ScaleY = 1f;
+                        HurtBox.mAABB.ScaleY = 1f;
+                        Jump();
+                    }
+                }
+
+                //if left or right key is pressed, but not both
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickX] != 0)
+                {
+                    movementState = MovementState.Walk;
+                    Body.mAABB.ScaleY = 1f;
+                    HurtBox.mAABB.ScaleY = 1f;
+
+
+                    break;
+                }
+
+
+                break;
+
+            case MovementState.Rolling:
+
+                Body.mIgnoresGravity = false;
+                Body.mPS.tmpIgnoresOneWay = false;
+                Body.mSpeed.x = GetSpeed() * 2 * (int)mDirection;
+
+                if (Time.time > rollTimestamp + rollDuration)
+                {
+                    StopRoll();
+                }
+
+                if (Body.mSpeed.y <= 0.0f && !Body.mPS.pushesTop
+                    && ((Body.mPS.pushesRight && Input.playerAxisInput[(int)AxisInput.LeftStickX] > 0) || (Body.mPS.pushesLeft && Input.playerAxisInput[(int)AxisInput.LeftStickX] < 0)))
+                {
+                    if (TryGrabLedge())
+                    {
+                        StopRoll();
+                        movementState = MovementState.GrabLedge;
+
+                    }
+
+                }
                 break;
             case MovementState.Walk:
 
@@ -595,7 +729,13 @@ public class Player : Entity, IHurtable
                 if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
                 {
                     Jump();
-                    //break;
+                    break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
                 }
 
                 //if both or neither left nor right keys are pressed then stop walking and stand
@@ -636,20 +776,6 @@ public class Player : Entity, IHurtable
                     //Body.mAABB.ScaleX = -Mathf.Abs(Body.mAABB.ScaleX);
                 }
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] == -1)
-                {
-                    if (Input.playerButtonInput[(int)ButtonInput.Jump] && !Input.previousButtonInput[(int)ButtonInput.Jump])
-                    {
-                        if (Body.mPS.onOneWay)
-                        {
-                            Body.mPS.tmpIgnoresOneWay = true;
-                            break;
-                        }
-
-                    }
-
-                }
-
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0 && Body.mPS.onLadder)
                 {
@@ -684,6 +810,11 @@ public class Player : Entity, IHurtable
 
                 }
 
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
+                }
 
                 // we can climb ladders from this state
                 if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
@@ -808,6 +939,12 @@ public class Player : Entity, IHurtable
                     Jump();
                 }
 
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
+                }
+
                 //when the tile we grab onto gets destroyed
                 if (!Map.IsObstacle(mLedgeTile.x, mLedgeTile.y))
                     movementState = MovementState.Jump;
@@ -837,6 +974,13 @@ public class Player : Entity, IHurtable
                 {
                     Body.mPS.isClimbing = false;
                     movementState = MovementState.Stand;
+                    break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Body.mPS.isClimbing = false;
+                    Roll();
                     break;
                 }
 
@@ -895,7 +1039,11 @@ public class Player : Entity, IHurtable
 
                 mCannotClimb = true;
 
-
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
+                }
 
 
                 if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
@@ -958,7 +1106,7 @@ public class Player : Entity, IHurtable
 
 
                 break;
-                case MovementState.Swimming:
+            case MovementState.Swimming:
 
                 if (!Body.mPS.inWater)
                 {
@@ -993,6 +1141,12 @@ public class Player : Entity, IHurtable
                 {
                     Jump();
                     //break;
+                }
+
+                if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
+                {
+                    Roll();
+                    break;
                 }
 
 
@@ -1115,7 +1269,7 @@ public class Player : Entity, IHurtable
 
         //Attacks
 
-        if (Input.playerButtonInput[(int)ButtonInput.Attack] && !Input.previousButtonInput[(int)ButtonInput.Attack])
+        if (Input.playerButtonInput[(int)ButtonInput.MeleeAttack] && !Input.previousButtonInput[(int)ButtonInput.MeleeAttack])
         {
             AttackManager.meleeAttacks[0].Activate();
         }
@@ -1245,6 +1399,26 @@ public class Player : Entity, IHurtable
 
     }
 
+    public void Roll()
+    {
+        if(Time.time < rollCooldownTimestamp + rollCooldown)
+        {
+            return;
+        }
+        rollTimestamp = Time.time;
+        movementState = MovementState.Rolling;
+        Body.mSpeed.x = rollSpeed*(int)mDirection;
+        HurtBox.mState = ColliderState.Closed;
+    }
+
+    public void StopRoll()
+    {
+        movementState = MovementState.Stand;
+        Body.mSpeed.x = 0;
+        HurtBox.mState = ColliderState.Open;
+        rollCooldownTimestamp = Time.time;
+    }
+
     public void JetMode()
     {
         if (movementState == MovementState.Jetting)
@@ -1260,7 +1434,7 @@ public class Player : Entity, IHurtable
         movementState = MovementState.Climb;
     }
 
-    public void TryGrabLedge()
+    public bool TryGrabLedge()
     {
         //we'll translate the original aabb's HalfSize so we get a vector Vector2iing
         //the top right corner of the aabb when we want to grab the right edge
@@ -1314,11 +1488,13 @@ public class Player : Entity, IHurtable
                     //Body.mAABB.ScaleX *= -1;
                     Renderer.SetAnimState("GrabLedge");
                     //mAudioSource.PlayOneShot(mHitWallSfx, 0.5f);
-                    break;
+                    return true;
                     //mGame.PlayOneShot(SoundType.Character_LedgeGrab, mPosition, Game.sSfxVolume);
                 }
             }
         }
+
+        return false;
     }
 
     public bool PickUp(ItemObject itemObject)
@@ -1337,12 +1513,15 @@ public class Player : Entity, IHurtable
     public void UpdateAnimator()
     {
 
-        foreach (Attack attack in AttackManager.meleeAttacks)
+        if (movementState != MovementState.Rolling)
         {
-            if (attack.mIsActive)
+            foreach (Attack attack in AttackManager.meleeAttacks)
             {
-                Renderer.SetAnimState("Attack");
-                return;
+                if (attack.mIsActive)
+                {
+                    Renderer.SetAnimState("Attack");
+                    return;
+                }
             }
         }
 
@@ -1486,18 +1665,34 @@ public class Player : Entity, IHurtable
         //Take 5% less damage for each point of defense
         //Limit defense to 80% reduction
         damage -= (int)(damage * Mathf.Min(0.8f, (0.05f * mStats.GetStat(StatType.Defense).GetValue())));
-        if (damage < 0)
+
+        if (damage <= 0)
         {
             damage = 0;
         }
-
-        foreach (Ability effect in abilities)
+        else
         {
-            effect.OnDamagedTrigger(attack);
+            //Crits
+            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            {
+                damage *= 2;
+                ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
+            }
+            else
+            {
+                ShowFloatingText(damage.ToString(), Color.red);
+            }
+
+            health.LoseHP(damage);
+
+            foreach (Ability effect in abilities)
+            {
+                effect.OnDamagedTrigger(attack);
+            }
         }
 
-        Health.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.red);
+
+
 
         if (Health.currentHealth == 0)
         {
@@ -1665,30 +1860,48 @@ public class Player : Entity, IHurtable
 
         return null;
     }
-    //TODO: put this in the invetory
-    public bool UseFirstHealingItem()
-    {
-        //ItemObject item = null;
-        for (int i = 0; i < inventory.slots.Length; i++)
-        {
-            if (inventory.slots[i].item is ConsumableItem temp && temp.isHealingItem)
-            {
-                if(temp.Use(this))
-                {
-                    inventory.slots[i].GetOneItem();
-                    return true;
-                }
-                else
-                {
 
-                    return false;
-                }
-            }
+
+    public void UpdateToolbelt()
+    {
+        List<InventorySlot> slots = inventory.GetQuickuseSlots();
+
+        if(slots.Count <= 0)
+        {
+            playerPanel.toolbeltUI.UpdateQuickUseNode(null);
+            return;
         }
 
-        return false;
+        if(quickUseIndex >= slots.Count)
+        {
+            quickUseIndex = slots.Count - 1;
+        }
+
+        if (inventory.GetQuickuseSlots()[quickUseIndex].item is ConsumableItem consumable)
+        {
+            playerPanel.toolbeltUI.UpdateQuickUseNode(consumable);
+        }
     }
 
+    public void QuickUse()
+    {
+        //playerPanel.toolbeltUI.UpdateQuickUseNode(temp);
+        List<InventorySlot> slots = inventory.GetQuickuseSlots();
+
+        if (slots.Count <= 0)
+        {
+            return;
+        }
+
+
+
+        if (slots[quickUseIndex].item is ConsumableItem consumable && consumable.Use(this))
+        {
+            slots[quickUseIndex].GetOneItem();
+        }
+
+    }
+ 
     public Entity GetEntity()
     {
         return this;

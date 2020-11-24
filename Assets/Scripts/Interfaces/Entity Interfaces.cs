@@ -28,6 +28,8 @@ public interface IProjectile
 
 public interface IInteractable
 {
+    string InteractLabel { get; set; }
+
     bool Interact(Player actor);
 }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   hostility: 0
   mName: PistolBullet
   bodySize: {x: 5, y: 5}
-  CollidesWith: 
+  CollidesWith: 02000000
   abilityFlags: 
   baseAbilities: []
   ignoreTilemap: 0
@@ -28,6 +28,7 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 5, y: 5}
   angled: 1
   maxTime: 10

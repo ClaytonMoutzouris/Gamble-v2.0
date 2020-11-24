@@ -9,13 +9,14 @@ public class NPCPrototype : EntityPrototype
     public int movementSpeed;
     public int jumpHeight = 120;
     public int sightRange = 50;
-
+    public List<string> possibleNames;
     public int health;
 
     public List<RangedAttackPrototype> rangedAttacks;
     public List<MeleeAttackPrototype> meleeAttacks;
 
-    public List<Item> wares;
+    //public List<Item> wares;
+    public LootTable wares;
     public List<string> dialogueLines;
 
 

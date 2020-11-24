@@ -23,6 +23,7 @@ public class ShopScreenUI : MonoBehaviour
     public ShopScreenMode buysellMode;
     public GameObject sellButton;
     public GameObject buyButton;
+    public Text titleText;
     // Start is called before the first frame update
     void Start()
     {
@@ -149,7 +150,7 @@ public class ShopScreenUI : MonoBehaviour
     {
         currentNPC = shopkeeper;
         currentPlayer = player;
-
+        titleText.text = shopkeeper.entityName + " the " +shopkeeper.npcType + "'s Wares";
         LoadInventories();
         SetBuyMode();
 

@@ -28,6 +28,26 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX:
+  - {fileID: 8300000, guid: e3bd72912821b51449a856695c0e2c0f, type: 3}
   locked: 0
   possibleItems: []
   lootTable: {fileID: 11400000, guid: 5b7bda705457e1d4b851779180c4d8a0, type: 2}

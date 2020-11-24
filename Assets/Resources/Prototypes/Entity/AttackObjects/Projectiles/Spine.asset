@@ -13,17 +13,49 @@ MonoBehaviour:
   m_Name: Spine
   m_EditorClassIdentifier: 
   entityType: 5
+  hostility: 0
   mName: Spine
   bodySize: {x: 5, y: 3}
-  CollidesWith: 
+  CollidesWith: 02000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
+  ignoreGravity: 1
   sprite: {fileID: 21300000, guid: 59c10f18c89dfad4dbe5dce35fd5d695, type: 3}
   sortingLayer: 8
   animationController: {fileID: 0}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 6, y: 3}
   angled: 1
   maxTime: 10
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: 7b2dabfa60d78e3438de43fc41d25b20, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
+  particleSystem: {fileID: 0}
   pierce: 1
-  ignoreGravity: 1
+  collidesWithTiles: 1
+  bouncy: 0
   speed: 200
+  frameDelay: 0

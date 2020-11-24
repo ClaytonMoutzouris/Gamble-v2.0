@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4858b67e4cf262e4a9bf2f2abebe7ba0, type: 3}
+  m_Name: ForestHub
+  m_EditorClassIdentifier: 
+  mapType: 3
+  type: 0
+  sizeX: 1
+  sizeY: 1
+  hasMiniboss: 0
+  roomSizeX: 25
+  roomSizeY: 25
+  gravity: 900
+  baseDepth: 3
+  depthVariance: 1
+  smallEnemies: 
+  largeEnemies: 
+  minibossType: 0
+  tileSprites:
+  - {fileID: 0}
+  - {fileID: 4487611389904843941, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 331156121016089927, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 7130472341855191249, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 6302801568098920539, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 483862569786616746, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: -4544912816351164547, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 2867020483019585006, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 7070417566975070808, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -1925203174703750341, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: -8533024219980528297, guid: 0949de72f3141ad4d80378f8df42358b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chestType: {fileID: 11400000, guid: 940ad77e6ff225b4682c9f579cf60d04, type: 2}

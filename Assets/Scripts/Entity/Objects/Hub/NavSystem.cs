@@ -9,6 +9,8 @@ public class NavSystem : Entity, IInteractable
     /// Draws the aabb and ceiling, ground and wall sensors .
     /// </summary>
     /// 
+    private string interactLabel = "<Travel>";
+
 
     public NavSystem(EntityPrototype proto) : base(proto)
     {
@@ -19,6 +21,7 @@ public class NavSystem : Entity, IInteractable
 
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public override void EntityUpdate()
     {

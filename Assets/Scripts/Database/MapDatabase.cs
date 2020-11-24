@@ -26,7 +26,7 @@ public static class MapDatabase
 
     public static MapData GetMap(WorldType worldType)
     {
-        if(worldType == WorldType.Hub)
+        if(worldType == WorldType.Ship)
         {
             return hubMap;
         }

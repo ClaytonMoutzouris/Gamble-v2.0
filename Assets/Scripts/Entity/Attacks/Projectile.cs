@@ -10,6 +10,8 @@ public class Projectile : AttackObject {
     public int framesAlive = 0;
     public bool isBouncy = false;
     public bool split = false;
+    public bool homing = false;
+    public Entity target = null;
     //Does a bullet have a reference to an attack?
     //or does a bullet behave like an attack?
 
@@ -37,7 +39,7 @@ public class Projectile : AttackObject {
 
         if (SoundManager.instance != null)
         {
-            SoundManager.instance.PlaySingle(proto.sfx);
+            SoundManager.instance.PlaySingle(proto.spawnSFX);
         }
         //AudioSource.PlayClipAtPoint(sfx, Body.mPosition);
     }
@@ -57,6 +59,22 @@ public class Projectile : AttackObject {
             {
                 Renderer.transform.Rotate(0, 0, -Vector2.Angle(Vector2.right, direction));
             }
+        }
+    }
+
+    public void SetHoming(Entity entity)
+    {
+        homing = true;
+        target = entity;
+
+    }
+
+    public void UpdateDirection()
+    {
+        if(homing)
+        {
+            Vector2 homingDir = (target.Position - target.Position).normalized;
+            Body.mSpeed = homingDir * mMovingSpeed;
         }
     }
 
@@ -115,6 +133,7 @@ public class Projectile : AttackObject {
                 }
 
             }
+
         }
 
 
@@ -142,7 +161,9 @@ public class Projectile : AttackObject {
             }
         }
 
-        if ((collidesWithTiles && !isBouncy && (Body.mPS.pushesBottomTile || Body.mPS.pushesTopTile || Body.mPS.pushesLeftTile || Body.mPS.pushesRightTile)))
+        UpdateDirection();
+
+        if ((collidesWithTiles && !isBouncy && (Body.mPS.pushesBottom || Body.mPS.pushesTop || Body.mPS.pushesLeft || Body.mPS.pushesRight)))
         {
             mToRemove = true;
         }

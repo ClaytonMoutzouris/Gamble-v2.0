@@ -5,16 +5,18 @@ using TMPro;
 
 public class ButtonTooltip : MonoBehaviour
 {
-    public TextMeshPro text;
+    public TextMesh text;
 
     private void Start()
     {
+        text.gameObject.GetComponent<MeshRenderer>().sortingLayerName = "UI";
 
     }
 
     public void SetText(string text)
     {
-        this.text.SetText(text);
+        this.text.text = text;
+
     }
 
     public void ShowTooltip(bool show)

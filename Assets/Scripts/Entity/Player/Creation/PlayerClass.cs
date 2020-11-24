@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class PlayerClass : ScriptableObject
 {
     public string className;
@@ -13,6 +12,7 @@ public class PlayerClass : ScriptableObject
 
     public List<Equipment> startingEquipment;
     public List<Item> startingInventory;
+    public int startingMoney = 20;
 
     public TalentTree talentTree;
 
@@ -36,6 +36,14 @@ public class PlayerClass : ScriptableObject
 
                 player.Inventory.AddItemToInventory(temp);
             }
+
+            for(int i = 0; i < startingMoney; i++)
+            {
+                Item temp = ItemDatabase.GetItem("Blueium");
+                player.Inventory.AddItemToInventory(temp);
+
+            }
+
         }
         player.talentTree = Instantiate(talentTree);
         player.talentTree.GetNewTree(player);

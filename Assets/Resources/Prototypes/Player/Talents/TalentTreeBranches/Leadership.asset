@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba5a377bead1dd46b2558e076619ad5, type: 3}
+  m_Name: Leadership
+  m_EditorClassIdentifier: 
+  branchName: Leadership
+  talents:
+  - {fileID: 11400000, guid: 09133d5b2ba36c34c95ea82b13d2fdf7, type: 2}
+  - {fileID: 11400000, guid: fb846c9cd9bc3fd40896b5ad71c1a81e, type: 2}
+  - {fileID: 11400000, guid: 89ec81c868d990a4b8701d0583fc3ddb, type: 2}
+  - {fileID: 11400000, guid: db1832f336d3b0640ac0600a66c8dab6, type: 2}

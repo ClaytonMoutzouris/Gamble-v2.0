@@ -16,7 +16,7 @@ MonoBehaviour:
   hostility: 1
   mName: SnowShot
   bodySize: {x: 4, y: 4}
-  CollidesWith: 
+  CollidesWith: 02000000
   abilityFlags: 
   baseAbilities: []
   ignoreTilemap: 0
@@ -28,11 +28,31 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  colorNodes: []
   baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 4, y: 4}
   angled: 1
   maxTime: 5
-  sfx: {fileID: 0}
+  spawnSFX: {fileID: 8300000, guid: a039159f8cca58b468987d62fe77cdd8, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}
   pierce: 0
   collidesWithTiles: 0

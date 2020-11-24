@@ -21,6 +21,7 @@ public class PlayerPanel : MonoBehaviour
     public bool isOpen = false;
     public int panelHeight;
     public PlayerStatusEffectUI effectUI;
+    public ToolbeltUI toolbeltUI;
 
     // Start is called before the first frame update
     public void Initialize()
@@ -100,7 +101,7 @@ public class PlayerPanel : MonoBehaviour
         GamepadInputManager.instance.gamepadInputs[playerIndex].GetEventSystem().SetSelectedGameObject(inputAnchor);
         inputAnchor.GetComponent<Button>().OnSelect(null);
         isOpen = true;
-        transform.localPosition = transform.localPosition + new Vector3(0, panelHeight-20, 0);
+        transform.localPosition = transform.localPosition + new Vector3(0, panelHeight, 0);
         tooltip.gameObject.SetActive(true);
 
         GameObject tabHeaderUI = GameObject.Find("TabHeaderContainer");
@@ -120,7 +121,7 @@ public class PlayerPanel : MonoBehaviour
             }
         }
         GamepadInputManager.instance.gamepadInputs[playerIndex].GetEventSystem().SetSelectedGameObject(null);
-        transform.localPosition = transform.localPosition - new Vector3(0, panelHeight-20, 0);
+        transform.localPosition = transform.localPosition - new Vector3(0, panelHeight, 0);
         isOpen = false;
         menuObject.SetActive(false);
         tooltip.SetTooptip("");

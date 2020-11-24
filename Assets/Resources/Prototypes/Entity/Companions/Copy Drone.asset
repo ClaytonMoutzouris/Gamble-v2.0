@@ -18,15 +18,17 @@ MonoBehaviour:
   bodySize: {x: 1, y: 1}
   CollidesWith: 
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
-  sprite: {fileID: 21300000, guid: 5c9047e3306ae3646837490a7b90e3c2, type: 3}
-  sortingLayer: 6
+  sprite: {fileID: 21300000, guid: 65c9d0a3f11c2024cbae5d4a609049dc, type: 3}
+  sortingLayer: 4
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  baseGravityMultiplier: 1
   movementSpeed: 2
   attack: {fileID: 11400000, guid: e9e4593e495fd6e46b80f94d9a17efae, type: 2}
   copyAttack: 1

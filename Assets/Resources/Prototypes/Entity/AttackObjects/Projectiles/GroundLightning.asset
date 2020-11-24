@@ -16,13 +16,19 @@ MonoBehaviour:
   hostility: 0
   mName: GroundFlame
   bodySize: {x: 8, y: 6}
-  CollidesWith: 
+  CollidesWith: 02000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 8
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 8, y: 6}
   angled: 0
   maxTime: 4

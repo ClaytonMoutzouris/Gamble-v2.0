@@ -18,6 +18,7 @@ MonoBehaviour:
   bodySize: {x: 32, y: 64}
   CollidesWith: 
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
@@ -26,15 +27,9 @@ MonoBehaviour:
   particleEffects: {fileID: 0}
   crushDamage: 999
   kinematic: 0
-  enemyType: 7
-  movementSpeed: 20
-  jumpHeight: 160
-  sightRange: 320
-  health: 100
-  rangedAttacks: []
-  meleeAttacks:
-  - {fileID: 11400000, guid: 873f8750c10b2a04b97bb03ecdea1fbe, type: 2}
-  lootTable: {fileID: 11400000, guid: ab90c4b2eb75f83498f1659a7acd92a5, type: 2}
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -51,3 +46,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 7
+  expValue: 5
+  movementSpeed: 20
+  jumpHeight: 160
+  sightRange: 80
+  health: 100
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 873f8750c10b2a04b97bb03ecdea1fbe, type: 2}
+  lootTable: {fileID: 11400000, guid: ab90c4b2eb75f83498f1659a7acd92a5, type: 2}

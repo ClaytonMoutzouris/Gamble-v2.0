@@ -8,7 +8,7 @@ public class Companion : Entity
 
     public AttackManager mAttackManager;
     public Player owner;
-    public Vector2 offset = new Vector2(32, 32);
+    public Vector2 offset = new Vector2(8, 32);
     public bool copyAttack = false;
 
     public Companion(CompanionPrototype proto) : base(proto)
@@ -27,9 +27,9 @@ public class Companion : Entity
     {
         owner = player;
         player.companionManager.AddCompanion(this);
-        if(copyAttack)
+        if(copyAttack && owner.Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon weapon)
         {
-            mAttackManager.rangedAttacks[0] = new RangedAttack(this, (RangedAttackPrototype)owner.AttackManager.rangedAttacks[0].attackPrototype);
+            mAttackManager.rangedAttacks[0] = new RangedAttack(this, ScriptableObject.Instantiate(weapon.attack));
         }
 
     }
@@ -37,13 +37,6 @@ public class Companion : Entity
     public override void EntityUpdate()
     {
         Position = Vector2.Lerp(Position, owner.Position + offset, mMovingSpeed / 10);
-
-        if (owner.AttackManager.rangedAttacks[0].mIsActive)
-        {
-
-            mAttackManager.rangedAttacks[0].Activate(owner.GetAimRight(), Position);
-
-        }
 
         mAttackManager.UpdateAttacks();
 
@@ -53,6 +46,11 @@ public class Companion : Entity
 
 
 
+    }
+
+    public void Fire()
+    {
+        mAttackManager.rangedAttacks[0].Activate(owner.GetAimRight(), Position);
     }
 
     public override bool Equals(object obj)
@@ -71,11 +69,6 @@ public class Companion : Entity
 
         mAttackManager.SecondUpdate();
 
-    }
-
-    public override void ShowFloatingText(string text, Color color)
-    {
-        base.ShowFloatingText(text, color);
     }
 
     public override void Spawn(Vector2 spawnPoint)

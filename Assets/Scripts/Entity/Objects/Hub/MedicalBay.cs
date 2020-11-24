@@ -11,6 +11,7 @@ public class MedicalBay : Entity, IInteractable
     /// 
     [HideInInspector]
     public bool mOpen = false;
+    private string interactLabel = "<Heal>";
 
 
     public MedicalBay(EntityPrototype proto) : base(proto)
@@ -22,6 +23,7 @@ public class MedicalBay : Entity, IInteractable
 
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public override void EntityUpdate()
     {

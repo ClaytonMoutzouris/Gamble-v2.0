@@ -405,30 +405,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2333733458198343550}
     m_Modifications:
-    - target: {fileID: 443316816821323228, guid: 28b676c6728f77042b9966c1a979740d,
+    - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
+      propertyPath: m_textInfo.characterCount
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
         type: 3}
-      propertyPath: m_fontSize
-      value: 85.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
-        type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
-        type: 3}
-      propertyPath: m_HorizontalAlignment
+      propertyPath: m_textInfo.wordCount
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
         type: 3}
-      propertyPath: m_textAlignment
-      value: 65535
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 973703205161239790, guid: 28b676c6728f77042b9966c1a979740d,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7073047073904281917, guid: 28b676c6728f77042b9966c1a979740d,
         type: 3}
@@ -540,8 +535,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonTooltip
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6162382550762653830, guid: 28b676c6728f77042b9966c1a979740d, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28b676c6728f77042b9966c1a979740d, type: 3}
 --- !u!224 &4848496771212726280 stripped
 RectTransform:

@@ -12,7 +12,10 @@ public class ClassOptionSelector : CreationOptionSelector
         classTypes = new List<PlayerClassType>();
         foreach(PlayerClassType classType in System.Enum.GetValues(typeof(PlayerClassType)))
         {
-            classTypes.Add(classType);
+            if(classType != PlayerClassType.Pilot && classType != PlayerClassType.Medic && classType != PlayerClassType.Guardian)
+            {
+                classTypes.Add(classType);
+            }
         }
 
         optionIndex = 0;

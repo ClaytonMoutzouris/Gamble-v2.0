@@ -25,7 +25,16 @@ public class ForceField : Entity
         base.Die();
         gadget.ForceField = null;
         gadget.isActive = false;
+        shieldBox.mState = ColliderState.Closed;
 
+    }
+
+    public override void ActuallyDie()
+    {
+
+        //before we remove it from the update list, we have to remove it from the update areas
+        CollisionManager.RemoveObjectFromAreas(shieldBox);
+        base.ActuallyDie();
     }
 
     public override void EntityUpdate()

@@ -30,17 +30,28 @@ public class RangedWeapon : Weapon
     };
     #endregion
 
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        projProto = Instantiate(projProto);
+        SetAttributes();
+    }
+
     public void SetAttributes()
     {
         attributes = new RangedWeaponAttributes();
         attributes.SetStats(baseAttributes);
         ammunitionCount = (int)attributes.GetAttribute(RangedWeaponAttributesType.AmmoCapacity).GetValue();
-        attributes.GetAttribute(RangedWeaponAttributesType.ProjectileSpeed).value = projProto.speed;
+        //attributes.GetAttribute(RangedWeaponAttributesType.ProjectileSpeed).value = projProto.speed;
+        damage = (int)attributes.GetAttribute(RangedWeaponAttributesType.Damage).value;
+        projProto.speed = (int)attributes.GetAttribute(RangedWeaponAttributesType.ProjectileSpeed).value;
     }
 
     public override void OnEquip(Player player)
     {
         SetAttributes();
+
         base.OnEquip(player);
         if(mSlot == EquipmentSlotType.Mainhand)
         {
@@ -107,6 +118,11 @@ public class RangedWeapon : Weapon
                     shot.Spawn(player.Position + new Vector2(0, attackProto.offset.y) + (attackProto.offset * tempDir.normalized));
 
                 }
+
+                foreach(Companion companion in player.companionManager.Companions)
+                {
+                    companion.Fire();
+                }
                 //Actually fire here
 
             }
@@ -151,10 +167,41 @@ public class RangedWeapon : Weapon
     public override string GetTooltip()
     {
         string tooltip = base.GetTooltip();
-        tooltip += "\n" + ammoType.ToString();
-        tooltip += attack.GetToolTip();
+        tooltip += "\n<color=silver>" + ammoType.ToString()+ "</color>";
+        tooltip += "\n<color=white>" + attributes.GetAttribute(RangedWeaponAttributesType.Damage).GetValue() + " Damage</color>";
+        tooltip += "\n<color=white>" + AttackSpeedToString() + "</color>";
 
         return tooltip;
+    }
+
+    public string AttackSpeedToString()
+    {
+        string speed = "";
+        float fireRate = attributes.GetAttribute(RangedWeaponAttributesType.FireRate).GetValue();
+        if (fireRate > 10)
+        {
+            speed = "Very Fast";
+        }
+        else if (fireRate < 10 && fireRate >= 6)
+        {
+            speed = "Fast";
+        }
+        else if (fireRate < 6 && fireRate >= 3)
+        {
+            speed = "Medium";
+        }
+        else if (fireRate < 3 && fireRate >= 1)
+        {
+            speed = "Slow";
+        }
+        else if (fireRate < 1)
+        {
+            speed = "Very Slow";
+        }
+
+        speed += " Attack Speed";
+
+        return speed;
     }
 
 }

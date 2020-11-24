@@ -17,13 +17,37 @@ MonoBehaviour:
   mName: 
   bodySize: {x: 28, y: 28}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 21300000, guid: aa05b851c9f57214fbac1a636f0bdb65, type: 3}
   sortingLayer: 2
   animationController: {fileID: 0}
-  effects: []
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX:
+  - {fileID: 8300000, guid: d3e2f619b2c386a4c8b63b9a1de7fcc9, type: 3}
   lootable: {fileID: 11400000, guid: 64c6a9b336b180d48b38cf09c9c76ec8, type: 2}
   usesMin: 3
   usesMax: 6

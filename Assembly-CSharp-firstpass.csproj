@@ -68,6 +68,7 @@
     <Compile Include="Assets\Plugins\AccidentalNoise\Combiner.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\TranslatedDomain.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\ScaleOffset.cs" />
+    <Compile Include="Assets\Plugins\Color Swap Package\ColorSwapManager.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\Fractal.cs" />
     <Compile Include="Assets\Plugins\Color Swap Package\ColorSwap.cs" />
     <Compile Include="Assets\Plugins\AccidentalNoise\BasisFunction.cs" />

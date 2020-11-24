@@ -90,19 +90,14 @@ public static class MapGenerator
 
     public static void AddBounds(Map map)
     {
-        for (int i = 0; i < map.getMapSize().y; i++)
+
+        for (int j = 0; j < map.getMapSize().x; j++)
         {
-            for (int j = 0; j < map.getMapSize().x; j++)
-            {
 
-                if (j == 0 || i == 0 || j == map.getMapSize().x - 1 || i == map.getMapSize().y - 1)
-                {
-                    //Debug.Log("X: " + i + ", Y: " + j);
-                    map.SetTile(j, i, TileType.Block);
-                }
-            }
-
+            map.SetTile(j, 0, TileType.Block);
+            
         }
+
     }
 
     public static RoomData[,] RoomMap(int sizeX, int sizeY, Vector2i startRoom, out Vector2i endRoom)
@@ -256,9 +251,8 @@ public static class MapGenerator
             {
                 depths[i] = data.sizeY;
             }
-            int randomY = Random.Range(0, map.sizeY);
 
-            startRoom = new Vector2i(randomX, randomY);
+            startRoom = new Vector2i(randomX, map.sizeY-1);
         }
 
         RoomData[,] roomPath = RoomMap(map.sizeX, map.sizeY, startRoom, out endRoom);
@@ -274,18 +268,6 @@ public static class MapGenerator
         {
             for (int y = 0; y < map.sizeY; y++)
             {
-                if (data.mapType == MapType.Hub)
-                {
-                    rooms[x, y] = RoomDatabase.GetRoom(RoomType.Hub);
-                    continue;
-                }
-                
-                if(data.mapType == MapType.BossMap)
-                {
-                    rooms[x, y] = RoomDatabase.GetRoom(RoomType.BossRoom);
-                    continue;
-                }               
-                
 
                 if (y < depths[x])
                 {
@@ -317,7 +299,12 @@ public static class MapGenerator
                     rooms[x, y] = RoomDatabase.GetRoom(RoomType.SideRoom, temp);
                 }
 
-                
+                foreach(EntityData eData in rooms[x, y].entityData)
+                {
+                    if (eData == null)
+                        continue;
+                    map.AddEntity(eData);
+                }
             }
         }
 
@@ -337,7 +324,7 @@ public static class MapGenerator
         map.startTile = GetStartTile(map, startRoom.x, startRoom.y);
 
 
-        if (data.mapType != MapType.Hub && data.mapType != MapType.BossMap)
+        if (data.mapType != MapType.Ship && data.mapType != MapType.BossMap)
         {
 
             //PopulateMap(map);
@@ -420,6 +407,13 @@ public static class MapGenerator
             map.SetTile(door.x, door.y, TileType.Door);
         }
 
+        foreach (EntityData eData in roomData.entityData)
+        {
+            if (eData == null)
+                continue;
+            map.AddEntity(eData);
+        }
+
 
         map.bossTile = new Vector2i(8, 2);
 
@@ -430,11 +424,11 @@ public static class MapGenerator
         return map;
     }
 
-    public static Map GenerateHubMap(MapData data)
+    public static Map GenerateShipMap(MapData data)
     {
         Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
 
-        RoomData roomData = RoomDatabase.GetRoom(RoomType.Hub);
+        RoomData roomData = RoomDatabase.GetRoom(RoomType.Ship);
         data.roomSizeX = roomData.mWidth;
         data.roomSizeY = roomData.mHeight;
 
@@ -447,38 +441,21 @@ public static class MapGenerator
         Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
 
         AddBounds(map);
-
-
-        map.AddEntity(new ObjectData(12, 5, ObjectType.Medbay));
-        map.AddEntity(new ObjectData(12, 1, ObjectType.NavSystem));
-        map.AddEntity(new ObjectData(10, 1, ObjectType.AnalysisCom));
-        map.AddEntity(new ObjectData(8, 1, ObjectType.SaveMachine));
-
-        map.AddEntity(new ObjectData(10, 5, ObjectType.SmallGatherable));
-        map.AddEntity(new ObjectData(5, 4, ObjectType.PracticeBot));
-
-        map.AddEntity(new ObjectData(15, 5, ObjectType.LargeGatherable));
-
-        map.AddEntity(new NPCData(14, 1, NPCType.Shopkeeper));
+        /*
+        map.AddEntity(new NPCData(1, 1, NPCType.ArmsDealer));
+        map.AddEntity(new NPCData(14, 1, NPCType.GeneralTrader));
+        map.AddEntity(new NPCData(8, 4, NPCType.Gadgeteer));
+        map.AddEntity(new NPCData(20, 1, NPCType.PotionSeller));
+        map.AddEntity(new NPCData(22, 4, NPCType.Clothier));
+        map.AddEntity(new NPCData(10, 13, NPCType.EggsDealer));
+        */
+        //map.AddEntity(new BossData(10, 13, BossType.VoidBoss));
 
 
         if (WorldManager.instance.NumCompletedWorlds() == 0)
         {
             map.AddEntity(new ItemObjectData(6, 1, ObjectType.Item, "Biosample"));
             map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Slime Egg"));
-            
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "BubbleGun"));
-
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "IcicleGun"));
-
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Snowzooka"));
-
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Flamethrower"));
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "SharkGun"));
-            map.AddEntity(new ItemObjectData(7, 1, ObjectType.Item, "Poison Uzi"));
-
-            //map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Low Gravity Potion"));
-            //map.AddEntity(new ItemObjectData(8, 1, ObjectType.Item, "Damage Buff Potion"));
 
 
         }
@@ -503,6 +480,47 @@ public static class MapGenerator
             map.AddEntity(new ItemObjectData(13, 1, ObjectType.Item, "CaptureGadget"));
             */
 
+        }
+
+        foreach (EntityData eData in roomData.entityData)
+        {
+            if (eData == null)
+                continue;
+            map.AddEntity(eData);
+        }
+        //Post process the map based on probabilistic tiles and such
+        PostProcessing(map, data);
+
+        return map;
+    }
+
+    public static Map GenerateHubMap(MapData data)
+    {
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
+
+        RoomData roomData = RoomDatabase.GetRoom(RoomType.Hub);
+        data.roomSizeX = roomData.mWidth;
+        data.roomSizeY = roomData.mHeight;
+
+        Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
+        Map map = new Map(data);
+
+
+
+        map.SetTileMap(roomData.tiles);
+        Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
+
+        AddBounds(map);
+
+
+        map.AddEntity(new ObjectData(12, 1, ObjectType.Medbay));
+        map.AddEntity(new ObjectData(8, 1, ObjectType.SaveMachine));
+
+        foreach (EntityData eData in roomData.entityData)
+        {
+            if (eData == null)
+                continue;
+            map.AddEntity(eData);
         }
         //Post process the map based on probabilistic tiles and such
         PostProcessing(map, data);
@@ -539,7 +557,7 @@ public static class MapGenerator
 
     public static Map CreationMap()
     {
-        Map map = new Map(MapType.Hub, WorldType.Hub, 20, 20);
+        Map map = new Map(MapType.Ship, WorldType.Ship, 20, 20);
 
 
 
@@ -637,12 +655,12 @@ public static class MapGenerator
                         map.SetTile(x, y, TileType.Empty);
                         break;
                     case TileType.Water:
-                        if(data.mapType == MapType.Hub)
+                        if(data.mapType == MapType.Ship || data.mapType == MapType.Hub)
                         {
                             break;
                         }
                         int random = Random.Range(0, 100);
-                        if(random >= 90)
+                        if(random >= 95)
                         {
                             map.AddEntity(new EnemyData(x, y, EnemyType.Nipper));
                         }

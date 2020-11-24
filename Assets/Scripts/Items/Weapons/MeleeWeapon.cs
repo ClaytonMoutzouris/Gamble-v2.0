@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MeleeWeaponType { Fist, Blade }
+
 public class MeleeWeapon : Weapon
 {
+    public MeleeWeaponType weaponType = MeleeWeaponType.Blade;
     public MeleeAttackPrototype attack;
     
     public void SetAttack(AttackManager attackManager, int index)

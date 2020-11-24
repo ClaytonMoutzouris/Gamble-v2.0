@@ -16,7 +16,7 @@ public class World
     {
         WorldType = data.type;
         maps = new List<Map>();
-        if(worldType == WorldType.Hub)
+        if(worldType == WorldType.Ship)
         {
             worldName = "Hub";
 
@@ -39,6 +39,9 @@ public class World
                     break;
                 case MapType.BossMap:
                     maps.Add(MapGenerator.GenerateBossMap(map));
+                    break;
+                case MapType.Ship:
+                    maps.Add(MapGenerator.GenerateShipMap(map));
                     break;
                 case MapType.Hub:
                     maps.Add(MapGenerator.GenerateHubMap(map));

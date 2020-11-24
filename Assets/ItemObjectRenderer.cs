@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class ItemObjectRenderer : EntityRenderer
 {
-    public TMP_Text nameDisplay;
+    public TextMesh nameDisplay;
     public Item item;
 
     protected override void Awake()
     {
         base.Awake();
         nameDisplay.gameObject.SetActive(false);
+        nameDisplay.gameObject.GetComponent<MeshRenderer>().sortingLayerName = "UI";
     }
 
     public void SetItem(Item item)

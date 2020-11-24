@@ -23,5 +23,6 @@ MonoBehaviour:
   baseBonuses: []
   baseEffects: []
   isEquipped: 0
-  damage: 15
+  damage: 10
+  weaponType: 1
   attack: {fileID: 11400000, guid: 2e0367cf1137d0845b04a1fdb63153ef, type: 2}

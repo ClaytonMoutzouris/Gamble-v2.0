@@ -10,8 +10,9 @@ public enum EditorMode
 {
     Tiles,
     Objects,
+    NPC,
     Enemies,
-    Misc
+    Misc,
 }
 
 public class RoomEditor : MonoBehaviour
@@ -26,16 +27,25 @@ public class RoomEditor : MonoBehaviour
     public Dropdown mapLayerDropdown;
     public Dropdown worldTypeDropdown;
 
+    //FeatureDropdowns
+    public List<Dropdown> featureDropdowns;
+    public Dropdown tileTypeDropdown;
+    public Dropdown objectTypeDropdown;
+    public Dropdown npcTypeDropdown;
 
     public Text tilePreview;
     private Color activeColor;
     public EditorMode mode;
     public TileType mPlacedTileType;
-    public List<GameObject> objectPrefabs;
+    public ObjectType mPlaceObjectType;
+    public NPCType mPlaceNPCType;
+
     public int mObjectIndex = 0;
 
     int lastMouseTileX = -1;
     int lastMouseTileY = -1;
+
+    public GameObject selectorIndicator;
 
     void Awake()
     {
@@ -65,6 +75,28 @@ public class RoomEditor : MonoBehaviour
         }
         worldTypeDropdown.AddOptions(edgeOptions);
 
+        edgeOptions.Clear();
+
+        for (int i = 0; i < (int)TileType.Count; i++)
+        {
+            edgeOptions.Add(((TileType)i).ToString());
+        }
+        tileTypeDropdown.AddOptions(edgeOptions);
+
+        edgeOptions.Clear();
+
+        for (int i = 0; i < (int)ObjectType.Count; i++)
+        {
+            edgeOptions.Add(((ObjectType)i).ToString());
+        }
+        objectTypeDropdown.AddOptions(edgeOptions);
+
+        edgeOptions.Clear();
+        for (int i = 0; i < (int)NPCType.Count; i++)
+        {
+            edgeOptions.Add(((NPCType)i).ToString());
+        }
+        npcTypeDropdown.AddOptions(edgeOptions);
     }
 
     void Update()
@@ -86,8 +118,42 @@ public class RoomEditor : MonoBehaviour
     public void ChangeMode(int index)
     {
         mode = (EditorMode)index;
+
+        switch(mode)
+        {
+            case EditorMode.Tiles:
+                objectTypeDropdown.gameObject.SetActive(false);
+                npcTypeDropdown.gameObject.SetActive(false);
+                tileTypeDropdown.gameObject.SetActive(true);
+                break;
+            case EditorMode.Objects:
+                objectTypeDropdown.gameObject.SetActive(true);
+                npcTypeDropdown.gameObject.SetActive(false);
+                tileTypeDropdown.gameObject.SetActive(false);
+                break;
+            case EditorMode.NPC:
+                objectTypeDropdown.gameObject.SetActive(false);
+                tileTypeDropdown.gameObject.SetActive(false);
+                npcTypeDropdown.gameObject.SetActive(true);
+
+                break;
+        }
     }
 
+    public void ChangeTiletype(int index)
+    {
+        mPlacedTileType = (TileType)index;
+    }
+
+    public void ChangeObjecttype(int index)
+    {
+        mPlaceObjectType = (ObjectType)index;
+    }
+
+    public void ChangeNPCtype(int index)
+    {
+        mPlaceNPCType = (NPCType)index;
+    }
 
     public void ChangeRoomType(int index)
     {
@@ -119,6 +185,9 @@ public class RoomEditor : MonoBehaviour
             case EditorMode.Objects:
                 ObjectMode();
                 break;
+            case EditorMode.NPC:
+                NPCMode();
+                break;
             case EditorMode.Enemies:
                 EnemyMode();
                 break;
@@ -140,38 +209,27 @@ public class RoomEditor : MonoBehaviour
         mouseTileX = (int)mousePos.x;
         mouseTileY = (int)mousePos.y;
 
+        if(mouseTileX < 0 || mouseTileX >= mMap.mWidth || mouseTileY < 0 || mouseTileY >= mMap.mHeight)
+        {
+            return;
+        }
+
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            EditorCamera.instance.SetTargetTile(mouseTileX, mouseTileY);
+
+            selectorIndicator.transform.position = mMap.GetMapTilePosition(mouseTileX, mouseTileY);
+        }
+
+
         if (Input.GetKey(KeyCode.Mouse1) || Input.GetKey(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
         {
-
 
             mMap.SetTile(mouseTileX, mouseTileY, mPlacedTileType);
 
         }
 
-        var wheel = Input.GetAxis("Mouse ScrollWheel");
-        if (wheel > 0.05f)
-        {
-
-            if ((int)mPlacedTileType < (int)TileType.Count)
-            {
-                mPlacedTileType += 1;
-            }
-            else
-            {
-                mPlacedTileType = TileType.Empty;
-            }
-
-            tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
-        }
-        else if (wheel < -0.05f)
-        {
-            if ((int)mPlacedTileType > (int)TileType.Empty)
-                mPlacedTileType -= 1;
-            else
-                mPlacedTileType = TileType.Count-1;
-
-            tilePreview.text = "Tiletype: " + mPlacedTileType.ToString();
-        }
+        
     }
 
     void ObjectMode()
@@ -179,39 +237,75 @@ public class RoomEditor : MonoBehaviour
         var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         int mouseTileX, mouseTileY;
-        mMap.GetMapTileAtPoint(mousePosInWorld, out mouseTileX, out mouseTileY);
+        Vector2 mousePos = mMap.GetMapTileAtPoint(mousePosInWorld);
+        mouseTileX = (int)mousePos.x;
+        mouseTileY = (int)mousePos.y;
+
+        if (mouseTileX < 0 || mouseTileX >= mMap.mWidth || mouseTileY < 0 || mouseTileY >= mMap.mHeight)
+        {
+            return;
+        }
+
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            EditorCamera.instance.SetTargetTile(mouseTileX, mouseTileY);
+
+            selectorIndicator.transform.position = mMap.GetMapTilePosition(mouseTileX, mouseTileY);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            //GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
+            //temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
+            mMap.AddObjectEntity(new ObjectData(mouseTileX, mouseTileY, mPlaceObjectType));
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && !EventSystem.current.IsPointerOverGameObject())
         {
-
-            GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
-
-            temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
-
-        }
-
-        var wheel = Input.GetAxis("Mouse ScrollWheel");
-        if (wheel > 0.05f)
-        {
-
-            if ((int)mObjectIndex < (int)objectPrefabs.Count - 1)
-                mObjectIndex += 1;
-            else
-                mObjectIndex = 0;
-
-            tilePreview.text = "Tiletype: " + objectPrefabs[mObjectIndex].name;
-        }
-        else if (wheel < -0.05f)
-        {
-            if ((int)mObjectIndex > 0)
-                mObjectIndex -= 1;
-            else
-                mObjectIndex = objectPrefabs.Count - 1;
-
-            tilePreview.text = "Tiletype: " + objectPrefabs[mObjectIndex].name;
+            //GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
+            //temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
+            mMap.ClearObjectEntity(mouseTileX, mouseTileY);
         }
 
     }
+
+    void NPCMode()
+    {
+        var mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        int mouseTileX, mouseTileY;
+        Vector2 mousePos = mMap.GetMapTileAtPoint(mousePosInWorld);
+        mouseTileX = (int)mousePos.x;
+        mouseTileY = (int)mousePos.y;
+
+        if (mouseTileX < 0 || mouseTileX >= mMap.mWidth || mouseTileY < 0 || mouseTileY >= mMap.mHeight)
+        {
+            return;
+        }
+
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            EditorCamera.instance.SetTargetTile(mouseTileX, mouseTileY);
+
+            selectorIndicator.transform.position = mMap.GetMapTilePosition(mouseTileX, mouseTileY);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            //GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
+            //temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
+            mMap.AddNPCEntity(new NPCData(mouseTileX, mouseTileY, mPlaceNPCType));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            //GameObject temp = Instantiate(objectPrefabs[mObjectIndex]);
+            //temp.transform.position = mMap.GetMapTilePosition(new Vector2i(mouseTileX, mouseTileY));
+            mMap.ClearObjectEntity(mouseTileX, mouseTileY);
+        }
+
+    }
+
 
     void EnemyMode()
     {

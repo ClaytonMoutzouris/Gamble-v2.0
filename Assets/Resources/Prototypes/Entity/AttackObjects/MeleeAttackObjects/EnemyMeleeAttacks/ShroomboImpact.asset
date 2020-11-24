@@ -18,6 +18,7 @@ MonoBehaviour:
   bodySize: {x: 0, y: 0}
   CollidesWith: 
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 7271780829008321723, guid: b8aa635c1c83b9b41b173dc9246bc8bf, type: 3}
@@ -27,8 +28,29 @@ MonoBehaviour:
   crushDamage: 0
   kinematic: 0
   colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
   hitboxSize: {x: 48, y: 16}
   angled: 0
   maxTime: 1
-  sfx: {fileID: 8300000, guid: 626547f26b49ab3489bc4de634699b89, type: 3}
+  spawnSFX: {fileID: 8300000, guid: bd7e60139c17a3e45b22a85d8fb0eff5, type: 3}
+  triggerSFX: {fileID: 0}
+  endSFX: {fileID: 0}
   particleSystem: {fileID: 0}

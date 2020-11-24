@@ -17,21 +17,19 @@ MonoBehaviour:
   mName: Nipper
   bodySize: {x: 10, y: 10}
   CollidesWith: 000000000200000007000000
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 1
   sprite: {fileID: -7727872075991994438, guid: cf8fd46c573a93b4cbf734a5b3a6343d, type: 3}
   sortingLayer: 4
   animationController: {fileID: 9100000, guid: 257f14dccda6475488acd81db0d9b08a, type: 2}
   particleEffects: {fileID: 0}
-  enemyType: 13
-  movementSpeed: 65
-  jumpHeight: 260
-  sightRange: 160
-  health: 20
-  rangedAttacks: []
-  meleeAttacks:
-  - {fileID: 11400000, guid: f015d8b2048b51c40a1fbdc921c31e2e, type: 2}
-  lootTable: {fileID: 11400000, guid: fd6b2ae2aff5fd044b7e15e38e6d328c, type: 2}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -48,3 +46,14 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: 13
+  expValue: 5
+  movementSpeed: 65
+  jumpHeight: 260
+  sightRange: 80
+  health: 20
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: f015d8b2048b51c40a1fbdc921c31e2e, type: 2}
+  lootTable: {fileID: 11400000, guid: fd6b2ae2aff5fd044b7e15e38e6d328c, type: 2}

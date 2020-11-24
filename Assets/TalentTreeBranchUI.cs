@@ -90,7 +90,7 @@ public class TalentTreeBranchUI : MonoBehaviour, ISelectHandler
 
     public string GetTooltip()
     {
-        return treeBranch.ToString();
+        return treeBranch.branchName;
     }
 
 }

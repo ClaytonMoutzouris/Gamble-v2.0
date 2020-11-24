@@ -129,6 +129,8 @@ public class MiniMap : MonoBehaviour
         {
             for (int x = 0; x < mapSizeY; x++)
             {
+                c = Color.black;
+
                 if (x < sizeX && y < sizeY)
                 {
                     switch (tiles[x, y])

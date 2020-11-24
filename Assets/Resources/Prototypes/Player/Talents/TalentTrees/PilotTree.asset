@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983f917a119bbb0418bbaf777ad9f1eb, type: 3}
+  m_Name: PilotTree
+  m_EditorClassIdentifier: 
+  name: Pilot
+  branches:
+  - {fileID: 11400000, guid: eaad51194d55ca94eace1f0bf41ff6c7, type: 2}
+  - {fileID: 11400000, guid: fc37d254d0079864e88b0b8515ca072d, type: 2}
+  - {fileID: 11400000, guid: ce779fb041e7a1e409cf47afb5469712, type: 2}
+  skillPoints: 0

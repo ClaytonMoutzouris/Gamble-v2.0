@@ -11,7 +11,7 @@ public class Enemy : Entity, IHurtable
     public int ExpValue = 5;
     //Behaviour
     //End of Behaviour
-
+    public Nest nestParent = null;
     private Hurtbox hurtBox;
     private Sightbox sight;
     [HideInInspector]
@@ -20,8 +20,6 @@ public class Enemy : Entity, IHurtable
     [SerializeField]
     private Entity target = null;
 
-    [HideInInspector]
-    public Stats mStats;
 
     public Hurtbox HurtBox
     {
@@ -82,7 +80,7 @@ public class Enemy : Entity, IHurtable
     {
 
         prototype = proto;
-
+        ExpValue = proto.expValue;
         mEnemyType = prototype.enemyType;
         mMovingSpeed = proto.movementSpeed;
         jumpHeight = proto.jumpHeight;
@@ -101,9 +99,6 @@ public class Enemy : Entity, IHurtable
 
 
 
-        //Stats
-        mStats = new Stats();
-        mStats.SetStats(prototype.stats);
         ScaleStatsToLevel();
         mHealth = new Health(this, prototype.health);
         
@@ -135,7 +130,6 @@ public class Enemy : Entity, IHurtable
             mStats.GetStat(type).value += WorldManager.instance.NumCompletedWorlds()*2;
         }
 
-        Debug.Log("Enemy Scaled to level " + WorldManager.instance.NumCompletedWorlds());
     }
 
     public override void Spawn(Vector2 spawnPoint)
@@ -150,7 +144,7 @@ public class Enemy : Entity, IHurtable
         sight.UpdatePosition();
 
         //Renderer.SetSprite(prototype.)
-        if(!(this is BossEnemy))
+        if(!(this is BossEnemy) && !(this is EnemyPart))
         {
             EnemyHealthBar temp = GameObject.Instantiate(Resources.Load<EnemyHealthBar>("Prefabs/UI/EnemyHealthBar"), Renderer.transform) as EnemyHealthBar;
             temp.transform.localPosition = new Vector3(0, Body.mAABB.HalfSizeY * 2 + 20);
@@ -192,6 +186,7 @@ public class Enemy : Entity, IHurtable
             return;
         }
 
+
         CrewManager.instance.GainPartyEXP(ExpValue + ExpValue* WorldManager.instance.NumCompletedWorlds());
         base.Die();
         foreach(Attack attack in mAttackManager.meleeAttacks)
@@ -226,8 +221,10 @@ public class Enemy : Entity, IHurtable
     {
         CollisionManager.RemoveObjectFromAreas(HurtBox);
         CollisionManager.RemoveObjectFromAreas(sight);
-
-
+        if (nestParent != null)
+        {
+            nestParent.spawns.Remove(this);
+        }
         base.ActuallyDie();
     }
 
@@ -244,6 +241,9 @@ public class Enemy : Entity, IHurtable
             ShowFloatingText("Missed", Color.blue);
             return;
         }
+        
+
+
 
         //Debug.Log("Dude is getting hurt");
         if (Hostility == Hostility.Neutral)
@@ -257,15 +257,37 @@ public class Enemy : Entity, IHurtable
         }
 
         int damage = attack.GetDamage();
+        
         //Take 5% less damage for each point of defense
         //Limit defense to 80% reduction
         damage -= (int)(damage * Mathf.Min(0.8f, (0.05f*mStats.GetStat(StatType.Defense).GetValue())));
-        if (damage < 0)
+        if (damage <= 0)
         {
             damage = 0;
         }
-        mHealth.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.white);
+        else
+        {
+            //Crits
+            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            {
+                damage *= 2;
+                ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
+            }
+            else
+            {
+                ShowFloatingText(damage.ToString(), Color.white);
+            }
+
+            mHealth.LoseHP(damage);
+
+            foreach (Ability effect in abilities)
+            {
+                effect.OnDamagedTrigger(attack);
+            }
+        }
+
+
+
 
         if (mHealth.currentHealth == 0)
         {
@@ -276,7 +298,7 @@ public class Enemy : Entity, IHurtable
 
     public float GetMovementSpeed()
     {
-        return mMovingSpeed + 10 * mStats.GetStat(StatType.Speed).GetValue();
+        return mMovingSpeed + 1 * mStats.GetStat(StatType.Speed).GetValue();
     }
 
     public Entity GetEntity()

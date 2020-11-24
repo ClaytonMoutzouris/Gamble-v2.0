@@ -115,7 +115,7 @@ public class TentacleBoss : BossEnemy
         if (Target != null)
         {
             //Replace this with pathfinding to the target
-            Vector2 dir = ((Vector2)Target.Position - Position).normalized;
+            Vector2 dir = (Target.Body.mAABB.Center - (Body.mAABB.Center)).normalized;
 
             if (mAttackManager.rangedAttacks[0].Activate(dir, Position))
             {
@@ -131,7 +131,7 @@ public class TentacleBoss : BossEnemy
         if (Target != null)
         {
             int randomX = Random.Range(3, 22);
-            if (mAttackManager.rangedAttacks[1].Activate(Vector2.up, Map.GetMapTilePosition(randomX, 5)))
+            if (mAttackManager.rangedAttacks[1].Activate(Vector2.up, Map.GetMapTilePosition(randomX, 1)))
             {
                 shotcount++;
 

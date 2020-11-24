@@ -12,6 +12,8 @@ public class Chest : Entity, IInteractable {
     public bool mOpen = false;
     public bool locked = false;
     public LootTable lootTable;
+    private string interactLabel = "<Open>";
+
 
     public Chest(ChestPrototype proto) : base(proto)
     {
@@ -24,6 +26,7 @@ public class Chest : Entity, IInteractable {
         this.lootTable = ScriptableObject.Instantiate(proto.lootTable);
     }
 
+    public string InteractLabel { get => interactLabel; set => interactLabel = value; }
 
     public override void EntityUpdate()
     {
@@ -56,6 +59,7 @@ public class Chest : Entity, IInteractable {
         } else
         {
             mOpen = true;
+            SoundManager.instance.PlaySingle(prototype.interactSFX[0]);
             Renderer.SetAnimState("ChestOpen");
 
             ItemObject temp;

@@ -17,12 +17,37 @@ MonoBehaviour:
   mName: Door
   bodySize: {x: 16, y: 16}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: 0}
   sortingLayer: 2
   animationController: {fileID: 0}
   particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX:
+  - {fileID: 8300000, guid: eda63bdfee033cb4baa358b11454a64c, type: 3}
   spritesForWorlds:
   - {fileID: 2867020483019585006, guid: ea5b57bbbe4a07a4aba2ae0274f84d57, type: 3}
   - {fileID: 21300012, guid: 1138ab5d8f69519419b363c51f819c91, type: 3}

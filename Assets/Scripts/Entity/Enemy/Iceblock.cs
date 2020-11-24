@@ -29,11 +29,6 @@ public class Iceblock : Entity, IHurtable
         base.ActuallyDie();
     }
 
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
-
     public override void Die()
     {
         base.Die();
@@ -85,12 +80,15 @@ public class Iceblock : Entity, IHurtable
 
         int damage = attack.GetDamage();
 
-        if (damage < 0)
+        if (damage <= 0)
         {
             damage = 0;
+        } else
+        {
+            health.LoseHP(damage);
+            ShowFloatingText(damage.ToString(), Color.white);
         }
-        health.LoseHP(damage);
-        ShowFloatingText(damage.ToString(), Color.white);
+
 
         if (health.currentHealth == 0)
         {

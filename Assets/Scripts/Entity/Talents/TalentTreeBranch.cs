@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //This should be a scriptable object
-[System.Serializable]
-public class TalentTreeBranch
+public class TalentTreeBranch : ScriptableObject
 {
+    public string branchName;
     public List<Talent> talents;
     int learned = 0;
-    int branchIndex;
     TalentTree talentTree;
 
     public TalentTreeBranch()

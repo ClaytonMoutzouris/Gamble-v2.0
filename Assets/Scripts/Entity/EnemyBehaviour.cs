@@ -31,23 +31,24 @@ public static class EnemyBehaviour
             {
                 if (entity is IHurtable && entity.hostility != enemy.hostility && entity.mEntityType != EntityType.Obstacle && entity.mEntityType != EntityType.Object)
                 {
-                    if (entity is Player player)
+                    if (entity is Player player && player.IsDead)
                     {
-                        if(player.IsDead)
-                        {
-                            continue;
-                        }
+                        continue;    
                     }
 
-
                     enemy.Target = entity;
+                    return;
                 }
+
+
                 
             }
         } else
         {
             enemy.Target = null;
         }
+
+
     }
 
     public static bool TargetInRange(Enemy enemy, Entity target, float range)

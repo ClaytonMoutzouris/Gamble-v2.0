@@ -209,23 +209,7 @@ public class GameManager : MonoBehaviour
 
     public void GlobalPlayerInputs()
     {
-        foreach (Player p in CrewManager.instance.players)
-        {
-            if (p != null)
-            {
-
-                if (p.Input.playerButtonInput[(int)ButtonInput.ZoomIn])
-                {
-                    GameCamera.instance.ZoomIn();
-                }
-
-                if (p.Input.playerButtonInput[(int)ButtonInput.ZoomOut])
-                {
-                    GameCamera.instance.ZoomOut();
-
-                }
-            }
-        }
+        //I havent put anything here yet
 
     }
 

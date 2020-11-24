@@ -5,7 +5,8 @@ using UnityEngine;
 public class Nipper : Enemy
 {
 
-
+    int baseMovementSpeed;
+    int baseJumpHeight;
 
     public Nipper(EnemyPrototype proto) : base(proto)
     {
@@ -13,7 +14,8 @@ public class Nipper : Enemy
         Body.mIsKinematic = false;
         Body.mIgnoresGravity = true;
         Body.mIgnoresOneWay = true;
-
+        baseMovementSpeed = proto.movementSpeed;
+        baseJumpHeight = proto.jumpHeight;
         mEnemyState = EnemyState.Moving;
     }
 
@@ -27,11 +29,15 @@ public class Nipper : Enemy
         if(Body.mPS.inWater)
         {
             Body.mIgnoresGravity = true;
+            mMovingSpeed = baseMovementSpeed;
+            jumpHeight = baseJumpHeight;
 
         }
         else
         {
             Body.mIgnoresGravity = false;
+            mMovingSpeed = baseMovementSpeed/2;
+            jumpHeight = baseJumpHeight/2;
         }
 
         switch (mEnemyState)
@@ -54,7 +60,6 @@ public class Nipper : Enemy
 
                         Body.mSpeed = ((Vector2)Target.Position - Position).normalized * GetMovementSpeed();
 
-                       
                     } else
                     {
                         Body.mSpeed.x = (int)mDirection * GetMovementSpeed();
@@ -65,7 +70,7 @@ public class Nipper : Enemy
 
                     if (Vector2.Distance(Position, Target.Position) < 64 && Target.Position.y > Position.y)
                     {
-                        EnemyBehaviour.Jump(this, prototype.jumpHeight, dir);
+                        EnemyBehaviour.Jump(this, jumpHeight, dir);
                     }
                     //Replace this with pathfinding to the target
 

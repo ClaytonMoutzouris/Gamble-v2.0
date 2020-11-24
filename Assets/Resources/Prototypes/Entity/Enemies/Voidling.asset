@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2dba9576f24fe47b83bc21605237db, type: 3}
+  m_Name: Voidling
+  m_EditorClassIdentifier: 
+  entityType: 1
+  hostility: 2
+  mName: Voidling
+  bodySize: {x: 12, y: 5}
+  bodyOffset: {x: 0, y: 0}
+  CollidesWith: 000000000300000002000000
+  abilityFlags: 
+  baseAbilities: []
+  ignoreTilemap: 1
+  ignoreGravity: 1
+  sprite: {fileID: 1782762558751276138, guid: 34fe0a45136d91d46adf3cc95d09a3ee, type: 3}
+  sortingLayer: 4
+  animationController: {fileID: 9100000, guid: 0494a53780102f34fb8a49d48ae3d7e1, type: 2}
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  colorNodes: []
+  baseGravityMultiplier: 1
+  stats:
+  - type: 0
+    value: 0
+    bonuses: []
+  - type: 1
+    value: 0
+    bonuses: []
+  - type: 2
+    value: 0
+    bonuses: []
+  - type: 3
+    value: 0
+    bonuses: []
+  - type: 4
+    value: 0
+    bonuses: []
+  interactSFX: []
+  enemyType: 16
+  expValue: 0
+  movementSpeed: 100
+  jumpHeight: 120
+  sightRange: 320
+  health: 20
+  rangedAttacks: []
+  meleeAttacks:
+  - {fileID: 11400000, guid: 213185252446f58459135f5d9ade5a19, type: 2}
+  lootTable: {fileID: 0}

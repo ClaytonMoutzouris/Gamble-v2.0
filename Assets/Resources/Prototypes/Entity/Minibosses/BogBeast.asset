@@ -18,6 +18,7 @@ MonoBehaviour:
   bodySize: {x: 32, y: 32}
   CollidesWith: 000000000200000007000000
   abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 0
   ignoreGravity: 0
   sprite: {fileID: -4114711218757776134, guid: 19b6bc4e6c744354e87dac7f6d243562, type: 3}
@@ -27,15 +28,8 @@ MonoBehaviour:
   crushDamage: 40
   kinematic: 0
   colorPallete: []
-  enemyType: -2
-  movementSpeed: 20
-  jumpHeight: 0
-  sightRange: 320
-  health: 200
-  rangedAttacks:
-  - {fileID: 11400000, guid: 2ed0ef0f3bdd2694b82450d76c9071e0, type: 2}
-  meleeAttacks: []
-  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
+  colorNodes: []
+  baseGravityMultiplier: 1
   stats:
   - type: 0
     value: 0
@@ -52,4 +46,15 @@ MonoBehaviour:
   - type: 4
     value: 0
     bonuses: []
+  interactSFX: []
+  enemyType: -2
+  expValue: 5
+  movementSpeed: 20
+  jumpHeight: 0
+  sightRange: 160
+  health: 200
+  rangedAttacks:
+  - {fileID: 11400000, guid: 2ed0ef0f3bdd2694b82450d76c9071e0, type: 2}
+  meleeAttacks: []
+  lootTable: {fileID: 11400000, guid: aacd05783b8457142bb2f37c78bcc95f, type: 2}
   minibossType: 0

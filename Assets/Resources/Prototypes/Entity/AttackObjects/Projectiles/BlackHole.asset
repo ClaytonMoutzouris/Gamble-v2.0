@@ -17,12 +17,18 @@ MonoBehaviour:
   mName: Black Hole
   bodySize: {x: 12, y: 12}
   CollidesWith: 
+  abilityFlags: 
+  baseAbilities: []
   ignoreTilemap: 1
   ignoreGravity: 1
   sprite: {fileID: 0}
   sortingLayer: 0
   animationController: {fileID: 0}
-  effects: []
+  particleEffects: {fileID: 0}
+  crushDamage: 0
+  kinematic: 0
+  colorPallete: []
+  baseGravityMultiplier: 1
   hitboxSize: {x: 12, y: 12}
   angled: 0
   maxTime: 5
@@ -31,4 +37,6 @@ MonoBehaviour:
     type: 3}
   pierce: 1
   collidesWithTiles: 0
+  bouncy: 0
   speed: 0
+  frameDelay: 0
