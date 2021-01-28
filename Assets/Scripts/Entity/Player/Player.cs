@@ -22,7 +22,6 @@ public class Player : Entity, IHurtable
 
     public float mTimeToExit = 1;
     public HealthBar mHealthBar;
-    public bool mCannotClimb = false;
     private PlayerInventory inventory;
     private PlayerEquipment equipment;
     private PlayerInputController input;
@@ -40,6 +39,7 @@ public class Player : Entity, IHurtable
     public TalentTree talentTree;
     public Companion companion;
     public CompanionManager companionManager;
+    public List<WeaponAttributeBonus> weaponBonuses;
 
     public AudioClip mHitWallSfx;
     public AudioClip mJumpSfx;
@@ -53,6 +53,12 @@ public class Player : Entity, IHurtable
     public float rollCooldown = 0.25f;
     public float rollCooldownTimestamp = 0;
     public float rollSpeed = 180;
+    public float climbCooldown = 0.25f;
+    public float climbCooldownTimestamp = 0;
+    public float beamUpTime = 2.5f;
+    public float beamUpTimestamp = 0;
+
+    GameObject warpingEffect = null;
 
     public int quickUseIndex = 0;
 
@@ -192,6 +198,7 @@ public class Player : Entity, IHurtable
         Inventory = new PlayerInventory(this);
         Equipment = new PlayerEquipment(this);
         abilities = new List<Ability>();
+        weaponBonuses = new List<WeaponAttributeBonus>();
         PlayerUIPanels.instance.playerPanels[mPlayerIndex].uiPlayerTab.player = this;
 
         mWalkSpeed = prototype.walkSpeed;
@@ -279,7 +286,7 @@ public class Player : Entity, IHurtable
         {
             waterReduction = 0.8f;
         }
-        return (mWalkSpeed + 1*mStats.GetStat(StatType.Speed).GetValue())*waterReduction;
+        return (mWalkSpeed + mMovingSpeed * 0.01f * mStats.GetSecondaryStat(SecondaryStatType.MoveSpeedBonus).GetValue()) *waterReduction;
     }
 
     public void HandlePlayerPanelInput()
@@ -300,12 +307,14 @@ public class Player : Entity, IHurtable
         {
             if (Input.playerButtonInput[(int)ButtonInput.InventoryDrop] && !Input.previousButtonInput[(int)ButtonInput.InventoryDrop])
             {
+                if(Inventory.inventoryUI.currentSlot != null)
                 Inventory.slots[Inventory.inventoryUI.currentSlot.slotID].DropItem();
             }
 
             if (Input.playerButtonInput[(int)ButtonInput.InventoryMove] && !Input.previousButtonInput[(int)ButtonInput.InventoryMove])
             {
-                Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
+                if (Inventory.inventoryUI.currentSlot != null)
+                    Inventory.inventoryUI.MoveItem(Inventory.inventoryUI.currentSlot.slotID);
             }
 
 
@@ -466,11 +475,6 @@ public class Player : Entity, IHurtable
         }
         
 
-        if (mCannotClimb && !Body.mPS.onLadder && !Input.playerButtonInput[(int)ButtonInput.Jump])
-        {
-            mCannotClimb = false;
-        }
-
         //playerPanel.toolbeltUI.UpdateQuickUseNode();
         if (Input.playerButtonInput[(int)ButtonInput.QuickHeal] && !Input.previousButtonInput[(int)ButtonInput.QuickHeal])
         {
@@ -562,35 +566,41 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0.5f)
                 {
-                    if (Body.mPS.onLadder)
+                    if (Body.mPS.onLadder && ClimbLadder())
                     {
-                        Body.mSpeed = Vector2.zero;
-                        Body.mPS.isClimbing = true;
-                        movementState = MovementState.Climb;
-                        Body.mIgnoresGravity = true;
-
                         break;
-                    }
-
-                    if (Body.mPS.onDoor)
-                    {
-                        mExitDoorTimer += Time.deltaTime;
-                        if (mExitDoorTimer > Constants.exitDoorTime)
-                        {
-                            //load map
-                            Game.mMapChangeFlag = true;
-                            mExitDoorTimer = 0;
-                        }
-
                     }
 
 
                 }
-                else
+
+                //Check to see if the player is trying to pass through a one way
+                if (Input.playerButtonInput[(int)ButtonInput.BeamUp] && Map.mCurrentMap.Data.mapType == MapType.World)
                 {
-                    mExitDoorTimer = 0;
+                    if(!Input.previousButtonInput[(int)ButtonInput.BeamUp])
+                    {
+                        beamUpTimestamp = Time.time;
+                        warpingEffect = Renderer.AddVisualEffect(Resources.Load<ParticleSystem>("Prefabs/ParticleEffects/WarpingEffect"), Body.mOffset);
+                    }
+
+
+                    if(Time.time > beamUpTimestamp + beamUpTime)
+                    {
+                        GameManager.instance.TravelToShip();
+
+                        break;
+                    }
+
+                } else
+                {
+                    if(warpingEffect != null)
+                    {
+                        Renderer.RemoveVisualEffect(warpingEffect);
+                        warpingEffect = null;
+                    }
+
                 }
 
                 break;
@@ -777,14 +787,10 @@ public class Player : Entity, IHurtable
                 }
 
 
-                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0 && Body.mPS.onLadder)
+                if (Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0.5f && Body.mPS.onLadder)
                 {
-                    Body.mSpeed = Vector2.zero;
-                    Body.mPS.isClimbing = true;
-                    movementState = MovementState.Climb;
-                    Body.mIgnoresGravity = true;
+                    ClimbLadder();
 
-                    break;
                 }
 
                 break;
@@ -817,9 +823,8 @@ public class Player : Entity, IHurtable
                 }
 
                 // we can climb ladders from this state
-                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
+                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0.5f || Input.playerAxisInput[(int)AxisInput.LeftStickY] < -0.5f) && Body.mPS.onLadder && ClimbLadder())
                 {
-                    movementState = MovementState.Climb;
                     break;
                 }
 
@@ -951,7 +956,6 @@ public class Player : Entity, IHurtable
 
                 break;
             case MovementState.Climb:
-                mCannotClimb = true;
                 /*
                                 //Update the animator
                                 if (Mathf.Abs(body.mSpeed.y) > 0)
@@ -972,14 +976,14 @@ public class Player : Entity, IHurtable
 
                 if (!Body.mPS.onLadder)
                 {
-                    Body.mPS.isClimbing = false;
-                    movementState = MovementState.Stand;
+
+                    StopClimb();
                     break;
                 }
 
                 if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
                 {
-                    Body.mPS.isClimbing = false;
+                    StopClimb();
                     Roll();
                     break;
                 }
@@ -989,7 +993,7 @@ public class Player : Entity, IHurtable
                 {
                     //the speed is positive so we don't have to worry about hero grabbing an edge
                     //right after he jumps because he doesn't grab if speed.y > 0
-                    Body.mPS.isClimbing = false;
+                    StopClimb();
                     if (Input.playerAxisInput[(int)AxisInput.LeftStickY] >= 0)
                     {
                         Jump();
@@ -1006,8 +1010,7 @@ public class Player : Entity, IHurtable
                 {
                     if (Body.mPS.pushesBottom)
                     {
-                        Body.mPS.isClimbing = false;
-                        movementState = MovementState.Stand;
+                        StopClimb();
                     }
                     else
                     {
@@ -1037,7 +1040,6 @@ public class Player : Entity, IHurtable
                 Body.mIgnoresGravity = true;
                 Body.mPS.tmpIgnoresOneWay = true;
 
-                mCannotClimb = true;
 
                 if (Input.playerButtonInput[(int)ButtonInput.Roll] && !Input.previousButtonInput[(int)ButtonInput.Roll])
                 {
@@ -1130,9 +1132,8 @@ public class Player : Entity, IHurtable
 
 
                 // we can climb ladders while swimming
-                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] != 0) && Body.mPS.onLadder && !mCannotClimb)
+                if ((Input.playerAxisInput[(int)AxisInput.LeftStickY] > 0.5f || Input.playerAxisInput[(int)AxisInput.LeftStickY] < -0.5f) && Body.mPS.onLadder && ClimbLadder())
                 {
-                    movementState = MovementState.Climb;
                     break;
                 }
 
@@ -1271,7 +1272,13 @@ public class Player : Entity, IHurtable
 
         if (Input.playerButtonInput[(int)ButtonInput.MeleeAttack] && !Input.previousButtonInput[(int)ButtonInput.MeleeAttack])
         {
-            AttackManager.meleeAttacks[0].Activate();
+            //AttackManager.meleeAttacks[0].Activate();
+            if (Equipment.GetSlot(EquipmentSlotType.Offhand).GetContents() is MeleeWeapon weapon)
+            {
+                weapon.Attack();
+                //((PlayerRenderer)Renderer).UpdateAmmo(weapon);
+
+            }
         }
 
         Vector2 aim;
@@ -1292,7 +1299,7 @@ public class Player : Entity, IHurtable
 
             if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon weapon)
             {
-                weapon.Fire(this);
+                weapon.Attack();
                 //((PlayerRenderer)Renderer).UpdateAmmo(weapon);
 
             }
@@ -1428,10 +1435,24 @@ public class Player : Entity, IHurtable
 
     }
 
-    public void ClimbLadder()
+    public bool ClimbLadder()
     {
+        if (Time.time < climbCooldownTimestamp + climbCooldown)
+        {
+            return false;
+        }
         Body.mPS.isClimbing = true;
         movementState = MovementState.Climb;
+        Body.mSpeed = Vector2.zero;
+        Body.mIgnoresGravity = true;
+        return true;
+    }
+
+    public void StopClimb()
+    {
+        climbCooldownTimestamp = Time.time;
+        Body.mPS.isClimbing = false;
+        movementState = MovementState.Stand;
     }
 
     public bool TryGrabLedge()
@@ -1655,16 +1676,16 @@ public class Player : Entity, IHurtable
 
     public void GetHurt(Attack attack)
     {
-        if(Random.Range(0, 100) < 5 + mStats.GetStat(StatType.Luck).value)
+        if(Random.Range(0, 100) < 5 + mStats.GetSecondaryStat(SecondaryStatType.DodgeChance).GetValue())
         {
-            ShowFloatingText("Missed", Color.blue);
+            ShowFloatingText("Missed", Color.grey);
             return;
         }
 
         int damage = attack.GetDamage();
         //Take 5% less damage for each point of defense
         //Limit defense to 80% reduction
-        damage -= (int)(damage * Mathf.Min(0.8f, (0.05f * mStats.GetStat(StatType.Defense).GetValue())));
+        damage -= (int)(damage * Mathf.Min(0.8f, 0.01f*mStats.GetSecondaryStat(SecondaryStatType.DamageReduction).GetValue()));
 
         if (damage <= 0)
         {
@@ -1673,7 +1694,7 @@ public class Player : Entity, IHurtable
         else
         {
             //Crits
-            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            if (attack.mEntity != null && Random.Range(0, 100) < attack.mEntity.mStats.GetSecondaryStat(SecondaryStatType.CritChance).GetValue())
             {
                 damage *= 2;
                 ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
@@ -1868,7 +1889,7 @@ public class Player : Entity, IHurtable
 
         if(slots.Count <= 0)
         {
-            playerPanel.toolbeltUI.UpdateQuickUseNode(null);
+            playerPanel.toolbeltUI.UpdateQuickUseNode(null, 0);
             return;
         }
 
@@ -1879,7 +1900,7 @@ public class Player : Entity, IHurtable
 
         if (inventory.GetQuickuseSlots()[quickUseIndex].item is ConsumableItem consumable)
         {
-            playerPanel.toolbeltUI.UpdateQuickUseNode(consumable);
+            playerPanel.toolbeltUI.UpdateQuickUseNode(consumable, inventory.GetQuickuseSlots()[quickUseIndex].amount);
         }
     }
 
@@ -1893,15 +1914,49 @@ public class Player : Entity, IHurtable
             return;
         }
 
-
-
         if (slots[quickUseIndex].item is ConsumableItem consumable && consumable.Use(this))
         {
             slots[quickUseIndex].GetOneItem();
         }
 
     }
- 
+
+    public void AddWeaponBonus(WeaponAttributeBonus bonus)
+    {
+        //This null checks right?
+        if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon ranged)
+        {
+            ranged.attributes.AddBonus(bonus);
+
+        }
+
+        if (Equipment.GetSlot(EquipmentSlotType.Offhand).GetContents() is MeleeWeapon melee)
+        {
+            melee.attributes.AddBonus(bonus);
+
+        }
+
+        weaponBonuses.Add(bonus);
+    }
+
+    public void RemoveWeaponBonus(WeaponAttributeBonus bonus)
+    {
+        //This null checks right?
+        if (Equipment.GetSlot(EquipmentSlotType.Mainhand).GetContents() is RangedWeapon ranged)
+        {
+            ranged.attributes.RemoveBonus(bonus);
+
+        }
+
+        if (Equipment.GetSlot(EquipmentSlotType.Offhand).GetContents() is MeleeWeapon melee)
+        {
+            melee.attributes.RemoveBonus(bonus);
+
+        }
+
+        weaponBonuses.Remove(bonus);
+    }
+
     public Entity GetEntity()
     {
         return this;

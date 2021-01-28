@@ -6,33 +6,33 @@ using UnityEngine.UI;
 public class PlayerAmmoDisplay : MonoBehaviour
 {
     public List<AmmoIconObject> ammoObjects;
-    AmmoType ammoType;
+    WeaponClassType ammoType;
     public GridLayoutGroup layout;
     public List<Sprite> ammoSprites;
     public Sprite currentIcon;
     public AmmoIconObject prefab;
     public FuelDisplay fuelDisplay;
 
-    public void SetAmmoType(AmmoType type)
+    public void SetAmmoType(WeaponClassType type)
     {
         ammoType = type;
         switch (ammoType)
         {
-            case AmmoType.Pistol:
+            case WeaponClassType.Pistol:
                 layout.cellSize = new Vector2(5, 5);
                 layout.spacing = new Vector2(0,0);
                 currentIcon = ammoSprites[0];
                 fuelDisplay.gameObject.SetActive(false);
 
                 break;
-            case AmmoType.Launcher:
+            case WeaponClassType.Launcher:
                 currentIcon = ammoSprites[1];
                 layout.cellSize = new Vector2(5, 5);
                 fuelDisplay.gameObject.SetActive(false);
                 layout.spacing = new Vector2(0, 0);
 
                 break;
-            case AmmoType.Automatic:
+            case WeaponClassType.Automatic:
                 layout.cellSize = new Vector2(1, 5);
                 layout.spacing = new Vector2(1, 0);
 
@@ -40,16 +40,16 @@ public class PlayerAmmoDisplay : MonoBehaviour
                 fuelDisplay.gameObject.SetActive(false);
 
                 break;
-            case AmmoType.Thrower:
+            case WeaponClassType.Thrower:
                 currentIcon = null;
                 fuelDisplay.gameObject.SetActive(true);
 
                 break;
-            case AmmoType.Charge:
+            case WeaponClassType.Charge:
                 currentIcon = null;
                 fuelDisplay.gameObject.SetActive(false);
                 break;
-            case AmmoType.Shotgun:
+            case WeaponClassType.Shotgun:
                 layout.spacing = new Vector2(0, 0);
                 currentIcon = ammoSprites[3];
                 layout.cellSize = new Vector2(5, 5);
@@ -73,7 +73,7 @@ public class PlayerAmmoDisplay : MonoBehaviour
 
         ammoObjects.Clear();
 
-        if (ammoType != AmmoType.Thrower)
+        if (ammoType != WeaponClassType.Thrower)
         {
             for (int i = 0; i < weapon.ammunitionCount; i++)
             {
@@ -81,7 +81,7 @@ public class PlayerAmmoDisplay : MonoBehaviour
                 temp.icon.sprite = currentIcon;
                 ammoObjects.Add(temp);
             }
-        } else if(ammoType == AmmoType.Thrower)
+        } else if(ammoType == WeaponClassType.Thrower)
         {
             fuelDisplay.SetFuel(weapon);
         }

@@ -10,6 +10,8 @@ public class Talent : ScriptableObject
     public string description;
     public List<Ability> abilities;
     public List<StatBonus> statBonuses;
+    public List<SecondaryStatBonus> secondaryStatBonuses;
+    public List<WeaponAttributeBonus> weaponBonuses;
     public List<Item> bonusItems;
     public Sprite icon;
     public bool repeatable = false;
@@ -39,7 +41,14 @@ public class Talent : ScriptableObject
         }
 
 
-        player.mStats.AddBonuses(statBonuses);
+        player.mStats.AddPrimaryBonuses(statBonuses);
+        player.mStats.AddSecondaryBonuses(secondaryStatBonuses);
+
+        foreach (WeaponAttributeBonus weaponBonus in weaponBonuses)
+        {
+            player.AddWeaponBonus(weaponBonus);
+        }
+        
         player.Health.UpdateHealth();
 
         if(!fromLoad)

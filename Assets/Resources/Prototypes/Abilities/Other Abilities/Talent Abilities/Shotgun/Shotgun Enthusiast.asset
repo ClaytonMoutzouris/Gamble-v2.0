@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Increases ammo capacity
   weaponClass: 5
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 0
     type: 2
     bonusValue: 2

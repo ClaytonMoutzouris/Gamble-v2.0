@@ -7,6 +7,6 @@ public class FuelDisplay : MonoBehaviour
     
     public void SetFuel(RangedWeapon weapon)
     {
-        transform.localScale = new Vector3(((float)weapon.ammunitionCount/(float)weapon.attributes.GetAttribute(RangedWeaponAttributesType.AmmoCapacity).GetValue()), 1, 1);
+        transform.localScale = new Vector3(((float)weapon.ammunitionCount/(float)weapon.attributes.GetAttribute(WeaponAttributesType.AmmoCapacity).GetValue()), 1, 1);
     }
 }

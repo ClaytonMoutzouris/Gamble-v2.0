@@ -236,9 +236,9 @@ public class Enemy : Entity, IHurtable
 
     public virtual void GetHurt(Attack attack)
     {
-        if (Random.Range(0, 100) < 5 + mStats.GetStat(StatType.Luck).value)
+        if (Random.Range(0, 100) < 5 + mStats.GetSecondaryStat(SecondaryStatType.DodgeChance).GetValue())
         {
-            ShowFloatingText("Missed", Color.blue);
+            ShowFloatingText("Missed", Color.grey);
             return;
         }
         
@@ -257,10 +257,11 @@ public class Enemy : Entity, IHurtable
         }
 
         int damage = attack.GetDamage();
-        
+
         //Take 5% less damage for each point of defense
         //Limit defense to 80% reduction
-        damage -= (int)(damage * Mathf.Min(0.8f, (0.05f*mStats.GetStat(StatType.Defense).GetValue())));
+        damage -= (int)(damage * Mathf.Min(0.8f, 0.01f * mStats.GetSecondaryStat(SecondaryStatType.DamageReduction).GetValue()));
+
         if (damage <= 0)
         {
             damage = 0;
@@ -268,14 +269,14 @@ public class Enemy : Entity, IHurtable
         else
         {
             //Crits
-            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            if (attack.mEntity != null && Random.Range(0, 100) < attack.mEntity.mStats.GetSecondaryStat(SecondaryStatType.CritChance).GetValue())
             {
                 damage *= 2;
                 ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
             }
             else
             {
-                ShowFloatingText(damage.ToString(), Color.white);
+                ShowFloatingText(damage.ToString(), attack.GetColorForDamageType());
             }
 
             mHealth.LoseHP(damage);
@@ -298,7 +299,7 @@ public class Enemy : Entity, IHurtable
 
     public float GetMovementSpeed()
     {
-        return mMovingSpeed + 1 * mStats.GetStat(StatType.Speed).GetValue();
+        return mMovingSpeed + mMovingSpeed * 0.01f * mStats.GetSecondaryStat(SecondaryStatType.MoveSpeedBonus).GetValue();
     }
 
     public Entity GetEntity()

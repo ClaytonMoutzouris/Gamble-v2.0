@@ -10,6 +10,7 @@ public abstract class AttackPrototype : ScriptableObject
     public int startUpFrames;
     public Vector2 offset = new Vector2(0,0);
     public int damage;
+    public DamageType damageType;
 
     public virtual string GetToolTip()
     {

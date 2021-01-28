@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class AbilityEditor
 {
+    [MenuItem("Assets/Create/Ability/AbilityTable")]
+    public static void CreateBaseAbilityTableAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<AbilityTable>();
+    }
 
     [MenuItem("Assets/Create/Ability/StatusOnHit")]
     public static void CreateBaseStatusOnHitAsset()
@@ -58,6 +63,12 @@ public class AbilityEditor
         ScriptableObjectUtility.CreateAsset<StatBuff>();
     }
 
+    [MenuItem("Assets/Create/Ability/SecondaryStatBuff")]
+    public static void CreateBaseSecondaryStatBuffAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<SecondaryStatBuff>();
+    }
+
     [MenuItem("Assets/Create/Ability/ChestFinder")]
     public static void CreateBaseChestFinderAsset()
     {
@@ -103,6 +114,6 @@ public class AbilityEditor
     [MenuItem("Assets/Create/Ability/RangedWeaponBuff")]
     public static void CreateBaseRangedWeaponBuffAsset()
     {
-        ScriptableObjectUtility.CreateAsset<RangedWeaponBuff>();
+        ScriptableObjectUtility.CreateAsset<WeaponBuff>();
     }
 }

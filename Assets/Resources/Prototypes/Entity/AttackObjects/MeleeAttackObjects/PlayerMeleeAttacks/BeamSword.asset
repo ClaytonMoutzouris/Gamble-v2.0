@@ -16,6 +16,7 @@ MonoBehaviour:
   hostility: 0
   mName: SwordAttack
   bodySize: {x: 0, y: 0}
+  bodyOffset: {x: 0, y: 0}
   CollidesWith: 
   abilityFlags: 
   baseAbilities: []

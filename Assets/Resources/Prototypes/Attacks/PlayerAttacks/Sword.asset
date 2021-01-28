@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   duration: 30
-  cooldown: 0.5
+  cooldown: 0.1
   startUpFrames: 0
   offset: {x: 8, y: 0}
-  animationController: {fileID: 9100000, guid: 8b8b2105bc89a414aa46ad2a3980b7f4, type: 2}
   damage: 10
-  abilities: 
-  sfx: {fileID: 8300000, guid: 7989b1b217a36e14e852f26f21562927, type: 3}
+  damageType: 3
   meleeObjectPrototype: {fileID: 11400000, guid: fdc20514e4fdb4a46a74a42db1e16638,
     type: 2}

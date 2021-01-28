@@ -7,11 +7,13 @@ public static class AbilityDatabase
 
     static Ability[] mAbilityDatabase;
     static Ability[] mItemAbilityDatabase;
+    static AbilityTable[] mAbilityTables;
 
     public static bool InitializeDatabase()
     {
         mAbilityDatabase = Resources.LoadAll<Ability>("Prototypes/Abilities");
         mItemAbilityDatabase = Resources.LoadAll<Ability>("Prototypes/Abilities/Item Abilities");
+        mAbilityTables = Resources.LoadAll<AbilityTable>("Prototypes/Abilities/AbilityTables");
         return true;
     }
 
@@ -32,19 +34,27 @@ public static class AbilityDatabase
 
     public static Ability GetRandomAbility()
     {
-        Ability item = ScriptableObject.Instantiate(mAbilityDatabase[Random.Range(0, mAbilityDatabase.Length)]);
-        return item;
+        Ability ability = ScriptableObject.Instantiate(mAbilityDatabase[Random.Range(0, mAbilityDatabase.Length)]);
+        return ability;
     }
 
-    public static Ability GetItemAbility()
+    public static Ability GetItemAbility(Equipment item)
     {
-        Ability item = ScriptableObject.Instantiate(mItemAbilityDatabase[Random.Range(0, mItemAbilityDatabase.Length)]);
-        return item;
+        Ability ability = null;
+        foreach (AbilityTable table in mAbilityTables)
+        {
+            if(table.equipmentType == item.mSlot)
+            {
+                ability = table.GetAbilityForItem(item);
+            }
+        }
+
+        return ability;
     }
 
-    public static Ability NewAbility(Ability item)
+    public static Ability NewAbility(Ability ability)
     {
-        Ability nItem = ScriptableObject.Instantiate(item);
+        Ability nItem = ScriptableObject.Instantiate(ability);
         return nItem;
     }
 

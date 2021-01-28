@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    public World hubWorld;
+    public World shipWorld;
     public WorldData hubData;
     public List<World> worlds;
     public List<WorldData> worldDatas;
@@ -19,7 +19,7 @@ public class WorldManager : MonoBehaviour
 
 
         //worlds.Add(new World(worldDatas[0]));
-        hubWorld = new World(hubData);
+        shipWorld = new World(hubData);
     }
 
     public void AddWorld(WorldType type)
@@ -34,8 +34,7 @@ public class WorldManager : MonoBehaviour
     {
         currentWorldIndex = index;
 
-
-        GameManager.instance.mMapChangeFlag = true;
+        GameManager.instance.TravelToWorld(currentWorldIndex);
 
     }
 
@@ -51,9 +50,9 @@ public class WorldManager : MonoBehaviour
         currentWorldIndex = -1;
     }
 
-    public World GetHubWorld()
+    public World GetShipWorld()
     {
-        return hubWorld;
+        return shipWorld;
     }
 
     public void WorldCleared(int index)

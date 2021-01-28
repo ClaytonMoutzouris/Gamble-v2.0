@@ -24,7 +24,9 @@ public class PlayerClass : ScriptableObject
         {
             foreach (Equipment equipment in startingEquipment)
             {
+                //These should grab from the database instead
                 Equipment temp = Instantiate(equipment);
+                temp.Initialize();
 
                 player.Inventory.AddItemToInventory(temp);
                 player.Equipment.EquipItem(temp);
@@ -32,7 +34,9 @@ public class PlayerClass : ScriptableObject
 
             foreach (Item item in startingInventory)
             {
+                //These should grab from the database instead
                 Item temp = Instantiate(item);
+                temp.Initialize();
 
                 player.Inventory.AddItemToInventory(temp);
             }

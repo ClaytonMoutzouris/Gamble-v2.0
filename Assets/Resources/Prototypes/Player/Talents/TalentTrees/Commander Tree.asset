@@ -16,5 +16,6 @@ MonoBehaviour:
   branches:
   - {fileID: 11400000, guid: eaad51194d55ca94eace1f0bf41ff6c7, type: 2}
   - {fileID: 11400000, guid: cda135152cc04f34f846194e3dd34e5e, type: 2}
+  - {fileID: 11400000, guid: e8b58bbae6ee902478e8c57529e7400c, type: 2}
   - {fileID: 11400000, guid: ce779fb041e7a1e409cf47afb5469712, type: 2}
   skillPoints: 0

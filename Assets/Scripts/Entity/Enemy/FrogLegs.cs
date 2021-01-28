@@ -40,7 +40,7 @@ public class FrogLegs : Enemy
 
 
 
-                    if (EnemyBehaviour.TargetInRange(this, Target, 96))
+                    if (EnemyBehaviour.TargetInRange(this, Target, 128))
                     {
                         mAttackManager.rangedAttacks[0].Activate((positionVector).normalized + new Vector2(Random.Range(-.3f, .3f), Random.Range(-.3f, .3f)), Position);
                         Body.mSpeed.x = 0;
@@ -60,7 +60,12 @@ public class FrogLegs : Enemy
 
                         Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
 
-                    }                    
+                    }
+
+                    if (Mathf.Abs(positionVector.x) < 16)
+                    {
+                        Body.mSpeed.x = 0;
+                    }
 
                 }
                 else

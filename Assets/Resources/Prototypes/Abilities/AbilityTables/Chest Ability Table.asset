@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21752d2e8b8845c4ab3b3435750b991d, type: 3}
+  m_Name: Chest Ability Table
+  m_EditorClassIdentifier: 
+  equipmentType: 1
+  rareAbilities:
+  - {fileID: 11400000, guid: 1908ace5e87be9f4887739cd179460c1, type: 2}
+  - {fileID: 11400000, guid: 02aca61afc389c84f92810d54e150d42, type: 2}
+  - {fileID: 11400000, guid: 615299203d275df4e8bfc6580f19133f, type: 2}
+  legendaryAbilities:
+  - {fileID: 11400000, guid: 1908ace5e87be9f4887739cd179460c1, type: 2}
+  - {fileID: 11400000, guid: 02aca61afc389c84f92810d54e150d42, type: 2}
+  - {fileID: 11400000, guid: 615299203d275df4e8bfc6580f19133f, type: 2}
+  - {fileID: 11400000, guid: f0a10275b3e740140822d3f68cdebc92, type: 2}
+  - {fileID: 11400000, guid: 0289d0c49051234438d501f5ff0d1cde, type: 2}
+  - {fileID: 11400000, guid: 8cbd509bc7b27e44db6a93173efe2e8d, type: 2}
+  artifactAbilities:
+  - {fileID: 11400000, guid: 190cd312971e5d545b33bd256b8b7b70, type: 2}
+  - {fileID: 11400000, guid: 615299203d275df4e8bfc6580f19133f, type: 2}
+  - {fileID: 11400000, guid: 99d0ff6860c3261499d42cc0950cddf9, type: 2}
+  - {fileID: 11400000, guid: 0289d0c49051234438d501f5ff0d1cde, type: 2}

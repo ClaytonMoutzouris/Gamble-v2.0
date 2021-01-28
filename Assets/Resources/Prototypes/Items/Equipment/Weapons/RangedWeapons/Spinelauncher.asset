@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Spinelauncher
   rarity: 4
   baseValue: 25
-  sprite: {fileID: -51968960129813083, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  sprite: {fileID: -51968960129813083, guid: c6f53bf4487536d4d95f72317c59ff40, type: 3}
   isStackable: 0
   identified: 1
   autoPickup: 0

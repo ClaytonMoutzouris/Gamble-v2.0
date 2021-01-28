@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Doubles ammo capacity
   weaponClass: 0
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 0
     type: 2
     bonusValue: 5

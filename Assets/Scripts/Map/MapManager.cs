@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
            || y < 0 || y >= mHeight)
             return false;
 
-        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop);
+        return (mTileData[x, y] == TileType.OneWay || mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.LadderTop || mTileData[x, y] == TileType.InvisibleBlock);
     }
 
     public bool IsGround(Vector2i pos)
@@ -91,7 +91,7 @@ public class MapManager : MonoBehaviour
             || y < 0 || y >= mHeight)
             return true;
 
-        return (mTileData[x, y] == TileType.Block);
+        return (mTileData[x, y] == TileType.Block || mTileData[x, y] == TileType.InvisibleBlock);
     }
 
     public bool IsEmpty(int x, int y)
@@ -191,7 +191,7 @@ public class MapManager : MonoBehaviour
         int x = start.x;
         int y = start.y;
 
-        while(y > 0 && GetTile(x,y) != TileType.Block)
+        while(y > 0 && GetTile(x,y) != TileType.Block && GetTile(x, y) != TileType.InvisibleBlock)
         {
             y -= 1;
         }
@@ -394,6 +394,14 @@ public class MapManager : MonoBehaviour
             case ObjectType.PracticeBot:
                 PracticeBot temp17 = new PracticeBot(Resources.Load("Prototypes/Entity/Objects/PracticeBot") as EntityPrototype);
                 temp17.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.ShipTeleporter:
+                ShipTeleporter temp18 = new ShipTeleporter(Resources.Load("Prototypes/Entity/Objects/ShipTeleporter") as EntityPrototype);
+                temp18.Spawn(GetMapTilePosition(data.TilePosition));
+                break;
+            case ObjectType.MovingPlatform:
+                MovingPlatform temp19 = new MovingPlatform(Resources.Load("Prototypes/Entity/Objects/MovingPlatform") as EntityPrototype);
+                temp19.Spawn(GetMapTilePosition(data.TilePosition));
                 break;
         }
     }

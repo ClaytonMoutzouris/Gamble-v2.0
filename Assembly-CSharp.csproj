@@ -97,7 +97,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Ghost.cs" />
     <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\Room.cs" />
-    <Compile Include="Assets\ShopTradeMenu.cs" />
     <Compile Include="Assets\Scripts\UI\RoomEditor.cs" />
     <Compile Include="Assets\MeleeWeaponToolbeltNode.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\ObjectPrototype.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Assets\ClothingOptionSelector.cs" />
     <Compile Include="Assets\NewGamepadInput.cs" />
     <Compile Include="Assets\Scripts\Map\Map.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\Stats\WeaponAttributes.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Stats\Stats.cs" />
     <Compile Include="Assets\ScrollListButton.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\BossEnemy.cs" />
@@ -168,6 +166,7 @@
     <Compile Include="Assets\Scripts\Entity\Player\SkillNode.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\Hitbox.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CustomAABB.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\SecondaryStatBuff.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\Hurtbox.cs" />
     <Compile Include="Assets\ScrollList.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Crawler.cs" />
@@ -179,7 +178,7 @@
     <Compile Include="Assets\Scripts\Entity\Objects\FlowerBed.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Projectile.cs" />
     <Compile Include="Assets\NewEventSystemManager.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\AbilityEffect.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\BuffEffect.cs" />
     <Compile Include="Assets\Scripts\Physics and Hitboxes\CollisionManager.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Gatherable.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\EnemyPrototype.cs" />
@@ -212,7 +211,7 @@
     <Compile Include="Assets\Scripts\Items\Gadget.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\Attacks\AttackPrototype\RangedAttackPrototype.cs" />
     <Compile Include="Assets\Scripts\Database\BossDatabase.cs" />
-    <Compile Include="Assets\Scripts\Entity\Player\Stats\RangedWeaponAttributes.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Stats\WeaponAttributes.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Snek.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\GravityShiftEffect.cs" />
     <Compile Include="Assets\BossUIManager.cs" />
@@ -254,7 +253,6 @@
     <Compile Include="Assets\ClassOptionSelector.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\IceShard.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Sightbox.cs" />
-    <Compile Include="Assets\Scripts\UI\OtisUIPanel.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\AttackObject.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Iceblock.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Hedgehog.cs" />
@@ -262,9 +260,8 @@
     <Compile Include="Assets\Scripts\Interfaces\IEntity.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Hub\NavSystem.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\Creation\PlayerClass.cs" />
-    <Compile Include="Assets\ParallaxBackground.cs" />
+    <Compile Include="Assets\Scripts\Entity\Player\Stats\SecondaryStats.cs" />
     <Compile Include="Assets\Scripts\Entity\Player\PlayerInventory.cs" />
-    <Compile Include="Assets\SnapToScroll.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Eye.cs" />
     <Compile Include="Assets\Scripts\Entity\Health.cs" />
     <Compile Include="Assets\Scripts\Utility\WorldNameGenerator.cs" />
@@ -314,7 +311,7 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\Stag.cs" />
     <Compile Include="Assets\Scripts\Utility\Constants.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\BouncePad.cs" />
-    <Compile Include="Assets\Scripts\Controllers\TimerManager.cs" />
+    <Compile Include="Assets\Scripts\Entity\Objects\Hub\ShipTeleporter.cs" />
     <Compile Include="Assets\Scripts\Items\Consumables\EffectItem.cs" />
     <Compile Include="Assets\Scripts\UI\SaveLoadMenu.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Minibosses\BogBeast.cs" />
@@ -352,6 +349,7 @@
     <Compile Include="Assets\Scripts\Map\RoomData.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Bosses\CatBoss.cs" />
     <Compile Include="Assets\ShopScreenUI.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\AbilityTable.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerPanel.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\StatusEffects\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\Entity\Objects\Spikes.cs" />
@@ -365,6 +363,7 @@
     <Compile Include="Assets\Scripts\Entity\Ability\Item Effects\ExtraJump.cs" />
     <Compile Include="Assets\Scripts\Entity\Prototypes\PlayerPrototype.cs" />
     <Compile Include="Assets\PlayerLevelTabUI.cs" />
+    <Compile Include="Assets\EditorIcon.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Shield.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Entity\Enemy\Slime.cs" />
@@ -375,7 +374,7 @@
     <Compile Include="Assets\TalentTreeNodeUI.cs" />
     <Compile Include="Assets\Scripts\Items\Quest Items\Key.cs" />
     <Compile Include="Assets\Scripts\Items\QuestItem.cs" />
-    <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\RangedWeaponBuff.cs" />
+    <Compile Include="Assets\Scripts\Entity\Ability\TalentEffects\WeaponBuff.cs" />
     <Compile Include="Assets\Scripts\Database\RoomDatabase.cs" />
     <Compile Include="Assets\Scripts\Map\ScrollingBackground.cs" />
     <Compile Include="Assets\Scripts\UI\InventoryNode.cs" />
@@ -395,7 +394,6 @@
     <Compile Include="Assets\Scripts\Entity\Enemy\FrogLegs.cs" />
     <Compile Include="Assets\Scripts\Entity\Ability\Ability.cs" />
     <Compile Include="Assets\Scripts\Entity\Attacks\Skill.cs" />
-    <Compile Include="Assets\EditorIcon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\RoomsWorkingDir2\InnerLR6.txt" />
@@ -406,6 +404,7 @@
     <None Include="Assets\Resources\Rooms\SurfaceLRBT3.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Resources\Rooms\SurfaceSR3.txt" />
+    <None Include="Assets\RoomsWorkingDir2\LavaHub.txt" />
     <None Include="Assets\Old Rooms\Old Rooms 2\Rooms\AboveLR1.txt" />
     <None Include="Assets\RoomsWorkingDir2\SurfaceSR2.txt" />
     <None Include="Assets\Old Rooms\Old Rooms 2\Rooms\AboveSR2.txt" />
@@ -440,6 +439,7 @@
     <None Include="Assets\RoomsWorkingDir2\AboveLRBT1.txt" />
     <None Include="Assets\RoomsWorkingDir2\AboveSR4.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerLR1NEW.txt" />
+    <None Include="Assets\RoomsWorkingDir2\MushroomHub.txt" />
     <None Include="Assets\Resources\Rooms\Hub1.txt" />
     <None Include="Assets\RoomsWorkingDir\LavaBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\AboveLR1.txt" />
@@ -449,10 +449,12 @@
     <None Include="Assets\Old Rooms\Old Rooms 2\Rooms\InnerLR1NEW.txt" />
     <None Include="Assets\RoomsWorkingDir2\CatBossRoom.txt" />
     <None Include="Assets\Resources\Rooms\LavaBossRoom.txt" />
+    <None Include="Assets\RoomsWorkingDir2\VoidHub.txt" />
     <None Include="Assets\RoomsWorkingDir2\InnerLRBT3.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceSR1.txt" />
     <None Include="Assets\Old Rooms\Old Rooms 2\Rooms\InnerLR3.txt" />
     <None Include="Assets\RoomsWorkingDir\AboveSR4.txt" />
+    <None Include="Assets\RoomsWorkingDir2\TundraHub.txt" />
     <None Include="Assets\RoomsWorkingDir2\AboveSR2.txt" />
     <None Include="Assets\Resources\Rooms\SurfaceLRBT2.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -525,6 +527,7 @@
     <None Include="Assets\RoomsWorkingDir\SurfaceLR1.txt" />
     <None Include="Assets\RoomsWorkingDir2\InnerSR1.txt" />
     <None Include="Assets\RoomsWorkingDir\InnerSR3.txt" />
+    <None Include="Assets\RoomsWorkingDir2\PurpleHub.txt" />
     <None Include="Assets\Resources\Rooms\InnerLR6.txt" />
     <None Include="Assets\Old Rooms\Old Rooms 2\Rooms\InnerSR2.txt" />
     <None Include="Assets\Resources\Rooms\InnerSR1.txt" />

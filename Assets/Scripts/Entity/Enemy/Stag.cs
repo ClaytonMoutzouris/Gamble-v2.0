@@ -66,6 +66,10 @@ public class Stag : Enemy
 
                     EnemyBehaviour.MoveHorizontal(this);
 
+                    if (Mathf.Abs(positionVector.x) < 16)
+                    {
+                        Body.mSpeed.x = 0;
+                    }
                 }
                 else
                 {

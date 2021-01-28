@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Increases damage
   weaponClass: 5
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 1
     type: 4
     bonusValue: 0.25

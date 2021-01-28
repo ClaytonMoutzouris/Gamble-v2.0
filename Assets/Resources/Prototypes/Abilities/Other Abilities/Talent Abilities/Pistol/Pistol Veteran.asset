@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Reduce reload speed and faster bullets and fire rate
   weaponClass: 0
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 1
     type: 3
     bonusValue: -0.33

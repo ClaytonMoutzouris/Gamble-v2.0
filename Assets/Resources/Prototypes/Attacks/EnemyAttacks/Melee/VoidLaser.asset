@@ -17,5 +17,6 @@ MonoBehaviour:
   startUpFrames: 0
   offset: {x: 0, y: -240}
   damage: 30
+  damageType: 6
   meleeObjectPrototype: {fileID: 11400000, guid: be7f75b7c523d6f44897e530d0cb9cef,
     type: 2}

@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Increase range and Fire rate
   weaponClass: 3
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 1
     type: 5
     bonusValue: 0.25

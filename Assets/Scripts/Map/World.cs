@@ -57,6 +57,7 @@ public class World
     public Map GetNextMap()
     {
         Map temp = null;
+        currentMapIndex++;
 
         if (currentMapIndex < maps.Count)
         {
@@ -64,10 +65,9 @@ public class World
         }
         else
         {
-            temp = WorldManager.instance.GetHubWorld().GetFirstMap();
+            temp = WorldManager.instance.GetShipWorld().GetFirstMap();
         }
 
-        currentMapIndex++;
 
         return temp;
     }

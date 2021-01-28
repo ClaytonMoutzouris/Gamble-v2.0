@@ -7101,8 +7101,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 52130fa971645e24ca4bfe4c5739cca3, type: 3}
   - {fileID: 21300000, guid: 10f131d927911894c943709f023ee2f0, type: 3}
   - {fileID: 21300000, guid: 0ea7dd4398cb8c045b1f1d621b1fc436, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -6598515498236365627, guid: 928a816b44a8f3b45b9110cfad776a84, type: 3}
+  - {fileID: 21300000, guid: ad4728720e6efee4b802e1d00071d448, type: 3}
   NPCsprite: {fileID: 21300000, guid: 01daa85fcdd70924d834a470f5b83787, type: 3}
   mapBounds: {fileID: 1981029628}
   objectsLayer: {fileID: 2002582983}

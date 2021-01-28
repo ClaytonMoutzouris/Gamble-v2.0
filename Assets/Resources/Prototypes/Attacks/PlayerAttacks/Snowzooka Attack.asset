@@ -16,9 +16,8 @@ MonoBehaviour:
   cooldown: 1
   startUpFrames: 5
   offset: {x: 12, y: 12}
-  animationController: {fileID: 0}
   damage: 20
-  sfx: {fileID: 0}
+  damageType: 5
   projectilePrototype: {fileID: 11400000, guid: 2375d32a6296b2d4b807924d04d404e2,
     type: 2}
   numberOfProjectiles: 1

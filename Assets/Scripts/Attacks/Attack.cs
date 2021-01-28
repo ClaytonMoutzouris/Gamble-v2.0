@@ -20,7 +20,7 @@ public class Attack {
     public float coolDownTimer = 0;
     public int startUpFrames = 0;
     public Vector2 attackOffset;
-
+    public DamageType damageType = DamageType.Physical;
     //List of effects
     public AttackState state = AttackState.Inactive;
     public bool mIsActive = false;
@@ -49,6 +49,8 @@ public class Attack {
         coolDown = prototype.cooldown;
         attackOffset = prototype.offset;
         startUpFrames = prototype.startUpFrames;
+        coolDownTimer = coolDown;
+        damageType = prototype.damageType;
     }
 
 
@@ -105,9 +107,44 @@ public class Attack {
 
         if (mEntity != null)
         {
-            damage += mEntity.mStats.GetStat(StatType.Attack).GetValue() / 4;
+            damage += (int)(damage * 0.01f * mEntity.mStats.GetSecondaryStat(SecondaryStatType.DamageBonus).GetValue());
         }
         return damage;
+
+    }
+
+    public Color GetColorForDamageType()
+    {
+        Color color = Color.white;
+
+        switch(damageType)
+        {
+            case DamageType.Electric:
+                color = Color.yellow;
+                break;
+            case DamageType.Fire:
+                color = Color.red + Color.yellow;
+
+                break;
+            case DamageType.Ice:
+                color = Color.cyan;
+
+                break;
+            case DamageType.Physical:
+                color = Color.white;
+
+                break;
+            case DamageType.Water:
+                color = Color.blue;
+
+                break;
+            case DamageType.Void:
+                color = Color.magenta;
+
+                break;
+        }
+
+        return color;
 
     }
 
@@ -118,6 +155,7 @@ public class MeleeAttack : Attack
     public MeleeAttackObjectPrototype meleeObject;
 
     public MeleeAttackObject attack;
+    public float speed = 1;
 
     public MeleeAttack(Entity entity, MeleeAttackPrototype proto) : base(entity, proto)
     {
@@ -127,9 +165,13 @@ public class MeleeAttack : Attack
     public MeleeAttack(Entity entity, MeleeWeapon meleeWeapon) :base(entity, meleeWeapon.attack)
     {
         meleeObject = meleeWeapon.attack.meleeObjectPrototype;
+        speed = meleeWeapon.attributes.GetAttribute(WeaponAttributesType.AttackSpeed).GetValue();
+        coolDown = coolDown * speed;
+        startUpFrames = (int)(startUpFrames * speed);
+        duration = duration * speed;
 
         //Override these values with the weapons values
-        baseDamage = meleeWeapon.damage;
+        baseDamage = (int)meleeWeapon.attributes.GetAttribute(WeaponAttributesType.Damage).GetValue();
     }
 
     public override void Activate()
@@ -171,6 +213,7 @@ public class MeleeAttack : Attack
             {
                 attack = new MeleeAttackObject(meleeObject, this, Vector2.right);
                 attack.Spawn(mEntity.Position);
+                attack.Renderer.Animator.speed *= 1 + (1 - speed);
             }
             //Position = owner.Position + attack.attackOffset * (Vector2.right * (int)owner.mDirection);
 

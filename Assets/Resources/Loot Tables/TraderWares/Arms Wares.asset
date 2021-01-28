@@ -17,11 +17,11 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: b27e3073bc77c7a4b9971d220335d3df, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 100
+  - dropChance: 50
     item: {fileID: 11400000, guid: e139cfc2e1597404bb8319fc7f94b1ce, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 100
+  - dropChance: 25
     item: {fileID: 11400000, guid: fa30994e0fcbffb45a6b13236e2783b5, type: 2}
     minDropNum: 1
     maxDropNum: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: 9d515be3da6f2814fbe44839d5ea965e, type: 2}
     minDropNum: 1
     maxDropNum: 1
-  - dropChance: 75
+  - dropChance: 50
     item: {fileID: 11400000, guid: 299c574687e970740a68841f43cf5287, type: 2}
     minDropNum: 1
     maxDropNum: 1
@@ -51,6 +51,10 @@ MonoBehaviour:
     maxDropNum: 1
   - dropChance: 50
     item: {fileID: 11400000, guid: 4906a27b1b6195048b0ab5a9e5b5b562, type: 2}
+    minDropNum: 1
+    maxDropNum: 1
+  - dropChance: 50
+    item: {fileID: 11400000, guid: 528ee1e2772746043986f303a2ac3284, type: 2}
     minDropNum: 1
     maxDropNum: 1
   guaranteedDrops: []

@@ -18,17 +18,22 @@ public class MovingPlatform : Entity
         mWait = false;
 
         Body.mIsKinematic = true;
+        mMovingSpeed = 50;
+
         int r = Random.Range(0, 2);
         if(r == 1)
         {
             axis = PlatformAxis.Vertical;
+            Body.mSpeed.y = -mMovingSpeed;
 
         }
         else
         {
             axis = PlatformAxis.Horizontal;
+            Body.mSpeed.x = -mMovingSpeed;
 
         }
+
     }
 
     public void VerticalPlatform()

@@ -21,8 +21,23 @@ MonoBehaviour:
   autoPickup: 0
   mSlot: 6
   baseBonuses: []
+  baseSecondaryBonuses: []
+  baseWeaponBonuses: []
   baseEffects: []
   isEquipped: 0
   damage: 8
-  weaponType: 0
+  ammoType: 6
   attack: {fileID: 11400000, guid: ae6d6c7b85ff41043b4cbc390cf47384, type: 2}
+  baseAttributes:
+  - type: 4
+    value: 8
+    bonuses: []
+  - type: 9
+    value: 0
+    bonuses: []
+  - type: 7
+    value: 1
+    bonuses: []
+  - type: 8
+    value: 0
+    bonuses: []

@@ -19,7 +19,7 @@ MonoBehaviour:
   - modType: 0
     type: 2
     bonusValue: 2
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 0
     type: 4
     bonusValue: 1

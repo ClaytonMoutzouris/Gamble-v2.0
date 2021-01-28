@@ -153,7 +153,7 @@ public class NPC : Entity, IHurtable, IInteractable
         
         if(damage > 0)
         {
-            ShowFloatingText(damage.ToString(), Color.white);
+            ShowFloatingText(damage.ToString(), attack.GetColorForDamageType());
         }
 
 
@@ -271,7 +271,7 @@ public class NPC : Entity, IHurtable, IInteractable
     public bool Interact(Player actor)
     {
 
-        ShowFloatingText(dialogueLines[dialogueProgress], Color.white, 2.0f, 0, 1.5f);
+        ShowFloatingText(dialogueLines[dialogueProgress], Color.white, 2.0f, 0, 1.2f);
         dialogueProgress++;
 
         if (dialogueProgress > dialogueLines.Count-1)

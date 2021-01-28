@@ -498,7 +498,7 @@ public static class MapGenerator
     {
         Debug.Log("Rooms Size: " + data.roomSizeX + ", " + data.roomSizeY);
 
-        RoomData roomData = RoomDatabase.GetRoom(RoomType.Hub);
+        RoomData roomData = RoomDatabase.GetWorldHub(data.type);
         data.roomSizeX = roomData.mWidth;
         data.roomSizeY = roomData.mHeight;
 
@@ -510,11 +510,7 @@ public static class MapGenerator
         map.SetTileMap(roomData.tiles);
         Debug.Log("Rooms Size: " + map.getMapSize().x + ", " + map.getMapSize().y);
 
-        AddBounds(map);
-
-
-        map.AddEntity(new ObjectData(12, 1, ObjectType.Medbay));
-        map.AddEntity(new ObjectData(8, 1, ObjectType.SaveMachine));
+        //AddBounds(map);
 
         foreach (EntityData eData in roomData.entityData)
         {

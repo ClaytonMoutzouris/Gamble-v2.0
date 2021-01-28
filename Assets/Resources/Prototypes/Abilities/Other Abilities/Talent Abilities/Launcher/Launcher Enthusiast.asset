@@ -16,7 +16,8 @@ MonoBehaviour:
   description: Faster Reload Speed with Launchers
   weaponClass: 1
   statBonuses: []
-  rangedWeaponBonuses:
-  - modType: 1
+  secondaryStatBonuses: []
+  weaponBonuses:
+  - modType: 0
     type: 3
     bonusValue: -0.33

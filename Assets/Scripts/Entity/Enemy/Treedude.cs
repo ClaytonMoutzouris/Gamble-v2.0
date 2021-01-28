@@ -52,6 +52,11 @@ public class Treedude : Enemy
                             }
                             mMovingSpeed = -Mathf.Abs(mMovingSpeed);
                         }
+
+                        if (Mathf.Abs(Target.Position.x - Position.x) < 16)
+                        {
+                            Body.mSpeed.x = 0;
+                        }
                     }
 
                 }

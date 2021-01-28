@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 4
   worldDescription: 
   maps:
+  - {fileID: 11400000, guid: 5e632b86e3768d64ba72f773806b1bc2, type: 2}
   - {fileID: 11400000, guid: ccb5a5cb6813d894e8b82e8166cf0679, type: 2}
   - {fileID: 11400000, guid: ba7f7f2d37f362d4c8d9b557b1cda821, type: 2}
   - {fileID: 11400000, guid: dedc56742e54dc54685ed841057f1f36, type: 2}

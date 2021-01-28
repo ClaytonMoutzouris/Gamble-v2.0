@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType { Fire, Water, Electric, Physical, Poison, Ice }
+public enum DamageType { Fire, Water, Electric, Physical, Poison, Ice, Void }
 
 public class AttackData : ScriptableObject
 {
@@ -17,13 +17,19 @@ public class AttackData : ScriptableObject
 
         if (entity is Player player)
         {
-            damage += player.mStats.GetStat(StatType.Attack).GetValue() / 4;
+            damage += (int)(damage*0.01f*player.mStats.GetSecondaryStat(SecondaryStatType.DamageBonus).GetValue());
         }
         else if (entity is Enemy enemy)
         {
-            damage += enemy.mStats.GetStat(StatType.Attack).GetValue() / 4;
+            damage += (int)(damage * 0.01f * enemy.mStats.GetSecondaryStat(SecondaryStatType.DamageBonus).GetValue());
         }
 
         return damage;
+    }
+
+    public AttackData GenerateAttackData(Attack attack, IHurtable hurtable)
+    {
+
+        return null;
     }
 }

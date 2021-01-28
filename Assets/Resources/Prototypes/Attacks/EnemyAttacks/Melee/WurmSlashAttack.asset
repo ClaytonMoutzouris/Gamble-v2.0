@@ -16,9 +16,7 @@ MonoBehaviour:
   cooldown: 0.5
   startUpFrames: 15
   offset: {x: 32, y: 32}
-  animationController: {fileID: 0}
   damage: 4
-  abilities: 
-  sfx: {fileID: 0}
+  damageType: 3
   meleeObjectPrototype: {fileID: 11400000, guid: 6bcbc3f52c539c54589ba858b2866e69,
     type: 2}

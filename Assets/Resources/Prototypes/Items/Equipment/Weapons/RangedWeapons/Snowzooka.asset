@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Snowzooka
   rarity: 0
   baseValue: 15
-  sprite: {fileID: 798360227008517706, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  sprite: {fileID: 798360227008517706, guid: c6f53bf4487536d4d95f72317c59ff40, type: 3}
   isStackable: 0
   identified: 1
   autoPickup: 0
@@ -29,6 +29,7 @@ MonoBehaviour:
   ammunitionCount: 1
   reloading: 0
   projProto: {fileID: 11400000, guid: 2375d32a6296b2d4b807924d04d404e2, type: 2}
+  damageType: 5
   baseAttributes:
   - type: 0
     value: 1

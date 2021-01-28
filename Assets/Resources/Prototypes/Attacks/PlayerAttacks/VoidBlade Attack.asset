@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: VoidBlade Attack
   m_EditorClassIdentifier: 
   duration: 30
-  cooldown: 0.25
+  cooldown: 0
   startUpFrames: 0
   offset: {x: 8, y: 0}
-  animationController: {fileID: 0}
   damage: 25
-  sfx: {fileID: 8300000, guid: 7989b1b217a36e14e852f26f21562927, type: 3}
+  damageType: 6
   meleeObjectPrototype: {fileID: 11400000, guid: 02dfed9398c025e42a62f340690ebac5,
     type: 2}

@@ -39,6 +39,8 @@ public class BossEnemy : Enemy
                         }
                     }
 
+
+
                     this.Target = entity;
                     TriggerBoss();
                     break;

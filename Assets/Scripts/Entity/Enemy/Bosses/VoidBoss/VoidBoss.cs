@@ -72,7 +72,7 @@ public class VoidBoss : BossEnemy
 
         voidlingSpawnRate = 2;
         mMovingSpeed = mMovingSpeed * 2;
-        mStats.AddBonus(new StatBonus(StatType.Attack, 20));
+        mStats.AddPrimaryBonus(new StatBonus(StatType.Attack, 20));
         Renderer.Sprite.color = Color.red;
     }
 

@@ -10,6 +10,7 @@ public class Health
     public float maxHealth;
     public HealthBar healthbar;
     public Entity entity;
+    public int conAtLastUpdate = 0;
 
     public Health(Entity entity, int baseHP, HealthBar bar = null)
     {
@@ -32,10 +33,19 @@ public class Health
     public void UpdateHealth()
     {
         maxHealth = baseHP;
+        int entityCon = entity.mStats.GetStat(StatType.Constitution).GetValue();
 
+        maxHealth = baseHP + 10 * entityCon;
 
-        maxHealth = baseHP + 10 * entity.mStats.GetStat(StatType.Constitution).GetValue();
+        if(entityCon > conAtLastUpdate)
+        {
+            GainHP(10 * (entityCon - conAtLastUpdate));
+        } else if (entityCon < conAtLastUpdate)
+        {
+            LoseHP(10 * (conAtLastUpdate - entityCon));
+        }
 
+        conAtLastUpdate = entityCon;
         //Debug.Log(entity.Name + " Updating max health: " + maxHealth);
 
         if (healthbar != null)

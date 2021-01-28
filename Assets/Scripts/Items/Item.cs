@@ -137,14 +137,29 @@ public abstract class Equipment : Item
 
     public EquipmentSlotType mSlot;
     public List<StatBonus> baseBonuses;
+    public List<SecondaryStatBonus> baseSecondaryBonuses;
+    public List<WeaponAttributeBonus> baseWeaponBonuses;
     List<StatBonus> statBonuses = new List<StatBonus>();
+    List<SecondaryStatBonus> secondaryBonuses = new List<SecondaryStatBonus>();
+    List<WeaponAttributeBonus> weaponBonuses = new List<WeaponAttributeBonus>();
+
     //public List<PlayerAbility> abilities;
     public List<Ability> baseEffects = new List<Ability>();
     List<Ability> effects = new List<Ability>();
     //public Trait trait;
     public bool isEquipped;
+    public Player equipped = null;
+
 
     public List<Ability> Effects { get => effects; set => effects = value; }
+
+    public override void Initialize()
+    {
+        foreach (Ability ability in baseEffects)
+        {
+            Effects.Add(AbilityDatabase.NewAbility(ability));
+        }
+    }
 
     public virtual void RandomizeStats()
     {
@@ -157,24 +172,19 @@ public abstract class Equipment : Item
             {
                 rarity = Rarity.Common;
             }
-            else if (rarityRoll >= 50 && rarityRoll < 80)
+            else if (rarityRoll >= 50 && rarityRoll < 90)
             {
                 rarity = Rarity.Uncommon;
             }
-            else if (rarityRoll >= 80 && rarityRoll < 100)
+            else if (rarityRoll >= 90 && rarityRoll < 120)
             {
                 rarity = Rarity.Rare;
 
             }
-            else if (rarityRoll >= 100)
+            else if (rarityRoll >= 120)
             {
                 rarity = Rarity.Legendary;
             }
-        }
-        
-        foreach(Ability ability in baseEffects)
-        {
-            Effects.Add(AbilityDatabase.NewAbility(ability));
         }
 
 
@@ -200,7 +210,11 @@ public abstract class Equipment : Item
 
         if(rarity == Rarity.Legendary || rarity == Rarity.Rare || rarity == Rarity.Artifact)
         {
-            Effects.Add(AbilityDatabase.GetItemAbility());
+            Ability ability = AbilityDatabase.GetItemAbility(this);
+            if (ability != null)
+            {
+                Effects.Add(ability);
+            }
             //abilities.Add((PlayerAbility)Random.Range(0, (int)PlayerAbility.Count));
         }
         
@@ -209,22 +223,28 @@ public abstract class Equipment : Item
     public virtual void OnEquip(Player player)
     {
         isEquipped = true;
+        equipped = player;
 
-
-        player.mStats.AddBonuses(statBonuses);
-        player.mStats.AddBonuses(baseBonuses);
-        player.Health.UpdateHealth();
+        equipped.mStats.AddPrimaryBonuses(statBonuses);
+        equipped.mStats.AddPrimaryBonuses(baseBonuses);
+        equipped.mStats.AddSecondaryBonuses(secondaryBonuses);
+        equipped.mStats.AddSecondaryBonuses(baseSecondaryBonuses);
+        equipped.Health.UpdateHealth();
 
         //This adds the abilities of the equipped item to the player
         foreach(Ability effect in Effects)
         {
+            if (effect == null)
+                continue;
             effect.OnGainTrigger(player);
         }
 
         //This calls the updatetrigger for all effects on the player
-        foreach (Ability ability in player.abilities)
+        foreach (Ability ability in equipped.abilities)
         {
-            ability.OnEquippedTrigger(player, this);
+            if (ability == null)
+                continue;
+            ability.OnEquippedTrigger(equipped, this);
         }
     }
 
@@ -232,9 +252,10 @@ public abstract class Equipment : Item
     {
         isEquipped = false;
 
-        player.mStats.RemoveBonuses(statBonuses);
-        player.mStats.RemoveBonuses(baseBonuses);
-
+        player.mStats.RemovePrimaryBonuses(statBonuses);
+        player.mStats.RemovePrimaryBonuses(baseBonuses);
+        player.mStats.RemoveSecondaryBonuses(secondaryBonuses);
+        player.mStats.RemoveSecondaryBonuses(baseSecondaryBonuses);
         player.Health.UpdateHealth();
 
         //This calls the updatetrigger for all effects on the player
@@ -293,6 +314,8 @@ public abstract class Equipment : Item
 
         foreach(Ability ability in effects)
         {
+            if (ability == null)
+                continue;
             data.abilityNames.Add(ability.abilityName);
         }
 
@@ -318,8 +341,33 @@ public abstract class Equipment : Item
 public abstract class Weapon : Equipment
 {
     public int damage;
+    public WeaponClassType ammoType;
 
+    public WeaponAttributes attributes;
 
+    public override void OnEquip(Player player)
+    {
+        attributes.AddBonuses(player.weaponBonuses);
+
+        base.OnEquip(player);
+    }
+
+    public override void OnUnequip(Player player)
+    {
+        attributes.RemoveBonuses(player.weaponBonuses);
+
+        base.OnUnequip(player);
+    }
+
+    public virtual bool Attack()
+    {
+        return true;
+    }
+
+    public virtual void OnUpdate()
+    {
+
+    }
 }
 
 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4a3472353cdca604991ed4a7c6a3e850
+timeCreated: 1492286193
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Digital tech
+  fontNames:
+  - Digital tech
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

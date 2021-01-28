@@ -24,7 +24,7 @@ MonoBehaviour:
   depthVariance: 1
   smallEnemies: 010000000500000006000000
   largeEnemies: 0a00000009000000
-  minibossType: 0
+  minibossType: 4
   tileSprites:
   - {fileID: 0}
   - {fileID: 21300000, guid: fbeabfd9edbca624c8ec44c66ab93cf7, type: 3}

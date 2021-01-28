@@ -86,7 +86,7 @@ public class Iceblock : Entity, IHurtable
         } else
         {
             health.LoseHP(damage);
-            ShowFloatingText(damage.ToString(), Color.white);
+            ShowFloatingText(damage.ToString(), attack.GetColorForDamageType());
         }
 
 

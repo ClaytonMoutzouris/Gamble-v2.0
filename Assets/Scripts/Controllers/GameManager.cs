@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     protected List<Entity> mEntities = new List<Entity>();
     public SpriteRenderer mMouseSprite;
     public bool mMapChangeFlag = false;
-
+    public Map targetMap = null;
     public bool warpToHubFlag = false;
 
     private void Awake()
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         WorldManager.instance.NewUniverse();
         BossUIManager.instance.ClearBoss();
 
-        LoadMap(WorldManager.instance.GetHubWorld().GetFirstMap());
+        LoadMap(WorldManager.instance.GetShipWorld().GetFirstMap());
         mGameMode = GameMode.Game;
     }
 
@@ -86,11 +86,6 @@ public class GameManager : MonoBehaviour
         }
 
         return chests;
-    }
-
-    public void TravelToWorld(World destination)
-    {
-
     }
 
     public void LoadMap(Map map)
@@ -317,7 +312,11 @@ public class GameManager : MonoBehaviour
         */
         if (mMapChangeFlag)
         {
-            LoadMap(WorldManager.instance.GetCurrentWorld().GetNextMap());
+            if(targetMap != null)
+            {
+                LoadMap(targetMap);
+                targetMap = null;
+            }
             mMapChangeFlag = false;
         }
 
@@ -331,5 +330,23 @@ public class GameManager : MonoBehaviour
         */
 
         
+    }
+
+    public void TravelToNextMap()
+    {
+        targetMap = WorldManager.instance.GetCurrentWorld().GetNextMap();
+        mMapChangeFlag = true;
+    }
+
+    public void TravelToShip()
+    {
+        targetMap = WorldManager.instance.GetShipWorld().GetFirstMap();
+        mMapChangeFlag = true;
+    }
+
+    public void TravelToWorld(int worldIndex)
+    {
+        targetMap = WorldManager.instance.worlds[worldIndex].GetFirstMap();
+        mMapChangeFlag = true;
     }
 }

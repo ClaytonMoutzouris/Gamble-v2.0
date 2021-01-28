@@ -31,7 +31,7 @@ public class EffectEditor
     [MenuItem("Assets/Create/StatusEffects/AbilityEffect")]
     public static void CreateBaseAbilityEffectAsset()
     {
-        ScriptableObjectUtility.CreateAsset<AbilityEffect>();
+        ScriptableObjectUtility.CreateAsset<BuffEffect>();
     }
 
 }

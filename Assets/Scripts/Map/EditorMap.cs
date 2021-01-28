@@ -72,12 +72,7 @@ public class EditorMap : MonoBehaviour
         mapBounds.size = new Vector2(mWidth * cTileSize, mHeight * cTileSize);
         mapBounds.transform.position = mapBounds.size / 2 - new Vector2(16, 16);
         
-        
-        foreach(ObjectData data in room.entityData)
-        {
-            if (data == null)
-                continue;
-        }
+       
 
         foreach (EntityData data in room.entityData)
         {

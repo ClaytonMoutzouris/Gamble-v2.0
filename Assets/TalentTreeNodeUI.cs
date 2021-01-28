@@ -45,12 +45,21 @@ public class TalentTreeNodeUI : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public string GetTooltip()
     {
-        string tooltip = talent.talentName + "\n" + talent.description;
+        string tooltip = talent.talentName + "\n"
+            + "<size=2><color=white> " + talent.description;
 
-        foreach(Ability ability in talent.abilities)
+        foreach (Ability ability in talent.abilities)
         {
-            tooltip += ability.GetDescription();
+            tooltip += "\n"  + ability.GetDescription();
         }
+        tooltip += "</color>";
+
+        if (talent.repeatable)
+        {
+            tooltip += "\n<color=green>Repeatable</color>";
+        }
+
+        tooltip += "</size>";
         return tooltip;
     }
 

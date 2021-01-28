@@ -8,7 +8,7 @@ public enum NPCType { GeneralTrader, Gadgeteer, EggsDealer, PotionSeller, ArmsDe
 public enum TraderType { GeneralTrader, Gadgeteer, EggDealer, PotionSeller, ArmsDealer, Clothier }
 public enum BossType { LavaBoss, CatBoss, SharkBoss, HedgehogBoss, TentacleBoss, VoidBoss, Count };
 public enum MinibossType { BogBeast, Salamander, IceShard, Shroombo, GiantCrab, Voidbeast }
-public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile, PracticeBot, Count };
+public enum ObjectType { FallingRock, RollingBoulder, Chest, Item , FlowerBed, Tree, Medbay, Door, NavSystem, BouncePad, Spikes, Iceblock, AnalysisCom, SmallGatherable, LargeGatherable, SaveMachine, BreakableTile, PracticeBot, ShipTeleporter, MovingPlatform, Count };
 public enum Rarity { Common, Uncommon, Rare, Legendary, Artifact, Count }
 public enum StatusEffectType {  DamageOverTime, Stun };
 public enum StatusEffectClass { Buff, Debuff };

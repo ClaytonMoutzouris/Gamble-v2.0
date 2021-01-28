@@ -16,7 +16,8 @@ MonoBehaviour:
   description: Further Decreases reload time
   weaponClass: 2
   statBonuses: []
-  rangedWeaponBonuses:
+  secondaryStatBonuses: []
+  weaponBonuses:
   - modType: 1
     type: 5
     bonusValue: 0.5

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 2f555426466f05a47bf8a1830ce634ce
+timeCreated: 1492020295
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Insane hours 2
+  fontNames:
+  - Insane hours 2
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

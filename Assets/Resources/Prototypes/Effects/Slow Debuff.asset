@@ -21,4 +21,10 @@ MonoBehaviour:
   effectOffset: {x: 0, y: 0}
   effectLocation: 0
   icon: {fileID: -8290258247621887946, guid: da4cbfafa48227445848daff3f0b8dbb, type: 3}
-  abilityProto: {fileID: 11400000, guid: c4f3c134b675ba24d8850b8b029f841a, type: 2}
+  abilitiesGranted: []
+  statBonuses: []
+  secondaryBonuses:
+  - modType: 0
+    type: 0
+    bonusValue: -25
+  weaponBonuses: []

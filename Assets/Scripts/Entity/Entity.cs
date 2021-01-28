@@ -175,6 +175,7 @@ public class Entity {
 
         Body = new PhysicsBody(this, new CustomAABB(Position, proto.bodySize, new Vector2(0, proto.bodySize.y)));
         Body.mIsKinematic = proto.kinematic;
+        Body.mIgnoresGravity = proto.ignoreGravity;
         List<Color> palette = proto.colorPallete;
         //Stats
         mStats = new Stats();

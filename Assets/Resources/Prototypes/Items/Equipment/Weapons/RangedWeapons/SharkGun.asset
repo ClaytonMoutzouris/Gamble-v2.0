@@ -35,6 +35,7 @@ MonoBehaviour:
   ammunitionCount: 2
   reloading: 0
   projProto: {fileID: 11400000, guid: 0f3807790058f714a9bfc812a7c0c654, type: 2}
+  damageType: 1
   baseAttributes:
   - type: 0
     value: 8

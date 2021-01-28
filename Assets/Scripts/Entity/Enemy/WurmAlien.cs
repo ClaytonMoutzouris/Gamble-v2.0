@@ -76,6 +76,21 @@ public class WurmAlien : Enemy
 
                     }
 
+                    if (!mAttackManager.IsAttacking())
+                    {
+                        Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
+
+                    }
+                    else
+                    {
+                        Body.mSpeed.x = 0;
+                    }
+                    //Stops the weird flipping
+                    if (Mathf.Abs(positionVector.x) < 16)
+                    {
+                        Body.mSpeed.x = 0;
+                    }
+
                 }
                 else
                 {
@@ -93,14 +108,7 @@ public class WurmAlien : Enemy
 
                 }
 
-                if (!mAttackManager.IsAttacking())
-                {
-                    Body.mSpeed.x = GetMovementSpeed() * (int)mDirection;
-                }
-                else
-                {
-                    Body.mSpeed.x = 0;
-                }
+
 
                 break;
             case EnemyState.Jumping:

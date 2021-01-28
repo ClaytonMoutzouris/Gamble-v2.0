@@ -60,6 +60,11 @@ public class Snowball : Enemy
 
                     }
 
+                    if (Mathf.Abs(positionVector.x) < 16)
+                    {
+                        Body.mSpeed.x = 0;
+                    }
+
                 }
                 else
                 {

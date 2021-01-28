@@ -48,6 +48,7 @@ public class PhysicsBody : CustomCollider2D
     public PositionState mPS;
 
     public List<Entity> parents = new List<Entity>();
+    public Entity mountParent;
 
     //
     public bool mIgnoresOneWay = false;
@@ -156,6 +157,7 @@ public class PhysicsBody : CustomCollider2D
                     break;
                 case TileType.Bounce:
                 case TileType.Block:
+                case TileType.InvisibleBlock:
                     state.pushesRightTile = true;
                     state.rightTile = new Vector2i(topRightTile.x, y);
                     return true;
@@ -228,6 +230,8 @@ public class PhysicsBody : CustomCollider2D
                     break;
                 case TileType.Bounce:
                 case TileType.Block:
+                case TileType.InvisibleBlock:
+
                     state.pushesLeftTile = true;
                     state.leftTile = new Vector2i(bottomLeftTile.x, y);
                     return true;
@@ -286,6 +290,8 @@ public class PhysicsBody : CustomCollider2D
                     break;
                 case TileType.Bounce:
                 case TileType.Block:
+                case TileType.InvisibleBlock:
+
                     state.pushesTopTile = true;
                     state.topTile = new Vector2i(x, topRightTile.y);
                     return true;
@@ -413,6 +419,7 @@ public class PhysicsBody : CustomCollider2D
                     //mPS.onLadder = true;
                     break;                    
                 case TileType.Block:
+                case TileType.InvisibleBlock:
                     state.onOneWay = false;
                     state.pushesBottomTile = true;
                     state.bottomTile = new Vector2i(x, bottomleftTile.y);
@@ -631,43 +638,32 @@ public class PhysicsBody : CustomCollider2D
         mOffset = mSpeed * Time.deltaTime;
 
 
-        List<Entity> removeParents = new List<Entity>();
-
-        
-        foreach (Entity parent in parents)
+        if(mountParent != null)
         {
-            if (HasCollisionDataFor(parent.Body))
+            if (HasCollisionDataFor(mountParent.Body))
             {
 
 
-                Vector2 parentOffset = parent.Body.mEntity.Position - parent.Body.mOldPosition;
+                Vector2 parentOffset = mountParent.Body.mEntity.Position - mountParent.Body.mOldPosition;
 
-                mOffset += parentOffset;
-                
-                /*
                 //This is my hacky way of fixing sliding off of a parent if its moving into another object, maybe
-                if ((parentOffset.y >= 0 || parent.Body.mIsKinematic) && (parentOffset.x > 0 && !parent.Body.mPS.pushesRight) || (parentOffset.x < 0 && !parent.Body.mPS.pushesLeft))
+                if ((parentOffset.y >= 0 || mountParent.Body.mIsKinematic) && (parentOffset.x > 0 && !mountParent.Body.mPS.pushesRight) || (parentOffset.x < 0 && !mountParent.Body.mPS.pushesLeft))
                 {
                     mOffset += parentOffset;
                 }
                 else
                 {
-                    removeParents.Add(parent);
+                    mountParent = null;
 
                 }
-                */
+
             }
             else
             {
-                removeParents.Add(parent);
+                mountParent = null;
             }
         }
-        
 
-        foreach(Entity toRemove in removeParents)
-        {
-            parents.Remove(toRemove);
-        }
 
         mEntity.Position += RoundVector(mOffset + mReminder);
         mAABB.Center = mEntity.Position;
@@ -706,16 +702,19 @@ public class PhysicsBody : CustomCollider2D
 
     public void TryAutoMount(Entity platform)
     {
-        
+        //return;
+        /*
         if(!platform.Body.mIsKinematic)
         {
             return;
         }
         
         parents.Add(platform);
+        */
         if (platform.mUpdateId > mEntity.mUpdateId)
             mGame.SwapUpdateIds(mEntity, platform);
 
+        mountParent = platform;
         
     }
 

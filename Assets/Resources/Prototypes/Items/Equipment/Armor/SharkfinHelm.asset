@@ -15,16 +15,19 @@ MonoBehaviour:
   itemName: SharkfinHelm
   rarity: 4
   baseValue: 25
-  sprite: {fileID: -2101561059080248862, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  sprite: {fileID: -2498838823653085445, guid: c6f53bf4487536d4d95f72317c59ff40, type: 3}
   isStackable: 0
   identified: 1
+  autoPickup: 0
   mSlot: 0
   baseBonuses:
-  - type: 1
+  - modType: 0
+    type: 1
     bonusValue: 1
-  - type: 2
+  - modType: 0
+    type: 2
     bonusValue: 1
-  baseEffects: 08000000
+  baseEffects: []
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 0

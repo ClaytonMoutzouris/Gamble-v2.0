@@ -16,7 +16,8 @@ MonoBehaviour:
   description: Further increases fire rate and projectile speed
   weaponClass: 2
   statBonuses: []
-  rangedWeaponBonuses:
+  secondaryStatBonuses: []
+  weaponBonuses:
   - modType: 1
     type: 3
     bonusValue: -0.5

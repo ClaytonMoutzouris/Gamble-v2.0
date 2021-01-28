@@ -52,14 +52,18 @@ public class ToolbeltUI : MonoBehaviour
         }
     }
 
-    public void UpdateQuickUseNode(ConsumableItem item)
+    public void UpdateQuickUseNode(ConsumableItem item, int amount)
     {
         if(item != null)
         {
             quickNode.nodeIcon.sprite = item.sprite;
-        } else
+            quickNode.amountText.text = amount.ToString();
+
+        }
+        else
         {
             quickNode.nodeIcon.sprite = null;
+            quickNode.amountText.text = "";
         }
     }
 }

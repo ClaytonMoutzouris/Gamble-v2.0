@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Increase fuel capacity
   weaponClass: 3
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 1
     type: 2
     bonusValue: 0.5

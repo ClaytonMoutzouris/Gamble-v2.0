@@ -59,14 +59,14 @@ public class PracticeBot : Entity, IHurtable
         else
         {
             //Crits
-            if (attack.mEntity != null && Random.Range(0, 100) < 5 + attack.mEntity.mStats.GetStat(StatType.Luck).value)
+            if (attack.mEntity != null && Random.Range(0, 100) < attack.mEntity.mStats.GetSecondaryStat(SecondaryStatType.CritChance).GetValue())
             {
                 damage *= 2;
                 ShowFloatingText(damage.ToString(), Color.yellow, 2, 20, 2);
             }
             else
             {
-                ShowFloatingText(damage.ToString(), Color.white);
+                ShowFloatingText(damage.ToString(), attack.GetColorForDamageType());
             }
 
             health.LoseHP(damage);

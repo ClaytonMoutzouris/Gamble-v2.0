@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f0eeda771f28a4943af4412954b7de3a
+timeCreated: 1491243154
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Space Angel
+  fontNames:
+  - Space Angel
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

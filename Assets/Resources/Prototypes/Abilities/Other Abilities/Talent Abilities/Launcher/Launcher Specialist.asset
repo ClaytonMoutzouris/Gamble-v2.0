@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Extra Launcher Damage
   weaponClass: 1
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 1
     type: 4
     bonusValue: 0.25

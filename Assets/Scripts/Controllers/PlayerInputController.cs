@@ -71,6 +71,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.Minimap] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadUp];
                 playerButtonInput[(int)ButtonInput.Gadget1] = mGamepadInput.buttonInputs[(int)GamepadButtons.LeftBumper];
                 playerButtonInput[(int)ButtonInput.Fire] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightTrigger];
+                playerButtonInput[(int)ButtonInput.BeamUp] = mGamepadInput.buttonInputs[(int)GamepadButtons.DpadDown];
                 playerButtonInput[(int)ButtonInput.Gadget2] = mGamepadInput.buttonInputs[(int)GamepadButtons.RightBumper];
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = false;
                 playerButtonInput[(int)ButtonInput.InventoryMove] = false;
@@ -112,6 +113,8 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.SkipLevel] = false;
                 playerButtonInput[(int)ButtonInput.Gadget1] = false;
                 playerButtonInput[(int)ButtonInput.Fire] = false;
+                playerButtonInput[(int)ButtonInput.BeamUp] = false;
+
                 playerButtonInput[(int)ButtonInput.Gadget2] = false;
                 playerButtonInput[(int)ButtonInput.InventoryDrop] = mGamepadInput.buttonInputs[(int)GamepadButtons.EastButton];
                 playerButtonInput[(int)ButtonInput.InventoryMove] = mGamepadInput.buttonInputs[(int)GamepadButtons.WestButton];
@@ -143,6 +146,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
                 playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
+                playerButtonInput[(int)ButtonInput.BeamUp] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
                 playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
@@ -183,6 +187,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
                 playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
+                playerButtonInput[(int)ButtonInput.BeamUp] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
                 playerButtonInput[(int)ButtonInput.MeleeAttack] = false;
@@ -224,6 +229,7 @@ public class PlayerInputController
                 playerButtonInput[(int)ButtonInput.DPad_Right] = false;
                 playerButtonInput[(int)ButtonInput.Interact] = false;
                 playerButtonInput[(int)ButtonInput.DPad_Up] = false;
+                playerButtonInput[(int)ButtonInput.BeamUp] = false;
 
                 playerButtonInput[(int)ButtonInput.Jump] = false;
                 playerButtonInput[(int)ButtonInput.MeleeAttack] = false;

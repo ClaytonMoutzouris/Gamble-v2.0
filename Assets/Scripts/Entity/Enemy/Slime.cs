@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class Slime : Enemy {
 
-    float closeRange = 30f;
-    float midRange = 70f;
+    float closeRange = 32f;
+    float midRange = 64;
     float longRange = 200f;
-    float jumpRangeMin = 160f;
-    float jumpRangeMax = 240f;
+
 
     public Slime(EnemyPrototype proto) : base(proto)
     {
@@ -45,7 +44,7 @@ public class Slime : Enemy {
                         }
                         //StartCoroutine(EnemyBehaviour.Wait(this, mAttackManager.AttackList[0].duration + 2, EnemyState.Moving));
                     }
-                    else if (EnemyBehaviour.TargetInRange(this, Target, jumpRangeMax) && !EnemyBehaviour.TargetInRange(this, Target, jumpRangeMin))
+                    else if (EnemyBehaviour.TargetInRange(this, Target, midRange))
                     {
                         EnemyBehaviour.Jump(this, jumpHeight, Target.Position-Position);
 
@@ -79,6 +78,21 @@ public class Slime : Enemy {
                         }
                         
 
+                    }
+
+                    if (Mathf.Abs(Target.Position.x - Position.x) < 8)
+                    {
+                        if(Target.Position.y >= 32 + Position.y)
+                        {
+                            EnemyBehaviour.Jump(this, jumpHeight);
+                        }
+                        else if(Target.Position.y <= 32 + Position.y)
+                        {
+                            Body.mPS.tmpIgnoresOneWay = true;
+                        } else
+                        {
+                            Body.mSpeed.x = 0;
+                        }
                     }
 
                 }

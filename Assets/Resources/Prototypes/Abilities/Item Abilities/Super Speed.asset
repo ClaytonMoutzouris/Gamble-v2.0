@@ -15,5 +15,6 @@ MonoBehaviour:
   abilityName: Super Speed
   description: 
   statBonuses:
-  - type: 3
-    bonusValue: 5
+  - modType: 0
+    type: 3
+    bonusValue: 10

@@ -68,6 +68,7 @@ public class Nipper : Enemy
 
                     }
 
+
                     if (Vector2.Distance(Position, Target.Position) < 64 && Target.Position.y > Position.y)
                     {
                         EnemyBehaviour.Jump(this, jumpHeight, dir);

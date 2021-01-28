@@ -16,10 +16,7 @@ MonoBehaviour:
   description: Extra Projectile
   weaponClass: 1
   statBonuses: []
-  rangedWeaponBonuses:
+  weaponBonuses:
   - modType: 0
     type: 0
     bonusValue: 1
-  - modType: 0
-    type: 1
-    bonusValue: 25

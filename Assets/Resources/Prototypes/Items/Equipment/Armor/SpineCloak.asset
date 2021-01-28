@@ -15,14 +15,16 @@ MonoBehaviour:
   itemName: SpineCloak
   rarity: 4
   baseValue: 20
-  sprite: {fileID: -3899356034349597953, guid: d6bf98d62089c7e4e93c046d092a9f74, type: 3}
+  sprite: {fileID: -3899356034349597953, guid: c6f53bf4487536d4d95f72317c59ff40, type: 3}
   isStackable: 0
   identified: 1
+  autoPickup: 0
   mSlot: 1
   baseBonuses:
-  - type: 0
+  - modType: 0
+    type: 0
     bonusValue: 1
-  baseEffects: 03000000
+  baseEffects: []
   isEquipped: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   colorIndex: 0

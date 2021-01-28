@@ -10,7 +10,7 @@ public class StatBuff : Ability
     public override void OnGainTrigger(Entity entity)
     {
         base.OnGainTrigger(entity);
-        entity.mStats.AddBonuses(statBonuses);
+        entity.mStats.AddPrimaryBonuses(statBonuses);
 
     }
 
@@ -18,7 +18,7 @@ public class StatBuff : Ability
     {
         base.OnRemoveTrigger(entity);
 
-        entity.mStats.RemoveBonuses(statBonuses);
+        entity.mStats.RemovePrimaryBonuses(statBonuses);
 
     }
 }

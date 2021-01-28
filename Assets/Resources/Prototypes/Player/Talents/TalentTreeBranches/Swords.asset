@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba5a377bead1dd46b2558e076619ad5, type: 3}
+  m_Name: Swords
+  m_EditorClassIdentifier: 
+  branchName: Swords
+  talents:
+  - {fileID: 11400000, guid: 956951d7456c4424a96624e78df23769, type: 2}
+  - {fileID: 11400000, guid: b42fee22bf91b4d4c8dc8fcf06496fbb, type: 2}
+  - {fileID: 11400000, guid: 803203dbdd0ce1a4c8e0b51528620712, type: 2}
+  - {fileID: 11400000, guid: e922f1939225d2f449d0283795540008, type: 2}

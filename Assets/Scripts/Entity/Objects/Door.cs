@@ -65,8 +65,7 @@ public class Door : Entity, IInteractable
             }
         } else
         {
-            Game.mMapChangeFlag = true;
-
+            GameManager.instance.TravelToNextMap();
         }
 
         return true;
